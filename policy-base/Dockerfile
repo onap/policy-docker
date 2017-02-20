@@ -1,4 +1,4 @@
-FROM ecomp-nexus:51220/policy/policy-os
+FROM openecomp/policy/policy-os
 
 
 # install MariaDB client

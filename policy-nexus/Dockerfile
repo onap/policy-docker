@@ -1,4 +1,4 @@
-FROM ecomp-nexus:51220/policy/policy-os
+FROM openecomp/policy/policy-os
 
 
 # note that in following command sequence, wget exit status is 1 even on success,

@@ -31,6 +31,10 @@
 	<name>Docker build</name>
 	<description>OpenECOMP Policy Docker Build</description>
 
+	<properties>
+		<nexusproxy>https://nexus.openecomp.org</nexusproxy>
+	</properties>
+
 	<repositories>
 		<repository>
 			<id>central</id>

@@ -1,4 +1,4 @@
-FROM ecomp-nexus:51220/policy/policy-os
+FROM openecomp/policy/policy-os
 
 RUN \
 	apt-get install -y apt-transport-https && \
