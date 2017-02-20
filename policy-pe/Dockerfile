@@ -1,4 +1,4 @@
-FROM ecomp-nexus:51220/policy/policy-base
+FROM openecomp/policy/policy-base
 
 RUN mkdir -p /opt/app/policy /tmp/policy-install && chown policy /opt/app/policy /tmp/policy-install
 
