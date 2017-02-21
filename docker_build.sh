@@ -10,11 +10,11 @@ for image in policy-os policy-nexus policy-db policy-base policy-drools policy-p
     echo "Building $image"
     mkdir -p target/$image
     cp $image/* target/$image
-    docker build --quiet --tag ${DOCKER_REPOSITORY}/openecomp/policy/$image:${DOCKER_VERSION} target/$image
+    docker build --quiet --tag openecomp/policy/$image:${DOCKER_VERSION} target/$image
     docker images
 done
 
 for image in policy-nexus policy-db policy-drools policy-pe; do
     echo "Pushing $image"
-    docker push ${DOCKER_REPOSITORY}/openecomp/policy/$image:${DOCKER_VERSION}
+    docker push openecomp/policy/$image:${DOCKER_VERSION}
 done
