@@ -36,6 +36,7 @@
 	</properties>
 
 	<repositories>
+<!--
 		<repository>
 			<id>central</id>
 			<name>Maven 2 repository</name>
@@ -46,6 +47,7 @@
 			<url>http://www.soapui.org/repository/maven2/</url>
 			<name>SoapUI plugin</name>
 		</repository>
+-->
 		<repository>
 			<id>ecomp-releases</id>
 			<name>OpenECOMP Release Repository</name>
