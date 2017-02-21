@@ -16,8 +16,3 @@ for image in policy-os policy-nexus policy-db policy-base policy-drools policy-p
     docker build --quiet --tag openecomp/policy/$image:${DOCKER_VERSION} --tag ${DOCKER_REPOSITORY}/openecomp/policy/$image:${DOCKER_VERSION} target/$image
     docker images
 done
-
-for image in policy-nexus policy-db policy-drools policy-pe; do
-    echo "Pushing $image"
-    docker push ${DOCKER_REPOSITORY}/openecomp/policy/$image:${DOCKER_VERSION}
-done
