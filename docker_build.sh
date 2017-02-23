@@ -6,6 +6,9 @@ echo '============== STARTING SCRIPT TO BUILD DOCKER IMAGES ================='
 DOCKER_REPOSITORY=nexus3.openecomp.org:10003
 DOCKER_VERSION=latest
 
+export DOCKER_REPOSITORY
+export DOCKER_VERSION
+
 cp policy-pe/* target/policy-pe/
 cp policy-drools/* target/policy-drools/
 
