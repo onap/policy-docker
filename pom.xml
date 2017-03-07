@@ -46,6 +46,11 @@
 			<name>OpenECOMP Staging Repository</name>
 			<url>${nexusproxy}/content/repositories/staging/</url>
 		</repository>
+		<repository>
+			<id>ecomp-snapshot</id>
+			<name>OpenECOMP Snapshot Repository</name>
+			<url>${nexusproxy}/content/repositories/snapshots/</url>
+		</repository>
 	</repositories>
 
 	<distributionManagement>
@@ -132,6 +137,28 @@
 					</execution>
 				</executions>
 			</plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.6.0</version>
+        <executions>
+          <execution>
+          	<id>get-target-version</id>
+          	<phase>prepare-package</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <executable>echo</executable>
+          <workingDirectory>${project.build.directory}</workingDirectory>
+          <arguments>
+            <argument>${project.version}</argument>
+          </arguments>
+          <outputFile>${project.build.directory}/version</outputFile>
+        </configuration>
+      </plugin>
 
 		</plugins>
 	</build>
