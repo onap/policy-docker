@@ -31,6 +31,6 @@ done
 
 for image in policy-nexus policy-db policy-drools policy-pe; do
     echo "Pushing $image"
-    docker push ${DOCKER_REPOSITORY}/openecomp/policy/$image:latest
+#    docker push ${DOCKER_REPOSITORY}/openecomp/policy/$image:latest
     docker push ${DOCKER_REPOSITORY}/openecomp/policy/$image:${MVN_VERSION}-${TIMESTAMP}
 done
