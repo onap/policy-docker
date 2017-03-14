@@ -20,8 +20,8 @@ for image in policy-os policy-nexus policy-db policy-base policy-drools policy-p
 
     TAGS="--tag openecomp/policy/${image}:latest"
     TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/openecomp/policy/${image}:latest"
-    TAGS="${TAGS} --tag openecomp/policy/${image}:${MVN_VERSION}-${TIMESTAMP}"
-    TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/openecomp/policy/${image}:${MVN_VERSION}-${TIMESTAMP}"
+    TAGS="${TAGS} --tag openecomp/policy/${image}:${MVN_VERSION}"
+    TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/openecomp/policy/${image}:${MVN_VERSION}"
 
     echo $TAGS
 
@@ -32,5 +32,5 @@ done
 for image in policy-nexus policy-db policy-drools policy-pe; do
     echo "Pushing $image"
 #    docker push ${DOCKER_REPOSITORY}/openecomp/policy/$image:latest
-    docker push ${DOCKER_REPOSITORY}/openecomp/policy/$image:${MVN_VERSION}-${TIMESTAMP}
+    docker push ${DOCKER_REPOSITORY}/openecomp/policy/$image:${MVN_VERSION}
 done
