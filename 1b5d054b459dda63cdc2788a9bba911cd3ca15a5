@@ -1,0 +1,7 @@
+Verified+1: ecomp jobbuilder <ecomp-jobbuilder@jenkins.openecomp.org>
+Code-Review+2: Pamela Dragosh <pdragosh@research.att.com>
+Submitted-by: Pamela Dragosh <pdragosh@research.att.com>
+Submitted-at: Tue, 14 Mar 2017 21:04:06 +0000
+Reviewed-on: http://gerrit.openecomp.org/r/2141
+Project: policy/docker
+Branch: refs/heads/release-1.0.0
