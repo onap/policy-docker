@@ -29,6 +29,9 @@ for image in policy-os policy-nexus policy-db policy-base policy-drools policy-p
     TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/openecomp/policy/${image}:${MVN_VERSION}-${TIMESTAMP}"
 
     echo $TAGS
+
+    docker build --quiet $TAGS target/$image
+    docker images
 done
 
 #
