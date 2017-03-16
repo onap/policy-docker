@@ -1,7 +1,9 @@
 #!/bin/bash
 #
 echo '============== STARTING SCRIPT TO BUILD DOCKER IMAGES ================='
-
+#
+# JUST VERIFY ONLY - NO PUSHING
+#
 DOCKER_REPOSITORY=nexus3.openecomp.org:10003
 MVN_VERSION=$(cat target/version)
 TIMESTAMP=$(date -u +%Y%m%dT%H%M%S)
@@ -20,9 +22,13 @@ for image in policy-os policy-nexus policy-db policy-base policy-drools policy-p
 
     TAGS="--tag openecomp/policy/${image}:latest"
     TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/openecomp/policy/${image}:latest"
-    TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/openecomp/policy/${image}:${MVN_VERSION}-latest"
     TAGS="${TAGS} --tag openecomp/policy/${image}:${MVN_VERSION}-${TIMESTAMP}"
     TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/openecomp/policy/${image}:${MVN_VERSION}-${TIMESTAMP}"
 
     echo $TAGS
+
+    docker build --quiet $TAGS target/$image
 done
+
+docker images
+

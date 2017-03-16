@@ -1,8 +1,13 @@
 #!/bin/bash
 #
 echo '============== STARTING SCRIPT TO BUILD DOCKER IMAGES ================='
-
+#
+# THIS SHOULD POINT TO THE SNAPSHOT repo
+#
 DOCKER_REPOSITORY=nexus3.openecomp.org:10003
+#
+# Should be appended with -SNAPSHOT
+#
 MVN_VERSION=$(cat target/version)
 TIMESTAMP=$(date -u +%Y%m%dT%H%M%S)
 
@@ -20,15 +25,19 @@ for image in policy-os policy-nexus policy-db policy-base policy-drools policy-p
 
     TAGS="--tag openecomp/policy/${image}:latest"
     TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/openecomp/policy/${image}:latest"
-    TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/openecomp/policy/${image}:${MVN_VERSION}-latest"
     TAGS="${TAGS} --tag openecomp/policy/${image}:${MVN_VERSION}-${TIMESTAMP}"
     TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/openecomp/policy/${image}:${MVN_VERSION}-${TIMESTAMP}"
 
     echo $TAGS
+
+    docker build --quiet $TAGS target/$image
+    docker images
 done
 
-#for image in policy-nexus policy-db policy-drools policy-pe; do
-#    echo "Pushing $image"
-##    docker push ${DOCKER_REPOSITORY}/openecomp/policy/$image:${MVN_VERSION}-latest
-#    docker push ${DOCKER_REPOSITORY}/openecomp/policy/$image:${MVN_VERSION}-${TIMESTAMP}
-#done
+#
+# NO latest tag. SNAPSHOTS are for internal testing
+#
+for image in policy-nexus policy-db policy-drools policy-pe; do
+    echo "Pushing $image"
+    docker push ${DOCKER_REPOSITORY}/openecomp/policy/$image:${MVN_VERSION}-${TIMESTAMP}
+done

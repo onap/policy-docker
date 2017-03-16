@@ -2,7 +2,13 @@
 #
 echo '============== STARTING SCRIPT TO BUILD DOCKER IMAGES ================='
 
+#
+# THIS SHOULD BE REPLACED WITH SPECIFIC REPOSITORY FOR THIS RELEASE
+#
 DOCKER_REPOSITORY=nexus3.openecomp.org:10003
+#
+# RELEASE BUILD CREATES latest tag and the STAGING tag
+#
 MVN_VERSION=$(cat target/version)
 MVN_VERSION="${MVN_VERSION}-STAGING"
 TIMESTAMP=$(date -u +%Y%m%dT%H%M%S)
@@ -33,7 +39,6 @@ done
 
 for image in policy-nexus policy-db policy-drools policy-pe; do
     echo "Pushing $image"
-#    docker push ${DOCKER_REPOSITORY}/openecomp/policy/$image:latest
-#    docker push ${DOCKER_REPOSITORY}/openecomp/policy/$image:${MVN_VERSION}-latest
+    docker push ${DOCKER_REPOSITORY}/openecomp/policy/$image:latest
     docker push ${DOCKER_REPOSITORY}/openecomp/policy/$image:${MVN_VERSION}-${TIMESTAMP}
 done
