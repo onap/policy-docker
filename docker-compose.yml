@@ -1,17 +1,17 @@
 version: '2'
 services:
    mariadb:
-      image: ${DOCKER_REPOSITORY}/openecomp/policy/policy-db
+      image: ${NEXUS_DOCKER_REPO}/openecomp/policy/policy-db
       container_name: mariadb
       hostname: mariadb
       ports:
        - "3306:3306"
    nexus:
-      image: ${DOCKER_REPOSITORY}/openecomp/policy/policy-nexus
+      image: ${NEXUS_DOCKER_REPO}/openecomp/policy/policy-nexus
       container_name: nexus
       hostname: nexus
    pap:
-      image: ${DOCKER_REPOSITORY}/openecomp/policy/policy-pe
+      image: ${NEXUS_DOCKER_REPO}/openecomp/policy/policy-pe
       container_name: pap
       depends_on: 
        - mariadb
@@ -23,7 +23,7 @@ services:
       volumes:
        - ./config/pe:/tmp/policy-install/config
    pdp:
-      image: ${DOCKER_REPOSITORY}/openecomp/policy/policy-pe
+      image: ${NEXUS_DOCKER_REPO}/openecomp/policy/policy-pe
       container_name: pdp
       depends_on: 
        - pap
@@ -34,7 +34,7 @@ services:
       volumes:
        - ./config/pe:/tmp/policy-install/config
    pypdp:
-      image: ${DOCKER_REPOSITORY}/openecomp/policy/policy-pe
+      image: ${NEXUS_DOCKER_REPO}/openecomp/policy/policy-pe
       container_name: pypdp
       depends_on: 
        - pap
@@ -45,7 +45,7 @@ services:
       volumes:
        - ./config/pe:/tmp/policy-install/config
    brmsgw:
-      image: ${DOCKER_REPOSITORY}/openecomp/policy/policy-pe
+      image: ${NEXUS_DOCKER_REPO}/openecomp/policy/policy-pe
       container_name: brmsgw
       depends_on: 
        - pap
@@ -54,7 +54,7 @@ services:
       volumes:
        - ./config/pe:/tmp/policy-install/config
    drools:
-      image: ${DOCKER_REPOSITORY}/openecomp/policy/policy-drools
+      image: ${NEXUS_DOCKER_REPO}/openecomp/policy/policy-drools
       container_name: drools
       depends_on: 
        - mariadb
