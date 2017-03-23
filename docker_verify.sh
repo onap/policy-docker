@@ -6,11 +6,20 @@ echo '============== STARTING SCRIPT TO BUILD DOCKER IMAGES ================='
 #
 DOCKER_REPOSITORY=nexus3.openecomp.org:10003
 MVN_VERSION=$(cat target/version)
+MVN_MAJMIN_VERSION=$(cut -d "." -f1 -f2 target/version)
 TIMESTAMP=$(date -u +%Y%m%dT%H%M%S)
 
 echo $DOCKER_REPOSITORY
 echo $MVN_VERSION
+echo $MVN_MAJMIN_VERSION
 echo $TIMESTAMP
+
+if [[ $MVN_VERSION == *"SNAPSHOT"* ]]
+then
+    MVN_MAJMIN_VERSION="${MVN_MAJMIN_VERSION}-SNAPSHOT"
+else
+    MVN_MAJMIN_VERSION="${MVN_MAJMIN_VERSION}-STAGING"
+fi
 
 cp policy-pe/* target/policy-pe/
 cp policy-drools/* target/policy-drools/
@@ -20,9 +29,17 @@ for image in policy-os policy-nexus policy-db policy-base policy-drools policy-p
     mkdir -p target/$image
     cp $image/* target/$image
 
+    #
+    # This is the local latest tagged image. The Dockerfile's need this to build images
+    #
     TAGS="--tag openecomp/policy/${image}:latest"
-    TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/openecomp/policy/${image}:latest"
-    TAGS="${TAGS} --tag openecomp/policy/${image}:${MVN_VERSION}-${TIMESTAMP}"
+    #
+    # This has the nexus repo prepended and only major/minor version with latest
+    #
+    TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/openecomp/policy/${image}:${MVN_MAJMIN_VERSION}-latest"
+    #
+    # This has the nexus repo prepended and major/minor/patch version with timestamp
+    #
     TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/openecomp/policy/${image}:${MVN_VERSION}-${TIMESTAMP}"
 
     echo $TAGS
