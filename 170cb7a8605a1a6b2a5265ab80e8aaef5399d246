@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Pamela Dragosh <pdragosh@research.att.com>
+Submitted-by: Pamela Dragosh <pdragosh@research.att.com>
+Submitted-at: Mon, 27 Mar 2017 15:13:43 +0000
+Reviewed-on: http://gerrit.openecomp.org/r/2441
+Project: policy/docker
+Branch: refs/heads/release-1.0.0
