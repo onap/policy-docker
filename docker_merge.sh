@@ -56,7 +56,16 @@ for image in policy-os policy-nexus policy-db policy-base policy-drools policy-p
     echo $TAGS
 
     docker build --quiet $TAGS target/$image
+
+    if [ $? -ne 0 ]
+    then
+        echo "Docker build failed"
+        docker images
+        exit 1
+    fi
 done
+
+docker images
 
 #
 # Push images
@@ -64,5 +73,18 @@ done
 for image in policy-nexus policy-db policy-drools policy-pe; do
     echo "Pushing $image"
     docker push ${DOCKER_REPOSITORY}/onap/policy/$image:${MVN_MAJMIN_VERSION}-latest
+
+    if [ $? -ne 0 ]
+    then
+        echo "Docker push failed"
+        exit 1
+    fi
+
     docker push ${DOCKER_REPOSITORY}/onap/policy/$image:${MVN_VERSION}-${TIMESTAMP}
+
+    if [ $? -ne 0 ]
+    then
+        echo "Docker push failed"
+        exit 1
+    fi
 done

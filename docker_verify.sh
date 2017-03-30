@@ -59,6 +59,13 @@ for image in policy-os policy-nexus policy-db policy-base policy-drools policy-p
     echo $TAGS
 
     docker build --quiet $TAGS target/$image
+
+    if [ $? -ne 0 ]
+    then
+        echo "Docker build failed"
+        docker images
+        exit 1
+    fi
 done
 
 docker images
