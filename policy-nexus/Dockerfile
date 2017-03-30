@@ -1,4 +1,4 @@
-FROM openecomp/policy/policy-os
+FROM onap/policy/policy-os
 
 
 # note that in following command sequence, wget exit status is 1 even on success,
