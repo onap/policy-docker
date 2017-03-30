@@ -1,4 +1,4 @@
-FROM openecomp/policy/policy-os
+FROM onap/policy/policy-os
 
 
 # install MariaDB client

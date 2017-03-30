@@ -32,7 +32,7 @@
 	<description>OpenECOMP Policy Docker Build</description>
 
 	<properties>
-		<nexusproxy>https://nexus.openecomp.org</nexusproxy>
+		<nexusproxy>https://nexus.onap.org</nexusproxy>
 	</properties>
 
 	<repositories>
