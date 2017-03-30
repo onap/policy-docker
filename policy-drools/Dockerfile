@@ -1,4 +1,4 @@
-FROM openecomp/policy/policy-base
+FROM onap/policy/policy-base
 
 RUN mkdir -p /opt/app/policy /tmp/policy-install && chown policy /opt/app/policy /tmp/policy-install
 WORKDIR /tmp/policy-install
