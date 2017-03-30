@@ -45,6 +45,10 @@ for image in policy-os policy-nexus policy-db policy-base policy-drools policy-p
     #
     TAGS="--tag onap/policy/${image}:latest"
     #
+    # This is the nexus repo prepended for latest tagged image.
+    #
+    TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/onap/policy/${image}:latest"
+    #
     # This has the nexus repo prepended and only major/minor version with latest
     #
     TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/onap/policy/${image}:${MVN_MAJMIN_VERSION}-latest"
