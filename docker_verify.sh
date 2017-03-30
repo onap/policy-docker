@@ -4,7 +4,7 @@ echo '============== STARTING SCRIPT TO BUILD DOCKER IMAGES ================='
 #
 # JUST VERIFY ONLY - NO PUSHING
 #
-DOCKER_REPOSITORY=nexus3.openecomp.org:10003
+DOCKER_REPOSITORY=nexus3.onap.org:10003
 MVN_VERSION=$(cat target/version)
 MVN_MAJMIN_VERSION=$(cut -f 1,2 -d . target/version)
 TIMESTAMP=$(date -u +%Y%m%dT%H%M%S)
@@ -46,19 +46,26 @@ for image in policy-os policy-nexus policy-db policy-base policy-drools policy-p
     #
     # This is the local latest tagged image. The Dockerfile's need this to build images
     #
-    TAGS="--tag openecomp/policy/${image}:latest"
+    TAGS="--tag onap/policy/${image}:latest"
     #
     # This has the nexus repo prepended and only major/minor version with latest
     #
-    TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/openecomp/policy/${image}:${MVN_MAJMIN_VERSION}-latest"
+    TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/onap/policy/${image}:${MVN_MAJMIN_VERSION}-latest"
     #
     # This has the nexus repo prepended and major/minor/patch version with timestamp
     #
-    TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/openecomp/policy/${image}:${MVN_VERSION}-${TIMESTAMP}"
+    TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/onap/policy/${image}:${MVN_VERSION}-${TIMESTAMP}"
 
     echo $TAGS
 
     docker build --quiet $TAGS target/$image
+
+    if [ $? -ne 0 ]
+    then
+        echo "Docker build failed"
+        docker images
+        exit 1
+    fi
 done
 
 docker images
