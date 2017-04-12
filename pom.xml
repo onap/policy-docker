@@ -33,23 +33,26 @@
 
 	<properties>
 		<nexusproxy>https://nexus.onap.org</nexusproxy>
+		<releases.path>content/repositories/releases/</releases.path>
+		<snapshots.path>content/repositories/snapshots/</snapshots.path>
+		<staging.path>content/repositories/staging/</staging.path>
 	</properties>
 
 	<repositories>
 		<repository>
 			<id>ecomp-releases</id>
 			<name>OpenECOMP Release Repository</name>
-			<url>${nexusproxy}/content/repositories/releases/</url>
+			<url>${nexusproxy}/${releases.path}</url>
 		</repository>
 		<repository>
 			<id>ecomp-staging</id>
 			<name>OpenECOMP Staging Repository</name>
-			<url>${nexusproxy}/content/repositories/staging/</url>
+			<url>${nexusproxy}/${staging.path}</url>
 		</repository>
 		<repository>
 			<id>ecomp-snapshot</id>
 			<name>OpenECOMP Snapshot Repository</name>
-			<url>${nexusproxy}/content/repositories/snapshots/</url>
+			<url>${nexusproxy}/${snapshots.path}</url>
 		</repository>
 	</repositories>
 
@@ -57,12 +60,12 @@
 		<repository>
 			<id>ecomp-releases</id>
 			<name>OpenECOMP Release Repository</name>
-			<url>${nexusproxy}/content/repositories/releases/</url>
+			<url>${nexusproxy}/${releases.path}</url>
 		</repository>
 		<snapshotRepository>
 			<id>ecomp-snapshots</id>
 			<name>OpenECOMP Snapshot Repository</name>
-			<url>${nexusproxy}/content/repositories/snapshots/</url>
+			<url>${nexusproxy}/${snapshots.path}</url>
 		</snapshotRepository>
 	</distributionManagement>
 
