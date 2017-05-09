@@ -33,17 +33,6 @@ services:
       command: pdp
       volumes:
        - ./config/pe:/tmp/policy-install/config
-   pypdp:
-      image: onap/policy/policy-pe
-      container_name: pypdp
-      depends_on: 
-       - pap
-      hostname: pypdp
-      ports:
-       - "8480:8480"
-      command: pypdp
-      volumes:
-       - ./config/pe:/tmp/policy-install/config
    brmsgw:
       image: onap/policy/policy-pe
       container_name: brmsgw
