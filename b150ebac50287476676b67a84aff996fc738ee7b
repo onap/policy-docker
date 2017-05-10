@@ -67,6 +67,24 @@
       "revId": "b150ebac50287476676b67a84aff996fc738ee7b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da141535_dc02eb0a",
+        "filename": "config/pe/pdp.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2017-05-10T12:20:42Z",
+      "side": 1,
+      "message": "Why are there still UEB references in there? I thought that was being de-scoped fully and components were supposed to use Dmaap?",
+      "parentUuid": "da141535_fca92f25",
+      "revId": "b150ebac50287476676b67a84aff996fc738ee7b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
