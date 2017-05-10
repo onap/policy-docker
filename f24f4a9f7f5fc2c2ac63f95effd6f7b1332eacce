@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Marco Platania <platania@research.att.com>
+Code-Review+2: Pamela Dragosh <pdragosh@research.att.com>
+Submitted-by: Pamela Dragosh <pdragosh@research.att.com>
+Submitted-at: Wed, 10 May 2017 14:49:46 +0000
+Reviewed-on: http://gerrit.onap.org/r/4081
+Project: policy/docker
+Branch: refs/heads/master
