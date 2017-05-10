@@ -1,4 +1,9 @@
 version: '2'
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: ${MTU}
 services:
    mariadb:
       image: onap/policy/policy-db
