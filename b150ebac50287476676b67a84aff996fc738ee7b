@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da141535_7c9f5f04",
+        "filename": "config/pe/base.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2017-05-10T03:54:21Z",
+      "side": 1,
+      "message": "I searched KEY_PASSWD and TRUSTSTORE_PASSWD in policy/engine source code and didn\u0027t see any occurrence.   I would have expected to see them there.  How are these 2 being used?",
+      "revId": "b150ebac50287476676b67a84aff996fc738ee7b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da141535_9c68f3f6",
+        "filename": "config/pe/brmsgw.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2017-05-10T03:54:21Z",
+      "side": 1,
+      "message": "Is this still valid, referring to PyPDP .. ?   Should it be PDP?",
+      "revId": "b150ebac50287476676b67a84aff996fc738ee7b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da141535_1cad0332",
+        "filename": "config/pe/pdp.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2017-05-10T03:54:21Z",
+      "side": 1,
+      "message": "very minor change, if you can correct typo below",
+      "revId": "b150ebac50287476676b67a84aff996fc738ee7b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da141535_fca92f25",
+        "filename": "config/pe/pdp.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2017-05-10T03:54:21Z",
+      "side": 1,
+      "message": "Is it ok to have notification type to include UEB below but not UEB urls, topic, etc .. in the other params.   Will it cause a problem?",
+      "revId": "b150ebac50287476676b67a84aff996fc738ee7b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
