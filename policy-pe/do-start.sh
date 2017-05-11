@@ -14,14 +14,11 @@ pap)
 pdp)
 	comps="base pdp pdplp"
 	;;
-pypdp)
-	comps="base pypdp"
-	;;
 brmsgw)
 	comps="base brmsgw"
 	;;
 *)
-	echo "Usage: do-start.sh pap|pdp|pypdp|brmsgw" >&2
+	echo "Usage: do-start.sh pap|pdp|brmsgw" >&2
 	exit 1
 esac
 
@@ -80,12 +77,11 @@ fi
 
 policy.sh start
 
-# on pap, wait for pap, pdp, pypdp, brmsgw, and nexus up,
+# on pap, wait for pap, pdp, brmsgw, and nexus up,
 # then push the initial default policies
 if [[ $container == pap ]]; then
 	./wait-for-port.sh pap 9091
 	./wait-for-port.sh pdp 8081
-	./wait-for-port.sh pypdp 8480
 	# brmsgw doesn't have a REST API, so check for JMX port instead
 	./wait-for-port.sh brmsgw 9989
 	./wait-for-port.sh nexus 8081

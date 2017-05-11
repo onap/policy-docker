@@ -9,8 +9,8 @@
 function usage() {
 	echo -n "syntax: $(basename $0) "
 	echo -n "--debug ("
-	echo -n "[--install base|pap|pdp|pypdp|console|mysql|brmsgw|paplp|pdplp] | "
-	echo -n "[--configure base|pap|pdp|pypdp|console|mysql|brmsgw|paplp|pdplp] | "
+	echo -n "[--install base|pap|pdp|console|mysql|brmsgw|paplp|pdplp] | "
+	echo -n "[--configure base|pap|pdp|console|mysql|brmsgw|paplp|pdplp] | "
 }
 
 function check_java() {
@@ -550,7 +550,7 @@ case $COMPONENT_TYPE in
 	paplp)	;;
 	pdplp)	;;
 	skip)	;;
-	*)		echo "invalid component type (${COMPONENT_TYPE}): must be in {base|pypdp|pdp|pap|console|mysql|brmsgw|paplp|pdplp}";
+	*)		echo "invalid component type (${COMPONENT_TYPE}): must be in {base|pdp|pap|console|mysql|brmsgw|paplp|pdplp}";
 			usage
 			exit 1
 			;;
@@ -603,9 +603,6 @@ if [[ ${OPERATION} == install ]]; then
 		base)	
 			install_base
 			;;
-		pypdp)
-			install_tomcat_component
-			;;
 		pdp)	
 			install_tomcat_component
 			;;
@@ -625,7 +622,7 @@ if [[ ${OPERATION} == install ]]; then
 			install_logparser
 			;;
 		*)		
-			echo "invalid component type (${COMPONENT_TYPE}): must be in {base|pypdp|pdp|pap|console|mysql|brmsgw|paplp|pdplp}";
+			echo "invalid component type (${COMPONENT_TYPE}): must be in {base|pdp|pap|console|mysql|brmsgw|paplp|pdplp}";
 			usage
 			exit 1
 			;;
@@ -639,9 +636,6 @@ if [[ ${OPERATION} == configure ]]; then
 		base)	
 			configure_base
 			component_preconfigure
-			;;
-		pypdp)
-			configure_component "${COMPONENT_TYPE}.conf" "${POLICY_HOME}/servers/${COMPONENT_TYPE}/"
 			;;
 		pdp)	
 			configure_component "${COMPONENT_TYPE}.conf" "${POLICY_HOME}/servers/${COMPONENT_TYPE}/"
@@ -662,7 +656,7 @@ if [[ ${OPERATION} == configure ]]; then
 			configure_component "${COMPONENT_TYPE}.conf" "${POLICY_HOME}/servers/${COMPONENT_TYPE}/"
 			;;
 		*)		
-			echo "invalid component type (${COMPONENT_TYPE}): must be in {base|pypdp|pdp|pap|console|mysql|brmsgw|paplp|pdplp}";
+			echo "invalid component type (${COMPONENT_TYPE}): must be in {base|pdp|pap|console|mysql|brmsgw|paplp|pdplp}";
 			usage
 			exit 1
 			;;
