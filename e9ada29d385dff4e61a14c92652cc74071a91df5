@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da141535_d3c1b9e5",
+        "filename": "config/pe/pdp.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2017-05-12T17:43:43Z",
+      "side": 1,
+      "message": "Ravi, one more, remove pypdp_1.   \nCan you do a grep on docker project for pypdp, just to make sure, there is nothing pending ?",
+      "revId": "e9ada29d385dff4e61a14c92652cc74071a91df5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
