@@ -466,6 +466,7 @@ function install_brmsgw() {
 	/bin/cp -fr "${POLICY_HOME}"/install/servers/${COMPONENT_TYPE}/BRMSGateway.jar "${POLICY_HOME}/servers/${COMPONENT_TYPE}"
 	/bin/cp -fr "${POLICY_HOME}"/install/servers/${COMPONENT_TYPE}/*.properties "${POLICY_HOME}/servers/${COMPONENT_TYPE}"
 	/bin/cp -fr "${POLICY_HOME}"/install/servers/${COMPONENT_TYPE}/config "${POLICY_HOME}/servers/${COMPONENT_TYPE}"
+	/bin/cp -fr "${POLICY_HOME}"/install/servers/${COMPONENT_TYPE}/dependency.json "${POLICY_HOME}/servers/${COMPONENT_TYPE}"
 	
 	/bin/mv $POLICY_HOME/m2 $HOME/.m2
 
@@ -541,7 +542,6 @@ done
 # component-type validation
 case $COMPONENT_TYPE in
 	base)	;;
-	pypdp)	;;
 	pdp)	;;
 	pap)	;;
 	console)	;;
