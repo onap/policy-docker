@@ -34,7 +34,7 @@ services:
        - pap
       hostname: pdp
       ports:
-       - "10.0.6.1:8081:8081"
+       - "8081:8081"
       command: pdp
       volumes:
        - ./config/pe:/tmp/policy-install/config
