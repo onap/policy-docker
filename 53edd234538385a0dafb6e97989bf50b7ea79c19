@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da141535_d5ff5900",
+        "filename": "docker-compose.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2017-05-24T17:57:35Z",
+      "side": 1,
+      "message": "why is it necessary to open this port?   Is it secured with at least authentication?",
+      "revId": "53edd234538385a0dafb6e97989bf50b7ea79c19",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
