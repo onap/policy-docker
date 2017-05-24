@@ -9,8 +9,7 @@ echo "Pushing default policies"
 
 curl -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHJlc3Q6M2MwbXBVI2gwMUBOMWMz' --header 'Environment: TEST' -d '{
   "pdpGroup": "default",
-  "policyName": "vFirewall",
-  "policyScope": "com",
+  "policyName": "com.vFirewall",
   "policyType": "MicroService"
 }' 'http://pdp:8081/pdp/api/pushPolicy'
 
@@ -18,16 +17,14 @@ sleep 2
 
 curl -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHJlc3Q6M2MwbXBVI2gwMUBOMWMz' --header 'Environment: TEST' -d '{
   "pdpGroup": "default",
-  "policyName": "vLoadBalancer",
-  "policyScope": "com",
+  "policyName": "com.vLoadBalancer",
   "policyType": "MicroService"
 }' 'http://pdp:8081/pdp/api/pushPolicy' 
 
 sleep 2
 curl -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHJlc3Q6M2MwbXBVI2gwMUBOMWMz' --header 'Environment: TEST' -d '{
   "pdpGroup": "default",
-  "policyName": "BRMSParamvLBDemoPolicy",
-  "policyScope": "com",
+  "policyName": "com.BRMSParamvLBDemoPolicy",
   "policyType": "BRMS_Param"
 }' 'http://pdp:8081/pdp/api/pushPolicy'
 
@@ -35,8 +32,7 @@ sleep 2
 
 curl -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHJlc3Q6M2MwbXBVI2gwMUBOMWMz' --header 'Environment: TEST' -d '{
   "pdpGroup": "default",
-  "policyName": "BRMSParamvFWDemoPolicy",
-  "policyScope": "com",
+  "policyName": "com.BRMSParamvFWDemoPolicy",
   "policyType": "BRMS_Param"
 }' 'http://pdp:8081/pdp/api/pushPolicy'
 
@@ -59,8 +55,7 @@ curl -X DELETE --header 'Content-Type: application/json' --header 'Accept: text/
 sleep 2
 curl -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHJlc3Q6M2MwbXBVI2gwMUBOMWMz' --header 'Environment: TEST' -d '{
   "pdpGroup": "default",
-  "policyName": "BRMSParamvLBDemoPolicy",
-  "policyScope": "com",
+  "policyName": "com.BRMSParamvLBDemoPolicy",
   "policyType": "BRMS_Param"
 }' 'http://pdp:8081/pdp/api/pushPolicy'
 
@@ -68,8 +63,7 @@ sleep 2
 
 curl -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHJlc3Q6M2MwbXBVI2gwMUBOMWMz' --header 'Environment: TEST' -d '{
   "pdpGroup": "default",
-  "policyName": "BRMSParamvFWDemoPolicy",
-  "policyScope": "com",
+  "policyName": "com.BRMSParamvFWDemoPolicy",
   "policyType": "BRMS_Param"
 }' 'http://pdp:8081/pdp/api/pushPolicy'
 

@@ -9,7 +9,7 @@ container=$1
 
 case $container in
 pap)
-	comps="base pap paplp console mysql"
+	comps="base pap paplp console mysql elk"
 	;;
 pdp)
 	comps="base pdp pdplp"
