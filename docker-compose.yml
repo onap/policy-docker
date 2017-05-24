@@ -24,6 +24,7 @@ services:
       ports:
        - "8443:8443"
        - "9091:9091"
+       - "9200:9200"
       command: pap
       volumes:
        - ./config/pe:/tmp/policy-install/config

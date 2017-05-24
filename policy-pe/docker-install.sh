@@ -9,8 +9,8 @@
 function usage() {
 	echo -n "syntax: $(basename $0) "
 	echo -n "--debug ("
-	echo -n "[--install base|pap|pdp|console|mysql|brmsgw|paplp|pdplp] | "
-	echo -n "[--configure base|pap|pdp|console|mysql|brmsgw|paplp|pdplp] | "
+	echo -n "[--install base|pap|pdp|console|mysql|elk|brmsgw|paplp|pdplp] | "
+	echo -n "[--configure base|pap|pdp|console|mysql|elk|brmsgw|paplp|pdplp] | "
 }
 
 function check_java() {
@@ -432,6 +432,65 @@ function configure_mysql() {
 	# nothing to do
 }
 
+# This function installs elk related shell scripts and sql files in the proper locations
+# under $POLICY_HOME. It also adds the Elk to the PATH based on configuration.
+#
+function configure_elk() {
+	if [[ $DEBUG == y ]]; then
+		echo "-- ${FUNCNAME[0]} $@ --"
+		set -x
+	fi
+	
+	# nothing to do
+}
+
+function install_elk() {
+	if [[ $DEBUG == y ]]; then
+		echo "-- ${FUNCNAME[0]} $@ --"
+		set -x
+	fi
+	
+	if [[ -f "${HOME}/.bash_profile" ]]; then
+		source "${HOME}/.bash_profile"
+	fi
+	
+	if [[ -f "${HOME}/.profile" ]]; then
+		source "${HOME}/.profile"
+	fi
+	
+	ELK_TARGET_INSTALL_DIR=${POLICY_HOME}/elk
+	
+	if [[ -d ${ELK_TARGET_INSTALL_DIR} ]]; then
+		echo "WARNING: ${ELK_TARGET_INSTALL_DIR} exists."
+		return 1
+	fi
+	
+	ELK_TEMP="${POLICY_HOME}/tmp/elk"
+	
+	/bin/mkdir -p "${ELK_TEMP}" > /dev/null 2>&1
+	curl -L -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.4.0.tar.gz
+	/bin/mkdir -p "${POLICY_HOME}/servers/elk/" > /dev/null 2>&1
+	$ tar xvzf elasticsearch-5.4.0.tar.gz -C "${ELK_TARGET_INSTALL_DIR}"
+	/bin/rm -fr "${ELK_TEMP}"
+	
+	/bin/cp "${POLICY_HOME}"/install/elk/bin/* "${POLICY_HOME}/bin"	
+	/bin/cp -f "${POLICY_HOME}"/install/elk/config/* "${ELK_TARGET_INSTALL_DIR}/config"
+	
+	/bin/cp -f "${POLICY_HOME}/install/elk/init.d/elkd" "${POLICY_HOME}/etc/init.d/elk"
+	
+	install_prereqs "${COMPONENT_TYPE}.conf"
+	
+	/bin/sed -i -e "s!\${{POLICY_HOME}}!${POLICY_HOME}!g" \
+		-e "s!\${{FQDN}}!${FQDN}!g" \
+		-e "s!\${{ELK_JMX_PORT}}!${ELK_JMX_PORT}!g" \
+		"${ELK_TARGET_INSTALL_DIR}"/config/* "${POLICY_HOME}/etc/init.d/elk" > /dev/null 2>&1
+		
+
+	list_unexpanded_files ${POLICY_HOME}
+		
+	return $?
+}
+
 # This function installs brmsgw related shell scripts and config files in the proper
 # locations under $POLICY_HOME. 
 #
@@ -546,11 +605,12 @@ case $COMPONENT_TYPE in
 	pap)	;;
 	console)	;;
 	mysql)	;;
+	elk)    ;;
 	brmsgw)	;;
 	paplp)	;;
 	pdplp)	;;
 	skip)	;;
-	*)		echo "invalid component type (${COMPONENT_TYPE}): must be in {base|pdp|pap|console|mysql|brmsgw|paplp|pdplp}";
+	*)		echo "invalid component type (${COMPONENT_TYPE}): must be in {base|pdp|pap|console|mysql|elk|brmsgw|paplp|pdplp}";
 			usage
 			exit 1
 			;;
@@ -615,6 +675,9 @@ if [[ ${OPERATION} == install ]]; then
 		mysql)
 			install_mysql
 			;;
+		elk)
+			install_elk
+			;;		
 		brmsgw)
 			install_brmsgw
 			;;
@@ -622,7 +685,7 @@ if [[ ${OPERATION} == install ]]; then
 			install_logparser
 			;;
 		*)		
-			echo "invalid component type (${COMPONENT_TYPE}): must be in {base|pdp|pap|console|mysql|brmsgw|paplp|pdplp}";
+			echo "invalid component type (${COMPONENT_TYPE}): must be in {base|pdp|pap|console|mysql|elk|brmsgw|paplp|pdplp}";
 			usage
 			exit 1
 			;;
@@ -649,6 +712,9 @@ if [[ ${OPERATION} == configure ]]; then
 		mysql)
 			configure_mysql
 			;;
+		elk)
+			configure_elk
+			;;	
 		brmsgw)
 			configure_component "${COMPONENT_TYPE}.conf" "${POLICY_HOME}/servers/${COMPONENT_TYPE}/"
 			;;
@@ -656,7 +722,7 @@ if [[ ${OPERATION} == configure ]]; then
 			configure_component "${COMPONENT_TYPE}.conf" "${POLICY_HOME}/servers/${COMPONENT_TYPE}/"
 			;;
 		*)		
-			echo "invalid component type (${COMPONENT_TYPE}): must be in {base|pdp|pap|console|mysql|brmsgw|paplp|pdplp}";
+			echo "invalid component type (${COMPONENT_TYPE}): must be in {base|pdp|pap|console|mysql|elk|brmsgw|paplp|pdplp}";
 			usage
 			exit 1
 			;;
