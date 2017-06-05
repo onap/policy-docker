@@ -35,11 +35,8 @@ else
 
 	# wait for DB up
 	./wait-for-port.sh mariadb 3306
-	# now that DB is up, invoke database upgrade
-	# (which does nothing if the db is already up-to-date)
-	dbuser=$(echo $(grep '^JDBC_USER=' base.conf | cut -f2 -d=))
-	dbpw=$(echo $(grep '^JDBC_PASSWORD=' base.conf | cut -f2 -d=))
-	db_upgrade_droolspdp_remote.sh $dbuser $dbpw mariadb
+	# now that DB is up, invoke database upgrade:
+	# sql provisioning scripts should be invoked here.
 fi
 
 echo "Starting processes"
