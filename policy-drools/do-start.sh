@@ -37,6 +37,8 @@ else
 	./wait-for-port.sh mariadb 3306
 	# now that DB is up, invoke database upgrade:
 	# sql provisioning scripts should be invoked here.
+
+	pip install http-prompt
 fi
 
 echo "Starting processes"
