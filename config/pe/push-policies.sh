@@ -7,6 +7,7 @@ echo "Pushing default policies"
 # so for the BRMS policies we will do a push, then delete from the pdp group, then push again.
 # Second push should be successful.
 
+echo "pushPolicy : PUT : com.vFirewall"
 curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
   "pdpGroup": "default",
   "policyName": "com.vFirewall",
@@ -15,6 +16,7 @@ curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Acce
 
 sleep 2
 
+echo "pushPolicy : PUT : com.vLoadBalancer"
 curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
   "pdpGroup": "default",
   "policyName": "com.vLoadBalancer",
@@ -22,6 +24,8 @@ curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Acce
 }' 'http://pdp:8081/pdp/api/pushPolicy' 
 
 sleep 2
+
+echo "pushPolicy : PUT : com.BRMSParamvLBDemoPolicy"
 curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
   "pdpGroup": "default",
   "policyName": "com.BRMSParamvLBDemoPolicy",
@@ -30,6 +34,7 @@ curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Acce
 
 sleep 2
 
+echo "pushPolicy : PUT : com.BRMSParamvFWDemoPolicy"
 curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
   "pdpGroup": "default",
   "policyName": "com.BRMSParamvFWDemoPolicy",
@@ -38,6 +43,7 @@ curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Acce
 
 sleep 2
 
+echo "pushPolicy : DELETE : com.BRMSParamvFWDemoPolicy.1.xml"
 curl -v --silent -X DELETE --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
 "pdpGroup": "default",
 "policyComponent": "PDP",
@@ -45,7 +51,9 @@ curl -v --silent -X DELETE --header 'Content-Type: application/json' --header 'A
 }' 'http://pdp:8081/pdp/api/deletePolicy'
 
 
+sleep 2
 
+echo "pushPolicy : DELETE : com.BRMSParamvLBDemoPolicy.1.xml"
 curl -v --silent -X DELETE --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
 "pdpGroup": "default",
 "policyComponent": "PDP",
@@ -53,6 +61,8 @@ curl -v --silent -X DELETE --header 'Content-Type: application/json' --header 'A
 }' 'http://pdp:8081/pdp/api/deletePolicy'
 
 sleep 2
+
+echo "pushPolicy : PUT : com.BRMSParamvLBDemoPolicy"
 curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
   "pdpGroup": "default",
   "policyName": "com.BRMSParamvLBDemoPolicy",
@@ -61,6 +71,7 @@ curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Acce
 
 sleep 2
 
+echo "pushPolicy : PUT : com.BRMSParamvFWDemoPolicy"
 curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
   "pdpGroup": "default",
   "policyName": "com.BRMSParamvFWDemoPolicy",

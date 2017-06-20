@@ -1,5 +1,6 @@
 FROM onap/policy/policy-base
 
+RUN pip install http-prompt
 RUN mkdir -p /opt/app/policy /tmp/policy-install && chown policy /opt/app/policy /tmp/policy-install
 WORKDIR /tmp/policy-install
 
