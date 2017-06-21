@@ -47,7 +47,8 @@ echo "pushPolicy : DELETE : com.BRMSParamvFWDemoPolicy.1.xml"
 curl -v --silent -X DELETE --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
 "pdpGroup": "default",
 "policyComponent": "PDP",
-"policyName": "com.Config_BRMS_Param_BRMSParamvFWDemoPolicy.1.xml"
+"policyName": "com.BRMSParamvFWDemoPolicy",
+"policyType": "BRMS_Param"
 }' 'http://pdp:8081/pdp/api/deletePolicy'
 
 
@@ -57,7 +58,8 @@ echo "pushPolicy : DELETE : com.BRMSParamvLBDemoPolicy.1.xml"
 curl -v --silent -X DELETE --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
 "pdpGroup": "default",
 "policyComponent": "PDP",
-"policyName": "com.Config_BRMS_Param_BRMSParamvLBDemoPolicy.1.xml"
+"policyName": "com.BRMSParamvLBDemoPolicy",
+"policyType": "BRMS_Param"
 }' 'http://pdp:8081/pdp/api/deletePolicy'
 
 sleep 2
