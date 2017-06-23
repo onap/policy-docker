@@ -584,8 +584,6 @@ function install_controller()
 		fi
 	done
 
-	mv config/makefile .
-
 	# append properties for rules artifact to server properties
 	cat >>config/server.properties <<EOF
 
