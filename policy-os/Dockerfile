@@ -1,5 +1,11 @@
 FROM ubuntu:14.04
 
+ARG HTTP_PROXY=${HTTP_PROXY}
+ARG HTTPS_PROXY=${HTTPS_PROXY}
+
+ENV http_proxy $HTTP_PROXY
+ENV https_proxy $HTTPS_PROXY
+
 RUN \
 	apt-get clean && \
 	apt-get update && \
