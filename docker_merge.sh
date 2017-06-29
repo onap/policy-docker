@@ -5,6 +5,14 @@ DOCKER_REPOSITORY=nexus3.onap.org:10003
 MVN_VERSION=$(cat target/version)
 MVN_MAJMIN_VERSION=$(cut -f 1,2 -d . target/version)
 TIMESTAMP=$(date -u +%Y%m%dT%H%M%S)
+PROXY_ARGS=""
+
+if [ $HTTP_PROXY ]; then
+    PROXY_ARGS+="--build-arg HTTP_PROXY=${HTTP_PROXY}"
+fi
+if [ $HTTPS_PROXY ]; then
+    PROXY_ARGS+=" --build-arg HTTPS_PROXY=${HTTPS_PROXY}"
+fi
 
 echo $DOCKER_REPOSITORY
 echo $MVN_VERSION
@@ -55,7 +63,7 @@ for image in policy-os policy-nexus policy-db policy-base policy-drools policy-p
 
     echo $TAGS
 
-    docker build --quiet $TAGS target/$image
+    docker build --quiet ${PROXY_ARGS} $TAGS target/$image
 
     if [ $? -ne 0 ]
     then
