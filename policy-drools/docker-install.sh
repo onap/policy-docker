@@ -818,7 +818,7 @@ function do_install()
 	# install features
 	SOURCE_DIR=$PWD
 	cd $POLICY_HOME
-	jar xf ${SOURCE_DIR}/policy-healthcheck-*.zip
+	jar xf ${SOURCE_DIR}/feature-healthcheck-*.zip
 	cd ${SOURCE_DIR}
 
 	installArtifacts
