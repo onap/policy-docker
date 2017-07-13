@@ -24,7 +24,7 @@ else
 	cp config/policy-keystore $POLICY_HOME/etc/ssl
 
 	# this should probably be done by install.sh
-	mvn install:install-file archetype:crawl -Dfile="archetype-closedloop-demo-rules-1.0.0-SNAPSHOT.jar" -DgroupId=org.openecomp.policy.archetype -DartifactId=archetype-closedloop-demo-rules -Dversion="1.0.0-SNAPSHOT" -Dpackaging=jar -DgeneratePom=true -DupdateReleaseInfo=true
+	mvn install:install-file archetype:crawl -Dfile="archetype-closedloop-demo-rules-1.0.0-SNAPSHOT.jar" -DgroupId=org.onap.policy.archetype -DartifactId=archetype-closedloop-demo-rules -Dversion="1.0.0-SNAPSHOT" -Dpackaging=jar -DgeneratePom=true -DupdateReleaseInfo=true
 
 	if [[ -x config/drools-tweaks.sh ]] ; then
 		echo "Executing tweaks"

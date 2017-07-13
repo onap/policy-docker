@@ -129,7 +129,7 @@
 							<overWriteSnapshots>true</overWriteSnapshots>
 							<artifactItems>
 								<artifactItem>
-									<groupId>org.openecomp.policy.drools-applications</groupId>
+									<groupId>org.onap.policy.drools-applications</groupId>
 									<artifactId>apps</artifactId>
 									<version>${project.version}</version>
 									<type>zip</type>
