@@ -331,7 +331,6 @@ function configure_base() {
 		echo "${PROFILE_LINE}" >> "${HOME}/.profile"
 	fi
 
-	
 	. "${POLICY_HOME}/etc/profile.d/env.sh"
 	
 	cat "${POLICY_HOME}"/etc/cron.d/* | crontab
@@ -458,6 +457,8 @@ function install_base() {
 	fi
 	
 	configure_base
+	
+	cp "${BASE_CONF}" "${POLICY_HOME}"/etc/profile.d
 	
 #	if ! create_keystore; then
 #		echo "error: aborting base installation: creating keystore"
@@ -797,6 +798,31 @@ function installArtifacts
 	fi
 }
 
+function installFeatures
+{
+	if [[ $DEBUG == y ]]; then
+		echo "-- ${FUNCNAME[0]} $@ --"
+		set -x
+	fi
+	
+	FEATURES_HOME="${POLICY_HOME}/features"
+	mkdir -p "${FEATURES_HOME}" > /dev/null 2>&1
+	if [[ -d "${FEATURES_HOME}" && -x "${FEATURES_HOME}" ]]; then
+		SOURCE_DIR=$PWD
+		for feature in feature-*.zip ; do
+			name="${feature#feature-}"
+			name="${name%-[0-9]*\.zip}"
+			mkdir -p "${FEATURES_HOME}/${name}" > /dev/null 2>&1
+			(cd "${FEATURES_HOME}/${name}"; jar xf ${SOURCE_DIR}/${feature})
+		done
+		
+		configure_component "${BASE_CONF}" "${FEATURES_HOME}"
+	else
+		echo "error: aborting ${FEATURES_HOME} is not accessible"
+		exit 1
+	fi
+}
+
 function do_install()
 {
 	if [[ $DEBUG == y ]]; then
@@ -815,21 +841,15 @@ function do_install()
 	COMPONENT_TYPE=policy-management
 	install_controller
 	
-	# install features
-	SOURCE_DIR=$PWD
-	cd $POLICY_HOME
-	jar xf ${SOURCE_DIR}/feature-healthcheck-*.zip
-	cd ${SOURCE_DIR}
-
+	installFeatures
 	installArtifacts
-
+	
 	echo
 	echo "Installation complete"
 	echo "Please logoff and login again to update shell environment"
 	
 }
 
-DEBUG=n
 export POLICY_USER=$(/usr/bin/id -un)
 export POLICY_GROUP=$POLICY_USER
 	
