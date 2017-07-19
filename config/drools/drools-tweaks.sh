@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # changes for health check
-options enable feature-healthcheck
+${POLICY_HOME}/bin/features enable healthcheck
 sedArgs=("-i")
 while read var value ; do
 	if [[ "${var}" == "" ]] ; then
