@@ -11,12 +11,14 @@ do
     cd $HOME
     git clone http://gerrit.onap.org/r/policy/$comp
     cd $comp
+    /vagrant/update.sh $comp
     mvn clean install
 done
 
 cd $HOME
 git clone http://gerrit.onap.org/r/policy/docker
 cd docker
+/vagrant/update.sh docker
 mvn prepare-package
 cp -r target/policy-pe/* policy-pe/
 cp -r target/policy-drools/* policy-drools
