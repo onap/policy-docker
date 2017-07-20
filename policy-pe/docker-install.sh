@@ -120,7 +120,7 @@ function tomcat_component() {
 		 "${POLICY_HOME}/servers/${COMPONENT_TYPE}/webapps/host-manager"
 	
 	if [[ ${COMPONENT_TYPE} == console ]]; then
-		install_ecomp_portal_settings
+		install_onap_portal_settings
 	fi
 
 	return 0
@@ -188,17 +188,17 @@ function configure_component() {
 	list_unexpanded_files ${POLICY_HOME}
 }
 
-function install_ecomp_portal_settings() {
-	echo "Install ecomp portal settings"
+function install_onap_portal_settings() {
+	echo "Install onap portal settings"
 
-	# unpack ecomp war file
-	mkdir -p "${POLICY_HOME}"/servers/console/webapps/ecomp
-	cd "${POLICY_HOME}"/servers/console/webapps/ecomp
-	unzip -q ../ecomp.war
+	# unpack onap war file
+	mkdir -p "${POLICY_HOME}"/servers/console/webapps/onap
+	cd "${POLICY_HOME}"/servers/console/webapps/onap
+	unzip -q ../onap.war
 	cd ${INSTALL_DIR}
 
 	# copy over the configured settings
-	/bin/cp -fr "${POLICY_HOME}"/install/servers/ecomp/* "${POLICY_HOME}/servers/console/webapps/ecomp"
+	/bin/cp -fr "${POLICY_HOME}"/install/servers/onap/* "${POLICY_HOME}/servers/console/webapps/onap"
 }
 
 function check_r_file() {

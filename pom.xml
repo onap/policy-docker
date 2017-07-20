@@ -1,6 +1,6 @@
 <!--
   ============LICENSE_START=======================================================
-  ECOMP Policy Engine - Docker files
+  ONAP Policy Engine - Docker files
   ================================================================================
   Copyright (C) 2017 AT&T Intellectual Property. All rights reserved.
   ================================================================================
@@ -24,12 +24,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 
-	<groupId>org.openecomp.policy.docker</groupId>
+	<groupId>org.onap.policy.docker</groupId>
 	<artifactId>docker</artifactId>
 	<version>1.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Policy Engine - Docker build</name>
-	<description>OpenECOMP Policy Docker Build</description>
+	<description>ONAP Policy Docker Build</description>
 
 	<properties>
 		<nexusproxy>https://nexus.onap.org</nexusproxy>
@@ -40,31 +40,31 @@
 
 	<repositories>
 		<repository>
-			<id>ecomp-releases</id>
-			<name>OpenECOMP Release Repository</name>
+			<id>onap-releases</id>
+			<name>ONAP Release Repository</name>
 			<url>${nexusproxy}/${releases.path}</url>
 		</repository>
 		<repository>
-			<id>ecomp-staging</id>
-			<name>OpenECOMP Staging Repository</name>
+			<id>onap-staging</id>
+			<name>ONAP Staging Repository</name>
 			<url>${nexusproxy}/${staging.path}</url>
 		</repository>
 		<repository>
-			<id>ecomp-snapshot</id>
-			<name>OpenECOMP Snapshot Repository</name>
+			<id>onap-snapshot</id>
+			<name>ONAP Snapshot Repository</name>
 			<url>${nexusproxy}/${snapshots.path}</url>
 		</repository>
 	</repositories>
 
 	<distributionManagement>
 		<repository>
-			<id>ecomp-releases</id>
-			<name>OpenECOMP Release Repository</name>
+			<id>onap-releases</id>
+			<name>ONAP Release Repository</name>
 			<url>${nexusproxy}/${releases.path}</url>
 		</repository>
 		<snapshotRepository>
-			<id>ecomp-snapshots</id>
-			<name>OpenECOMP Snapshot Repository</name>
+			<id>onap-snapshots</id>
+			<name>ONAP Snapshot Repository</name>
 			<url>${nexusproxy}/${snapshots.path}</url>
 		</snapshotRepository>
 	</distributionManagement>
@@ -87,7 +87,7 @@
 							<overWriteSnapshots>true</overWriteSnapshots>
 							<artifactItems>
 								<artifactItem>
-									<groupId>org.openecomp.policy.engine</groupId>
+									<groupId>org.onap.policy.engine</groupId>
 									<artifactId>install</artifactId>
 									<version>${project.version}</version>
 									<type>zip</type>
@@ -108,7 +108,7 @@
 							<overWriteSnapshots>true</overWriteSnapshots>
 							<artifactItems>
 								<artifactItem>
-									<groupId>org.openecomp.policy.drools-pdp</groupId>
+									<groupId>org.onap.policy.drools-pdp</groupId>
 									<artifactId>install-drools</artifactId>
 									<version>${project.version}</version>
 									<type>zip</type>
