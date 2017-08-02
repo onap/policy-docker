@@ -814,8 +814,17 @@ function installFeatures
 			name="${name%-[0-9]*\.zip}"
 			mkdir -p "${FEATURES_HOME}/${name}" > /dev/null 2>&1
 			(cd "${FEATURES_HOME}/${name}"; jar xf ${SOURCE_DIR}/${feature})
+			featureConf="feature-${name}.conf"
+			if [[ -r "${featureConf}" ]]; then
+				configure_component "${featureConf}" "${FEATURES_HOME}"
+				cp "${featureConf}" "${POLICY_HOME}"/etc/profile.d
+				echo "feature ${name} has been installed (configuration present)"
+			else
+				echo "feature ${name} has been installed (no configuration present)"
+			fi
 		done
 		
+		echo "applying base configuration to features"
 		configure_component "${BASE_CONF}" "${FEATURES_HOME}"
 	else
 		echo "error: aborting ${FEATURES_HOME} is not accessible"
