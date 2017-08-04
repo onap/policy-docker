@@ -144,7 +144,7 @@ function configure_component() {
 		set -x
 	fi
 
-	local CONF_FILE COMPONENT_ROOT_DIR name value
+	local CONF_FILE COMPONENT_ROOT_DIR SED_LINE SED_FILES name value
 		
 	CONF_FILE=$1
 	COMPONENT_ROOT_DIR=$2
@@ -157,16 +157,15 @@ function configure_component() {
 	SED_LINE+=" -e 's!\${{JAVA_HOME}}!${JAVA_HOME}!g' "
 		
 	while read line || [ -n "${line}" ]; do
-        if [[ -n $line ]] && [[ $line != *#* ]]; then
+        if [[ -n ${line} ]] && [[ ${line:0:1} != \# ]]; then
 	        name=$(echo "${line%%=*}")
 	        value=$(echo "${line#*=}")
 	        # escape ampersand so that sed does not replace it with the search string
-            value=${value//&/\\&}
+		value=$(echo "${value}" | sed -e 's/[\/&]/\\&/g')
 	    	if [[ -z ${name} ]] || [[ -z ${value} ]]; then
 	        	echo "WARNING: ${line} missing name or value"
 	    	fi
-	    	SED_LINE+=" -e 's!\${{${name}}}!${value}!g' "
-	        
+	    	SED_LINE+=" -e 's/\${{${name}}}/${value}/g' "
         fi
 	done < "$CONF_FILE"
 	
