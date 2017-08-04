@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a1a2d67_ad45d1b4",
+        "filename": "policy-drools/docker-install.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 743
+      },
+      "writtenOn": "2017-08-04T08:10:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure why these changes are so urgent, but shouldn\u0027t \u0027SED_LINE\u0027 and \u0027SED_FILE\u0027 be added to the list?\n\nIt is also possible to mark variables \u0027local\u0027 when you first set them:\n\nlocal CONF_FILE\u003d$1\nlocal COMPONENT_ROOT_DIR\u003d$2",
+      "revId": "013b0e7f66eabb03fc238f17917579abfab3aade",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
