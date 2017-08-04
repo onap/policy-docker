@@ -41,6 +41,8 @@ function POLICY_HOME() {
 		set -x
 	fi
 	
+	local POLICY_HOME_ABS
+	
 	if [[ -z ${POLICY_HOME} ]]; then
 		echo "error: aborting installation: the installation directory POLICY_HOME must be set"
 		exit 1
@@ -65,6 +67,8 @@ function check_java() {
 		echo "-- ${FUNCNAME[0]} $@ --"
 		set -x
 	fi
+	
+	local TARGET_JAVA_VERSION INSTALLED_JAVA_VERSION
 	
 	TARGET_JAVA_VERSION=$1
 	
@@ -103,6 +107,8 @@ function process_configuration() {
 		echo "-- ${FUNCNAME[0]} $@ --"
 		set -x
 	fi
+
+	local CONF_FILE name value
 	
 	CONF_FILE=$1
 	while read line || [ -n "${line}" ]; do
@@ -137,6 +143,8 @@ function configure_component() {
 		echo "-- ${FUNCNAME[0]} $@ --"
 		set -x
 	fi
+
+	local CONF_FILE COMPONENT_ROOT_DIR name value
 		
 	CONF_FILE=$1
 	COMPONENT_ROOT_DIR=$2
@@ -266,6 +274,8 @@ function install_prereqs() {
 		echo "-- ${FUNCNAME[0]} $@ --"
 		set -x
 	fi
+
+	local CONF_FILE HOME_OWNER
 	
 	CONF_FILE=$1
 	
@@ -305,6 +315,8 @@ function configure_base() {
 		echo "-- ${FUNCNAME[0]} $@ --"
 		set -x
 	fi
+
+	local BASH_PROFILE_LINE PROFILE_LINE
 	
 	# check if fqdn is set in base.conf and use that value if set
 	if [[ -z ${INSTALL_FQDN} ]]
@@ -341,6 +353,8 @@ function install_base() {
 		echo "-- ${FUNCNAME[0]} $@ --"
 		set -x
 	fi
+
+	local POLICY_HOME_CONTENTS BASE_TGZ BASEX_TGZ BASH_PROFILE_LINE
 	
 	install_prereqs "${BASE_CONF}"
 
@@ -439,7 +453,6 @@ function install_base() {
 			
 #	chmod -R 755 ${POLICY_HOME}/nagios > /dev/null 2>&1
 	
-	HOME_M2=$HOME/.m2
 	if [[ -d $HOME_M2 ]]; then
 		echo "Renaming existing $HOME_M2 to $HOME/m2.$TIMESTAMP"
 		mv $HOME_M2 $HOME/m2.$TIMESTAMP
@@ -494,6 +507,8 @@ function install_controller()
 		echo "error: aborting installation: ${POLICY_HOME}/etc/profile.d/env.sh is not accessible"
 		exit 1	
 	fi
+
+	local CONTROLLER_CONF CONTROLLER_ZIP RULES_JAR SOURCE_DIR CONTROLLER_DIR AAAA BBBB PORT UTOPIC ARTIFACT_VERSION
 	
 	CONTROLLER_CONF=$COMPONENT_TYPE.conf
 	install_prereqs "${CONTROLLER_CONF}"
@@ -625,6 +640,8 @@ function update_monitor() {
 		echo "-- ${FUNCNAME[0]} $@ --"
 		set -x
 	fi
+
+	local NAME lastline
 	
 	NAME=$1
 	
@@ -804,8 +821,9 @@ function installFeatures
 		echo "-- ${FUNCNAME[0]} $@ --"
 		set -x
 	fi
+
+	local name featureConf
 	
-	FEATURES_HOME="${POLICY_HOME}/features"
 	mkdir -p "${FEATURES_HOME}" > /dev/null 2>&1
 	if [[ -d "${FEATURES_HOME}" && -x "${FEATURES_HOME}" ]]; then
 		SOURCE_DIR=$PWD
@@ -873,5 +891,7 @@ LOGFILE=$PWD/install.log.$TIMESTAMP
 
 OPERATION=install
 BASE_CONF=base.conf
+HOME_M2=$HOME/.m2
+FEATURES_HOME="${POLICY_HOME}/features"
 
 do_install 2>&1 | tee $LOGFILE
