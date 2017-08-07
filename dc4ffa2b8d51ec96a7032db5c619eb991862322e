@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a1a2d67_7c09a894",
+        "filename": "policy-drools/docker-install.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 743
+      },
+      "writtenOn": "2017-08-07T12:05:29Z",
+      "side": 1,
+      "message": "I have started using a control character as a delimiter when needed in order to avoid this kind of problem:\n\nd\u003d$\u0027\\001\u0027\nsedArgs\u003d(\"sed\" \"-i\")\n   . . .\nsedArgs+\u003d(\"-e\" \"s${d}\\${{${name}}}${d}${value}${d}g\")\n   . . .\n\"${sedArgs[@]}\" ${files}\n\nNote that this is building an array rather than a single string -- this still works if \u0027value\u0027 has spaces or tabs.",
+      "revId": "dc4ffa2b8d51ec96a7032db5c619eb991862322e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
