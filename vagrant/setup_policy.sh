@@ -6,6 +6,9 @@ sudo apt-get update -y
 sudo apt-get install -y maven openjdk-8-jdk npm python-pip docker.io
 sudo pip install docker-compose
 
+git clone http://gerrit.onap.org/r/oparent
+cp oparent/settings.xml $HOME/.m2
+
 for comp in common drools-pdp drools-applications engine
 do
     cd $HOME

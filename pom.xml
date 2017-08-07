@@ -23,6 +23,12 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
+	<parent>
+		<groupId>org.onap.oparent</groupId>
+		<artifactId>oparent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath/>
+	</parent>
 
 	<groupId>org.onap.policy.docker</groupId>
 	<artifactId>docker</artifactId>
@@ -30,44 +36,6 @@
 	<packaging>pom</packaging>
 	<name>Policy Engine - Docker build</name>
 	<description>ONAP Policy Docker Build</description>
-
-	<properties>
-		<nexusproxy>https://nexus.onap.org</nexusproxy>
-		<releases.path>content/repositories/releases/</releases.path>
-		<snapshots.path>content/repositories/snapshots/</snapshots.path>
-		<staging.path>content/repositories/staging/</staging.path>
-	</properties>
-
-	<repositories>
-		<repository>
-			<id>ecomp-releases</id>
-			<name>ONAP Release Repository</name>
-			<url>${nexusproxy}/${releases.path}</url>
-		</repository>
-		<repository>
-			<id>ecomp-staging</id>
-			<name>ONAP Staging Repository</name>
-			<url>${nexusproxy}/${staging.path}</url>
-		</repository>
-		<repository>
-			<id>ecomp-snapshot</id>
-			<name>ONAP Snapshot Repository</name>
-			<url>${nexusproxy}/${snapshots.path}</url>
-		</repository>
-	</repositories>
-
-	<distributionManagement>
-		<repository>
-			<id>ecomp-releases</id>
-			<name>ONAP Release Repository</name>
-			<url>${nexusproxy}/${releases.path}</url>
-		</repository>
-		<snapshotRepository>
-			<id>ecomp-snapshots</id>
-			<name>ONAP Snapshot Repository</name>
-			<url>${nexusproxy}/${snapshots.path}</url>
-		</snapshotRepository>
-	</distributionManagement>
 
 	<build>
 		<plugins>
