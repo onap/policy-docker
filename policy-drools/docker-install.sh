@@ -822,6 +822,8 @@ function installFeatures
 	fi
 
 	local name featureConf
+	export FEATURES_HOME="${POLICY_HOME}/${FEATURES_DIR}"
+	echo "FEATURES_HOME is ${FEATURES_HOME}"
 	
 	mkdir -p "${FEATURES_HOME}" > /dev/null 2>&1
 	if [[ -d "${FEATURES_HOME}" && -x "${FEATURES_HOME}" ]]; then
@@ -891,6 +893,6 @@ LOGFILE=$PWD/install.log.$TIMESTAMP
 OPERATION=install
 BASE_CONF=base.conf
 HOME_M2=$HOME/.m2
-FEATURES_HOME="${POLICY_HOME}/features"
+FEATURES_DIR="features"
 
 do_install 2>&1 | tee $LOGFILE
