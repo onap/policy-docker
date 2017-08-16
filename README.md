@@ -1,6 +1,6 @@
 This source repository contains the files for building the ONAP Policy Engine Docker images.
 
-To build it using Maven 3, first build 'policy-common-modules', 'policy-engine', 'policy-drools-pdp', and 'policy-drools-applications' repositories, and then run: mvn prepare-package. This will pull the installation zip files needed for building the policy-pe and policy-drools Docker images into the target directory.  It will not actually build the docker images; the following additional steps are needed to accomplish this:
+To build it using Maven 3, first build 'policy/common', 'policy/engine', 'policy/drools-pdp', and 'policy/drools-applications' repositories, and then run: mvn prepare-package. This will pull the installation zip files needed for building the policy-pe and policy-drools Docker images into the target directory.  It will not actually build the docker images; the following additional steps are needed to accomplish this:
 
 - Copy the files under policy-pe to target/policy-pe
 - Copy the files under policy-drools to target/policy-drools
