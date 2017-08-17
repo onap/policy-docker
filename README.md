@@ -12,10 +12,9 @@ To build it using Maven 3, first build 'policy/common', 'policy/engine', 'policy
 	target/policy-pe
 	target/policy-drools
 
-In addition, the 'config' dirctory contains configuration files that are read during the startup of the containers; this directory is referenced by the docker-compose.yml file.
+In addition, the 'config' directory contains configuration files that are read during the startup of the containers; this directory is referenced by the docker-compose.yml file.
 
 If you want to call the docker-compose, the following needs to be setup before doing so:
 
-chmod +x config/drools/drools-tweaks.sh
 IP_ADDRESS=$(ifconfig eth0 | grep "inet addr" | tr -s ' ' | cut -d' ' -f3 | cut -d':' -f2)
 echo $IP_ADDRESS > config/pe/ip_addr.txt
