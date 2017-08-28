@@ -157,11 +157,11 @@ function configure_component() {
 	SED_LINE+=" -e 's!\${{JAVA_HOME}}!${JAVA_HOME}!g' "
 		
 	while read line || [ -n "${line}" ]; do
-        if [[ -n ${line} ]] && [[ ${line:0:1} != \# ]]; then
-	        name=$(echo "${line%%=*}")
-	        value=$(echo "${line#*=}")
-	        # escape ampersand so that sed does not replace it with the search string
-		value=$(echo "${value}" | sed -e 's/[\/&]/\\&/g')
+		if [[ -n ${line} ]] && [[ ${line:0:1} != \# ]]; then
+			name=$(echo "${line%%=*}")
+			value=$(echo "${line#*=}")
+			# escape ampersand so that sed does not replace it with the search string
+			value=$(echo "${value}" | sed -e 's/[\/&]/\\&/g')
 	    	if [[ -z ${name} ]] || [[ -z ${value} ]]; then
 	        	echo "WARNING: ${line} missing name or value"
 	    	fi
@@ -170,14 +170,14 @@ function configure_component() {
 	done < "$CONF_FILE"
 	
 	SED_FILES=""
-	for sed_file in $(find "${COMPONENT_ROOT_DIR}" -path ${COMPONENT_ROOT_DIR}/backup -prune -o -name '*.xml' -o -name '*.sh' -o -name '*.properties' -o -name '*.json' -o -name '*.conf' -o -name '*.cfg' -o -name '*.template' -o -name '*.conf' -o -name '*.cron'); do
+	for sed_file in $(find "${COMPONENT_ROOT_DIR}" -type f -exec grep -Iq . {} \; -print 2> /dev/null); do
 		if fgrep -l '${{' ${sed_file} > /dev/null 2>&1; then
 			SED_FILES+="${sed_file} "
 		fi
 	done
 
 	if [[ -z ${SED_FILES} ]]; then
-		echo "WARNING: no xml, sh, properties, or conf files to perform configuration expansion"
+		echo "WARNING: no files to perform variable expansion"
 	else
 		SED_LINE+=${SED_FILES}
 		eval "${SED_LINE}"
@@ -402,14 +402,14 @@ function install_base() {
 		exit 1
 	fi
 	
-	BASEX_TGZ=$(ls basex-*.tar.gz)
-	if [ ! -r ${BASEX_TGZ} ]; then
-		echo "warning: basex package is not accessible"
+	BASEX_TGZ=$(ls basex-*.tar.gz 2> /dev/null)
+	if [ -z ${BASEX_TGZ} ]; then
+		echo "warning: no basex application package present"
 		BASEX_TGZ=
 	else
 		tar -tzf ${BASEX_TGZ} > /dev/null 2>&1
 		if [[ $? != 0 ]]; then
-			echo >&2 "warning: invalid basex package tar file: ${BASEX_TGZ}"
+			echo >&2 "warning: invalid basex application package tar file: ${BASEX_TGZ}"
 			BASEX_TGZ=
 		fi			
 	fi

@@ -41,6 +41,6 @@ fi
 
 echo "Starting processes"
 
-policy.sh start
+policy start
 
 sleep 1000d
