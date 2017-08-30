@@ -56,5 +56,6 @@ services:
       hostname: drools
       ports:
        - "6969:6969"
+       - "9696:9696"
       volumes:
        - ./config/drools:/tmp/policy-install/config
