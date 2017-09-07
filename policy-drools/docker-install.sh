@@ -413,7 +413,6 @@ function install_base() {
 			BASEX_TGZ=
 		fi			
 	fi
-
 	
 	# Undo any changes in the $HOME directory if any
 	
@@ -470,6 +469,10 @@ function install_base() {
 	
 	configure_base
 	
+	# save ${BASE_CONF} in PDP-D installation
+	# make it available under ${POLICY_HOME}/config as an environment properties file
+	# for PDP-D to make them available at runtime.
+
 	cp "${BASE_CONF}" "${POLICY_HOME}"/etc/profile.d
 	
 #	if ! create_keystore; then
@@ -631,6 +634,9 @@ EOF
 	fi
 
 	update_monitor $CONTROLLER_NAME
+
+	# save install configuration as an environment file
+	ln -s -f "${POLICY_HOME}/etc/profile.d/${BASE_CONF}" "${POLICY_HOME}/config/${BASE_CONF}.environment"
 }
 
 
