@@ -8,8 +8,8 @@ WORKDIR /tmp/policy-install
 
 COPY install-drools.zip apps.zip docker-install.sh do-start.sh wait-for-port.sh ./
 
-RUN unzip install-drools.zip && \
-    unzip apps.zip && \
+RUN unzip -o install-drools.zip && \
+    unzip -o apps.zip && \
     rm install-drools.zip apps.zip && \
     chown -R policy * && \
     chmod +x *.sh
