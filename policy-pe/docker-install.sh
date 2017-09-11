@@ -458,7 +458,7 @@ function install_elk() {
 		source "${HOME}/.profile"
 	fi
 	
-	ELK_TARGET_INSTALL_DIR=${POLICY_HOME}/elk
+	ELK_TARGET_INSTALL_DIR="${POLICY_HOME}"/elk
 	
 	if [[ -d ${ELK_TARGET_INSTALL_DIR} ]]; then
 		echo "WARNING: ${ELK_TARGET_INSTALL_DIR} exists."
