@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Tarun Tej Velaga <tt3868@att.com>
+Code-Review+2: Jorge Hernandez <jh1730@att.com>
+Submitted-by: Jorge Hernandez <jh1730@att.com>
+Submitted-at: Tue, 12 Sep 2017 10:40:03 +0000
+Reviewed-on: http://gerrit.onap.org/r/11735
+Project: policy/docker
+Branch: refs/heads/master
