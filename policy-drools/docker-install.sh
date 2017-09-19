@@ -874,6 +874,16 @@ function do_install()
 	
 	installFeatures
 	installArtifacts
+
+
+	if [[ -f apps-installer ]]; then
+		# if exists, any customizations to the 
+		# base drools installation from the drools apps
+		# is executed here
+
+		chmod +x ./apps-installer
+		./apps-installer
+	fi
 	
 	echo
 	echo "Installation complete"
