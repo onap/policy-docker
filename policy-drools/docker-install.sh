@@ -881,7 +881,17 @@ function do_install()
 		# base drools installation from the drools apps
 		# is executed here
 
+		# sync and sleep is used to make sure file system
+		# syncronization happens. When running within docker back
+		# to back operations on the same file such as
+		# chmod and then script execution, it has been
+		# seen that the script execution returns "text busy"
+		# OS error.
+
 		chmod +x ./apps-installer
+
+		sync
+		sleep 5s
 		./apps-installer
 	fi
 	

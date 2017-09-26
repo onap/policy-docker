@@ -23,9 +23,6 @@ else
 	mkdir -p $POLICY_HOME/etc/ssl
 	cp config/policy-keystore $POLICY_HOME/etc/ssl
 
-	# this should probably be done by install.sh
-	mvn install:install-file archetype:crawl -Dfile="archetype-closedloop-demo-rules-1.0.0-SNAPSHOT.jar" -DgroupId=org.onap.policy.archetype -DartifactId=archetype-closedloop-demo-rules -Dversion="1.0.0-SNAPSHOT" -Dpackaging=jar -DgeneratePom=true -DupdateReleaseInfo=true
-
 	if [[ -x config/drools-tweaks.sh ]] ; then
 		echo "Executing tweaks"
 		# file may not be executable; running it as an
@@ -35,6 +32,7 @@ else
 
 	# wait for DB up
 	./wait-for-port.sh mariadb 3306
+
 	# now that DB is up, invoke database upgrade:
 	# sql provisioning scripts should be invoked here.
 fi
