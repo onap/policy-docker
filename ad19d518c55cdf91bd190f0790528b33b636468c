@@ -22,6 +22,30 @@
       "revId": "ad19d518c55cdf91bd190f0790528b33b636468c",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_f6f6435c",
+        "filename": "config/pe/push-policies.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 803
+      },
+      "writtenOn": "2017-09-28T20:59:32Z",
+      "side": 1,
+      "message": "Done with the fix",
+      "parentUuid": "9a437d4f_36da8be8",
+      "range": {
+        "startLine": 161,
+        "startChar": 106,
+        "endLine": 161,
+        "endChar": 120
+      },
+      "revId": "ad19d518c55cdf91bd190f0790528b33b636468c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
