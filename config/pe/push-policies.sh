@@ -4,9 +4,7 @@
 
 echo "Upload BRMS Param Template"
 
-curl -v --silent -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' 
--F "file=@ClosedLoopControlName.drl" 
-'http://pdp:8081/pdp/api/policyEngineImport?importParametersJson=%7B%22serviceName%22%3A%ClosedLoopControlName%22%2C%20%22serviceType%22%20%3A%20%22BRMSPARAM%22%20%7D'
+curl -v --silent -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -F "file=@ClosedLoopControlName.drl" 'http://pdp:8081/pdp/api/policyEngineImport?importParametersJson=%7B%22serviceName%22%3A%ClosedLoopControlName%22%2C%20%22serviceType%22%20%3A%20%22BRMSPARAM%22%20%7D' 
 
 #########################################Create BRMS Param policies##########################################
 
@@ -99,7 +97,7 @@ echo "Create MicroService Config Policies"
 sleep 2
 
 echo "Create MicroServicevFirewall Policy"
-curl -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: DEVL' -d '{
+curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
 	"configBody": "{\"service\": \"policy_tosca_tca\",\"location\": \"SampleServiceLocation\",\"uuid\": \"test\",\"policyName\": \"MicroServicevFirewall\",\"description\": \"MicroService vFirewall Policy\",\"configName\": \"SampleConfigName\",\"templateVersion\": \"OpenSource.version.1\",\"version\": \"1.0.0\",\"priority\": \"1\",\"policyScope\": \"resource=SampleResource,service=SampleService,type=SampleType,closedLoopControlName=SampleClosedLoop\",\"riskType\": \"SampleRiskType\",\"riskLevel\": \"1\",\"guard\": \"False\",\"content\": {\"policyVersion\": \"v0.0.1\",\"threshholds\": [{\"severity\": \"MAJOR\",\"fieldPath\": \"$$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated\",\"thresholdValue\": \"4000\",\"closedLoopEventStatus\": \"ONSET\",\"closedLoopControlName\": \"CL-FRWL-LOW-TRAFFIC-SIG-d925ed73-8231-4d02-9545-db4e101f88f8\",\"version\": \"1.0.2\",\"direction\": \"LESS_OR_EQUAL\"}, {\"severity\": \"CRITICAL\",\"fieldPath\": \"$$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated\",\"thresholdValue\": \"20000\",\"closedLoopEventStatus\": \"ONSET\",\"closedLoopControlName\": \"CL-FRWL-HIGH-TRAFFIC-SIG-EA36FE84-9342-5E13-A656-EC5F21309A09\",\"version\": \"1.0.2\",\"direction\": \"GREATER_OR_EQUAL\"}],\"policyName\": \"DCAE.Config_tca-hi-lo\",\"controlLoopSchemaType\": \"VNF\",\"policyScope\": \"DCAE\",\"eventName\": \"vFirewallBroadcastPackets\"}}",
 	"policyConfigType": "MicroService",
 	"policyName": "com.MicroServicevFirewall",
@@ -110,7 +108,7 @@ curl -X PUT --header 'Content-Type: application/json' --header 'Accept: text/pla
 sleep 2
 
 echo "Create MicroServicevDNS Policy"
-curl -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: DEVL' -d '{
+curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
 	"configBody": "{ \"service\": \"policy_tosca_tca\", \"location\": \"SampleServiceLocation\", \"uuid\": \"test\", \"policyName\": \"MicroServicevDNS\", \"description\": \"MicroService vDNS Policy\", \"configName\": \"SampleConfigName\", \"templateVersion\": \"OpenSource.version.1\", \"version\": \"1.0.0\", \"priority\": \"1\", \"policyScope\": \"resource=SampleResource,service=SampleService,type=SampleType,closedLoopControlName=SampleClosedLoop\", \"riskType\": \"SampleRiskType\", \"riskLevel\": \"1\", \"guard\": \"False\", \"content\": { \"policyVersion\": \"v0.0.1\", \"threshholds\": [{ \"severity\": \"MAJOR\", \"fieldPath\": \"$$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated\", \"thresholdValue\": \"500\", \"closedLoopEventStatus\": \"ONSET\", \"closedLoopControlName\": \"CL-LBAL-LOW-TRAFFIC-SIG-FB480F95-A453-6F24-B767-FD703241AB1A\", \"version\": \"1.0.2\", \"direction\": \"LESS_OR_EQUAL\" }, { \"severity\": \"CRITICAL\", \"fieldPath\": \"$$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated\", \"thresholdValue\": \"5000\", \"closedLoopEventStatus\": \"ONSET\", \"closedLoopControlName\": \"CL-LBAL-HIGH-TRAFFIC-SIG-0C5920A6-B564-8035-C878-0E814352BC2B\", \"version\": \"1.0.2\", \"direction\": \"GREATER_OR_EQUAL\" }], \"policyName\": \"DCAE.Config_tca-hi-lo\", \"controlLoopSchemaType\": \"VM\", \"policyScope\": \"DCAE\", \"eventName\": \"vLoadBalancer\" } }",
 	"policyConfigType": "MicroService",
 	"policyName": "com.MicroServicevDNS",
@@ -121,7 +119,7 @@ curl -X PUT --header 'Content-Type: application/json' --header 'Accept: text/pla
 sleep 2
 
 echo "Create MicroServicevCPE Policy"
-curl -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: DEVL' -d '{
+curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
 	"configBody": "{ \"service\": \"policy_tosca_tca\", \"location\": \"SampleServiceLocation\", \"uuid\": \"test\", \"policyName\": \"MicroServicevCPE\", \"description\": \"MicroService vCPE Policy\", \"configName\": \"SampleConfigName\", \"templateVersion\": \"OpenSource.version.1\", \"version\": \"1.0.0\", \"priority\": \"1\", \"policyScope\": \"resource=SampleResource,service=SampleService,type=SampleType,closedLoopControlName=SampleClosedLoop\", \"riskType\": \"SampleRiskType\", \"riskLevel\": \"1\", \"guard\": \"False\", \"content\": { \"policyVersion\": \"v0.0.1\", \"threshholds\": [{ \"severity\": \"MAJOR\", \"fieldPath\": \"$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedDiscardedPacketsDelta\", \"thresholdValue\": \"0\", \"closedLoopEventStatus\": \"ABATED\", \"closedLoopControlName\": \"CL-vCPEvGMUX-TRAFFIC-SIG-FB480F95-A453-6F24-B767-FD703241ABA1\", \"version\": \"1.0.2\", \"direction\": \"EQUAL\" }, { \"severity\": \"CRITICAL\", \"fieldPath\": \"$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedDiscardedPacketsDelta\", \"thresholdValue\": \"1000\", \"closedLoopEventStatus\": \"ONSET\", \"closedLoopControlName\": \"CL-vCPEvGMUX-TRAFFIC-SIG-FB480F95-A453-6F24-B767-FD703241ABA1\", \"version\": \"1.0.2\", \"direction\": \"GREATER_OR_EQUAL\" }], \"policyName\": \"DCAE.Config_tca-hi-lo\", \"controlLoopSchemaType\": \"VM\", \"policyScope\": \"DCAE\", \"eventName\": \"vCPEvGMUXPacketLoss\" } }",
 	"policyConfigType": "MicroService",
 	"policyName": "com.MicroServicevCPE",
@@ -129,6 +127,42 @@ curl -X PUT --header 'Content-Type: application/json' --header 'Accept: text/pla
 }' 'http://pdp:8081/pdp/api/createPolicy'
 
 
+#########################################Creating Decision Guard policy######################################### 
+
+sleep 2
+
+echo "Creating Decision Guard policy"
+curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{ 
+	"policyClass": "Decision", 
+	"policyName": "com.AllPermitGuard", 
+	"policyDescription": "Testing all Permit YAML Guard Policy", 
+	"ecompName": "PDPD", 
+	"ruleProvider": "GUARD_YAML", 
+	"attributes": { 
+		"MATCHING": { 
+			"actor": ".*", 
+			"recipe": ".*", 
+			"targets": ".*", 
+			"clname": ".*", 
+			"limit": "10", 
+			"timeWindow": "1", 
+			"timeUnits": "minute", 
+			"guardActiveStart": "00:00:00-05:00", 
+			"guardActiveEnd": "23:59:59-05:00" 
+		} 
+	} 
+}' 'http://pdp:8081/pdp/api/createPolicy'
+
+#########################################Push Decision policy#########################################
+
+sleep 2
+
+echo "Push Decision policy" 
+curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{ 
+  "pdpGroup": "default", 
+  "policyName": "com.AllPermitGuard", 
+  "policyType": "DECISION" 
+}' 'http://pdp:8081/pdp/api/pushPolicy'
 
 #########################################Pushing BRMS Param policies##########################################
 
@@ -190,7 +224,7 @@ curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Acce
   "pdpGroup": "default",
   "policyName": "com.MicroServicevDNS",
   "policyType": "MicroService"
-}' 'http://pdp:                           8081/pdp/api/pushPolicy' 
+}' 'http://pdp:8081/pdp/api/pushPolicy' 
 
 sleep 2
 
@@ -199,4 +233,4 @@ curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Acce
   "pdpGroup": "default",
   "policyName": "com.MicroServicevCPE",
   "policyType": "MicroService"
-}' 'http://pdp:                           8081/pdp/api/pushPolicy' 
+}' 'http://pdp:8081/pdp/api/pushPolicy' 
