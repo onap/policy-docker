@@ -4,9 +4,7 @@
 
 echo "Upload BRMS Param Template"
 
-curl -v --silent -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' 
--F "file=@ClosedLoopControlName.drl" 
-'http://pdp:8081/pdp/api/policyEngineImport?importParametersJson=%7B%22serviceName%22%3A%ClosedLoopControlName%22%2C%20%22serviceType%22%20%3A%20%22BRMSPARAM%22%20%7D'
+curl -v --silent -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -F "file=@ClosedLoopControlName.drl" 'http://pdp:8081/pdp/api/policyEngineImport?importParametersJson=%7B%22serviceName%22%3A%ClosedLoopControlName%22%2C%20%22serviceType%22%20%3A%20%22BRMSPARAM%22%20%7D' 
 
 #########################################Create BRMS Param policies##########################################
 
@@ -129,6 +127,42 @@ curl -X PUT --header 'Content-Type: application/json' --header 'Accept: text/pla
 }' 'http://pdp:8081/pdp/api/createPolicy'
 
 
+#########################################Creating Decision Guard policy######################################### 
+
+sleep 2
+
+echo "Creating Decision Guard policy"
+curl -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{ 
+	"policyClass": "Decision", 
+	"policyName": "com.AllPermitGuard", 
+	"policyDescription": "Testing all Permit YAML Guard Policy", 
+	"ecompName": "PDPD", 
+	"ruleProvider": "GUARD_YAML", 
+	"attributes": { 
+		"MATCHING": { 
+			"actor": ".*", 
+			"recipe": ".*", 
+			"targets": ".*", 
+			"clname": ".*", 
+			"limit": "10", 
+			"timeWindow": "1", 
+			"timeUnits": "minute", 
+			"guardActiveStart": "00:00:00-05:00", 
+			"guardActiveEnd": "23:59:59-05:00" 
+		} 
+	} 
+}' 'http://pdp:8081/pdp/api/createPolicy'
+
+#########################################Push Decision policy#########################################
+
+sleep 2
+
+echo "Push Decision policy" 
+curl -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: Basic bTAzOTQ5OnBvbGljeVIwY2sk' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{ 
+  "pdpGroup": "default", 
+  "policyName": "com.AllPermitGuard", 
+  "policyType": "DECISION" 
+}' 'http://pdp:8081/pdp/api/pushPolicy'
 
 #########################################Pushing BRMS Param policies##########################################
 
@@ -190,7 +224,7 @@ curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Acce
   "pdpGroup": "default",
   "policyName": "com.MicroServicevDNS",
   "policyType": "MicroService"
-}' 'http://pdp:                           8081/pdp/api/pushPolicy' 
+}' 'http://pdp:8081/pdp/api/pushPolicy' 
 
 sleep 2
 
@@ -199,4 +233,4 @@ curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Acce
   "pdpGroup": "default",
   "policyName": "com.MicroServicevCPE",
   "policyType": "MicroService"
-}' 'http://pdp:                           8081/pdp/api/pushPolicy' 
+}' 'http://pdp:8081/pdp/api/pushPolicy' 
