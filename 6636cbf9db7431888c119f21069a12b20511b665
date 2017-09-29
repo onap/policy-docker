@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a437d4f_395ddc47",
+        "filename": "config/pe/ClosedLoopControlName.drl",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1677
+      },
+      "writtenOn": "2017-09-29T02:47:49Z",
+      "side": 1,
+      "message": "Is username and password supposed to have a different key name in the properties environment file? I think it\u0027s \"pdpx.username\" and \"pdpx.password\".",
+      "revId": "6636cbf9db7431888c119f21069a12b20511b665",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
