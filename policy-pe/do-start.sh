@@ -87,7 +87,7 @@ if [[ $container == pap ]]; then
 	./wait-for-port.sh nexus 8081
 	# wait addional 1 minute for all processes to get fully initialized and synched up
 	sleep 60
-	bash config/push-policies.sh
+	bash -xv config/push-policies.sh
 fi
 
 sleep 1000d
