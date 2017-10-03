@@ -6,7 +6,7 @@ echo "Upload BRMS Param Template"
 
 wget -O cl-amsterdam-template.drl https://git.onap.org/policy/drools-applications/plain/controlloop/templates/archetype-cl-amsterdam/src/main/resources/archetype-resources/src/main/resources/__closedLoopControlName__.drl
 
-curl -v --silent -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -F "file=@cl-amsterdam-template.drl" 'http://pdp:8081/pdp/api/policyEngineImport?importParametersJson=%7B%22serviceName%22%3A%ClosedLoopControlName%22%2C%20%22serviceType%22%20%3A%20%22BRMSPARAM%22%20%7D' 
+curl -v --silent -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -F "file=@cl-amsterdam-template.drl" 'http://pdp:8081/pdp/api/policyEngineImport?importParametersJson=%7B%22serviceName%22%20%3A%20%22ClosedLoopControlName%22%2C%20%22serviceType%22%20%3A%20%22BRMSPARAM%22%7D' 
 
 #########################################Create BRMS Param policies##########################################
 
