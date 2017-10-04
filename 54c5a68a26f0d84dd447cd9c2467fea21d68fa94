@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a437d4f_4c67b326",
+        "filename": "config/pe/pdp.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2017-10-04T03:13:33Z",
+      "side": 1,
+      "message": "We should never get any INDETERMINATE. Never during production. What is up with this?",
+      "revId": "54c5a68a26f0d84dd447cd9c2467fea21d68fa94",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_2c6a2fee",
+        "filename": "config/pe/push-policies.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2017-10-04T03:13:33Z",
+      "side": 1,
+      "message": "Why the extra sleep calls? Shouldn\u0027t checking the return code be enough to know that it was pulled? I notice that we don\u0027t do enough in our scripts to check return code. Something we should probably address later.",
+      "revId": "54c5a68a26f0d84dd447cd9c2467fea21d68fa94",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
