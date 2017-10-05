@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9a437d4f_d4cc458b",
+        "filename": "config/pe/pdp.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1075
+      },
+      "writtenOn": "2017-10-05T14:38:05Z",
+      "side": 1,
+      "message": "In case of guard decision policies, if there is a PIP DB failure the response from PDP would be indeterminate which in turn is Deny by default. In order to avoid failure for PDP Drools we give permit for guard decision policies only under indeterminate case. \nThis will be removed in future once we have the Guard policies policy set implementation is done.",
+      "parentUuid": "9a437d4f_14e08df8",
+      "revId": "54c5a68a26f0d84dd447cd9c2467fea21d68fa94",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a437d4f_2c6a2fee",
         "filename": "config/pe/push-policies.sh",
         "patchSetId": 1
