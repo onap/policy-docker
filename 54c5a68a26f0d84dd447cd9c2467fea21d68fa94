@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "5a2585a7_53639cb1",
+        "filename": "config/pe/pdp.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2017-10-09T12:19:54Z",
+      "side": 1,
+      "message": "This is where an overarching platform policy should take over and return the decision. Having it configurable via seems difficult to change without rebooting the pieces.",
+      "parentUuid": "9a437d4f_d4c8c556",
+      "revId": "54c5a68a26f0d84dd447cd9c2467fea21d68fa94",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a437d4f_2c6a2fee",
         "filename": "config/pe/push-policies.sh",
         "patchSetId": 1
