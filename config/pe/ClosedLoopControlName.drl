@@ -75,7 +75,7 @@ import java.util.Iterator;
 
 import org.onap.policy.drools.system.PolicyEngine;
 
-declare Params
+declare PapParams
   closedLoopControlName : String
   controlLoopYaml : String
 end
