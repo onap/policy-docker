@@ -77,7 +77,7 @@ fi
 
 policy.sh start
 
-# on pap, wait for pap, pdp, brmsgw, and nexus up,
+# on pap, wait for pap, pdp, brmsgw, nexus and drools up,
 # then push the initial default policies
 if [[ $container == pap ]]; then
 	./wait-for-port.sh pap 9091
@@ -85,6 +85,7 @@ if [[ $container == pap ]]; then
 	# brmsgw doesn't have a REST API, so check for JMX port instead
 	./wait-for-port.sh brmsgw 9989
 	./wait-for-port.sh nexus 8081
+	./wait-for-port.sh drools 6969
 	# wait addional 1 minute for all processes to get fully initialized and synched up
 	sleep 60
 	bash -xv config/push-policies.sh
