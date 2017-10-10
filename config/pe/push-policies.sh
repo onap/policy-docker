@@ -12,6 +12,11 @@ sleep 2
 
 curl -v --silent -X POST --header 'Content-Type: multipart/form-data' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -F "file=@cl-amsterdam-template.drl" -F "importParametersJson={\"serviceName\":\"ClosedLoopControlName\",\"serviceType\":\"BRMSPARAM\"}" 'http://pdp:8081/pdp/api/policyEngineImport' 
 
+if [ "$PRELOAD_POLICIES" == "false" ]; then
+    echo "PRELOAD_POLICIES is $PRELOAD_POLICIES"
+    exit 0
+fi
+
 #########################################Create BRMS Param policies##########################################
 
 echo "Create BRMSParam Operational Policies"

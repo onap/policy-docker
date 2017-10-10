@@ -12,6 +12,14 @@ To build it using Maven 3, first build 'policy/common', 'policy/engine', 'policy
 	target/policy-pe
 	target/policy-drools
 
+For example:
+docker build -t onap/policy/policy-os     policy-os
+docker build -t onap/policy/policy-db     policy-db
+docker build -t onap/policy/policy-nexus  policy-nexus
+docker build -t onap/policy/policy-base   policy-base
+docker build -t onap/policy/policy-pe     target/policy-pe
+docker build -t onap/policy/policy-drools target/policy-drools
+
 In addition, the 'config' directory contains configuration files that are read during the startup of the containers; this directory is referenced by the docker-compose.yml file.
 
 If you want to call the docker-compose, the following needs to be setup before doing so:
@@ -19,3 +27,10 @@ If you want to call the docker-compose, the following needs to be setup before d
 chmod +x config/drools/drools-tweaks.sh
 IP_ADDRESS=$(ifconfig eth0 | grep "inet addr" | tr -s ' ' | cut -d' ' -f3 | cut -d':' -f2)
 echo $IP_ADDRESS > config/pe/ip_addr.txt
+
+If you do not want the policies pre-loaded, then set this environment variable to false:
+
+export PRELOAD_POLICIES=false
+
+It will override the settings in the .env file. Which is set to true.
+
