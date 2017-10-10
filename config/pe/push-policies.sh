@@ -153,8 +153,8 @@ curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Acce
 			"limit": "10", 
 			"timeWindow": "1", 
 			"timeUnits": "minute", 
-			"guardActiveStart": "00:00:00-05:00", 
-			"guardActiveEnd": "23:59:59-05:00" 
+			"guardActiveStart": "00:00:01-05:00", 
+			"guardActiveEnd": "00:00:00-05:00" 
 		} 
 	} 
 }' 'http://pdp:8081/pdp/api/createPolicy'
