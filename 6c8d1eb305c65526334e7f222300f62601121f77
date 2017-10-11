@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a2f8d8d_cac7c663",
+        "filename": ".env",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2017-10-11T13:32:07Z",
+      "side": 1,
+      "message": "Yes its necessary. It is read by docker-compose for default values. You can override via the environment. There needs to be a default value at the very least. Otherwise PRELOAD_POLICIES\u003d\"\"",
+      "parentUuid": "1a2f8d8d_0a202e48",
+      "revId": "6c8d1eb305c65526334e7f222300f62601121f77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a2f8d8d_6a31f2a1",
         "filename": "config/pe/push-policies.sh",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-11T13:12:40Z",
       "side": 1,
       "message": "this line will be better to move it before the if line 15, at this point we know is either \"false\" or unset.",
+      "revId": "6c8d1eb305c65526334e7f222300f62601121f77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_8aa1beab",
+        "filename": "config/pe/push-policies.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2017-10-11T13:32:07Z",
+      "side": 1,
+      "message": "I\u0027m not sure which line you are talking about. We need to have the template loaded regardless. So right after that is done then we check if the user wanted policies loaded.",
+      "parentUuid": "1a2f8d8d_6a31f2a1",
       "revId": "6c8d1eb305c65526334e7f222300f62601121f77",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
