@@ -87,6 +87,24 @@
       "revId": "6c8d1eb305c65526334e7f222300f62601121f77",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_eac60249",
+        "filename": "config/pe/push-policies.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2017-10-11T13:42:21Z",
+      "side": 1,
+      "message": "Oh ok - yeah I can change that.",
+      "parentUuid": "1a2f8d8d_ea9f224f",
+      "revId": "6c8d1eb305c65526334e7f222300f62601121f77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
