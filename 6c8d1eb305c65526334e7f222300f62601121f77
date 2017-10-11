@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a2f8d8d_0a202e48",
+        "filename": ".env",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2017-10-11T13:12:40Z",
+      "side": 1,
+      "message": "not sure if this file is necessary, will it be read by any tooling ??  How is it picked up pre-installation?   May be should be read by policy_vm_init.sh before the docker compose call ?",
+      "revId": "6c8d1eb305c65526334e7f222300f62601121f77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_6a31f2a1",
+        "filename": "config/pe/push-policies.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2017-10-11T13:12:40Z",
+      "side": 1,
+      "message": "this line will be better to move it before the if line 15, at this point we know is either \"false\" or unset.",
+      "revId": "6c8d1eb305c65526334e7f222300f62601121f77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
