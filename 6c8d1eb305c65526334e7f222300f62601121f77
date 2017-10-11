@@ -69,6 +69,24 @@
       "revId": "6c8d1eb305c65526334e7f222300f62601121f77",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_ea9f224f",
+        "filename": "config/pe/push-policies.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2017-10-11T13:41:07Z",
+      "side": 1,
+      "message": "Just meant the echo statement to always print its value by moving it before the \"if\".   Here you always know it is false so you could just perfectly so \necho \"PRELOAD_POLICIES is false\" as an equivalent statement here.  Very minor comment.",
+      "parentUuid": "1a2f8d8d_8aa1beab",
+      "revId": "6c8d1eb305c65526334e7f222300f62601121f77",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
