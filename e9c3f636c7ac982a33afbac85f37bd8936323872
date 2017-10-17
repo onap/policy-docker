@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a2f8d8d_524b7659",
+        "filename": "config/pe/push-policies.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2017-10-17T19:06:37Z",
+      "side": 1,
+      "message": "it seems retry: 3 is used instead of retry: 0 per https://wiki.onap.org/display/DW/Policy+R1+Amsterdam+Functional+Test+Cases",
+      "revId": "e9c3f636c7ac982a33afbac85f37bd8936323872",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a2f8d8d_3248ea5a",
+        "filename": "config/pe/push-policies.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2017-10-17T19:06:37Z",
+      "side": 1,
+      "message": "it seems retry: 3 is used instead of retry: 0 per https://wiki.onap.org/display/DW/Policy+R1+Amsterdam+Functional+Test+Cases",
+      "revId": "e9c3f636c7ac982a33afbac85f37bd8936323872",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
