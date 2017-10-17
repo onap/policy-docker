@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a2f8d8d_72daf279",
+        "filename": "config/pe/push-policies.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 803
+      },
+      "writtenOn": "2017-10-17T19:47:10Z",
+      "side": 1,
+      "message": "++++retry%3A+0%0D%0A++++ if you decode the yml content the value will be \"0\"\n\nhttps://www.url-encode-decode.com/\ncopy the yml content and decode in the above link please.\nScript has been updated with latest changes.",
+      "parentUuid": "1a2f8d8d_524b7659",
+      "revId": "e9c3f636c7ac982a33afbac85f37bd8936323872",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a2f8d8d_3248ea5a",
         "filename": "config/pe/push-policies.sh",
         "patchSetId": 2
