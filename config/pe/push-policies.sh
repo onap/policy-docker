@@ -229,7 +229,7 @@ curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Acce
   "policyType": "MicroService"
 }' 'http://pdp:8081/pdp/api/pushPolicy'
 
-sleep 2
+sleep 10
 
 echo "pushPolicy : PUT : com.MicroServicevDNS"
 curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
@@ -238,7 +238,7 @@ curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Acce
   "policyType": "MicroService"
 }' 'http://pdp:8081/pdp/api/pushPolicy' 
 
-sleep 2
+sleep 10
 
 echo "pushPolicy : PUT : com.MicroServicevCPE"
 curl -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
