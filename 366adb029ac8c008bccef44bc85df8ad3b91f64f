@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4e6583_0874b1cd",
+        "filename": "config/pe/push-policies.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2017-11-09T17:31:14Z",
+      "side": 1,
+      "message": "why would version be required in the config policies?",
+      "revId": "366adb029ac8c008bccef44bc85df8ad3b91f64f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
