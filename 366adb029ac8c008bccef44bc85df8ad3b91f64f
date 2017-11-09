@@ -16,6 +16,23 @@
       "revId": "366adb029ac8c008bccef44bc85df8ad3b91f64f",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a4e6583_68444574",
+        "filename": "config/pe/push-policies.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 803
+      },
+      "writtenOn": "2017-11-09T17:34:10Z",
+      "side": 1,
+      "message": "Hi Jorge, this version here indicates MicroServiceModel Version. If this needs to be changed. Then we need to update the db script as well/",
+      "revId": "366adb029ac8c008bccef44bc85df8ad3b91f64f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
