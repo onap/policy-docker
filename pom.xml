@@ -37,6 +37,35 @@
 	<name>Policy Engine - Docker build</name>
 	<description>ONAP Policy Docker Build</description>
 
+	<properties>
+		<nexusproxy>https://nexus.onap.org</nexusproxy>
+	</properties>
+
+        <repositories>
+                <!-- LF repositories -->
+                <repository>
+                        <id>ecomp-releases</id>
+                        <name>Release Repository</name>
+                        <url>${nexusproxy}/content/repositories/releases/</url>
+                </repository>
+                <repository>
+                        <id>ecomp-staging</id>
+                        <name>Staging Repository</name>
+                        <url>${nexusproxy}/content/repositories/staging/</url>
+                </repository>
+                <repository>
+                        <id>ecomp-snapshots</id>
+                        <name>Snapshots Repository</name>
+                        <url>${nexusproxy}/content/repositories/snapshots/</url>
+                </repository>
+                <repository>
+                        <id>ecomp-public</id>
+                        <name>Public Repository</name>
+                        <url>${nexusproxy}/content/repositories/public/</url>
+                </repository>
+                <!-- LF repositories END-->
+        </repositories>
+
 	<build>
 		<plugins>
 			<plugin>
