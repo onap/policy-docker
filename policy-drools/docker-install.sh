@@ -9,9 +9,9 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-# 
+#
 #      http://www.apache.org/licenses/LICENSE-2.0
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,12 +26,12 @@ function JAVA_HOME() {
 		echo "-- ${FUNCNAME[0]} $@ --"
 		set -x
 	fi
-		
+
 	if [[ -z ${JAVA_HOME} ]]; then
 		echo "error: aborting installation: JAVA_HOME variable must be present in base.conf"
 		exit 1;
 	fi
-	
+
 	echo "JAVA_HOME is ${JAVA_HOME}"
 }
 
@@ -40,21 +40,21 @@ function POLICY_HOME() {
 		echo "-- ${FUNCNAME[0]} $@ --"
 		set -x
 	fi
-	
+
 	local POLICY_HOME_ABS
-	
+
 	if [[ -z ${POLICY_HOME} ]]; then
 		echo "error: aborting installation: the installation directory POLICY_HOME must be set"
 		exit 1
 	fi
-	
+
 	POLICY_HOME_ABS=$(readlink -f "${POLICY_HOME}")
 	if [[ -n ${POLICY_HOME_ABS} ]]; then
 		export POLICY_HOME=${POLICY_HOME_ABS}
 	fi
-	
+
 	echo "POLICY_HOME is ${POLICY_HOME}"
-	
+
 	# Do not allow installations from within POLICY_HOME dir or sub-dirs
 	if [[ "$(pwd)/" == ${POLICY_HOME}/* ]]; then
 	 	echo "error: aborting installation: cannot be executed from '${POLICY_HOME}' or sub-directories. "
@@ -67,35 +67,35 @@ function check_java() {
 		echo "-- ${FUNCNAME[0]} $@ --"
 		set -x
 	fi
-	
+
 	local TARGET_JAVA_VERSION INSTALLED_JAVA_VERSION
-	
+
 	TARGET_JAVA_VERSION=$1
-	
+
 	if [[ -z ${JAVA_HOME} ]]; then
 		echo "error: ${JAVA_HOME} is not set"
 		return 1
 	fi
-	
+
 	if ! check_x_file "${JAVA_HOME}/bin/java"; then
 		echo "error: ${JAVA_HOME}/bin/java is not accessible"
 		return 1
 	fi
-	
+
 	INSTALLED_JAVA_VERSION=$("${JAVA_HOME}/bin/java" -version 2>&1 | awk -F '"' '/version/ {print $2}')
 	if [[ -z $INSTALLED_JAVA_VERSION ]]; then
 		echo "error: ${JAVA_HOME}/bin/java is invalid"
 		return 1
 	fi
-	
+
 	if [[ "${INSTALLED_JAVA_VERSION}" != ${TARGET_JAVA_VERSION}* ]]; then
 		echo "error: java version (${INSTALLED_JAVA_VERSION}) does not"\
 			 "march desired version ${TARGET_JAVA_VERSION}"
 		return 1
-	fi 
-	
+	fi
+
 	echo "OK: java ${INSTALLED_JAVA_VERSION} installed"
-	
+
 	if ! type -p "${JAVA_HOME}/bin/keytool" > /dev/null 2>&1; then
 		echo "error: {JAVA_HOME}/bin/keytool is not installed"
 		return 1
@@ -109,7 +109,7 @@ function process_configuration() {
 	fi
 
 	local CONF_FILE name value
-	
+
 	CONF_FILE=$1
 	while read line || [ -n "${line}" ]; do
         if [[ -n ${line} ]] && [[ ${line} != *#* ]]; then
@@ -145,17 +145,17 @@ function configure_component() {
 	fi
 
 	local CONF_FILE COMPONENT_ROOT_DIR SED_LINE SED_FILES name value
-		
+
 	CONF_FILE=$1
 	COMPONENT_ROOT_DIR=$2
-	
+
 	SED_LINE="sed -i"
 	SED_LINE+=" -e 's!\${{POLICY_HOME}}!${POLICY_HOME}!g' "
 	SED_LINE+=" -e 's!\${{POLICY_USER}}!${POLICY_USER}!g' "
 	SED_LINE+=" -e 's!\${{POLICY_GROUP}}!${POLICY_GROUP}!g' "
 	SED_LINE+=" -e 's!\${{KEYSTORE_PASSWD}}!${KEYSTORE_PASSWD}!g' "
 	SED_LINE+=" -e 's!\${{JAVA_HOME}}!${JAVA_HOME}!g' "
-		
+
 	while read line || [ -n "${line}" ]; do
 		if [[ -n ${line} ]] && [[ ${line:0:1} != \# ]]; then
 			name=$(echo "${line%%=*}")
@@ -168,7 +168,7 @@ function configure_component() {
 	    	SED_LINE+=" -e 's/\${{${name}}}/${value}/g' "
         fi
 	done < "$CONF_FILE"
-	
+
 	SED_FILES=""
 	for sed_file in $(find "${COMPONENT_ROOT_DIR}" -type f -exec grep -Iq . {} \; -print 2> /dev/null); do
 		if fgrep -l '${{' ${sed_file} > /dev/null 2>&1; then
@@ -192,11 +192,11 @@ function configure_settings() {
 
 	# The goal is to have repositories for both 'release' and 'snapshot'
 	# artifacts. These may either be remote (e.g. Nexus) repositories, or
-	# a local file-based repository. 
+	# a local file-based repository.
 	local fileRepoID=file-repository
 	local fileRepoUrl=file:$HOME_M2/file-repository
 	mkdir -p "${fileRepoUrl#file:}"
-		
+
 	# The following parameters are also used outside of this function.
 	# if snapshotRepositoryUrl and/or releaseRepositoryUrl is defined,
 	# the corresponding ID and url will be updated below
@@ -208,8 +208,8 @@ function configure_settings() {
 	# if both snapshotRepositoryUrl and releaseRepositoryUrl are null,
 	# use standalone-settings.xml that just defines the file-based repo.
 	# if only one of them is specified, use file-based repo for the other.
-	if [[ -z "$snapshotRepositoryUrl" && -z $releaseRepositoryUrl ]]; then
-		echo "snapshotRepositoryUrl and releaseRepositoryUrl properties not set, configuring settings.xml for standalone operation"
+	if [[ -z "$snapshotRepositoryUrl" && -z $releaseRepositoryUrl && -z $releaseRepository2Url ]]; then
+		echo "snapshotRepositoryUrl, releaseRepositoryUrl, and releaseRepository2Url properties not set, configuring settings.xml for standalone operation"
 		mv $HOME_M2/standalone-settings.xml $HOME_M2/settings.xml
 	else
 		rm $HOME_M2/standalone-settings.xml
@@ -222,6 +222,10 @@ function configure_settings() {
 			releaseRepoID=${releaseRepositoryID}
 			releaseRepoUrl=${releaseRepositoryUrl}
 		fi
+		if [[ -n "${releaseRepository2Url}" ]] ; then
+			releaseRepo2ID=${releaseRepository2ID}
+			releaseRepo2Url=${releaseRepository2Url}
+		fi
 	fi
 
 	SED_LINE="sed -i"
@@ -229,14 +233,16 @@ function configure_settings() {
 	SED_LINE+=" -e 's!\${{snapshotRepositoryUrl}}!${snapshotRepoUrl}!g' "
 	SED_LINE+=" -e 's!\${{releaseRepositoryID}}!${releaseRepoID}!g' "
 	SED_LINE+=" -e 's!\${{releaseRepositoryUrl}}!${releaseRepoUrl}!g' "
+	SED_LINE+=" -e 's!\${{releaseRepository2ID}}!${releaseRepo2ID}!g' "
+	SED_LINE+=" -e 's!\${{releaseRepository2Url}}!${releaseRepo2Url}!g' "
 	SED_LINE+=" -e 's!\${{repositoryUsername}}!${repositoryUsername}!g' "
 	SED_LINE+=" -e 's!\${{repositoryPassword}}!${repositoryPassword}!g' "
 	SED_LINE+=" -e 's!\${{fileRepoID}}!${fileRepoID}!g' "
 	SED_LINE+=" -e 's!\${{fileRepoUrl}}!${fileRepoUrl}!g' "
-	
+
 	SED_LINE+="$HOME_M2/settings.xml"
 	eval "${SED_LINE}"
-	
+
 }
 
 
@@ -254,7 +260,7 @@ function check_r_file() {
 	return 0
 }
 
-function check_x_file() {	
+function check_x_file() {
 	if [[ $DEBUG == y ]]; then
 		echo "-- ${FUNCNAME[0]} $@ --"
 		set -x
@@ -275,28 +281,28 @@ function install_prereqs() {
 	fi
 
 	local CONF_FILE HOME_OWNER
-	
+
 	CONF_FILE=$1
-	
+
 	if ! check_r_file "${CONF_FILE}"; then
 		echo "error: aborting ${COMPONENT_TYPE} installation: ${CONF_FILE} is not accessible"
 		exit 1
 	fi
-	
+
 	if ! process_configuration "${CONF_FILE}"; then
 		echo "error: aborting ${COMPONENT_TYPE} installation: cannot process configuration ${CONF_FILE}"
 		exit 1
 	fi
-	
+
 	if ! check_java "1.8"; then
 		echo "error: aborting ${COMPONENT_TYPE} installation: invalid java version"
 		exit 1
 	fi
-	
+
 
 	if [[ -z ${POLICY_HOME} ]]; then
 		echo "error: aborting ${COMPONENT_TYPE} installation: ${POLICY_HOME} is not set"
-		exit 1	
+		exit 1
 	fi
 
 	HOME_OWNER=$(ls -ld "${POLICY_HOME}" | awk '{print $3}')
@@ -304,7 +310,7 @@ function install_prereqs() {
 		echo "error: aborting ${COMPONENT_TYPE} installation: ${POLICY_USER} does not own ${POLICY_HOME} directory"
 		exit 1
 	fi
-	
+
 	echo -n "Starting ${OPERATION} of ${COMPONENT_TYPE} under ${POLICY_USER}:${POLICY_GROUP} "
 	echo "ownership with umask $(umask)."
 }
@@ -316,7 +322,7 @@ function configure_base() {
 	fi
 
 	local BASH_PROFILE_LINE PROFILE_LINE
-	
+
 	# check if fqdn is set in base.conf and use that value if set
 	if [[ -z ${INSTALL_FQDN} ]]
 	then
@@ -327,9 +333,9 @@ function configure_base() {
 	fi
 
 	configure_component "${BASE_CONF}" "${POLICY_HOME}"
-	
+
 	configure_settings
-	
+
 	BASH_PROFILE_LINE=". ${POLICY_HOME}/etc/profile.d/env.sh"
 	PROFILE_LINE="ps -p \$\$ | grep -q bash || . ${POLICY_HOME}/etc/profile.d/env.sh"
 
@@ -343,7 +349,7 @@ function configure_base() {
 	fi
 
 	. "${POLICY_HOME}/etc/profile.d/env.sh"
-	
+
 	cat "${POLICY_HOME}"/etc/cron.d/* | crontab
 }
 
@@ -354,7 +360,7 @@ function install_base() {
 	fi
 
 	local POLICY_HOME_CONTENTS BASE_TGZ BASEX_TGZ BASH_PROFILE_LINE
-	
+
 	install_prereqs "${BASE_CONF}"
 
 	# following properties must be set:
@@ -378,30 +384,30 @@ function install_base() {
 		echo "error: aborting base installation: cannot delete the underlying ${POLICY_HOME} files"
 		exit 1
 	fi
-	
+
 	POLICY_HOME_CONTENTS=$(ls -A "${POLICY_HOME}" 2> /dev/null)
 	if [[ -n ${POLICY_HOME_CONTENTS} ]]; then
 		echo "error: aborting base installation: ${POLICY_HOME} directory is not empty"
 		exit 1
 	fi
-	
-	if ! /bin/mkdir -p "${POLICY_HOME}/logs/" > /dev/null 2>&1; then	
+
+	if ! /bin/mkdir -p "${POLICY_HOME}/logs/" > /dev/null 2>&1; then
 		echo "error: aborting base installation: cannot create ${POLICY_HOME}/logs/"
 		exit 1
-	fi	
-	
+	fi
+
 	BASE_TGZ=$(ls base-*.tar.gz)
 	if [ ! -r ${BASE_TGZ} ]; then
 		echo "error: aborting: base package is not accessible"
-		exit 1			
+		exit 1
 	fi
-	
+
 	tar -tzf ${BASE_TGZ} > /dev/null 2>&1
 	if [[ $? != 0 ]]; then
 		echo >&2 "error: aborting installation: invalid base package file: ${BASE_TGZ}"
 		exit 1
 	fi
-	
+
 	BASEX_TGZ=$(ls basex-*.tar.gz 2> /dev/null)
 	if [ -z ${BASEX_TGZ} ]; then
 		echo "warning: no basex application package present"
@@ -411,30 +417,30 @@ function install_base() {
 		if [[ $? != 0 ]]; then
 			echo >&2 "warning: invalid basex application package tar file: ${BASEX_TGZ}"
 			BASEX_TGZ=
-		fi			
+		fi
 	fi
-	
+
 	# Undo any changes in the $HOME directory if any
-	
+
 	BASH_PROFILE_LINE=". ${POLICY_HOME}/etc/profile.d/env.sh"
 #	PROFILE_LINE="ps -p \$\$ | grep -q bash || . ${POLICY_HOME}/etc/profile.d/env.sh"
-		
+
 	# Note: using .bashrc instead of .bash_profile
 	if [[ -f ${HOME}/.bashrc ]]; then
 		/bin/sed -i.bak "\:${BASH_PROFILE_LINE}:d" "${HOME}/.bashrc"
 	fi
-	
+
 #	if [[ -f ${HOME}/.profile ]]; then
 #		/bin/sed -i.bak "\:${PROFILE_LINE}:d" "${HOME}/.profile"
 #	fi
-	
+
 	tar -C ${POLICY_HOME} -xf ${BASE_TGZ} --no-same-owner
 	if [[ $? != 0 ]]; then
 		# this should not happened
 		echo "error: aborting base installation: base package cannot be unpacked: ${BASE_TGZ}"
 		exit 1
 	fi
-	
+
 	if [ ! -z ${BASEX_TGZ} ]; then
 		tar -C ${POLICY_HOME} -xf ${BASEX_TGZ} --no-same-owner
 		if [[ $? != 0 ]]; then
@@ -448,9 +454,9 @@ function install_base() {
 #	/bin/mkdir -p ${POLICY_HOME}/nagios/tmp > /dev/null 2>&1
 #	/bin/mkdir -p ${POLICY_HOME}/tmp > /dev/null 2>&1
 #	/bin/mkdir -p ${POLICY_HOME}/var > /dev/null 2>&1
-			
+
 #	chmod -R 755 ${POLICY_HOME}/nagios > /dev/null 2>&1
-	
+
 	if [[ -d $HOME_M2 ]]; then
 		echo "Renaming existing $HOME_M2 to $HOME/m2.$TIMESTAMP"
 		mv $HOME_M2 $HOME/m2.$TIMESTAMP
@@ -466,17 +472,17 @@ function install_base() {
 			exit 1
 		fi
 	fi
-	
+
 	configure_base
-	
+
 	# save ${BASE_CONF} in PDP-D installation
 	cp "${BASE_CONF}" "${POLICY_HOME}"/etc/profile.d
-	
+
 #	if ! create_keystore; then
 #		echo "error: aborting base installation: creating keystore"
 #		exit 1
 #	fi
-	
+
 #	list_unexpanded_files ${POLICY_HOME}
 
 }
@@ -492,23 +498,23 @@ function install_controller()
 		echo "-- ${FUNCNAME[0]} $@ --"
 		set -x
 	fi
-	
+
 	if [[ -f "${HOME}/.bashrc" ]]; then
 		source "${HOME}/.bashrc"
 	fi
-	
+
 	if [[ -z ${POLICY_HOME} ]]; then
 		echo "error: aborting installation: POLICY_HOME environment variable is not set."
-		exit 1	
+		exit 1
 	fi
-	
+
 	if ! check_r_file ${POLICY_HOME}/etc/profile.d/env.sh; then
 		echo "error: aborting installation: ${POLICY_HOME}/etc/profile.d/env.sh is not accessible"
-		exit 1	
+		exit 1
 	fi
 
 	local CONTROLLER_CONF CONTROLLER_ZIP RULES_JAR SOURCE_DIR CONTROLLER_DIR AAAA BBBB PORT UTOPIC ARTIFACT_VERSION
-	
+
 	CONTROLLER_CONF=$COMPONENT_TYPE.conf
 	install_prereqs "${CONTROLLER_CONF}"
 
@@ -518,7 +524,7 @@ function install_controller()
 	#                   $POLICY_HOME/controllers/$CONTROLLER_NAME
 	# CONTROLLER_PORT - port number for the controller REST interface
 	# RULES_ARTIFACT -  rules artifact specifier: groupId:artifactId:version
-	
+
 	# test that all required properties are set
 	for var in CONTROLLER_ARTIFACT_ID CONTROLLER_NAME CONTROLLER_PORT RULES_ARTIFACT UEB_TOPIC
 	do
@@ -527,7 +533,7 @@ function install_controller()
 			exit 1
 		fi
 	done
-	
+
 	CONTROLLER_ZIP=$(ls $CONTROLLER_ARTIFACT_ID*.zip 2>&-)
 	if [[ -z $CONTROLLER_ZIP ]]; then
 		echo "ERROR: Cannot find controller zip file ($CONTROLLER_ARTIFACT_ID*.zip)"
@@ -576,7 +582,7 @@ function install_controller()
 
 	# Perform base variable replacement in controller config file
 	configure_component "${SOURCE_DIR}/${BASE_CONF}" "${CONTROLLER_DIR}"
-	
+
 	# Perform variable replacements in config files.
 	# config files may contain the following strings that need to be replaced with
 	# real values:
@@ -611,7 +617,7 @@ EOF
 
 	# return to directory where we started
 	cd $SOURCE_DIR
-	
+
 	# install rules jar into repository if present
 	if [[ -n $RULES_JAR ]]; then
 		# can't use RULES_VERSION because may be set to "LATEST",
@@ -644,9 +650,9 @@ function update_monitor() {
 	fi
 
 	local NAME lastline
-	
+
 	NAME=$1
-	
+
 	if [[ -f ${POLICY_HOME}/etc/monitor/monitor.cfg ]]; then
 		if grep -q "^${NAME}=" ${POLICY_HOME}/etc/monitor/monitor.cfg; then
 			echo "OK: updating monitoring entry for ${NAME}"
@@ -668,7 +674,7 @@ function update_monitor() {
 			echo "${NAME}=off" >> ${POLICY_HOME}/etc/monitor/monitor.cfg
 		fi
 	else
-		echo "WARNING: ${POLICY_HOME}/etc/monitor/monitor.cfg does not exist. No monitoring enabled."	
+		echo "WARNING: ${POLICY_HOME}/etc/monitor/monitor.cfg does not exist. No monitoring enabled."
 	fi
 }
 
@@ -827,7 +833,7 @@ function installFeatures
 	local name featureConf
 	export FEATURES_HOME="${POLICY_HOME}/${FEATURES_DIR}"
 	echo "FEATURES_HOME is ${FEATURES_HOME}"
-	
+
 	mkdir -p "${FEATURES_HOME}" > /dev/null 2>&1
 	if [[ -d "${FEATURES_HOME}" && -x "${FEATURES_HOME}" ]]; then
 		SOURCE_DIR=$PWD
@@ -845,7 +851,7 @@ function installFeatures
 				echo "feature ${name} has been installed (no configuration present)"
 			fi
 		done
-		
+
 		echo "applying base configuration to features"
 		configure_component "${BASE_CONF}" "${FEATURES_HOME}"
 	else
@@ -863,7 +869,7 @@ function do_install()
 
 	echo "Starting installation at $(date)"
 	echo
-	
+
 	COMPONENT_TYPE=base
 	BASE_CONF=base.conf
 	install_base
@@ -871,28 +877,28 @@ function do_install()
 
 	COMPONENT_TYPE=policy-management
 	install_controller
-	
+
 	installFeatures
 	installArtifacts
 
 
 	if [[ -f apps-installer ]]; then
-		# if exists, any customizations to the 
+		# if exists, any customizations to the
 		# base drools installation from the drools apps
 		# is executed here
 
 		./apps-installer
 	fi
-	
+
 	echo
 	echo "Installation complete"
 	echo "Please logoff and login again to update shell environment"
-	
+
 }
 
 export POLICY_USER=$(/usr/bin/id -un)
 export POLICY_GROUP=$POLICY_USER
-	
+
 FQDN=$(hostname -f 2> /dev/null)
 if [[ $? != 0 || -z ${FQDN} ]]; then
 	echo "error: cannot determine the FQDN for this host $(hostname)."
