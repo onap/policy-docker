@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Pamela Dragosh <pdragosh@research.att.com>
+Submitted-by: Pamela Dragosh <pdragosh@research.att.com>
+Submitted-at: Tue, 05 Dec 2017 15:18:44 +0000
+Reviewed-on: https://gerrit.onap.org/r/25507
+Project: policy/docker
+Branch: refs/heads/amsterdam
