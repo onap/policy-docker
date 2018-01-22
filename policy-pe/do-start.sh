@@ -28,7 +28,7 @@ if [[ -f /opt/app/policy/etc/build.info ]]; then
 	echo "Found existing installation, will not reinstall"
 	. /opt/app/policy/etc/profile.d/env.sh
 
-else 
+else
 	if [[ -d config ]]; then
 		cp config/*.conf .
 	fi
@@ -44,10 +44,10 @@ else
 
 	. /opt/app/policy/etc/profile.d/env.sh
 
-	# install keystore
-	#changed to use http instead of http, so keystore no longer needed
-	#cp config/policy-keystore.jks $POLICY_HOME/etc/ssl/policy-keystore
-	
+	# install policy keystore
+	mkdir -p $POLICY_HOME/etc/ssl
+	cp config/policy-keystore $POLICY_HOME/etc/ssl
+
 	if [[ -f config/$container-tweaks.sh ]] ; then
 		# file may not be executable; running it as an
 		# argument to bash avoids needing execute perms.

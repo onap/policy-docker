@@ -6,8 +6,8 @@ WORKDIR /tmp/policy-install
 
 COPY install.zip docker-install.sh do-start.sh wait-for-port.sh ./
 RUN unzip install.zip && rm install.zip && chown policy * && chmod +x *.sh
+RUN cp ../config/drools/policy-keystore ../config/pe/policy-keystore
 
 USER policy
 
 ENTRYPOINT [ "bash", "./do-start.sh" ]
-
