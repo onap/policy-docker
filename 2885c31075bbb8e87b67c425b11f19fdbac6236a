@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_db364a52",
+        "filename": "config/drools/base.conf",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2018-01-31T13:54:21Z",
+      "side": 1,
+      "message": "I think we need to inform OOM for this. I remember seeing this in the Helm Script",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 27
+      },
+      "revId": "2885c31075bbb8e87b67c425b11f19fdbac6236a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
