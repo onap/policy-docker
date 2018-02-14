@@ -26,7 +26,7 @@
 	<parent>
 		<groupId>org.onap.oparent</groupId>
 		<artifactId>oparent</artifactId>
-		<version>0.1.1</version>
+		<version>1.1.0-SNAPSHOT</version>
 		<relativePath/>
 	</parent>
 
@@ -126,7 +126,7 @@
 							<overWriteSnapshots>true</overWriteSnapshots>
 							<artifactItems>
 								<artifactItem>
-									<groupId>org.onap.policy.drools-applications</groupId>
+									<groupId>org.onap.policy.drools-applications.controlloop.packages</groupId>
 									<artifactId>apps</artifactId>
 									<version>${project.version}</version>
 									<type>zip</type>
