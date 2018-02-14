@@ -127,7 +127,7 @@
 							<artifactItems>
 								<artifactItem>
 									<groupId>org.onap.policy.drools-applications</groupId>
-									<artifactId>apps</artifactId>
+									<artifactId>controlloop.packages.apps</artifactId>
 									<version>${project.version}</version>
 									<type>zip</type>
 									<destFileName>apps.zip</destFileName>
