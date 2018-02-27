@@ -1,9 +1,12 @@
 version: '2'
 services:
    mariadb:
-      image: onap/policy/policy-db
+      image: mariadb:10.0.34
       container_name: mariadb
       hostname: mariadb
+      command: ['--lower-case-table-names=1']
+      volumes:
+         - ./config/db:/docker-entrypoint-initdb.d
       expose:
        - 3306
    nexus:

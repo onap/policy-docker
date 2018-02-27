@@ -25,7 +25,7 @@ mvn prepare-package
 cp -r target/policy-pe/* policy-pe/
 cp -r target/policy-drools/* policy-drools
 
-for comp in policy-os policy-db policy-nexus policy-base policy-pe policy-drools
+for comp in policy-os policy-nexus policy-base policy-pe policy-drools
 do
     sudo docker build -t onap/policy/$comp $HOME/docker/$comp
 done
