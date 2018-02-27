@@ -6,7 +6,6 @@ To build it using Maven 3, first build 'policy/common', 'policy/engine', 'policy
 - Copy the files under policy-drools to target/policy-drools
 - Run the 'docker build' command on the following directories, in order:
 	policy-os
-	policy-db
 	policy-nexus
 	policy-base
 	target/policy-pe
@@ -14,7 +13,6 @@ To build it using Maven 3, first build 'policy/common', 'policy/engine', 'policy
 
 For example:
 docker build -t onap/policy/policy-os     policy-os
-docker build -t onap/policy/policy-db     policy-db
 docker build -t onap/policy/policy-nexus  policy-nexus
 docker build -t onap/policy/policy-base   policy-base
 docker build -t onap/policy/policy-pe     target/policy-pe
