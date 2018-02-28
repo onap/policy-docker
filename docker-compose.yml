@@ -10,6 +10,7 @@ services:
       container_name: mariadb
       hostname: mariadb
       command: ['--lower-case-table-names=1']
+      env_file: config/db/db.conf
       volumes:
          - ./config/db:/docker-entrypoint-initdb.d
       ports:
