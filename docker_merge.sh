@@ -40,10 +40,7 @@ fi
 
 echo $MVN_MAJMIN_VERSION
 
-cp policy-pe/* target/policy-pe/
-cp policy-drools/* target/policy-drools/
-
-for image in policy-os policy-nexus policy-base policy-drools policy-pe ; do
+for image in policy-os policy-nexus policy-base ; do
     echo "Building $image"
     mkdir -p target/$image
     cp $image/* target/$image
@@ -78,7 +75,7 @@ docker images
 #
 # Push images
 #
-for image in policy-nexus policy-drools policy-pe; do
+for image in policy-nexus policy-base; do
     echo "Pushing $image"
     docker push ${DOCKER_REPOSITORY}/onap/policy/$image:${MVN_MAJMIN_VERSION}-latest
 
