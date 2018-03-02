@@ -78,7 +78,7 @@ docker images
 #
 # Push images
 #
-for image in policy-nexus policy-drools policy-pe; do
+for image in policy-nexus policy-base policy-drools policy-pe ; do
     echo "Pushing $image"
     docker push ${DOCKER_REPOSITORY}/onap/policy/$image:${MVN_MAJMIN_VERSION}-latest
 
