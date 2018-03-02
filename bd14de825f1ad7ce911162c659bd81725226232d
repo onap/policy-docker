@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_2ea8f38b",
+        "filename": "docker_merge.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2018-03-02T18:17:25Z",
+      "side": 0,
+      "message": "may be leave policy-drools until done.   We can experiment first with policy-engine images, and if OK we can do the same with drools-pdp",
+      "revId": "bd14de825f1ad7ce911162c659bd81725226232d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_2ebd53b7",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2018-03-02T18:17:25Z",
+      "side": 0,
+      "message": "can we leave these 2 sections until we have the drools-pdp work done.",
+      "revId": "bd14de825f1ad7ce911162c659bd81725226232d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
