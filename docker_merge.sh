@@ -6,6 +6,7 @@ MVN_VERSION=$(cat target/version)
 MVN_MAJMIN_VERSION=$(cut -f 1,2 -d . target/version)
 TIMESTAMP=$(date -u +%Y%m%dT%H%M%S)
 PROXY_ARGS=""
+IMAGE=policy-nexus
 
 if [ $HTTP_PROXY ]; then
     PROXY_ARGS+="--build-arg HTTP_PROXY=${HTTP_PROXY}"
@@ -40,59 +41,52 @@ fi
 
 echo $MVN_MAJMIN_VERSION
 
-cp policy-pe/* target/policy-pe/
-cp policy-drools/* target/policy-drools/
+echo "Building $IMAGE"
+mkdir -p target/$IMAGE
+cp $IMAGE/* target/$IMAGE
 
-for image in policy-os policy-nexus policy-base policy-drools policy-pe ; do
-    echo "Building $image"
-    mkdir -p target/$image
-    cp $image/* target/$image
+#
+# This is the local latest tagged image. The Dockerfile's need this to build images
+#
+TAGS="--tag onap/policy/${IMAGE}:latest"
+#
+# This has the nexus repo prepended and only major/minor version with latest
+#
+TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/onap/policy/${IMAGE}:${MVN_MAJMIN_VERSION}-latest"
+#
+# This has the nexus repo prepended and major/minor/patch version with timestamp
+#
+TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/onap/policy/${IMAGE}:${MVN_VERSION}-${TIMESTAMP}"
 
-    #
-    # This is the local latest tagged image. The Dockerfile's need this to build images
-    #
-    TAGS="--tag onap/policy/${image}:latest"
-    #
-    # This has the nexus repo prepended and only major/minor version with latest
-    #
-    TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/onap/policy/${image}:${MVN_MAJMIN_VERSION}-latest"
-    #
-    # This has the nexus repo prepended and major/minor/patch version with timestamp
-    #
-    TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/onap/policy/${image}:${MVN_VERSION}-${TIMESTAMP}"
+echo $TAGS
 
-    echo $TAGS
+docker build --quiet ${PROXY_ARGS} $TAGS target/$IMAGE
 
-    docker build --quiet ${PROXY_ARGS} $TAGS target/$image
-
-    if [ $? -ne 0 ]
-    then
-        echo "Docker build failed"
-        docker images
-        exit 1
-    fi
-done
+if [ $? -ne 0 ]
+then
+    echo "Docker build failed"
+    docker images
+    exit 1
+fi
 
 docker images
 
 #
-# Push images
+# Push image
 #
-for image in policy-nexus policy-base policy-drools policy-pe ; do
-    echo "Pushing $image"
-    docker push ${DOCKER_REPOSITORY}/onap/policy/$image:${MVN_MAJMIN_VERSION}-latest
+echo "Pushing $IMAGE"
+docker push ${DOCKER_REPOSITORY}/onap/policy/$IMAGE:${MVN_MAJMIN_VERSION}-latest
 
-    if [ $? -ne 0 ]
-    then
-        echo "Docker push failed"
-        exit 1
-    fi
+if [ $? -ne 0 ]
+then
+    echo "Docker push failed"
+    exit 1
+fi
 
-    docker push ${DOCKER_REPOSITORY}/onap/policy/$image:${MVN_VERSION}-${TIMESTAMP}
+docker push ${DOCKER_REPOSITORY}/onap/policy/$IMAGE:${MVN_VERSION}-${TIMESTAMP}
 
-    if [ $? -ne 0 ]
-    then
-        echo "Docker push failed"
-        exit 1
-    fi
-done
+if [ $? -ne 0 ]
+then
+    echo "Docker push failed"
+    exit 1
+fi

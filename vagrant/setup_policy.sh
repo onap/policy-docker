@@ -18,17 +18,17 @@ do
     mvn clean install
 done
 
+for comp in policy-pe policy-drools
+do
+    cd $HOME/$comp
+    sudo docker build -t onap/policy/$comp packages/docker/target/$comp 
+done
+
 cd $HOME
 git clone http://gerrit.onap.org/r/policy/docker
 cd docker
-mvn prepare-package
-cp -r target/policy-pe/* policy-pe/
-cp -r target/policy-drools/* policy-drools
 
-for comp in policy-os policy-nexus policy-base policy-pe policy-drools
-do
-    sudo docker build -t onap/policy/$comp $HOME/docker/$comp
-done
+sudo docker build -t onap/policy/policy-nexus policy-nexus
 
 cd $HOME/docker
 chmod +x config/drools/drools-tweaks.sh
