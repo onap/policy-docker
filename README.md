@@ -6,7 +6,7 @@ To build the policy-nexus docker image, run the 'docker build' command on the fo
 	policy-nexus
 
 For example:
-docker build -t onap/policy/policy-nexus  policy-nexus
+docker build -t onap/policy-nexus  policy-nexus
 
 In addition, this source repository contains a docker-compose.yml file and associated configuration files (in the 'config' directory) that can be used to start up the ONAP Policy Engine docker containers
 
