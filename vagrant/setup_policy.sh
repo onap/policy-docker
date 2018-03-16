@@ -21,14 +21,14 @@ done
 for comp in policy-pe policy-drools
 do
     cd $HOME/$comp
-    sudo docker build -t onap/policy/$comp packages/docker/target/$comp 
+    sudo docker build -t onap/$comp packages/docker/target/$comp 
 done
 
 cd $HOME
 git clone http://gerrit.onap.org/r/policy/docker
 cd docker
 
-sudo docker build -t onap/policy/policy-nexus policy-nexus
+sudo docker build -t onap/policy-nexus policy-nexus
 
 cd $HOME/docker
 chmod +x config/drools/drools-tweaks.sh
