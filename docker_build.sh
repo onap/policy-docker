@@ -60,7 +60,7 @@ TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/onap/${IMAGE}:${MVN_MAJMIN_VERSION}-lat
 #
 # This has the nexus repo prepended and major/minor/patch version with timestamp
 #
-TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/onap/${IMAGE}:${MVN_VERSION}-STAGING-${TIMESTAMP}"
+TAGS="${TAGS} --tag ${DOCKER_REPOSITORY}/onap/${IMAGE}:${MVN_VERSION}-STAGING-${TIMESTAMP}Z"
 
 echo $TAGS
 
@@ -94,7 +94,7 @@ then
     exit 1
 
 fi
-docker push ${DOCKER_REPOSITORY}/onap/$IMAGE:${MVN_VERSION}-STAGING-${TIMESTAMP}
+docker push ${DOCKER_REPOSITORY}/onap/$IMAGE:${MVN_VERSION}-STAGING-${TIMESTAMP}Z
 
 if [ $? -ne 0 ]
 then
