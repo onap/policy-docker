@@ -16,9 +16,12 @@ services:
       ports:
        - "3306:3306"
    nexus:
-      image: onap/policy-nexus
+      image: sonatype/nexus
       container_name: nexus
       hostname: nexus
+      restart: always
+      ports:
+       - "9081:8081"
    pap:
       image: onap/policy-pe
       environment:
@@ -60,6 +63,7 @@ services:
        - mariadb
        - nexus
       hostname: drools
+      restart: always
       ports:
        - "6969:6969"
        - "9696:9696"
