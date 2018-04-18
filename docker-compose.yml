@@ -29,7 +29,7 @@ services:
       ports:
        - "3306:3306"
    nexus:
-      image: sonatype/nexus
+      image: sonatype/nexus:2.14.8-01
       container_name: nexus
       hostname: nexus
       restart: always

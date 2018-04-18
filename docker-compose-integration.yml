@@ -24,7 +24,7 @@ services:
       expose:
        - 3306
    nexus:
-      image: onap/policy-nexus
+      image: sonatype/nexus:2.14.8-01
       container_name: nexus
       hostname: nexus
    pap:
