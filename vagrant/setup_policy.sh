@@ -41,8 +41,6 @@ cd $HOME
 git clone http://gerrit.onap.org/r/policy/docker
 cd docker
 
-sudo docker build -t onap/policy-nexus policy-nexus
-
 cd $HOME/docker
 chmod +x config/drools/drools-tweaks.sh
 echo 192.168.0.10 > config/pe/ip_addr.txt

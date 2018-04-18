@@ -2,19 +2,9 @@ Copyright 2018 AT&T Intellectual Property. All rights reserved.
 This file is licensed under the CREATIVE COMMONS ATTRIBUTION 4.0 INTERNATIONAL LICENSE
 Full license text at https://creativecommons.org/licenses/by/4.0/legalcode
 
-This source repository contains the files for building the ONAP Policy Engine Docker image policy-nexus. 
+This source repository contains the files for the ONAP Policy docker-compose configuration
 
-To build it using Maven 3, first build 'policy/common', 'policy/engine', 'policy/drools-pdp', and 'policy/drools-applications' repositories, and then run: mvn prepare-package. This will pull the installation zip files needed for building the policy-pe and policy-drools Docker images into the target directory.  It will not actually build the docker images; the following additional steps are needed to accomplish this:
-
-To build the policy-nexus docker image, run the 'docker build' command on the following directory:
-	policy-nexus
-
-For example:
-docker build -t onap/policy-nexus  policy-nexus
-
-In addition, this source repository contains a docker-compose.yml file and associated configuration files (in the 'config' directory) that can be used to start up the ONAP Policy Engine docker containers
-
-If you want to call the docker-compose, the following needs to be setup before doing so:
+The following needs to be setup before using docker-compose:
 
 chmod +x config/drools/drools-tweaks.sh
 IP_ADDRESS=$(ifconfig eth0 | grep "inet addr" | tr -s ' ' | cut -d' ' -f3 | cut -d':' -f2)
