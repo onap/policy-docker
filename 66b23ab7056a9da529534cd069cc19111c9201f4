@@ -22,6 +22,30 @@
       "revId": "66b23ab7056a9da529534cd069cc19111c9201f4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a93c517_a10ddbe9",
+        "filename": "config/pe/base.conf",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2018-05-08T11:51:33Z",
+      "side": 1,
+      "message": "Ram it is a good point, I would hope that no process in ONAP is doing a query that would take over 30 seconds. I agree in that we will find these situations out and can optimize and adjust from there.",
+      "parentUuid": "5a93c517_e17683a3",
+      "range": {
+        "startLine": 20,
+        "startChar": 113,
+        "endLine": 20,
+        "endChar": 134
+      },
+      "revId": "66b23ab7056a9da529534cd069cc19111c9201f4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
