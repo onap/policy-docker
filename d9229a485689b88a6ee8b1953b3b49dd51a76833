@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a93c517_b228ca86",
+        "filename": "config/drools/base.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2018-05-09T11:21:30Z",
+      "side": 1,
+      "message": "A comment and 2 notes:\n\nComment:\n\nProvided that this is associated with an optional feature, feature-pooling-dmaap specifically, it would be best to be placed in a feature-pooling-dmaap.conf file (as it is done for example for feature-healthcheck.conf for the feature-healthcheck feature).    The installation would take care of processing and expanding contents regardless.\n\nNote 1:\nAs a note, the topic name, may not be necessary to be a first installation provisionable parameter for *ONAP* installations, so could be placed in properties files (folks that desire to change it, can go directly to those files and change it, if for some reason they want to change it).   You could pick a canonical name that nobody uses and stick with it.   This is because ONAP installations are not shared.\n\nNote 2:\nWith regards to naming, I think at any given time, we are going to have either the amsterdam controller or the beijing (new controller, may be renamed in casablanca), but not both.   I think it is safe to assume just one pooling topic, so the \"amsterdam\" marker could be removed.",
+      "revId": "d9229a485689b88a6ee8b1953b3b49dd51a76833",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
