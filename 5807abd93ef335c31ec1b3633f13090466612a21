@@ -1,0 +1,9 @@
+Code-Review+1: Liam Fallon <liam.fallon@ericsson.com>
+Code-Review+1: Marco Platania <platania@research.att.com>
+Code-Review+2: Pamela Dragosh <pdragosh@research.att.com>
+Verified+1: Pamela Dragosh <pdragosh@research.att.com>
+Submitted-by: Pamela Dragosh <pdragosh@research.att.com>
+Submitted-at: Tue, 22 May 2018 18:44:43 +0000
+Reviewed-on: https://gerrit.onap.org/r/48529
+Project: policy/docker
+Branch: refs/heads/master
