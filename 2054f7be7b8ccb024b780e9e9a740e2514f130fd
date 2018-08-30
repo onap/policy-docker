@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_2cc28234",
+        "filename": "config/pe/push-policies.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2757
+      },
+      "writtenOn": "2018-08-30T13:40:07Z",
+      "side": 1,
+      "message": "-v(verbose) and --silent. Think \"-v\" is not needed",
+      "revId": "2054f7be7b8ccb024b780e9e9a740e2514f130fd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
