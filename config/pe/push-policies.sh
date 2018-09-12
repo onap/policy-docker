@@ -151,6 +151,43 @@ curl -k -v --silent -X PUT --header 'Content-Type: application/json' --header 'A
 	"onapName": "DCAE"
 }' 'https://pdp:8081/pdp/api/createPolicy'
 
+sleep 2
+
+echo "Create MicroServicevPCI Policy"
+curl -k -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
+        "configBody": "{ \"service\": \"tca_policy\", \"location\": \"SampleServiceLocation_pci\", \"uuid\": \"test_pci\", \"policyName\": \"MicroServicevPCI\", \"description\": \"MicroService vPCI Policy\", \"configName\": \"SampleConfigName\", \"templateVersion\": \"OpenSource.version.1\", \"version\": \"1.1.0\", \"priority\": \"1\", \"policyScope\": \"resource=SampleResource,service=SampleService,type=SampleType,closedLoopControlName=ControlLoop-vPCI-fb41f388-a5f2-11e8-98d0-529269fb1459\", \"riskType\": \"SampleRiskType\", \"riskLevel\": \"1\", \"guard\": \"False\", \"content\": { \"tca_policy\": { \"domain\": \"measurementsForVfScaling\", \"metricsPerEventName\": [{ \"eventName\": \"vFirewallBroadcastPackets\", \"controlLoopSchemaType\": \"VNF\", \"policyScope\": \"DCAE\", \"policyName\": \"DCAE.Config_tca-hi-lo\", \"policyVersion\": \"v0.0.1\", \"thresholds\": [{ \"closedLoopControlName\": \"ControlLoop-vPCI-fb41f388-a5f2-11e8-98d0-529269fb1459\", \"version\": \"1.0.2\", \"fieldPath\": \"$.event.executePolicy\", \"thresholdValue\": 1, \"direction\": \"GREATER_OR_EQUAL\", \"severity\": \"MAJOR\", \"closedLoopEventStatus\": \"ONSET\" } ] }] } } }",
+        "policyConfigType": "MicroService",
+        "policyName": "com.MicroServicevPCI",
+        "onapName": "DCAE"
+}' 'https://pdp:8081/pdp/api/createPolicy'
+
+sleep 2
+
+echo "Create PCI MS Config Policy"
+curl -k -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
+  "policyName": "com.PCIMS_CONFIG_POLICY",
+  "configBody": "{ \"PCI_NEIGHBOR_CHANGE_CLUSTER_TIMEOUT_IN_SECS\":60, \"PCI_MODCONFIG_POLICY_NAME\":\"ControlLoop-vPCI-fb41f388-a5f2-11e8-98d0-529269fb1459\", \"PCI_OPTMIZATION_ALGO_CATEGORY_IN_OOF\":\"OOF-PCI-OPTIMIZATION\", \"PCI_SDNR_TARGET_NAME\":\"SDNR\" }",
+  "policyType": "Config",
+  "attributes" : { "matching" : { "key1" : "value1" } },
+  "policyConfigType": "Base",
+  "onapName": "DCAE",
+  "configName": "PCIMS_CONFIG_POLICY",
+  "configBodyType": "JSON"
+}' 'https://pdp:8081/pdp/api/createPolicy'
+
+sleep 2
+
+echo "Create OOF Config Policy"
+curl -k -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
+  "policyName": "com.OOF_PCI_CONFIG_POLICY",
+  "configBody": "{ \"ALGO_CATEGORY\":\"OOF-PCI-OPTIMIZATION\", \"PCI_OPTMIZATION_ALGO_NAME\":\"OOF-PCI-OPTIMIZATION-LEVEL1\", \"PCI_OPTIMIZATION_NW_CONSTRAINT\":\"MAX5PCICHANGESONLY\", \"PCI_OPTIMIZATION_PRIORITY\": 2, \"PCI_OPTIMIZATION_TIME_CONSTRAINT\":\"ONLYATNIGHT\" }",
+  "attributes" : { "matching" : { "key1" : "value1" } },
+  "policyType": "Config",
+  "policyConfigType": "Base",
+  "onapName": "DCAE",
+  "configName": "OOF_PCI_CONFIG_POLICY",
+  "configBodyType": "JSON"
+}' 'https://pdp:8081/pdp/api/createPolicy'
 
 #########################################Creating Decision Guard policy######################################### 
 
@@ -258,4 +295,31 @@ curl -k -v --silent -X PUT --header 'Content-Type: application/json' --header 'A
   "pdpGroup": "default",
   "policyName": "com.MicroServicevCPE",
   "policyType": "MicroService"
+}' 'https://pdp:8081/pdp/api/pushPolicy'
+
+sleep 10
+
+echo "pushPolicy : PUT : com.MicroServicevPCI"
+curl -k -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
+  "pdpGroup": "default",
+  "policyName": "com.MicroServicevPCI",
+  "policyType": "MicroService"
+}' 'https://pdp:8081/pdp/api/pushPolicy'
+
+sleep 10
+
+echo "pushPolicy : PUT : com.PCIMS_CONFIG_POLICY"
+curl -k -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
+  "pdpGroup": "default",
+  "policyName": "com.PCIMS_CONFIG_POLICY",
+  "policyType": "Base"
+}' 'https://pdp:8081/pdp/api/pushPolicy' 
+
+sleep 10
+
+echo "pushPolicy : PUT : com.OOF_PCI_CONFIG_POLICY"
+curl -k -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
+  "pdpGroup": "default",
+  "policyName": "com.OOF_PCI_CONFIG_POLICY",
+  "policyType": "Base"
 }' 'https://pdp:8081/pdp/api/pushPolicy'
