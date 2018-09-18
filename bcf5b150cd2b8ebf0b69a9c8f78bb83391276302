@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_d8f48d5c",
+        "filename": "config/pe/push-policies.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2018-09-18T11:24:46Z",
+      "side": 1,
+      "message": "Maybe remove the tabs so that the tab handling is consistent in the file.",
+      "range": {
+        "startLine": 185,
+        "startChar": 1,
+        "endLine": 185,
+        "endChar": 2
+      },
+      "revId": "bcf5b150cd2b8ebf0b69a9c8f78bb83391276302",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
