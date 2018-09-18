@@ -115,6 +115,26 @@ curl -k -v --silent -X PUT --header 'Content-Type: application/json' --header 'A
 	}
 }' 'https://pdp:8081/pdp/api/createPolicy'
 
+sleep 2
+
+echo "Create BRMSParamvPCI Policy"
+curl -k -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/html' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
+	"policyConfigType": "BRMS_PARAM",
+	"policyName": "com.BRMSParamvPCI",
+	"policyDescription": "BRMS Param vPCI policy",
+	"policyScope": "com",
+	"attributes": {
+	    "MATCHING": {
+	    	"controller" : "casablanca"
+	    },
+		"RULE": {
+			"templateName": "ClosedLoopControlName",
+			"closedLoopControlName": "ControlLoop-vPCI-fb41f388-a5f2-11e8-98d0-529269fb1459",
+			"controlLoopYaml": "controlLoop%3A%0D%0A++version%3A+3.0.0%0D%0A++controlLoopName%3A+ControlLoop-vPCI-fb41f388-a5f2-11e8-98d0-529269fb1459%0D%0A++trigger_policy%3A+unique-policy-id-123-modifyconfig%0D%0A++timeout%3A+1200%0D%0A++abatement%3A+false%0D%0A+%0D%0Apolicies%3A%0D%0A++-+id%3A+unique-policy-id-123-modifyconfig%0D%0A++++name%3A+modify+PCI+config%0D%0A++++description%3A%0D%0A++++actor%3A+SDNR%0D%0A++++recipe%3A+ModifyConfig%0D%0A++++target%3A%0D%0A++++++%23+These+fields+are+not+used%0D%0A++++++resourceID%3A+Eace933104d443b496b8.nodes.heat.vpg%0D%0A++++++type%3A+VNF%0D%0A++++retry%3A+0%0D%0A++++timeout%3A+300%0D%0A++++success%3A+final_success%0D%0A++++failure%3A+final_failure%0D%0A++++failure_timeout%3A+final_failure_timeout%0D%0A++++failure_retries%3A+final_failure_retries%0D%0A++++failure_exception%3A+final_failure_exception%0D%0A++++failure_guard%3A+final_failure_guard"
+		}
+	}
+}' 'https://pdp:8081/pdp/api/createPolicy'
+
 #########################################Create Micro Service Config policies##########################################
 
 echo "Create MicroService Config Policies"
@@ -298,6 +318,15 @@ echo "pushPolicy : PUT : com.BRMSParamvCPE"
 curl -k -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
   "pdpGroup": "default",
   "policyName": "com.BRMSParamvCPE",
+  "policyType": "BRMS_Param"
+}' 'https://pdp:8081/pdp/api/pushPolicy'
+
+sleep 2
+
+echo "pushPolicy : PUT : com.BRMSParamvPCI"
+curl -k -v --silent -X PUT --header 'Content-Type: application/json' --header 'Accept: text/plain' --header 'ClientAuth: cHl0aG9uOnRlc3Q=' --header 'Authorization: Basic dGVzdHBkcDphbHBoYTEyMw==' --header 'Environment: TEST' -d '{
+  "pdpGroup": "default",
+  "policyName": "com.BRMSParamvPCI",
   "policyType": "BRMS_Param"
 }' 'https://pdp:8081/pdp/api/pushPolicy'
 
