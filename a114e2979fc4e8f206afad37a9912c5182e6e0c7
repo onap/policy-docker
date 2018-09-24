@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "1a76adc5_88e1c3d2",
+        "filename": "config/pe/base.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2018-09-24T14:39:21Z",
+      "side": 1,
+      "message": "based on the discussion in another review, this is correct; I withdraw my comment",
+      "parentUuid": "1a76adc5_3ca31551",
+      "revId": "a114e2979fc4e8f206afad37a9912c5182e6e0c7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a76adc5_dc8781b5",
         "filename": "config/pe/base.conf",
         "patchSetId": 1
