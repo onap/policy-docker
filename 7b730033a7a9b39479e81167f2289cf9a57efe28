@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a76adc5_f3c61168",
+        "filename": "config/drools/base.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2018-09-28T19:14:24Z",
+      "side": 1,
+      "message": "Is this just random? Or could/should onap be used??",
+      "range": {
+        "startLine": 34,
+        "startChar": 35,
+        "endLine": 34,
+        "endChar": 40
+      },
+      "revId": "7b730033a7a9b39479e81167f2289cf9a57efe28",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
