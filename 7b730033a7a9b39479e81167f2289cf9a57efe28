@@ -22,6 +22,30 @@
       "revId": "7b730033a7a9b39479e81167f2289cf9a57efe28",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a76adc5_337b292b",
+        "filename": "config/drools/base.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2018-09-28T19:32:07Z",
+      "side": 1,
+      "message": "This is a default account that comes preinstalled with AAF at installation.  It is used by several components including portal, so we know it is there.\n\nIn the future, once we get a clear picture how AAF comes up preconfigured with policy, and if there is a policy@policy.onap.org with password credentials set up.  There is a ticket open with Jonathan to work out these details.  Once that is resolved, we can change the user line, we can decide then once that is ready.   Right now, this account is the best alternative as they system currently behaves.\n\nIn general, I think is very reasonable to have this demo account attached to appropriate roles and permissions over all the ONAP components for Demo installations purposes for the time being.",
+      "parentUuid": "1a76adc5_f3c61168",
+      "range": {
+        "startLine": 34,
+        "startChar": 35,
+        "endLine": 34,
+        "endChar": 40
+      },
+      "revId": "7b730033a7a9b39479e81167f2289cf9a57efe28",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
