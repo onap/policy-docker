@@ -253,7 +253,7 @@ curl -k -v --silent -X PUT --header 'Content-Type: application/json' --header 'A
     "policyClass": "Decision",
     "policyName": "com.AllPermitGuard",
     "policyDescription": "Testing all Permit YAML Guard Policy",
-    "ecompName": "PDPD",
+    "onapName": "PDPD",
     "ruleProvider": "GUARD_YAML",
     "attributes": {
         "MATCHING": {
@@ -265,7 +265,7 @@ curl -k -v --silent -X PUT --header 'Content-Type: application/json' --header 'A
             "timeWindow": "1",
             "timeUnits": "minute",
             "guardActiveStart": "00:00:01-05:00",
-            "guardActiveEnd": "00:00:00-05:00"
+            "guardActiveEnd": "23:59:59-05:00"
         }
     }
 }' 'https://pdp:8081/pdp/api/createPolicy'
@@ -277,7 +277,7 @@ curl -k -v --silent -X PUT --header 'Content-Type: application/json' --header 'A
     "policyClass": "Decision",
     "policyName": "com.vDNS_Frequency",
     "policyDescription": "Limit vDNS Scale Up over time period",
-    "ecompName": "PDPD",
+    "onapName": "PDPD",
     "ruleProvider": "GUARD_YAML",
     "attributes": {
         "MATCHING": {
@@ -289,7 +289,7 @@ curl -k -v --silent -X PUT --header 'Content-Type: application/json' --header 'A
             "timeWindow": "10",
             "timeUnits": "minute",
             "guardActiveStart": "00:00:01-05:00",
-            "guardActiveEnd": "00:00:00-05:00"
+            "guardActiveEnd": "23:59:59-05:00"
         }
     }
 }' 'https://pdp:8081/pdp/api/createPolicy'
@@ -301,7 +301,7 @@ curl -k -v --silent -X PUT --header 'Content-Type: application/json' --header 'A
     "policyClass": "Decision",
     "policyName": "com.vDNS_MinMax",
     "policyDescription": "Ensure number of instances within a range",
-    "ecompName": "PDPD",
+    "onapName": "SampleDemo",
     "ruleProvider": "GUARD_MIN_MAX",
     "attributes": {
         "MATCHING": {
@@ -312,7 +312,7 @@ curl -k -v --silent -X PUT --header 'Content-Type: application/json' --header 'A
             "min": "1",
             "max": "5",
             "guardActiveStart": "00:00:01-05:00",
-            "guardActiveEnd": "00:00:00-05:00"
+            "guardActiveEnd": "23:59:59-05:00"
         }
     }
 }' 'https://pdp:8081/pdp/api/createPolicy'
