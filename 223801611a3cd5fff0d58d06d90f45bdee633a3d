@@ -1,0 +1,11 @@
+Code-Review+1: Xin Miao <xin.miao@huawei.com>
+Code-Review+1: Gaurav Agrawal <gaurav.agrawal@huawei.com>
+Code-Review+1: Pamela Dragosh <pdragosh@research.att.com>
+Code-Review+1: Liam Fallon <liam.fallon@est.tech>
+Code-Review+2: Jorge Hernandez <jorge.hernandez-herrero@att.com>
+Verified+1: Jorge Hernandez <jorge.hernandez-herrero@att.com>
+Submitted-by: Jorge Hernandez <jorge.hernandez-herrero@att.com>
+Submitted-at: Fri, 30 Nov 2018 15:17:44 +0000
+Reviewed-on: https://gerrit.onap.org/r/73925
+Project: policy/docker
+Branch: refs/heads/master
