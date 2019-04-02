@@ -1,6 +1,6 @@
 <!--
   ============LICENSE_START=======================================================
-   Copyright (C) 2018 Ericsson, Tieto. All rights reserved.
+   Copyright (C) 2019 Ericsson, Tieto. All rights reserved.
   ================================================================================
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -77,7 +77,6 @@
                     <apiVersion>1.23</apiVersion>
                     <pullRegistry>${docker.pull.registry}</pullRegistry>
                     <pushRegistry>${docker.push.registry}</pushRegistry>
-
                     <images>
                         <image>
                             <name>onap/policy-common-alpine</name>
@@ -89,6 +88,9 @@
                                     <tag>${project.version}-${maven.build.timestamp}</tag>
                                     <tag>${project.docker.latesttag.version}</tag>
                                 </tags>
+                                <args>
+                                    <BUILD_VERSION>${docker.build.version}</BUILD_VERSION>
+                                </args>
                             </build>
                         </image>
                     </images>

@@ -1,16 +1,30 @@
+#   ============LICENSE_START=======================================================
+#    Copyright (C) 2019 Tieto. All rights reserved.
+#   ================================================================================
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
 #
-# Docker file to build an image that contains commom packages for Policy apps
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+#   SPDX-License-Identifier: Apache-2.0
+#   ============LICENSE_END=========================================================
+
+#
+# Docker file to build an image that contains commom packages for Policy components
 #
 FROM onap/policy-base-alpine
 
 LABEL maintainer="Policy Team"
 
-ARG HTTP_PROXY=${HTTP_PROXY}
-ARG HTTPS_PROXY=${HTTPS_PROXY}
 ARG BUILD_VERSION=${BUILD_VERSION}
 
-ENV http_proxy $HTTP_PROXY
-ENV https_proxy $HTTPS_PROXY
 ENV BUILD_VERSION ${BUILD_VERSION}
 ENV POLICY_HOME=/opt/app/policy
 
