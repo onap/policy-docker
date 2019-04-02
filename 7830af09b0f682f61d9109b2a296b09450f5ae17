@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2820a5b_7bebe84e",
+        "filename": "policy-base/alpine/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-04-02T00:59:27Z",
+      "side": 1,
+      "message": "2019 license",
+      "revId": "7830af09b0f682f61d9109b2a296b09450f5ae17",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2521f3e_dceaab53",
+        "filename": "policy-base/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-04-02T00:59:27Z",
+      "side": 1,
+      "message": "\"policy components\" instead of \"policy apps\"\n\nYou may want to add a license header.",
+      "revId": "7830af09b0f682f61d9109b2a296b09450f5ae17",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5befcea_11faf59a",
+        "filename": "policy-base/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-04-02T00:59:27Z",
+      "side": 1,
+      "message": "is JAVA_HOME already set up then in openjdk:8-alpine ?",
+      "revId": "7830af09b0f682f61d9109b2a296b09450f5ae17",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39a509d7_af42da7c",
+        "filename": "policy-base/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-04-02T00:59:27Z",
+      "side": 1,
+      "message": "2019 - global",
+      "revId": "7830af09b0f682f61d9109b2a296b09450f5ae17",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3214e80_c1feaa83",
+        "filename": "policy-common/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-04-02T00:59:27Z",
+      "side": 1,
+      "message": "since you\u0027re touching this, better to remove the *PROXY* and *proxy* all together.",
+      "revId": "7830af09b0f682f61d9109b2a296b09450f5ae17",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aca21308_3d35c4c8",
+        "filename": "policy-common/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-04-02T00:59:27Z",
+      "side": 1,
+      "message": "how are you thinking of handling BUILD_VERSION ?",
+      "revId": "7830af09b0f682f61d9109b2a296b09450f5ae17",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
