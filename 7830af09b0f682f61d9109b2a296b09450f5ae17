@@ -209,6 +209,24 @@
       "revId": "7830af09b0f682f61d9109b2a296b09450f5ae17",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "950908fb_9b88a6a8",
+        "filename": "policy-common/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5040
+      },
+      "writtenOn": "2019-04-03T13:07:39Z",
+      "side": 1,
+      "message": "Set it to ${project.version} in policy-common/pom.xml (line 43)",
+      "parentUuid": "5d556bcc_97d6afe5",
+      "revId": "7830af09b0f682f61d9109b2a296b09450f5ae17",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
