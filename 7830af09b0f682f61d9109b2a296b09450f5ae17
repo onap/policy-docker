@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c9c3cd78_0e5a7b58",
+        "filename": "policy-base/alpine/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5040
+      },
+      "writtenOn": "2019-04-03T12:35:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2820a5b_7bebe84e",
+      "revId": "7830af09b0f682f61d9109b2a296b09450f5ae17",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2521f3e_dceaab53",
         "filename": "policy-base/alpine/src/main/docker/Dockerfile",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "07385797_15a6b145",
+        "filename": "policy-base/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5040
+      },
+      "writtenOn": "2019-04-03T12:35:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2521f3e_dceaab53",
+      "revId": "7830af09b0f682f61d9109b2a296b09450f5ae17",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5befcea_11faf59a",
         "filename": "policy-base/alpine/src/main/docker/Dockerfile",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2019-04-02T00:59:27Z",
       "side": 1,
       "message": "is JAVA_HOME already set up then in openjdk:8-alpine ?",
+      "revId": "7830af09b0f682f61d9109b2a296b09450f5ae17",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72a43ee7_90945063",
+        "filename": "policy-base/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5040
+      },
+      "writtenOn": "2019-04-03T12:35:26Z",
+      "side": 1,
+      "message": "Yes, JAVA_HOME is set in the openjdk:8-alpine: JAVA_HOME\u003d/usr/lib/jvm/java-1.8-openjdk",
+      "parentUuid": "b5befcea_11faf59a",
       "revId": "7830af09b0f682f61d9109b2a296b09450f5ae17",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "4142f489_2c0298a0",
+        "filename": "policy-common/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5040
+      },
+      "writtenOn": "2019-04-03T12:35:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3214e80_c1feaa83",
+      "revId": "7830af09b0f682f61d9109b2a296b09450f5ae17",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aca21308_3d35c4c8",
         "filename": "policy-common/alpine/src/main/docker/Dockerfile",
         "patchSetId": 1
@@ -98,6 +170,24 @@
       "writtenOn": "2019-04-02T00:59:27Z",
       "side": 1,
       "message": "how are you thinking of handling BUILD_VERSION ?",
+      "revId": "7830af09b0f682f61d9109b2a296b09450f5ae17",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25b8098f_e2386bde",
+        "filename": "policy-common/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 5040
+      },
+      "writtenOn": "2019-04-03T12:35:26Z",
+      "side": 1,
+      "message": "We can pass it via docker-maven-plugin configuration as:\n\u003cargs\u003e                               \u003cBUILD_VERSION\u003e${docker.build.version}\u003c/BUILD_VERSION\u003e\n\u003c/args\u003e \nI\u0027m not sure what to use as default value, so that project.version used. If required it can be overridden with maven arg: -Ddocker.build.version\u003d\"anything_here\"",
+      "parentUuid": "aca21308_3d35c4c8",
       "revId": "7830af09b0f682f61d9109b2a296b09450f5ae17",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
