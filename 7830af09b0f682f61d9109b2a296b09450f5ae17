@@ -191,6 +191,24 @@
       "revId": "7830af09b0f682f61d9109b2a296b09450f5ae17",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d556bcc_97d6afe5",
+        "filename": "policy-common/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-04-03T13:01:40Z",
+      "side": 1,
+      "message": "I think this should be overriden by derived images (that use this value when built), for this one, I guess just setting it up to the project.version of the pom as default?",
+      "parentUuid": "25b8098f_e2386bde",
+      "revId": "7830af09b0f682f61d9109b2a296b09450f5ae17",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
