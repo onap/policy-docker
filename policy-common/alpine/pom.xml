@@ -26,7 +26,7 @@
     <parent>
         <groupId>org.onap.policy.docker</groupId>
         <artifactId>policy-common</artifactId>
-        <version>1.4.1-SNAPSHOT</version>
+        <version>1.5.0-SNAPSHOT</version>
     </parent>
 
     <packaging>pom</packaging>
