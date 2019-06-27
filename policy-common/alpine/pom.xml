@@ -43,7 +43,7 @@
                 <version>1.0</version>
                 <executions>
                     <execution>
-                        <phase>validate</phase>
+                        <phase>pre-clean</phase>
                         <goals>
                             <goal>execute</goal>
                         </goals>
@@ -79,14 +79,13 @@
                     <pushRegistry>${docker.push.registry}</pushRegistry>
                     <images>
                         <image>
-                            <name>onap/policy-common-alpine</name>
+                            <name>cristinapauna/policy-common-alpine:%l-${os.arch}</name>
                             <build>
                                 <cleanup>try</cleanup>
                                 <dockerFile>Dockerfile</dockerFile>
                                 <tags>
-                                    <tag>${project.version}</tag>
-                                    <tag>${project.version}-${maven.build.timestamp}</tag>
-                                    <tag>${project.docker.latesttag.version}</tag>
+                                    <tag>${project.version}-${os.arch}</tag>
+                                    <tag>${project.docker.latesttag.version}-${os.arch}</tag>
                                 </tags>
                                 <args>
                                     <BUILD_VERSION>${docker.build.version}</BUILD_VERSION>
@@ -124,7 +123,7 @@
                             <goal>push</goal>
                         </goals>
                         <configuration>
-                            <image>onap/policy-common-alpine</image>
+                            <image>cristinapauna/policy-common-alpine</image>
                         </configuration>
                     </execution>
                 </executions>
