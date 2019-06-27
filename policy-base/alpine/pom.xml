@@ -76,17 +76,15 @@
                     <apiVersion>1.23</apiVersion>
                     <pullRegistry>${docker.pull.registry}</pullRegistry>
                     <pushRegistry>${docker.push.registry}</pushRegistry>
-
                     <images>
                         <image>
-                            <name>onap/policy-base-alpine</name>
+                            <name>policy-base-alpine</name>
                             <build>
                                 <cleanup>try</cleanup>
                                 <dockerFile>Dockerfile</dockerFile>
                                 <tags>
-                                    <tag>${project.version}</tag>
-                                    <tag>${project.version}-${maven.build.timestamp}</tag>
-                                    <tag>${project.docker.latesttag.version}</tag>
+				    <tag>${project.version}-${os.arch}</tag>
+                                    <tag>${project.docker.latesttag.version}-${os.arch}</tag>
                                 </tags>
                             </build>
                         </image>

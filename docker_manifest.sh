@@ -1,5 +1,6 @@
+#!/bin/bash
 #   ============LICENSE_START=======================================================
-#    Copyright (C) 2019 Tieto. All rights reserved.
+#    Copyright (C) 2019 ENEA AB. All rights reserved.
 #   ================================================================================
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -16,33 +17,22 @@
 #   SPDX-License-Identifier: Apache-2.0
 #   ============LICENSE_END=========================================================
 
-#
-# Docker file to build an image that contains commom packages for Policy components
-#
-FROM onap/policy-base-alpine:amd64
+REGISTRY='onap'
+IMAGE_NAME=$1
+IMAGE_TAG=$2
 
-LABEL maintainer="Policy Team"
-
-ARG BUILD_VERSION=${BUILD_VERSION}
-
-ENV BUILD_VERSION ${BUILD_VERSION}
-ENV POLICY_HOME=/opt/app/policy
-
-# Install common packages used in 6 out of 7 images
-RUN apk add --no-cache \
-    busybox-extras \
-    httpie \
-    jq \
-    maven \
-    py-pip \
-    python
-
-# Create policy user and group
-RUN addgroup -S policy && \
-    adduser -S  --shell /bin/bash -G policy policy
-
-# Create common directories and change owner
-RUN mkdir -p \
-    ${POLICY_HOME}/etc/ssl \
-    && chown  -R policy:policy ${POLICY_HOME} ${POLICY_HOME}/etc/ssl
-
+#create the template to be used with the manifest list
+cat > "${IMAGE_NAME}_${IMAGE_TAG}.yaml" <<EOF
+image: ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
+manifests:
+  -
+    image: ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}-amd64
+    platform:
+      architecture: amd64
+      os: linux
+  -
+    image: ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}-aarch64
+    platform:
+      architecture: arm64
+      os: linux
+EOF
