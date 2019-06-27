@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.onap.policy.docker</groupId>
         <artifactId>docker</artifactId>
-        <version>1.5.0-SNAPSHOT</version>
+        <version>2.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>policy-common</artifactId>
@@ -37,9 +37,8 @@
         <docker.skip>false</docker.skip>
         <docker.skip.build>false</docker.skip.build>
         <docker.skip.push>false</docker.skip.push>
-        <docker.pull.registry>nexus3.onap.org:10001</docker.pull.registry>
-        <docker.push.registry>nexus3.onap.org:10003</docker.push.registry>
-        <maven.build.timestamp.format>yyyyMMdd'T'HHmm</maven.build.timestamp.format>
+        <docker.pull.registry>docker.io</docker.pull.registry>
+        <docker.push.registry>docker.io</docker.push.registry>
         <docker.build.version>${project.version}</docker.build.version>
     </properties>
 
