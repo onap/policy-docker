@@ -17,9 +17,9 @@
 #   ============LICENSE_END=========================================================
 
 #
-# Docker file to build an image that contains commom packages for Policy components
+# Docker file to build an image that contains common packages for Policy components
 #
-FROM onap/policy-base-alpine
+FROM onap/policy-base-alpine:latest-${project.docker.arch}
 
 LABEL maintainer="Policy Team"
 
