@@ -19,7 +19,7 @@
 #
 # Docker file to build an image that contains commom packages for Policy components
 #
-FROM onap/policy-base-alpine
+FROM onap/policy-base-alpine:aarch64
 
 LABEL maintainer="Policy Team"
 
