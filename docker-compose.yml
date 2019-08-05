@@ -36,7 +36,7 @@ services:
       ports:
        - "9081:8081"
    pap:
-      image: onap/policy-pe:1.4-SNAPSHOT-latest
+      image: onap/policy-pe:1.5-SNAPSHOT-latest
       environment:
        - PRELOAD_POLICIES=${PRELOAD_POLICIES}
       container_name: pap
@@ -50,7 +50,7 @@ services:
       volumes:
        - ./config/pe:/tmp/policy-install/config
    pdp:
-      image: onap/policy-pe:1.4-SNAPSHOT-latest
+      image: onap/policy-pe:1.5-SNAPSHOT-latest
       container_name: pdp
       depends_on: 
        - pap
@@ -61,7 +61,7 @@ services:
       volumes:
        - ./config/pe:/tmp/policy-install/config
    brmsgw:
-      image: onap/policy-pe:1.4-SNAPSHOT-latest
+      image: onap/policy-pe:1.5-SNAPSHOT-latest
       container_name: brmsgw
       depends_on: 
        - pap
@@ -70,7 +70,7 @@ services:
       volumes:
        - ./config/pe:/tmp/policy-install/config
    drools:
-      image: onap/policy-pdp-cl:1.4-SNAPSHOT-latest
+      image: onap/policy-pdp-cl:1.5-SNAPSHOT-latest
       container_name: drools
       depends_on: 
        - mariadb
