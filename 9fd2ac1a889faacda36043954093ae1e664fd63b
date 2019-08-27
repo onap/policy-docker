@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce2ff97d_45b1929d",
+        "filename": "docker_manifest.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-08-27T15:25:22Z",
+      "side": 1,
+      "message": "Add license information",
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d86bfea5_4f49b8a7",
+        "filename": "docker_push_manifest.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-08-27T15:25:22Z",
+      "side": 1,
+      "message": "license info\n\nin general, a little more spacing in the file will help readibility",
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00688af1_7a2074e9",
+        "filename": "docker_push_manifest.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-08-27T15:25:22Z",
+      "side": 1,
+      "message": "how to handle staging-latest tag?",
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7496c5f0_3d10a4c3",
+        "filename": "docker_push_manifest.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-08-27T15:25:22Z",
+      "side": 1,
+      "message": "indent",
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c93bd27c_fac48f69",
+        "filename": "docker_push_manifest.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-08-27T15:25:22Z",
+      "side": 1,
+      "message": "indent",
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6af39a52_8ead5cef",
+        "filename": "policy-common/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-08-27T15:25:22Z",
+      "side": 1,
+      "message": "I don\u0027t see clearly how the push registry will work",
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
