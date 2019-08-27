@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8eafbc7d_739df07e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 5695
+      },
+      "writtenOn": "2019-08-27T17:28:04Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 7,
+        "startChar": 14,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce2ff97d_45b1929d",
         "filename": "docker_manifest.sh",
         "patchSetId": 2
@@ -16,6 +39,75 @@
       "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b556c76_78909095",
+        "filename": "docker_manifest.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5695
+      },
+      "writtenOn": "2019-08-27T17:28:04Z",
+      "side": 1,
+      "message": "trailing ws",
+      "range": {
+        "startLine": 3,
+        "startChar": 13,
+        "endLine": 3,
+        "endChar": 14
+      },
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "197e82aa_499ce3f0",
+        "filename": "docker_manifest.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5695
+      },
+      "writtenOn": "2019-08-27T17:28:04Z",
+      "side": 1,
+      "message": "Should be quoted to prevent issues with filenames that contain spaces.\nAlso, shellcheck should be ran against all sh scripts in this patch.",
+      "range": {
+        "startLine": 6,
+        "startChar": 6,
+        "endLine": 6,
+        "endChar": 37
+      },
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d1886d_8d8e5941",
+        "filename": "docker_manifest.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5695
+      },
+      "writtenOn": "2019-08-27T17:28:04Z",
+      "side": 1,
+      "message": "With the proposed changes to pom.xml and the manifest push script, this should become:\n\n  ${IMAGE_TAG}-amd64\n\nSimilar for below.",
+      "range": {
+        "startLine": 10,
+        "startChar": 37,
+        "endLine": 10,
+        "endChar": 42
+      },
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     },
     {
       "key": {
@@ -70,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "6ca1b7ae_a7f73fa7",
+        "filename": "docker_push_manifest.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 5695
+      },
+      "writtenOn": "2019-08-27T17:28:04Z",
+      "side": 1,
+      "message": "I have a suggestion towards handling that, I added some comments in the pom.xml file + below.",
+      "parentUuid": "00688af1_7a2074e9",
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7496c5f0_3d10a4c3",
         "filename": "docker_push_manifest.sh",
         "patchSetId": 2
@@ -84,6 +194,29 @@
       "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb27a7e8_971db168",
+        "filename": "docker_push_manifest.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5695
+      },
+      "writtenOn": "2019-08-27T17:28:04Z",
+      "side": 1,
+      "message": "The mechanism suggested in pom.xml would require something like this block (and of course moving the manifest tool download earlier in the script):\n\n  IMAGES\u003dpolicy-base-alpine policy-common-alpine\n  ARCHES\u003damd64 aarch64\n  TIMESTAMP\u003d$(date -u +\"%Y%m%d%H%M%S\")\n  for image in ${IMAGES}; do\n    for arch in ${ARCHES}; do\n      docker tag ${image}:latest-${arch} ${image}:${release_version}-${TIMESTAMP}-${arch}\n    done\n    # create a list of arch-agnostic tags based on preexisting amd64 tags by removing the suffix\n    TAGS\u003d$(docker inspect ${image}:latest-amd64 --format \u0027{{.RepoTags}}\u0027 | \\\n           grep -Po \":(\\K[^ ]*?)(?\u003d-amd64)\")\n    for tag in ${TAGS}\n      ./docker_manifest.sh \"${image}\" \"${tag}\"\n      ./manifest-tool push from-spec \"${image}_${tag}.yaml\"\n    done\n  done",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 4
+      },
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     },
     {
       "key": {
@@ -121,6 +254,70 @@
     },
     {
       "key": {
+        "uuid": "dbbe33f1_cdd351b8",
+        "filename": "policy-base/alpine/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 5695
+      },
+      "writtenOn": "2019-08-27T17:28:04Z",
+      "side": 1,
+      "message": "Not needed for this image, as its Dockerfile works unchanged for any arch (upstream FROM image is multiarch-capable).\nHopefully we can drop the duplicate Dockerfiles for the other image too.",
+      "parentUuid": "440405fe_e666cd18",
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84477a44_e5050148",
+        "filename": "policy-base/alpine/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 5695
+      },
+      "writtenOn": "2019-08-27T17:28:04Z",
+      "side": 1,
+      "message": "I would rework this mechanism + the one in the manifest push like this:\n\n  \u003ctags\u003e\n    \u003ctag\u003e${project.version}-${os.arch}\u003c/tag\u003e\n    \u003ctag\u003e${project.docker.latesttag.version}-${os.arch}\u003c/tag\u003e\n  \u003c/tags\u003e\n\nNote that each old tag is suffixed with \"-${os.arch}\" and the timestamp-sensitive one is removed (since timestamps would be different across different build machines).\n\nSo the manifest push would now only have to deal with:\n- creating + pushing of arch-independent tags for each pair of arch-qualified tags found (that way we don\u0027t hardcode the list of tags in the manifest pushing script, but instead keep here / from version.properties);\n- tagging \u0027latest\u0027 with the timestamp-sensitive tag;\n\nIf we change it, other occurrences (e.g. in the manifest yaml) should be updated as well.",
+      "range": {
+        "startLine": 86,
+        "startChar": 41,
+        "endLine": 86,
+        "endChar": 51
+      },
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d425587_5107c3d2",
+        "filename": "policy-common/alpine/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5695
+      },
+      "writtenOn": "2019-08-27T17:28:04Z",
+      "side": 1,
+      "message": "see comment in Dockerfile.aarch64, I think we can drop this and use a single Dockerfile.",
+      "range": {
+        "startLine": 85,
+        "startChar": 54,
+        "endLine": 85,
+        "endChar": 65
+      },
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b297139c_dc755b06",
         "filename": "policy-common/alpine/src/main/docker/Dockerfile.aarch64",
         "patchSetId": 2
@@ -135,6 +332,47 @@
       "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "873152ae_277bbe8c",
+        "filename": "policy-common/alpine/src/main/docker/Dockerfile.aarch64",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5695
+      },
+      "writtenOn": "2019-08-27T17:28:04Z",
+      "side": 1,
+      "message": "imo this should not be needed and the FROM should just resolve to the latest-aarch64 tag via the manifest (provided that the policy-base image has already been switched to using multiarch manifests).\nIf that works as intended, we no longer need 1 Dockerfile per arch and instead can reuse the same old Dockerfile for both builds.",
+      "range": {
+        "startLine": 22,
+        "startChar": 28,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce8ab35a_15d48f52",
+        "filename": "policy-common/alpine/src/main/docker/Dockerfile.aarch64",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 5695
+      },
+      "writtenOn": "2019-08-27T17:28:04Z",
+      "side": 1,
+      "message": "I know it\u0027s odd, but maven resolves `os.arch` to amd64, respectively aarch64.\nUsually the platform is represented as x86_64/aarch64 or amd64/arm64, but `os.arch` is different.",
+      "parentUuid": "b297139c_dc755b06",
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     },
     {
       "key": {
