@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "4205c1a7_43db351a",
+        "filename": "docker_manifest.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5109
+      },
+      "writtenOn": "2019-08-29T13:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce2ff97d_45b1929d",
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b556c76_78909095",
         "filename": "docker_manifest.sh",
         "patchSetId": 2
@@ -62,6 +80,30 @@
       "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d61cacd_9e8a76e9",
+        "filename": "docker_manifest.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 5109
+      },
+      "writtenOn": "2019-08-29T13:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b556c76_78909095",
+      "range": {
+        "startLine": 3,
+        "startChar": 13,
+        "endLine": 3,
+        "endChar": 14
+      },
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "28ab853d_94458e9e",
+        "filename": "docker_manifest.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 5109
+      },
+      "writtenOn": "2019-08-29T13:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "197e82aa_499ce3f0",
+      "range": {
+        "startLine": 6,
+        "startChar": 6,
+        "endLine": 6,
+        "endChar": 37
+      },
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72d1886d_8d8e5941",
         "filename": "docker_manifest.sh",
         "patchSetId": 2
@@ -108,6 +174,30 @@
       "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0097fa76_ecc36c14",
+        "filename": "docker_manifest.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5109
+      },
+      "writtenOn": "2019-08-29T13:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72d1886d_8d8e5941",
+      "range": {
+        "startLine": 10,
+        "startChar": 37,
+        "endLine": 10,
+        "endChar": 42
+      },
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +310,30 @@
     },
     {
       "key": {
+        "uuid": "02829134_1ff0bbf3",
+        "filename": "docker_push_manifest.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5109
+      },
+      "writtenOn": "2019-08-29T13:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb27a7e8_971db168",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 4
+      },
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c93bd27c_fac48f69",
         "filename": "docker_push_manifest.sh",
         "patchSetId": 2
@@ -231,6 +345,24 @@
       "writtenOn": "2019-08-27T15:25:22Z",
       "side": 1,
       "message": "indent",
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "478de8f9_0801f861",
+        "filename": "docker_push_manifest.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 5109
+      },
+      "writtenOn": "2019-08-29T13:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c93bd27c_fac48f69",
       "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
@@ -342,6 +474,30 @@
     },
     {
       "key": {
+        "uuid": "d29766fc_d82a5f5c",
+        "filename": "policy-common/alpine/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 5109
+      },
+      "writtenOn": "2019-08-29T13:08:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d425587_5107c3d2",
+      "range": {
+        "startLine": 85,
+        "startChar": 54,
+        "endLine": 85,
+        "endChar": 65
+      },
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b297139c_dc755b06",
         "filename": "policy-common/alpine/src/main/docker/Dockerfile.aarch64",
         "patchSetId": 2
@@ -411,6 +567,24 @@
       "writtenOn": "2019-08-27T15:25:22Z",
       "side": 1,
       "message": "I don\u0027t see clearly how the push registry will work",
+      "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0fb4ecc5_0699763b",
+        "filename": "policy-common/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5109
+      },
+      "writtenOn": "2019-08-29T13:08:57Z",
+      "side": 1,
+      "message": "The docker push command by default will try to push to DockerHub. All it needs is to be logged in (handled by LF tools in ci-management) and the repo within DockerHub to which the push is made (https://hub.docker.com/u/onap).",
+      "parentUuid": "6af39a52_8ead5cef",
       "revId": "9fd2ac1a889faacda36043954093ae1e664fd63b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
