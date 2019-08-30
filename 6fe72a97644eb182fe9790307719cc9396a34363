@@ -106,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "9ae80b16_7a1f9246",
+        "filename": "docker_push_manifest.sh",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5109
+      },
+      "writtenOn": "2019-08-30T18:28:40Z",
+      "side": 1,
+      "message": "To give more context: the build jobs are separate from the job that makes the manifest, so the jenkins slave that runs the manifest job doesn\u0027t have any images stored locally. What we do here is: for each arch pull the latest image that was just pushed by the previous job, tag it with the timestamp and push it into the repo. \n\nThe manifest is done at the end for all the tags that are already in the repo.",
+      "parentUuid": "a4280786_0941afaa",
+      "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b57cf88_4ec1063a",
         "filename": "policy-base/alpine/pom.xml",
         "patchSetId": 15
