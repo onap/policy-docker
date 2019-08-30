@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c0271d5_d98ee0fe",
+        "filename": "docker_push_manifest.sh",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2019-08-30T12:07:47Z",
+      "side": 1,
+      "message": "Just wondering where this name is coming from? It is also in some of the other files.",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 21
+      },
+      "revId": "967aee8dc5968fc95b510e4ee2d3f9166c6a1948",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
