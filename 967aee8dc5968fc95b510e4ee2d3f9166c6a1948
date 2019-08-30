@@ -22,6 +22,30 @@
       "revId": "967aee8dc5968fc95b510e4ee2d3f9166c6a1948",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "319d8f50_9cf188a5",
+        "filename": "docker_push_manifest.sh",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5109
+      },
+      "writtenOn": "2019-08-30T12:11:03Z",
+      "side": 1,
+      "message": "We want to make sure that the push part works properly, so this is a temporary value where we\u0027re pushing the images from sandbox. In the final version of the patch it will be replaced with the official onap dockerhub registry.",
+      "parentUuid": "6c0271d5_d98ee0fe",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 21
+      },
+      "revId": "967aee8dc5968fc95b510e4ee2d3f9166c6a1948",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
