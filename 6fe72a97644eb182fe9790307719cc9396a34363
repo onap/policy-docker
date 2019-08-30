@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed157351_03413c3a",
+        "filename": "docker_push_manifest.sh",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-08-30T15:20:53Z",
+      "side": 1,
+      "message": "delete above line",
+      "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5bd4c633_c0fbd828",
+        "filename": "docker_push_manifest.sh",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-08-30T15:20:53Z",
+      "side": 1,
+      "message": "these names will change at some point, is \"onap/..\" available?",
+      "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "acf31523_e822f11e",
+        "filename": "docker_push_manifest.sh",
+        "patchSetId": 15
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-08-30T15:20:53Z",
+      "side": 1,
+      "message": "check for existence of manifest-tool file in disk before continuing below",
+      "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "deab027a_bcbed99c",
+        "filename": "docker_push_manifest.sh",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-08-30T15:20:53Z",
+      "side": 1,
+      "message": "why it does a \"pull\" ?",
+      "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b57cf88_4ec1063a",
+        "filename": "policy-base/alpine/pom.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-08-30T15:20:53Z",
+      "side": 1,
+      "message": "when is \"pre-clean\" being invoked, does it need \"mvn clean\" to hit it?",
+      "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45e1a759_6bb3c653",
+        "filename": "policy-base/alpine/pom.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-08-30T15:20:53Z",
+      "side": 1,
+      "message": "Is \"os.arch\" always set up?   What about in a local docker build?",
+      "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de904813_8de695f5",
+        "filename": "policy-base/alpine/pom.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-08-30T15:20:53Z",
+      "side": 1,
+      "message": "how %1 get populated?",
+      "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0aee36f_28cc5e35",
+        "filename": "policy-base/alpine/pom.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-08-30T15:20:53Z",
+      "side": 1,
+      "message": "is timestamp needed, this functionality is lost?",
+      "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa019500_de5baca0",
+        "filename": "policy-base/alpine/pom.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-08-30T15:20:53Z",
+      "side": 1,
+      "message": "I suppose the name is temporary ..  Does the image name has to match the one in line 88?",
+      "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
