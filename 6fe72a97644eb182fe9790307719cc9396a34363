@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "3fd899e2_4f164b93",
+        "filename": "docker_push_manifest.sh",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 5109
+      },
+      "writtenOn": "2019-08-30T18:16:26Z",
+      "side": 1,
+      "message": "Yes, once we have a final OK on the patch we will change that to \"onap\" (which is available, and linked to LF Jenkins). Currently we\u0027re keeping \"cristinapauna\" for testing the push part in sandbox.",
+      "parentUuid": "5bd4c633_c0fbd828",
+      "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acf31523_e822f11e",
         "filename": "docker_push_manifest.sh",
         "patchSetId": 15
@@ -64,6 +82,24 @@
       "writtenOn": "2019-08-30T15:20:53Z",
       "side": 1,
       "message": "why it does a \"pull\" ?",
+      "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4280786_0941afaa",
+        "filename": "docker_push_manifest.sh",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 5109
+      },
+      "writtenOn": "2019-08-30T18:16:26Z",
+      "side": 1,
+      "message": "We do the pull so that we can create the manifest for the tag that contains the timestamp. We moved it from pom.xml here so that we can assure all images (amd64, arm64 and manifest list) will be tagged with the same timestamp.",
+      "parentUuid": "deab027a_bcbed99c",
       "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
@@ -104,6 +140,24 @@
     },
     {
       "key": {
+        "uuid": "f245159d_2a6bc14e",
+        "filename": "policy-base/alpine/pom.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 5109
+      },
+      "writtenOn": "2019-08-30T18:16:26Z",
+      "side": 1,
+      "message": "Yes, the \"os.arch\" will be available in a local build too, it\u0027s available through maven, it\u0027s not set by Jenkins.",
+      "parentUuid": "45e1a759_6bb3c653",
+      "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de904813_8de695f5",
         "filename": "policy-base/alpine/pom.xml",
         "patchSetId": 15
@@ -115,6 +169,24 @@
       "writtenOn": "2019-08-30T15:20:53Z",
       "side": 1,
       "message": "how %1 get populated?",
+      "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "697fb0c9_a2898e37",
+        "filename": "policy-base/alpine/pom.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 5109
+      },
+      "writtenOn": "2019-08-30T18:16:26Z",
+      "side": 1,
+      "message": "%l is placeholder that is used by docker-maven-plugin to resolve the tag name at runtime; you can check [1] for reference\n\n[1] https://dmp.fabric8.io/#image-name",
+      "parentUuid": "de904813_8de695f5",
       "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
@@ -138,6 +210,24 @@
     },
     {
       "key": {
+        "uuid": "50b14823_99b6377f",
+        "filename": "policy-base/alpine/pom.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 5109
+      },
+      "writtenOn": "2019-08-30T18:16:26Z",
+      "side": 1,
+      "message": "The creation of the timestamp tag was moved from pom.xml to the manifest script so that we assure that all 3 images (amd64, arm64, and manifest list) have all the same timestamp associated.",
+      "parentUuid": "c0aee36f_28cc5e35",
+      "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa019500_de5baca0",
         "filename": "policy-base/alpine/pom.xml",
         "patchSetId": 15
@@ -149,6 +239,24 @@
       "writtenOn": "2019-08-30T15:20:53Z",
       "side": 1,
       "message": "I suppose the name is temporary ..  Does the image name has to match the one in line 88?",
+      "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbbba536_fffcd052",
+        "filename": "policy-base/alpine/pom.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 5109
+      },
+      "writtenOn": "2019-08-30T18:16:26Z",
+      "side": 1,
+      "message": "Yes, all occurrences of \"cristinapauna\" will be replaced with \"onap\" once we have the final form of the functionality agreed on.",
+      "parentUuid": "fa019500_de5baca0",
       "revId": "6fe72a97644eb182fe9790307719cc9396a34363",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
