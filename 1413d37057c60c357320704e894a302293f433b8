@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adc0b01b_b262e5df",
+        "filename": "policy-base/alpine/pom.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-08-30T15:20:53Z",
+      "side": 1,
+      "message": "how does this work, need to invoke it always with \"mvn clean\" to get hit?",
+      "revId": "1413d37057c60c357320704e894a302293f433b8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
