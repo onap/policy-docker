@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23135ed9_f366395e",
+        "filename": "policy-base/alpine/pom.xml",
+        "patchSetId": 25
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-09-05T15:39:58Z",
+      "side": 1,
+      "message": "Please bump to 2.0.0-SNAPSHOT",
+      "range": {
+        "startLine": 29,
+        "startChar": 17,
+        "endLine": 29,
+        "endChar": 31
+      },
+      "revId": "cf7899c2864ad1726dd3617fee7ee1f44aa9030a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "886276ce_98864828",
+        "filename": "policy-base/pom.xml",
+        "patchSetId": 25
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-09-05T15:39:58Z",
+      "side": 1,
+      "message": "Please bump to 2.0.0-SNAPSHOT",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 31
+      },
+      "revId": "cf7899c2864ad1726dd3617fee7ee1f44aa9030a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b393a638_29b414e0",
+        "filename": "policy-common/alpine/pom.xml",
+        "patchSetId": 25
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-09-05T15:39:58Z",
+      "side": 1,
+      "message": "Please bump to 2.0.0-SNAPSHOT",
+      "range": {
+        "startLine": 29,
+        "startChar": 17,
+        "endLine": 29,
+        "endChar": 20
+      },
+      "revId": "cf7899c2864ad1726dd3617fee7ee1f44aa9030a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9c8e3f_e6589ad0",
+        "filename": "policy-common/pom.xml",
+        "patchSetId": 25
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-09-05T15:39:58Z",
+      "side": 1,
+      "message": "Bump version 59 2.0.0-SNAPSHOT",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "cf7899c2864ad1726dd3617fee7ee1f44aa9030a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
