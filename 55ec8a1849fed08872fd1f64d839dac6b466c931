@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3df616cb_f673e0bf",
+        "filename": "config/pe/brmsgw.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-09-10T00:15:17Z",
+      "side": 1,
+      "message": "I think we are going to need to bump this one too, since the drools-applications will need to be released to pick up the changes in drools-pdp.   Not critical here since it is docker repo.",
+      "revId": "55ec8a1849fed08872fd1f64d839dac6b466c931",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
