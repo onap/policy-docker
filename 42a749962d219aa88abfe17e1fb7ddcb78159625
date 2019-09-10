@@ -1,0 +1,8 @@
+Code-Review+1: Jorge Hernandez <jorge.hernandez-herrero@att.com>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Jim Hahn <jrh3@att.com>
+Submitted-by: Pamela Dragosh <pdragosh@research.att.com>
+Submitted-at: Tue, 10 Sep 2019 17:29:49 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/policy/docker/+/95283
+Project: policy/docker
+Branch: refs/heads/elalto
