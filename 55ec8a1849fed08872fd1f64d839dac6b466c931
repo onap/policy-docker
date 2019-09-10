@@ -16,6 +16,24 @@
       "revId": "55ec8a1849fed08872fd1f64d839dac6b466c931",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "471ab250_baae4a28",
+        "filename": "config/pe/brmsgw.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-09-10T00:17:19Z",
+      "side": 1,
+      "message": "Yes of course, but I wasn\u0027t going to do that until it actually got released.",
+      "parentUuid": "3df616cb_f673e0bf",
+      "revId": "55ec8a1849fed08872fd1f64d839dac6b466c931",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
