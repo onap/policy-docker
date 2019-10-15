@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd90b570_2fe276f1",
+        "filename": "docker.iml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-10-15T21:42:32Z",
+      "side": 1,
+      "message": "I don\u0027t think we should add IDE specific files here.  \nBut could add .iml extension to .gitignore entry so they don\u0027t leak into submissions ..",
+      "revId": "cb0434b5f87aaa95c890e18c04ffd90c1ab42909",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
