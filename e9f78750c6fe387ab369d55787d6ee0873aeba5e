@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "486761ae_179b924a",
+        "filename": "config/pe/brmsgw.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2019-10-15T20:22:51Z",
+      "side": 1,
+      "message": "can you also bump this one to 1.5.3 (outdated)",
+      "revId": "e9f78750c6fe387ab369d55787d6ee0873aeba5e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
