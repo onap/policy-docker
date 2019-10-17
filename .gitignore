@@ -5,3 +5,4 @@ target
 install.log*
 policy-drools/install.log*
 *.sw?
+*.iml
