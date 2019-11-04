@@ -38,7 +38,7 @@ chmod u+x manifest-tool
 set +e
 for image in ${IMAGES}; do
     # always (re)create both SNAPSHOT and STAGING tags to make sure everything is up to date
-    TAGS="latest ${release_version} ${release_version}-SNAPSHOT ${release_version}-SNAPSHOT-latest ${release_version}-STAGING-latest"
+    TAGS="latest ${release_version}-SNAPSHOT ${release_version}-SNAPSHOT-latest ${release_version}-STAGING-latest"
     for tag in ${TAGS}; do
         ./manifest-tool push from-args \
             --ignore-missing \
