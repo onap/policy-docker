@@ -30,16 +30,29 @@ ENV POLICY_HOME=/opt/app/policy
 
 # Install common packages used in 6 out of 7 images
 RUN apk add --no-cache \
-    busybox-extras \
     httpie \
     jq \
     maven \
     py-pip \
     python
 
+# jrh3
+RUN apk add --no-cache \
+	bash-completion \
+	less \
+	file \
+	openssl \
+	vim \
+	git \
+	socat \
+	python2 \
+	py2-pip \
+	sudo \
+	docker
+
 # Create policy user and group
 RUN addgroup -S policy && \
-    adduser -S  --shell /bin/bash -G policy policy
+    adduser -S  -s /bin/bash -G policy policy
 
 # Create common directories and change owner
 RUN mkdir -p \

@@ -21,7 +21,7 @@
 # $JAVA_HOME is set to /usr/lib/jvm/java-1.8-openjdk
 # more details at https://hub.docker.com/_/openjdk
 
-FROM openjdk:8-alpine
+FROM alpine:3.7
 
 LABEL maintainer="Policy Team"
 
@@ -34,6 +34,7 @@ RUN apk add --no-cache \
     grep \
     nss \
     openssh \
+    openjdk8 \
     procps \
     unzip \
     wget \
