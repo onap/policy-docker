@@ -1,0 +1,150 @@
+<!--
+  ============LICENSE_START=======================================================
+   Copyright (C) 2019 Ericsson, Tieto. All rights reserved.
+   Modifications Copyright (C) 2020 AT&T Intellectual Property. All rights reserved.
+  ================================================================================
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  SPDX-License-Identifier: Apache-2.0
+  ============LICENSE_END=========================================================
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.onap.policy.docker</groupId>
+        <artifactId>policy-jre</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+    </parent>
+
+    <packaging>pom</packaging>
+    <artifactId>policy-jre-debian</artifactId>
+    <name>Policy debian-slim jre docker image</name>
+    <description>Policy debian-slim jre docker image</description>
+
+    <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.groovy.maven</groupId>
+                <artifactId>gmaven-plugin</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <phase>pre-clean</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <source>
+                                println 'Project version: ' + project.properties['dist.project.version'];
+                                def versionArray;
+                                if ( project.properties['dist.project.version'] != null ) {
+                                    versionArray = project.properties['dist.project.version'].split('-');
+                                }
+
+                                if ( project.properties['dist.project.version'].endsWith("-SNAPSHOT") ) {
+                                    project.properties['project.docker.latesttag.version']=versionArray[0] + "-SNAPSHOT-latest";
+                                } else {
+                                    project.properties['project.docker.latesttag.version']=versionArray[0] + "-STAGING-latest";
+                                }
+
+                                println 'New tag for docker: ' + project.properties['project.docker.latesttag.version'];
+                                if ( "aarch64".equals(System.properties['os.arch']) ) {
+                                    project.properties['project.docker.arch'] = "arm64";
+                                } else {
+                                    project.properties['project.docker.arch'] = System.properties['os.arch'];
+                                }
+                                println 'Using arch for docker: ' + project.properties['project.docker.arch'];
+                            </source>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <verbose>true</verbose>
+                    <apiVersion>1.23</apiVersion>
+                    <pullRegistry>${docker.pull.registry}</pullRegistry>
+                    <pushRegistry>${docker.push.registry}</pushRegistry>
+
+                    <images>
+                        <image>
+                            <name>onap/policy-jre-debian:latest-${project.docker.arch}</name>
+                            <build>
+                                <cleanup>try</cleanup>
+                                <dockerFile>Dockerfile</dockerFile>
+                                <tags>
+                                    <tag>${project.version}-${project.docker.arch}</tag>
+                                    <tag>${project.docker.latesttag.version}-${project.docker.arch}</tag>
+                                </tags>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>clean-images</id>
+                        <phase>pre-clean</phase>
+                        <goals>
+                            <goal>remove</goal>
+                        </goals>
+                        <configuration>
+                            <removeAll>true</removeAll>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>generate-images</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>push-images</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                        <configuration>
+                            <image>onap/policy-jre-debian</image>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
