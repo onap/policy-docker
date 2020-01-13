@@ -1,5 +1,5 @@
 #   ============LICENSE_START=======================================================
-#    Copyright (C) 2019 Tieto. All rights reserved.
+#    Copyright (C) 2020 AT&T Intellectual Property. All rights reserved.
 #   ================================================================================
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -16,33 +16,29 @@
 #   SPDX-License-Identifier: Apache-2.0
 #   ============LICENSE_END=========================================================
 
+# Docker file to build a base image for all policy components images
 #
-# Docker file to build an image that contains common packages for Policy components
-#
-FROM onap/policy-base-alpine:latest-${project.docker.arch}
+
+FROM openjdk:11.0.5-jre-slim
 
 LABEL maintainer="Policy Team"
 
-ARG BUILD_VERSION=${BUILD_VERSION}
-
-ENV BUILD_VERSION ${BUILD_VERSION}
 ENV POLICY_HOME=/opt/app/policy
 
-# Install common packages used in 6 out of 7 images
-RUN apk add --no-cache \
-    busybox-extras \
-    httpie \
-    jq \
-    maven \
-    py-pip \
-    python
-
-# Create policy user and group
-RUN addgroup -S policy && \
-    adduser -S  --shell /bin/bash -G policy policy
-
-# Create common directories and change owner
-RUN mkdir -p \
-    ${POLICY_HOME}/etc/ssl \
-    && chown  -R policy:policy ${POLICY_HOME} ${POLICY_HOME}/etc/ssl
-
+RUN apt-get -y update \
+    && apt-get -y install \
+        curl \
+        httpie \
+        jq \
+        less \
+        python \
+        python-pip \
+        ssh \
+        unzip \
+        wget \
+        zip \
+    && mkdir /usr/lib/jvm \
+    && ln -s /usr/local/openjdk-11 /usr/lib/jvm/java-11-openjdk \
+    && adduser --shell /bin/bash --disabled-password policy \
+    && mkdir -p ${POLICY_HOME}/etc/ssl \
+    && chown -R policy:policy ${POLICY_HOME}
