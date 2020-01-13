@@ -1,5 +1,5 @@
 #   ============LICENSE_START=======================================================
-#    Copyright (C) 2019 Tieto. All rights reserved.
+#    Copyright (C) 2020 AT&T Intellectual Property. All rights reserved.
 #   ================================================================================
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -18,23 +18,18 @@
 
 # Docker file to build a base image for all policy components images
 #
-# $JAVA_HOME is set to /usr/lib/jvm/java-1.8-openjdk
-# more details at https://hub.docker.com/_/openjdk
 
-FROM openjdk:8-alpine
+# change "jre" to "jdk" for an image using the full JDK
+
+FROM openjdk:11-jre-slim
 
 LABEL maintainer="Policy Team"
 
-# used in 7 out of 7 images
-RUN apk add --no-cache \
-    bash \
-    coreutils \
-    curl \
-    findutils \
-    grep \
-    nss \
-    openssh \
-    procps \
-    unzip \
-    wget \
-    zip
+RUN apt-get -y update \
+    && apt-get -y install \
+        curl \
+        less \
+        ssh \
+        unzip \
+        wget \
+        zip
