@@ -1,6 +1,6 @@
 <!--
   ============LICENSE_START=======================================================
-   Copyright (C) 2019 Ericsson, Tieto. All rights reserved.
+   Copyright (C) 2020 AT&T Intellectual Property. All rights reserved.
   ================================================================================
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -30,9 +30,9 @@
     </parent>
 
     <packaging>pom</packaging>
-    <artifactId>policy-base-alpine</artifactId>
-    <name>Policy alpine base docker image</name>
-    <description>Policy alpine base docker image</description>
+    <artifactId>policy-base-debian-slim</artifactId>
+    <name>Policy debian-slim base docker image</name>
+    <description>Policy debian-slim base docker image</description>
 
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
@@ -85,7 +85,7 @@
 
                     <images>
                         <image>
-                            <name>onap/policy-base-alpine:latest-${project.docker.arch}</name>
+                            <name>onap/policy-base-debian-slim:latest-${project.docker.arch}</name>
                             <build>
                                 <cleanup>try</cleanup>
                                 <dockerFile>Dockerfile</dockerFile>
@@ -126,7 +126,7 @@
                             <goal>push</goal>
                         </goals>
                         <configuration>
-                            <image>onap/policy-base-alpine</image>
+                            <image>onap/policy-base-debian-slim</image>
                         </configuration>
                     </execution>
                 </executions>
