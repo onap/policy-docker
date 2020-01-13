@@ -1,6 +1,7 @@
 <!--
   ============LICENSE_START=======================================================
    Copyright (C) 2019 Ericsson, Tieto. All rights reserved.
+   Modifications Copyright (C) 2020 AT&T Intellectual Property. All rights reserved.
   ================================================================================
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -26,7 +27,7 @@
         <version>2.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>policy-common</artifactId>
+    <artifactId>policy-jdk</artifactId>
     <packaging>pom</packaging>
     <name>Policy Common Docker images</name>
 
@@ -47,6 +48,7 @@
             <id>docker</id>
             <modules>
                 <module>alpine</module>
+                <module>debian-slim</module>
             </modules>
         </profile>
     </profiles>

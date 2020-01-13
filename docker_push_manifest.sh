@@ -1,6 +1,7 @@
 #!/bin/bash -ex
 #   ============LICENSE_START=======================================================
 #    Copyright (C) 2019 ENEA AB. All rights reserved.
+#    Modifications Copyright (C) 2020 AT&T Intellectual Property. All rights reserved.
 #   ================================================================================
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -21,7 +22,7 @@
 
 # shellcheck source=/dev/null
 source version.properties
-IMAGES="onap/policy-base-alpine onap/policy-common-alpine"
+IMAGES="onap/policy-jre-alpine onap/policy-jre-debian onap/policy-jdk-alpine onap/policy-jdk-debian"
 ARCHES="amd64 arm64"
 TIMESTAMP=$(date -u +"%Y%m%d%H%M%S")
 MT_RELEASE='v0.9.0'
