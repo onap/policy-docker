@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8132d755_f28f469f",
+        "filename": "policy-jdk/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-01-14T20:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19b9723c_60af6427",
+      "revId": "2d1ea250abaacdf0969f3eaad78cc043325571ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a31a14a_70f623bb",
         "filename": "policy-jdk/debian-slim/src/main/docker/Dockerfile",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "085d1990_321b8b75",
+        "filename": "policy-jdk/debian-slim/src/main/docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-01-14T20:05:47Z",
+      "side": 1,
+      "message": "using the maven image as a base results in a 945MB image, while this approach yields 860MB.  Nevertheless, I\u0027ll do it the other way, if that\u0027s the preference.",
+      "parentUuid": "4a31a14a_70f623bb",
+      "revId": "2d1ea250abaacdf0969f3eaad78cc043325571ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae7b458d_f3007fa7",
         "filename": "policy-jdk/debian-slim/src/main/docker/Dockerfile",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2020-01-14T19:51:11Z",
       "side": 1,
       "message": "same comment about a BUILD_VERSION , it was a mistake to start with in the original alpine images.   This is not used anywhere and forced to some workarounds in derived images.",
+      "revId": "2d1ea250abaacdf0969f3eaad78cc043325571ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "74a23571_c9f74c77",
+        "filename": "policy-jdk/debian-slim/src/main/docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-01-14T20:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae7b458d_f3007fa7",
       "revId": "2d1ea250abaacdf0969f3eaad78cc043325571ad",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
@@ -117,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "00e847e8_57446b92",
+        "filename": "policy-jre/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-01-14T20:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "773c5114_e2420738",
+      "revId": "2d1ea250abaacdf0969f3eaad78cc043325571ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7d037a8_7d4682f7",
         "filename": "policy-jre/debian-slim/src/main/docker/Dockerfile",
         "patchSetId": 5
@@ -128,6 +200,24 @@
       "writtenOn": "2020-01-14T19:51:11Z",
       "side": 1,
       "message": "BUILD_VERSION",
+      "revId": "2d1ea250abaacdf0969f3eaad78cc043325571ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "062dc741_8ffb4b6a",
+        "filename": "policy-jre/debian-slim/src/main/docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-01-14T20:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7d037a8_7d4682f7",
       "revId": "2d1ea250abaacdf0969f3eaad78cc043325571ad",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
