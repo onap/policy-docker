@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "42bbc433_977744c2",
+        "filename": "policy-common/debian-slim/src/main/docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-01-14T16:31:44Z",
+      "side": 1,
+      "message": "modified to use same apache URL as is used by the policy CSITs",
+      "parentUuid": "deb9b379_7edd2072",
+      "revId": "92362cb697448471e43e759e0debb4efce69fc66",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64c9b42b_c64c3614",
         "filename": "policy-common/debian-slim/src/main/docker/Dockerfile",
         "patchSetId": 2
@@ -53,6 +71,24 @@
       "writtenOn": "2020-01-14T05:12:52Z",
       "side": 1,
       "message": "if this is preserved, can combine all of these statements into one single RUN.",
+      "revId": "92362cb697448471e43e759e0debb4efce69fc66",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e9220a0_c1a9a6f6",
+        "filename": "policy-common/debian-slim/src/main/docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-01-14T16:31:44Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "64c9b42b_c64c3614",
       "revId": "92362cb697448471e43e759e0debb4efce69fc66",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
