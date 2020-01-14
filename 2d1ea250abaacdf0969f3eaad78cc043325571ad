@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "19b9723c_60af6427",
+        "filename": "policy-jdk/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-01-14T19:51:11Z",
+      "side": 1,
+      "message": "I think we should remove the BUILD_VERSION from these Dockerfiles.  It was placed by mistake on the alpine images, and then didn\u0027t allow overriding it in derived images where the BUILD_VERSION is different and had to do some workarounds.",
+      "revId": "2d1ea250abaacdf0969f3eaad78cc043325571ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a31a14a_70f623bb",
+        "filename": "policy-jdk/debian-slim/src/main/docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-01-14T19:51:11Z",
+      "side": 1,
+      "message": "I think can reuse the official maven one here which uses the same base as in the FROM plus does the maven install:\n\nFROM maven:3.6-jdk-11\n\nfrom\n\nhttps://hub.docker.com/_/maven",
+      "revId": "2d1ea250abaacdf0969f3eaad78cc043325571ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae7b458d_f3007fa7",
+        "filename": "policy-jdk/debian-slim/src/main/docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-01-14T19:51:11Z",
+      "side": 1,
+      "message": "same comment about a BUILD_VERSION , it was a mistake to start with in the original alpine images.   This is not used anywhere and forced to some workarounds in derived images.",
+      "revId": "2d1ea250abaacdf0969f3eaad78cc043325571ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e6e8e09_6205dc82",
         "filename": "policy-jre/alpine/src/main/docker/Dockerfile",
         "patchSetId": 5
@@ -46,6 +97,40 @@
       "revId": "2d1ea250abaacdf0969f3eaad78cc043325571ad",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "773c5114_e2420738",
+        "filename": "policy-jre/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-01-14T19:51:11Z",
+      "side": 1,
+      "message": "sane comment about BUILD-VERSION",
+      "revId": "2d1ea250abaacdf0969f3eaad78cc043325571ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7d037a8_7d4682f7",
+        "filename": "policy-jre/debian-slim/src/main/docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-01-14T19:51:11Z",
+      "side": 1,
+      "message": "BUILD_VERSION",
+      "revId": "2d1ea250abaacdf0969f3eaad78cc043325571ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
