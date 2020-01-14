@@ -22,6 +22,40 @@
       "revId": "92362cb697448471e43e759e0debb4efce69fc66",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb9b379_7edd2072",
+        "filename": "policy-common/debian-slim/src/main/docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-01-14T05:12:52Z",
+      "side": 1,
+      "message": "I am a bit uneasy about this, first because it is based on JRE and not in JDK, and from all the references I\u0027ve seen, none use the JRE (note the official maven image from the maven team is based on the JDK).    Another concern is that since this is the same code as the official base, why not use the official one instead, as it dominates this Dockerfile.   The official one will give me more piece of mind.",
+      "revId": "92362cb697448471e43e759e0debb4efce69fc66",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64c9b42b_c64c3614",
+        "filename": "policy-common/debian-slim/src/main/docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-01-14T05:12:52Z",
+      "side": 1,
+      "message": "if this is preserved, can combine all of these statements into one single RUN.",
+      "revId": "92362cb697448471e43e759e0debb4efce69fc66",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
