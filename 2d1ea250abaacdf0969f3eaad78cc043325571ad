@@ -22,6 +22,30 @@
       "revId": "2d1ea250abaacdf0969f3eaad78cc043325571ad",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b3c376_18f4d752",
+        "filename": "policy-jre/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-01-14T19:05:44Z",
+      "side": 1,
+      "message": "I wasn\u0027t sure.  These files all are modified versions of the original files, though they\u0027ve been renamed.  I\u0027ll go with whatever others say.",
+      "parentUuid": "5e6e8e09_6205dc82",
+      "range": {
+        "startLine": 2,
+        "startChar": 5,
+        "endLine": 2,
+        "endChar": 51
+      },
+      "revId": "2d1ea250abaacdf0969f3eaad78cc043325571ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
