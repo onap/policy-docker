@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "6222da2f_0c864b53",
+        "filename": "policy-jdk/debian-slim/src/main/docker/Dockerfile",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-01-14T20:48:39Z",
+      "side": 1,
+      "message": "My preference would be to stick to the official image so we don\u0027t need to maintain it the code ourselves with new Debian versions or maven, since the difference is not that significant.  The major damage in that area is done from transitioning to alpine already.   I can live though with it as is if you prefer it this way.",
+      "parentUuid": "085d1990_321b8b75",
+      "revId": "2d1ea250abaacdf0969f3eaad78cc043325571ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae7b458d_f3007fa7",
         "filename": "policy-jdk/debian-slim/src/main/docker/Dockerfile",
         "patchSetId": 5
