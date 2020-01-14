@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0a74f4b_f5a02b0a",
+        "filename": "policy-common/debian-slim/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2020-01-14T00:59:41Z",
+      "side": 1,
+      "message": "I think this version is defined in policy/parent now. Not a big deal.",
+      "range": {
+        "startLine": 80,
+        "startChar": 16,
+        "endLine": 80,
+        "endChar": 41
+      },
+      "revId": "92362cb697448471e43e759e0debb4efce69fc66",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
