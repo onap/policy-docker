@@ -93,9 +93,6 @@
                                     <tag>${project.version}-${project.docker.arch}</tag>
                                     <tag>${project.docker.latesttag.version}-${project.docker.arch}</tag>
                                 </tags>
-                                <args>
-                                    <BUILD_VERSION>${docker.build.version}</BUILD_VERSION>
-                                </args>
                             </build>
                         </image>
                     </images>
