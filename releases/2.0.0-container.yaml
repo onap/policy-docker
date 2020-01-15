@@ -1,0 +1,10 @@
+distribution_type: 'container'
+container_release_tag: '2.0.0'
+project: 'policy-docker'
+log_dir: 'policy-docker-multiarch-docker-stage-master/128/'
+ref: 8db243af9793c7d54ca2547ac0785897846d17db
+containers:
+    - name: 'policy-jre-debian'
+      version: '2.0.0'
+    - name: 'policy-jdk-debian'
+      version: '2.0.0'
