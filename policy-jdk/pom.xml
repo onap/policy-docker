@@ -47,7 +47,10 @@
         <profile>
             <id>docker</id>
             <modules>
+                <!-- pretty frequently, alpine fails to build, so removing
+                     it for now
                 <module>alpine</module>
+                -->
                 <module>debian-slim</module>
             </modules>
         </profile>
