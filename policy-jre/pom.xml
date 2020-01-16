@@ -29,7 +29,7 @@
 
     <artifactId>policy-jre</artifactId>
     <packaging>pom</packaging>
-    <name>Policy Base Docker images</name>
+    <name>Policy JRE Docker images</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -46,10 +46,7 @@
         <profile>
             <id>docker</id>
             <modules>
-                <!-- pretty frequently, alpine fails to build, so removing
-                     it for now
                 <module>alpine</module>
-                -->
                 <module>debian-slim</module>
             </modules>
         </profile>
