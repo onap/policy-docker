@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72eedcb2_9a32c04c",
+        "filename": "policy-jre/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-01-16T16:43:46Z",
+      "side": 1,
+      "message": "just fyi, \"nss\" lib I think could be removed, it was added in the original ones because a bug in the openjdk8 version that alpine was using at that time.   It was corrected subsquently in the openjdk8 project.",
+      "revId": "2e239aa74cc67e58515e5b09be469d8fd77c3d48",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f00181c0_52b72062",
+        "filename": "policy-jre/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-01-16T16:43:46Z",
+      "side": 1,
+      "message": "just fyi, this may not be needed in this lightweight version, may be apex uses it, but will use the other one.",
+      "revId": "2e239aa74cc67e58515e5b09be469d8fd77c3d48",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
