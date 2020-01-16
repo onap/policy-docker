@@ -28,6 +28,10 @@ LABEL maintainer="Policy Team"
 
 ENV POLICY_HOME=/opt/app/policy
 
+#
+# When these are done via a single "RUN", I/O errors occur sporadically,
+# thus they have been split into separate RUNs.
+#
 RUN apk update \
     && apk add --no-cache \
         bash \
@@ -38,15 +42,15 @@ RUN apk update \
         grep \
         httpie \
         jq \
-        nss \
-        openjdk11-jre \
-        openssh \
         procps \
         py-pip \
         python \
         unzip \
         wget \
-        zip \
+        zip
+
+RUN apk add --no-cache \
+        openjdk11-jre \
     && addgroup -S policy \
     && adduser -S  --shell /bin/bash -G policy policy \
     && mkdir -p ${POLICY_HOME}/etc/ssl \
