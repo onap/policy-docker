@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3d7e261_7da8853c",
+        "filename": "config/drools/base.conf",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-01-29T17:41:44Z",
+      "side": 1,
+      "message": "see my comments in your other review Rashmi, I think they can be documented but not necessarily explicitly set.   Also the comment about the upper case version.   I think the OS only looks at the lower case ones.   So see my other review for comments for this and the MVN_* ones.",
+      "revId": "0a85fdab8502a5c6e870df77d839600d78202106",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
