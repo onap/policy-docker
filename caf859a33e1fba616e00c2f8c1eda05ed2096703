@@ -93,6 +93,30 @@
       "revId": "caf859a33e1fba616e00c2f8c1eda05ed2096703",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "169050e9_5c28dc0a",
+        "filename": "config/drools/base.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-01-29T17:41:44Z",
+      "side": 1,
+      "message": "not sure . need more details to consider adding the upper case version.  Debian based OS tooling I think works OK, ie. apt install, etc .. works with http_proxy. In my tests in ubuntu wget does not work with HTTP_PROXY but it does work with http_proxy.",
+      "parentUuid": "4c20e747_2622ea3a",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 11
+      },
+      "revId": "caf859a33e1fba616e00c2f8c1eda05ed2096703",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
