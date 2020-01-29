@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f55d7293_0f398529",
+        "filename": "config/drools/base.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2020-01-29T14:28:51Z",
+      "side": 1,
+      "message": "License",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 1
+      },
+      "revId": "caf859a33e1fba616e00c2f8c1eda05ed2096703",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0824507_11a0df4f",
         "filename": "config/drools/base.conf",
         "patchSetId": 1
