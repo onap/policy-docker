@@ -35,6 +35,7 @@ RUN apt-get -y update \
         python-pip \
         ssh \
         unzip \
+        vim \
         wget \
         zip \
     && mkdir /usr/lib/jvm \
