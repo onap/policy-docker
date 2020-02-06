@@ -1,0 +1,16 @@
+distribution_type: 'container'
+container_release_tag: '2.0.0'
+container_pull_registry: docker.io
+container_push_registry: docker.io
+project: 'policy-docker'
+log_dir: 'policy-docker-multiarch-docker-stage-master/160/'
+ref: 8e80f8967e3c7f7241c840d041aa3ac19da4ded9
+containers:
+    - name: 'policy-jre-alpine'
+      version: '2.0.0-20200214101317'
+    - name: 'policy-jdk-alpine'
+      version: '2.0.0-20200214101317'
+    - name: 'policy-jre-debian'
+      version: '2.0.0-20200214101317'
+    - name: 'policy-jdk-debian'
+      version: '2.0.0-20200214101317'
