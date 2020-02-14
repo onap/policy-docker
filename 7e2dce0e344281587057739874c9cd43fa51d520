@@ -22,6 +22,30 @@
       "revId": "7e2dce0e344281587057739874c9cd43fa51d520",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcf2fec0_b09fa246",
+        "filename": "releases/2.0.0-container.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2020-02-14T09:33:01Z",
+      "side": 1,
+      "message": "I think its docker.io",
+      "parentUuid": "f5bde460_5305c85c",
+      "range": {
+        "startLine": 3,
+        "startChar": 25,
+        "endLine": 3,
+        "endChar": 39
+      },
+      "revId": "7e2dce0e344281587057739874c9cd43fa51d520",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
