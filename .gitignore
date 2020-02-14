@@ -3,6 +3,6 @@
 .settings
 target
 install.log*
-policy-drools/install.log*
 *.sw?
-*.iml
+**/*.iml
+.idea/
