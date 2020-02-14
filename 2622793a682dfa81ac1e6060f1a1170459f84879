@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb514ad7_0dc8765b",
+        "filename": "releases/2.0.0-container.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2020-02-14T11:23:14Z",
+      "side": 1,
+      "message": "so switch to 160",
+      "range": {
+        "startLine": 6,
+        "startChar": 54,
+        "endLine": 6,
+        "endChar": 57
+      },
+      "revId": "2622793a682dfa81ac1e6060f1a1170459f84879",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8e0d8ee_d7ebdd0d",
+        "filename": "releases/2.0.0-container.yaml",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2020-02-14T11:23:14Z",
+      "side": 1,
+      "message": "and then as discussed in rocketchat use these tags generated from that job:\n\nonap/policy-jre-debian:2.0.0-20200214101317\nonap/policy-jdk-alpine:2.0.0-20200214101317\nonap/policy-jdk-debian:2.0.0-20200214101317\nonap/policy-jre-alpine:2.0.0-20200214101317",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 16,
+        "endChar": 22
+      },
+      "revId": "2622793a682dfa81ac1e6060f1a1170459f84879",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
