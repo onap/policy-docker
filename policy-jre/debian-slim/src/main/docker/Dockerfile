@@ -28,11 +28,8 @@ ENV POLICY_HOME=/opt/app/policy
 RUN apt-get -y update \
     && apt-get -y install \
         curl \
-        httpie \
         jq \
         less \
-        python \
-        python-pip \
         ssh \
         unzip \
         vim \
@@ -41,5 +38,5 @@ RUN apt-get -y update \
     && mkdir /usr/lib/jvm \
     && ln -s /usr/local/openjdk-11 /usr/lib/jvm/java-11-openjdk \
     && adduser --shell /bin/bash --disabled-password policy \
-    && mkdir -p ${POLICY_HOME}/etc/ssl \
-    && chown -R policy:policy ${POLICY_HOME}
+    && mkdir -p ${POLICY_HOME}/ \
+    && chown policy:policy ${POLICY_HOME}
