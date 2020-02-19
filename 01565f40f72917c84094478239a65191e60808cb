@@ -1,0 +1,7 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+2: Pamela Dragosh <pdragosh@research.att.com>
+Submitted-by: Jorge Hernandez <jorge.hernandez-herrero@att.com>
+Submitted-at: Wed, 19 Feb 2020 13:47:19 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/policy/docker/+/101941
+Project: policy/docker
+Branch: refs/heads/master
