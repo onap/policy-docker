@@ -34,6 +34,24 @@
       "revId": "1c3e0cc8cb3d2bf3744294cc26c75181378303c2",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "846df818_28d81a41",
+        "filename": "policy-jre/debian-slim/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-02-20T03:28:48Z",
+      "side": 1,
+      "message": "please, so we don\u0027t forget it",
+      "parentUuid": "bca34de0_cd9cba08",
+      "revId": "1c3e0cc8cb3d2bf3744294cc26c75181378303c2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
