@@ -16,6 +16,24 @@
       "revId": "1c3e0cc8cb3d2bf3744294cc26c75181378303c2",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bca34de0_cd9cba08",
+        "filename": "policy-jre/debian-slim/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-02-20T03:27:43Z",
+      "side": 1,
+      "message": "I think it would be better to make similar changes, but at this stage, if the api/pap/xacml components are working, I think is preferable to not disrupt them.   Should I create a ticket for the backlog?",
+      "parentUuid": "655faca4_3129b8e3",
+      "revId": "1c3e0cc8cb3d2bf3744294cc26c75181378303c2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
