@@ -45,6 +45,30 @@
       "revId": "5dafe1d673660f7337604ad32431beebded29373",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1a2b4f_b4b2ed4a",
+        "filename": "releases/2.0.1-container.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2020-02-28T20:08:10Z",
+      "side": 1,
+      "message": "In the latest stage job you will see the daily tag. Probably 20200228*",
+      "parentUuid": "1bdd5b93_725e9a07",
+      "range": {
+        "startLine": 10,
+        "startChar": 16,
+        "endLine": 10,
+        "endChar": 36
+      },
+      "revId": "5dafe1d673660f7337604ad32431beebded29373",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
