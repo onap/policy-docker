@@ -1,6 +1,7 @@
 #   ============LICENSE_START=======================================================
 #    Copyright (C) 2019 Tieto. All rights reserved.
 #    Modifications Copyright (C) 2020 AT&T Intellectual Property. All rights reserved.
+#    Modifications Copyright (C) 2020 Nordix Foundation.
 #   ================================================================================
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -22,7 +23,7 @@
 # $JAVA_HOME is set to /usr/lib/jvm/java-11-openjdk
 # more details at https://hub.docker.com/_/openjdk
 
-FROM alpine:latest
+FROM alpine:3.11.3
 
 LABEL maintainer="Policy Team"
 
