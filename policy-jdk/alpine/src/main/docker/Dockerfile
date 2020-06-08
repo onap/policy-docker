@@ -41,11 +41,8 @@ RUN apk update \
         curl \
         findutils \
         grep \
-        httpie \
         jq \
         procps \
-        py-pip \
-        python \
         unzip \
         wget \
         zip
@@ -57,5 +54,5 @@ RUN apk add --no-cache \
         openjdk11 \
     && addgroup -S policy \
     && adduser -S  --shell /bin/bash -G policy policy \
-    && mkdir -p ${POLICY_HOME}/etc/ssl \
-    && chown -R policy:policy ${POLICY_HOME}
+    && mkdir -p ${POLICY_HOME}/ \
+    && chown policy:policy ${POLICY_HOME}
