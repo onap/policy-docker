@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "487f0875_7cb7d1d7",
+        "filename": "policy-jdk/alpine/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-06-16T13:34:36Z",
+      "side": 1,
+      "message": "Not sure about \"pre-clean\".  We have in the other repos \"validate\" phase, may be we should be put back to validate.",
+      "revId": "75b441bd6c29a80c25efcfc9b761c8c7114b03b5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
