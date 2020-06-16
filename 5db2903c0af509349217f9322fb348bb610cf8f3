@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7bc13c2_600f81e6",
+        "filename": "policy-jre/alpine/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-06-16T12:21:05Z",
+      "side": 1,
+      "message": "delete this?",
+      "range": {
+        "startLine": 82,
+        "startChar": 56,
+        "endLine": 82,
+        "endChar": 86
+      },
+      "revId": "5db2903c0af509349217f9322fb348bb610cf8f3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c2ade9_650e3f4a",
+        "filename": "policy-jre/debian-slim/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-06-16T12:21:05Z",
+      "side": 1,
+      "message": "delete this?",
+      "range": {
+        "startLine": 82,
+        "startChar": 56,
+        "endLine": 82,
+        "endChar": 86
+      },
+      "revId": "5db2903c0af509349217f9322fb348bb610cf8f3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
