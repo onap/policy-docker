@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4f9fa980_43ddef3a",
+        "filename": "policy-jre/alpine/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6593
+      },
+      "writtenOn": "2020-06-16T12:53:33Z",
+      "side": 1,
+      "message": "Ah i missed that in these 2 poms, I\u0027ve updated it in the latest patch",
+      "parentUuid": "c3293338_2b712537",
+      "range": {
+        "startLine": 82,
+        "startChar": 56,
+        "endLine": 82,
+        "endChar": 86
+      },
+      "revId": "5db2903c0af509349217f9322fb348bb610cf8f3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5c2ade9_650e3f4a",
         "filename": "policy-jre/debian-slim/pom.xml",
         "patchSetId": 1
