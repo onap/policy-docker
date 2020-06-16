@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "593c3819_866e5f6d",
+        "filename": "policy-jre/alpine/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-06-16T16:04:12Z",
+      "side": 1,
+      "message": "in the others, the goal is \"execute\" and there is no \"id\"",
+      "revId": "3148b69465d999345154a4103d75937667198fd6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
