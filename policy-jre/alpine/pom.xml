@@ -63,12 +63,6 @@
                                 }
 
                                 println 'New tag for docker: ' + project.properties['project.docker.latesttag.version'];
-                                if ( "aarch64".equals(System.properties['os.arch']) ) {
-                                    project.properties['project.docker.arch'] = "arm64";
-                                } else {
-                                    project.properties['project.docker.arch'] = System.properties['os.arch'];
-                                }
-                                println 'Using arch for docker: ' + project.properties['project.docker.arch'];
                             </source>
                         </configuration>
                     </execution>
@@ -90,8 +84,9 @@
                                 <cleanup>try</cleanup>
                                 <dockerFile>Dockerfile</dockerFile>
                                 <tags>
-                                    <tag>${project.version}-${project.docker.arch}</tag>
-                                    <tag>${project.docker.latesttag.version}-${project.docker.arch}</tag>
+                                    <tag>${project.version}</tag>
+                                    <tag>${project.version}-${maven.build.timestamp}</tag>
+                                    <tag>${project.docker.latesttag.version}</tag>
                                 </tags>
                             </build>
                         </image>
@@ -148,4 +143,3 @@
         </plugins>
     </build>
 </project>
-
