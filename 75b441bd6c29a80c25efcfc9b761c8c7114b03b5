@@ -16,6 +16,24 @@
       "revId": "75b441bd6c29a80c25efcfc9b761c8c7114b03b5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a747a2_1ad9cb17",
+        "filename": "policy-jdk/alpine/pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6593
+      },
+      "writtenOn": "2020-06-16T13:55:00Z",
+      "side": 1,
+      "message": "ye i seen that in the git diff, If its like that in other repos then I\u0027ll change it back to validate as well",
+      "parentUuid": "487f0875_7cb7d1d7",
+      "revId": "75b441bd6c29a80c25efcfc9b761c8c7114b03b5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
