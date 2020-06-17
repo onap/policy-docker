@@ -34,6 +34,24 @@
       "revId": "3148b69465d999345154a4103d75937667198fd6",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c86d8d6_8c57b83a",
+        "filename": "policy-jre/alpine/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-06-17T11:31:13Z",
+      "side": 1,
+      "message": "to match the others, shouldn\u0027t it be:\n  phase\u003dvalidate\n  goal\u003dexecute\n\nsame comment in the other pom",
+      "parentUuid": "c7d1d773_2d67a561",
+      "revId": "3148b69465d999345154a4103d75937667198fd6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
