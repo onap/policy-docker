@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5997794_f5d15f33",
+        "filename": "policy-jre/alpine/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-06-17T18:18:32Z",
+      "side": 1,
+      "message": "Sorry to keep jerking you around, but in comparing this file to the policy-jdk pom, it appears that the wrong section has been changed.  Line 47 should have been changed to \"validate\", while lines 98-118 should have been left unchanged from patch 2.",
+      "revId": "6b4ab2e138aea518b42a8203642d96d8fc59e2cf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32cadd7_0f537579",
+        "filename": "policy-jre/debian-slim/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-06-17T18:18:32Z",
+      "side": 1,
+      "message": "similar comment to before: line 47 looks correct with this patch, but lines 98-118 should be reverted back to what they were in patch 2",
+      "revId": "6b4ab2e138aea518b42a8203642d96d8fc59e2cf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
