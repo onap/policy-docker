@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "73307301_6714016e",
+        "filename": "policy-jre/alpine/pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 6593
+      },
+      "writtenOn": "2020-06-18T10:16:45Z",
+      "side": 1,
+      "message": "Hey Jim, It\u0027s no problem, Ive reverted it now and updated line 47 in both poms",
+      "parentUuid": "e5997794_f5d15f33",
+      "revId": "6b4ab2e138aea518b42a8203642d96d8fc59e2cf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f32cadd7_0f537579",
         "filename": "policy-jre/debian-slim/pom.xml",
         "patchSetId": 5
