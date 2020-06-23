@@ -1,0 +1,11 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Pamela Dragosh <pdragosh@research.att.com>
+Code-Review+1: Ajith Sreekumar <ajith.sreekumar@bell.ca>
+Code-Review+1: Ram Krishna Verma <ram_krishna.verma@bell.ca>
+Code-Review+1: Jorge Hernandez <jorge.hernandez-herrero@att.com>
+Code-Review+2: Liam Fallon <liam.fallon@est.tech>
+Submitted-by: Pamela Dragosh <pdragosh@research.att.com>
+Submitted-at: Tue, 23 Jun 2020 20:29:07 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/policy/docker/+/109450
+Project: policy/docker
+Branch: refs/heads/master
