@@ -40,6 +40,7 @@
         <docker.skip.push>false</docker.skip.push>
         <docker.pull.registry>docker.io</docker.pull.registry>
         <docker.push.registry>docker.io</docker.push.registry>
+        <maven.build.timestamp.format>yyyyMMdd'T'HHmm</maven.build.timestamp.format>
     </properties>
 
     <profiles>
