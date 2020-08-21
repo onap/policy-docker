@@ -1,0 +1,14 @@
+distribution_type: 'container'
+container_release_tag: '2.0.2'
+project: 'policy-docker'
+log_dir: 'policy-docker-maven-docker-stage-master/67'
+ref: 6f30053a118d53efc6d85beb7893b365a3cb2209
+containers:
+    - name: 'policy-jre-alpine'
+      version: '2.0.2-20200821T1414'
+    - name: 'policy-jdk-alpine'
+      version: '2.0.2-20200821T1414'
+    - name: 'policy-jre-debian'
+      version: '2.0.2-20200821T1414'
+    - name: 'policy-jdk-debian'
+      version: '2.0.2-20200821T1414'
