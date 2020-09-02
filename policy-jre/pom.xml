@@ -48,7 +48,6 @@
             <id>docker</id>
             <modules>
                 <module>alpine</module>
-                <module>debian-slim</module>
             </modules>
         </profile>
     </profiles>
