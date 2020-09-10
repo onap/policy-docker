@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11e1ab1c_b17fe8bf",
+        "filename": "policy-jdk/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-09-10T15:18:29Z",
+      "side": 1,
+      "message": "Is it possible to do \"apk remove openjdk8\" here instead (or better in line 51)",
+      "revId": "8af769518ab442eeae0d453a95a027fc7be98554",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
