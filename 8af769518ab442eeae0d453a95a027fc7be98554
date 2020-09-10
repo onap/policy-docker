@@ -16,6 +16,24 @@
       "revId": "8af769518ab442eeae0d453a95a027fc7be98554",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b97f2429_74c2d6e4",
+        "filename": "policy-jdk/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-09-10T15:21:18Z",
+      "side": 1,
+      "message": "tried that, but apk complained that it\u0027s required by maven.  Don\u0027t see an option to apk to force it to be removed anyway.  Do you know a way?",
+      "parentUuid": "11e1ab1c_b17fe8bf",
+      "revId": "8af769518ab442eeae0d453a95a027fc7be98554",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
