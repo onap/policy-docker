@@ -23,7 +23,7 @@
 # $JAVA_HOME is set to /usr/lib/jvm/java-11-openjdk
 # more details at https://hub.docker.com/_/openjdk
 
-FROM alpine:3.11.3
+FROM alpine:3.12.0
 
 LABEL maintainer="Policy Team"
 
@@ -45,14 +45,11 @@ RUN apk update \
         procps \
         unzip \
         wget \
-        zip
-
-RUN apk add --no-cache \
-        maven
-
-RUN apk add --no-cache \
+        zip \
+        maven \
         openjdk11 \
     && addgroup -S policy \
     && adduser -S  --shell /bin/bash -G policy policy \
     && mkdir -p ${POLICY_HOME}/ \
-    && chown policy:policy ${POLICY_HOME}
+    && chown policy:policy ${POLICY_HOME} \
+    && rm -rf /usr/lib/jvm/java-1.8-openjdk
