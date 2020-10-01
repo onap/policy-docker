@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e602b010_fc4b6144",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 5658
+      },
+      "writtenOn": "2020-10-01T16:40:08Z",
+      "side": 1,
+      "message": "Do we need helm package ? \nhelm upgrade -i should be enough.",
+      "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e42c83e_01af608b",
+        "filename": "helm/policy-models-simulator/resources/config/logback.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 5658
+      },
+      "writtenOn": "2020-10-01T16:40:08Z",
+      "side": 1,
+      "message": "I would recommend to keep it simple and the way it designed and well managed by Kubernetes by only logging to sdtout and do not log to any file. It adds complexity and not sure about the value it brings here.",
+      "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5e1f5c_30ff8a67",
+        "filename": "helm/policy-models-simulator/templates/configmap.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 5658
+      },
+      "writtenOn": "2020-10-01T16:40:08Z",
+      "side": 1,
+      "message": "I don\u0027t see this resource",
+      "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5085c08_41df4b95",
+        "filename": "helm/policy-models-simulator/templates/configmap.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 5658
+      },
+      "writtenOn": "2020-10-01T16:40:08Z",
+      "side": 1,
+      "message": "Do we have any binary data to add to the config map ?",
+      "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd771c62_0d8fd923",
+        "filename": "helm/policy-models-simulator/templates/deployment.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 5658
+      },
+      "writtenOn": "2020-10-01T16:40:08Z",
+      "side": 1,
+      "message": "Empty space\nThey are few others in the change.",
+      "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73db4d17_b2ff2250",
+        "filename": "helm/policy-models-simulator/templates/ingress.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 5658
+      },
+      "writtenOn": "2020-10-01T16:40:08Z",
+      "side": 1,
+      "message": "Do we need an ingress ?\nAre we planning to access the simulator from outside the cluster ?",
+      "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf222237_22f605aa",
+        "filename": "helm/policy-models-simulator/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 5658
+      },
+      "writtenOn": "2020-10-01T16:40:08Z",
+      "side": 1,
+      "message": "The image should come form an official project repo",
+      "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42544833_ccf98c98",
+        "filename": "helm/policy-models-simulator/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 5658
+      },
+      "writtenOn": "2020-10-01T16:40:08Z",
+      "side": 1,
+      "message": "It should be meaningful version here",
+      "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
