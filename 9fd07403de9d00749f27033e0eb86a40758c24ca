@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8fada8af_d4cb054e",
+        "filename": "README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 6738
+      },
+      "writtenOn": "2020-10-02T16:13:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e602b010_fc4b6144",
+      "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e42c83e_01af608b",
         "filename": "helm/policy-models-simulator/resources/config/logback.xml",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1944da99_cc2b656d",
+        "filename": "helm/policy-models-simulator/resources/config/logback.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6738
+      },
+      "writtenOn": "2020-10-02T16:13:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9e42c83e_01af608b",
+      "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a5e1f5c_30ff8a67",
         "filename": "helm/policy-models-simulator/templates/configmap.yaml",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2020-10-01T16:40:08Z",
       "side": 1,
       "message": "I don\u0027t see this resource",
+      "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71e851f2_4e502fbc",
+        "filename": "helm/policy-models-simulator/templates/configmap.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 6738
+      },
+      "writtenOn": "2020-10-02T16:13:30Z",
+      "side": 1,
+      "message": "Yes no binary data to be added hence removed",
+      "parentUuid": "1a5e1f5c_30ff8a67",
       "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5aec501f_e544acbf",
+        "filename": "helm/policy-models-simulator/templates/configmap.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 6738
+      },
+      "writtenOn": "2020-10-02T16:13:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a5085c08_41df4b95",
+      "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd771c62_0d8fd923",
         "filename": "helm/policy-models-simulator/templates/deployment.yaml",
         "patchSetId": 1
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "95b09fc8_8b53c6f0",
+        "filename": "helm/policy-models-simulator/templates/deployment.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 6738
+      },
+      "writtenOn": "2020-10-02T16:13:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cd771c62_0d8fd923",
+      "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73db4d17_b2ff2250",
         "filename": "helm/policy-models-simulator/templates/ingress.yaml",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2020-10-01T16:40:08Z",
       "side": 1,
       "message": "Do we need an ingress ?\nAre we planning to access the simulator from outside the cluster ?",
+      "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee576a1_c7aeeea5",
+        "filename": "helm/policy-models-simulator/templates/ingress.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6738
+      },
+      "writtenOn": "2020-10-02T16:13:30Z",
+      "side": 1,
+      "message": "No this simulator will not be used from outside the cluster. Removed ingress.yaml",
+      "parentUuid": "73db4d17_b2ff2250",
       "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "181422b3_83a01da7",
+        "filename": "helm/policy-models-simulator/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 6738
+      },
+      "writtenOn": "2020-10-02T16:13:30Z",
+      "side": 1,
+      "message": "Using nexus3 policy-models-simulator image",
+      "parentUuid": "bf222237_22f605aa",
+      "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42544833_ccf98c98",
         "filename": "helm/policy-models-simulator/values.yaml",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "830ebd6f_6ecb5b51",
+        "filename": "helm/policy-models-simulator/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 6738
+      },
+      "writtenOn": "2020-10-02T16:13:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "42544833_ccf98c98",
+      "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
