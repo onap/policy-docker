@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "41732c75_59c56e5b",
+        "filename": "helm/policy-models-simulator/resources/config/logback.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-10-02T18:18:45Z",
+      "side": 1,
+      "message": "could just copy from here, which provides a simple log to stdout, easily captured by kubernetes:\n\nhttps://gerrit.onap.org/r/c/policy/models/+/113498/2/models-sim/packages/models-simulator-tarball/src/main/resources/etc/logback.xml",
+      "parentUuid": "1944da99_cc2b656d",
+      "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a5e1f5c_30ff8a67",
         "filename": "helm/policy-models-simulator/templates/configmap.yaml",
         "patchSetId": 1
