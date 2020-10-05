@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d893abc_538720c9",
+        "filename": "README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2020-10-05T09:32:24Z",
+      "side": 1,
+      "message": "Maybe it is also worth mentioning what pods/services.. this brings up, and how to access these, for example CDSSimulator or which port, message-router on which etc.",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 58
+      },
+      "revId": "7edc7955d012fea43290b21bfd72d77d70ea4ec3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
