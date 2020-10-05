@@ -22,6 +22,30 @@
       "revId": "7edc7955d012fea43290b21bfd72d77d70ea4ec3",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2293bdda_31056c54",
+        "filename": "README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2020-10-05T12:37:39Z",
+      "side": 1,
+      "message": "Ok the port information and all is something that is configured in simParameters.json. gr8.",
+      "parentUuid": "7d893abc_538720c9",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 58
+      },
+      "revId": "7edc7955d012fea43290b21bfd72d77d70ea4ec3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
