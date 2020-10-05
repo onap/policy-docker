@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "63aaa172_d1469026",
+        "filename": "helm/policy-models-simulator/resources/config/logback.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6738
+      },
+      "writtenOn": "2020-10-05T12:50:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "41732c75_59c56e5b",
+      "revId": "9fd07403de9d00749f27033e0eb86a40758c24ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a5e1f5c_30ff8a67",
         "filename": "helm/policy-models-simulator/templates/configmap.yaml",
         "patchSetId": 1
