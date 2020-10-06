@@ -1,51 +1,48 @@
 {
     "dmaapProvider": {
         "name": "DMaaP simulator",
-        "topicSweepSec": 300,
-        "restServerParameters": {
-
-        }
+        "topicSweepSec": 300
     },
     "restServers": [
         {
             "name": "DMaaP simulator",
             "providerClass": "org.onap.policy.models.sim.dmaap.rest.DmaapSimRestControllerV1",
-            "host": "localhost",
+            "host": "0.0.0.0",
             "port": 3905,
             "https": true
         },
         {
             "name": "A&AI simulator",
             "providerClass": "org.onap.policy.simulators.AaiSimulatorJaxRs",
-            "host": "localhost",
+            "host": "0.0.0.0",
             "port": 6666,
             "https": true
         },
         {
             "name": "Guard simulator",
             "providerClass": "org.onap.policy.simulators.GuardSimulatorJaxRs",
-            "host": "localhost",
+            "host": "0.0.0.0",
             "port": 6667,
             "https": true
         },
         {
             "name": "SDNC simulator",
             "providerClass": "org.onap.policy.simulators.SdncSimulatorJaxRs",
-            "host": "localhost",
+            "host": "0.0.0.0",
             "port": 6668,
             "https": true
         },
         {
             "name": "SO simulator",
             "providerClass": "org.onap.policy.simulators.SoSimulatorJaxRs",
-            "host": "localhost",
+            "host": "0.0.0.0",
             "port": 6669,
             "https": true
         },
         {
             "name": "VFC simulator",
             "providerClass": "org.onap.policy.simulators.VfcSimulatorJaxRs",
-            "host": "localhost",
+            "host": "0.0.0.0",
             "port": 6670,
             "https": true
         }
@@ -53,41 +50,47 @@
     "topicSinks": [
         {
             "topic": "APPC-CL",
-            "servers": ["localhost"],
+            "servers": ["${HOST_NAME}"],
             "topicCommInfrastructure": "DMAAP",
-            "useHttps": true
+            "useHttps": true,
+            "allowSelfSignedCerts" : true
         },
         {
             "topic": "APPC-LCM-WRITE",
-            "servers": ["localhost"],
+            "servers": ["${HOST_NAME}"],
             "topicCommInfrastructure": "DMAAP",
-            "useHttps": true
+            "useHttps": true,
+            "allowSelfSignedCerts" : true
         },
         {
             "topic": "SDNR-CL",
-            "servers": ["localhost"],
+            "servers": ["${HOST_NAME}"],
             "topicCommInfrastructure": "DMAAP",
-            "useHttps": true
+            "useHttps": true,
+            "allowSelfSignedCerts" : true
         }
     ],
     "topicSources": [
         {
             "topic": "APPC-CL",
-            "servers": ["localhost"],
+            "servers": ["${HOST_NAME}"],
             "topicCommInfrastructure": "DMAAP",
-            "useHttps": true
+            "useHttps": true,
+            "allowSelfSignedCerts" : true
         },
         {
             "topic": "APPC-LCM-READ",
-            "servers": ["localhost"],
+            "servers": ["${HOST_NAME}"],
             "topicCommInfrastructure": "DMAAP",
-            "useHttps": true
+            "useHttps": true,
+            "allowSelfSignedCerts" : true
         },
         {
             "topic": "SDNR-CL-RSP",
-            "servers": ["localhost"],
+            "servers": ["${HOST_NAME}"],
             "topicCommInfrastructure": "DMAAP",
-            "useHttps": true
+            "useHttps": true,
+            "allowSelfSignedCerts" : true
         }
     ],
     "topicServers": [
@@ -118,7 +121,7 @@
         "timeout": 30,
         "username": "ccsdkapps",
         "password": "ccsdkapps",
-	      "resourceLocation": "/opt/app/policy/simulators/etc/mounted/",
+        "resourceLocation": "/opt/app/policy/simulators/etc/mounted/",
         "successRepeatCount": 0,
         "requestedResponseDelayMs": 0
     }
