@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03a5a107_0235a4e7",
+        "filename": "helm/policy-models-simulator/resources/config/simParameters.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-10-06T18:05:55Z",
+      "side": 1,
+      "message": "can remove this altogether once https://gerrit.onap.org/r/c/policy/models/+/113581 is merged",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 8,
+        "endChar": 9
+      },
+      "revId": "d1af46a8e24cdb6b977ee942dcfada8f2b5b3005",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca875b45_c53a8689",
+        "filename": "helm/policy-models-simulator/resources/config/simParameters.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-10-06T18:05:55Z",
+      "side": 1,
+      "message": "makes sense",
+      "revId": "d1af46a8e24cdb6b977ee942dcfada8f2b5b3005",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d0fb3f3_985d5735",
+        "filename": "helm/policy-models-simulator/resources/config/simParameters.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-10-06T18:05:55Z",
+      "side": 1,
+      "message": "this should be ok, though \"localhost\" should work, too, since the topic sinks \u0026 sources run within the same JVM as the dmaap reset server to which the connect",
+      "revId": "d1af46a8e24cdb6b977ee942dcfada8f2b5b3005",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f3810c_0bb06e0e",
+        "filename": "helm/policy-models-simulator/resources/config/simParameters.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2020-10-06T18:05:55Z",
+      "side": 1,
+      "message": "ty :-)",
+      "revId": "d1af46a8e24cdb6b977ee942dcfada8f2b5b3005",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
