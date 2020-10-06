@@ -46,6 +46,29 @@
       "revId": "7edc7955d012fea43290b21bfd72d77d70ea4ec3",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5375a19_dfcb8e7b",
+        "filename": "helm/policy-models-simulator/resources/config/simParameters.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2020-10-06T11:09:21Z",
+      "side": 1,
+      "message": "With the latest changes Jim submitted in policy models, this is validated, and as a result this will cause the container to fail with invalid parameters error. \"host\" and \"port\" are mandatory parameters for restServerParameters.\nBetter to keep the default configuration file as something that is working. I can raise a separate review for this if this can be merged now.",
+      "range": {
+        "startLine": 5,
+        "startChar": 32,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "7edc7955d012fea43290b21bfd72d77d70ea4ec3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
