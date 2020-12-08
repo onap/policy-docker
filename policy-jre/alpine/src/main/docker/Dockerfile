@@ -35,16 +35,11 @@ ENV POLICY_HOME=/opt/app/policy
 #
 RUN apk update \
     && apk add --no-cache \
-        bash \
         busybox-extras \
-        coreutils \
         curl \
-        findutils \
-        grep \
         jq \
         procps \
         unzip \
-        wget \
         zip \
         openjdk11-jre \
     && addgroup -S policy \
