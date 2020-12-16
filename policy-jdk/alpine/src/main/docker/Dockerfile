@@ -50,6 +50,6 @@ RUN apk update \
     && ln -s /usr/share/apache-maven-3.6.3/bin/mvn /usr/bin/mvn \
     && rm -f /tmp/apache-maven-3.6.3-bin.tar.gz \
     && addgroup -S policy \
-    && adduser -S  --shell /bin/bash -G policy policy \
+    && adduser -S  --shell /bin/sh -G policy policy \
     && mkdir -p ${POLICY_HOME}/ \
     && chown policy:policy ${POLICY_HOME}

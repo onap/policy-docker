@@ -43,6 +43,6 @@ RUN apk update \
         zip \
         openjdk11-jre \
     && addgroup -S policy \
-    && adduser -S  --shell /bin/bash -G policy policy \
+    && adduser -S  --shell /bin/sh -G policy policy \
     && mkdir -p ${POLICY_HOME}/ \
     && chown policy:policy ${POLICY_HOME}
