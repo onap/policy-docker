@@ -23,12 +23,13 @@
 # $JAVA_HOME is set to /usr/lib/jvm/java-11-openjdk
 # more details at https://hub.docker.com/_/openjdk
 
-FROM alpine:3.12.0
+FROM onap/integration-java11:8.0.0
 
 LABEL maintainer="Policy Team"
 
 ENV POLICY_HOME=/opt/app/policy
 
+USER root
 #
 # When these are done via a single "RUN", I/O errors occur sporadically,
 # thus they have been split into separate RUNs.
@@ -41,8 +42,9 @@ RUN apk update \
         procps \
         unzip \
         zip \
-        openjdk11-jre \
     && addgroup -S policy \
     && adduser -S  --shell /bin/sh -G policy policy \
     && mkdir -p ${POLICY_HOME}/ \
-    && chown policy:policy ${POLICY_HOME}
+    && chown policy:policy ${POLICY_HOME} \
+    && mkdir -p /usr/lib/jvm/ \
+    && ln -s /opt/java/openjdk /usr/lib/jvm/java-11-openjdk
