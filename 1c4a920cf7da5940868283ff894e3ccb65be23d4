@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1d449ab_8208d019",
+        "filename": "policy-jre/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-12-22T15:24:15Z",
+      "side": 1,
+      "message": "Quick question Taka, I am sure there\u0027s a reason but what\u0027s the reason to overlap the directory structure with the /usr/lib/.../openjdk one.?",
+      "revId": "1c4a920cf7da5940868283ff894e3ccb65be23d4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
