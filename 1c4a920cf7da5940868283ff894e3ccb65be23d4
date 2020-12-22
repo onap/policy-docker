@@ -16,6 +16,24 @@
       "revId": "1c4a920cf7da5940868283ff894e3ccb65be23d4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69e8be0c_4bd29759",
+        "filename": "policy-jre/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 2477
+      },
+      "writtenOn": "2020-12-22T15:39:36Z",
+      "side": 1,
+      "message": "The original apk openjdk11-jre added on /usr/lib/jvm/java-11-openjdk, but onap/integration-java11 image has JAVA_HOME on /opt/java/openjdk. Several startup scripts, for example policy-api.sh has JAVA_HOME\u003d/usr/lib/jvm/java-11-openjdk/ hard coded. if we do not want to make a sym link, then we need to scan/change all scripts again.",
+      "parentUuid": "b1d449ab_8208d019",
+      "revId": "1c4a920cf7da5940868283ff894e3ccb65be23d4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
