@@ -52,6 +52,24 @@
       "revId": "1c4a920cf7da5940868283ff894e3ccb65be23d4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c1dd0e7_5fcab78e",
+        "filename": "policy-jre/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2020-12-23T00:34:10Z",
+      "side": 1,
+      "message": "then we should probably go back and clean those up. Maybe this Dockerfile sets JAVA_HOME and those scripts assume it is set?? I\u0027m ok with bringing this in first and cleaning up later. Then also remove lines 23-24 when the cleanup is done.",
+      "parentUuid": "0720d141_eb4f0eaf",
+      "revId": "1c4a920cf7da5940868283ff894e3ccb65be23d4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
