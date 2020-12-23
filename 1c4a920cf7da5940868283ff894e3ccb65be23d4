@@ -70,6 +70,24 @@
       "revId": "1c4a920cf7da5940868283ff894e3ccb65be23d4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f42d409_386832bd",
+        "filename": "policy-jre/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2020-12-23T00:56:10Z",
+      "side": 1,
+      "message": "I also think what you are outlining is the cleanest way.",
+      "parentUuid": "8c1dd0e7_5fcab78e",
+      "revId": "1c4a920cf7da5940868283ff894e3ccb65be23d4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
