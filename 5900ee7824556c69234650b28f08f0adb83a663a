@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa9a6e4a_ed6fbcd4",
+        "filename": "csit/config/db/db.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-01-13T22:11:03Z",
+      "side": 1,
+      "message": "maybe change these tabs to spaces while we\u0027re at it",
+      "revId": "5900ee7824556c69234650b28f08f0adb83a663a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e4eb3d_e1adc1c5",
+        "filename": "csit/detmVers.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-01-13T22:11:03Z",
+      "side": 1,
+      "message": "is this the mirror?\n\nsame question through-out this file",
+      "range": {
+        "startLine": 25,
+        "startChar": 14,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "5900ee7824556c69234650b28f08f0adb83a663a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
