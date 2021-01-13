@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "367fb812_3c7e3f03",
+        "filename": "csit/config/db/db.conf",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2477
+      },
+      "writtenOn": "2021-01-13T22:56:41Z",
+      "side": 1,
+      "message": "i think may be 2021.",
+      "parentUuid": "5528e727_b8b528f4",
+      "revId": "5900ee7824556c69234650b28f08f0adb83a663a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa9a6e4a_ed6fbcd4",
         "filename": "csit/config/db/db.sh",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d0567514_dbc8dad3",
+        "filename": "csit/config/db/db.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 2477
+      },
+      "writtenOn": "2021-01-13T22:56:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fa9a6e4a_ed6fbcd4",
+      "revId": "5900ee7824556c69234650b28f08f0adb83a663a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9e4eb3d_e1adc1c5",
         "filename": "csit/detmVers.sh",
         "patchSetId": 4
@@ -47,6 +83,30 @@
       "writtenOn": "2021-01-13T22:11:03Z",
       "side": 1,
       "message": "is this the mirror?\n\nsame question through-out this file",
+      "range": {
+        "startLine": 25,
+        "startChar": 14,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "5900ee7824556c69234650b28f08f0adb83a663a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fbeb37e_efbae701",
+        "filename": "csit/detmVers.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 2477
+      },
+      "writtenOn": "2021-01-13T22:56:41Z",
+      "side": 1,
+      "message": "as far as I tested on mirror site which is Jess provided: gerrit-mirror-ap.onap.org does not provide https interface only git. that is why I did not change to mirror",
+      "parentUuid": "f9e4eb3d_e1adc1c5",
       "range": {
         "startLine": 25,
         "startChar": 14,
