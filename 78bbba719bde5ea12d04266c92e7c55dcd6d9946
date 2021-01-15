@@ -22,6 +22,30 @@
       "revId": "78bbba719bde5ea12d04266c92e7c55dcd6d9946",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae509fd_634b1436",
+        "filename": "csit/run-project-csit.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 2477
+      },
+      "writtenOn": "2021-01-15T20:59:50Z",
+      "side": 1,
+      "message": "actually, the sandbox jenkins build did not take \"docker/csit\" after git clone docker repo but took only /csit instead under ${WORKSPACE} (see in line 141). ${WORKSPACE}/scripts can be removed in theory, but I would leave it for now.",
+      "parentUuid": "25025f5c_3bfb2ae6",
+      "range": {
+        "startLine": 140,
+        "startChar": 52,
+        "endLine": 140,
+        "endChar": 59
+      },
+      "revId": "78bbba719bde5ea12d04266c92e7c55dcd6d9946",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
