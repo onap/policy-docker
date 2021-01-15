@@ -137,8 +137,8 @@ if [ -z "$WORKSPACE" ]; then
 fi
 
 # Add csit scripts to PATH
-export PATH="${PATH}:${WORKSPACE}/docker/csit:${WORKSPACE}/scripts:${ROBOT_VENV}/bin"
-export SCRIPTS="${WORKSPACE}/docker/csit"
+export PATH="${PATH}:${WORKSPACE}/csit:${WORKSPACE}/scripts:${ROBOT_VENV}/bin"
+export SCRIPTS="${WORKSPACE}/csit"
 export ROBOT_VARIABLES=
 
 # get the plan from git clone
@@ -154,9 +154,6 @@ if ! `git clone -b ${GERRIT_BRANCH} --single-branch git://gerrit-mirror-ap.onap.
     echo "repo not found: policy/${PROJECT}"
     exit 1
 fi
-
-# temp fix
-cp -rf /root/${PROJECT}/csit ${WORKSPACE}/${PROJECT}
 
 if [ -f "${WORKSPACE}/${1}/csit/plans/testplan.txt" ]; then
     export TESTPLAN="${1}"
@@ -205,7 +202,7 @@ SUITES=$( xargs -a testplan.txt )
 echo ROBOT_VARIABLES="${ROBOT_VARIABLES}"
 echo "Starting Robot test suites ${SUITES} ..."
 relax_set
-python -m robot.run -N ${TESTPLAN} -v WORKSPACE:/tmp ${ROBOT_VARIABLES} ${TESTOPTIONS} ${SUITES}
+python -m robot.run -N ${TESTPLAN} -v WORKSPACE:/tmp ${ROBOT_VARIABLES} ${SUITES}
 RESULT=$?
 load_set
 echo "RESULT: $RESULT"
