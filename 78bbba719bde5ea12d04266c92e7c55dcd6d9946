@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25025f5c_3bfb2ae6",
+        "filename": "csit/run-project-csit.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-01-15T20:29:03Z",
+      "side": 1,
+      "message": "should this be \"csit/scripts\"?",
+      "range": {
+        "startLine": 140,
+        "startChar": 52,
+        "endLine": 140,
+        "endChar": 59
+      },
+      "revId": "78bbba719bde5ea12d04266c92e7c55dcd6d9946",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
