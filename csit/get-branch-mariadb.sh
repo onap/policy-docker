@@ -16,7 +16,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END======================================================
 
-export POLICY_MARIADB_VER=10.2.25
+export POLICY_MARIADB_VER=10.5.8
 export NEXUS_URL=https://nexus.onap.org/content/repositories/snapshots
 
 GIT_TOP=$(git rev-parse --show-toplevel)
