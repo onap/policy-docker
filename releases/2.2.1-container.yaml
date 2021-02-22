@@ -1,0 +1,10 @@
+distribution_type: 'container'
+container_release_tag: '2.2.1'
+project: 'policy-docker'
+log_dir: 'policy-docker-maven-docker-stage-master/256'
+ref: 6ba77c1852cf827375ad351680e4986721132030
+containers:
+    - name: 'policy-jre-alpine'
+      version: '2.2.1-20210222T2125'
+    - name: 'policy-jdk-alpine'
+      version: '2.2.1-20210222T2125'
