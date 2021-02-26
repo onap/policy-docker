@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d45eccb_9f4f90fb",
+        "filename": "csit/onset.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-02-26T17:52:26Z",
+      "side": 1,
+      "message": "is this needed by anything other than drools-apps?",
+      "revId": "2391d153cc34dcdcccdf622a45aff4a1e7a829ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
