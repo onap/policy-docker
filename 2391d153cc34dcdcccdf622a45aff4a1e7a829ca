@@ -16,6 +16,24 @@
       "revId": "2391d153cc34dcdcccdf622a45aff4a1e7a829ca",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f96f558_8be47080",
+        "filename": "csit/onset.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2477
+      },
+      "writtenOn": "2021-02-26T18:24:28Z",
+      "side": 1,
+      "message": "Plans dir in each repo would only keep three files: setup.sh, teardown.sh, testplan.txt, so I decided to move this script to docker repo. but if you have different opinion, then i will move this to drool-apps.",
+      "parentUuid": "4d45eccb_9f4f90fb",
+      "revId": "2391d153cc34dcdcccdf622a45aff4a1e7a829ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
