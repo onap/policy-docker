@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c7fe398_4d580560",
+        "filename": "csit/config/drools-apps/custom/features.pre.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-03-05T20:33:39Z",
+      "side": 1,
+      "message": "sh",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 4
+      },
+      "revId": "26b2693ca190fd7965157123900c4d4564dac956",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
