@@ -22,6 +22,30 @@
       "revId": "26b2693ca190fd7965157123900c4d4564dac956",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd29921d_4af0bb84",
+        "filename": "csit/config/drools-apps/custom/features.pre.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 2477
+      },
+      "writtenOn": "2021-03-05T20:36:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8c7fe398_4d580560",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 4
+      },
+      "revId": "26b2693ca190fd7965157123900c4d4564dac956",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
