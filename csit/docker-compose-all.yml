@@ -178,7 +178,7 @@ services:
       hostname: policy-distribution
       volumes:
        - ./config/distribution/defaultConfig.json:/opt/app/policy/distribution/etc/defaultConfig.json:ro
-       - ./policy-distribution/config/distribution/temp/:/opt/app/policy/distribution/etc/temp/:ro
+       - ../distribution/csit/config/temp/:/opt/app/policy/distribution/etc/temp/:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
