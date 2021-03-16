@@ -33,6 +33,7 @@ services:
       hostname: policy.api.simpledemo.onap.org
       volumes:
        - ./config/sim-all:/opt/app/policy/simulators/etc/mounted:ro
+       - ./config/ks.jks:/opt/app/policy/simulators/etc/ssl/policy-keystore:ro
       expose:
        - 6666
        - 6668
@@ -48,6 +49,7 @@ services:
       expose:
        - 6969
       volumes:
+       - ./config/ks.jks:/opt/app/policy/api/etc/ssl/policy-keystore:ro
        - ./wait_for_port.sh:/opt/app/policy/api/bin/wait_for_port.sh:ro
       entrypoint: ./wait_for_port.sh
       command: [
@@ -66,6 +68,7 @@ services:
        - 6969
       volumes:
        - ./config/pap/defaultConfig.json:/opt/app/policy/pap/etc/defaultConfig.json:ro
+       - ./config/ks.jks:/opt/app/policy/pap/etc/ssl/policy-keystore:ro
        - ./wait_for_port.sh:/opt/app/policy/pap/bin/wait_for_port.sh:ro
       entrypoint: ./wait_for_port.sh
       command: [
@@ -86,6 +89,7 @@ services:
        - 6969
       volumes:
        - ./config/xacml-pdp/defaultConfig.json:/opt/app/policy/pdpx/etc/defaultConfig.json:ro
+       - ./config/ks.jks:/opt/app/policy/pdpx/etc/ssl/policy-keystore:ro
        - ./wait_for_port.sh:/opt/app/policy/pdpx/bin/wait_for_port.sh:ro
       entrypoint: ./wait_for_port.sh
       command: [
@@ -130,6 +134,7 @@ services:
        - 9696
       volumes:
        - ./config/drools-apps/custom:/tmp/policy-install/config:ro
+       - ./config/drools-apps/custom/feature-lifecycle.properties:/opt/app/policy/features/lifecycle/config/feature-lifecycle.properties:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       env_file:
         - config/drools-apps/env/base.conf
@@ -159,6 +164,7 @@ services:
        - 23324
       volumes:
        - ./config/apex-pdp/OnapPfConfig.json:/opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json:ro
+       - ./config/ks.jks:/opt/app/policy/apex-pdp/etc/ssl/policy-keystore:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
@@ -178,6 +184,7 @@ services:
       hostname: policy-distribution
       volumes:
        - ./config/distribution/defaultConfig.json:/opt/app/policy/distribution/etc/defaultConfig.json:ro
+       - ./config/ks.jks:/opt/app/policy/distribution/etc/ssl/policy-keystore:ro
        - ../distribution/csit/config/temp/:/opt/app/policy/distribution/etc/temp/:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       entrypoint: /opt/app/policy/bin/wait_for_port.sh

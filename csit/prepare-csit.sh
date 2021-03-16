@@ -50,12 +50,3 @@ rm -rf ${ROBOT_VENV}/src/onap/testsuite
 pip install --upgrade --extra-index-url="https://nexus3.onap.org/repository/PyPi.staging/simple" 'robotframework-onap==0.5.1.*' --pre
 
 pip freeze
-
-# install chrome driver
-if [ ! -x ${ROBOT_VENV}/bin/chromedriver ]; then
-    pushd ${ROBOT_VENV}/bin
-    wget -N http://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip
-    unzip chromedriver_linux64.zip
-    chmod +x chromedriver
-    popd
-fi
