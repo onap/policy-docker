@@ -50,6 +50,7 @@
             "servers": ["${HOST_NAME}"],
             "topicCommInfrastructure": "DMAAP",
             "useHttps": true,
+            "allowSelfSignedCerts": true,
             "apiKey": "some-key",
             "apiSecret": "some-secret"
         },
@@ -58,6 +59,7 @@
             "servers": ["${HOST_NAME}"],
             "topicCommInfrastructure": "DMAAP",
             "useHttps": true,
+            "allowSelfSignedCerts": true,
             "apiKey": "some-key",
             "apiSecret": "some-secret"
         }
@@ -68,6 +70,7 @@
             "servers": ["${HOST_NAME}"],
             "topicCommInfrastructure": "DMAAP",
             "useHttps": true,
+            "allowSelfSignedCerts": true,
             "apiKey": "some-key",
             "apiSecret": "some-secret"
         },
@@ -76,6 +79,7 @@
             "servers": ["${HOST_NAME}"],
             "topicCommInfrastructure": "DMAAP",
             "useHttps": true,
+            "allowSelfSignedCerts": true,
             "apiKey": "some-key",
             "apiSecret": "some-secret"
         }

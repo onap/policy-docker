@@ -65,6 +65,7 @@
                     "password": "zb!XztG34"
                 },
                 "isHttps": true,
+                "allowSelfSignedCerts": true,
                 "deployPolicies": true
             }
         }
