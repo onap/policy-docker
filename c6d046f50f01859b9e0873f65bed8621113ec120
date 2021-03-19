@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e14cee5_849011d2",
+        "filename": "csit/prepare-csit.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-03-19T12:56:41Z",
+      "side": 0,
+      "message": "policy CSITs do not use chromedriver, at this point.",
+      "revId": "c6d046f50f01859b9e0873f65bed8621113ec120",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
