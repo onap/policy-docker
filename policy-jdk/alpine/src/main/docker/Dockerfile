@@ -1,6 +1,6 @@
 #   ============LICENSE_START=======================================================
 #    Copyright (C) 2019 Tieto. All rights reserved.
-#    Modifications Copyright (C) 2020 AT&T Intellectual Property. All rights reserved.
+#    Modifications Copyright (C) 2020, 2021 AT&T Intellectual Property. All rights reserved.
 #    Modifications Copyright (C) 2020 Nordix Foundation.
 #   ================================================================================
 #   Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,17 +23,19 @@
 # $JAVA_HOME is set to /usr/lib/jvm/java-11-openjdk
 # more details at https://hub.docker.com/_/openjdk
 
-FROM alpine:3.12.0
+FROM onap/integration-java11:8.0.0
 
 LABEL maintainer="Policy Team"
 
 ENV POLICY_HOME=/opt/app/policy
 
-#
-# When these are done via a single "RUN", I/O errors occur sporadically,
-# thus they have been split into separate RUNs.
-#
-RUN apk update \
+USER root
+
+RUN rm -rf /opt/java/openjdk \
+    && mkdir /opt/java/openjdk \
+    && mkdir -p /usr/lib/jvm/ \
+    && ln -s /opt/java/openjdk /usr/lib/jvm/java-11-openjdk \
+    && apk update \
     && apk add --no-cache \
         busybox-extras \
         curl \
