@@ -1,6 +1,6 @@
 #   ============LICENSE_START=======================================================
 #    Copyright (C) 2019 Tieto. All rights reserved.
-#    Modifications Copyright (C) 2020 AT&T Intellectual Property. All rights reserved.
+#    Modifications Copyright (C) 2020, 2021 AT&T Intellectual Property. All rights reserved.
 #    Modifications Copyright (C) 2020 Nordix Foundation.
 #   ================================================================================
 #   Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,10 +30,7 @@ LABEL maintainer="Policy Team"
 ENV POLICY_HOME=/opt/app/policy
 
 USER root
-#
-# When these are done via a single "RUN", I/O errors occur sporadically,
-# thus they have been split into separate RUNs.
-#
+
 RUN apk update \
     && apk add --no-cache \
         busybox-extras \
