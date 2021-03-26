@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f68d2919_0ee33692",
+        "filename": "policy-jdk/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2021-03-26T13:27:38Z",
+      "side": 1,
+      "message": "one question, the jre installed here, will override the jre from integration-java?   I\u0027m asking this in case, as if there are new versions of jdk that we may pick up here from upstream repos, could have a bad interactions if the jre that is used is the one from integration-java.",
+      "revId": "502295e5097bd0701434afc7df511dab6a0988dd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
