@@ -34,6 +34,24 @@
       "revId": "502295e5097bd0701434afc7df511dab6a0988dd",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cabb9eda_5bc75f46",
+        "filename": "policy-jdk/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-03-26T16:36:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebaadd2e_d7adf917",
+      "revId": "502295e5097bd0701434afc7df511dab6a0988dd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
