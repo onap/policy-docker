@@ -20,58 +20,43 @@ source ${SCRIPTS}/get-branch-mariadb.sh
 
 echo POLICY_MARIADB_VER=${POLICY_MARIADB_VER}
 
-POLICY_MODELS_VERSION=$(
-    curl -q --silent \
-      https://git.onap.org/policy/models/plain/pom.xml?h=${GERRIT_BRANCH} |
-    xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)
+function getVersion
+{
+    REPO=$1
+    curl -qL --silent \
+      https://github.com/onap/policy-$REPO/raw/${GERRIT_BRANCH}/pom.xml |
+    xmllint --xpath \
+      '/*[local-name()="project"]/*[local-name()="version"]/text()' -
+}
+
+POLICY_MODELS_VERSION=$(getVersion models)
 export POLICY_MODELS_VERSION=${POLICY_MODELS_VERSION:0:3}-SNAPSHOT-latest
 echo POLICY_MODELS_VERSION=${POLICY_MODELS_VERSION}
 
-POLICY_API_VERSION=$(
-    curl -q --silent \
-      https://git.onap.org/policy/api/plain/pom.xml?h=${GERRIT_BRANCH} |
-    xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)
+POLICY_API_VERSION=$(getVersion api)
 export POLICY_API_VERSION=${POLICY_API_VERSION:0:3}-SNAPSHOT-latest
 echo POLICY_API_VERSION=${POLICY_API_VERSION}
 
-POLICY_PAP_VERSION=$(
-    curl -q --silent \
-      https://git.onap.org/policy/pap/plain/pom.xml?h=${GERRIT_BRANCH} |
-    xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)
+POLICY_PAP_VERSION=$(getVersion pap)
 export POLICY_PAP_VERSION=${POLICY_PAP_VERSION:0:3}-SNAPSHOT-latest
 echo POLICY_PAP_VERSION=${POLICY_PAP_VERSION}
 
-POLICY_XACML_PDP_VERSION=$(
-    curl -q --silent \
-      https://git.onap.org/policy/xacml-pdp/plain/pom.xml?h=${GERRIT_BRANCH} |
-    xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)
+POLICY_XACML_PDP_VERSION=$(getVersion xacml-pdp)
 export POLICY_XACML_PDP_VERSION=${POLICY_XACML_PDP_VERSION:0:3}-SNAPSHOT-latest
 echo POLICY_XACML_PDP_VERSION=${POLICY_XACML_PDP_VERSION}
 
-POLICY_DROOLS_VERSION=$(
-    curl -q --silent \
-      https://git.onap.org/policy/drools-pdp/plain/pom.xml?h=${GERRIT_BRANCH} |
-    xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)
+POLICY_DROOLS_VERSION=$(getVersion drools-pdp)
 export POLICY_DROOLS_VERSION=${POLICY_DROOLS_VERSION:0:3}-SNAPSHOT-latest
 echo POLICY_DROOLS_VERSION=${POLICY_DROOLS_VERSION}
 
-POLICY_DROOLS_APPS_VERSION=$(
-    curl -q --silent \
-      https://git.onap.org/policy/drools-applications/plain/pom.xml?h=${GERRIT_BRANCH} |
-    xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)
+POLICY_DROOLS_APPS_VERSION=$(getVersion drools-applications)
 export POLICY_DROOLS_APPS_VERSION=${POLICY_DROOLS_APPS_VERSION:0:3}-SNAPSHOT-latest
 echo POLICY_DROOLS_APPS_VERSION=${POLICY_DROOLS_APPS_VERSION}
 
-POLICY_APEX_PDP_VERSION=$(
-    curl -q --silent \
-      https://git.onap.org/policy/apex-pdp/plain/pom.xml?h=${GERRIT_BRANCH} |
-    xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)
+POLICY_APEX_PDP_VERSION=$(getVersion apex-pdp)
 export POLICY_APEX_PDP_VERSION=${POLICY_APEX_PDP_VERSION:0:3}-SNAPSHOT-latest
 echo POLICY_APEX_PDP_VERSION=${POLICY_APEX_PDP_VERSION}
 
-POLICY_DISTRIBUTION_VERSION=$(
-    curl -q --silent \
-      https://git.onap.org/policy/distribution/plain/pom.xml?h=${GERRIT_BRANCH} |
-    xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' -)
+POLICY_DISTRIBUTION_VERSION=$(getVersion distribution)
 export POLICY_DISTRIBUTION_VERSION=${POLICY_DISTRIBUTION_VERSION:0:3}-SNAPSHOT-latest
 echo POLICY_DISTRIBUTION_VERSION=${POLICY_DISTRIBUTION_VERSION}
