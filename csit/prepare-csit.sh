@@ -33,11 +33,11 @@ if [ -f ${WORKSPACE}/env.properties ]; then
 fi
 if [ -f ${ROBOT_VENV}/bin/activate ]; then
     source ${ROBOT_VENV}/bin/activate
-else
+elif [ ! -d /tmp/ci-management ]; then
     rm -rf /tmp/ci-management
     rm -f ${WORKSPACE}/env.properties
     cd /tmp
-    git clone -b master --single-branch git://gerrit-mirror-ap.onap.org/mirror/ci-management.git
+    git clone -b master --single-branch https://github.com/onap/ci-management.git
     source /tmp/ci-management/jjb/integration/include-raw-integration-install-robotframework.sh
 fi
 

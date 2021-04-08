@@ -24,4 +24,4 @@ mkdir ${WORKSPACE}/models
 cd ${WORKSPACE}
 
 # download models examples
-git clone -b ${GERRIT_BRANCH} --single-branch git://gerrit-mirror-ap.onap.org/mirror/policy/models.git
+git clone -b ${GERRIT_BRANCH} --single-branch https://github.com/onap/policy-models.git models
