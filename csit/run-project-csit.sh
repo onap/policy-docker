@@ -150,7 +150,7 @@ mkdir ${WORKSPACE}/${PROJECT}
 cd ${WORKSPACE}
 
 # get the plan from git clone
-if ! `git clone -b ${GERRIT_BRANCH} --single-branch git://gerrit-mirror-ap.onap.org/mirror/policy/${PROJECT}.git` ; then
+if ! `git clone -b ${GERRIT_BRANCH} --single-branch https://github.com/onap/policy-${PROJECT}.git ${PROJECT}` ; then
     echo "repo not found: policy/${PROJECT}"
     exit 1
 fi
