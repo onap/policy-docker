@@ -35,6 +35,10 @@
     <name>Policy alpine jdk docker image</name>
     <description>Policy alpine jdk docker image</description>
 
+    <properties>
+        <docker.jdk.imagename>onap/policy-jdk-alpine</docker.jdk.imagename>
+    </properties>
+
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
@@ -79,7 +83,7 @@
                     <pushRegistry>${docker.push.registry}</pushRegistry>
                     <images>
                         <image>
-                            <name>onap/policy-jdk-alpine</name>
+                            <name>${docker.jdk.imagename}</name>
                             <build>
                                 <cleanup>try</cleanup>
                                 <dockerFile>Dockerfile</dockerFile>
@@ -121,7 +125,7 @@
                             <goal>push</goal>
                         </goals>
                         <configuration>
-                            <image>onap/policy-jdk-alpine</image>
+                            <image>${docker.jdk.imagename}</image>
                         </configuration>
                     </execution>
                 </executions>
