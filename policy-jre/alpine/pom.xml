@@ -34,6 +34,10 @@
     <artifactId>policy-jre-alpine</artifactId>
     <name>Policy alpine jre docker image</name>
     <description>Policy alpine jre docker image</description>
+    
+    <properties>
+        <docker.jre.imagename>onap/policy-jre-alpine</docker.jre.imagename>
+    </properties>
 
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
@@ -79,7 +83,7 @@
                     <pushRegistry>${docker.push.registry}</pushRegistry>
                     <images>
                         <image>
-                            <name>onap/policy-jre-alpine</name>
+                            <name>${docker.jre.imagename}</name>
                             <build>
                                 <cleanup>try</cleanup>
                                 <dockerFile>Dockerfile</dockerFile>
@@ -121,7 +125,7 @@
                             <goal>push</goal>
                         </goals>
                         <configuration>
-                            <image>onap/policy-jre-alpine</image>
+                            <image>${docker.jre.imagename}</image>
                         </configuration>
                     </execution>
                 </executions>
