@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abd2f507_b214eb00",
+        "filename": "policy-jdk/alpine/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2021-04-19T13:23:02Z",
+      "side": 1,
+      "message": "oops extra tab or space",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 4
+      },
+      "revId": "746fbc26941be07476fb5613cbb3142b1fcda49b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b21fc0be_8a675ff7",
+        "filename": "policy-jre/alpine/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2021-04-19T13:23:02Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 4
+      },
+      "revId": "746fbc26941be07476fb5613cbb3142b1fcda49b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
