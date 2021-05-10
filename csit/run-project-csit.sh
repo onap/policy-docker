@@ -27,17 +27,17 @@ function on_exit(){
     rc=$?
     if [[ ${WORKSPACE} ]]; then
         if [[ ${WORKDIR} ]]; then
-            rsync -av "$WORKDIR/" "$WORKSPACE/csit/archives/$TESTPLAN"
+            rsync -av "$WORKDIR/" "$WORKSPACE/csit/archives/$PROJECT"
         fi
         # Record list of active docker containers
-        docker ps --format "{{.Image}}" > "$WORKSPACE/csit/archives/$TESTPLAN/_docker-images.log"
+        docker ps --format "{{.Image}}" > "$WORKSPACE/csit/archives/$PROJECT/_docker-images.log"
 
         # show memory consumption after all docker instances initialized
-        docker_stats | tee "$WORKSPACE/csit/archives/$TESTPLAN/_sysinfo-2-after-robot.txt"
+        docker_stats | tee "$WORKSPACE/csit/archives/$PROJECT/_sysinfo-2-after-robot.txt"
     fi
     # Run teardown script plan if it exists
-    cd "${TESTPLANDIR}/csit/plans/"
-    TEARDOWN="${TESTPLANDIR}/csit/plans/teardown.sh"
+    cd "${TESTPLANDIR}/plans/"
+    TEARDOWN="${TESTPLANDIR}/plans/teardown.sh"
     if [ -f "${TEARDOWN}" ]; then
         echo "Running teardown script ${TEARDOWN}"
         source_safely "${TEARDOWN}"
@@ -145,29 +145,36 @@ export ROBOT_VARIABLES=
 source ${SCRIPTS}/get-branch-mariadb.sh
 
 export PROJECT="${1}"
-rm -rf ${WORKSPACE}/${PROJECT}
-mkdir ${WORKSPACE}/${PROJECT}
+
 cd ${WORKSPACE}
 
-# get the plan from git clone
-if ! `git clone -b ${GERRIT_BRANCH} --single-branch https://github.com/onap/policy-${PROJECT}.git ${PROJECT}` ; then
-    echo "repo not found: policy/${PROJECT}"
-    exit 1
-fi
+case "${PROJECT}" in
+xacml-pdp)
+	export TESTPLANDIR="${WORKSPACE}/csit/${PROJECT}"
+	;;
+*)
+	export TESTPLANDIR="${WORKSPACE}/${PROJECT}/csit"
 
-if [ -f "${WORKSPACE}/${1}/csit/plans/testplan.txt" ]; then
-    export TESTPLAN="${1}"
-else
-    echo "testplan not found: ${WORKSPACE}/${1}/csit/plans/testplan.txt"
-    exit 2
-fi
+	rm -rf ${WORKSPACE}/${PROJECT}
+	mkdir ${WORKSPACE}/${PROJECT}
+
+	# get the plan from git clone
+	if ! `git clone -b ${GERRIT_BRANCH} --single-branch https://github.com/onap/policy-${PROJECT}.git ${PROJECT}` ; then
+    		echo "repo not found: policy/${PROJECT}"
+    		exit 1
+	fi
+
+	if [ ! -f "${TESTPLANDIR}/plans/testplan.txt" ]; then
+    		echo "testplan not found: ${TESTPLANDIR}/plans/testplan.txt"
+    		exit 2
+	fi
+	;;
+esac
 
 export TESTOPTIONS="${2}"
 
-rm -rf "$WORKSPACE/csit/archives/$TESTPLAN"
-mkdir -p "$WORKSPACE/csit/archives/$TESTPLAN"
-
-TESTPLANDIR="${WORKSPACE}/${TESTPLAN}"
+rm -rf "$WORKSPACE/csit/archives/$PROJECT"
+mkdir -p "$WORKSPACE/csit/archives/$PROJECT"
 
 # Run installation of prerequired libraries
 source_safely "${SCRIPTS}/prepare-csit.sh"
@@ -187,27 +194,27 @@ cp ${SCRIPTS}/config/ks.jks ${SCRIPTS}/config/drools/custom/policy-keystore
 cp ${SCRIPTS}/config/ks.jks ${SCRIPTS}/config/drools-apps/custom/policy-keystore
 
 # Run setup script plan if it exists
-cd "${TESTPLANDIR}/csit/plans/"
-SETUP="${TESTPLANDIR}/csit/plans/setup.sh"
+cd "${TESTPLANDIR}/plans/"
+SETUP="${TESTPLANDIR}/plans/setup.sh"
 if [ -f "${SETUP}" ]; then
     echo "Running setup script ${SETUP}"
     source_safely "${SETUP}"
 fi
 
 # show memory consumption after all docker instances initialized
-docker_stats | tee "$WORKSPACE/csit/archives/$TESTPLAN/_sysinfo-1-after-setup.txt"
+docker_stats | tee "$WORKSPACE/csit/archives/$PROJECT/_sysinfo-1-after-setup.txt"
 
 # Run test plan
 cd "$WORKDIR"
 echo "Reading the testplan:"
-cat "${TESTPLANDIR}/csit/plans/testplan.txt" | egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' | sed "s|^|${TESTPLANDIR}/csit/tests/|" > testplan.txt
+cat "${TESTPLANDIR}/plans/testplan.txt" | egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' | sed "s|^|${TESTPLANDIR}/tests/|" > testplan.txt
 cat testplan.txt
 SUITES=$( xargs -a testplan.txt )
 
 echo ROBOT_VARIABLES="${ROBOT_VARIABLES}"
 echo "Starting Robot test suites ${SUITES} ..."
 relax_set
-python -m robot.run -N ${TESTPLAN} -v WORKSPACE:/tmp ${ROBOT_VARIABLES} ${SUITES}
+python -m robot.run -N ${PROJECT} -v WORKSPACE:/tmp ${ROBOT_VARIABLES} ${SUITES}
 RESULT=$?
 load_set
 echo "RESULT: $RESULT"
