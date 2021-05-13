@@ -148,29 +148,7 @@ export PROJECT="${1}"
 
 cd ${WORKSPACE}
 
-case "${PROJECT}" in
-xacml-pdp)
-    export TESTPLANDIR="${WORKSPACE}/csit/${PROJECT}"
-    ;;
-*)
-    export TESTPLANDIR="${WORKSPACE}/${PROJECT}/csit"
-
-    rm -rf ${WORKSPACE}/${PROJECT}
-    mkdir ${WORKSPACE}/${PROJECT}
-
-    # get the plan from git clone
-    if ! `git clone -b ${GERRIT_BRANCH} --single-branch https://github.com/onap/policy-${PROJECT}.git ${PROJECT}` ; then
-        echo "repo not found: policy/${PROJECT}"
-        exit 1
-    fi
-
-    if [ ! -f "${TESTPLANDIR}/plans/testplan.txt" ]; then
-    echo "testplan not found: ${TESTPLANDIR}/plans/testplan.txt"
-        exit 2
-    fi
-    ;;
-esac
-
+export TESTPLANDIR="${WORKSPACE}/csit/${PROJECT}"
 export TESTOPTIONS="${2}"
 
 rm -rf "${WORKSPACE}/csit/archives/${PROJECT}"
