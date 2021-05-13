@@ -1,3 +1,3 @@
-# Test suites are relative paths under [policy/drools-pdp.git]/tests/.
+# Test suites are relative paths under [policy/docker.git]/csit/[project]/tests.
 # Place the suites in run order.
 drools-pdp-test.robot
