@@ -17,7 +17,7 @@ LoadPolicy
      Should Be Equal As Strings    ${resp.status_code}     200
 
 Healthcheck
-     [Documentation]    Runs Policy PAP Health check
+     [Documentation]    Verify policy pap health check
      ${auth}=    Create List    healthcheck    zb!XztG34
      Log    Creating session https://${POLICY_PAP_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_PAP_IP}:6969   auth=${auth}
@@ -28,7 +28,7 @@ Healthcheck
      Should Be Equal As Strings    ${resp.json()['code']}  200
 
 Statistics
-     [Documentation]    Runs Policy PAP Statistics
+     [Documentation]    Verify policy pap statistics
      ${auth}=    Create List    healthcheck    zb!XztG34
      Log    Creating session https://${POLICY_PAP_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_PAP_IP}:6969   auth=${auth}
