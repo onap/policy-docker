@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b00a3a99_a89b995d",
+        "filename": "csit/drools-applications/tests/drools-applications-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-05-20T21:28:19Z",
+      "side": 1,
+      "message": "I could swear I checked this - should be 0, not 1",
+      "revId": "97c0fc4613767f85af4e4be91d896655e3a5d003",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
