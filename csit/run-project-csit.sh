@@ -3,6 +3,7 @@
 # Copyright 2016-2017 Huawei Technologies Co., Ltd.
 # Modification Copyright 2019 © Samsung Electronics Co., Ltd.
 # Modification Copyright 2021 © AT&T Intellectual Property.
+# Modification Copyright 2021. Nordix Foundation.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -192,7 +193,7 @@ SUITES=$( xargs -a testplan.txt )
 echo ROBOT_VARIABLES="${ROBOT_VARIABLES}"
 echo "Starting Robot test suites ${SUITES} ..."
 relax_set
-python -m robot.run -N ${PROJECT} -v WORKSPACE:/tmp ${ROBOT_VARIABLES} ${SUITES}
+python3 -m robot.run -N ${PROJECT} -v WORKSPACE:/tmp ${ROBOT_VARIABLES} ${SUITES}
 RESULT=$?
 load_set
 echo "RESULT: ${RESULT}"
