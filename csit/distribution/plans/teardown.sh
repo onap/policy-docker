@@ -1,9 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2018 Ericsson. All rights reserved.
 #
 #  Modifications copyright (c) 2019 Nordix Foundation.
 #  Modifications Copyright (C) 2020-2021 AT&T Intellectual Property.
+#  Modification Copyright 2021. Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,4 +21,4 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
-docker-compose -f ${SCRIPTS}/docker-compose-all.yml down -v
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml down -v

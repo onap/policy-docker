@@ -1,7 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2019 Nordix Foundation.
 #  Modifications Copyright (C) 2019-2021 AT&T Intellectual Property.
+#  Modification Copyright 2021. Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,19 +19,19 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
-source ${SCRIPTS}/get-branch-mariadb.sh
+. "${SCRIPTS}"/get-branch-mariadb.sh
 
 echo "Uninstall docker-py and reinstall docker."
-pip uninstall -y docker-py
-pip uninstall -y docker
-pip install -U docker==2.7.0
+pip3 uninstall -y docker-py
+pip3 uninstall -y docker
+pip3 install -U docker
 
 sudo apt-get -y install libxml2-utils
-bash ${SCRIPTS}/get-models-examples.sh
+sh "${SCRIPTS}"/get-models-examples.sh
 
-source ${SCRIPTS}/detmVers.sh
+. "${SCRIPTS}"/detmVers.sh
 
-docker-compose -f ${SCRIPTS}/docker-compose-all.yml up -d pap
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d pap
 
 unset http_proxy https_proxy
 
@@ -38,13 +39,13 @@ POLICY_PAP_IP=`get-instance-ip.sh policy-pap`
 POLICY_API_IP=`get-instance-ip.sh policy-api`
 MARIADB_IP=`get-instance-ip.sh mariadb`
 
-echo PAP IP IS ${POLICY_PAP_IP}
-echo API IP IS ${POLICY_API_IP}
-echo MARIADB IP IS ${MARIADB_IP}
+echo PAP IP IS "${POLICY_PAP_IP}"
+echo API IP IS "${POLICY_API_IP}"
+echo MARIADB IP IS "${MARIADB_IP}"
 
 
 # wait for the app to start up
-${SCRIPTS}/wait_for_port.sh ${POLICY_PAP_IP} 6969
+"${SCRIPTS}"/wait_for_port.sh "${POLICY_PAP_IP}" 6969
 
 
 DATA=${WORKSPACE}/models/models-examples/src/main/resources/policies

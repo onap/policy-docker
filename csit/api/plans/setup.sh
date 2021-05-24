@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2019-2021 AT&T Intellectual Property. All rights reserved.
+#  Modification Copyright 2021. Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,35 +19,35 @@
 # ============LICENSE_END=========================================================
 
 # Select branch
-source ${SCRIPTS}/get-branch-mariadb.sh
+. "${SCRIPTS}"/get-branch-mariadb.sh
 
 echo "Uninstall docker-py and reinstall docker."
-pip uninstall -y docker-py
-pip uninstall -y docker
-pip install -U docker==2.7.0
+pip3 uninstall -y docker-py
+pip3 uninstall -y docker
+pip3 install -U docker
 
 
 sudo apt-get -y install libxml2-utils
-bash ${SCRIPTS}/get-models-examples.sh
+sh "${SCRIPTS}"/get-models-examples.sh
 
-source ${SCRIPTS}/detmVers.sh
+. "${SCRIPTS}"/detmVers.sh
 
 DATA=${WORKSPACE}/models/models-examples/src/main/resources/policies
 
 # create a couple of variations of the policy definitions
 sed -e 's!Measurement_vGMUX!ADifferentValue!' \
-        ${DATA}/vCPE.policy.monitoring.input.tosca.json \
-    >${DATA}/vCPE.policy.monitoring.input.tosca.v1_2.json
+        "${DATA}"/vCPE.policy.monitoring.input.tosca.json \
+    >"${DATA}"/vCPE.policy.monitoring.input.tosca.v1_2.json
 
 sed -e 's!"version": "1.0.0"!"version": "2.0.0"!' \
         -e 's!"policy-version": 1!"policy-version": 2!' \
-        ${DATA}/vCPE.policy.monitoring.input.tosca.json \
-    >${DATA}/vCPE.policy.monitoring.input.tosca.v2.json
+        "${DATA}"/vCPE.policy.monitoring.input.tosca.json \
+    >"${DATA}"/vCPE.policy.monitoring.input.tosca.v2.json
 
-echo ${POLICY_API_VERSION}
+echo "${POLICY_API_VERSION}"
 
-cd ${SCRIPTS}
-docker-compose -f ${SCRIPTS}/docker-compose-all.yml up -d api
+cd "${SCRIPTS}"
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d api
 
 sleep 10
 unset http_proxy https_proxy
@@ -54,11 +55,11 @@ unset http_proxy https_proxy
 POLICY_API_IP=`get-instance-ip.sh policy-api`
 MARIADB_IP=`get-instance-ip.sh mariadb`
 
-echo API IP IS ${POLICY_API_IP}
-echo MARIADB IP IS ${MARIADB_IP}
+echo API IP IS "${POLICY_API_IP}"
+echo MARIADB IP IS "${MARIADB_IP}"
 
 # wait for the app to start up
-${SCRIPTS}/wait_for_port.sh ${POLICY_API_IP} 6969
+"${SCRIPTS}"/wait_for_port.sh "${POLICY_API_IP}" 6969
 
 ROBOT_VARIABLES=""
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_IP:${POLICY_API_IP}"
