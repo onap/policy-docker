@@ -1,7 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 #
 # ===========LICENSE_START====================================================
 #  Copyright (C) 2020-2021 AT&T Intellectual Property. All rights reserved.
+#  Modification Copyright 2021. Nordix Foundation.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,4 +17,4 @@
 # limitations under the License.
 # ============LICENSE_END=====================================================
 #
-docker-compose -f ${SCRIPTS}/docker-compose-all.yml down -v
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml down -v
