@@ -1,7 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 #
 # ============LICENSE_START===================================================
 #  Copyright (C) 2020-2021 AT&T Intellectual Property. All rights reserved.
+#  Modification Copyright 2021. Nordix Foundation.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,11 +18,11 @@
 # ============LICENSE_END=====================================================
 #
 
-source ${SCRIPTS}/get-branch-mariadb.sh
+. "${SCRIPTS}"/get-branch-mariadb.sh
 
-rm -rf ${WORKSPACE}/models
-mkdir ${WORKSPACE}/models
-cd ${WORKSPACE}
+rm -rf "${WORKSPACE}"/models
+mkdir "${WORKSPACE}"/models
+cd "${WORKSPACE}"
 
 # download models examples
-git clone -b ${GERRIT_BRANCH} --single-branch https://github.com/onap/policy-models.git models
+git clone -b "${GERRIT_BRANCH}" --single-branch https://github.com/onap/policy-models.git models
