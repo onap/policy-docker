@@ -1,7 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Copyright 2016-2017 Huawei Technologies Co., Ltd.
 # Modification Copyright 2021 © AT&T Intellectual Property.
+# Modification Copyright 2021. Nordix Foundation.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

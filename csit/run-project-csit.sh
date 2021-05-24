@@ -1,8 +1,9 @@
-#!/bin/bash -x
+#!/bin/sh -x
 #
 # Copyright 2016-2017 Huawei Technologies Co., Ltd.
 # Modification Copyright 2019 © Samsung Electronics Co., Ltd.
 # Modification Copyright 2021 © AT&T Intellectual Property.
+# Modification Copyright 2021. Nordix Foundation.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,11 +23,10 @@
 #
 # functions
 #
-
-function on_exit(){
+on_exit(){
     rc=$?
-    if [[ ${WORKSPACE} ]]; then
-        if [[ ${WORKDIR} ]]; then
+    if [ "${WORKSPACE}" ]; then
+        if [ "${WORKDIR}" ]; then
             rsync -av "${WORKDIR}/" "${WORKSPACE}/csit/archives/${PROJECT}"
         fi
         # Record list of active docker containers
@@ -49,7 +49,7 @@ function on_exit(){
 # ensure that teardown and other finalizing steps are always executed
 trap on_exit EXIT
 
-function docker_stats(){
+docker_stats(){
     #General memory details
     echo "> top -bn1 | head -3"
     top -bn1 | head -3
@@ -70,13 +70,13 @@ function docker_stats(){
 }
 
 # save current set options
-function save_set() {
+save_set() {
     RUN_CSIT_SAVE_SET="$-"
     RUN_CSIT_SHELLOPTS="${SHELLOPTS}"
 }
 
 # load the saved set options
-function load_set() {
+load_set() {
     _setopts="$-"
 
     # bash shellopts
@@ -84,31 +84,30 @@ function load_set() {
         set +o ${i}
     done
     for i in $(echo "${RUN_CSIT_SHELLOPTS}" | tr ':' ' ') ; do
-        set -o ${i}
+        set -o "${i}"
     done
 
     # other options
     for i in $(echo "$_setopts" | sed 's/./& /g') ; do
-        set +${i}
+        set +"${i}"
     done
     set -${RUN_CSIT_SAVE_SET}
 }
 
 # set options for quick bailout when error
-function harden_set() {
-    set -xeo pipefail
+harden_set() {
+    set -xe
     set +u # enabled it would probably fail too many often
 }
 
 # relax set options so the sourced file will not fail
 # the responsibility is shifted to the sourced file...
-function relax_set() {
+relax_set() {
     set +e
-    set +o pipefail
 }
 
 # wrapper for sourcing a file
-function source_safely() {
+source_safely() {
     [ -z "$1" ] && return 1
     relax_set
     . "$1"
@@ -133,7 +132,8 @@ then
 fi
 
 if [ -z "${WORKSPACE}" ]; then
-    export WORKSPACE=$(git rev-parse --show-toplevel)
+    WORKSPACE=$(git rev-parse --show-toplevel)
+    export WORKSPACE
 fi
 
 # Add csit scripts to PATH
@@ -142,11 +142,11 @@ export SCRIPTS="${WORKSPACE}/csit"
 export ROBOT_VARIABLES=
 
 # get the plan from git clone
-source ${SCRIPTS}/get-branch-mariadb.sh
+. "${SCRIPTS}"/get-branch-mariadb.sh
 
 export PROJECT="${1}"
 
-cd ${WORKSPACE}
+cd "${WORKSPACE}"
 
 export TESTPLANDIR="${WORKSPACE}/csit/${PROJECT}"
 export TESTOPTIONS="${2}"
@@ -167,9 +167,9 @@ cd "${WORKDIR}"
 docker login -u docker -p docker nexus3.onap.org:10001
 
 # Generate keystore to be used by repos
-${SCRIPTS}/gen_keystore.sh
-cp ${SCRIPTS}/config/ks.jks ${SCRIPTS}/config/drools/custom/policy-keystore
-cp ${SCRIPTS}/config/ks.jks ${SCRIPTS}/config/drools-apps/custom/policy-keystore
+"${SCRIPTS}"/gen_keystore.sh
+cp "${SCRIPTS}"/config/ks.jks "${SCRIPTS}"/config/drools/custom/policy-keystore
+cp "${SCRIPTS}"/config/ks.jks "${SCRIPTS}"/config/drools-apps/custom/policy-keystore
 
 # Run setup script plan if it exists
 cd "${TESTPLANDIR}/plans/"
@@ -185,14 +185,14 @@ docker_stats | tee "${WORKSPACE}/csit/archives/${PROJECT}/_sysinfo-1-after-setup
 # Run test plan
 cd "${WORKDIR}"
 echo "Reading the testplan:"
-cat "${TESTPLANDIR}/plans/testplan.txt" | egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' | sed "s|^|${TESTPLANDIR}/tests/|" > testplan.txt
+cat "${TESTPLANDIR}/plans/testplan.txt" | grep -E -v '(^[[:space:]]*#|^[[:space:]]*$)' | sed "s|^|${TESTPLANDIR}/tests/|" > testplan.txt
 cat testplan.txt
 SUITES=$( xargs -a testplan.txt )
 
 echo ROBOT_VARIABLES="${ROBOT_VARIABLES}"
 echo "Starting Robot test suites ${SUITES} ..."
 relax_set
-python -m robot.run -N ${PROJECT} -v WORKSPACE:/tmp ${ROBOT_VARIABLES} ${SUITES}
+python3 -m robot.run -N "${PROJECT}" -v WORKSPACE:/tmp "${ROBOT_VARIABLES}" "${SUITES}"
 RESULT=$?
 load_set
 echo "RESULT: ${RESULT}"
