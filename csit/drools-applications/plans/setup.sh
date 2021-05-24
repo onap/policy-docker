@@ -1,7 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 #
 # ===========LICENSE_START====================================================
 #  Copyright (C) 2019-2021 AT&T Intellectual Property. All rights reserved.
+#  Modification Copyright 2021. Nordix Foundation.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,19 +17,19 @@
 # limitations under the License.
 # ============LICENSE_END=====================================================
 #
-source ${SCRIPTS}/get-branch-mariadb.sh
+. "${SCRIPTS}"/get-branch-mariadb.sh
 
 echo "Uninstall docker-py and reinstall docker."
-pip uninstall -y docker-py
-pip uninstall -y docker
-pip install -U docker==2.7.0
+pip3 uninstall -y docker-py
+pip3 uninstall -y docker
+pip3 install -U docker
 
 sudo apt-get -y install libxml2-utils
 
-bash ${SCRIPTS}/get-models-examples.sh
-source ${SCRIPTS}/detmVers.sh
+sh "${SCRIPTS}"/get-models-examples.sh
+. "${SCRIPTS}"/detmVers.sh
 
-docker-compose -f ${SCRIPTS}/docker-compose-all.yml up -d drools-apps
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d drools-apps
 
 unset http_proxy https_proxy
 
@@ -39,14 +40,14 @@ XACML_IP=`get-instance-ip.sh policy-xacml-pdp`
 SIM_IP=`get-instance-ip.sh policy.api.simpledemo.onap.org`
 export SIM_IP
 
-echo DROOLS IP IS ${DROOLS_IP}
-echo API IP IS ${API_IP}
-echo PAP IP IS ${PAP_IP}
-echo XACML IP IS ${XACML_IP}
-echo SIMULATORS IP IS ${SIM_IP}
+echo DROOLS IP IS "${DROOLS_IP}"
+echo API IP IS "${API_IP}"
+echo PAP IP IS "${PAP_IP}"
+echo XACML IP IS "${XACML_IP}"
+echo SIMULATORS IP IS "${SIM_IP}"
 
 # wait for the app to start up
-${SCRIPTS}/wait_for_port.sh ${DROOLS_IP} 6969
+"${SCRIPTS}"/wait_for_port.sh "${DROOLS_IP}" 6969
 
 # give enough time for the controllers to come up
 sleep 15

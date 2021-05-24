@@ -1,7 +1,8 @@
-#!/bin/bash -x
+#!/bin/sh -x
 #
 # Copyright 2019 © Samsung Electronics Co., Ltd.
 # Modification Copyright 2021 © AT&T Intellectual Property.
+# Modification Copyright 2021. Nordix Foundation.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,7 +20,8 @@
 #
 
 if [ -z "$WORKSPACE" ]; then
-    export WORKSPACE=`git rev-parse --show-toplevel`
+    WORKSPACE=`git rev-parse --show-toplevel`
+    export WORKSPACE
 fi
 
 # Assume that if ROBOT_VENV is set and virtualenv with system site packages can be activated,
@@ -27,24 +29,24 @@ fi
 # been executed
 
 if [ -f ${WORKSPACE}/env.properties ]; then
-    source ${WORKSPACE}/env.properties
+    . ${WORKSPACE}/env.properties
 fi
 if [ -f ${ROBOT_VENV}/bin/activate ]; then
-    source ${ROBOT_VENV}/bin/activate
+    . ${ROBOT_VENV}/bin/activate
 elif [ ! -d /tmp/ci-management ]; then
     rm -rf /tmp/ci-management
     rm -f ${WORKSPACE}/env.properties
     cd /tmp
     git clone -b master --single-branch https://github.com/onap/ci-management.git
-    source /tmp/ci-management/jjb/integration/include-raw-integration-install-robotframework.sh
+    . /tmp/ci-management/jjb/integration/include-raw-integration-install-robotframework.sh
 fi
 
 # install required Robot libraries
-pip install robotframework-selenium2library==1.8.0 robotframework-extendedselenium2library==0.9.1
+pip3 install --upgrade robotframework-selenium2library robotframework-extendedselenium2library
 
 # install eteutils
 mkdir -p ${ROBOT_VENV}/src/onap
 rm -rf ${ROBOT_VENV}/src/onap/testsuite
-pip install --upgrade --extra-index-url="https://nexus3.onap.org/repository/PyPi.staging/simple" 'robotframework-onap==0.5.1.*' --pre
+pip3 install --upgrade --extra-index-url="https://nexus3.onap.org/repository/PyPi.staging/simple" 'robotframework-onap==0.5.1.*' --pre
 
-pip freeze
+pip3 freeze
