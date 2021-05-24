@@ -2,6 +2,7 @@
 #
 # Copyright 2019 © Samsung Electronics Co., Ltd.
 # Modification Copyright 2021 © AT&T Intellectual Property.
+# Modification Copyright 2021. Nordix Foundation.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -39,21 +40,10 @@ else
     source /tmp/ci-management/jjb/integration/include-raw-integration-install-robotframework.sh
 fi
 
-# install required Robot libraries
-pip install robotframework-selenium2library==1.8.0 robotframework-extendedselenium2library==0.9.1
 
 # install eteutils
 mkdir -p ${ROBOT_VENV}/src/onap
 rm -rf ${ROBOT_VENV}/src/onap/testsuite
-pip install --upgrade --extra-index-url="https://nexus3.onap.org/repository/PyPi.staging/simple" 'robotframework-onap==0.5.1.*' --pre
+pip3 install --upgrade --extra-index-url="https://nexus3.onap.org/repository/PyPi.staging/simple" 'robotframework-onap==0.5.1.*' --pre
 
-pip freeze
-
-# install chrome driver
-if [ ! -x ${ROBOT_VENV}/bin/chromedriver ]; then
-    pushd ${ROBOT_VENV}/bin
-    wget -N http://chromedriver.storage.googleapis.com/2.35/chromedriver_linux64.zip
-    unzip chromedriver_linux64.zip
-    chmod +x chromedriver
-    popd
-fi
+pip3 freeze
