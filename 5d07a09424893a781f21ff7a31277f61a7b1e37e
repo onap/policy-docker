@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1426f775_33e21708",
+        "filename": "csit/include-raw-integration-install-robotframework.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-06-02T14:34:04Z",
+      "side": 1,
+      "message": "can remove this and see if it still works",
+      "range": {
+        "startLine": 38,
+        "startChar": 23,
+        "endLine": 38,
+        "endChar": 30
+      },
+      "revId": "5d07a09424893a781f21ff7a31277f61a7b1e37e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a17399a_3998739e",
+        "filename": "csit/include-raw-integration-install-robotframework.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-06-02T14:34:04Z",
+      "side": 1,
+      "message": "can remove this and see if it still works",
+      "range": {
+        "startLine": 41,
+        "startChar": 27,
+        "endLine": 41,
+        "endChar": 32
+      },
+      "revId": "5d07a09424893a781f21ff7a31277f61a7b1e37e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
