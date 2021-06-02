@@ -16,6 +16,24 @@
       "revId": "77394422af2dfc38041faff5459e7d8ce78859c4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c870b36_0c39a679",
+        "filename": "csit/pylibs.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-06-02T16:12:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78980bbd_fbaec404",
+      "revId": "77394422af2dfc38041faff5459e7d8ce78859c4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
