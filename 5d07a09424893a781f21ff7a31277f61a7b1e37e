@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "ff0e515a_2af813d7",
+        "filename": "csit/include-raw-integration-install-robotframework.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-06-02T14:54:58Z",
+      "side": 1,
+      "message": "good idea - and maybe rename it to pylibs.txt (or something like that)",
+      "parentUuid": "d211bf2d_5525e5ff",
+      "revId": "5d07a09424893a781f21ff7a31277f61a7b1e37e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b567e038_4f37ede3",
         "filename": "csit/include-raw-integration-install-robotframework.sh",
         "patchSetId": 7
@@ -81,6 +99,24 @@
       "writtenOn": "2021-06-02T14:46:45Z",
       "side": 1,
       "message": "I tend to think that is better to fix the libraries versions to latest ones that we know they work, provided that this will be executed quite often and libraries will change.   It wouldn\u0027t be unusual breaking changes with new versions of libraries in future.",
+      "revId": "5d07a09424893a781f21ff7a31277f61a7b1e37e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea08194_7259f302",
+        "filename": "csit/include-raw-integration-install-robotframework.sh",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-06-02T14:54:58Z",
+      "side": 1,
+      "message": "I tend to prefer to use the latest versions until something breaks",
+      "parentUuid": "b567e038_4f37ede3",
       "revId": "5d07a09424893a781f21ff7a31277f61a7b1e37e",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
