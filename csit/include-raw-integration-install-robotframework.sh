@@ -26,9 +26,9 @@ source "${ROBOT_VENV}/bin/activate"
 set -exu
 
 # Make sure pip3 itself us up-to-date.
-python3 -m pip3 install --upgrade pip3
+python3 -m pip install --upgrade pip
 
 echo "Installing Python Requirements"
-python3 -m pip3 install -r pylibs.txt
+python3 -m pip install -r pylibs.txt
 odltools -V
 pip3 freeze
