@@ -24,8 +24,7 @@ if [ -z "$WORKSPACE" ]; then
 fi
 
 # Assume that if ROBOT_VENV is set and virtualenv with system site packages can be activated,
-# ci-management/jjb/integration/include-raw-integration-install-robotframework.sh has already
-# been executed
+# include-raw-integration-install-robotframework.sh has already been executed
 
 if [ -f ${WORKSPACE}/env.properties ]; then
     source ${WORKSPACE}/env.properties
@@ -33,11 +32,15 @@ fi
 if [ -f ${ROBOT_VENV}/bin/activate ]; then
     source ${ROBOT_VENV}/bin/activate
 else
+<<<<<<< HEAD   (58fcc9 Use python3 for CSITs)
     rm -rf /tmp/ci-management
     rm -f ${WORKSPACE}/env.properties
     cd /tmp
     git clone -b master --single-branch https://github.com/onap/ci-management.git
     source /tmp/ci-management/jjb/integration/include-raw-integration-install-robotframework.sh
+=======
+    source ./include-raw-integration-install-robotframework.sh
+>>>>>>> CHANGE (8f44cb Use local version of the include script)
 fi
 
 
