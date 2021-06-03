@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "401571fe_867f1230",
+        "filename": "csit/prepare-csit.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2021-06-03T09:13:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "611e537d_231b733d",
+      "revId": "6aa090f27ad11d4f197fa147e3e58239ce201d7f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9370589a_4a4e18ac",
         "filename": "csit/prepare-csit.sh",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "6aa090f27ad11d4f197fa147e3e58239ce201d7f",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69813f37_bf35e81a",
+        "filename": "csit/prepare-csit.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2021-06-03T09:13:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9370589a_4a4e18ac",
+      "revId": "6aa090f27ad11d4f197fa147e3e58239ce201d7f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
