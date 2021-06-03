@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7ff15be_8d1639b7",
+        "filename": "csit/prepare-csit.sh",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-06-03T13:48:56Z",
+      "side": 1,
+      "message": "oh, this block should be deleted - it should source in the local copy of include-raw-...\n\n@Arkadiusz: would you please push another review to fix this?",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 95
+      },
+      "revId": "2b1e8d08ed869124e4a363a0c5f58999f487a4be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
