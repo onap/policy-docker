@@ -16,6 +16,24 @@
       "revId": "58fcc9268a667348d45cf338da686d12cfcf8064",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03fe02e_22dc7889",
+        "filename": "csit/prepare-csit.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-06-04T15:10:21Z",
+      "side": 1,
+      "message": "good point - this should specify ${GERRIT_BRANCH}.  However, this line will go away with the next cherry pick, so I\u0027m just going to leave it be",
+      "parentUuid": "a0479e3e_c6864994",
+      "revId": "58fcc9268a667348d45cf338da686d12cfcf8064",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
