@@ -3,6 +3,7 @@
 ##############################################################################
 # Copyright (c) 2015 The Linux Foundation and others.
 # Modification Copyright 2021. Nordix Foundation.
+# Modification Copyright 2021 AT&T Intellectual Property. All rights reserved.
 #
 # All rights reserved. This program and the accompanying materials
 # are made available under the terms of the Eclipse Public License v1.0
@@ -31,4 +32,4 @@ python3 -m pip install --upgrade pip
 echo "Installing Python Requirements"
 python3 -m pip install -r pylibs.txt
 odltools -V
-pip3 freeze
+python3 -m pip freeze
