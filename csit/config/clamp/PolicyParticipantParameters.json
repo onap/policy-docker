@@ -1,0 +1,53 @@
+{
+    "name": "ControlLoopParticipantGroup",
+    "intermediaryParameters": {
+        "name": "Participant parameters",
+        "reportingTimeInterval": 120000,
+        "description": "Participant Description",
+        "participantType":{
+            "name": "org.onap.policy.controlloop.PolicyControlLoopParticipant",
+            "version":"2.2.1"
+        },
+        "participantId": {
+            "name": "org.onap.PM_Policy",
+            "version": "1.0.0"
+        },
+        "clampControlLoopTopics": {
+            "topicSources": [
+                {
+                    "topic": "POLICY-CLRUNTIME-PARTICIPANT",
+                    "servers" : [ "simulator" ],
+                    "topicCommInfrastructure" : "dmaap",
+                    "useHttps" : true,
+                    "allowSelfSignedCerts" : true,
+                    "fetchTimeout": 15000
+                }
+            ],
+            "topicSinks": [
+                {
+                    "topic": "POLICY-CLRUNTIME-PARTICIPANT",
+                    "servers" : [ "simulator" ],
+                    "topicCommInfrastructure" : "dmaap",
+                    "useHttps" : true,
+                    "allowSelfSignedCerts" : true
+                },
+                {
+                    "topic": "POLICY-NOTIFICATION",
+                    "servers" : [ "simulator" ],
+                    "topicCommInfrastructure" : "dmaap",
+                    "useHttps" : true,
+                    "allowSelfSignedCerts" : true
+                }
+            ]
+        }
+    },
+    "policyApiParameters": {
+        "clientName": "api",
+        "hostname": "policy-api",
+        "port": "6969",
+        "userName": "healthcheck",
+        "password": "zb!XztG34",
+        "https": true,
+        "allowSelfSignedCerts": true
+    }
+}
