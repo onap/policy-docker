@@ -1,0 +1,49 @@
+{
+    "name": "ControlLoopParticipantGroup",
+    "intermediaryParameters": {
+        "name": "Participant parameters",
+        "reportingTimeInterval": 120000,
+        "description": "Participant Description",
+        "participantType":{
+            "name": "org.onap.policy.controlloop.PolicyControlLoopParticipant",
+            "version":"2.2.1"
+        },
+        "participantId": {
+            "name": "org.onap.PM_Policy",
+            "version": "1.0.0"
+        },
+        "clampControlLoopTopics": {
+            "topicSources": [
+                {
+                    "topic": "POLICY-CLRUNTIME-PARTICIPANT",
+                    "servers" : [ "message-router" ],
+                    "topicCommInfrastructure" : "dmaap",
+                    "useHttps" : true,
+                    "fetchTimeout": 15000
+                }
+            ],
+            "topicSinks": [
+                {
+                    "topic": "POLICY-CLRUNTIME-PARTICIPANT",
+                    "servers" : [ "message-router" ],
+                    "topicCommInfrastructure" : "dmaap",
+                    "useHttps" : true
+                },
+                {
+                    "topic": "POLICY-NOTIFICATION",
+                    "servers" : [ "message-router" ],
+                    "topicCommInfrastructure" : "dmaap",
+                    "useHttps" : true
+                }
+            ]
+        }
+    },
+    "policyApiParameters": {
+        "clientName": "api",
+        "hostname": "policy-api",
+        "port": "6969",
+        "userName": "healthcheck",
+        "password": "zb!XztG34",
+        "https": true
+    }
+}

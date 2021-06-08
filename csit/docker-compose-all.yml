@@ -211,3 +211,58 @@ services:
         'pap', '6969',
         'apex-pdp', '6969'
         ]
+   policy-controlloop-runtime:
+      image: onap/policy-controlloop-runtime:latest
+      container_name: policy-controlloop-runtime
+      depends_on:
+       - mariadb
+       - simulator
+       - policy-participant
+       - dcae-participant
+      hostname: policy-controlloop-runtime
+      expose:
+       - 6970
+      volumes:
+       - ./config/clamp/ClRuntimeParameters.json:/opt/app/policy/clamp/etc/ClRuntimeParameters.json:ro
+       - ./config/policy-truststore:/opt/app/policy/api/etc/ssl/policy-truststore:ro
+       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
+      entrypoint: /opt/app/policy/bin/wait_for_port.sh
+      command: [
+        '-c', './controlloop-runtime.sh',
+        'message-router', '3905'
+        ]
+   dcae-participant:
+      image: onap/dcae-participant:latest
+      container_name: dcae-participant
+      depends_on:
+       - simulator
+      hostname: dcae-participant
+      expose:
+       - 6971
+      volumes:
+       - ./config/clamp/DcaeParticipantParameters.json:/opt/app/policy/clamp/etc/DcaeParticipantParameters.json:ro
+       - ./config/policy-truststore:/opt/app/policy/api/etc/ssl/policy-truststore:ro
+       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
+      entrypoint: /opt/app/policy/bin/wait_for_port.sh
+      command: [
+        '-c', './dcae-participant.sh',
+        'message-router', '3905'
+        ]
+   policy-participant:
+      image: onap/policy-participant:latest
+      container_name: policy-participant
+      depends_on:
+       - simulator
+       - api
+      hostname: policy-participant
+      expose:
+       - 6972
+      volumes:
+       - ./config/clamp/PolicyParticipantParameters.json:/opt/app/policy/clamp/etc/PolicyParticipantParameters.json:ro
+       - ./config/policy-truststore:/opt/app/policy/api/etc/ssl/policy-truststore:ro
+       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
+      entrypoint: /opt/app/policy/bin/wait_for_port.sh
+      command: [
+        '-c', './policy-participant.sh',
+        'message-router', '3905'
+        ]
