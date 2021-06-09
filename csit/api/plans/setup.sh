@@ -49,7 +49,6 @@ echo ${POLICY_API_VERSION}
 cd ${SCRIPTS}
 docker-compose -f ${SCRIPTS}/docker-compose-all.yml up -d api
 
-sleep 10
 unset http_proxy https_proxy
 
 POLICY_API_IP=`get-instance-ip.sh policy-api`
