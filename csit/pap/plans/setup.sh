@@ -33,6 +33,7 @@ source ${SCRIPTS}/detmVers.sh
 
 docker-compose -f ${SCRIPTS}/docker-compose-all.yml up -d pap
 
+sleep 20
 unset http_proxy https_proxy
 
 POLICY_PAP_IP=`get-instance-ip.sh policy-pap`
