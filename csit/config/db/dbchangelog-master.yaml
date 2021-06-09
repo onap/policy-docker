@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - include:
+      file: changelog/dbchangelog.mariadb.yaml
