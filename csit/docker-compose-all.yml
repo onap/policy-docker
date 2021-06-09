@@ -28,6 +28,30 @@ services:
          - ./config/db:/docker-entrypoint-initdb.d:ro
       expose:
        - 3306
+   liquibase:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      container_name: liquibase
+      depends_on:
+       - mariadb
+      hostname: liquibase
+      expose:
+       - 2468
+      env_file: config/db/db.conf
+      environment:
+        MYSQL_DB: policyadmin
+      volumes:
+         - ./config/db:/liquibase/changelog
+         - ./liquibase_policy_init.sh:/liquibase/liquibase_policy_init.sh:ro
+         - ./LiquibaseListener.class:/tmp/LiquibaseListener.class:ro
+         - ./wait_for_port.sh:/liquibase/wait_for_port.sh:ro
+      entrypoint: ./wait_for_port.sh
+      command: [
+              '-c',
+                './liquibase_policy_init.sh',
+                'mariadb', '3306'
+               ]
    policy.api.simpledemo.onap.org:
       image: nexus3.onap.org:10001/onap/policy-models-simulator:${POLICY_MODELS_VERSION}
       container_name: policy.api.simpledemo.onap.org
@@ -46,6 +70,7 @@ services:
       container_name: policy-api
       depends_on:
        - mariadb
+       - liquibase
       hostname: policy-api
       expose:
        - 6969
@@ -55,13 +80,15 @@ services:
       entrypoint: ./wait_for_port.sh
       command: [
         '-c', './policy-api.sh',
-        'mariadb', '3306'
+        'mariadb', '3306',
+        'liquibase', '2468'
         ]
    pap:
       image: nexus3.onap.org:10001/onap/policy-pap:${POLICY_PAP_VERSION}
       container_name: policy-pap
       depends_on:
        - mariadb
+       - liquibase
        - policy.api.simpledemo.onap.org
        - api
       hostname: policy-pap
