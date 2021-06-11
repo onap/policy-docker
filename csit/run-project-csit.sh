@@ -171,6 +171,13 @@ docker login -u docker -p docker nexus3.onap.org:10001
 ${SCRIPTS}/gen_keystore.sh
 cp ${SCRIPTS}/config/ks.jks ${SCRIPTS}/config/drools/custom/policy-keystore
 cp ${SCRIPTS}/config/ks.jks ${SCRIPTS}/config/drools-apps/custom/policy-keystore
+cp ${SCRIPTS}/config/policy-truststore \
+    ${SCRIPTS}/config/drools/custom/policy-truststore
+cp ${SCRIPTS}/config/policy-truststore \
+    ${SCRIPTS}/config/drools-apps/custom/policy-truststore
+chmod 644 \
+    ${SCRIPTS}/config/drools/custom/policy-* \
+    ${SCRIPTS}/config/drools-apps/custom/policy-*
 
 # Run setup script plan if it exists
 cd "${TESTPLANDIR}/plans/"
