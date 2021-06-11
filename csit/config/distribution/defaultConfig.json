@@ -64,8 +64,7 @@
                     "userName": "healthcheck",
                     "password": "zb!XztG34"
                 },
-                "isHttps": true,
-                "allowSelfSignedCerts": true,
+                "isHttps": true
                 "deployPolicies": true
             }
         }

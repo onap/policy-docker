@@ -37,7 +37,7 @@ DROOLS_IP=`get-instance-ip.sh drools-apps`
 API_IP=`get-instance-ip.sh policy-api`
 PAP_IP=`get-instance-ip.sh policy-pap`
 XACML_IP=`get-instance-ip.sh policy-xacml-pdp`
-SIM_IP=`get-instance-ip.sh policy.api.simpledemo.onap.org`
+SIM_IP=`get-instance-ip.sh message-router`
 export SIM_IP
 
 echo DROOLS IP IS ${DROOLS_IP}
