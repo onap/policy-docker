@@ -31,24 +31,21 @@
     "topicParameterGroup": {
         "topicSources" : [{
             "topic" : "POLICY-PDP-PAP",
-            "servers" : [ "policy.api.simpledemo.onap.org" ],
+            "servers" : [ "message-router" ],
             "topicCommInfrastructure" : "dmaap",
-            "useHttps": true,
-            "allowSelfSignedCerts" : true
+            "useHttps": true
         }],
         "topicSinks" : [{
             "topic" : "POLICY-PDP-PAP",
-            "servers" : [ "policy.api.simpledemo.onap.org" ],
+            "servers" : [ "message-router" ],
             "topicCommInfrastructure" : "dmaap",
-            "useHttps": true,
-            "allowSelfSignedCerts" : true
+            "useHttps": true
         },
         {
             "topic" : "POLICY-NOTIFICATION",
-            "servers" : [ "policy.api.simpledemo.onap.org" ],
+            "servers" : [ "message-router" ],
             "topicCommInfrastructure" : "dmaap",
-            "useHttps": true,
-            "allowSelfSignedCerts" : true
+            "useHttps": true
         }]
     },
     "healthCheckRestClientParameters":[{
@@ -58,7 +55,6 @@
         "userName": "healthcheck",
         "password": "zb!XztG34",
         "useHttps": true,
-        "allowSelfSignedCerts" : true,
         "basePath": "policy/api/v1/healthcheck"
     }]
 }

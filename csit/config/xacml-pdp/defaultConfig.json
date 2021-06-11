@@ -16,24 +16,21 @@
         "userName": "healthcheck",
         "password": "zb!XztG34",
         "useHttps": true,
-        "allowSelfSignedCerts" : true,
         "aaf": false
     },
     "applicationPath": "/opt/app/policy/pdpx/apps",
     "topicParameterGroup": {
         "topicSources" : [{
             "topic" : "POLICY-PDP-PAP",
-            "servers" : [ "policy.api.simpledemo.onap.org" ],
+            "servers" : [ "message-router" ],
             "topicCommInfrastructure" : "dmaap",
-            "useHttps" : true,
-            "allowSelfSignedCerts" : true
+            "useHttps" : true
         }],
         "topicSinks" : [{
             "topic" : "POLICY-PDP-PAP",
-            "servers" : [ "policy.api.simpledemo.onap.org" ],
+            "servers" : [ "message-router" ],
             "topicCommInfrastructure" : "dmaap",
-            "useHttps" : true,
-            "allowSelfSignedCerts" : true
+            "useHttps" : true
         }]
     }
 }

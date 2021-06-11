@@ -23,16 +23,32 @@
 #
 
 DIR="${0%/*}/config"
-DNSFILE="${DIR}/dns_keystore.txt"
-OUTFILE="${DIR}/ks.jks"
+cd "${DIR}"
+
+OUTFILE=ks.jks
+
+ALIAS="policy@policy.onap.org"
+PASS=Pol1cy_0nap
 
 dn="C=US, O=ONAP, OU=OSAAF, OU=policy@policy.onap.org:DEV, CN=policy"
-san=`paste -sd , "${DNSFILE}"`
 
-rm -f "$OUTFILE"
+rm -f "${OUTFILE}"
 
-keytool -genkeypair -alias "policy@policy.onap.org" -validity 30 \
-    -keyalg RSA -dname "$dn" -keystore "$OUTFILE" \
-    -keypass Pol1cy_0nap -storepass Pol1cy_0nap -ext "SAN=$san"
+keytool -genkeypair -alias "${ALIAS}" -validity 30 \
+    -keyalg RSA -dname "${dn}" -keystore "${OUTFILE}" \
+    -keypass "${PASS}" -storepass "${PASS}"
+
+keytool -certreq -alias "${ALIAS}" -keystore ks.jks -file ks.csr \
+    -storepass "${PASS}"
+
+openssl x509 -CA caroot.cer -CAkey cakey.pem -CAserial caserial.txt \
+    -req -in ks.csr -out ks.cer -passin "pass:${PASS}" \
+    -extfile dns_ssl.txt -days 30
+
+keytool -import -noprompt -file caroot.cer -keystore ks.jks \
+    -storepass "${PASS}"
+
+keytool -import -alias "${ALIAS}" -file ks.cer -keystore ks.jks \
+    -storepass "${PASS}"
 
 chmod 644 "$OUTFILE"

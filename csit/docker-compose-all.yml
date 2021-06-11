@@ -28,13 +28,14 @@ services:
          - ./config/db:/docker-entrypoint-initdb.d:ro
       expose:
        - 3306
-   policy.api.simpledemo.onap.org:
+   message-router:
       image: nexus3.onap.org:10001/onap/policy-models-simulator:${POLICY_MODELS_VERSION}
-      container_name: policy.api.simpledemo.onap.org
-      hostname: policy.api.simpledemo.onap.org
+      container_name: message-router
+      hostname: message-router
       volumes:
        - ./config/sim-all:/opt/app/policy/simulators/etc/mounted:ro
        - ./config/ks.jks:/opt/app/policy/simulators/etc/ssl/policy-keystore:ro
+       - ./config/policy-truststore:/opt/app/policy/simulators/etc/ssl/policy-truststore:ro
       expose:
        - 6666
        - 6668
@@ -51,6 +52,7 @@ services:
        - 6969
       volumes:
        - ./config/ks.jks:/opt/app/policy/api/etc/ssl/policy-keystore:ro
+       - ./config/policy-truststore:/opt/app/policy/api/etc/ssl/policy-truststore:ro
        - ./wait_for_port.sh:/opt/app/policy/api/bin/wait_for_port.sh:ro
       entrypoint: ./wait_for_port.sh
       command: [
@@ -62,7 +64,7 @@ services:
       container_name: policy-pap
       depends_on:
        - mariadb
-       - policy.api.simpledemo.onap.org
+       - message-router
        - api
       hostname: policy-pap
       expose:
@@ -70,12 +72,13 @@ services:
       volumes:
        - ./config/pap/defaultConfig.json:/opt/app/policy/pap/etc/defaultConfig.json:ro
        - ./config/ks.jks:/opt/app/policy/pap/etc/ssl/policy-keystore:ro
+       - ./config/policy-truststore:/opt/app/policy/pap/etc/ssl/policy-truststore:ro
        - ./wait_for_port.sh:/opt/app/policy/pap/bin/wait_for_port.sh:ro
       entrypoint: ./wait_for_port.sh
       command: [
         '-c', './policy-pap.sh',
         'mariadb', '3306',
-        'policy.api.simpledemo.onap.org', '3905',
+        'message-router', '3905',
         'api', '6969'
         ]
    xacml-pdp:
@@ -83,7 +86,7 @@ services:
       container_name: policy-xacml-pdp
       depends_on:
        - mariadb
-       - policy.api.simpledemo.onap.org
+       - message-router
        - pap
       hostname: policy-xacml-pdp
       expose:
@@ -91,12 +94,13 @@ services:
       volumes:
        - ./config/xacml-pdp/defaultConfig.json:/opt/app/policy/pdpx/etc/defaultConfig.json:ro
        - ./config/ks.jks:/opt/app/policy/pdpx/etc/ssl/policy-keystore:ro
+       - ./config/policy-truststore:/opt/app/policy/pdpx/etc/ssl/policy-truststore:ro
        - ./wait_for_port.sh:/opt/app/policy/pdpx/bin/wait_for_port.sh:ro
       entrypoint: ./wait_for_port.sh
       command: [
         '-c', './policy-pdpx.sh',
         'mariadb', '3306',
-        'policy.api.simpledemo.onap.org', '3905',
+        'message-router', '3905',
         'pap', '6969'
         ]
    drools:
@@ -104,7 +108,7 @@ services:
       container_name: drools
       depends_on:
        - mariadb
-       - policy.api.simpledemo.onap.org
+       - message-router
        - pap
       hostname: drools
       expose:
@@ -119,14 +123,14 @@ services:
       command: [
         '-c', '/opt/app/policy/bin/pdpd-entrypoint.sh boot',
         'mariadb', '3306',
-        'policy.api.simpledemo.onap.org', '3905'
+        'message-router', '3905'
         ]
    drools-apps:
       image: nexus3.onap.org:10001/onap/policy-pdpd-cl:${POLICY_DROOLS_APPS_VERSION}
       container_name: drools-apps
       depends_on:
        - mariadb
-       - policy.api.simpledemo.onap.org
+       - message-router
        - pap
        - xacml-pdp
       hostname: drools-apps
@@ -145,19 +149,19 @@ services:
       command: [
         '-c', '/opt/app/policy/bin/pdpd-cl-entrypoint.sh boot',
         'mariadb', '3306',
-        'policy.api.simpledemo.onap.org', '3905',
+        'message-router', '3905',
         'pap', '6969',
-        'policy.api.simpledemo.onap.org', '6666',
-        'policy.api.simpledemo.onap.org', '6668',
-        'policy.api.simpledemo.onap.org', '6669',
-        'policy.api.simpledemo.onap.org', '6670'
+        'message-router', '6666',
+        'message-router', '6668',
+        'message-router', '6669',
+        'message-router', '6670'
         ]
    apex-pdp:
       image: nexus3.onap.org:10001/onap/policy-apex-pdp:${POLICY_APEX_PDP_VERSION}
       container_name: policy-apex-pdp
       depends_on:
        - mariadb
-       - policy.api.simpledemo.onap.org
+       - message-router
        - pap
       hostname: policy-apex-pdp
       expose:
@@ -166,12 +170,13 @@ services:
       volumes:
        - ./config/apex-pdp/OnapPfConfig.json:/opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json:ro
        - ./config/ks.jks:/opt/app/policy/apex-pdp/etc/ssl/policy-keystore:ro
+       - ./config/policy-truststore:/opt/app/policy/apex-pdp/etc/ssl/policy-truststore:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', '/opt/app/policy/apex-pdp/bin/apexOnapPf.sh -c /opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json',
         'mariadb', '3306',
-        'policy.api.simpledemo.onap.org', '3905',
+        'message-router', '3905',
         'pap', '6969'
         ]
    distribution:
@@ -186,13 +191,14 @@ services:
       volumes:
        - ./config/distribution/defaultConfig.json:/opt/app/policy/distribution/etc/defaultConfig.json:ro
        - ./config/ks.jks:/opt/app/policy/distribution/etc/ssl/policy-keystore:ro
+       - ./config/policy-truststore:/opt/app/policy/distribution/etc/ssl/policy-truststore:ro
        - ./distribution/config/temp/:/opt/app/policy/distribution/etc/temp/:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', './policy-dist.sh',
         'mariadb', '3306',
-        'policy.api.simpledemo.onap.org', '3905',
+        'message-router', '3905',
         'pap', '6969',
         'apex-pdp', '6969'
         ]
