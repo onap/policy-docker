@@ -12,4 +12,10 @@ subjectAltName = \
     DNS:policy-pap.onap, \
     DNS:policy-xacml-pdp, \
     DNS:policy-xacml-pdp.onap, \
+    DNS:simulator, \
+    DNS:aai-sim, \
+    DNS:grpc-sim, \
+    DNS:sdnc-sim, \
+    DNS:so-sim, \
+    DNS:vfc-sim, \
     DNS:message-router

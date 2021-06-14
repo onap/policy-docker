@@ -28,10 +28,19 @@ services:
          - ./config/db:/docker-entrypoint-initdb.d:ro
       expose:
        - 3306
-   message-router:
+   simulator:
       image: nexus3.onap.org:10001/onap/policy-models-simulator:${POLICY_MODELS_VERSION}
-      container_name: message-router
-      hostname: message-router
+      container_name: simulator
+      hostname: simulator
+      networks:
+          default:
+              aliases:
+                  - message-router
+                  - aai-sim
+                  - grpc-sim
+                  - sdnc-sim
+                  - so-sim
+                  - vfc-sim
       volumes:
        - ./config/sim-all:/opt/app/policy/simulators/etc/mounted:ro
        - ./config/ks.jks:/opt/app/policy/simulators/etc/ssl/policy-keystore:ro
@@ -64,7 +73,7 @@ services:
       container_name: policy-pap
       depends_on:
        - mariadb
-       - message-router
+       - simulator
        - api
       hostname: policy-pap
       expose:
@@ -86,7 +95,7 @@ services:
       container_name: policy-xacml-pdp
       depends_on:
        - mariadb
-       - message-router
+       - simulator
        - pap
       hostname: policy-xacml-pdp
       expose:
@@ -108,7 +117,7 @@ services:
       container_name: drools
       depends_on:
        - mariadb
-       - message-router
+       - simulator
        - pap
       hostname: drools
       expose:
@@ -130,7 +139,7 @@ services:
       container_name: drools-apps
       depends_on:
        - mariadb
-       - message-router
+       - simulator
        - pap
        - xacml-pdp
       hostname: drools-apps
@@ -151,17 +160,17 @@ services:
         'mariadb', '3306',
         'message-router', '3905',
         'pap', '6969',
-        'message-router', '6666',
-        'message-router', '6668',
-        'message-router', '6669',
-        'message-router', '6670'
+        'aai-sim', '6666',
+        'sdnc-sim', '6668',
+        'so-sim', '6669',
+        'vfc-sim', '6670'
         ]
    apex-pdp:
       image: nexus3.onap.org:10001/onap/policy-apex-pdp:${POLICY_APEX_PDP_VERSION}
       container_name: policy-apex-pdp
       depends_on:
        - mariadb
-       - message-router
+       - simulator
        - pap
       hostname: policy-apex-pdp
       expose:

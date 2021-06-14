@@ -48,7 +48,7 @@ POLICY_API_IP=`get-instance-ip.sh policy-api`
 POLICY_PAP_IP=`get-instance-ip.sh policy-pap`
 MARIADB_IP=`get-instance-ip.sh mariadb`
 APEX_IP=`get-instance-ip.sh policy-apex-pdp`
-DMAAP_IP=`get-instance-ip.sh message-router`
+DMAAP_IP=`get-instance-ip.sh simulator`
 POLICY_DISTRIBUTION_IP=`get-instance-ip.sh policy-distribution`
 
 echo PAP IP IS ${POLICY_PAP_IP}
