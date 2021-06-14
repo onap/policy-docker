@@ -16,6 +16,24 @@
       "revId": "3b56db7dbbca5875685ce6743da5b082b434f29d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1ec970_3000131e",
+        "filename": "csit/docker-compose-all.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 3239
+      },
+      "writtenOn": "2021-06-14T15:10:39Z",
+      "side": 1,
+      "message": "Agree!",
+      "parentUuid": "ffd8a910_3f04ece3",
+      "revId": "3b56db7dbbca5875685ce6743da5b082b434f29d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
