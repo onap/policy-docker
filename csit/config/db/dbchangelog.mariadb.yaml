@@ -1,0 +1,3287 @@
+databaseChangeLog:
+- changeSet:
+    id: 1622532452641-1
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpapdpgroup_properties
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpapdpgroup_properties'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: PROPERTIES
+            type: VARCHAR(255)
+        - column:
+            name: PROPERTIES_KEY
+            type: VARCHAR(255)
+        tableName: jpapdpgroup_properties
+- changeSet:
+    id: 1622532452641-2
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpapdpstatistics_enginestats
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpapdpstatistics_enginestats'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            defaultValueComputed: 'NULL'
+            name: AVERAGEEXECUTIONTIME
+            type: DOUBLE
+        - column:
+            name: ENGINEID
+            type: VARCHAR(255)
+        - column:
+            defaultValueComputed: 'NULL'
+            name: ENGINETIMESTAMP
+            type: BIGINT
+        - column:
+            defaultValueComputed: 'NULL'
+            name: ENGINEWORKERSTATE
+            type: INT
+        - column:
+            defaultValueComputed: 'NULL'
+            name: EVENTCOUNT
+            type: BIGINT
+        - column:
+            defaultValueComputed: 'NULL'
+            name: LASTENTERTIME
+            type: BIGINT
+        - column:
+            defaultValueComputed: 'NULL'
+            name: LASTEXECUTIONTIME
+            type: BIGINT
+        - column:
+            defaultValueComputed: 'NULL'
+            name: LASTSTART
+            type: BIGINT
+        - column:
+            defaultValueComputed: 'NULL'
+            name: UPTIME
+            type: BIGINT
+        - column:
+            defaultValueComputed: 'NULL'
+            name: ID
+            type: BIGINT
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        tableName: jpapdpstatistics_enginestats
+- changeSet:
+    id: 1622532452641-3
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpapdpsubgroup_policies
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpapdpsubgroup_policies'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: parentLocalName
+            type: VARCHAR(120)
+        - column:
+            name: localName
+            type: VARCHAR(120)
+        - column:
+            name: parentKeyVersion
+            type: VARCHAR(15)
+        - column:
+            name: parentKeyName
+            type: VARCHAR(120)
+        tableName: jpapdpsubgroup_policies
+- changeSet:
+    id: 1622532452641-4
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpapdpsubgroup_properties
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpapdpsubgroup_properties'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: parentLocalName
+            type: VARCHAR(120)
+        - column:
+            name: localName
+            type: VARCHAR(120)
+        - column:
+            name: parentKeyVersion
+            type: VARCHAR(15)
+        - column:
+            name: parentKeyName
+            type: VARCHAR(120)
+        - column:
+            name: PROPERTIES
+            type: VARCHAR(255)
+        - column:
+            name: PROPERTIES_KEY
+            type: VARCHAR(255)
+        tableName: jpapdpsubgroup_properties
+- changeSet:
+    id: 1622532452641-5
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpapdpsubgroup_supportedpolicytypes
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpapdpsubgroup_supportedpolicytypes'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: parentLocalName
+            type: VARCHAR(120)
+        - column:
+            name: localName
+            type: VARCHAR(120)
+        - column:
+            name: parentKeyVersion
+            type: VARCHAR(15)
+        - column:
+            name: parentKeyName
+            type: VARCHAR(120)
+        tableName: jpapdpsubgroup_supportedpolicytypes
+- changeSet:
+    id: 1622532452641-6
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscacapabilityassignment_attributes
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscacapabilityassignment_attributes'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: ATTRIBUTES
+            type: LONGTEXT
+        - column:
+            name: ATTRIBUTES_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscacapabilityassignment_attributes
+- changeSet:
+    id: 1622532452641-7
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscacapabilityassignment_metadata
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscacapabilityassignment_metadata'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: METADATA
+            type: VARCHAR(255)
+        - column:
+            name: METADATA_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscacapabilityassignment_metadata
+- changeSet:
+    id: 1622532452641-8
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscacapabilityassignment_occurrences
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscacapabilityassignment_occurrences'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            defaultValueComputed: 'NULL'
+            name: OCCURRENCES
+            type: INT
+        tableName: jpatoscacapabilityassignment_occurrences
+- changeSet:
+    id: 1622532452641-9
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscacapabilityassignment_properties
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscacapabilityassignment_properties'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: PROPERTIES
+            type: LONGTEXT
+        - column:
+            name: PROPERTIES_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscacapabilityassignment_properties
+- changeSet:
+    id: 1622532452641-10
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscacapabilitytype_metadata
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscacapabilitytype_metadata'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: METADATA
+            type: VARCHAR(255)
+        - column:
+            name: METADATA_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscacapabilitytype_metadata
+- changeSet:
+    id: 1622532452641-11
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscacapabilitytype_properties
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscacapabilitytype_properties'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            defaultValueComputed: 'NULL'
+            name: PROPERTIES
+            type: LONGBLOB
+        - column:
+            name: PROPERTIES_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscacapabilitytype_properties
+- changeSet:
+    id: 1622532452641-12
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscadatatype_constraints
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscadatatype_constraints'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: CONSTRAINTS
+            type: VARCHAR(255)
+        tableName: jpatoscadatatype_constraints
+- changeSet:
+    id: 1622532452641-13
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscadatatype_metadata
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscadatatype_metadata'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: METADATA
+            type: VARCHAR(255)
+        - column:
+            name: METADATA_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscadatatype_metadata
+- changeSet:
+    id: 1622532452641-14
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscadatatype_properties
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscadatatype_properties'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            defaultValueComputed: 'NULL'
+            name: PROPERTIES
+            type: LONGBLOB
+        - column:
+            name: PROPERTIES_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscadatatype_properties
+- changeSet:
+    id: 1622532452641-15
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscanodetemplate_metadata
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscanodetemplate_metadata'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: METADATA
+            type: VARCHAR(255)
+        - column:
+            name: METADATA_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscanodetemplate_metadata
+- changeSet:
+    id: 1622532452641-16
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscanodetemplate_properties
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscanodetemplate_properties'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: PROPERTIES
+            type: LONGTEXT
+        - column:
+            name: PROPERTIES_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscanodetemplate_properties
+- changeSet:
+    id: 1622532452641-17
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscanodetype_metadata
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscanodetype_metadata'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: METADATA
+            type: VARCHAR(255)
+        - column:
+            name: METADATA_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscanodetype_metadata
+- changeSet:
+    id: 1622532452641-18
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscanodetype_properties
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscanodetype_properties'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            defaultValueComputed: 'NULL'
+            name: PROPERTIES
+            type: LONGBLOB
+        - column:
+            name: PROPERTIES_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscanodetype_properties
+- changeSet:
+    id: 1622532452641-19
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscapolicy_metadata
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscapolicy_metadata'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: METADATA
+            type: VARCHAR(255)
+        - column:
+            name: METADATA_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscapolicy_metadata
+- changeSet:
+    id: 1622532452641-20
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscapolicy_properties
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscapolicy_properties'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: PROPERTIES
+            type: LONGTEXT
+        - column:
+            name: PROPERTIES_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscapolicy_properties
+- changeSet:
+    id: 1622532452641-21
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscapolicy_targets
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscapolicy_targets'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        tableName: jpatoscapolicy_targets
+- changeSet:
+    id: 1622532452641-22
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscapolicytype_metadata
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscapolicytype_metadata'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: METADATA
+            type: VARCHAR(255)
+        - column:
+            name: METADATA_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscapolicytype_metadata
+- changeSet:
+    id: 1622532452641-23
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscapolicytype_properties
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscapolicytype_properties'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            defaultValueComputed: 'NULL'
+            name: PROPERTIES
+            type: LONGBLOB
+        - column:
+            name: PROPERTIES_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscapolicytype_properties
+- changeSet:
+    id: 1622532452641-24
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscapolicytype_targets
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscapolicytype_targets'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        tableName: jpatoscapolicytype_targets
+- changeSet:
+    id: 1622532452641-25
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscapolicytype_triggers
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscapolicytype_triggers'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: TRIGGERS
+            type: VARCHAR(255)
+        tableName: jpatoscapolicytype_triggers
+- changeSet:
+    id: 1622532452641-26
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscaproperty_constraints
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscaproperty_constraints'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: parentLocalName
+            type: VARCHAR(120)
+        - column:
+            name: localName
+            type: VARCHAR(120)
+        - column:
+            name: parentKeyVersion
+            type: VARCHAR(15)
+        - column:
+            name: parentKeyName
+            type: VARCHAR(120)
+        - column:
+            name: CONSTRAINTS
+            type: VARCHAR(255)
+        tableName: jpatoscaproperty_constraints
+- changeSet:
+    id: 1622532452641-27
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscaproperty_metadata
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscaproperty_metadata'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: parentLocalName
+            type: VARCHAR(120)
+        - column:
+            name: localName
+            type: VARCHAR(120)
+        - column:
+            name: parentKeyVersion
+            type: VARCHAR(15)
+        - column:
+            name: parentKeyName
+            type: VARCHAR(120)
+        - column:
+            name: METADATA
+            type: VARCHAR(255)
+        - column:
+            name: METADATA_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscaproperty_metadata
+- changeSet:
+    id: 1622532452641-28
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscarelationshiptype_metadata
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscarelationshiptype_metadata'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: METADATA
+            type: VARCHAR(255)
+        - column:
+            name: METADATA_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscarelationshiptype_metadata
+- changeSet:
+    id: 1622532452641-29
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscarelationshiptype_properties
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscarelationshiptype_properties'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            defaultValueComputed: 'NULL'
+            name: PROPERTIES
+            type: LONGBLOB
+        - column:
+            name: PROPERTIES_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscarelationshiptype_properties
+- changeSet:
+    id: 1622532452641-30
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscarequirement_metadata
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscarequirement_metadata'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: METADATA
+            type: VARCHAR(255)
+        - column:
+            name: METADATA_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscarequirement_metadata
+- changeSet:
+    id: 1622532452641-31
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscarequirement_occurrences
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscarequirement_occurrences'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            defaultValueComputed: 'NULL'
+            name: OCCURRENCES
+            type: INT
+        tableName: jpatoscarequirement_occurrences
+- changeSet:
+    id: 1622532452641-32
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscarequirement_properties
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscarequirement_properties'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: PROPERTIES
+            type: LONGTEXT
+        - column:
+            name: PROPERTIES_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscarequirement_properties
+- changeSet:
+    id: 1622532452641-33
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscaservicetemplate_metadata
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscaservicetemplate_metadata'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: METADATA
+            type: VARCHAR(255)
+        - column:
+            name: METADATA_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscaservicetemplate_metadata
+- changeSet:
+    id: 1622532452641-34
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: jpatoscatopologytemplate_inputs
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'jpatoscatopologytemplate_inputs'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: parentLocalName
+            type: VARCHAR(120)
+        - column:
+            name: localName
+            type: VARCHAR(120)
+        - column:
+            name: parentKeyVersion
+            type: VARCHAR(15)
+        - column:
+            name: parentKeyName
+            type: VARCHAR(120)
+        - column:
+            defaultValueComputed: 'NULL'
+            name: INPUTS
+            type: LONGBLOB
+        - column:
+            name: INPUTS_KEY
+            type: VARCHAR(255)
+        tableName: jpatoscatopologytemplate_inputs
+- changeSet:
+    id: 1622532452641-35
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: pdp
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'pdp'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            defaultValueComputed: 'NULL'
+            name: HEALTHY
+            type: INT
+        - column:
+            name: MESSAGE
+            type: VARCHAR(255)
+        - column:
+            defaultValueComputed: 'NULL'
+            name: PDPSTATE
+            type: INT
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentLocalName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: localName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentKeyVersion
+            type: VARCHAR(15)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentKeyName
+            type: VARCHAR(120)
+        tableName: pdp
+- changeSet:
+    id: 1622532452641-36
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: pdpgroup
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'pdpgroup'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: DESCRIPTION
+            type: VARCHAR(255)
+        - column:
+            defaultValueComputed: 'NULL'
+            name: PDPGROUPSTATE
+            type: INT
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        tableName: pdpgroup
+- changeSet:
+    id: 1622532452641-37
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: pdpgroup_pdpsubgroup
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'pdpgroup_pdpsubgroup'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentLocalName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: localName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentKeyVersion
+            type: VARCHAR(15)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentKeyName
+            type: VARCHAR(120)
+        tableName: pdpgroup_pdpsubgroup
+- changeSet:
+    id: 1622532452641-38
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: pdppolicystatus
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'pdppolicystatus'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            defaultValueBoolean: false
+            name: DEPLOY
+            type: BIT
+        - column:
+            name: PDPGROUP
+            type: VARCHAR(255)
+        - column:
+            name: PDPTYPE
+            type: VARCHAR(255)
+        - column:
+            defaultValueComputed: 'NULL'
+            name: STATE
+            type: INT
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentLocalName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: localName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentKeyVersion
+            type: VARCHAR(15)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentKeyName
+            type: VARCHAR(120)
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        tableName: pdppolicystatus
+- changeSet:
+    id: 1622532452641-39
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: pdpstatistics
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'pdpstatistics'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: PDPGROUPNAME
+            type: VARCHAR(120)
+        - column:
+            name: PDPSUBGROUPNAME
+            type: VARCHAR(120)
+        - column:
+            defaultValueComputed: 'NULL'
+            name: POLICYDEPLOYCOUNT
+            type: BIGINT
+        - column:
+            defaultValueComputed: 'NULL'
+            name: POLICYDEPLOYFAILCOUNT
+            type: BIGINT
+        - column:
+            defaultValueComputed: 'NULL'
+            name: POLICYDEPLOYSUCCESSCOUNT
+            type: BIGINT
+        - column:
+            defaultValueComputed: 'NULL'
+            name: POLICYEXECUTEDCOUNT
+            type: BIGINT
+        - column:
+            defaultValueComputed: 'NULL'
+            name: POLICYEXECUTEDFAILCOUNT
+            type: BIGINT
+        - column:
+            defaultValueComputed: 'NULL'
+            name: POLICYEXECUTEDSUCCESSCOUNT
+            type: BIGINT
+        - column:
+            defaultValueComputed: 'NULL'
+            name: TIMESTAMP
+            type: datetime
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: ID
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        tableName: pdpstatistics
+- changeSet:
+    id: 1622532452641-40
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: pdpsubgroup
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'pdpsubgroup'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            defaultValueComputed: 'NULL'
+            name: CURRENTINSTANCECOUNT
+            type: INT
+        - column:
+            defaultValueComputed: 'NULL'
+            name: DESIREDINSTANCECOUNT
+            type: INT
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentLocalName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: localName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentKeyVersion
+            type: VARCHAR(15)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentKeyName
+            type: VARCHAR(120)
+        tableName: pdpsubgroup
+- changeSet:
+    id: 1622532452641-41
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: pdpsubgroup_pdp
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'pdpsubgroup_pdp'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: pdpParentKeyName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: pdpParentKeyVersion
+            type: VARCHAR(15)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: pdpParentLocalName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: pdpLocalName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentLocalName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: localName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentKeyVersion
+            type: VARCHAR(15)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentKeyName
+            type: VARCHAR(120)
+        tableName: pdpsubgroup_pdp
+- changeSet:
+    id: 1622532452641-42
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: sequence
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'sequence'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: SEQ_NAME
+            type: VARCHAR(50)
+        - column:
+            defaultValueComputed: 'NULL'
+            name: SEQ_COUNT
+            type: DECIMAL(38)
+        tableName: sequence
+- changeSet:
+    id: 1622532452641-43
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscacapabilityassignment
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscacapabilityassignment'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: DESCRIPTION
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_name
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_version
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: type_name
+            type: VARCHAR(255)
+        - column:
+            name: type_version
+            type: VARCHAR(255)
+        tableName: toscacapabilityassignment
+- changeSet:
+    id: 1622532452641-44
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscacapabilityassignments
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscacapabilityassignments'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        tableName: toscacapabilityassignments
+- changeSet:
+    id: 1622532452641-45
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscacapabilityassignments_toscacapabilityassignment
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscacapabilityassignments_toscacapabilityassignment'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerMapName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: concpetContainerMapVersion
+            type: VARCHAR(20)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerVersion
+            type: VARCHAR(20)
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        tableName: toscacapabilityassignments_toscacapabilityassignment
+- changeSet:
+    id: 1622532452641-46
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscacapabilitytype
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscacapabilitytype'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: DESCRIPTION
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_name
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_version
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        tableName: toscacapabilitytype
+- changeSet:
+    id: 1622532452641-47
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscacapabilitytypes
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscacapabilitytypes'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        tableName: toscacapabilitytypes
+- changeSet:
+    id: 1622532452641-48
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscacapabilitytypes_toscacapabilitytype
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscacapabilitytypes_toscacapabilitytype'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerMapName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: concpetContainerMapVersion
+            type: VARCHAR(20)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerVersion
+            type: VARCHAR(20)
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        tableName: toscacapabilitytypes_toscacapabilitytype
+- changeSet:
+    id: 1622532452641-49
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscadatatype
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscadatatype'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: DESCRIPTION
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_name
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_version
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        tableName: toscadatatype
+- changeSet:
+    id: 1622532452641-50
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscadatatypes
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscadatatypes'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        tableName: toscadatatypes
+- changeSet:
+    id: 1622532452641-51
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscadatatypes_toscadatatype
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscadatatypes_toscadatatype'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerMapName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: concpetContainerMapVersion
+            type: VARCHAR(20)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerVersion
+            type: VARCHAR(20)
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        tableName: toscadatatypes_toscadatatype
+- changeSet:
+    id: 1622532452641-52
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscanodetemplate
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscanodetemplate'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: DESCRIPTION
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_name
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_version
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: type_name
+            type: VARCHAR(255)
+        - column:
+            name: type_version
+            type: VARCHAR(255)
+        - column:
+            name: capabilitiesName
+            type: VARCHAR(120)
+        - column:
+            name: capabilitiesVersion
+            type: VARCHAR(20)
+        - column:
+            name: requirementsVersion
+            type: VARCHAR(20)
+        - column:
+            name: requirementsName
+            type: VARCHAR(120)
+        tableName: toscanodetemplate
+- changeSet:
+    id: 1622532452641-53
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscanodetemplates
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscanodetemplates'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        tableName: toscanodetemplates
+- changeSet:
+    id: 1622532452641-54
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscanodetemplates_toscanodetemplate
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscanodetemplates_toscanodetemplate'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerMapName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: concpetContainerMapVersion
+            type: VARCHAR(20)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerVersion
+            type: VARCHAR(20)
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        tableName: toscanodetemplates_toscanodetemplate
+- changeSet:
+    id: 1622532452641-55
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscanodetype
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscanodetype'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: DESCRIPTION
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_name
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_version
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: requirementsVersion
+            type: VARCHAR(20)
+        - column:
+            name: requirementsName
+            type: VARCHAR(120)
+        tableName: toscanodetype
+- changeSet:
+    id: 1622532452641-56
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscanodetypes
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscanodetypes'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        tableName: toscanodetypes
+- changeSet:
+    id: 1622532452641-57
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscanodetypes_toscanodetype
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscanodetypes_toscanodetype'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerMapName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: concpetContainerMapVersion
+            type: VARCHAR(20)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerVersion
+            type: VARCHAR(20)
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        tableName: toscanodetypes_toscanodetype
+- changeSet:
+    id: 1622532452641-58
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscaparameter
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscaparameter'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: VALUE
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentLocalName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: localName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentKeyVersion
+            type: VARCHAR(15)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentKeyName
+            type: VARCHAR(120)
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        tableName: toscaparameter
+- changeSet:
+    id: 1622532452641-59
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscapolicies
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscapolicies'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        tableName: toscapolicies
+- changeSet:
+    id: 1622532452641-60
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscapolicies_toscapolicy
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscapolicies_toscapolicy'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerMapName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: concpetContainerMapVersion
+            type: VARCHAR(20)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerVersion
+            type: VARCHAR(20)
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        tableName: toscapolicies_toscapolicy
+- changeSet:
+    id: 1622532452641-61
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscapolicy
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscapolicy'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: DESCRIPTION
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_name
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_version
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: type_name
+            type: VARCHAR(255)
+        - column:
+            name: type_version
+            type: VARCHAR(255)
+        tableName: toscapolicy
+- changeSet:
+    id: 1622532452641-62
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscapolicytype
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscapolicytype'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: DESCRIPTION
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_name
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_version
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        tableName: toscapolicytype
+- changeSet:
+    id: 1622532452641-63
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscapolicytypes
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscapolicytypes'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        tableName: toscapolicytypes
+- changeSet:
+    id: 1622532452641-64
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscapolicytypes_toscapolicytype
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscapolicytypes_toscapolicytype'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerMapName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: concpetContainerMapVersion
+            type: VARCHAR(20)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerVersion
+            type: VARCHAR(20)
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        tableName: toscapolicytypes_toscapolicytype
+- changeSet:
+    id: 1622532452641-65
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscaproperty
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscaproperty'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: DEFAULTVALUE
+            type: VARCHAR(255)
+        - column:
+            name: DESCRIPTION
+            type: VARCHAR(255)
+        - column:
+            defaultValueComputed: 'NULL'
+            name: ENTRYSCHEMA
+            type: LONGBLOB
+        - column:
+            defaultValueBoolean: false
+            name: REQUIRED
+            type: BIT
+        - column:
+            defaultValueComputed: 'NULL'
+            name: STATUS
+            type: INT
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentLocalName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: localName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentKeyVersion
+            type: VARCHAR(15)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentKeyName
+            type: VARCHAR(120)
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        tableName: toscaproperty
+- changeSet:
+    id: 1622532452641-66
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscarelationshiptype
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscarelationshiptype'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: DESCRIPTION
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_name
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_version
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        tableName: toscarelationshiptype
+- changeSet:
+    id: 1622532452641-67
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscarelationshiptypes
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscarelationshiptypes'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        tableName: toscarelationshiptypes
+- changeSet:
+    id: 1622532452641-68
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscarelationshiptypes_toscarelationshiptype
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscarelationshiptypes_toscarelationshiptype'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerMapName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: concpetContainerMapVersion
+            type: VARCHAR(20)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerVersion
+            type: VARCHAR(20)
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        tableName: toscarelationshiptypes_toscarelationshiptype
+- changeSet:
+    id: 1622532452641-69
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscarequirement
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscarequirement'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: CAPABILITY
+            type: VARCHAR(255)
+        - column:
+            name: DESCRIPTION
+            type: VARCHAR(255)
+        - column:
+            name: NODE
+            type: VARCHAR(255)
+        - column:
+            name: RELATIONSHIP
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_name
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_version
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: type_name
+            type: VARCHAR(255)
+        - column:
+            name: type_version
+            type: VARCHAR(255)
+        tableName: toscarequirement
+- changeSet:
+    id: 1622532452641-70
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscarequirements
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscarequirements'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        tableName: toscarequirements
+- changeSet:
+    id: 1622532452641-71
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscarequirements_toscarequirement
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscarequirements_toscarequirement'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerMapName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: concpetContainerMapVersion
+            type: VARCHAR(20)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: conceptContainerVersion
+            type: VARCHAR(20)
+        - column:
+            name: name
+            type: VARCHAR(120)
+        - column:
+            name: version
+            type: VARCHAR(20)
+        tableName: toscarequirements_toscarequirement
+- changeSet:
+    id: 1622532452641-72
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscaservicetemplate
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscaservicetemplate'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: DESCRIPTION
+            type: VARCHAR(255)
+        - column:
+            name: TOSCADEFINITIONSVERSION
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_name
+            type: VARCHAR(255)
+        - column:
+            name: derived_from_version
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: name
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: version
+            type: VARCHAR(20)
+        - column:
+            name: capabilityTypesVersion
+            type: VARCHAR(20)
+        - column:
+            name: capabilityTypesName
+            type: VARCHAR(120)
+        - column:
+            name: dataTypesName
+            type: VARCHAR(120)
+        - column:
+            name: dataTypesVersion
+            type: VARCHAR(20)
+        - column:
+            name: nodeTypesVersion
+            type: VARCHAR(20)
+        - column:
+            name: nodeTypesName
+            type: VARCHAR(120)
+        - column:
+            name: policyTypesName
+            type: VARCHAR(120)
+        - column:
+            name: policyTypesVersion
+            type: VARCHAR(20)
+        - column:
+            name: relationshipTypesVersion
+            type: VARCHAR(20)
+        - column:
+            name: relationshipTypesName
+            type: VARCHAR(120)
+        - column:
+            name: topologyTemplateLocalName
+            type: VARCHAR(120)
+        - column:
+            name: topologyTemplateParentKeyName
+            type: VARCHAR(120)
+        - column:
+            name: topologyTemplateParentKeyVersion
+            type: VARCHAR(15)
+        - column:
+            name: topologyTemplateParentLocalName
+            type: VARCHAR(120)
+        tableName: toscaservicetemplate
+- changeSet:
+    id: 1622532452641-73
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscatopologytemplate
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscatopologytemplate'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: description
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentLocalName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: localName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentKeyVersion
+            type: VARCHAR(15)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentKeyName
+            type: VARCHAR(120)
+        - column:
+            name: nodeTemplatessVersion
+            type: VARCHAR(20)
+        - column:
+            name: nodeTemplatesName
+            type: VARCHAR(120)
+        - column:
+            name: policyVersion
+            type: VARCHAR(20)
+        - column:
+            name: policyName
+            type: VARCHAR(120)
+        tableName: toscatopologytemplate
+- changeSet:
+    id: 1622532452641-74
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - tableExists:
+            tableName: toscatrigger
+      - sqlCheck:
+          expectedResult: 0
+          sql: SELECT count(*) FROM  information_schema.tables WHERE lower(table_name) = 'toscatrigger'
+    changes:
+    - createTable:
+        columns:
+        - column:
+            name: ACTION
+            type: VARCHAR(255)
+        - column:
+            defaultValueComputed: 'NULL'
+            name: toscaCondition
+            type: LONGBLOB
+        - column:
+            defaultValueComputed: 'NULL'
+            name: toscaConstraint
+            type: LONGBLOB
+        - column:
+            name: DESCRIPTION
+            type: VARCHAR(255)
+        - column:
+            defaultValueComputed: 'NULL'
+            name: EVALUATIONS
+            type: INT
+        - column:
+            name: EVENTTYPE
+            type: VARCHAR(255)
+        - column:
+            name: METHOD
+            type: VARCHAR(255)
+        - column:
+            defaultValueComputed: 'NULL'
+            name: PERIOD
+            type: LONGBLOB
+        - column:
+            defaultValueComputed: 'NULL'
+            name: SCHEDULE
+            type: LONGBLOB
+        - column:
+            defaultValueComputed: 'NULL'
+            name: TARGETFILTER
+            type: LONGBLOB
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentLocalName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: localName
+            type: VARCHAR(120)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentKeyVersion
+            type: VARCHAR(15)
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: parentKeyName
+            type: VARCHAR(120)
+        tableName: toscatrigger
+- changeSet:
+    id: 1622532452641-75
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - indexExists:
+            indexName: FK_ToscaNodeTemplate_capabilitiesName
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: capabilitiesName
+        - column:
+            name: capabilitiesVersion
+        indexName: FK_ToscaNodeTemplate_capabilitiesName
+        tableName: toscanodetemplate
+- changeSet:
+    id: 1622532452641-76
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - indexExists:
+            indexName: FK_ToscaNodeTemplate_requirementsName
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: requirementsName
+        - column:
+            name: requirementsVersion
+        indexName: FK_ToscaNodeTemplate_requirementsName
+        tableName: toscanodetemplate
+- changeSet:
+    id: 1622532452641-77
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - indexExists:
+            indexName: FK_ToscaNodeType_requirementsName
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: requirementsName
+        - column:
+            name: requirementsVersion
+        indexName: FK_ToscaNodeType_requirementsName
+        tableName: toscanodetype
+- changeSet:
+    id: 1622532452641-78
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - indexExists:
+            indexName: FK_ToscaServiceTemplate_capabilityTypesName
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: capabilityTypesName
+        - column:
+            name: capabilityTypesVersion
+        indexName: FK_ToscaServiceTemplate_capabilityTypesName
+        tableName: toscaservicetemplate
+- changeSet:
+    id: 1622532452641-79
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - indexExists:
+            indexName: FK_ToscaServiceTemplate_dataTypesName
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: dataTypesName
+        - column:
+            name: dataTypesVersion
+        indexName: FK_ToscaServiceTemplate_dataTypesName
+        tableName: toscaservicetemplate
+- changeSet:
+    id: 1622532452641-80
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - indexExists:
+            indexName: FK_ToscaServiceTemplate_nodeTypesName
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: nodeTypesName
+        - column:
+            name: nodeTypesVersion
+        indexName: FK_ToscaServiceTemplate_nodeTypesName
+        tableName: toscaservicetemplate
+- changeSet:
+    id: 1622532452641-81
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - indexExists:
+            indexName: FK_ToscaServiceTemplate_policyTypesName
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: policyTypesName
+        - column:
+            name: policyTypesVersion
+        indexName: FK_ToscaServiceTemplate_policyTypesName
+        tableName: toscaservicetemplate
+- changeSet:
+    id: 1622532452641-82
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - indexExists:
+            indexName: FK_ToscaServiceTemplate_relationshipTypesName
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: relationshipTypesName
+        - column:
+            name: relationshipTypesVersion
+        indexName: FK_ToscaServiceTemplate_relationshipTypesName
+        tableName: toscaservicetemplate
+- changeSet:
+    id: 1622532452641-83
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - indexExists:
+            indexName: FK_ToscaTopologyTemplate_nodeTemplatesName
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: nodeTemplatesName
+        - column:
+            name: nodeTemplatessVersion
+        indexName: FK_ToscaTopologyTemplate_nodeTemplatesName
+        tableName: toscatopologytemplate
+- changeSet:
+    id: 1622532452641-84
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - indexExists:
+            indexName: FK_ToscaTopologyTemplate_policyName
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: policyName
+        - column:
+            name: policyVersion
+        indexName: FK_ToscaTopologyTemplate_policyName
+        tableName: toscatopologytemplate
+- changeSet:
+    id: 1622532452641-85
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - indexExists:
+            indexName: IDX_TSIDX1
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            defaultValueComputed: 'NULL'
+            name: TIMESTAMP
+        - column:
+            name: name
+        - column:
+            name: version
+        indexName: IDX_TSIDX1
+        tableName: pdpstatistics
+- changeSet:
+    id: 1622532452641-86
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - indexExists:
+            indexName: PdpPolicyStatus_PdpGroup
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: PDPGROUP
+        indexName: PdpPolicyStatus_PdpGroup
+        tableName: pdppolicystatus
+- changeSet:
+    id: 1622532452641-87
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - indexExists:
+            indexName: TscaServiceTemplatetopologyTemplateParentLocalName
+    changes:
+    - createIndex:
+        columns:
+        - column:
+            name: topologyTemplateParentLocalName
+        - column:
+            name: topologyTemplateLocalName
+        - column:
+            name: topologyTemplateParentKeyVersion
+        - column:
+            name: topologyTemplateParentKeyName
+        indexName: TscaServiceTemplatetopologyTemplateParentLocalName
+        tableName: toscaservicetemplate
+- changeSet:
+    id: 1622532452641-88
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - foreignKeyConstraintExists:
+            foreignKeyTableName: toscanodetemplate
+            foreignKeyName: FK_ToscaNodeTemplate_capabilitiesName
+      - dbms:
+          type: mariadb
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: capabilitiesName,capabilitiesVersion
+        baseTableName: toscanodetemplate
+        constraintName: FK_ToscaNodeTemplate_capabilitiesName
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: RESTRICT
+        onUpdate: RESTRICT
+        referencedColumnNames: name,version
+        referencedTableName: toscacapabilityassignments
+        validate: true
+- changeSet:
+    id: 1622532452641-89
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - foreignKeyConstraintExists:
+            foreignKeyTableName: toscanodetemplate
+            foreignKeyName: FK_ToscaNodeTemplate_requirementsName
+      - dbms:
+          type: mariadb
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: requirementsName,requirementsVersion
+        baseTableName: toscanodetemplate
+        constraintName: FK_ToscaNodeTemplate_requirementsName
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: RESTRICT
+        onUpdate: RESTRICT
+        referencedColumnNames: name,version
+        referencedTableName: toscarequirements
+        validate: true
+- changeSet:
+    id: 1622532452641-90
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - foreignKeyConstraintExists:
+            foreignKeyTableName: toscanodetype
+            foreignKeyName: FK_ToscaNodeType_requirementsName
+      - dbms:
+          type: mariadb
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: requirementsName,requirementsVersion
+        baseTableName: toscanodetype
+        constraintName: FK_ToscaNodeType_requirementsName
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: RESTRICT
+        onUpdate: RESTRICT
+        referencedColumnNames: name,version
+        referencedTableName: toscarequirements
+        validate: true
+- changeSet:
+    id: 1622532452641-91
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - foreignKeyConstraintExists:
+            foreignKeyTableName: toscaservicetemplate
+            foreignKeyName: FK_ToscaServiceTemplate_capabilityTypesName
+      - dbms:
+          type: mariadb
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: capabilityTypesName,capabilityTypesVersion
+        baseTableName: toscaservicetemplate
+        constraintName: FK_ToscaServiceTemplate_capabilityTypesName
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: RESTRICT
+        onUpdate: RESTRICT
+        referencedColumnNames: name,version
+        referencedTableName: toscacapabilitytypes
+        validate: true
+- changeSet:
+    id: 1622532452641-92
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - foreignKeyConstraintExists:
+            foreignKeyTableName: toscaservicetemplate
+            foreignKeyName: FK_ToscaServiceTemplate_dataTypesName
+      - dbms:
+          type: mariadb
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: dataTypesName,dataTypesVersion
+        baseTableName: toscaservicetemplate
+        constraintName: FK_ToscaServiceTemplate_dataTypesName
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: RESTRICT
+        onUpdate: RESTRICT
+        referencedColumnNames: name,version
+        referencedTableName: toscadatatypes
+        validate: true
+- changeSet:
+    id: 1622532452641-93
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - foreignKeyConstraintExists:
+            foreignKeyTableName: toscaservicetemplate
+            foreignKeyName: FK_ToscaServiceTemplate_nodeTypesName
+      - dbms:
+          type: mariadb
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: nodeTypesName,nodeTypesVersion
+        baseTableName: toscaservicetemplate
+        constraintName: FK_ToscaServiceTemplate_nodeTypesName
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: RESTRICT
+        onUpdate: RESTRICT
+        referencedColumnNames: name,version
+        referencedTableName: toscanodetypes
+        validate: true
+- changeSet:
+    id: 1622532452641-94
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - foreignKeyConstraintExists:
+            foreignKeyTableName: toscaservicetemplate
+            foreignKeyName: FK_ToscaServiceTemplate_policyTypesName
+      - dbms:
+          type: mariadb
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: policyTypesName,policyTypesVersion
+        baseTableName: toscaservicetemplate
+        constraintName: FK_ToscaServiceTemplate_policyTypesName
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: RESTRICT
+        onUpdate: RESTRICT
+        referencedColumnNames: name,version
+        referencedTableName: toscapolicytypes
+        validate: true
+- changeSet:
+    id: 1622532452641-95
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - foreignKeyConstraintExists:
+            foreignKeyTableName: toscaservicetemplate
+            foreignKeyName: FK_ToscaServiceTemplate_relationshipTypesName
+      - dbms:
+          type: mariadb
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: relationshipTypesName,relationshipTypesVersion
+        baseTableName: toscaservicetemplate
+        constraintName: FK_ToscaServiceTemplate_relationshipTypesName
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: RESTRICT
+        onUpdate: RESTRICT
+        referencedColumnNames: name,version
+        referencedTableName: toscarelationshiptypes
+        validate: true
+- changeSet:
+    id: 1622532452641-96
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - foreignKeyConstraintExists:
+            foreignKeyTableName: toscatopologytemplate
+            foreignKeyName: FK_ToscaTopologyTemplate_nodeTemplatesName
+      - dbms:
+          type: mariadb
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: nodeTemplatesName,nodeTemplatessVersion
+        baseTableName: toscatopologytemplate
+        constraintName: FK_ToscaTopologyTemplate_nodeTemplatesName
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: RESTRICT
+        onUpdate: RESTRICT
+        referencedColumnNames: name,version
+        referencedTableName: toscanodetemplates
+        validate: true
+- changeSet:
+    id: 1622532452641-97
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - foreignKeyConstraintExists:
+            foreignKeyTableName: toscatopologytemplate
+            foreignKeyName: FK_ToscaTopologyTemplate_policyName
+      - dbms:
+          type: mariadb
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: policyName,policyVersion
+        baseTableName: toscatopologytemplate
+        constraintName: FK_ToscaTopologyTemplate_policyName
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: RESTRICT
+        onUpdate: RESTRICT
+        referencedColumnNames: name,version
+        referencedTableName: toscapolicies
+        validate: true
+- changeSet:
+    id: 1622532452641-98
+    author: liquibase (generated)
+    dbms:  mariadb
+    preConditions:
+      - onFail: MARK_RAN
+      - not:
+        - foreignKeyConstraintExists:
+            foreignKeyTableName: toscaservicetemplate
+            foreignKeyName: TscaServiceTemplatetopologyTemplateParentLocalName
+      - dbms:
+          type: mariadb
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: topologyTemplateParentLocalName,topologyTemplateLocalName,topologyTemplateParentKeyVersion,topologyTemplateParentKeyName
+        baseTableName: toscaservicetemplate
+        constraintName: TscaServiceTemplatetopologyTemplateParentLocalName
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: RESTRICT
+        onUpdate: RESTRICT
+        referencedColumnNames: parentLocalName,localName,parentKeyVersion,parentKeyName
+        referencedTableName: toscatopologytemplate
+        validate: true
+
