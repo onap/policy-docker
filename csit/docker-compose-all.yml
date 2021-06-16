@@ -2,6 +2,7 @@
 # ===========LICENSE_START====================================================
 #  Copyright (C) 2020-2021 AT&T Intellectual Property. All rights reserved.
 #  Modifications Copyright (C) 2021 Bell Canada. All rights reserved.
+#  Modifications Copyright (C) 2021 Nordix Foundation.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -51,11 +52,35 @@ services:
        - 6669
        - 6670
        - 3905
+   drools-db-migration:
+      image: nexus3.onap.org:10001/onap/policy-drools:${POLICY_DROOLS_VERSION}
+      container_name: drools-db-migration
+      depends_on:
+        - mariadb
+      hostname: drools-db-migration
+      expose:
+       - 6824
+      env_file: config/db/db.conf
+      environment:
+        SQL_DB: policyadmin
+        SQL_HOST: mariadb
+      volumes:
+         - ./config/db/db.conf:/home/policy/db.conf:ro
+         - ./config/sql:/home/policy/sql
+         - ./drools_policy_init.sh:/opt/app/policy/bin/drools_policy_init.sh:ro
+         - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
+      entrypoint: /opt/app/policy/bin/wait_for_port.sh
+      command: [
+              '-c',
+                '/opt/app/policy/bin/drools_policy_init.sh',
+                'mariadb', '3306'
+               ]
    api:
       image: nexus3.onap.org:10001/onap/policy-api:${POLICY_API_VERSION}
       container_name: policy-api
       depends_on:
        - mariadb
+       - drools-db-migration
       hostname: policy-api
       expose:
        - 6969
@@ -66,13 +91,15 @@ services:
       entrypoint: ./wait_for_port.sh
       command: [
         '-c', './policy-api.sh',
-        'mariadb', '3306'
+        'mariadb', '3306',
+        'drools-db-migration', '6824'
         ]
    pap:
       image: nexus3.onap.org:10001/onap/policy-pap:${POLICY_PAP_VERSION}
       container_name: policy-pap
       depends_on:
        - mariadb
+       - drools-db-migration
        - simulator
        - api
       hostname: policy-pap
