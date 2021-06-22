@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c0b60bc8_8241308c",
+        "filename": "csit/clamp/docker-compose-controlloop.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7504
+      },
+      "writtenOn": "2021-06-22T14:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4356e7eb_459ec723",
+      "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59ca8f2b_3d0df5e3",
         "filename": "csit/clamp/docker-compose-controlloop.yml",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ecf452_f1ee5614",
+        "filename": "csit/clamp/docker-compose-controlloop.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 7504
+      },
+      "writtenOn": "2021-06-22T14:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59ca8f2b_3d0df5e3",
+      "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "5c122e02_6798c860",
+        "filename": "csit/clamp/docker-compose-controlloop.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 7504
+      },
+      "writtenOn": "2021-06-22T14:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5760701_c0309d7f",
+      "range": {
+        "startLine": 87,
+        "startChar": 9,
+        "endLine": 87,
+        "endChar": 18
+      },
+      "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47925dc0_d16eaf2a",
         "filename": "csit/clamp/plans/detmVers.sh",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce43bd93_1f3d4efa",
+        "filename": "csit/clamp/plans/detmVers.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7504
+      },
+      "writtenOn": "2021-06-22T14:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47925dc0_d16eaf2a",
+      "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "1c22fafa_31327e4e",
+        "filename": "csit/clamp/tests/policy-clamp-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 7504
+      },
+      "writtenOn": "2021-06-22T14:16:17Z",
+      "side": 1,
+      "message": "This is a mistake. This should be policy-api. Corrected.",
+      "parentUuid": "9a82f0f2_ceb0f514",
+      "range": {
+        "startLine": 49,
+        "startChar": 42,
+        "endLine": 49,
+        "endChar": 47
+      },
+      "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a00d4f04_2757a099",
         "filename": "csit/clamp/tests/policy-clamp-test.robot",
         "patchSetId": 1
@@ -119,6 +221,30 @@
       "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86ee71d5_1777dd08",
+        "filename": "csit/clamp/tests/policy-clamp-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 7504
+      },
+      "writtenOn": "2021-06-22T14:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a00d4f04_2757a099",
+      "range": {
+        "startLine": 79,
+        "startChar": 42,
+        "endLine": 79,
+        "endChar": 46
+      },
+      "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "56665171_1821c438",
+        "filename": "csit/config/clamp/ClRuntimeParameters.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 7504
+      },
+      "writtenOn": "2021-06-22T14:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bca9a849_0bab9774",
+      "range": {
+        "startLine": 35,
+        "startChar": 31,
+        "endLine": 35,
+        "endChar": 40
+      },
+      "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8965fedf_eb09d840",
         "filename": "csit/config/clamp/ClRuntimeParameters.json",
         "patchSetId": 1
@@ -159,6 +309,24 @@
       "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc26499_ea163b63",
+        "filename": "csit/config/clamp/ClRuntimeParameters.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 7504
+      },
+      "writtenOn": "2021-06-22T14:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8965fedf_eb09d840",
+      "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
