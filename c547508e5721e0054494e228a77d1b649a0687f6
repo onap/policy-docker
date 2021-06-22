@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4356e7eb_459ec723",
+        "filename": "csit/clamp/docker-compose-controlloop.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-06-22T12:55:53Z",
+      "side": 1,
+      "message": "why not just add the extra entries to the common docker-compose.yaml?",
+      "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ca8f2b_3d0df5e3",
+        "filename": "csit/clamp/docker-compose-controlloop.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-06-22T12:55:53Z",
+      "side": 1,
+      "message": "should probably add policy-truststore, too - that was a recent addition so that signed certificates work now\n\nsame comment below",
+      "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5760701_c0309d7f",
+        "filename": "csit/clamp/docker-compose-controlloop.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-06-22T12:55:53Z",
+      "side": 1,
+      "message": "maybe change this to message-router\n\nsame comment below",
+      "range": {
+        "startLine": 87,
+        "startChar": 9,
+        "endLine": 87,
+        "endChar": 18
+      },
+      "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47925dc0_d16eaf2a",
+        "filename": "csit/clamp/plans/detmVers.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-06-22T12:55:53Z",
+      "side": 1,
+      "message": "merge this with the common one",
+      "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a82f0f2_ceb0f514",
+        "filename": "csit/clamp/tests/policy-clamp-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-06-22T12:55:53Z",
+      "side": 1,
+      "message": "what is \"$ API\"?",
+      "range": {
+        "startLine": 49,
+        "startChar": 42,
+        "endLine": 49,
+        "endChar": 47
+      },
+      "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00d4f04_2757a099",
+        "filename": "csit/clamp/tests/policy-clamp-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-06-22T12:55:53Z",
+      "side": 1,
+      "message": "I think it\u0027s CL, not API",
+      "range": {
+        "startLine": 79,
+        "startChar": 42,
+        "endLine": 79,
+        "endChar": 46
+      },
+      "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca9a849_0bab9774",
+        "filename": "csit/config/clamp/ClRuntimeParameters.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-06-22T12:55:53Z",
+      "side": 1,
+      "message": "maybe change this to message-router\n\nsame comment below and in later files",
+      "range": {
+        "startLine": 35,
+        "startChar": 31,
+        "endLine": 35,
+        "endChar": 40
+      },
+      "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8965fedf_eb09d840",
+        "filename": "csit/config/clamp/ClRuntimeParameters.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-06-22T12:55:53Z",
+      "side": 1,
+      "message": "this should no longer be needed\n\nsame comment below and in later files",
+      "revId": "c547508e5721e0054494e228a77d1b649a0687f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
