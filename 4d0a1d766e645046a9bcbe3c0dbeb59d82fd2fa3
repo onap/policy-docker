@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "18cf1bde_78160ea6",
+        "filename": "csit/clamp/tests/data/PMSHMultipleCLTosca.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-06-23T13:57:56Z",
+      "side": 1,
+      "message": "once this is decided/addressed, we can merge this review",
+      "parentUuid": "03b844d5_ce139e3e",
+      "range": {
+        "startLine": 1,
+        "startChar": 27,
+        "endLine": 1,
+        "endChar": 48
+      },
+      "revId": "4d0a1d766e645046a9bcbe3c0dbeb59d82fd2fa3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa617a0b_2b6215f5",
         "filename": "csit/config/db/db.sh",
         "patchSetId": 2
@@ -62,6 +86,30 @@
       "revId": "4d0a1d766e645046a9bcbe3c0dbeb59d82fd2fa3",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a9d985_9799e863",
+        "filename": "csit/config/db/db.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-06-23T13:57:56Z",
+      "side": 1,
+      "message": "thanks.  I created https://jira.onap.org/browse/POLICY-3300 to remove it",
+      "parentUuid": "fa617a0b_2b6215f5",
+      "range": {
+        "startLine": 16,
+        "startChar": 41,
+        "endLine": 16,
+        "endChar": 61
+      },
+      "revId": "4d0a1d766e645046a9bcbe3c0dbeb59d82fd2fa3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
