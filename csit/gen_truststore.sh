@@ -26,7 +26,16 @@ DIR="${0%/*}/config"
 cd "${DIR}"
 
 OUTFILE=policy-truststore
+ALIAS=onap.policy.csit.root.ca
 PASS=Pol1cy_0nap
+
+keytool -list -alias ${ALIAS} -keystore ${OUTFILE} -storepass "${PASS}" \
+    >/dev/null 2>&1
+if [ $? -eq 0 ]
+then
+    echo "Truststore already contains a policy root CA - not re-generating"
+    exit 0
+fi
 
 openssl req -new -keyout cakey.pem -out careq.pem -passout "pass:${PASS}" \
             -subj "/C=US/ST=New Jersey/OU=ONAP/CN=policy.onap"
@@ -34,7 +43,7 @@ openssl req -new -keyout cakey.pem -out careq.pem -passout "pass:${PASS}" \
 openssl x509 -signkey cakey.pem -req -days 3650 -in careq.pem \
             -out caroot.cer -extensions v3_ca -passin "pass:${PASS}"
 
-keytool -import -noprompt -trustcacerts -alias onap.policy.csit.root.ca \
+keytool -import -noprompt -trustcacerts -alias ${ALIAS} \
             -file caroot.cer -keystore "${OUTFILE}" -storepass "${PASS}"
 
 chmod 644 "$OUTFILE"
