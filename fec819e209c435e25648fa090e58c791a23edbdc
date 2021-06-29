@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ca511005_1eda3dd3",
+        "filename": "csit/config/sql/01-policyadmin.upgrade.sql",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-06-29T14:38:33Z",
+      "side": 1,
+      "message": "right.  The approach used by drools-pdp uses a metatable to track versions of things - I don\u0027t see that here.\n\nthings need to be broken into separate scripts, both to manage the versioning AND to do deal with failures/rollbacks.",
+      "parentUuid": "d797fd35_f04b49b0",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "fec819e209c435e25648fa090e58c791a23edbdc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02bc54dd_55efbccb",
         "filename": "csit/docker-compose-all.yml",
         "patchSetId": 8
