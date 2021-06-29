@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d797fd35_f04b49b0",
+        "filename": "csit/config/sql/01-policyadmin.upgrade.sql",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 3239
+      },
+      "writtenOn": "2021-06-29T14:30:00Z",
+      "side": 1,
+      "message": "I see that we are having full list of tables and entire policyadmin schema in a single sql file. So, how do we upgrade \u0026 migrate (Example - Honolulu to Istanbul)? Furthermore we need to understand about the maintainability of the solution going forward.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "fec819e209c435e25648fa090e58c791a23edbdc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bc54dd_55efbccb",
+        "filename": "csit/docker-compose-all.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 3239
+      },
+      "writtenOn": "2021-06-29T14:30:00Z",
+      "side": 1,
+      "message": "Why are we using drools-pdp image here?\nAre we trying to make entire Policy Framework dependent on drools-pdp? Moreover, how will it work in case of real deployments using OOM charts.",
+      "range": {
+        "startLine": 56,
+        "startChar": 13,
+        "endLine": 56,
+        "endChar": 78
+      },
+      "revId": "fec819e209c435e25648fa090e58c791a23edbdc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
