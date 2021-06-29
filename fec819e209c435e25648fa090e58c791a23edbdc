@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f4cf2f1e_8c63389e",
+        "filename": "csit/config/sql/01-policyadmin.upgrade.sql",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2021-06-29T15:17:07Z",
+      "side": 1,
+      "message": "Yes - we\u0027ll need separate scripts. Honolulu-2-Istanbul and then rollback, going forward someone  should be able to execute a series of scripts to do a multiple version upgrade.",
+      "parentUuid": "ca511005_1eda3dd3",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "fec819e209c435e25648fa090e58c791a23edbdc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02bc54dd_55efbccb",
         "filename": "csit/docker-compose-all.yml",
         "patchSetId": 8
