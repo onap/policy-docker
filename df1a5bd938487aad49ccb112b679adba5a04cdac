@@ -22,6 +22,30 @@
       "revId": "df1a5bd938487aad49ccb112b679adba5a04cdac",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "66eddaf6_90c16f26",
+        "filename": "csit/config/pap/defaultConfig.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2021-06-30T16:06:25Z",
+      "side": 1,
+      "message": "I was trying to fix the apex csit failure, but then noticed this change is needed too for it to pass.",
+      "parentUuid": "e3f7ae65_c4f3a4b3",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "df1a5bd938487aad49ccb112b679adba5a04cdac",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
