@@ -16,6 +16,7 @@ Healthcheck
      Log    Received response from policy ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
      Should Be Equal As Strings    ${resp.json()['code']}  200
+     Set Suite Variable    ${pdpName}    ${resp.json()['name']}
 
 ExecuteApexPolicy
      Wait Until Keyword Succeeds    2 min    5 sec    CreatePolicy
@@ -62,7 +63,7 @@ VerifyPolicyStatus
      Should Be Equal As Strings    ${resp.status_code}     200
      Should Be Equal As Strings    ${resp.json()[0]['pdpGroup']}  defaultGroup
      Should Be Equal As Strings    ${resp.json()[0]['pdpType']}  apex
-     Should Be Equal As Strings    ${resp.json()[0]['pdpId']}  policy-apex-pdp
+     Should Be Equal As Strings    ${resp.json()[0]['pdpId']}  ${pdpName}
      Should Be Equal As Strings    ${resp.json()[0]['policy']['name']}  onap.policies.native.apex.Sampledomain
      Should Be Equal As Strings    ${resp.json()[0]['policy']['version']}  1.0.0
      Should Be Equal As Strings    ${resp.json()[0]['policyType']['name']}  onap.policies.native.Apex
@@ -85,10 +86,10 @@ VerifyPdpStatistics
      Log    Creating session https://${POLICY_PAP_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_PAP_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=    GET On Session    policy    /policy/pap/v1/pdps/statistics/defaultGroup/apex/policy-apex-pdp    params=recordCount=1    headers=${headers}
+     ${resp}=    GET On Session    policy    /policy/pap/v1/pdps/statistics/defaultGroup/apex/${pdpName}    params=recordCount=1    headers=${headers}
      Log    Received response from policy ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
-     Should Be Equal As Strings    ${resp.json()['defaultGroup']['apex'][0]['pdpInstanceId']}  policy-apex-pdp
+     Should Be Equal As Strings    ${resp.json()['defaultGroup']['apex'][0]['pdpInstanceId']}  ${pdpName}
      Should Be Equal As Strings    ${resp.json()['defaultGroup']['apex'][0]['pdpGroupName']}  defaultGroup
      Should Be Equal As Strings    ${resp.json()['defaultGroup']['apex'][0]['pdpSubGroupName']}  apex
      Should Be Equal As Strings    ${resp.json()['defaultGroup']['apex'][0]['policyDeployCount']}  ${deployCount}
