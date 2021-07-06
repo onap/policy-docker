@@ -22,6 +22,30 @@
       "revId": "74af7a402a0215929058d671223ac17b75b00088",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f23111_5ff458d8",
+        "filename": "policy-db-migrator/policy-jdk/src/main/docker/config/sql/honolulu/downgrade/01-jpapdpgroup_properties.downgrade.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-06T18:39:31Z",
+      "side": 1,
+      "message": "Fixed in patchset 2",
+      "parentUuid": "871c0c30_61640e79",
+      "range": {
+        "startLine": 3,
+        "startChar": 13,
+        "endLine": 3,
+        "endChar": 16
+      },
+      "revId": "74af7a402a0215929058d671223ac17b75b00088",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
