@@ -34,6 +34,24 @@
       "revId": "b54e3b029fe3ae9632b3abee4a6de1181a93af14",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "228d8e73_b53bc117",
+        "filename": "csit/config/pap/defaultConfig.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2021-07-06T15:06:03Z",
+      "side": 1,
+      "message": "Anyway what Jim is doing for Istanbul right! These changes for savePdpStatisticsInDb were pulled to Honolulu as well.",
+      "parentUuid": "24765990_bb849449",
+      "revId": "b54e3b029fe3ae9632b3abee4a6de1181a93af14",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
