@@ -37,7 +37,7 @@
             "useHttps": true
         },
         {
-            "topic" : "POLICY-STATISTICS",
+            "topic" : "POLICY-HEARTBEAT",
             "effectiveTopic": "POLICY-PDP-PAP",
             "consumerGroup": "policy-pap",
             "servers" : [ "message-router" ],
