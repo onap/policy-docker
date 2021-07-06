@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fedc07bb_73ce4703",
+        "filename": "csit/config/pap/defaultConfig.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2021-07-06T14:04:59Z",
+      "side": 1,
+      "message": "is this going away per Jim\u0027s work, will need a PDP-STATISTICS endpoint?",
+      "revId": "b54e3b029fe3ae9632b3abee4a6de1181a93af14",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
