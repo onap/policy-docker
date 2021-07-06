@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d4e31f1_93d92dd4",
+        "filename": "policy-db-migrator/policy-jdk/src/main/docker/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-06T21:19:35Z",
+      "side": 1,
+      "message": "append these lines after line 32",
+      "revId": "4eb1c6d48230b68bd8f3bb43ffba60cfa58a79c3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef76c4d_eca67fa4",
+        "filename": "policy-db-migrator/policy-jdk/src/main/docker/db-migrator",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-06T21:19:35Z",
+      "side": 1,
+      "message": "add license",
+      "revId": "4eb1c6d48230b68bd8f3bb43ffba60cfa58a79c3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a2678ed_2da5782f",
+        "filename": "policy-db-migrator/policy-jdk/src/main/docker/db-migrator",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-06T21:19:35Z",
+      "side": 1,
+      "message": "need to update these comments",
+      "range": {
+        "startLine": 40,
+        "startChar": 1,
+        "endLine": 51,
+        "endChar": 72
+      },
+      "revId": "4eb1c6d48230b68bd8f3bb43ffba60cfa58a79c3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
