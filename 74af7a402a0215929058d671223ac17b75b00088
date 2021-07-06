@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "871c0c30_61640e79",
+        "filename": "policy-db-migrator/policy-jdk/src/main/docker/config/sql/honolulu/downgrade/01-jpapdpgroup_properties.downgrade.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-06T15:44:40Z",
+      "side": 1,
+      "message": "\";C)\" \u003d\u003e \" (C)\"\n\nsame comment for several of the following files",
+      "range": {
+        "startLine": 3,
+        "startChar": 13,
+        "endLine": 3,
+        "endChar": 16
+      },
+      "revId": "74af7a402a0215929058d671223ac17b75b00088",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
