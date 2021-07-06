@@ -16,6 +16,24 @@
       "revId": "b54e3b029fe3ae9632b3abee4a6de1181a93af14",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24765990_bb849449",
+        "filename": "csit/config/pap/defaultConfig.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-06T14:17:51Z",
+      "side": 1,
+      "message": "actually, I changed direction yesterday and I\u0027m leaving it in.",
+      "parentUuid": "fedc07bb_73ce4703",
+      "revId": "b54e3b029fe3ae9632b3abee4a6de1181a93af14",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
