@@ -2,9 +2,9 @@
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2018 Ericsson. All rights reserved.
 #
-#  Modifications copyright (c) 2019 Nordix Foundation.
+#  Modifications copyright (c) 2019, 2021 Nordix Foundation.
 #  Modifications Copyright (C) 2020-2021 AT&T Intellectual Property.
-#  Modification Copyright 2021. Nordix Foundation.
+#  Modifications Copyright (C) 2021 Bell Canada. All rights reserved.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -54,3 +54,4 @@ ROBOT_VARIABLES=""
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v APEX_IP:${APEX_IP}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_IP:${POLICY_API_IP}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_PAP_IP:${POLICY_PAP_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v DMAAP_IP:${DMAAP_IP}"
