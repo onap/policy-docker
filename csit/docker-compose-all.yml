@@ -51,6 +51,7 @@ services:
        - 6669
        - 6670
        - 3905
+       - 6680
    api:
       image: nexus3.onap.org:10001/onap/policy-api:${POLICY_API_VERSION}
       container_name: policy-api
