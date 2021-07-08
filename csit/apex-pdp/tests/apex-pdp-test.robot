@@ -19,20 +19,28 @@ Healthcheck
      Set Suite Variable    ${pdpName}    ${resp.json()['name']}
 
 ExecuteApexPolicy
+     Set Test Variable    ${policyName}    onap.policies.native.apex.Sampledomain
      Wait Until Keyword Succeeds    2 min    5 sec    CreatePolicy
      Wait Until Keyword Succeeds    3 min    5 sec    VerifyPdpStatistics    0    0    0    0
      Wait Until Keyword Succeeds    2 min    5 sec    DeployPolicy
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyPolicyStatus
      Wait Until Keyword Succeeds    3 min    5 sec    VerifyPdpStatistics    1    1    0    0
-     Wait Until Keyword Succeeds    4 min    10 sec    RunEventOnApexEngine
+     Wait Until Keyword Succeeds    4 min    5 sec    RunEventOnApexEngine
      Wait Until Keyword Succeeds    3 min    5 sec    VerifyPdpStatistics    1    1    1    1
+
+ExecuteApexControlLoopPolicy
+     Set Test Variable    ${policyName}    onap.policies.apex.Simplecontrolloop
+     Wait Until Keyword Succeeds    2 min    5 sec    CreatePolicy
+     Wait Until Keyword Succeeds    2 min    5 sec    DeployPolicy
+     Wait Until Keyword Succeeds    2 min    5 sec    VerifyPolicyStatus
+     Wait Until Keyword Succeeds    4 min    5 sec    TriggerAndVerifyControlLoopPolicy
 
 *** Keywords ***
 
 CreatePolicy
      [Documentation]    Create a new Apex policy
      ${auth}=    Create List    healthcheck    zb!XztG34
-     ${postjson}=  Get file  ${CURDIR}/data/onap.policies.native.Apex.tosca.json
+     ${postjson}=  Get file  ${CURDIR}/data/${policyName}.json
      Log    Creating session https://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -44,7 +52,10 @@ CreatePolicy
 DeployPolicy
      [Documentation]    Deploy the policy in apex-pdp engine
      ${auth}=    Create List    healthcheck    zb!XztG34
-     ${postjson}=  Get file  ${CURDIR}/data/pdp_update.json
+     ${postjson}=    Get file  ${CURDIR}/data/policy_deploy.json
+     ${postjson}=    evaluate    json.loads('''${postjson}''')    json
+     set to dictionary    ${postjson['groups'][0]['deploymentSubgroups'][0]['policies'][0]}    name=${policyName}
+     ${postjson}=    evaluate    json.dumps(${postjson})    json
      Log    Creating session https://${POLICY_PAP_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_PAP_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -57,19 +68,22 @@ VerifyPolicyStatus
      ${auth}=    Create List    healthcheck    zb!XztG34
      Log    Creating session https://${POLICY_PAP_IP}:6969
      ${session}=    Create Session      policy  https://${POLICY_PAP_IP}:6969   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${headers}=    Create Dictionary     Accept=application/json    Content-Type=application/json
      ${resp}=   GET On Session     policy  /policy/pap/v1/policies/status     headers=${headers}
      Log    Received response from policy ${resp.text}
+     FOR    ${responseEntry}    IN    @{resp.json()}
+     Exit For Loop IF      '${responseEntry['policy']['name']}'=='${policyName}'
+     END
      Should Be Equal As Strings    ${resp.status_code}     200
-     Should Be Equal As Strings    ${resp.json()[0]['pdpGroup']}  defaultGroup
-     Should Be Equal As Strings    ${resp.json()[0]['pdpType']}  apex
-     Should Be Equal As Strings    ${resp.json()[0]['pdpId']}  ${pdpName}
-     Should Be Equal As Strings    ${resp.json()[0]['policy']['name']}  onap.policies.native.apex.Sampledomain
-     Should Be Equal As Strings    ${resp.json()[0]['policy']['version']}  1.0.0
-     Should Be Equal As Strings    ${resp.json()[0]['policyType']['name']}  onap.policies.native.Apex
-     Should Be Equal As Strings    ${resp.json()[0]['policyType']['version']}  1.0.0
-     Should Be Equal As Strings    ${resp.json()[0]['deploy']}  True
-     Should Be Equal As Strings    ${resp.json()[0]['state']}  SUCCESS
+     Should Be Equal As Strings    ${responseEntry['pdpGroup']}  defaultGroup
+     Should Be Equal As Strings    ${responseEntry['pdpType']}  apex
+     Should Be Equal As Strings    ${responseEntry['pdpId']}  ${pdpName}
+     Should Be Equal As Strings    ${responseEntry['policy']['name']}  ${policyName}
+     Should Be Equal As Strings    ${responseEntry['policy']['version']}  1.0.0
+     Should Be Equal As Strings    ${responseEntry['policyType']['name']}  onap.policies.native.Apex
+     Should Be Equal As Strings    ${responseEntry['policyType']['version']}  1.0.0
+     Should Be Equal As Strings    ${responseEntry['deploy']}  True
+     Should Be Equal As Strings    ${responseEntry['state']}  SUCCESS
 
 RunEventOnApexEngine
     [Documentation]    Send event to verify policy execution
@@ -78,6 +92,22 @@ RunEventOnApexEngine
     &{headers}=  Create Dictionary    Content-Type=application/json    Accept=application/json
     ${resp}=    PUT On Session    apexSession    /apex/FirstConsumer/EventIn    data=${data}   headers=${headers}
     Should Be Equal As Strings    ${resp.status_code}   200
+
+TriggerAndVerifyControlLoopPolicy
+    [Documentation]    Send event to DMaaP and read notifications to verify policy execution
+    Create Session   apexSession  https://${DMAAP_IP}:3905   max_retries=1
+    ${data}=    Get Binary File     ${CURDIR}/data/VesEvent.json
+    &{headers}=  Create Dictionary    Content-Type=application/json    Accept=application/json
+    ${resp}=    POST On Session    apexSession    /events/unauthenticated.DCAE_CL_OUTPUT    data=${data}   headers=${headers}
+    Should Be Equal As Strings    ${resp.status_code}   200
+    Sleep  2 seconds  "Wait until the final response is received from CDS"
+    ${params} =    Create Dictionary    limit=5    timeout=15000
+    ${resp}=    GET On Session    apexSession    /events/APEX-CL-MGT/g1/c1    params=${params}   headers=${headers}
+    Log    Received log event on APEX-CL-MGT topic ${resp.text}
+    Should Be Equal As Strings    ${resp.status_code}     200
+    Should Contain    ${resp.text}  VES event has been received. Going to fetch details from AAI.
+    Should Contain    ${resp.text}  Received response from AAI successfully. Hostname in AAI matches with the one in Ves event. Going to make the update-config request to CDS.
+    Should Contain    ${resp.text}  Successfully processed the VES event. Hostname is updated.
 
 VerifyPdpStatistics
      [Documentation]    Verify pdp statistics after policy execution
