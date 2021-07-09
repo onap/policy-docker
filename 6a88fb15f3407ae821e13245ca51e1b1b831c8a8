@@ -1,0 +1,227 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d785c9fa_19af1845",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/honolulu/0800/downgrade/100-jpapdpgroup_properties.sql",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-09T16:43:59Z",
+      "side": 1,
+      "message": "still not sure we need \"honolulu\" in the path name, as 0800 is sufficient to identify the version",
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4895e8d9_423c42ff",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/honolulu/0800/downgrade/990-FK_ToscaServiceTemplate_nodeTypesName.sql",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-09T16:43:59Z",
+      "side": 1,
+      "message": "ok, that\u0027s a lot of files - should we switch to 4-digit names?  Or are we ok, given the gaps we have already?",
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09dbb37_3f3c3db7",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-09T16:43:59Z",
+      "side": 1,
+      "message": "why not use the same args as on line 172?",
+      "range": {
+        "startLine": 173,
+        "startChar": 38,
+        "endLine": 173,
+        "endChar": 74
+      },
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c15053_d707814b",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-09T16:43:59Z",
+      "side": 1,
+      "message": "don\u0027t think these \"rev\" calls are needed",
+      "range": {
+        "startLine": 340,
+        "startChar": 38,
+        "endLine": 340,
+        "endChar": 41
+      },
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75018dcf_ab9fe50d",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-09T16:43:59Z",
+      "side": 1,
+      "message": "tab \u003d\u003e spaces",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 340,
+        "endChar": 1
+      },
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e8bdbb3_508a6289",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 4
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-09T16:43:59Z",
+      "side": 1,
+      "message": "tab \u003d\u003e spaces",
+      "range": {
+        "startLine": 380,
+        "startChar": 0,
+        "endLine": 380,
+        "endChar": 1
+      },
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d506ccb_aa0902a5",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 4
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-09T16:43:59Z",
+      "side": 1,
+      "message": "don\u0027t think these \"rev\" calls are needed",
+      "range": {
+        "startLine": 380,
+        "startChar": 38,
+        "endLine": 380,
+        "endChar": 41
+      },
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ece27d3_22ee2a85",
+        "filename": "policy-db-migrator/src/main/docker/prepare_downgrade.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-09T16:43:59Z",
+      "side": 1,
+      "message": "probably more straight-forward with \"cpio\"\n\nsame comments in upgrade.sh",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 75
+      },
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87bc332e_f633261e",
+        "filename": "policy-db-migrator/src/main/docker/prepare_downgrade.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-09T16:43:59Z",
+      "side": 1,
+      "message": "hmm.  as an organization may provide additional files, we can\u0027t make assumptions about line numbers.  Perhaps these should just append lines at the start and end of the file.  Or better yet, the migrator should do the \"USE\" line and then run all of the sql scripts, avoiding the need to do \"USE\" for every single script",
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6087919_2f4bea46",
+        "filename": "policy-db-migrator/src/main/docker/prepare_downgrade.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-09T16:43:59Z",
+      "side": 1,
+      "message": "did we decide we still wanted this?  or should the sql scripts deal with changes to foreign keys?\n\nsame questions for upgrade.sh",
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e20b3e_eb7fb807",
+        "filename": "policy-db-migrator/src/main/docker/prepare_upgrade.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-09T16:43:59Z",
+      "side": 1,
+      "message": "this still needs to handle rollback if one of these fails, but that can be done in a separate review",
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
