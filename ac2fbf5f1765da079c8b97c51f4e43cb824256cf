@@ -33,6 +33,24 @@
       "revId": "ac2fbf5f1765da079c8b97c51f4e43cb824256cf",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b9ee49_5ea2e11d",
+        "filename": "csit/apex-pdp/tests/apex-pdp-test.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2021-07-09T17:50:09Z",
+      "side": 1,
+      "message": "I was trying to use wait_topic.sh. But realized that it uses \"https://${SIM_IP}:3905/events/${topic}/script/1?limit\u003d1\". limit is 1, I think drools is using it extensively.\nIt seems using that script makes it more tedious instead of making it simpler in this case, because I will have to call it 3 times for the expected  message in this case(I am expecting 3 different events on DMaaP). If I update the limit from 1 to 3, it may need more work on drools csit I guess.\nCalling the script 3 times seems less efficient to me, but I am okay to do it to keep it consisent. Comments?\n\nWill work on the other comments.",
+      "parentUuid": "a2b465f0_a82f54f2",
+      "revId": "ac2fbf5f1765da079c8b97c51f4e43cb824256cf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
