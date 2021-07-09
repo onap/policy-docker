@@ -51,6 +51,24 @@
       "revId": "ac2fbf5f1765da079c8b97c51f4e43cb824256cf",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6931381_e0eef0f9",
+        "filename": "csit/apex-pdp/tests/apex-pdp-test.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-09T18:34:47Z",
+      "side": 1,
+      "message": "that makes sense, though it may make the test fragile, as the simulator will only return one message, if there\u0027s nothing yet on the queue when the GET is performed.  Seems like invoking wait_topic three times might actually be a bit clearer, as it would make it obvious that it\u0027s checking three different messages.  OTOH, is it necessary to check for all three, or is it sufficient to just check the last one?\n\nnote: still need to perform a make_topic at the very beginning, to ensure the topic has been created",
+      "parentUuid": "99b9ee49_5ea2e11d",
+      "revId": "ac2fbf5f1765da079c8b97c51f4e43cb824256cf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
