@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22fff9dd_6af0e30b",
+        "filename": "csit/xacml-pdp/tests/xacml-pdp-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-12T20:34:09Z",
+      "side": 0,
+      "message": "wait_topic will wait for up to 15s for the desired message, thus no need to add an extra \"sleep\" here",
+      "revId": "78850b54b98e8bdc27d186035910126dd2ac826e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
