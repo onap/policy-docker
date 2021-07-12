@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "68d8dd97_468f5099",
+        "filename": "csit/apex-pdp/plans/setup.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-12T16:16:00Z",
+      "side": 1,
+      "message": "nvm - there is no \"DMAAP_IP\" variable to be deleted from this script.  Could change the robot script to use SIM_IP to reduce confusion, but it\u0027s OK as is, too.",
+      "parentUuid": "91770c16_bb20427e",
+      "revId": "9a12d024fe42fd3c57477c513382c3b78983b9ce",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9aec7736_d0fdc6f1",
         "filename": "csit/apex-pdp/tests/apex-pdp-test.robot",
         "patchSetId": 4
