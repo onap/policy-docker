@@ -51,6 +51,24 @@
       "revId": "9a12d024fe42fd3c57477c513382c3b78983b9ce",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c03f6154_9711ff4b",
+        "filename": "csit/apex-pdp/tests/apex-pdp-test.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2021-07-12T13:43:32Z",
+      "side": 1,
+      "message": "I actually tried that approach, but felt this is more ideal in this case.\nBecause, 1) When a different message is received, the failure message will clearly say what didn\u0027t match with what.\n2) DMaaP simulator anyway returns the message in  order (that is what I saw during all the csit executions), hence I can read 1 by 1 and check for the expected message. If there is a mismatch, then it will be clearly printed.\n\nJust calling wait_topic.sh with the expected message will work(just checking exitcode will be enough then), but during failures, what message came in the topic will not be visible.\n\nI think drools also uses similar approach - listen in the topic with something unique in the event, then check if the expected things are there in the event.",
+      "parentUuid": "9aec7736_d0fdc6f1",
+      "revId": "9a12d024fe42fd3c57477c513382c3b78983b9ce",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
