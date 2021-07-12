@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6287109f_ecd356de",
+        "filename": "csit/apex-pdp/plans/setup.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2021-07-12T13:45:05Z",
+      "side": 1,
+      "message": "Yes, without this, SIM_IP will not be avialble in the wait_topic.sh script.",
+      "parentUuid": "cf11cc41_54359afb",
+      "revId": "9a12d024fe42fd3c57477c513382c3b78983b9ce",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9aec7736_d0fdc6f1",
         "filename": "csit/apex-pdp/tests/apex-pdp-test.robot",
         "patchSetId": 4
