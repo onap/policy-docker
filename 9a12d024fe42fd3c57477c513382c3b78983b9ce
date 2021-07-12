@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a3be4131_66daf6bf",
+        "filename": "csit/apex-pdp/plans/setup.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-12T14:01:35Z",
+      "side": 1,
+      "message": "could delete DMAAP_IP, then, as it\u0027s redundant",
+      "parentUuid": "6287109f_ecd356de",
+      "revId": "9a12d024fe42fd3c57477c513382c3b78983b9ce",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9aec7736_d0fdc6f1",
         "filename": "csit/apex-pdp/tests/apex-pdp-test.robot",
         "patchSetId": 4
@@ -87,6 +105,24 @@
       "revId": "9a12d024fe42fd3c57477c513382c3b78983b9ce",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea033c9_049107f0",
+        "filename": "csit/apex-pdp/tests/apex-pdp-test.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-12T14:01:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c03f6154_9711ff4b",
+      "revId": "9a12d024fe42fd3c57477c513382c3b78983b9ce",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
