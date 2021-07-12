@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5c4f547_149eea9d",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/0800/upgrade/1000-FK_ToscaServiceTemplate_policyTypesName.sql",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-12T18:31:31Z",
+      "side": 1,
+      "message": "in the same directory, I don\u0027t think we can have some files with 4-digit sequences and some with 3-digit sequences",
+      "revId": "6ace18c0aaf9a86f366a9947fd113465c1e83e46",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
