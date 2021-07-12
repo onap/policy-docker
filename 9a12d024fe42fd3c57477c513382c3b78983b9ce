@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "91770c16_bb20427e",
+        "filename": "csit/apex-pdp/plans/setup.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2021-07-12T16:08:19Z",
+      "side": 1,
+      "message": "Yes, but I can\u0027t just use ${SIM_IP} in the robot scripts, for that we should pass it as a variable. Otherwise, we have to do something like: ${SIM_IP}\u003d    Get Environment Variable  SIM_IP in the robot file.",
+      "parentUuid": "a3be4131_66daf6bf",
+      "revId": "9a12d024fe42fd3c57477c513382c3b78983b9ce",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9aec7736_d0fdc6f1",
         "filename": "csit/apex-pdp/tests/apex-pdp-test.robot",
         "patchSetId": 4
