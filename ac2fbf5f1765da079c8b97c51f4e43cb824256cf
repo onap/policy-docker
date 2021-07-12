@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b790c854_67212a0a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2021-07-12T11:04:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6925f166_d8f7664a",
+      "revId": "ac2fbf5f1765da079c8b97c51f4e43cb824256cf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2b465f0_a82f54f2",
         "filename": "csit/apex-pdp/tests/apex-pdp-test.robot",
         "patchSetId": 3
@@ -69,6 +87,24 @@
       "revId": "ac2fbf5f1765da079c8b97c51f4e43cb824256cf",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef86a143_ddc45223",
+        "filename": "csit/apex-pdp/tests/apex-pdp-test.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2021-07-12T11:04:44Z",
+      "side": 1,
+      "message": "Sure, my question was about the usage of wait_topic script only.\nJust checking the last one is enough to check if the policy execution was successful. But, at the final stage(i.e., after CDS action) only 1 output is there, which is the final log message.\nOnly in the intermediate steps, multiple outputs are made - for e.g., CDSRequest is made, along with the Log message saying \"Received response from AAI ... Going to make the update-config request to CDS.\"\nSo, to test multiple outputs as well the complete execution, all log messages have to be checked.\n\nDone. Removed the Sleep 2 sec I added earlier. Seems efficient enough on execution.",
+      "parentUuid": "e6931381_e0eef0f9",
+      "revId": "ac2fbf5f1765da079c8b97c51f4e43cb824256cf",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
