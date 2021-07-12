@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aec7736_d0fdc6f1",
+        "filename": "csit/apex-pdp/tests/apex-pdp-test.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-12T12:58:51Z",
+      "side": 1,
+      "message": "if this were added to the wait_topic command line, then wait_topic would automatically skip over any messages that contain something else and would exit with 0 when it finds a match.  I don\u0027t think it\u0027s necessary to check the exit code (though I could be wrong).  Then I believe this entire \"function\" would simply become:\n\n  wait_topic.sh ... ${expectedMsg}",
+      "revId": "9a12d024fe42fd3c57477c513382c3b78983b9ce",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
