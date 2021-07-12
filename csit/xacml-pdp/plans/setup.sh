@@ -39,6 +39,8 @@ POLICY_PDPX_IP=`get-instance-ip.sh policy-xacml-pdp`
 SIM_IP=`get-instance-ip.sh simulator`
 POLICY_PAP_IP=`get-instance-ip.sh policy-pap`
 
+export SIM_IP
+
 echo PDP IP IS ${POLICY_PDPX_IP}
 echo API IP IS ${POLICY_API_IP}
 echo PAP IP IS ${POLICY_PAP_IP}
