@@ -105,6 +105,24 @@
       "revId": "edf09e8264bdeefdcb20d566feee0b54005b775b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da54917c_12436e0d",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/0900/downgrade/0120-JpaPolicyAuditIndex_timestamp.sql",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-13T14:25:18Z",
+      "side": 1,
+      "message": "I\u0027m imagining this scenario:\n\n  script 1:\n    set FK\u003d0\n    drop index 1\n    set FK\u003d1\n\n  script 2:\n    set FK\u003d0\n    drop index 2\n    set FK\u003d1\n\nif dropping index 1 causes a violation, then I would expect it to generate a violation as soon as FK\u003d1 is executed, which happens before script 2 is executed",
+      "parentUuid": "6f72511e_ba0f745e",
+      "revId": "edf09e8264bdeefdcb20d566feee0b54005b775b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
