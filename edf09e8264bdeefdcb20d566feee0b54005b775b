@@ -123,6 +123,24 @@
       "revId": "edf09e8264bdeefdcb20d566feee0b54005b775b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a8789a_401853ac",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/0900/downgrade/0120-JpaPolicyAuditIndex_timestamp.sql",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-13T14:40:44Z",
+      "side": 1,
+      "message": "I\u0027m not sure what\u0027s going on behind the scenes.\nThere isn\u0027t very much documentation on line for this error.\nI think when you run SET FOREIGN_KEY_CHECKS \u003d 0; it disables all foreign keys\nand SET FOREIGN_KEY_CHECKS \u003d 0 re-enables them.\nThe constraint itself is created independently and exist prior to the index.\nI assume when you create the index it creates some kind of binding between the index and constraint.\nWhen the index is removed the constraint exists again independently and is re-enabled without the index.",
+      "parentUuid": "da54917c_12436e0d",
+      "revId": "edf09e8264bdeefdcb20d566feee0b54005b775b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
