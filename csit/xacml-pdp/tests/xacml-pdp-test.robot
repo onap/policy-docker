@@ -54,9 +54,9 @@ GetDefaultDecision
 DeployPolicies
      [Documentation]   Runs Policy PAP to deploy a policy
      ${resp}=  PerformPostRequest  /policy/pap/v1/pdps/policies  null  ${POLICY_PAP_IP}  202  vCPE.policy.input.tosca.deploy.json  ${CURDIR}/data
-     Sleep      5s
      ${result}=     Run Process    ${SCR_DMAAP}/wait_topic.sh    POLICY-PDP-PAP
      ...            responseTo    xacml    ACTIVE    onap.restart.tca
+     Should Be Equal As Integers        ${result.rc}    0
 
 GetStatisticsAfterDeployed
      [Documentation]  Verify policy xacml-pdp statistics after policy is deployed
