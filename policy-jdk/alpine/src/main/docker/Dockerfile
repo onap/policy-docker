@@ -23,19 +23,16 @@
 # $JAVA_HOME is set to /usr/lib/jvm/java-11-openjdk
 # more details at https://hub.docker.com/_/openjdk
 
-FROM onap/integration-java11:9.0.0
+FROM adoptopenjdk/openjdk11:x86_64-alpine-jdk-11.0.11_9
 
 LABEL maintainer="Policy Team"
 
+ENV JAVA_OPTS="-Xms256m -Xmx1g"
+ENV JAVA_SEC_OPTS=""
 ENV POLICY_HOME=/opt/app/policy
 
-USER root
-
-RUN rm -rf /opt/java/openjdk \
-    && mkdir /opt/java/openjdk \
-    && mkdir -p /usr/lib/jvm/ \
-    && ln -s /opt/java/openjdk /usr/lib/jvm/java-11-openjdk \
-    && apk update \
+# Install additional tools
+RUN apk update \
     && apk add --no-cache \
         busybox-extras \
         curl \
@@ -43,7 +40,6 @@ RUN rm -rf /opt/java/openjdk \
         procps \
         unzip \
         zip \
-        openjdk11 \
     && curl --fail --silent --show-error --retry 3 \
             --output /tmp/apache-maven-3.6.3-bin.tar.gz \
             https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz \
@@ -52,6 +48,10 @@ RUN rm -rf /opt/java/openjdk \
     && ln -s /usr/share/apache-maven-3.6.3/bin/mvn /usr/bin/mvn \
     && rm -f /tmp/apache-maven-3.6.3-bin.tar.gz \
     && addgroup -S policy \
-    && adduser -S  --shell /bin/sh -G policy policy \
-    && mkdir -p ${POLICY_HOME}/ \
-    && chown policy:policy ${POLICY_HOME}
+    && adduser -S --shell /bin/sh -G policy policy \
+    && mkdir -p /var/log/onap/policy \
+    && chown policy:policy /var/log/onap/policy \
+    && mkdir -p ${POLICY_HOME} \
+    && chown policy:policy ${POLICY_HOME} \
+    && mkdir -p /usr/lib/jvm/ \
+    && ln -s /opt/java/openjdk /usr/lib/jvm/java-11-openjdk
