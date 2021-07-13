@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66826888_4414b96c",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/0900/downgrade/0120-JpaPolicyAuditIndex_timestamp.sql",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-13T14:09:29Z",
+      "side": 1,
+      "message": "Upgrade script is present: https://gerrit.onap.org/r/c/policy/docker/+/122460/6/policy-db-migrator/src/main/docker/config/policyadmin/sql/0900/upgrade/0120-JpaPolicyAuditIndex_timestamp.sql\nyou may need to hit the \"Show All\" button to see it",
+      "parentUuid": "1a767f21_f0bc9877",
+      "revId": "edf09e8264bdeefdcb20d566feee0b54005b775b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53bdf9c6_3f1a5102",
         "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/0900/downgrade/0120-JpaPolicyAuditIndex_timestamp.sql",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2021-07-13T13:51:29Z",
       "side": 1,
       "message": "probably don\u0027t need to enable/disable this when dropping (or creating) an index",
+      "revId": "edf09e8264bdeefdcb20d566feee0b54005b775b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f72f3c4_5796b719",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/0900/downgrade/0120-JpaPolicyAuditIndex_timestamp.sql",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-13T14:09:29Z",
+      "side": 1,
+      "message": "We only really needs this when there is an index on a foreign key.\nIf it\u0027s not there you\u0027ll see any error like:\ndrools-db-migration    | ERROR 1553 (HY000) at line 22: Cannot drop index \u0027TscaServiceTemplatetopologyTemplateParentLocalName\u0027: needed in a foreign key constraint\ndrools-db-migration    | DROP INDEX TscaServiceTemplatetopologyTemplateParentLocalName ON toscaservicetemplate\nI thought it would be easier to include it for all indexes.",
+      "parentUuid": "53bdf9c6_3f1a5102",
       "revId": "edf09e8264bdeefdcb20d566feee0b54005b775b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e827768_12f5821f",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/honolulu/0800/downgrade/100-jpapdpgroup_properties.sql",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-13T14:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d785c9fa_19af1845",
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4895e8d9_423c42ff",
         "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/honolulu/0800/downgrade/990-FK_ToscaServiceTemplate_nodeTypesName.sql",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13cad634_c5f410bd",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/honolulu/0800/downgrade/990-FK_ToscaServiceTemplate_nodeTypesName.sql",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-13T14:09:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4895e8d9_423c42ff",
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -68,6 +104,30 @@
         "id": 811
       },
       "writtenOn": "2021-07-12T18:31:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c09dbb37_3f3c3db7",
+      "range": {
+        "startLine": 173,
+        "startChar": 38,
+        "endLine": 173,
+        "endChar": 74
+      },
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2fadc0c_4ec04cf2",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-13T14:09:29Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "c09dbb37_3f3c3db7",
@@ -177,6 +237,54 @@
     },
     {
       "key": {
+        "uuid": "c2d2fbf9_e0a1dbd6",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-13T14:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75018dcf_ab9fe50d",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 340,
+        "endChar": 1
+      },
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dbb1f382_b739862f",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-13T14:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86c15053_d707814b",
+      "range": {
+        "startLine": 340,
+        "startChar": 38,
+        "endLine": 340,
+        "endChar": 41
+      },
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e8bdbb3_508a6289",
         "filename": "policy-db-migrator/src/main/docker/db-migrator",
         "patchSetId": 4
@@ -271,6 +379,78 @@
     },
     {
       "key": {
+        "uuid": "9034f41a_cf3aee57",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 4
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-13T14:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d506ccb_aa0902a5",
+      "range": {
+        "startLine": 380,
+        "startChar": 38,
+        "endLine": 380,
+        "endChar": 41
+      },
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e04dac4_1bdbe416",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 4
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-13T14:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e8bdbb3_508a6289",
+      "range": {
+        "startLine": 380,
+        "startChar": 0,
+        "endLine": 380,
+        "endChar": 1
+      },
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01a8d296_f5f15ab6",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 4
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-13T14:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d506ccb_aa0902a5",
+      "range": {
+        "startLine": 380,
+        "startChar": 38,
+        "endLine": 380,
+        "endChar": 41
+      },
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ece27d3_22ee2a85",
         "filename": "policy-db-migrator/src/main/docker/prepare_downgrade.sh",
         "patchSetId": 4
@@ -303,6 +483,30 @@
         "id": 811
       },
       "writtenOn": "2021-07-12T18:31:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ece27d3_22ee2a85",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 75
+      },
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf1a06eb_6104be1b",
+        "filename": "policy-db-migrator/src/main/docker/prepare_downgrade.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-13T14:09:29Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "5ece27d3_22ee2a85",
@@ -353,6 +557,24 @@
     },
     {
       "key": {
+        "uuid": "b8cbeb62_42c36728",
+        "filename": "policy-db-migrator/src/main/docker/prepare_downgrade.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-13T14:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87bc332e_f633261e",
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6087919_2f4bea46",
         "filename": "policy-db-migrator/src/main/docker/prepare_downgrade.sh",
         "patchSetId": 4
@@ -388,6 +610,24 @@
     },
     {
       "key": {
+        "uuid": "8f33147c_a00f00af",
+        "filename": "policy-db-migrator/src/main/docker/prepare_downgrade.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-13T14:09:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6087919_2f4bea46",
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59e20b3e_eb7fb807",
         "filename": "policy-db-migrator/src/main/docker/prepare_upgrade.sh",
         "patchSetId": 4
@@ -402,6 +642,24 @@
       "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892ed7b7_4b574acf",
+        "filename": "policy-db-migrator/src/main/docker/prepare_upgrade.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-13T14:09:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "59e20b3e_eb7fb807",
+      "revId": "6a88fb15f3407ae821e13245ca51e1b1b831c8a8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
