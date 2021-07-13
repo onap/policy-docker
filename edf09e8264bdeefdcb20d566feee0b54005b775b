@@ -87,6 +87,24 @@
       "revId": "edf09e8264bdeefdcb20d566feee0b54005b775b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f72511e_ba0f745e",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/0900/downgrade/0120-JpaPolicyAuditIndex_timestamp.sql",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-13T14:20:27Z",
+      "side": 1,
+      "message": "No it doesn\u0027t.\nThe script will run to the end and all indexes, constraints and tables are dropped.\nWithout it the script fails on the first downgrade script because they are run in reverse order.",
+      "parentUuid": "97afe808_d2d9f7d5",
+      "revId": "edf09e8264bdeefdcb20d566feee0b54005b775b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
