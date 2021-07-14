@@ -23,7 +23,7 @@
 # $JAVA_HOME is set to /usr/lib/jvm/java-11-openjdk
 # more details at https://hub.docker.com/_/openjdk
 
-FROM onap/integration-java11:9.0.0
+FROM onap/integration-python:9.1.0
 
 LABEL maintainer="Policy Team"
 
@@ -32,7 +32,7 @@ ENV POLICY_HOME=/opt/app/policy
 USER root
 
 RUN rm -rf /opt/java/openjdk \
-    && mkdir /opt/java/openjdk \
+    && mkdir -p /opt/java/openjdk \
     && mkdir -p /usr/lib/jvm/ \
     && ln -s /opt/java/openjdk /usr/lib/jvm/java-11-openjdk \
     && apk update \
