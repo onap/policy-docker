@@ -58,6 +58,7 @@ METADATA_DB=migration
 METADATA_TABLE=${METADATA_DB}.db_metadata_versions
 MIGRATION_DIR=${POLICY_HOME}/etc/db/migration
 ZERO_VERSION="0"
+BASE_VERSION="0800"
 UPGRADE_SQL_SUFFIX=".upgrade.sql"
 DOWNGRADE_SQL_SUFFIX=".downgrade.sql"
 
@@ -95,6 +96,29 @@ function usage() {
     echo -e "\t ok: is the migration status valid"
     echo
     echo
+}
+
+#####################################################
+# current_schema
+#####################################################
+
+function current_schema
+{
+    if [ "${DEBUG}" = "y" ]; then
+        echo "-- current_schema --"
+        set -x
+    fi
+
+    local rc
+    local query="SELECT count(table_name) from information_schema.tables where table_schema='${SCHEMA}'"
+
+    TABLES_IN_SCHEMA=$(${MYSQL} --skip-column-names --silent --execute "${query}")
+    if [ ${TABLES_IN_SCHEMA} -gt 0 ] && [ ${BASE_VERSION} \> ${CURRENT_RELEASE} ]; then
+        set_current_release "${BASE_VERSION}"
+        return $?
+    fi
+
+    return 0
 }
 
 #####################################################
@@ -139,10 +163,10 @@ function ensure_metadata_schema
     local sql rc
 
     sql="CREATE TABLE IF NOT EXISTS ${METADATA_HISTORY} "
-    sql=${sql}"(script VARCHAR(80) NOT NULL, "
-    sql=${sql}"operation VARCHAR(10), from_version VARCHAR(20), to_version VARCHAR(20), success VARCHAR(1), "
-    sql=${sql}"atTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, "
-    sql=${sql}"PRIMARY KEY(to_version, script, operation));"
+    sql=${sql}"(ID bigint(20) unsigned NOT NULL AUTO_INCREMENT, script VARCHAR(80) NOT NULL, "
+    sql=${sql}"operation VARCHAR(10), from_version VARCHAR(20), to_version VARCHAR(20), tag VARCHAR(20), "
+    sql=${sql}"success VARCHAR(1), atTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, "
+    sql=${sql}"PRIMARY KEY(ID));"
     ${MYSQL} --execute "${sql}"
     rc=$?
     if [ ${rc} -ne 0 ]; then
@@ -271,6 +295,35 @@ function current_release
 }
 
 #####################################################
+# previous_release
+#####################################################
+
+function previous_release
+{
+    if [ "${DEBUG}" = "y" ]; then
+        echo "-- previous_release --"
+        set -x
+    fi
+    local current_release="${1}"
+    local current_release_int_val previous_release_int_val previous_release
+
+    if [ $current_release == $ZERO_VERSION ] || [ $current_release == $BASE_VERSION ]; then
+         PREVIOUS_RELEASE=$ZERO_VERSION
+    else
+         current_release_int_val=$(echo $current_release  | awk '{$0=int($0)}1')
+         let previous_release_int_val=$current_release_int_val-100
+         if [ $previous_release_int_val -lt 1000 ]; then
+                 previous_release="0"$previous_release_int_val
+         else
+                 previous_release=$previous_release_int_val
+         fi
+         PREVIOUS_RELEASE=$previous_release
+    fi
+
+    return 0
+}
+
+#####################################################
 # execute sql script history
 #####################################################
 
@@ -281,15 +334,13 @@ function track_script
         set -x
     fi
 
-    local script="${1}" operation="${2}" success="${3}" to_version="${4}"
+    local script="${1}" operation="${2}" success="${3}" from_version="${4}" to_version="${5}" tag="${6}"
     if [ $operation == "downgrade" ]; then
        to_version=${TARGET_DOWNGRADE_RELEASE}
     fi
-    from_version=${CURRENT_RELEASE}
-    local sql="INSERT INTO ${METADATA_HISTORY}(script,operation,from_version,to_version,success,atTime) "
-    sql=${sql}"VALUES ('${script}','${operation}','${from_version}','${to_version}','${success}',now()) "
-    sql=${sql}"ON DUPLICATE KEY UPDATE operation=values(operation),from_version=values(from_version),"
-    sql=${sql}"success=values(success), atTime=values(atTime);"
+
+    local sql="INSERT INTO ${METADATA_HISTORY}(script,operation,from_version,to_version,tag,success,atTime) "
+    sql=${sql}"VALUES ('${script}','${operation}','${from_version}','${to_version}','${tag}','${success}',now()) "
 
     ${MYSQL} --execute "${sql}"
     return $?
@@ -307,7 +358,7 @@ function run_script
         set -x
     fi
 
-    local operation="${1}" script="${2}" scriptPath="${3}" schemaVersion="${4}"
+    local operation="${1}" script="${2}" scriptPath="${3}" fromVersion="${4}" toVersion="${5}" tag="${6}"
 
     echo
     echo "> ${operation} ${script}"
@@ -320,7 +371,7 @@ function run_script
         success="1"
     fi
 
-    track_script "${script}" "${operation}" "${success}" "${schemaVersion}"
+    track_script "${script}" "${operation}" "${success}" "${fromVersion}" "${toVersion}" "${tag}"
 
     return ${rc}
 }
@@ -336,9 +387,8 @@ function upgrade
         set -x
     fi
 
-    local sqlName sqlFile schemaVersion upgradeSqls rc
-
-    ${MYSQL} --execute "USE ${SCHEMA_DB}"
+    local sqlName sqlFile schemaVersion upgradeSqls rc tagDate tag
+    tagDate=$(date +%d%m%y%H%M%S)
 
     echo "upgrade: ${CURRENT_RELEASE} -> ${TARGET_UPGRADE_RELEASE}"
 
@@ -347,13 +397,16 @@ function upgrade
         for sqlFile in ${upgradeSqls}; do
             sqlName=$(basename "${sqlFile}")
             schemaVersion="$(basename $(dirname $(dirname $sqlFile)))"
+            previous_release $schemaVersion
             if [ "${schemaVersion}" -gt "${CURRENT_RELEASE}" ] && \
                 [ "${schemaVersion}" -le "${TARGET_UPGRADE_RELEASE}" ]; then
-                run_script "upgrade" "${sqlName}" "${sqlFile}" "${schemaVersion}"
+                tag=${tagDate}"${schemaVersion}u"
+                run_script "upgrade" "${sqlName}" "${sqlFile}" "${PREVIOUS_RELEASE}" "${schemaVersion}" "${tag}"
                 rc=$?
                 if [ ${rc} -ne 0 ]; then
                     echo "${SCHEMA}: upgrade aborted at ${schemaVersion} by script ${sqlName}"
                     set_current_release "${schemaVersion}"
+                    rollback "${PREVIOUS_RELEASE}" "${schemaVersion}" "${tag}"
                     return ${rc}
                 fi
             fi
@@ -376,9 +429,8 @@ function downgrade
         set -x
     fi
 
-    local sqlName sqlFile schemaVersion downgradeSqls rc
-
-    ${MYSQL} --execute "USE ${SCHEMA_DB}"
+    local sqlName sqlFile schemaVersion downgradeSqls rc tagDate tag
+    tagDate=$(date +%d%m%y%H%M%S)
 
     echo "downgrade: ${CURRENT_RELEASE} -> ${TARGET_DOWNGRADE_RELEASE}"
 
@@ -389,10 +441,59 @@ function downgrade
             schemaVersion="$(basename $(dirname $(dirname $sqlFile)))"
             if [ "${schemaVersion}" -le "${CURRENT_RELEASE}" ] && \
                 [ "${schemaVersion}" -gt "${TARGET_DOWNGRADE_RELEASE}" ]; then
-                run_script "downgrade" "${sqlName}" "${sqlFile}" "${schemaVersion}"
+                tag=${tagDate}"${schemaVersion}d"
+                run_script "downgrade" "${sqlName}" "${sqlFile}" "${schemaVersion}" "${PREVIOUS_RELEASE}" ${tag}
                 rc=$?
                 if [ ${rc} -ne 0 ]; then
                     echo "${SCHEMA}: downgrade aborted at ${schemaVersion} by script ${sqlName}"
+                    set_current_release "${schemaVersion}"
+                    return ${rc}
+                fi
+            fi
+        done
+
+        set_current_release "${TARGET_DOWNGRADE_RELEASE}"
+    fi
+
+    return 0
+}
+
+#####################################################
+# rollback
+#####################################################
+
+function rollback
+{
+    if [ "${DEBUG}" = "y" ]; then
+        echo "-- rollback --"
+        set -x
+    fi
+
+    local from_version="${1}" to_version="${2}" rollbackTag="${3}"
+    local query sqlName sqlFile schemaVersion rollbackSqls rc tagDate tag
+    tagDate=$(date +%d%m%y%H%M%S)
+
+    query="SELECT script FROM "
+    query=${query}"${METADATA_HISTORY} WHERE tag='${rollbackTag}' AND success=1 "
+    query=${query}"order by id desc"
+
+    rollbackSqls=$(${MYSQL} --skip-column-names --silent --execute "${query}")
+
+    TARGET_DOWNGRADE_RELEASE=${from_version}
+
+    echo "rollback: ${CURRENT_RELEASE} -> ${TARGET_DOWNGRADE_RELEASE}"
+
+    if [ ${CURRENT_RELEASE} \> ${TARGET_DOWNGRADE_RELEASE} ]; then
+        for sqlName in ${rollbackSqls}; do
+     sqlFile=$(ls "${DOWNGRADE_DIR}"/*/rollback/${sqlName} 2> /dev/null)
+            schemaVersion="$(basename $(dirname $(dirname $sqlFile)))"
+            if [ "${schemaVersion}" -le "${CURRENT_RELEASE}" ] && \
+                [ "${schemaVersion}" -gt "${TARGET_DOWNGRADE_RELEASE}" ]; then
+                tag=${tagDate}"${schemaVersion}r"
+                run_script "rollback" "${sqlName}" "${sqlFile}" "${schemaVersion}" "${TARGET_DOWNGRADE_RELEASE}" "${tag}"
+                rc=$?
+                if [ ${rc} -ne 0 ]; then
+                    echo "${SCHEMA}: rollback aborted at ${schemaVersion} by script ${sqlName}"
                     set_current_release "${schemaVersion}"
                     return ${rc}
                 fi
@@ -440,7 +541,7 @@ function report
     local versionSql="SELECT * FROM ${METADATA_TABLE} WHERE name='${SCHEMA}';"
     ${MYSQL} --execute "${versionSql}"
 
-    local historySql="SELECT * FROM ${METADATA_HISTORY} ORDER BY atTime ASC;"
+    local historySql="SELECT * FROM ${METADATA_HISTORY} ORDER BY id, atTime ASC;"
     ${MYSQL} --execute "${historySql}"
 
     okay
@@ -493,7 +594,7 @@ until [ -z "$1" ]; do
              INPUT_TARGET_RELEASE=$1
              ;;
         -f|--from)      shift
-             INPUT_CURRENT_RELEASE=$1
+             INPUT_FROM_RELEASE=$1
              ;;
         -o|--operation) shift
              OPERATION=$1
@@ -561,7 +662,6 @@ for dbPath in ${SCHEMA_S}; do
     DOWNGRADE_DIR=${UPGRADE_DIR}
     METADATA_HISTORY="${METADATA_DB}.\`${SCHEMA}_change_history\`"
     TARGET_RELEASE=${INPUT_TARGET_RELEASE}
-    CURRENT_RELEASE=${INPUT_CURRENT_RELEASE}
 
     if is_upgrade && is_downgrade; then
         echo "${SCHEMA}: failure: invalid configuration: ${UPGRADE_SQL_SUFFIX} and "\
@@ -600,6 +700,18 @@ for dbPath in ${SCHEMA_S}; do
         if ! set_current_release "${CURRENT_RELEASE}"; then
             echo "${SCHEMA}: failure: cannot set current release"
             continue
+        fi
+    fi
+
+    # Check if the schema has already been installed
+    current_schema
+
+    if [ -n "${INPUT_FROM_RELEASE}" ]; then
+        if [ "${CURRENT_RELEASE}" \> "${INPUT_FROM_RELEASE}" ] || [ "${CURRENT_RELEASE}" \< "${INPUT_FROM_RELEASE}" ]; then
+            echo "${SCHEMA}: On version ${CURRENT_RELEASE} cannot ${OPERATION} from ${INPUT_FROM_RELEASE}"
+            continue
+        else
+                    CURRENT_RELEASE=${INPUT_FROM_RELEASE}
         fi
     fi
 

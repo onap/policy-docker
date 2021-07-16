@@ -33,8 +33,13 @@ mkdir -p $POLICY_HOME/etc/db/migration/${SCHEMA}/sql/
 # Remove any files from previous operations
 rm -rf $POLICY_HOME/etc/db/migration/${SCHEMA}/sql/* 2>/dev/null
 # Copy files to upgrade directories
-cd /home/policy/sql && find . -type f  -not -path '*/downgrade/*' -not -path '*/downgrade'  -print0  \
+cd /home/policy/sql && find . -type f  -print0  \
    | cpio --null -pud $POLICY_HOME/etc/db/migration/${SCHEMA}/sql/
+
+for dir in `find /opt/app/policy/etc/db/migration/policyadmin/sql/*/downgrade -type d`; do
+        parentDir=$(dirname $dir)
+        mv $parentDir/downgrade $parentDir/rollback
+done
 
 releases=$(find $POLICY_HOME/etc/db/migration/${SCHEMA}/sql/*/upgrade -type d | sort -u | rev | cut -f2 -d/ | rev)
 for release in $releases
