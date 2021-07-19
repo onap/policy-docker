@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d12275ca_0fd94da8",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2021-07-19T21:30:32Z",
+      "side": 1,
+      "message": "pass SCHEMA as a $1 function parameter or is it global ?  probably better to pass it as a parameter if it is not assigned.",
+      "revId": "416cea5a23a80374da04e86c141fa1f73599ab3b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8e9ec5_50ee1594",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2021-07-19T21:30:32Z",
+      "side": 1,
+      "message": "probably better to surround vars with \"\" ?",
+      "revId": "416cea5a23a80374da04e86c141fa1f73599ab3b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de40580a_da8afef1",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 2
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2021-07-19T21:30:32Z",
+      "side": 1,
+      "message": "align code for else",
+      "revId": "416cea5a23a80374da04e86c141fa1f73599ab3b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
