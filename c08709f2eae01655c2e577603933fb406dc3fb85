@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ab312c8_f7b0645a",
+        "filename": "csit/config/db/db.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-19T18:44:07Z",
+      "side": 1,
+      "message": "are any of these still needed?  is \"controlloop\" still needed?  I assume \"migration\" is for DB-migration within drools-pdp.",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "c08709f2eae01655c2e577603933fb406dc3fb85",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
