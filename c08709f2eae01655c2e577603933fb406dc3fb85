@@ -22,6 +22,30 @@
       "revId": "c08709f2eae01655c2e577603933fb406dc3fb85",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2eb5a27_96e90d85",
+        "filename": "csit/config/db/db.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2021-07-19T18:56:32Z",
+      "side": 1,
+      "message": "I think they can be deleted Jim, probably we should do it too in the oom side as well, if you don\u0027t mind to patch the in progress review.",
+      "parentUuid": "4ab312c8_f7b0645a",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "c08709f2eae01655c2e577603933fb406dc3fb85",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
