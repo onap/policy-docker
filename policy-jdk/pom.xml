@@ -1,7 +1,7 @@
 <!--
   ============LICENSE_START=======================================================
    Copyright (C) 2019 Ericsson, Tieto. All rights reserved.
-   Modifications Copyright (C) 2020 AT&T Intellectual Property. All rights reserved.
+   Modifications Copyright (C) 2020-2021 AT&T Intellectual Property. All rights reserved.
   ================================================================================
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -38,8 +38,6 @@
         <docker.skip>false</docker.skip>
         <docker.skip.build>false</docker.skip.build>
         <docker.skip.push>false</docker.skip.push>
-        <docker.pull.registry>docker.io</docker.pull.registry>
-        <docker.push.registry>docker.io</docker.push.registry>
         <docker.build.version>${project.version}</docker.build.version>
         <maven.build.timestamp.format>yyyyMMdd'T'HHmm</maven.build.timestamp.format>
     </properties>
