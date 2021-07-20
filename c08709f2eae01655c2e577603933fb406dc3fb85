@@ -46,6 +46,30 @@
       "revId": "c08709f2eae01655c2e577603933fb406dc3fb85",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9778a71e_a62e81de",
+        "filename": "csit/config/db/db.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-20T14:01:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b2eb5a27_96e90d85",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "c08709f2eae01655c2e577603933fb406dc3fb85",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
