@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4edd897a_1fb01b79",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 3
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-20T14:48:27Z",
+      "side": 1,
+      "message": "Yes that is correct.\nIf you only want it to execute some of the scripts then you will have to manually delete the ones you don\u0027t want prior to running db-migrator",
+      "parentUuid": "aca647e7_c0399c3c",
+      "revId": "939ccae374e93cbc204eaf3f47150c27107e6e6b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6920d31e_914773f9",
         "filename": "policy-db-migrator/src/main/docker/db-migrator",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2021-07-20T14:33:17Z",
       "side": 1,
       "message": "what if we previously stopped in the middle of an upgrade (or downgrade)?  this appears to execute all scripts, when it should only execute some of them",
+      "revId": "939ccae374e93cbc204eaf3f47150c27107e6e6b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2dd5b0_320dd244",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 3
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-20T14:48:27Z",
+      "side": 1,
+      "message": "Yes, same as above.\nIt will try to run all the script present in the directory.",
+      "parentUuid": "6920d31e_914773f9",
       "revId": "939ccae374e93cbc204eaf3f47150c27107e6e6b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "a48c443a_17f0e696",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 3
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-20T14:48:27Z",
+      "side": 1,
+      "message": "Yes this is a good point.\nWe don\u0027t really need to take in this \"from\" parameter as you can only really upgrade or downgrade from the current release.",
+      "parentUuid": "c43d8406_89a1a4fb",
+      "range": {
+        "startLine": 661,
+        "startChar": 11,
+        "endLine": 661,
+        "endChar": 117
+      },
+      "revId": "939ccae374e93cbc204eaf3f47150c27107e6e6b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edcf6cdd_eb5d7cd1",
         "filename": "policy-db-migrator/src/main/docker/db-migrator",
         "patchSetId": 3
@@ -70,6 +130,24 @@
       "writtenOn": "2021-07-20T14:33:17Z",
       "side": 1,
       "message": "seems redundant, as it appears we can only get here if these two are already equal",
+      "revId": "939ccae374e93cbc204eaf3f47150c27107e6e6b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe83b02_1ba65cfd",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 3
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-20T14:48:27Z",
+      "side": 1,
+      "message": "Same as above.\nI left it in to be consistent with the original.",
+      "parentUuid": "edcf6cdd_eb5d7cd1",
       "revId": "939ccae374e93cbc204eaf3f47150c27107e6e6b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
