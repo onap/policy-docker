@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "10f087e6_4e399f87",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-20T08:00:20Z",
+      "side": 1,
+      "message": "SCHEMA is global, it\u0027s not passed in as a parameter to any of the functions",
+      "parentUuid": "d12275ca_0fd94da8",
+      "revId": "416cea5a23a80374da04e86c141fa1f73599ab3b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae8e9ec5_50ee1594",
         "filename": "policy-db-migrator/src/main/docker/db-migrator",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2450dc39_be0626ab",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-20T08:00:20Z",
+      "side": 1,
+      "message": "I surrounded ${BASE_VERSION} and ${CURRENT_RELEASE} with double quotes.\nI left ${TABLES_IN_SCHEMA} as it is because it\u0027s a number",
+      "parentUuid": "ae8e9ec5_50ee1594",
+      "revId": "416cea5a23a80374da04e86c141fa1f73599ab3b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de40580a_da8afef1",
         "filename": "policy-db-migrator/src/main/docker/db-migrator",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "416cea5a23a80374da04e86c141fa1f73599ab3b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fef76fa_55b11892",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 2
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-20T08:00:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de40580a_da8afef1",
+      "revId": "416cea5a23a80374da04e86c141fa1f73599ab3b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
