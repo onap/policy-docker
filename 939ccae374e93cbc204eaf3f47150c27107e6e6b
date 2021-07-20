@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f8fec351_3f6ea070",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 3
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-20T15:14:11Z",
+      "side": 1,
+      "message": "hmm.  I thought the main reason for tracking the execution of the individual scripts in the DB was so that we knew exactly where to begin if we do an upgrade/downgrade: so it would be able to resume from there.\n\nIf there are 10 upgrade scripts and it ran seven of them, then:\n- if I request an upgrade, it should resume with the remaining three scripts, knowing that the previous seven had already been completed\n- OTOH, if I request a downgrade (i.e., rollback), then it should execute the downgrade scripts associated with the seven upgrade scripts that it had already completed, in reverse order",
+      "parentUuid": "4edd897a_1fb01b79",
+      "revId": "939ccae374e93cbc204eaf3f47150c27107e6e6b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6920d31e_914773f9",
         "filename": "policy-db-migrator/src/main/docker/db-migrator",
         "patchSetId": 3
@@ -119,6 +137,30 @@
     },
     {
       "key": {
+        "uuid": "fa28183a_03621001",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 3
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-20T15:14:11Z",
+      "side": 1,
+      "message": "I\u0027m ok with removing it",
+      "parentUuid": "a48c443a_17f0e696",
+      "range": {
+        "startLine": 661,
+        "startChar": 11,
+        "endLine": 661,
+        "endChar": 117
+      },
+      "revId": "939ccae374e93cbc204eaf3f47150c27107e6e6b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edcf6cdd_eb5d7cd1",
         "filename": "policy-db-migrator/src/main/docker/db-migrator",
         "patchSetId": 3
@@ -148,6 +190,24 @@
       "side": 1,
       "message": "Same as above.\nI left it in to be consistent with the original.",
       "parentUuid": "edcf6cdd_eb5d7cd1",
+      "revId": "939ccae374e93cbc204eaf3f47150c27107e6e6b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236c033e_4d6b3637",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 3
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-20T15:14:11Z",
+      "side": 1,
+      "message": "let\u0027s remove it",
+      "parentUuid": "cfe83b02_1ba65cfd",
       "revId": "939ccae374e93cbc204eaf3f47150c27107e6e6b",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
