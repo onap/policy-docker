@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad69356_843e93cc",
+        "filename": "policy-jdk/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-20T14:04:59Z",
+      "side": 0,
+      "message": "switching to nexus3 for the registry - should be OK, since it\u0027s pulling from onap base images instead of alpine base images",
+      "revId": "614af0ea4b6aa450726b491444d1ef52070ca52d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
