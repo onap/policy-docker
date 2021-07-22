@@ -17,8 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-SET FOREIGN_KEY_CHECKS = 0;
-
-DROP INDEX FK_ToscaNodeTemplate_capabilitiesName ON toscanodetemplate;
-
-SET FOREIGN_KEY_CHECKS = 1;
+ALTER TABLE toscaservicetemplate ADD CONSTRAINT FK_ToscaServiceTemplate_dataTypesName FOREIGN KEY (dataTypesName, dataTypesVersion) REFERENCES toscadatatypes (name, version) ON UPDATE RESTRICT ON DELETE RESTRICT;

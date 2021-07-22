@@ -17,8 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-SET FOREIGN_KEY_CHECKS = 0;
-
 DROP INDEX JpaPolicyAuditIndex_timestamp ON jpapolicyaudit;
-
-SET FOREIGN_KEY_CHECKS = 1;

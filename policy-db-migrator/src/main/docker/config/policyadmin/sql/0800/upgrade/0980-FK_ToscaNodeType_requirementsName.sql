@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE toscaservicetemplate ADD CONSTRAINT TscaServiceTemplatetopologyTemplateParentLocalName FOREIGN KEY (topologyTemplateParentLocalName, topologyTemplateLocalName, topologyTemplateParentKeyVersion, topologyTemplateParentKeyName) REFERENCES toscatopologytemplate (parentLocalName, localName, parentKeyVersion, parentKeyName) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE toscanodetype ADD CONSTRAINT FK_ToscaNodeType_requirementsName FOREIGN KEY (requirementsName, requirementsVersion) REFERENCES toscarequirements (name, version) ON UPDATE RESTRICT ON DELETE RESTRICT;

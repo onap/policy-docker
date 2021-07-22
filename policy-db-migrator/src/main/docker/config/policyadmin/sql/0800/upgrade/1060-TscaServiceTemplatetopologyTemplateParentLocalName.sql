@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE INDEX TscaServiceTemplatetopologyTemplateParentLocalName ON toscaservicetemplate(topologyTemplateParentLocalName, topologyTemplateLocalName, topologyTemplateParentKeyVersion, topologyTemplateParentKeyName);
+ALTER TABLE toscaservicetemplate ADD CONSTRAINT TscaServiceTemplatetopologyTemplateParentLocalName FOREIGN KEY (topologyTemplateParentLocalName, topologyTemplateLocalName, topologyTemplateParentKeyVersion, topologyTemplateParentKeyName) REFERENCES toscatopologytemplate (parentLocalName, localName, parentKeyVersion, parentKeyName) ON UPDATE RESTRICT ON DELETE RESTRICT;

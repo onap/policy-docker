@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE toscatopologytemplate DROP CONSTRAINT FK_ToscaTopologyTemplate_nodeTemplatesName;
+DROP INDEX FK_ToscaTopologyTemplate_nodeTemplatesName ON toscatopologytemplate;

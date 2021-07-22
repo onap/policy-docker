@@ -17,8 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-SET FOREIGN_KEY_CHECKS = 0;
-
-DROP INDEX TscaServiceTemplatetopologyTemplateParentLocalName ON toscaservicetemplate;
-
-SET FOREIGN_KEY_CHECKS = 1;
+ALTER TABLE toscaservicetemplate DROP CONSTRAINT TscaServiceTemplatetopologyTemplateParentLocalName;

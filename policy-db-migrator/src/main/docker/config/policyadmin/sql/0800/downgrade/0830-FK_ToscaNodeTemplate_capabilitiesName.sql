@@ -1,4 +1,4 @@
-/*
+ /*
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2021 Nordix Foundation
  *  ================================================================================
@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE toscanodetemplate DROP CONSTRAINT FK_ToscaNodeTemplate_capabilitiesName;
+DROP INDEX FK_ToscaNodeTemplate_capabilitiesName ON toscanodetemplate;
