@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5c0205_d53bb4f1",
+        "filename": "csit/config/distribution/defaultConfig.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-22T14:12:24Z",
+      "side": 1,
+      "message": "this isn\u0027t needed - distribution will hard-code it",
+      "revId": "394f7ac8e88f18eeea121bde1f969f2027d84605",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c05d6c6c_b7f93fe5",
+        "filename": "csit/config/distribution/defaultConfig.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-22T14:12:24Z",
+      "side": 1,
+      "message": "same comment",
+      "revId": "394f7ac8e88f18eeea121bde1f969f2027d84605",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
