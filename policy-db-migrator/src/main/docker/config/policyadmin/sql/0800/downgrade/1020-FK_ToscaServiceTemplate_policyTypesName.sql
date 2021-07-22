@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE toscaservicetemplate DROP CONSTRAINT TscaServiceTemplatetopologyTemplateParentLocalName;
+ALTER TABLE toscaservicetemplate DROP CONSTRAINT FK_ToscaServiceTemplate_policyTypesName;

@@ -17,8 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-SET FOREIGN_KEY_CHECKS = 0;
-
-DROP INDEX FK_ToscaTopologyTemplate_policyName ON toscatopologytemplate;
-
-SET FOREIGN_KEY_CHECKS = 1;
+ALTER TABLE toscanodetemplate ADD CONSTRAINT FK_ToscaNodeTemplate_capabilitiesName FOREIGN KEY (capabilitiesName, capabilitiesVersion) REFERENCES toscacapabilityassignments (name, version) ON UPDATE RESTRICT ON DELETE RESTRICT;

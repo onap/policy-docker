@@ -17,8 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-SET FOREIGN_KEY_CHECKS = 0;
-
-DROP INDEX FK_ToscaTopologyTemplate_nodeTemplatesName ON toscatopologytemplate;
-
-SET FOREIGN_KEY_CHECKS = 1;
+DROP INDEX IDX_TSIDX1 ON pdpstatistics;

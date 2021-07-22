@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE INDEX FK_ToscaServiceTemplate_policyTypesName ON toscaservicetemplate(policyTypesName, policyTypesVersion);
+DROP INDEX PdpPolicyStatus_PdpGroup ON pdppolicystatus;
