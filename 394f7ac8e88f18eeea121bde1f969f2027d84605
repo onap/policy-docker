@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0508f917_af58ca6f",
+        "filename": "csit/config/distribution/defaultConfig.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-22T14:49:35Z",
+      "side": 1,
+      "message": "actually, that change I made should be completely redone - I\u0027m going to revert it, so we can abandon this review",
+      "parentUuid": "7d48de4e_452973e5",
+      "revId": "394f7ac8e88f18eeea121bde1f969f2027d84605",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c05d6c6c_b7f93fe5",
         "filename": "csit/config/distribution/defaultConfig.json",
         "patchSetId": 1
