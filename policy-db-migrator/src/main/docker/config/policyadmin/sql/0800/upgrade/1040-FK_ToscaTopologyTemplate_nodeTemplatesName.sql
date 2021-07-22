@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE INDEX FK_ToscaTopologyTemplate_nodeTemplatesName ON toscatopologytemplate(nodeTemplatesName, nodeTemplatessVersion);
+ALTER TABLE toscatopologytemplate ADD CONSTRAINT FK_ToscaTopologyTemplate_nodeTemplatesName FOREIGN KEY (nodeTemplatesName, nodeTemplatessVersion) REFERENCES toscanodetemplates (name, version) ON UPDATE RESTRICT ON DELETE RESTRICT;

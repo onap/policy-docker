@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE toscanodetype ADD CONSTRAINT FK_ToscaNodeType_requirementsName FOREIGN KEY (requirementsName, requirementsVersion) REFERENCES toscarequirements (name, version) ON UPDATE RESTRICT ON DELETE RESTRICT;
+CREATE INDEX FK_ToscaNodeType_requirementsName ON toscanodetype(requirementsName, requirementsVersion);

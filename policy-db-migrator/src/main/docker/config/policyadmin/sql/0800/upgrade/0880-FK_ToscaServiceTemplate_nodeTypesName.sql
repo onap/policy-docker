@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE toscaservicetemplate ADD CONSTRAINT FK_ToscaServiceTemplate_nodeTypesName FOREIGN KEY (nodeTypesName, nodeTypesVersion) REFERENCES toscanodetypes (name, version) ON UPDATE RESTRICT ON DELETE RESTRICT;
+CREATE INDEX FK_ToscaServiceTemplate_nodeTypesName ON toscaservicetemplate(nodeTypesName, nodeTypesVersion);

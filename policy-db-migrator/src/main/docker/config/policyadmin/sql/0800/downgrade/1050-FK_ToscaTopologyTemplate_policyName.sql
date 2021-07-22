@@ -17,8 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-SET FOREIGN_KEY_CHECKS = 0;
-
-DROP INDEX FK_ToscaServiceTemplate_relationshipTypesName ON toscaservicetemplate;
-
-SET FOREIGN_KEY_CHECKS = 1;
+ALTER TABLE toscatopologytemplate DROP CONSTRAINT FK_ToscaTopologyTemplate_policyName;

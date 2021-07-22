@@ -17,8 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-SET FOREIGN_KEY_CHECKS = 0;
-
-DROP INDEX FK_ToscaNodeTemplate_requirementsName ON toscanodetemplate;
-
-SET FOREIGN_KEY_CHECKS = 1;
+ALTER TABLE toscanodetemplate DROP CONSTRAINT FK_ToscaNodeTemplate_capabilitiesName;
