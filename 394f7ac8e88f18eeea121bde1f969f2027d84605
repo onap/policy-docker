@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7d48de4e_452973e5",
+        "filename": "csit/config/distribution/defaultConfig.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-22T14:33:00Z",
+      "side": 1,
+      "message": "hmm.  that\u0027s a bug in the change I made.  forgot that the validation code runs BEFORE the code that sets those values 😞  Guess you should leave it in for now!",
+      "parentUuid": "158ddb62_38fc580f",
+      "revId": "394f7ac8e88f18eeea121bde1f969f2027d84605",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c05d6c6c_b7f93fe5",
         "filename": "csit/config/distribution/defaultConfig.json",
         "patchSetId": 1
@@ -51,6 +69,24 @@
       "revId": "394f7ac8e88f18eeea121bde1f969f2027d84605",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9142eab_60cb54c3",
+        "filename": "csit/config/distribution/defaultConfig.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-22T14:33:00Z",
+      "side": 1,
+      "message": "never mind",
+      "parentUuid": "c05d6c6c_b7f93fe5",
+      "revId": "394f7ac8e88f18eeea121bde1f969f2027d84605",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
