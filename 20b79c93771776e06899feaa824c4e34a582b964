@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b38aecf_aa512936",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-26T18:08:36Z",
+      "side": 1,
+      "message": "I think all of this can be done in a single line:\n\n  echo \"${row}\" | read LAST_SCRIPT LAST_OPERATION ...",
+      "revId": "20b79c93771776e06899feaa824c4e34a582b964",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd5eb80_c9214dd6",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 1
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-26T18:08:36Z",
+      "side": 1,
+      "message": "why not just use simple string comparison?\n\n  $sqlName $compare $last_script\n\nwhere $compare \u003d \"\u003c\" or \"\u003c\u003d\"",
+      "revId": "20b79c93771776e06899feaa824c4e34a582b964",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60cc34d_9ab9e0f1",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-26T18:08:36Z",
+      "side": 1,
+      "message": "not sure we need this check",
+      "revId": "20b79c93771776e06899feaa824c4e34a582b964",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f26ade8_8dd5f1ec",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-26T18:08:36Z",
+      "side": 1,
+      "message": "same comment",
+      "revId": "20b79c93771776e06899feaa824c4e34a582b964",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a470fe9_11cc43d9",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-26T18:08:36Z",
+      "side": 1,
+      "message": "same comment",
+      "revId": "20b79c93771776e06899feaa824c4e34a582b964",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
