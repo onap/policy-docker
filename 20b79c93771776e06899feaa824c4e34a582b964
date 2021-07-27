@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4fbb45a1_9f626ee2",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-27T14:00:14Z",
+      "side": 1,
+      "message": "I see.  One simplification: it appears that the shell will automatically strip extra spaces with \"echo $row\" so the -F\u0027 *\u0027 argument should not be needed",
+      "parentUuid": "97604e2f_620cc290",
+      "revId": "20b79c93771776e06899feaa824c4e34a582b964",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efd5eb80_c9214dd6",
         "filename": "policy-db-migrator/src/main/docker/db-migrator",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "20b79c93771776e06899feaa824c4e34a582b964",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f715ce7b_ae8a77b1",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 1
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-27T14:00:14Z",
+      "side": 1,
+      "message": "hmm.  Actually, looks like it doesn\u0027t support \"\u003c\" either (it interprets it as a redirect); the only string comparisons it supports are \"\u003d\" and \"!\u003d\".  One way around it is to use \"expr\" which can do the string comparison.  However, at this point, I think your original idea of extracting the numeric portion may be the best approach.  Should probably add a comment before this line that we have to compare the numeric portion because bourne shell doesn\u0027t support string comparison.",
+      "parentUuid": "80673dc0_8b01da2a",
+      "revId": "20b79c93771776e06899feaa824c4e34a582b964",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     },
     {
       "key": {
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "c7b367aa_dbac28ef",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-27T14:00:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "078c2b66_ce3c28cc",
+      "revId": "20b79c93771776e06899feaa824c4e34a582b964",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f26ade8_8dd5f1ec",
         "filename": "policy-db-migrator/src/main/docker/db-migrator",
         "patchSetId": 1
@@ -139,6 +193,24 @@
       "revId": "20b79c93771776e06899feaa824c4e34a582b964",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5052279b_fc324cd9",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-07-27T14:00:14Z",
+      "side": 1,
+      "message": "same comment as before",
+      "parentUuid": "492f6789_25f3cfe2",
+      "revId": "20b79c93771776e06899feaa824c4e34a582b964",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     },
     {
       "key": {
