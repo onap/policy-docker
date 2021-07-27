@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "97604e2f_620cc290",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-27T10:19:40Z",
+      "side": 1,
+      "message": "This works on the command line but when i put it into the script I get an error.\n\nread LAST_SCRIPT LAST_OPERATION LAST_FROM_VERSION LAST_TO_VERSION LAST_STATUS \u003c \u003c(echo $row | awk -F\u0027  *\u0027 \u0027{print $0}\u0027)\n\n\n/opt/app/policy/bin/db-migrator: line 394: syntax error: unexpected redirection",
+      "parentUuid": "4b38aecf_aa512936",
+      "revId": "20b79c93771776e06899feaa824c4e34a582b964",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efd5eb80_c9214dd6",
         "filename": "policy-db-migrator/src/main/docker/db-migrator",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "80673dc0_8b01da2a",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 1
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-27T10:19:40Z",
+      "side": 1,
+      "message": "Done\nThere is no \"\u003c\u003d\" for strings so I had to use not greater than instead",
+      "parentUuid": "efd5eb80_c9214dd6",
+      "revId": "20b79c93771776e06899feaa824c4e34a582b964",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b60cc34d_9ab9e0f1",
         "filename": "policy-db-migrator/src/main/docker/db-migrator",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2021-07-26T18:08:36Z",
       "side": 1,
       "message": "not sure we need this check",
+      "revId": "20b79c93771776e06899feaa824c4e34a582b964",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "078c2b66_ce3c28cc",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-27T10:19:40Z",
+      "side": 1,
+      "message": "At the moment this is not necessary but it will be useful going forward when we have files for multiple components.\nIt\u0027s equivalent to CREATE TABLE IF NOT EXISTS or DROP TABLE IF EXISTS.\nIt\u0027s an extra check that will ensure the script doesn\u0027t stop due to this type of error.",
+      "parentUuid": "b60cc34d_9ab9e0f1",
       "revId": "20b79c93771776e06899feaa824c4e34a582b964",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "492f6789_25f3cfe2",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-27T10:19:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f26ade8_8dd5f1ec",
+      "revId": "20b79c93771776e06899feaa824c4e34a582b964",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a470fe9_11cc43d9",
         "filename": "policy-db-migrator/src/main/docker/db-migrator",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "20b79c93771776e06899feaa824c4e34a582b964",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b1e4f5c_d56c2130",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-07-27T10:19:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2a470fe9_11cc43d9",
+      "revId": "20b79c93771776e06899feaa824c4e34a582b964",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
