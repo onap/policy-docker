@@ -41,6 +41,7 @@
             <modules>
                 <module>policy-jre</module>
                 <module>policy-jdk</module>
+                <module>policy-db-migrator</module>
             </modules>
         </profile>
     </profiles>
