@@ -83,6 +83,22 @@ DeployPdpGroups
      Log    Received response from policy ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     202
 
+QueryPolicyAuditAfterDeploy
+     [Documentation]    Runs Policy PAP Query Policy Audit after Deploy
+     ${auth}=    Create List    healthcheck    zb!XztG34
+     Log    Creating session https://${POLICY_PAP_IP}:6969
+     ${session}=    Create Session      policy  https://${POLICY_PAP_IP}:6969   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=    GET On Session    policy    /policy/pap/v1/policies/audit    params=recordCount=1    headers=${headers}
+     Log    Received response from policy ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     200
+     Should Be Equal As Strings    ${resp.json()[0]['pdpGroup']}  create.group.request
+     Should Be Equal As Strings    ${resp.json()[0]['pdpType']}  pdpTypeA
+     Should Be Equal As Strings    ${resp.json()[0]['policy']['name']}  onap.restart.tca
+     Should Be Equal As Strings    ${resp.json()[0]['policy']['version']}  1.0.0
+     Should Be Equal As Strings    ${resp.json()[0]['action']}  DEPLOYMENT
+     Should Be Equal As Strings    ${resp.json()[0]['user']}  healthcheck
+
 UndeployPolicy
      [Documentation]    Runs Policy PAP Undeploy a Policy from PDP Groups
      ${auth}=    Create List    healthcheck    zb!XztG34
@@ -104,6 +120,22 @@ QueryPdpGroupsAfterUndeploy
      Should Be Equal As Strings    ${resp.status_code}     200
      Should Be Equal As Strings    ${resp.json()['groups'][0]['name']}  create.group.request
      Should Be Equal As Strings    ${resp.json()['groups'][0]['pdpSubgroups'][0]['policies']}  []
+
+QueryPolicyAuditAfterUnDeploy
+     [Documentation]    Runs Policy PAP Query Policy Audit after Undeploy
+     ${auth}=    Create List    healthcheck    zb!XztG34
+     Log    Creating session https://${POLICY_PAP_IP}:6969
+     ${session}=    Create Session      policy  https://${POLICY_PAP_IP}:6969   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=    GET On Session    policy    /policy/pap/v1/policies/audit    params=recordCount=1    headers=${headers}
+     Log    Received response from policy ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     200
+     Should Be Equal As Strings    ${resp.json()[0]['pdpGroup']}  create.group.request
+     Should Be Equal As Strings    ${resp.json()[0]['pdpType']}  pdpTypeA
+     Should Be Equal As Strings    ${resp.json()[0]['policy']['name']}  onap.restart.tca
+     Should Be Equal As Strings    ${resp.json()[0]['policy']['version']}  1.0.0
+     Should Be Equal As Strings    ${resp.json()[0]['action']}  UNDEPLOYMENT
+     Should Be Equal As Strings    ${resp.json()[0]['user']}  healthcheck
 
 DeactivatePdpGroup
      [Documentation]    Runs Policy PAP Change PDP Group State to PASSIVE
