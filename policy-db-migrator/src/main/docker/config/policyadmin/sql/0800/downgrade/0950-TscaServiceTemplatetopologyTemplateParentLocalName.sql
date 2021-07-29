@@ -17,8 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-SET FOREIGN_KEY_CHECKS = 0;
-
-DROP INDEX FK_ToscaServiceTemplate_capabilityTypesName ON toscaservicetemplate;
-
-SET FOREIGN_KEY_CHECKS = 1;
+DROP INDEX TscaServiceTemplatetopologyTemplateParentLocalName ON toscaservicetemplate;

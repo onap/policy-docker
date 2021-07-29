@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE toscanodetemplate DROP CONSTRAINT FK_ToscaNodeTemplate_requirementsName;
+DROP INDEX FK_ToscaNodeTemplate_requirementsName ON toscanodetemplate;

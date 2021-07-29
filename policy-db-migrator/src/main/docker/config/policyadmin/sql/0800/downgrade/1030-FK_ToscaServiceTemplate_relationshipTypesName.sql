@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE INDEX FK_ToscaNodeTemplate_capabilitiesName ON toscanodetemplate(capabilitiesName, capabilitiesVersion);
+ALTER TABLE toscaservicetemplate DROP CONSTRAINT FK_ToscaServiceTemplate_relationshipTypesName;

@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE toscaservicetemplate ADD CONSTRAINT FK_ToscaServiceTemplate_capabilityTypesName FOREIGN KEY (capabilityTypesName, capabilityTypesVersion) REFERENCES toscacapabilitytypes (name, version) ON UPDATE RESTRICT ON DELETE RESTRICT;
+CREATE INDEX FK_ToscaServiceTemplate_capabilityTypesName ON toscaservicetemplate(capabilityTypesName, capabilityTypesVersion);

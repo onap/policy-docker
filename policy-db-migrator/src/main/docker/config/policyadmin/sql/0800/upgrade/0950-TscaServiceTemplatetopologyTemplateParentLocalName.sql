@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE INDEX FK_ToscaNodeTemplate_requirementsName ON toscanodetemplate(requirementsName, requirementsVersion);
+CREATE INDEX TscaServiceTemplatetopologyTemplateParentLocalName ON toscaservicetemplate(topologyTemplateParentLocalName, topologyTemplateLocalName, topologyTemplateParentKeyVersion, topologyTemplateParentKeyName);

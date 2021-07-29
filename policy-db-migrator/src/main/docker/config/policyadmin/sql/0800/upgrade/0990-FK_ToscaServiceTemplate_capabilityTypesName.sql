@@ -17,8 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-SET FOREIGN_KEY_CHECKS = 0;
-
-DROP INDEX IDX_TSIDX1 ON pdpstatistics;
-
-SET FOREIGN_KEY_CHECKS = 1;
+ALTER TABLE toscaservicetemplate ADD CONSTRAINT FK_ToscaServiceTemplate_capabilityTypesName FOREIGN KEY (capabilityTypesName, capabilityTypesVersion) REFERENCES toscacapabilitytypes (name, version) ON UPDATE RESTRICT ON DELETE RESTRICT;

@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE toscaservicetemplate DROP CONSTRAINT FK_ToscaServiceTemplate_dataTypesName;
+DROP INDEX FK_ToscaServiceTemplate_dataTypesName ON toscaservicetemplate;

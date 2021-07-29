@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE toscatopologytemplate ADD CONSTRAINT FK_ToscaTopologyTemplate_policyName FOREIGN KEY (policyName, policyVersion) REFERENCES toscapolicies (name, version) ON UPDATE RESTRICT ON DELETE RESTRICT;
+CREATE INDEX FK_ToscaTopologyTemplate_policyName ON toscatopologytemplate(policyName, policyVersion);
