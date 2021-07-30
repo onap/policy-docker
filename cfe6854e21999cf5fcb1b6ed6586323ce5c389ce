@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eef443f9_8e215993",
+        "filename": "csit/pap/tests/pap-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2021-07-30T11:02:51Z",
+      "side": 1,
+      "message": "Agree with your comment about refactoring this file. Even here, a keyword can be extracted which just takes DEPLOYMENT/UNDEPLOYMENT as an argument. Let us take the whole refactoring in a separate review.",
+      "range": {
+        "startLine": 137,
+        "startChar": 64,
+        "endLine": 137,
+        "endChar": 76
+      },
+      "revId": "cfe6854e21999cf5fcb1b6ed6586323ce5c389ce",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
