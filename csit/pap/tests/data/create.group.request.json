@@ -1,7 +1,7 @@
 {
     "groups": [
         {
-            "name": "create.group.request",
+            "name": "testGroup",
             "pdpGroupState": "PASSIVE",
             "properties": {
                 "hello": "world"
