@@ -34,6 +34,24 @@
       "revId": "051f314a5e8e50a85d85a96b59fe939ae41448fd",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f2030e_7b4ead67",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-08-06T14:50:40Z",
+      "side": 1,
+      "message": "the question is, will the redirect link always be valid?",
+      "parentUuid": "d95b7829_7c22e169",
+      "revId": "051f314a5e8e50a85d85a96b59fe939ae41448fd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
