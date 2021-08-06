@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55a5512c_d70d77d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-08-06T13:14:13Z",
+      "side": 1,
+      "message": "fyi: in the csits, we use:\n\n  https://github.com/onap/policy-docker/raw",
+      "revId": "051f314a5e8e50a85d85a96b59fe939ae41448fd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
