@@ -1,5 +1,6 @@
 # ============LICENSE_START====================================================
 #  Copyright (C) 2020-2021 AT&T Intellectual Property. All rights reserved.
+#  Modification Copyright 2021. Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -64,3 +65,7 @@ echo POLICY_DISTRIBUTION_VERSION=${POLICY_DISTRIBUTION_VERSION}
 POLICY_CLAMP_VERSION=$(getVersion clamp)
 export POLICY_CLAMP_VERSION=${POLICY_CLAMP_VERSION:0:5}-SNAPSHOT-latest
 echo POLICY_CLAMP_VERSION=${POLICY_CLAMP_VERSION}
+
+POLICY_DOCKER_VERSION=$(getVersion docker)
+export POLICY_DOCKER_VERSION=${POLICY_DOCKER_VERSION:0:5}-SNAPSHOT-latest
+echo POLICY_DOCKER_VERSION=${POLICY_DOCKER_VERSION}

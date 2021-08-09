@@ -2,6 +2,7 @@
 # ===========LICENSE_START====================================================
 #  Copyright (C) 2020-2021 AT&T Intellectual Property. All rights reserved.
 #  Modifications Copyright (C) 2021 Bell Canada. All rights reserved.
+#  Modification Copyright 2021. Nordix Foundation.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,6 +29,27 @@ services:
          - ./config/db:/docker-entrypoint-initdb.d:ro
       expose:
        - 3306
+   policy-db-migrator:
+      image: nexus3.onap.org:10001/onap/policy-db-migrator:${POLICY_DOCKER_VERSION}
+      container_name: policy-db-migrator
+      hostname: policy-db-migrator
+      depends_on:
+        - mariadb
+      expose:
+       - 6824
+      env_file: config/db/db.conf
+      environment:
+        SQL_DB: policyadmin
+        SQL_HOST: mariadb
+      volumes:
+         - ./db_migrator_policy_init.sh:/opt/app/policy/bin/db_migrator_policy_init.sh:ro
+         - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
+      entrypoint: /opt/app/policy/bin/wait_for_port.sh
+      command: [
+              '-c',
+                '/opt/app/policy/bin/db_migrator_policy_init.sh',
+                'mariadb', '3306'
+               ]
    simulator:
       image: nexus3.onap.org:10001/onap/policy-models-simulator:${POLICY_MODELS_VERSION}
       container_name: simulator
@@ -56,7 +78,7 @@ services:
       image: nexus3.onap.org:10001/onap/policy-api:${POLICY_API_VERSION}
       container_name: policy-api
       depends_on:
-       - mariadb
+       - policy-db-migrator
       hostname: policy-api
       expose:
        - 6969
@@ -67,13 +89,14 @@ services:
       entrypoint: ./wait_for_port.sh
       command: [
         '-c', './policy-api.sh',
-        'mariadb', '3306'
+        'mariadb', '3306',
+        'policy-db-migrator', '6824'
         ]
    pap:
       image: nexus3.onap.org:10001/onap/policy-pap:${POLICY_PAP_VERSION}
       container_name: policy-pap
       depends_on:
-       - mariadb
+       - policy-db-migrator
        - simulator
        - api
       hostname: policy-pap
@@ -88,6 +111,7 @@ services:
       command: [
         '-c', './policy-pap.sh',
         'mariadb', '3306',
+        'policy-db-migrator', '6824',
         'message-router', '3905',
         'api', '6969'
         ]
