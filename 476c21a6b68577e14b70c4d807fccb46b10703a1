@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bf13892_a124240f",
+        "filename": "csit/docker-compose-all.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3239
+      },
+      "writtenOn": "2021-08-10T14:02:59Z",
+      "side": 1,
+      "message": "Thanks for adding it to CSIT !\n\nHowever, we cannot be sure that the db schema is fully cerated by db-migrator until we stop the eclipselink ddl generation in pap \u0026 api components. Basically editing the below lines in persistence.xml.\n\n\u003cproperty name\u003d\"javax.persistence.schema-generation.database.action\" value\u003d\"create\" /\u003e\n\u003cproperty name\u003d\"eclipselink.ddl-generation\" value\u003d\"create-or-extend-tables\" /\u003e\n\u003cproperty name\u003d\"eclipselink.ddl-generation.output-mode\" value\u003d\"database\" /\u003e\n\nOtherwise, even if few parts are missing, pap \u0026 api will attempt to create them while starting. And db-migrator won\u0027t have tracking of those actions.",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 22
+      },
+      "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
