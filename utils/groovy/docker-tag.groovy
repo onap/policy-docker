@@ -30,5 +30,5 @@ if (project.properties['dist.project.version'] != null) {
         project.properties['project.docker.latest.minmax.tag.version'] =
              minMaxVersionArray[0] + "." + minMaxVersionArray[1] + "-STAGING-latest"
      }
-     println 'New tag for docker: ' + properties['project.docker.latest.minmax.tag.version']
+     println 'New tag for docker: ' + project.properties['project.docker.latest.minmax.tag.version']
 }
