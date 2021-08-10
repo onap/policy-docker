@@ -46,6 +46,30 @@
       "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14775777_cdb3a8ec",
+        "filename": "csit/docker-compose-all.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3239
+      },
+      "writtenOn": "2021-08-10T16:00:50Z",
+      "side": 1,
+      "message": "That will be great Kevin!\nOnce, your local testing is successful, please go ahead and raise reviews in pap \u0026 api.",
+      "parentUuid": "8ec45d2b_53512654",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 22
+      },
+      "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
