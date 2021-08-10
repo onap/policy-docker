@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "eacb8ad6_ab9e4ce9",
+        "filename": "csit/db_migrator_policy_init.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2021-08-10T18:38:40Z",
+      "side": 1,
+      "message": "is this the only way to impose container ordering and living the container running forever?",
+      "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f75e37_28ab7b62",
+        "filename": "csit/db_migrator_policy_init.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2021-08-10T18:38:40Z",
+      "side": 1,
+      "message": "could we exit with the status code returned by db-migrator from line 28 (to report error if it occured)?   Althought this won\u0027t take effect with previous line",
+      "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bf13892_a124240f",
         "filename": "csit/docker-compose-all.yml",
         "patchSetId": 1
