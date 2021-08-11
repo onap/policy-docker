@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8d82b2d_a3a6ecac",
+        "filename": "csit/db_migrator_policy_init.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-08-11T16:01:03Z",
+      "side": 1,
+      "message": "I can change this to nc -l -p 6824 so it will stop after the first ping.\nAll the containers use wait_for_port.sh to determine when another container is ready.",
+      "parentUuid": "eacb8ad6_ab9e4ce9",
+      "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83f75e37_28ab7b62",
         "filename": "csit/db_migrator_policy_init.sh",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2021-08-10T18:38:40Z",
       "side": 1,
       "message": "could we exit with the status code returned by db-migrator from line 28 (to report error if it occured)?   Althought this won\u0027t take effect with previous line",
+      "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10c78695_0b0c0582",
+        "filename": "csit/db_migrator_policy_init.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-08-11T16:01:03Z",
+      "side": 1,
+      "message": "I can save the return code from line 28 and exit with that instead",
+      "parentUuid": "83f75e37_28ab7b62",
       "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
