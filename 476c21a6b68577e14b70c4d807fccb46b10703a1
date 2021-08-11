@@ -152,6 +152,30 @@
       "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2540b764_1d015fe5",
+        "filename": "csit/docker-compose-all.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-08-11T13:56:39Z",
+      "side": 1,
+      "message": "Yes we will fix these.\nI\u0027m not sure the cause of the sequence error at the moment but I will investigate further.",
+      "parentUuid": "9c022a4f_8a4cbccc",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 22
+      },
+      "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
