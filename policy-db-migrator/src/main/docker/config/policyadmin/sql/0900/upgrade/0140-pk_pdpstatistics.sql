@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-DROP INDEX JpaPolicyAuditIndex_timestamp ON jpapolicyaudit;
+ALTER TABLE pdpstatistics DROP PRIMARY KEY;
