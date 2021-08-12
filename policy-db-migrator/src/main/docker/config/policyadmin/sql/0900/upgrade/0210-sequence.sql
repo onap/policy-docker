@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-DROP INDEX JpaPolicyAuditIndex_timestamp ON jpapolicyaudit;
+INSERT INTO sequence(SEQ_NAME, SEQ_COUNT) VALUES('SEQ_GEN', 0);

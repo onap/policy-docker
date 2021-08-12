@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE INDEX IDX_TSIDX1 ON pdpstatistics(TIMESTAMP, name, version);
+ALTER TABLE pdpstatistics DROP PRIMARY KEY;

@@ -335,34 +335,44 @@ function object_exists
     fi
 
     local sqlFile="${1}"
-    local query rc objectType objectName
+    local query rc objectType objectName operation tableName
 
     objectName=$(basename ${sqlFile} .sql | cut -f2 -d-)
-
-    rc=$(cat ${sqlFile} | awk '/ALTER/ && /CONSTRAINT/' | wc -l)
-    if [ $rc -gt 0 ]; then
+    operation=$(basename $(dirname ${sqlFile}))
+    if [ $(cat ${sqlFile} | awk '/ALTER/ && /CONSTRAINT/ && /PRIMARY/' | wc -l) -gt 0 ]; then
+         if [ "${operation}" == "upgrade" ]; then
+              objectType="constraint"
+              objectName="PRIMARY"
+              tableName=$(cat ${sqlFile} | grep "ALTER TABLE" | cut -f3 -d' ')
+         else
+              objectType="other"
+         fi
+    elif [ $(cat ${sqlFile} | awk '/ALTER/ && /CONSTRAINT/' | wc -l) -gt 0 ]; then
          objectType="constraint"
+         tableName=$(cat ${sqlFile} | grep "ALTER TABLE" | cut -f3 -d' ')
+    elif [ $(cat ${sqlFile} | awk '/CREATE/ && /TABLE/' | wc -l) -gt 0 ]; then
+         objectType="table"
+    elif [ $(cat ${sqlFile} | awk '/INDEX/' | wc -l) -gt 0 ]; then
+         objectType="index"
     else
-        rc=$(cat ${sqlFile} | awk '/INDEX/' | wc -l)
-        if [ $rc -gt 0 ]; then
-             objectType="index"
-        else
-             objectType="table"
-        fi
+         objectType="other"
     fi
 
     if [ "${objectType}" == "constraint" ]; then
           query="SELECT IF (constraint_count>0, TRUE, FALSE) as constraint_exists FROM "
           query=${query}"(SELECT count(1) as constraint_count from INFORMATION_SCHEMA.TABLE_CONSTRAINTS "
-          query=${query}"WHERE lower(constraint_name)=lower('${objectName}') AND table_schema='${SCHEMA}') t"
+          query=${query}"WHERE lower(constraint_name)=lower('${objectName}') AND table_name='${tableName}' AND table_schema='${SCHEMA}') t"
     elif [ "${objectType}" == "index" ]; then
           query="SELECT IF (index_count>0, TRUE, FALSE) as index_exists FROM "
           query=${query}"(SELECT count(1) as index_count FROM INFORMATION_SCHEMA.STATISTICS "
           query=${query}"WHERE lower(index_name)=lower('${objectName}') AND index_schema='${SCHEMA}') t"
-    else
+    elif [ "${objectType}" == "table" ]; then
           query="SELECT IF (table_count>0, TRUE, FALSE) as table_exists FROM "
           query=${query}"(SELECT count(1) as table_count FROM INFORMATION_SCHEMA.TABLES "
           query=${query}"WHERE lower(table_name)=lower('${objectName}') AND table_schema='${SCHEMA}') t"
+    else
+          query="SELECT IF (operation='upgrade', 0, 1) as other_exists FROM "
+          query=${query}"(SELECT '${operation}' as operation FROM DUAL) t"
     fi
 
     rc=$(${MYSQL} --skip-column-names --silent --execute "${query}")
