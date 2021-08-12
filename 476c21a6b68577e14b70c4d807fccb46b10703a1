@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5316ed99_5e14d22d",
+        "filename": "csit/db_migrator_policy_init.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-08-12T08:09:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8d82b2d_a3a6ecac",
+      "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83f75e37_28ab7b62",
         "filename": "csit/db_migrator_policy_init.sh",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07d731b_aba6d0f8",
+        "filename": "csit/db_migrator_policy_init.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-08-12T08:09:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10c78695_0b0c0582",
+      "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
