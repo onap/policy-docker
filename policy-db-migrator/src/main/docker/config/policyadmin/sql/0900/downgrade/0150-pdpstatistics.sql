@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-DROP INDEX JpaPolicyAuditIndex_timestamp ON jpapolicyaudit;
+ALTER TABLE pdpstatistics DROP COLUMN POLICYUNDEPLOYCOUNT, DROP COLUMN POLICYUNDEPLOYFAILCOUNT, DROP COLUMN POLICYUNDEPLOYSUCCESSCOUNT, DROP COLUMN ID;
