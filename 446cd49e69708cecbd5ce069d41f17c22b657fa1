@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bd4a646_1d0ad47f",
+        "filename": "csit/include-raw-integration-install-robotframework.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-08-17T14:58:13Z",
+      "side": 0,
+      "message": "this comment is no longer applicable",
+      "revId": "446cd49e69708cecbd5ce069d41f17c22b657fa1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3783c6ea_7ab90238",
+        "filename": "csit/include-raw-integration-install-robotframework.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-08-17T14:58:13Z",
+      "side": 0,
+      "message": "not needed for robot tests",
+      "revId": "446cd49e69708cecbd5ce069d41f17c22b657fa1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
