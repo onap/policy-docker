@@ -320,6 +320,30 @@
       "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8b7f070_e4d66cba",
+        "filename": "csit/docker-compose-all.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-08-17T14:35:46Z",
+      "side": 1,
+      "message": "I will create these 2 reviews using the same persistence.xml as we did in the tests last week.\nI want to make sure we get the dependencies right though.\nAdheli\u0027s latest review fixes the issue found in the last weeks testing.\nI\u0027m concerned the CSIT tests will break if the persistence.xml changes go in first.",
+      "parentUuid": "205b1b6c_09a619d1",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 22
+      },
+      "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
