@@ -1,27 +1,30 @@
 #!/bin/bash
-# SPDX-License-Identifier: EPL-1.0
-##############################################################################
-# Copyright (c) 2015 The Linux Foundation and others.
+#
+# ============LICENSE_START===================================================
+# Copyright (c) 2016 The Linux Foundation and others.
 # Modification Copyright 2021. Nordix Foundation.
 # Modification Copyright 2021 AT&T Intellectual Property. All rights reserved.
+# ============================================================================
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
 #
-# All rights reserved. This program and the accompanying materials
-# are made available under the terms of the Eclipse Public License v1.0
-# which accompanies this distribution, and is available at
-# http://www.eclipse.org/legal/epl-v10.html
-##############################################################################
-# vim: sw=4 ts=4 sts=4 et ft=sh :
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ============LICENSE_END=====================================================
+#
 
-ROBOT_VENV="/tmp/v/robot"
-echo ROBOT_VENV="${ROBOT_VENV}" >> "${WORKSPACE}/env.properties"
+ROBOT_VENV=$(mktemp -d --suffix=robot_venv)
+echo "ROBOT_VENV=${ROBOT_VENV}" >> "${WORKSPACE}/env.properties"
 
 echo "Python version is: $(python3 --version)"
 
-# The --system-site-packages parameter allows us to pick up system level
-# installed packages. This allows us to bake matplotlib which takes very long
-# to install into the image.
 python3 -m venv "${ROBOT_VENV}"
-
 source "${ROBOT_VENV}/bin/activate"
 
 set -exu
@@ -31,5 +34,4 @@ python3 -m pip install --upgrade pip
 
 echo "Installing Python Requirements"
 python3 -m pip install -r pylibs.txt
-odltools -V
 python3 -m pip freeze
