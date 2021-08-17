@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "50abc37d_26744444",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/0900/downgrade/0190-JpaPolicyAuditIndex_timestamp.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2021-08-17T16:03:18Z",
+      "side": 1,
+      "message": "it was suggested to have the matching sql from upgrade.",
+      "parentUuid": "50da2abb_6ef6f611",
+      "revId": "adcacd40cc94d46758a943a4ad3b5935f3d4448e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87389a9c_445148ef",
         "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/0900/downgrade/0210-sequence.sql",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "e58d620f_83345d68",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/0900/upgrade/0170-pdpstatistics.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2021-08-17T16:03:18Z",
+      "side": 1,
+      "message": "the idea of having individual alters was for easier and more controlled partial operations.",
+      "parentUuid": "e7bcc071_dd4b17d1",
+      "revId": "adcacd40cc94d46758a943a4ad3b5935f3d4448e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "574f13d6_253703f2",
         "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/0900/upgrade/0210-sequence.sql",
         "patchSetId": 1
@@ -81,6 +117,24 @@
       "writtenOn": "2021-08-17T15:22:01Z",
       "side": 1,
       "message": "hmm.  I\u0027m concerned that we\u0027re making assumptions about the contents of the sql scripts.  Perhaps we should eliminate this function altogether?",
+      "revId": "adcacd40cc94d46758a943a4ad3b5935f3d4448e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd36e511_77046d25",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2021-08-17T16:03:18Z",
+      "side": 1,
+      "message": "sure. will discuss this with Kevin but shouldn\u0027t have any side effect on script in general.",
+      "parentUuid": "648dbd1e_b1a62428",
       "revId": "adcacd40cc94d46758a943a4ad3b5935f3d4448e",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
