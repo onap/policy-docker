@@ -392,6 +392,30 @@
       "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2855dd2_ece6aaf8",
+        "filename": "csit/docker-compose-all.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 3239
+      },
+      "writtenOn": "2021-08-17T17:08:12Z",
+      "side": 1,
+      "message": "Agree.\nThanks Kevin for the other 2 reviews. We can proceed with this one now.",
+      "parentUuid": "a54d22ed_028c9bca",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 22
+      },
+      "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
