@@ -368,6 +368,30 @@
       "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a54d22ed_028c9bca",
+        "filename": "csit/docker-compose-all.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-08-17T15:01:47Z",
+      "side": 1,
+      "message": "We can review the other two before merging.  However, this review must be merged first, as the CSITs will fail if the others are merged first.",
+      "parentUuid": "4101cab3_3b97d219",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 22
+      },
+      "revId": "476c21a6b68577e14b70c4d807fccb46b10703a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
