@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "63f9ef5f_29f65b2b",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/0900/downgrade/0210-sequence.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-08-18T13:48:21Z",
+      "side": 1,
+      "message": "never mind - same answer as before",
+      "parentUuid": "87389a9c_445148ef",
+      "revId": "adcacd40cc94d46758a943a4ad3b5935f3d4448e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7bcc071_dd4b17d1",
         "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/0900/upgrade/0170-pdpstatistics.sql",
         "patchSetId": 1
