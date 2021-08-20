@@ -69,6 +69,24 @@
       "revId": "22cc75eb4b868bc768c8680802131931912acadd",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa6268d_d8449700",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/0900/upgrade/0210-sequence.sql",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2021-08-20T15:28:28Z",
+      "side": 1,
+      "message": "ok, I think I see what you mean now. Just confirmed that wouldn\u0027t cause an issue because downgrade would start from 0150 to 0100. The PK with timestamp would be created normally, as the previous was dropped and no new were created.",
+      "parentUuid": "44cce8b0_58b82db7",
+      "revId": "22cc75eb4b868bc768c8680802131931912acadd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
