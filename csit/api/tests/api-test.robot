@@ -3,17 +3,23 @@ Library     Collections
 Library     RequestsLibrary
 Library     OperatingSystem
 Library     json
+Resource    ${CURDIR}/../../common-library.robot
 
 *** Test Cases ***
 
 Healthcheck
      [Documentation]  Verify policy api health check
-     ${resp}=  PeformGetRequest  /policy/api/v1/healthcheck  200
+     ${resp}=  PerformGetRequest  ${POLICY_API_IP}  /policy/api/v1/healthcheck  200  null
      Should Be Equal As Strings  ${resp.json()['code']}  200
+
+Metrics
+    [Documentation]  Verify policy-api is exporting prometheus metrics
+    ${resp}=  PerformGetRequest  ${POLICY_API_IP}  /metrics  200  null
+    Should Contain  ${resp.text}  jvm_threads_current
 
 Statistics
      [Documentation]  Verify policy api statistics
-     ${resp}=  PeformGetRequest  /policy/api/v1/statistics  200
+     ${resp}=  PerformGetRequest  ${POLICY_API_IP}  /policy/api/v1/statistics  200  null
      Should Be Equal As Strings  ${resp.json()['code']}  200
 
 RetrievePolicyTypes
@@ -34,15 +40,18 @@ RetrieveMonitoringPolicyTypes
 
 CreateNewMonitoringPolicyV1
      [Documentation]  Create a policy named 'onap.restart.tca' and version '1.0.0' using specific api
-     CreatePolicy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies  200  vCPE.policy.monitoring.input.tosca.json  onap.restart.tca  1.0.0
+     ${postjson}=  Get file  ${DATA}/vCPE.policy.monitoring.input.tosca.json
+     CreatePolicy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies  200  ${postjson}  onap.restart.tca  1.0.0
 
 CreateNewMonitoringPolicyV1Again
      [Documentation]  Create an existing policy with modification and keeping the same version should result in error.
-     CreatePolicy  /policy/api/v1/policies  406  vCPE.policy.monitoring.input.tosca.v1_2.json  null  null
+     ${postjson}=  Get file  ${DATA}/vCPE.policy.monitoring.input.tosca.v1_2.json
+     CreatePolicy  /policy/api/v1/policies  406  ${postjson}  null  null
 
 CreateNewMonitoringPolicyV2
      [Documentation]  Create a policy named 'onap.restart.tca' and version '2.0.0' using generic api
-     CreatePolicy  /policy/api/v1/policies  200  vCPE.policy.monitoring.input.tosca.v2.json  onap.restart.tca  2.0.0
+     ${postjson}=  Get file  ${DATA}/vCPE.policy.monitoring.input.tosca.v2.json
+     CreatePolicy  /policy/api/v1/policies  200  ${postjson}  onap.restart.tca  2.0.0
 
 RetrievePoliciesOfType
      [Documentation]  Retrieve all policies belonging to a specific Policy Type
@@ -58,81 +67,48 @@ RetrieveSpecificPolicy
 
 DeleteSpecificPolicy
      [Documentation]  Delete a policy named 'onap.restart.tca' and version '1.0.0' using generic api
-     PeformDeleteRequest  /policy/api/v1/policies/onap.restart.tca/versions/1.0.0
+     PerformDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policies/onap.restart.tca/versions/1.0.0  200
+     PerformDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policies/onap.restart.tca/versions/1.0.0  404
 
 DeleteSpecificPolicyV2
      [Documentation]  Delete a policy named 'onap.restart.tca' and version '2.0.0' using specific api
-     PeformDeleteRequest  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies/onap.restart.tca/versions/2.0.0
+     PerformDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies/onap.restart.tca/versions/2.0.0  200
+     PerformDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies/onap.restart.tca/versions/2.0.0  404
 
 DeleteSpecificPolicyTypeV1
      [Documentation]  Delete a policy type named 'onap.policies.monitoring.tcagen2' and version '1.0.0'
-     PeformDeleteRequest  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0
+     PerformDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0  200
+     PerformDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0  404
 
 DeleteSpecificPolicyTypeV2
      [Documentation]  Delete a policy type named 'onap.policies.monitoring.tcagen2' and version '2.0.0'
-     PeformDeleteRequest  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/2.0.0
+     PerformDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/2.0.0  200
+     PerformDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/2.0.0  404
 
 *** Keywords ***
 
 CreatePolicyType
      [Arguments]  ${url}  ${expectedstatus}  ${jsonfile}  ${policytypename}  ${policytypeversion}
      [Documentation]  Create the specific policy type
-     ${resp}=  PerformCreateRequest  ${url}  ${expectedstatus}  ${jsonfile}  ${CURDIR}/data
+     ${postjson}=  Get file  ${CURDIR}/data/${jsonfile}
+     ${resp}=  PerformPostRequest  ${POLICY_API_IP}  ${url}  ${expectedstatus}  ${postjson}  null
      Run Keyword If  ${expectedstatus}==200  List Should Contain Value  ${resp.json()['policy_types']}  ${policytypename}
      Run Keyword If  ${expectedstatus}==200  Should Be Equal As Strings  ${resp.json()['policy_types']['${policytypename}']['version']}  ${policytypeversion}
 
 FetchPolicyTypes
      [Arguments]  ${url}  ${expectedLength}
      [Documentation]  Fetch all policy types
-     ${resp}=  PeformGetRequest  ${url}  200
+     ${resp}=  PerformGetRequest  ${POLICY_API_IP}  ${url}  200  null
      Length Should Be  ${resp.json()['policy_types']}  ${expectedLength}
-
-CreatePolicy
-     [Arguments]  ${url}  ${expectedstatus}  ${jsonfile}  ${policyname}  ${policyversion}
-     [Documentation]  Create the specific policy
-     ${resp}=  PerformCreateRequest  ${url}  ${expectedstatus}  ${jsonfile}  ${DATA}
-     Run Keyword If  ${expectedstatus}==200  Dictionary Should Contain Key  ${resp.json()['topology_template']['policies'][0]}  ${policyname}
-     Run Keyword If  ${expectedstatus}==200  Should Be Equal As Strings  ${resp.json()['topology_template']['policies'][0]['${policyname}']['version']}  ${policyversion}
 
 FetchPolicy
      [Arguments]  ${url}  ${keyword}
      [Documentation]  Fetch the specific policy
-     ${resp}=  PeformGetRequest  ${url}  200
+     ${resp}=  PerformGetRequest  ${POLICY_API_IP}  ${url}  200  null
      Dictionary Should Contain Key  ${resp.json()['topology_template']['policies'][0]}  ${keyword}
 
 FetchPolicies
      [Arguments]  ${url}  ${expectedLength}
      [Documentation]  Fetch all policies
-     ${resp}=  PeformGetRequest  ${url}  200
+     ${resp}=  PerformGetRequest  ${POLICY_API_IP}  ${url}  200  null
      Length Should Be  ${resp.json()['topology_template']['policies']}  ${expectedLength}
-
-PerformCreateRequest
-     [Arguments]  ${url}  ${expectedstatus}  ${jsonfile}  ${filepath}
-     ${auth}=  Create List  healthcheck  zb!XztG34
-     ${postjson}=  Get file  ${filepath}/${jsonfile}
-     Log  Creating session https://${POLICY_API_IP}:6969
-     ${session}=  Create Session  policy  https://${POLICY_API_IP}:6969  auth=${auth}
-     ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
-     ${resp}=  POST On Session  policy  ${url}  data=${postjson}  headers=${headers}  expected_status=${expectedstatus}
-     Log  Received response from policy ${resp.text}
-     [return]  ${resp}
-
-PeformGetRequest
-     [Arguments]  ${url}  ${expectedstatus}
-     ${auth}=  Create List  healthcheck  zb!XztG34
-     Log  Creating session https://${POLICY_API_IP}:6969
-     ${session}=  Create Session  policy  https://${POLICY_API_IP}:6969  auth=${auth}
-     ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
-     ${resp}=  GET On Session  policy  ${url}  headers=${headers}  expected_status=${expectedstatus}
-     Log  Received response from policy ${resp.text}
-     [return]  ${resp}
-
-PeformDeleteRequest
-     [Arguments]  ${url}
-     ${auth}=  Create List  healthcheck  zb!XztG34
-     Log  Creating session https://${POLICY_API_IP}:6969
-     ${session}=  Create Session  policy  https://${POLICY_API_IP}:6969  auth=${auth}
-     ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
-     ${resp}=  DELETE On Session  policy  ${url}  headers=${headers}  expected_status=200
-     Log  Received response from policy ${resp.text}
-     ${resp}=  DELETE On Session  policy  ${url}  headers=${headers}  expected_status=404
