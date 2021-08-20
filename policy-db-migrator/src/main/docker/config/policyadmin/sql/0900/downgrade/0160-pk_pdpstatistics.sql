@@ -18,3 +18,5 @@
  */
 
 ALTER TABLE pdpstatistics DROP CONSTRAINT PRIMARY KEY;
+
+UPDATE pdpstatistics set ID = 0;
