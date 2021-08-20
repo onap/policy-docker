@@ -87,6 +87,24 @@
       "revId": "22cc75eb4b868bc768c8680802131931912acadd",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3186caf_c6bf3203",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/0900/upgrade/0210-sequence.sql",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-08-20T15:35:38Z",
+      "side": 1,
+      "message": "If it fails at 160 and you run the downgrade this is the statement that is run:\n\nALTER TABLE pdpstatistics DROP COLUMN POLICYUNDEPLOYCOUNT, DROP COLUMN POLICYUNDEPLOYFAILCOUNT, DROP COLUMN POLICYUNDEPLOYSUCCESSCOUNT, DROP COLUMN ID;\n\nso everything is cleaned up.\n\nif you continue with the upgrade it will run both statements in 160 again which won\u0027t be a problem.",
+      "parentUuid": "dfa6268d_d8449700",
+      "revId": "22cc75eb4b868bc768c8680802131931912acadd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
