@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-INSERT INTO sequence(SEQ_NAME, SEQ_COUNT) VALUES('SEQ_GEN', 0);
+INSERT INTO sequence(SEQ_NAME, SEQ_COUNT) VALUES('SEQ_GEN', (SELECT IFNULL(max(id),0) FROM pdpstatistics));
