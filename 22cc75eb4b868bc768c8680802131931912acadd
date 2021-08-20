@@ -51,6 +51,24 @@
       "revId": "22cc75eb4b868bc768c8680802131931912acadd",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44cce8b0_58b82db7",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/0900/upgrade/0210-sequence.sql",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-08-20T15:16:50Z",
+      "side": 1,
+      "message": "I was thinking, if it fails at this step and the user chose to do a downgrade to revert back to honolulu, would the migrator still work OK?  Or does it expect there to be a corresponding downgrade script?",
+      "parentUuid": "30b631c2_412a18a7",
+      "revId": "22cc75eb4b868bc768c8680802131931912acadd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
