@@ -4,89 +4,53 @@ Library     RequestsLibrary
 Library     OperatingSystem
 Library     json
 Library     Process
+Resource    ${CURDIR}/../../common-library.robot
+
 
 *** Test Cases ***
 
 Healthcheck
      [Documentation]    Runs Apex PDP Health check
-     ${auth}=    Create List    healthcheck    zb!XztG34
-     Log    Creating session https://${APEX_IP}:6969
-     ${session}=    Create Session      policy  https://${APEX_IP}:6969   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   GET On Session     policy  /policy/apex-pdp/v1/healthcheck     headers=${headers}
-     Log    Received response from policy ${resp.text}
-     Should Be Equal As Strings    ${resp.status_code}     200
-     Should Be Equal As Strings    ${resp.json()['code']}  200
+     ${resp}=    PerformGetRequest    ${APEX_IP}    /policy/apex-pdp/v1/healthcheck    200    null
+     Should Be Equal As Strings    ${resp.json()['code']}    200
      Set Suite Variable    ${pdpName}    ${resp.json()['name']}
 
-ExecuteApexPolicy
+Metrics
+     [Documentation]  Verify policy-apex-pdp is exporting prometheus metrics
+     ${resp}=  PerformGetRequest  ${APEX_IP}  /metrics  200  null
+     Should Contain  ${resp.text}  jvm_threads_current
+
+ExecuteApexSampleDomainPolicy
      Set Test Variable    ${policyName}    onap.policies.native.apex.Sampledomain
-     Wait Until Keyword Succeeds    2 min    5 sec    CreatePolicy
+     ${postjson}=  Get file  ${CURDIR}/data/${policyName}.json
+     CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
      Wait Until Keyword Succeeds    3 min    5 sec    VerifyPdpStatistics    0    0    0    0
-     Wait Until Keyword Succeeds    2 min    5 sec    DeployPolicy
-     Wait Until Keyword Succeeds    2 min    5 sec    VerifyPolicyStatus
+     DeployPolicy
+     Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
      Wait Until Keyword Succeeds    3 min    5 sec    VerifyPdpStatistics    1    1    0    0
      Wait Until Keyword Succeeds    4 min    5 sec    RunEventOnApexEngine
      Wait Until Keyword Succeeds    3 min    5 sec    VerifyPdpStatistics    1    1    1    1
 
 ExecuteApexControlLoopPolicy
      Set Test Variable    ${policyName}    onap.policies.apex.Simplecontrolloop
-     Wait Until Keyword Succeeds    2 min    5 sec    CreatePolicy
-     Wait Until Keyword Succeeds    2 min    5 sec    DeployPolicy
-     Wait Until Keyword Succeeds    2 min    5 sec    VerifyPolicyStatus
+     ${postjson}=  Get file  ${CURDIR}/data/${policyName}.json
+     CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
+     DeployPolicy
+     Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
      ${result}=     Run Process    ${SCRIPTS}/make_topic.sh     APEX-CL-MGT
      Should Be Equal As Integers    ${result.rc}    0
      Wait Until Keyword Succeeds    2 min    5 sec    TriggerAndVerifyControlLoopPolicy
 
 *** Keywords ***
 
-CreatePolicy
-     [Documentation]    Create a new Apex policy
-     ${auth}=    Create List    healthcheck    zb!XztG34
-     ${postjson}=  Get file  ${CURDIR}/data/${policyName}.json
-     Log    Creating session https://${POLICY_API_IP}:6969
-     ${session}=    Create Session      policy  https://${POLICY_API_IP}:6969   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   POST On Session   policy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  data=${postjson}   headers=${headers}
-     Log    Received response from policy ${resp.text}
-     Should Be Equal As Strings    ${resp.status_code}     200
-     Dictionary Should Contain Key    ${resp.json()}    tosca_definitions_version
 
 DeployPolicy
      [Documentation]    Deploy the policy in apex-pdp engine
-     ${auth}=    Create List    healthcheck    zb!XztG34
      ${postjson}=    Get file  ${CURDIR}/data/policy_deploy.json
      ${postjson}=    evaluate    json.loads('''${postjson}''')    json
      set to dictionary    ${postjson['groups'][0]['deploymentSubgroups'][0]['policies'][0]}    name=${policyName}
      ${postjson}=    evaluate    json.dumps(${postjson})    json
-     Log    Creating session https://${POLICY_PAP_IP}:6969
-     ${session}=    Create Session      policy  https://${POLICY_PAP_IP}:6969   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   POST On Session   policy  /policy/pap/v1/pdps/deployments/batch  data=${postjson}   headers=${headers}
-     Log    Received response from policy ${resp.text}
-     Should Be Equal As Strings    ${resp.status_code}     202
-
-VerifyPolicyStatus
-     [Documentation]    Verify policy deployment status
-     ${auth}=    Create List    healthcheck    zb!XztG34
-     Log    Creating session https://${POLICY_PAP_IP}:6969
-     ${session}=    Create Session      policy  https://${POLICY_PAP_IP}:6969   auth=${auth}
-     ${headers}=    Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   GET On Session     policy  /policy/pap/v1/policies/status     headers=${headers}
-     Log    Received response from policy ${resp.text}
-     FOR    ${responseEntry}    IN    @{resp.json()}
-     Exit For Loop IF      '${responseEntry['policy']['name']}'=='${policyName}'
-     END
-     Should Be Equal As Strings    ${resp.status_code}     200
-     Should Be Equal As Strings    ${responseEntry['pdpGroup']}  defaultGroup
-     Should Be Equal As Strings    ${responseEntry['pdpType']}  apex
-     Should Be Equal As Strings    ${responseEntry['pdpId']}  ${pdpName}
-     Should Be Equal As Strings    ${responseEntry['policy']['name']}  ${policyName}
-     Should Be Equal As Strings    ${responseEntry['policy']['version']}  1.0.0
-     Should Be Equal As Strings    ${responseEntry['policyType']['name']}  onap.policies.native.Apex
-     Should Be Equal As Strings    ${responseEntry['policyType']['version']}  1.0.0
-     Should Be Equal As Strings    ${responseEntry['deploy']}  True
-     Should Be Equal As Strings    ${responseEntry['state']}  SUCCESS
+     PerformPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/deployments/batch  202  ${postjson}  null
 
 RunEventOnApexEngine
     [Documentation]    Send event to verify policy execution
@@ -118,12 +82,7 @@ CheckLogMessage
 VerifyPdpStatistics
      [Documentation]    Verify pdp statistics after policy execution
      [Arguments]    ${deployCount}    ${deploySuccessCount}    ${executedCount}    ${executedSuccessCount}
-     ${auth}=    Create List    healthcheck    zb!XztG34
-     Log    Creating session https://${POLICY_PAP_IP}:6969
-     ${session}=    Create Session      policy  https://${POLICY_PAP_IP}:6969   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=    GET On Session    policy    /policy/pap/v1/pdps/statistics/defaultGroup/apex/${pdpName}    params=recordCount=1    headers=${headers}
-     Log    Received response from policy ${resp.text}
+     ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/statistics/defaultGroup/apex/${pdpName}  200  null
      Should Be Equal As Strings    ${resp.status_code}     200
      Should Be Equal As Strings    ${resp.json()['defaultGroup']['apex'][0]['pdpInstanceId']}  ${pdpName}
      Should Be Equal As Strings    ${resp.json()['defaultGroup']['apex'][0]['pdpGroupName']}  defaultGroup

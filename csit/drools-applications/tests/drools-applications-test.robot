@@ -12,6 +12,11 @@ Alive
     ${resp}=  PeformGetRequest  /policy/pdp/engine  ${DROOLS_IP}  9696  200
     Should Be Equal As Strings    ${resp.json()['alive']}  True
 
+Metrics
+    [Documentation]    Verify drools-apps is exporting metrics
+    ${resp}=  PeformGetRequest  /metrics  ${DROOLS_IP}  9696  200
+    Should Contain  ${resp.text}  jvm_threads_current
+
 Healthcheck
     [Documentation]    Runs Policy PDP-D Health check
     ${resp}=  PeformGetRequest  /healthcheck  ${DROOLS_IP}  6969  200
