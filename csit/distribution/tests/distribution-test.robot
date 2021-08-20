@@ -3,18 +3,24 @@ Library     Collections
 Library     RequestsLibrary
 Library     OperatingSystem
 Library     json
+Resource    ${CURDIR}/../../common-library.robot
 
 *** Test Cases ***
 
 Healthcheck
      [Documentation]  Verify policy distribution health check
-     ${resp}=  PeformGetRequest  /healthcheck  200
+     ${resp}=  PerformGetRequest  ${POLICY_DISTRIBUTION_IP}  /healthcheck  200  null
      Should Be Equal As Strings  ${resp.json()['code']}  200
 
 Statistics
      [Documentation]  Verify policy distribution statistics
-     ${resp}=  PeformGetRequest  /statistics  200
+     ${resp}=  PerformGetRequest  ${POLICY_DISTRIBUTION_IP}  /statistics  200  null
      Should Be Equal As Strings  ${resp.json()['code']}  200
+
+Metrics
+    [Documentation]  Verify policy-distribution is exporting prometheus metrics
+    ${resp}=  PerformGetRequest  ${POLICY_DISTRIBUTION_IP}  /metrics  200  null
+    Should Contain  ${resp.text}  jvm_threads_current
 
 InvokeDistributionAndRunEventOnEngine
      Wait Until Keyword Succeeds  5 min  30 sec  InvokeDistributionUsingFile And RunEventOnApexEngine
@@ -30,13 +36,3 @@ InvokeDistributionUsingFile And RunEventOnApexEngine
     &{headers}=  Create Dictionary  Content-Type=application/json  Accept=application/json
     ${resp}=  PUT On Session  apexSession  /apex/FirstConsumer/EventIn  data=${data}  headers=${headers}  expected_status=200
     Remove Files  ${SCRIPT_DIR}/temp/sample_csar_with_apex_policy.csar
-
-PeformGetRequest
-     [Arguments]  ${url}  ${expectedstatus}
-     ${auth}=  Create List  healthcheck  zb!XztG34
-     Log  Creating session https://${POLICY_DISTRIBUTION_IP}:6969
-     ${session}=  Create Session  policy  https://${POLICY_DISTRIBUTION_IP}:6969  auth=${auth}
-     ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
-     ${resp}=  GET On Session  policy  ${url}  headers=${headers}  expected_status=${expectedstatus}
-     Log  Received response from policy ${resp.text}
-     [return]  ${resp}
