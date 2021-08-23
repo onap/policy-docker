@@ -55,7 +55,7 @@
 source ${POLICY_HOME}/etc/profile.d/env.sh
 
 METADATA_DB=migration
-METADATA_TABLE=${METADATA_DB}.db_metadata_versions
+METADATA_TABLE=${METADATA_DB}.schema_versions
 MIGRATION_DIR=${POLICY_HOME}/etc/db/migration
 ZERO_VERSION="0"
 BASE_VERSION="0800"
@@ -700,7 +700,7 @@ for dbPath in ${SCHEMA_S}; do
     SCHEMA_DB="\`${SCHEMA}\`"
     UPGRADE_DIR="${MIGRATION_DIR}"/"${SCHEMA}"/sql
     DOWNGRADE_DIR=${UPGRADE_DIR}
-    METADATA_HISTORY="${METADATA_DB}.\`${SCHEMA}_change_history\`"
+    METADATA_HISTORY="${METADATA_DB}.\`${SCHEMA}_schema_changelog\`"
     TARGET_RELEASE=${INPUT_TARGET_RELEASE}
 
     if is_upgrade && is_downgrade; then
