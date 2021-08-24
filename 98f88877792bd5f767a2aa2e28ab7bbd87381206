@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98a273e0_04c712e8",
+        "filename": "csit/apex-pdp/tests/apex-pdp-test.robot",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 3239
+      },
+      "writtenOn": "2021-08-24T13:26:09Z",
+      "side": 1,
+      "message": "Probably rename this to \"ExecuteApexSampleDomainPolicy\" or similar.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 17
+      },
+      "revId": "98f88877792bd5f767a2aa2e28ab7bbd87381206",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f24a61b_8bbae3af",
+        "filename": "csit/common-library.robot",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 3239
+      },
+      "writtenOn": "2021-08-24T13:26:09Z",
+      "side": 1,
+      "message": "May be we could have separated the http request \u0026 validation/assertion in separate methods?",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 134
+      },
+      "revId": "98f88877792bd5f767a2aa2e28ab7bbd87381206",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
