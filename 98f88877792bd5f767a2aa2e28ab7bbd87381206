@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dfd34d66_6446b753",
+        "filename": "csit/apex-pdp/tests/apex-pdp-test.robot",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2021-08-25T09:45:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98a273e0_04c712e8",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 17
+      },
+      "revId": "98f88877792bd5f767a2aa2e28ab7bbd87381206",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54ac617b_37791544",
         "filename": "csit/common-library.robot",
         "patchSetId": 5
@@ -77,6 +101,30 @@
       "side": 1,
       "message": "agreed",
       "parentUuid": "1f24a61b_8bbae3af",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 134
+      },
+      "revId": "98f88877792bd5f767a2aa2e28ab7bbd87381206",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba69083_e97f66b7",
+        "filename": "csit/common-library.robot",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2021-08-25T09:45:16Z",
+      "side": 1,
+      "message": "These assertions are specific to the pdpGroupQuery. So, for reusing the QueryPdpGroups keyword, I think parameterizing it will be a better option. Otherwise, by just extracting the assertions to a separate method, QueryPdpGroups will be doing nothing other than the PerformGetRequest , and then calling the new method for assertions.",
+      "parentUuid": "75ad9827_d2d8b1fe",
       "range": {
         "startLine": 21,
         "startChar": 4,
