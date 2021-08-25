@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-INSERT INTO sequence(SEQ_NAME, SEQ_COUNT) VALUES('SEQ_GEN', (SELECT IFNULL(max(id),0) FROM pdpstatistics));
+CREATE TABLE IF NOT EXISTS sequence (SEQ_NAME VARCHAR(50) NOT NULL, SEQ_COUNT DECIMAL(38) DEFAULT NULL NULL, CONSTRAINT PK_SEQUENCE PRIMARY KEY (SEQ_NAME));

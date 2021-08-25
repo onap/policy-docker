@@ -17,6 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-UPDATE pdpstatistics as p JOIN (SELECT name, version, timeStamp, ROW_NUMBER() OVER (ORDER BY timeStamp ASC) AS row_num FROM pdpstatistics GROUP BY name, version, timeStamp) AS t ON (p.name=t.name AND p.version=t.version AND p.timeStamp = t.timeStamp) SET p.id=t.row_num;
-
-ALTER TABLE pdpstatistics ADD CONSTRAINT PK_PDPSTATISTICS PRIMARY KEY (ID, name, version);
+ALTER TABLE pdpstatistics ADD COLUMN POLICYUNDEPLOYCOUNT BIGINT DEFAULT NULL NULL AFTER POLICYEXECUTEDSUCCESSCOUNT, ADD COLUMN POLICYUNDEPLOYFAILCOUNT BIGINT DEFAULT NULL NULL, ADD COLUMN POLICYUNDEPLOYSUCCESSCOUNT BIGINT DEFAULT NULL NULL, ADD COLUMN ID BIGINT NOT NULL;
