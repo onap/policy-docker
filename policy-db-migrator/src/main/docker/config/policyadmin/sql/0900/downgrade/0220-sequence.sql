@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-DROP TABLE IF EXISTS `sequence`;
+DELETE from sequence;

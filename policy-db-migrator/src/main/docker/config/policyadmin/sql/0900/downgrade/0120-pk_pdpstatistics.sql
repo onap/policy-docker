@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE pdpstatistics MODIFY COLUMN timeStamp datetime NULL;
+ALTER TABLE pdpstatistics ADD CONSTRAINT PK_PDPSTATISTICS PRIMARY KEY (timeStamp, name, version);

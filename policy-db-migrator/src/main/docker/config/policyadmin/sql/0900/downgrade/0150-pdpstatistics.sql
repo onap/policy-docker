@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE pdpstatistics DROP COLUMN POLICYUNDEPLOYCOUNT, DROP COLUMN POLICYUNDEPLOYFAILCOUNT, DROP COLUMN POLICYUNDEPLOYSUCCESSCOUNT, DROP COLUMN ID;
+ALTER TABLE pdpstatistics MODIFY COLUMN timeStamp datetime NOT NULL;

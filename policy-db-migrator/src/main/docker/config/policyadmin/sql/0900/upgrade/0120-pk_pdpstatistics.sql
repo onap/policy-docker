@@ -17,6 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE pdpstatistics DROP CONSTRAINT PRIMARY KEY;
-
-UPDATE pdpstatistics set ID = 0;
+ALTER TABLE pdpstatistics DROP PRIMARY KEY;

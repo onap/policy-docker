@@ -16,5 +16,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  *  ============LICENSE_END=========================================================
  */
-
-CREATE TABLE IF NOT EXISTS sequence (SEQ_NAME VARCHAR(50) NOT NULL, SEQ_COUNT DECIMAL(38) DEFAULT NULL NULL, CONSTRAINT PK_SEQUENCE PRIMARY KEY (SEQ_NAME));
+UPDATE jpapdpstatistics_enginestats a
+  JOIN pdpstatistics b
+    ON a.name = b.name AND a.version = b.version AND a.id = b.id
+   SET a.timeStamp = b.timeStamp;

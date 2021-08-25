@@ -16,7 +16,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  *  ============LICENSE_END=========================================================
  */
-
-ALTER TABLE pdpstatistics DROP CONSTRAINT PRIMARY KEY;
-
-UPDATE pdpstatistics set ID = 0;
+UPDATE jpapdpstatistics_enginestats a
+  JOIN pdpstatistics b
+    ON a.name = b.name AND a.version = b.version AND a.timeStamp = b.timeStamp
+   SET a.id = b.id;
