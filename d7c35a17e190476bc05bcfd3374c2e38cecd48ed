@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb5cf61a_a54f1478",
+        "filename": "csit/config/drools-apps/custom/engine.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-08-31T13:09:06Z",
+      "side": 1,
+      "message": "cool!",
+      "revId": "d7c35a17e190476bc05bcfd3374c2e38cecd48ed",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d4da6ee_8af99089",
+        "filename": "csit/config/drools/custom/engine.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-08-31T13:09:06Z",
+      "side": 1,
+      "message": "cool!",
+      "revId": "d7c35a17e190476bc05bcfd3374c2e38cecd48ed",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
