@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE pdp ADD COLUMN LASTUPDATE datetime DEFAULT NULL NULL AFTER HEALTHY;
+ALTER TABLE pdp ADD COLUMN LASTUPDATE datetime NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER HEALTHY;
