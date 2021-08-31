@@ -16,6 +16,11 @@ Healthcheck
     ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/healthcheck  200  null
     Should Be Equal As Strings  ${resp.json()['code']}  200
 
+Consolidated Healthcheck
+    [Documentation]  Verify policy consolidated health check
+    ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/components/healthcheck  200  null
+    Should Be Equal As Strings  ${resp.json()['healthy']}  True
+
 Metrics
     [Documentation]  Verify policy pap is exporting prometheus metrics
     ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /metrics  200  null

@@ -104,6 +104,7 @@ services:
        - 6969
       volumes:
        - ./config/pap/defaultConfig.json:/opt/app/policy/pap/etc/defaultConfig.json:ro
+       - ./config/pap/groups.json:/opt/app/policy/pap/etc/mounted/groups.json:ro
        - ./config/ks.jks:/opt/app/policy/pap/etc/ssl/policy-keystore:ro
        - ./config/policy-truststore:/opt/app/policy/pap/etc/ssl/policy-truststore:ro
        - ./wait_for_port.sh:/opt/app/policy/pap/bin/wait_for_port.sh:ro
