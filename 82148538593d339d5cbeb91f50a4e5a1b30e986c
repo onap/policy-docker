@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1da30d19_85ddea4c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 811
+      },
+      "writtenOn": "2021-08-31T16:03:11Z",
+      "side": 1,
+      "message": "keep the commit message under 50 characters",
+      "revId": "82148538593d339d5cbeb91f50a4e5a1b30e986c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
