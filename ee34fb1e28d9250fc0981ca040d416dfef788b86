@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d376b6f4_19be885c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2021-08-31T16:59:24Z",
+      "side": 1,
+      "message": "Use \u003c\u003d50 characters for commit summary line, commit message guidelines are at https://wiki.onap.org/display/DW/Commit+Messages",
+      "revId": "ee34fb1e28d9250fc0981ca040d416dfef788b86",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
