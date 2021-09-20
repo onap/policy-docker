@@ -422,28 +422,10 @@ function upgrade
         set -x
     fi
 
-    local sqlName sqlFile schemaVersion upgradeSqls rc tagDate tag retry compare
+    local sqlName sqlFile schemaVersion upgradeSqls rc tagDate tag
     tagDate=$(date +%d%m%y%H%M%S)
-    retry=0
 
     echo "upgrade: ${CURRENT_RELEASE} -> ${TARGET_UPGRADE_RELEASE}"
-    last_operation_status
-    rc=$?
-    if [ $rc -eq 0 ]; then
-         echo "Partial $LAST_OPERATION detected"
-         retry=1
-         if [ "${LAST_OPERATION}" == 'upgrade' ]; then
-              CURRENT_RELEASE="${LAST_FROM_VERSION}"
-              # less than
-              compare="lt"
-              echo "Upgrade will attempt to resume at $LAST_SCRIPT"
-         else
-              CURRENT_RELEASE="${LAST_TO_VERSION}"
-              # less than or equal
-              compare="le"
-              echo "Upgrade will attempt to resume after $LAST_SCRIPT"
-         fi
-    fi
 
     if [ ${CURRENT_RELEASE} \< ${TARGET_UPGRADE_RELEASE} ]; then
         upgradeSqls=$(ls -v "${UPGRADE_DIR}"/*/upgrade/*.sql 2> /dev/null)
@@ -490,28 +472,10 @@ function downgrade
         set -x
     fi
 
-    local sqlName sqlFile schemaVersion downgradeSqls rc tagDate tag retry compare
+    local sqlName sqlFile schemaVersion downgradeSqls rc tagDate tag
     tagDate=$(date +%d%m%y%H%M%S)
-    retry=0
 
     echo "downgrade: ${CURRENT_RELEASE} -> ${TARGET_DOWNGRADE_RELEASE}"
-    last_operation_status
-    rc=$?
-    if [ $rc -eq 0 ]; then
-         echo "Partial $LAST_OPERATION detected"
-         retry=1
-         if [ "${LAST_OPERATION}" == 'downgrade' ]; then
-              CURRENT_RELEASE="${LAST_FROM_VERSION}"
-              # greater than
-              compare="gt"
-              echo "Downgrade will attempt to resume at $LAST_SCRIPT"
-         else
-              CURRENT_RELEASE="${LAST_TO_VERSION}"
-              # greater than or equal to
-              compare="ge"
-              echo "Downgrade will attempt to resume before $LAST_SCRIPT"
-         fi
-    fi
 
     if [ ${CURRENT_RELEASE} \> ${TARGET_DOWNGRADE_RELEASE} ]; then
         downgradeSqls=$(ls -v -r "${DOWNGRADE_DIR}"/*/downgrade/*.sql 2> /dev/null)
@@ -745,6 +709,35 @@ for dbPath in ${SCHEMA_S}; do
 
     # Check if the schema has already been installed
     current_schema
+    retry=0
+    comapre=""
+    last_operation_status
+    last_status=$?
+    if [ $last_status -eq 0 ]; then
+         echo "Partial $LAST_OPERATION detected"
+         retry=1
+         if [ "${OPERATION}" == 'downgrade' ] && [ "${LAST_OPERATION}" == 'downgrade' ]; then
+              CURRENT_RELEASE="${LAST_FROM_VERSION}"
+              # greater than
+              compare="gt"
+              echo "Downgrade will attempt to resume at $LAST_SCRIPT"
+         elif [ "${OPERATION}" == 'downgrade' ] && [ "${LAST_OPERATION}" == 'upgrade' ]; then
+              CURRENT_RELEASE="${LAST_TO_VERSION}"
+              # greater than or equal to
+              compare="ge"
+              echo "Downgrade will attempt to resume before $LAST_SCRIPT"
+         elif [ "${OPERATION}" == 'upgrade' ] && [ "${LAST_OPERATION}" == 'upgrade' ]; then
+              CURRENT_RELEASE="${LAST_FROM_VERSION}"
+              # less than
+              compare="lt"
+              echo "Upgrade will attempt to resume at $LAST_SCRIPT"
+         else
+              CURRENT_RELEASE="${LAST_TO_VERSION}"
+              # less than or equal
+              compare="le"
+              echo "Upgrade will attempt to resume after $LAST_SCRIPT"
+         fi
+    fi
 
     if [ -n "${INPUT_FROM_RELEASE}" ]; then
         if [ "${CURRENT_RELEASE}" \> "${INPUT_FROM_RELEASE}" ] || [ "${CURRENT_RELEASE}" \< "${INPUT_FROM_RELEASE}" ]; then
