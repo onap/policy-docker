@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d432c5e7_2b780d78",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 1
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2021-09-21T15:37:25Z",
+      "side": 1,
+      "message": "The convention in the script is upper case for global scope vars, and lower case for local vars, I think this is now a global, better to change it to upper case I think.",
+      "revId": "0c4c2b186614352dee3b9e8482afe03e2e876b88",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96da9773_32f14126",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator",
+        "patchSetId": 1
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2021-09-21T15:37:25Z",
+      "side": 1,
+      "message": "Is this a typo? should this be compare?   Same convention suggested for globals and locals and mentioned in previous comment.   I don\u0027t seem very clearly how this is variable is used, I suppose it is at some point, but can you doublecheck?",
+      "revId": "0c4c2b186614352dee3b9e8482afe03e2e876b88",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
