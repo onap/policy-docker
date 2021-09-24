@@ -22,6 +22,30 @@
       "revId": "31702ad1b2daf35291ffe3571bfdb5064d1eaf15",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb219bc1_84d66df9",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/0900/downgrade/0140-pk_pdpstatistics.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 7668
+      },
+      "writtenOn": "2021-09-24T19:08:10Z",
+      "side": 1,
+      "message": "In Honolulu the primary key is name, version, timeStamp\nIn Istanbul it\u0027s name, version, id\nSo in the Istanbul release it\u0027s possible to have duplicate records with name, version and timeStamp (the ids will be different).\nThis probably won\u0027t happen very often but in case it does we will have to remove the duplicates when downgrading to Honolulu.\nWe can make this a manual task if you like.",
+      "parentUuid": "715da4f4_414526f6",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "31702ad1b2daf35291ffe3571bfdb5064d1eaf15",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
