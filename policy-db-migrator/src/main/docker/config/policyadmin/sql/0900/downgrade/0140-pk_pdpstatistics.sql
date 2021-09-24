@@ -16,6 +16,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  *  ============LICENSE_END=========================================================
  */
+DELETE FROM pdpstatistics WHERE (id,name,version) IN (select id, name, version FROM (select max(id) as id, name, version, timeStamp FROM pdpstatistics WHERE (name,version,timestamp) IN (SELECT name, version, timeStamp FROM pdpstatistics GROUP BY name, version, timeStamp HAVING count(*) > 1) GROUP BY name, version, timeStamp) t);
 
 ALTER TABLE pdpstatistics DROP CONSTRAINT PRIMARY KEY;
 
