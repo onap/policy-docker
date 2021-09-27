@@ -46,6 +46,30 @@
       "revId": "31702ad1b2daf35291ffe3571bfdb5064d1eaf15",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6838807f_05eadfc3",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/0900/downgrade/0140-pk_pdpstatistics.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 3239
+      },
+      "writtenOn": "2021-09-27T13:47:42Z",
+      "side": 1,
+      "message": "Got it, thanks for the clarification!",
+      "parentUuid": "cb219bc1_84d66df9",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "31702ad1b2daf35291ffe3571bfdb5064d1eaf15",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
