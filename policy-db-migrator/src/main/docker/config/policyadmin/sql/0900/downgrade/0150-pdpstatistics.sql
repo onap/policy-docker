@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE pdpstatistics MODIFY COLUMN timeStamp datetime NOT NULL;
+ALTER TABLE pdpstatistics MODIFY COLUMN timeStamp datetime(6) NOT NULL;

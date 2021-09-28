@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE jpapdpstatistics_enginestats ADD COLUMN timeStamp datetime DEFAULT NULL NULL AFTER UPTIME;
+ALTER TABLE jpapdpstatistics_enginestats ADD COLUMN timeStamp datetime(6) DEFAULT NULL NULL AFTER UPTIME;
