@@ -22,6 +22,30 @@
       "revId": "826d9edd2492c3bbe492face3ce4d7fe0dd84b8a",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34646d3c_fd2dc749",
+        "filename": "csit/clamp/tests/data/PMSHMultipleCLTosca.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2021-10-04T14:15:03Z",
+      "side": 1,
+      "message": "If the policy type and policy is already in the PF, you need only specify the name and version. If they are not already in there, then you need to have them in the service template with the Control Loop.",
+      "parentUuid": "9e3ab0fc_d5c2c586",
+      "range": {
+        "startLine": 358,
+        "startChar": 0,
+        "endLine": 358,
+        "endChar": 12
+      },
+      "revId": "826d9edd2492c3bbe492face3ce4d7fe0dd84b8a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
