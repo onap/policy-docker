@@ -44,16 +44,16 @@ spec:
               - /bin/bash
               - -c
               - nodetool status | grep $POD_IP | awk '$1!="UN" { exit 1; }'
-              initialDelaySeconds: 120
-              periodSeconds: 20
+            initialDelaySeconds: 120
+            periodSeconds: 20
           readinessProbe:
             exec:
               command:
               - /bin/bash
               - -c
               - nodetool status | grep $POD_IP | awk '$1!="UN" { exit 1; }'
-              initialDelaySeconds: 120
-              periodSeconds: 20
+            initialDelaySeconds: 120
+            periodSeconds: 20
           volumeMounts:
             - mountPath: /opt/app/policy/simulators/etc/mounted/
               name: simconfig
@@ -77,4 +77,3 @@ spec:
           configMap:
             name: {{ include "policy-models-simulator.fullname" . }}-configmap
             defaultMode: 0755
-
