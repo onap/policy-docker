@@ -1,6 +1,7 @@
 # ============LICENSE_START====================================================
 #  Copyright (C) 2020-2021 AT&T Intellectual Property. All rights reserved.
 #  Modification Copyright 2021. Nordix Foundation.
+#  Modifications Copyright (C) 2021 Bell Canada. All rights reserved.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,45 +28,36 @@ function getVersion
     curl -qL --silent \
       https://github.com/onap/policy-$REPO/raw/${GERRIT_BRANCH}/pom.xml |
     xmllint --xpath \
-      '/*[local-name()="project"]/*[local-name()="version"]/text()' -
+      '/*[local-name()="project"]/*[local-name()="version"]/text()' - |
+    awk -F \. '{print $1"."$2"-SNAPSHOT-latest"}'
 }
 
-POLICY_MODELS_VERSION=$(getVersion models)
-export POLICY_MODELS_VERSION=${POLICY_MODELS_VERSION:0:3}-SNAPSHOT-latest
+export POLICY_MODELS_VERSION=$(getVersion models)
 echo POLICY_MODELS_VERSION=${POLICY_MODELS_VERSION}
 
-POLICY_API_VERSION=$(getVersion api)
-export POLICY_API_VERSION=${POLICY_API_VERSION:0:3}-SNAPSHOT-latest
+export POLICY_API_VERSION=$(getVersion api)
 echo POLICY_API_VERSION=${POLICY_API_VERSION}
 
-POLICY_PAP_VERSION=$(getVersion pap)
-export POLICY_PAP_VERSION=${POLICY_PAP_VERSION:0:3}-SNAPSHOT-latest
+export POLICY_PAP_VERSION=$(getVersion pap)
 echo POLICY_PAP_VERSION=${POLICY_PAP_VERSION}
 
-POLICY_XACML_PDP_VERSION=$(getVersion xacml-pdp)
-export POLICY_XACML_PDP_VERSION=${POLICY_XACML_PDP_VERSION:0:3}-SNAPSHOT-latest
+export POLICY_XACML_PDP_VERSION=$(getVersion xacml-pdp)
 echo POLICY_XACML_PDP_VERSION=${POLICY_XACML_PDP_VERSION}
 
-POLICY_DROOLS_VERSION=$(getVersion drools-pdp)
-export POLICY_DROOLS_VERSION=${POLICY_DROOLS_VERSION:0:3}-SNAPSHOT-latest
+export POLICY_DROOLS_VERSION=$(getVersion drools-pdp)
 echo POLICY_DROOLS_VERSION=${POLICY_DROOLS_VERSION}
 
-POLICY_DROOLS_APPS_VERSION=$(getVersion drools-applications)
-export POLICY_DROOLS_APPS_VERSION=${POLICY_DROOLS_APPS_VERSION:0:3}-SNAPSHOT-latest
+export POLICY_DROOLS_APPS_VERSION=$(getVersion drools-applications)
 echo POLICY_DROOLS_APPS_VERSION=${POLICY_DROOLS_APPS_VERSION}
 
-POLICY_APEX_PDP_VERSION=$(getVersion apex-pdp)
-export POLICY_APEX_PDP_VERSION=${POLICY_APEX_PDP_VERSION:0:3}-SNAPSHOT-latest
+export POLICY_APEX_PDP_VERSION=$(getVersion apex-pdp)
 echo POLICY_APEX_PDP_VERSION=${POLICY_APEX_PDP_VERSION}
 
-POLICY_DISTRIBUTION_VERSION=$(getVersion distribution)
-export POLICY_DISTRIBUTION_VERSION=${POLICY_DISTRIBUTION_VERSION:0:3}-SNAPSHOT-latest
+export POLICY_DISTRIBUTION_VERSION=$(getVersion distribution)
 echo POLICY_DISTRIBUTION_VERSION=${POLICY_DISTRIBUTION_VERSION}
 
-POLICY_CLAMP_VERSION=$(getVersion clamp)
-export POLICY_CLAMP_VERSION=${POLICY_CLAMP_VERSION:0:5}-SNAPSHOT-latest
+export POLICY_CLAMP_VERSION=$(getVersion clamp)
 echo POLICY_CLAMP_VERSION=${POLICY_CLAMP_VERSION}
 
-POLICY_DOCKER_VERSION=$(getVersion docker)
-export POLICY_DOCKER_VERSION=${POLICY_DOCKER_VERSION:0:3}-SNAPSHOT-latest
+export POLICY_DOCKER_VERSION=$(getVersion docker)
 echo POLICY_DOCKER_VERSION=${POLICY_DOCKER_VERSION}
