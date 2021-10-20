@@ -18,7 +18,8 @@
             "port": 6666,
             "https": true,
             "userName": "policy@policy.onap.org",
-            "password": "demo123456!"
+            "password": "demo123456!",
+            "resourceLocation": "/opt/app/policy/simulators/etc/mounted/aairesponse/"
         },
         {
             "name": "SDNC simulator",
