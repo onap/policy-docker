@@ -6,7 +6,7 @@
       "eventId" : "8c7935a4-79d8-4ec0-b661-dcca3cd68006",
       "lastEpochMicrosec" : 1597952499468,
       "eventName" : "Report hostname & IP",
-      "sourceName" : "PNF101",
+      "sourceName" : "demo-pnf",
       "reportingEntityName" : "DCAE",
       "vesEventListenerVersion" : "7.1",
       "internalHeaderFields" : { },
@@ -19,7 +19,7 @@
       "hashMap" : {
         "hostname" : "UNDEFINED",
         "pnfId": "927b2580-36d9-4f13-8421-3c9d43b7a57e",
-        "pnfName": "PNF101",
+        "pnfName": "demo-pnf",
         "ip" : "10.101.200.10"
       },
       "otherFieldsVersion" : "3.0"

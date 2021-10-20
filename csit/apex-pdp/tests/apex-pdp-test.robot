@@ -41,6 +41,16 @@ ExecuteApexControlLoopPolicy
      Should Be Equal As Integers    ${result.rc}    0
      Wait Until Keyword Succeeds    2 min    5 sec    TriggerAndVerifyControlLoopPolicy
 
+ExecuteApexExamplePolicy
+     Set Test Variable    ${policyName}    onap.policies.apex.Example
+     ${postjson}=  Get file  ${CURDIR}/data/${policyName}.json
+     CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
+     DeployPolicy
+     Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
+     ${result}=     Run Process    ${SCRIPTS}/make_topic.sh     APEX-CL-MGT
+     Should Be Equal As Integers    ${result.rc}    0
+     Wait Until Keyword Succeeds    2 min    5 sec    TriggerAndVerifyExamplePolicy
+
 *** Keywords ***
 
 
@@ -61,20 +71,32 @@ RunEventOnApexEngine
     Should Be Equal As Strings    ${resp.status_code}   200
 
 TriggerAndVerifyControlLoopPolicy
-    [Documentation]    Send event to DMaaP and read notifications to verify policy execution
+    [Documentation]    Send CL policy trigger event to DMaaP and read notifications to verify policy execution
     Create Session   apexSession  https://${DMAAP_IP}:3905   max_retries=1
     ${data}=    Get Binary File     ${CURDIR}/data/VesEvent.json
     &{headers}=  Create Dictionary    Content-Type=application/json    Accept=application/json
     ${resp}=    POST On Session    apexSession    /events/unauthenticated.DCAE_CL_OUTPUT    data=${data}   headers=${headers}
     Should Be Equal As Strings    ${resp.status_code}   200
-    Run Keyword    CheckLogMessage    VES event has been received. Going to fetch details from AAI.
-    Run Keyword    CheckLogMessage    Received response from AAI successfully. Hostname in AAI matches with the one in Ves event. Going to make the update-config request to CDS.
-    Run Keyword    CheckLogMessage    Successfully processed the VES event. Hostname is updated.
+    Run Keyword    CheckLogMessage    ACTIVE    VES event has been received. Going to fetch details from AAI.
+    Run Keyword    CheckLogMessage    SUCCESS    Received response from AAI successfully. Hostname in AAI matches with the one in Ves event. Going to make the update-config request to CDS.
+    Run Keyword    CheckLogMessage    FINAL_SUCCESS    Successfully processed the VES event. Hostname is updated.
+
+TriggerAndVerifyExamplePolicy
+    [Documentation]    Send example policy trigger event to DMaaP and read notifications to verify policy execution
+    Create Session   apexSession  https://${DMAAP_IP}:3905   max_retries=1
+    ${data}=    Get Binary File     ${CURDIR}/data/VesEventForExamplePolicy.json
+    &{headers}=  Create Dictionary    Content-Type=application/json    Accept=application/json
+    ${resp}=    POST On Session    apexSession    /events/unauthenticated.DCAE_POLICY_EXAMPLE_OUTPUT    data=${data}   headers=${headers}
+    Should Be Equal As Strings    ${resp.status_code}   200
+    Run Keyword    CheckLogMessage    ACTIVE    VES event has been received. Going to fetch VNF details from AAI.
+    Run Keyword    CheckLogMessage    SUCCESS    VNF details are received from AAI successfully. Sending ConfigModify request to CDS.
+    Run Keyword    CheckLogMessage    SUCCESS    ConfigModify request is successful. Sending restart request to CDS.
+    Run Keyword    CheckLogMessage    FINAL_SUCCESS    Successfully processed the VES Event. Restart is complete.
 
 CheckLogMessage
     [Documentation]    Read log messages received and check for expected content.
-    [Arguments]    ${expectedMsg}
-    ${result}=     Run Process    ${SCRIPTS}/wait_topic.sh     APEX-CL-MGT    PNF101
+    [Arguments]    ${status}    ${expectedMsg}
+    ${result}=     Run Process    ${SCRIPTS}/wait_topic.sh     APEX-CL-MGT    ${status}
     Log    Received log event on APEX-CL-MGT topic ${result.stdout}
     Should Be Equal As Integers    ${result.rc}    0
     Should Contain    ${result.stdout}    ${expectedMsg}
