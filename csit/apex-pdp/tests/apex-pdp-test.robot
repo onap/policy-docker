@@ -5,6 +5,7 @@ Library     OperatingSystem
 Library     json
 Library     Process
 Resource    ${CURDIR}/../../common-library.robot
+Resource    ${CURDIR}/../../api-pap-common.robot
 
 
 *** Test Cases ***
@@ -53,14 +54,13 @@ ExecuteApexTestVnfPolicy
 
 *** Keywords ***
 
-
 DeployPolicy
      [Documentation]    Deploy the policy in apex-pdp engine
      ${postjson}=    Get file  ${CURDIR}/data/policy_deploy.json
      ${postjson}=    evaluate    json.loads('''${postjson}''')    json
      set to dictionary    ${postjson['groups'][0]['deploymentSubgroups'][0]['policies'][0]}    name=${policyName}
      ${postjson}=    evaluate    json.dumps(${postjson})    json
-     PerformPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/deployments/batch  202  ${postjson}  null
+     PapApiPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/deployments/batch  202  ${postjson}  null
 
 RunEventOnApexEngine
     [Documentation]    Send event to verify policy execution
@@ -104,7 +104,7 @@ CheckLogMessage
 VerifyPdpStatistics
      [Documentation]    Verify pdp statistics after policy execution
      [Arguments]    ${deployCount}    ${deploySuccessCount}    ${executedCount}    ${executedSuccessCount}
-     ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/statistics/defaultGroup/apex/${pdpName}  200  null
+     ${resp}=  PapApiGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/statistics/defaultGroup/apex/${pdpName}  200  null
      Should Be Equal As Strings    ${resp.status_code}     200
      Should Be Equal As Strings    ${resp.json()['defaultGroup']['apex'][0]['pdpInstanceId']}  ${pdpName}
      Should Be Equal As Strings    ${resp.json()['defaultGroup']['apex'][0]['pdpGroupName']}  defaultGroup

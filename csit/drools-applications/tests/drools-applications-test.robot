@@ -35,31 +35,31 @@ MakeTopics
 
 CreateVcpeXacmlPolicy
     [Documentation]    Create VCPE Policy for Xacml
-    PerformPostRequest  /policy/api/v1/policies  null  ${API_IP}  6969  vCPE.policy.monitoring.input.tosca.yaml  ${DATA}  yaml  200
+    CreatePolicy  vCPE.policy.monitoring.input.tosca.yaml  ${DATA}  yaml
 
 CreateVcpeDroolsPolicy
     [Documentation]    Create VCPE Policy for Drools
-    PerformPostRequest  /policy/api/v1/policies  null  ${API_IP}  6969  vCPE.policy.operational.input.tosca.yaml  ${DATA}  yaml  200
+    CreatePolicy  vCPE.policy.operational.input.tosca.yaml  ${DATA}  yaml
 
 CreateVdnsXacmlPolicy
     [Documentation]    Create VDNS Policy for Xacml
-    PerformPostRequest  /policy/api/v1/policies  null  ${API_IP}  6969  vDNS.policy.monitoring.input.tosca.yaml  ${DATA}  yaml  200
+    CreatePolicy  vDNS.policy.monitoring.input.tosca.yaml  ${DATA}  yaml
 
 CreateVdnsDroolsPolicy
     [Documentation]    Create VDNS Policy for Drools
-    PerformPostRequest  /policy/api/v1/policies  null  ${API_IP}  6969  vDNS.policy.operational.input.tosca.json  ${DATA}  json  200
+    CreatePolicy  vDNS.policy.operational.input.tosca.json  ${DATA}  json
 
 CreateVfwXacmlPolicy
     [Documentation]    Create VFW Policy for Xacml
-    PerformPostRequest  /policy/api/v1/policies  null  ${API_IP}  6969  vFirewall.policy.monitoring.input.tosca.yaml  ${DATA}  yaml  200
+    CreatePolicy  vFirewall.policy.monitoring.input.tosca.yaml  ${DATA}  yaml
 
 CreateVfwDroolsPolicy
     [Documentation]    Create VFW Policy for Drools
-    PerformPostRequest  /policy/api/v1/policies  null  ${API_IP}  6969  vFirewall.policy.operational.input.tosca.json  ${DATA}  json  200
+    CreatePolicy  vFirewall.policy.operational.input.tosca.json  ${DATA}  json
 
 DeployXacmlPolicies
     [Documentation]    Deploys the Policies to Xacml
-    PerformPostRequest  /policy/pap/v1/pdps/deployments/batch  null  ${PAP_IP}  6969  deploy.xacml.policies.json  ${DATA2}  json  202
+    PerformPostRequest  /policy/pap/v1/pdps/deployments/batch  ${PAP_IP}  deploy.xacml.policies.json  ${DATA2}  json  202  null
     ${result}=     Run Process        ${SCR2}/wait_topic.sh     POLICY-PDP-PAP
     ...            responseTo    xacml    ACTIVE    restart
     Log    Received status ${result.stdout}
@@ -70,7 +70,7 @@ DeployXacmlPolicies
 
 DeployDroolsPolicies
     [Documentation]    Deploys the Policies to Drools
-    PerformPostRequest  /policy/pap/v1/pdps/deployments/batch  null  ${PAP_IP}  6969  deploy.drools.policies.json  ${DATA2}  json  202
+    PerformPostRequest  /policy/pap/v1/pdps/deployments/batch  ${PAP_IP}  deploy.drools.policies.json  ${DATA2}  json  202  null
     ${result}=     Run Process        ${SCR2}/wait_topic.sh     POLICY-PDP-PAP
     ...            responseTo    drools    ACTIVE
     Log    Received status ${result.stdout}
@@ -221,8 +221,8 @@ PeformGetRequest
      [return]  ${resp}
 
 PerformPostRequest
-     [Arguments]  ${url}  ${params}  ${hostname}  ${port}  ${jsonfile}  ${filepath}  ${contenttype}  ${expectedstatus}
-     ${auth}=  Create List  healthcheck  zb!XztG34
+     [Arguments]  ${url}  ${hostname}  ${jsonfile}  ${filepath}  ${contenttype}  ${expectedstatus}  ${params}
+     ${auth}=  Create List  policyadmin  zb!XztG34
      ${postjson}=  Get file  ${filepath}/${jsonfile}
      Log  Creating session https://${hostname}:6969
      ${session}=  Create Session  policy  https://${hostname}:6969  auth=${auth}
@@ -230,3 +230,7 @@ PerformPostRequest
      ${resp}=  POST On Session  policy  ${url}  params=${params}  data=${postjson}  headers=${headers}  expected_status=${expectedstatus}
      Log  Received response from policy ${resp.text}
      [return]  ${resp}
+
+CreatePolicy
+     [Arguments]  ${jsonfile}  ${filepath}  ${contenttype}
+     PerformPostRequest  /policy/api/v1/policies  ${API_IP}  ${jsonfile}  ${filepath}  ${contenttype}  200  null

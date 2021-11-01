@@ -5,6 +5,7 @@ Library     OperatingSystem
 Library     Process
 Library     json
 Resource    ${CURDIR}/../../common-library.robot
+Resource    ${CURDIR}/../../api-pap-common.robot
 
 *** Test Cases ***
 Healthcheck
@@ -63,7 +64,7 @@ GetDefaultDecision
 DeployPolicies
      [Documentation]   Runs Policy PAP to deploy a policy
      ${postjson}=  Get file  ${CURDIR}/data/vCPE.policy.input.tosca.deploy.json
-     PerformPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/policies  202  ${postjson}  null
+     PapApiPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/policies  202  ${postjson}  null
      ${result}=     Run Process    ${SCR_DMAAP}/wait_topic.sh    POLICY-PDP-PAP
      ...            responseTo    xacml    ACTIVE    onap.restart.tca
      Should Be Equal As Integers        ${result.rc}    0
@@ -127,7 +128,7 @@ GetStatisticsAfterDecision
 
 UndeployMonitorPolicy
      [Documentation]    Runs Policy PAP to undeploy a policy
-     PerformDeleteRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/policies/onap.restart.tca  202
+     PapApiDeleteRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/policies/onap.restart.tca  202
 
 GetStatisticsAfterUndeploy
      [Documentation]    Runs Policy Xacml PDP Statistics after policy is undeployed

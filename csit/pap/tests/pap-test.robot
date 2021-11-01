@@ -3,7 +3,7 @@ Library    Collections
 Library    RequestsLibrary
 Library    OperatingSystem
 Library    json
-Resource    ${CURDIR}/../../common-library.robot
+Resource    ${CURDIR}/../../api-pap-common.robot
 
 *** Test Cases ***
 LoadPolicy
@@ -13,28 +13,28 @@ LoadPolicy
 
 Healthcheck
     [Documentation]  Verify policy pap health check
-    ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/healthcheck  200  null
+    ${resp}=  PapApiGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/healthcheck  200  null
     Should Be Equal As Strings  ${resp.json()['code']}  200
 
 Consolidated Healthcheck
     [Documentation]  Verify policy consolidated health check
-    ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/components/healthcheck  200  null
+    ${resp}=  PapApiGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/components/healthcheck  200  null
     Should Be Equal As Strings  ${resp.json()['healthy']}  True
 
 Metrics
     [Documentation]  Verify policy pap is exporting prometheus metrics
-    ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /metrics  200  null
+    ${resp}=  PapApiGetRequest  ${POLICY_PAP_IP}  /metrics  200  null
     Should Contain  ${resp.text}  jvm_threads_current
 
 Statistics
     [Documentation]  Verify policy pap statistics
-    ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/statistics  200  null
+    ${resp}=  PapApiGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/statistics  200  null
     Should Be Equal As Strings  ${resp.json()['code']}  200
 
 AddPdpGroup
     [Documentation]  Add a new PdpGroup named 'testGroup' in the policy database
     ${postjson}=  Get file  ${CURDIR}/data/create.group.request.json
-    PerformPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/groups/batch  200  ${postjson}  null
+    PapApiPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/groups/batch  200  ${postjson}  null
 
 QueryPdpGroupsBeforeActivation
     [Documentation]  Verify PdpGroups before activation
@@ -42,7 +42,7 @@ QueryPdpGroupsBeforeActivation
 
 ActivatePdpGroup
     [Documentation]  Change the state of PdpGroup named 'testGroup' to ACTIVE
-    PerformPutRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/groups/testGroup  200  state=ACTIVE
+    PapApiPutRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/groups/testGroup  200  state=ACTIVE
 
 QueryPdpGroupsAfterActivation
     [Documentation]  Verify PdpGroups after activation
@@ -51,7 +51,7 @@ QueryPdpGroupsAfterActivation
 DeployPdpGroups
     [Documentation]  Deploy policies in PdpGroups
     ${postjson}=  Get file  ${CURDIR}/data/deploy.group.request.json
-    PerformPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/deployments/batch  202  ${postjson}  null
+    PapApiPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/deployments/batch  202  ${postjson}  null
 
 QueryPdpGroupsAfterDeploy
     [Documentation]  Verify PdpGroups after undeploy
@@ -63,7 +63,7 @@ QueryPolicyAuditAfterDeploy
 
 UndeployPolicy
     [Documentation]  Undeploy a policy named 'onap.restart.tca' from PdpGroups
-    PerformDeleteRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/policies/onap.restart.tca  202
+    PapApiDeleteRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/policies/onap.restart.tca  202
 
 QueryPdpGroupsAfterUndeploy
     [Documentation]  Verify PdpGroups after undeploy
@@ -75,11 +75,11 @@ QueryPolicyAuditAfterUnDeploy
 
 DeactivatePdpGroup
     [Documentation]  Change the state of PdpGroup named 'testGroup' to PASSIVE
-    PerformPutRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/groups/testGroup  200  state=PASSIVE
+    PapApiPutRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/groups/testGroup  200  state=PASSIVE
 
 DeletePdpGroups
     [Documentation]  Delete the PdpGroup named 'testGroup' from policy database
-    PerformDeleteRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/groups/testGroup  200
+    PapApiDeleteRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/groups/testGroup  200
 
 QueryPdpGroupsAfterDelete
     [Documentation]    Verify PdpGroups after delete

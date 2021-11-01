@@ -3,23 +3,23 @@ Library     Collections
 Library     RequestsLibrary
 Library     OperatingSystem
 Library     json
-Resource    ${CURDIR}/../../common-library.robot
+Resource    ${CURDIR}/../../api-pap-common.robot
 
 *** Test Cases ***
 
 Healthcheck
      [Documentation]  Verify policy api health check
-     ${resp}=  PerformGetRequest  ${POLICY_API_IP}  /policy/api/v1/healthcheck  200  null
+     ${resp}=  PapApiGetRequest  ${POLICY_API_IP}  /policy/api/v1/healthcheck  200  null
      Should Be Equal As Strings  ${resp.json()['code']}  200
 
 Metrics
     [Documentation]  Verify policy-api is exporting prometheus metrics
-    ${resp}=  PerformGetRequest  ${POLICY_API_IP}  /metrics  200  null
+    ${resp}=  PapApiGetRequest  ${POLICY_API_IP}  /metrics  200  null
     Should Contain  ${resp.text}  jvm_threads_current
 
 Statistics
      [Documentation]  Verify policy api statistics
-     ${resp}=  PerformGetRequest  ${POLICY_API_IP}  /policy/api/v1/statistics  200  null
+     ${resp}=  PapApiGetRequest  ${POLICY_API_IP}  /policy/api/v1/statistics  200  null
      Should Be Equal As Strings  ${resp.json()['code']}  200
 
 RetrievePolicyTypes
@@ -67,23 +67,23 @@ RetrieveSpecificPolicy
 
 DeleteSpecificPolicy
      [Documentation]  Delete a policy named 'onap.restart.tca' and version '1.0.0' using generic api
-     PerformDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policies/onap.restart.tca/versions/1.0.0  200
-     PerformDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policies/onap.restart.tca/versions/1.0.0  404
+     PapApiDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policies/onap.restart.tca/versions/1.0.0  200
+     PapApiDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policies/onap.restart.tca/versions/1.0.0  404
 
 DeleteSpecificPolicyV2
      [Documentation]  Delete a policy named 'onap.restart.tca' and version '2.0.0' using specific api
-     PerformDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies/onap.restart.tca/versions/2.0.0  200
-     PerformDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies/onap.restart.tca/versions/2.0.0  404
+     PapApiDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies/onap.restart.tca/versions/2.0.0  200
+     PapApiDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies/onap.restart.tca/versions/2.0.0  404
 
 DeleteSpecificPolicyTypeV1
      [Documentation]  Delete a policy type named 'onap.policies.monitoring.tcagen2' and version '1.0.0'
-     PerformDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0  200
-     PerformDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0  404
+     PapApiDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0  200
+     PapApiDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0  404
 
 DeleteSpecificPolicyTypeV2
      [Documentation]  Delete a policy type named 'onap.policies.monitoring.tcagen2' and version '2.0.0'
-     PerformDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/2.0.0  200
-     PerformDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/2.0.0  404
+     PapApiDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/2.0.0  200
+     PapApiDeleteRequest  ${POLICY_API_IP}  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/2.0.0  404
 
 *** Keywords ***
 
@@ -91,24 +91,24 @@ CreatePolicyType
      [Arguments]  ${url}  ${expectedstatus}  ${jsonfile}  ${policytypename}  ${policytypeversion}
      [Documentation]  Create the specific policy type
      ${postjson}=  Get file  ${CURDIR}/data/${jsonfile}
-     ${resp}=  PerformPostRequest  ${POLICY_API_IP}  ${url}  ${expectedstatus}  ${postjson}  null
+     ${resp}=  PapApiPostRequest  ${POLICY_API_IP}  ${url}  ${expectedstatus}  ${postjson}  null
      Run Keyword If  ${expectedstatus}==200  List Should Contain Value  ${resp.json()['policy_types']}  ${policytypename}
      Run Keyword If  ${expectedstatus}==200  Should Be Equal As Strings  ${resp.json()['policy_types']['${policytypename}']['version']}  ${policytypeversion}
 
 FetchPolicyTypes
      [Arguments]  ${url}  ${expectedLength}
      [Documentation]  Fetch all policy types
-     ${resp}=  PerformGetRequest  ${POLICY_API_IP}  ${url}  200  null
+     ${resp}=  PapApiGetRequest  ${POLICY_API_IP}  ${url}  200  null
      Length Should Be  ${resp.json()['policy_types']}  ${expectedLength}
 
 FetchPolicy
      [Arguments]  ${url}  ${keyword}
      [Documentation]  Fetch the specific policy
-     ${resp}=  PerformGetRequest  ${POLICY_API_IP}  ${url}  200  null
+     ${resp}=  PapApiGetRequest  ${POLICY_API_IP}  ${url}  200  null
      Dictionary Should Contain Key  ${resp.json()['topology_template']['policies'][0]}  ${keyword}
 
 FetchPolicies
      [Arguments]  ${url}  ${expectedLength}
      [Documentation]  Fetch all policies
-     ${resp}=  PerformGetRequest  ${POLICY_API_IP}  ${url}  200  null
+     ${resp}=  PapApiGetRequest  ${POLICY_API_IP}  ${url}  200  null
      Length Should Be  ${resp.json()['topology_template']['policies']}  ${expectedLength}
