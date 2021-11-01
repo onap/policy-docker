@@ -5,6 +5,13 @@ Library    OperatingSystem
 Library    json
 Resource    ${CURDIR}/../../common-library.robot
 
+*** Keywords ***
+GetReq
+    [Arguments]  ${url}
+    ${auth}=  PolicyAdminAuth
+    ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  ${url}  200  null  ${auth}
+    [return]  ${resp}
+
 *** Test Cases ***
 LoadPolicy
     [Documentation]  Create a policy named 'onap.restart.tca' and version '1.0.0' using specific api
@@ -13,28 +20,29 @@ LoadPolicy
 
 Healthcheck
     [Documentation]  Verify policy pap health check
-    ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/healthcheck  200  null
+    ${resp}=  GetReq  /policy/pap/v1/healthcheck
     Should Be Equal As Strings  ${resp.json()['code']}  200
 
 Consolidated Healthcheck
     [Documentation]  Verify policy consolidated health check
-    ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/components/healthcheck  200  null
+    ${resp}=  GetReq  /policy/pap/v1/components/healthcheck
     Should Be Equal As Strings  ${resp.json()['healthy']}  True
 
 Metrics
     [Documentation]  Verify policy pap is exporting prometheus metrics
-    ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /metrics  200  null
+    ${resp}=  GetReq  /metrics
     Should Contain  ${resp.text}  jvm_threads_current
 
 Statistics
     [Documentation]  Verify policy pap statistics
-    ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/statistics  200  null
+    ${resp}=  GetReq  /policy/pap/v1/statistics
     Should Be Equal As Strings  ${resp.json()['code']}  200
 
 AddPdpGroup
     [Documentation]  Add a new PdpGroup named 'testGroup' in the policy database
     ${postjson}=  Get file  ${CURDIR}/data/create.group.request.json
-    PerformPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/groups/batch  200  ${postjson}  null
+    ${auth}=  PolicyAdminAuth
+    PerformPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/groups/batch  200  ${postjson}  null  ${auth}
 
 QueryPdpGroupsBeforeActivation
     [Documentation]  Verify PdpGroups before activation
@@ -42,7 +50,8 @@ QueryPdpGroupsBeforeActivation
 
 ActivatePdpGroup
     [Documentation]  Change the state of PdpGroup named 'testGroup' to ACTIVE
-    PerformPutRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/groups/testGroup  200  state=ACTIVE
+    ${auth}=  PolicyAdminAuth
+    PerformPutRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/groups/testGroup  200  state=ACTIVE  ${auth}
 
 QueryPdpGroupsAfterActivation
     [Documentation]  Verify PdpGroups after activation
@@ -51,7 +60,8 @@ QueryPdpGroupsAfterActivation
 DeployPdpGroups
     [Documentation]  Deploy policies in PdpGroups
     ${postjson}=  Get file  ${CURDIR}/data/deploy.group.request.json
-    PerformPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/deployments/batch  202  ${postjson}  null
+    ${auth}=  PolicyAdminAuth
+    PerformPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/deployments/batch  202  ${postjson}  null  ${auth}
 
 QueryPdpGroupsAfterDeploy
     [Documentation]  Verify PdpGroups after undeploy
@@ -63,7 +73,8 @@ QueryPolicyAuditAfterDeploy
 
 UndeployPolicy
     [Documentation]  Undeploy a policy named 'onap.restart.tca' from PdpGroups
-    PerformDeleteRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/policies/onap.restart.tca  202
+    ${auth}=  PolicyAdminAuth
+    PerformDeleteRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/policies/onap.restart.tca  202  ${auth}
 
 QueryPdpGroupsAfterUndeploy
     [Documentation]  Verify PdpGroups after undeploy
@@ -75,11 +86,13 @@ QueryPolicyAuditAfterUnDeploy
 
 DeactivatePdpGroup
     [Documentation]  Change the state of PdpGroup named 'testGroup' to PASSIVE
-    PerformPutRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/groups/testGroup  200  state=PASSIVE
+    ${auth}=  PolicyAdminAuth
+    PerformPutRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/groups/testGroup  200  state=PASSIVE  ${auth}
 
 DeletePdpGroups
     [Documentation]  Delete the PdpGroup named 'testGroup' from policy database
-    PerformDeleteRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/groups/testGroup  200
+    ${auth}=  PolicyAdminAuth
+    PerformDeleteRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/groups/testGroup  200  ${auth}
 
 QueryPdpGroupsAfterDelete
     [Documentation]    Verify PdpGroups after delete

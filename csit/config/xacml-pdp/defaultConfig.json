@@ -14,7 +14,7 @@
     "policyApiParameters": {
         "hostname": "policy-api",
         "port": 6969,
-        "userName": "healthcheck",
+        "userName": "policyadmin",
         "password": "zb!XztG34",
         "useHttps": true,
         "aaf": false

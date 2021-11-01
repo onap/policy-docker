@@ -11,13 +11,15 @@ Resource    ${CURDIR}/../../common-library.robot
 
 Healthcheck
      [Documentation]    Runs Apex PDP Health check
-     ${resp}=    PerformGetRequest    ${APEX_IP}    /policy/apex-pdp/v1/healthcheck    200    null
+     ${hcauth}=  HealthCheckAuth
+     ${resp}=  PerformGetRequest  ${APEX_IP}  /policy/apex-pdp/v1/healthcheck  200  null  ${hcauth}
      Should Be Equal As Strings    ${resp.json()['code']}    200
      Set Suite Variable    ${pdpName}    ${resp.json()['name']}
 
 Metrics
      [Documentation]  Verify policy-apex-pdp is exporting prometheus metrics
-     ${resp}=  PerformGetRequest  ${APEX_IP}  /metrics  200  null
+     ${hcauth}=  HealthCheckAuth
+     ${resp}=  PerformGetRequest  ${APEX_IP}  /metrics  200  null  ${hcauth}
      Should Contain  ${resp.text}  jvm_threads_current
 
 ExecuteApexSampleDomainPolicy
@@ -53,14 +55,14 @@ ExecuteApexTestVnfPolicy
 
 *** Keywords ***
 
-
 DeployPolicy
      [Documentation]    Deploy the policy in apex-pdp engine
      ${postjson}=    Get file  ${CURDIR}/data/policy_deploy.json
      ${postjson}=    evaluate    json.loads('''${postjson}''')    json
      set to dictionary    ${postjson['groups'][0]['deploymentSubgroups'][0]['policies'][0]}    name=${policyName}
      ${postjson}=    evaluate    json.dumps(${postjson})    json
-     PerformPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/deployments/batch  202  ${postjson}  null
+     ${policyadmin}=  PolicyAdminAuth
+     PerformPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/deployments/batch  202  ${postjson}  null  ${policyadmin}
 
 RunEventOnApexEngine
     [Documentation]    Send event to verify policy execution
@@ -104,7 +106,8 @@ CheckLogMessage
 VerifyPdpStatistics
      [Documentation]    Verify pdp statistics after policy execution
      [Arguments]    ${deployCount}    ${deploySuccessCount}    ${executedCount}    ${executedSuccessCount}
-     ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/statistics/defaultGroup/apex/${pdpName}  200  null
+     ${policyadmin}=  PolicyAdminAuth
+     ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/statistics/defaultGroup/apex/${pdpName}  200  null  ${policyadmin}
      Should Be Equal As Strings    ${resp.status_code}     200
      Should Be Equal As Strings    ${resp.json()['defaultGroup']['apex'][0]['pdpInstanceId']}  ${pdpName}
      Should Be Equal As Strings    ${resp.json()['defaultGroup']['apex'][0]['pdpGroupName']}  defaultGroup

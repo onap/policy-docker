@@ -8,22 +8,25 @@ Resource    ${CURDIR}/../../common-library.robot
 *** Test Cases ***
 
 Healthcheck
-     [Documentation]  Verify policy distribution health check
-     ${resp}=  PerformGetRequest  ${POLICY_DISTRIBUTION_IP}  /healthcheck  200  null
-     Should Be Equal As Strings  ${resp.json()['code']}  200
+    [Documentation]  Verify policy distribution health check
+    ${hcauth}=  HealthCheckAuth
+    ${resp}=  PerformGetRequest  ${POLICY_DISTRIBUTION_IP}  /healthcheck  200  null  ${hcauth}
+    Should Be Equal As Strings  ${resp.json()['code']}  200
 
 Statistics
-     [Documentation]  Verify policy distribution statistics
-     ${resp}=  PerformGetRequest  ${POLICY_DISTRIBUTION_IP}  /statistics  200  null
-     Should Be Equal As Strings  ${resp.json()['code']}  200
+    [Documentation]  Verify policy distribution statistics
+    ${hcauth}=  HealthCheckAuth
+    ${resp}=  PerformGetRequest  ${POLICY_DISTRIBUTION_IP}  /statistics  200  null  ${hcauth}
+    Should Be Equal As Strings  ${resp.json()['code']}  200
 
 Metrics
     [Documentation]  Verify policy-distribution is exporting prometheus metrics
-    ${resp}=  PerformGetRequest  ${POLICY_DISTRIBUTION_IP}  /metrics  200  null
+    ${hcauth}=  HealthCheckAuth
+    ${resp}=  PerformGetRequest  ${POLICY_DISTRIBUTION_IP}  /metrics  200  null  ${hcauth}
     Should Contain  ${resp.text}  jvm_threads_current
 
 InvokeDistributionAndRunEventOnEngine
-     Wait Until Keyword Succeeds  5 min  30 sec  InvokeDistributionUsingFile And RunEventOnApexEngine
+    Wait Until Keyword Succeeds  5 min  30 sec  InvokeDistributionUsingFile And RunEventOnApexEngine
 
 *** Keywords ***
 

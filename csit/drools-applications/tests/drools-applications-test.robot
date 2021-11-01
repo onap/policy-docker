@@ -222,10 +222,10 @@ PeformGetRequest
 
 PerformPostRequest
      [Arguments]  ${url}  ${params}  ${hostname}  ${port}  ${jsonfile}  ${filepath}  ${contenttype}  ${expectedstatus}
-     ${auth}=  Create List  healthcheck  zb!XztG34
+     ${auth}=  Create List  policyadmin  zb!XztG34
      ${postjson}=  Get file  ${filepath}/${jsonfile}
-     Log  Creating session https://${hostname}:6969
-     ${session}=  Create Session  policy  https://${hostname}:6969  auth=${auth}
+     Log  Creating session https://${hostname}:${port}
+     ${session}=  Create Session  policy  https://${hostname}:${port}  auth=${auth}
      ${headers}=  Create Dictionary  Accept=application/${contenttype}  Content-Type=application/${contenttype}
      ${resp}=  POST On Session  policy  ${url}  params=${params}  data=${postjson}  headers=${headers}  expected_status=${expectedstatus}
      Log  Received response from policy ${resp.text}
