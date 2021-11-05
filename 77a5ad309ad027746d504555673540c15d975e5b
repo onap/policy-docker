@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37d5121b_41f6e003",
+        "filename": "csit/api-pap-common.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2021-11-05T10:26:19Z",
+      "side": 1,
+      "message": "The only change here was to update the credentials. I would prefer something like setting a variable or something for the credentials, and just use the existing common robot file - instead of having one common PerformXXXRequest and a different PapApiXXXrequest",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "77a5ad309ad027746d504555673540c15d975e5b",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
