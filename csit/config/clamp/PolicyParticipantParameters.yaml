@@ -6,17 +6,17 @@ participant:
     clientName: api
     hostname: policy-api
     port: 6969
-    userName: healthcheck
+    userName: policyadmin
     password: zb!XztG34
-    https: true
+    useHttps: true
     allowSelfSignedCerts: true
   policyPapParameters:
     clientName: pap
     hostname: policy-pap
     port: 6969
-    userName: healthcheck
+    userName: policyadmin
     password: zb!XztG34
-    https: true
+    useHttps: true
     allowSelfSignedCerts: true
   intermediaryParameters:
     reportingTimeIntervalMs: 120000
