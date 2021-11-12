@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0920388b_6b06558f",
+        "filename": "csit/config/clamp/PolicyParticipantParameters.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2021-11-12T14:44:29Z",
+      "side": 1,
+      "message": "I think it is best to keep it align with OOM, so it is less confusing.  If in OOM we use in istanbul healthcheck account, I find it less confusing to keep this the same.\n\nIn jakarta, since we are planning to use policyadmin account, it would be ok, as there are plans to change it in the OOM side as well.",
+      "revId": "8cbea88593243a035660355fd8bc9c6eb2938b36",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
