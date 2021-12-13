@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00df13ab_e6a4b0ef",
+        "filename": "csit/pap/tests/pap-test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2021-12-13T21:55:15Z",
+      "side": 1,
+      "message": "why /actuator/prometheus (vs. the /metrics which is the default prometheus path), and why the need for the session?",
+      "revId": "bc46a39b42aeeca7ff4c788e251feb0e2056c837",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
