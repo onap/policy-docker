@@ -16,6 +16,24 @@
       "revId": "bc46a39b42aeeca7ff4c788e251feb0e2056c837",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df2a003f_9571263a",
+        "filename": "csit/pap/tests/pap-test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2021-12-14T11:26:12Z",
+      "side": 1,
+      "message": "In spring boot, prometheus metrics are exposed on actuator/prometheus. We just have to add spring-boot-starter-actuator dependency in pom.xml. We get a lot of benefits including application metrics on top of system metrics - like success/failure-request-count and time taken etc. We don\u0027t need to use policy-common server anymore in spring boot apps.",
+      "parentUuid": "00df13ab_e6a4b0ef",
+      "revId": "bc46a39b42aeeca7ff4c788e251feb0e2056c837",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
