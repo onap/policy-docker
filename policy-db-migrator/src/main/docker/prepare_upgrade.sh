@@ -1,6 +1,6 @@
 #!/bin/sh
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2021 Nordix Foundation.
+#  Copyright (C) 2021-2022 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,14 +29,14 @@ export operation=upgrade
 cd $POLICY_HOME
 
 # Create schema directory for upgrade
-mkdir -p $POLICY_HOME/etc/db/migration/${SCHEMA}/sql/
+mkdir -p $POLICY_HOME/etc/db/migration/${SCHEMA}/${SCRIPT_DIRECTORY}/
 # Remove any files from previous operations
-rm -rf $POLICY_HOME/etc/db/migration/${SCHEMA}/sql/* 2>/dev/null
+rm -rf $POLICY_HOME/etc/db/migration/${SCHEMA}/${SCRIPT_DIRECTORY}/* 2>/dev/null
 # Copy files to upgrade directories
-cd /home/policy/sql && find . -type f  -not -path '*/downgrade/*' -not -path '*/downgrade'  -print0  \
-   | cpio --null -pud $POLICY_HOME/etc/db/migration/${SCHEMA}/sql/
+cd /home/policy/${SCRIPT_DIRECTORY} && find . -type f  -not -path '*/downgrade/*' -not -path '*/downgrade'  -print0  \
+   | cpio --null -pud $POLICY_HOME/etc/db/migration/${SCHEMA}/${SCRIPT_DIRECTORY}/
 
-releases=$(find $POLICY_HOME/etc/db/migration/${SCHEMA}/sql/*/upgrade -type d | sort -u | rev | cut -f2 -d/ | rev)
+releases=$(find $POLICY_HOME/etc/db/migration/${SCHEMA}/${SCRIPT_DIRECTORY}/*/upgrade -type d | sort -u | rev | cut -f2 -d/ | rev)
 for release in $releases
 do
         echo "Preparing $operation release version: $release"
