@@ -23,10 +23,26 @@ Metrics
     [Documentation]  Verify policy-distribution is exporting prometheus metrics
     ${hcauth}=  HealthCheckAuth
     ${resp}=  PerformGetRequest  ${POLICY_DISTRIBUTION_IP}  /metrics  200  null  ${hcauth}
-    Should Contain  ${resp.text}  jvm_threads_current
+    Should Contain  ${resp.text}  total_distribution_received_count_total 0.0
+    Should Contain  ${resp.text}  distribution_success_count_total 0.0
+    Should Contain  ${resp.text}  distribution_failure_count_total 0.0
+    Should Contain  ${resp.text}  total_download_received_count_total 0.0
+    Should Contain  ${resp.text}  download_success_count_total 0.0
+    Should Contain  ${resp.text}  download_failure_count_total 0.0
 
 InvokeDistributionAndRunEventOnEngine
     Wait Until Keyword Succeeds  5 min  30 sec  InvokeDistributionUsingFile And RunEventOnApexEngine
+
+MetricsAfterExecution
+    [Documentation]  Verify policy-distribution is exporting prometheus metrics after execution
+    ${hcauth}=  HealthCheckAuth
+    ${resp}=  PerformGetRequest  ${POLICY_DISTRIBUTION_IP}  /metrics  200  null  ${hcauth}
+    Should Contain  ${resp.text}  total_distribution_received_count_total 1.0
+    Should Contain  ${resp.text}  distribution_success_count_total 1.0
+    Should Contain  ${resp.text}  distribution_failure_count_total 0.0
+    Should Contain  ${resp.text}  total_download_received_count_total 1.0
+    Should Contain  ${resp.text}  download_success_count_total 1.0
+    Should Contain  ${resp.text}  download_failure_count_total 0.0
 
 *** Keywords ***
 
