@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "773b5e57_97c104db",
+        "filename": "policy-db-migrator/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 6722
+      },
+      "writtenOn": "2022-02-01T16:00:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2427ce9d_bd2d7bd3",
+      "range": {
+        "startLine": 4,
+        "startChar": 21,
+        "endLine": 5,
+        "endChar": 32
+      },
+      "revId": "f8ec517212dd881722cc6feb159562c229a621ef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "069f9f92_7281f636",
         "filename": "policy-db-migrator/src/main/docker/db-migrator-pg",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2022-02-01T14:51:15Z",
       "side": 1,
       "message": "I think it\u0027s only Copyright to Nordix, year 2022.",
+      "range": {
+        "startLine": 6,
+        "startChar": 2,
+        "endLine": 7,
+        "endChar": 53
+      },
+      "revId": "f8ec517212dd881722cc6feb159562c229a621ef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0b5b8b7_f55020f8",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator-pg",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 6722
+      },
+      "writtenOn": "2022-02-01T16:00:02Z",
+      "side": 1,
+      "message": "My bad :)",
+      "parentUuid": "069f9f92_7281f636",
       "range": {
         "startLine": 6,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7c94a55b_b8f67154",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator-pg",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 6722
+      },
+      "writtenOn": "2022-02-01T16:00:02Z",
+      "side": 1,
+      "message": "Will change this to postgres. Thanks Adheli",
+      "parentUuid": "7d131021_5c3e30b9",
+      "range": {
+        "startLine": 291,
+        "startChar": 4,
+        "endLine": 291,
+        "endChar": 9
+      },
+      "revId": "f8ec517212dd881722cc6feb159562c229a621ef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc824a63_bbfe433f",
         "filename": "policy-db-migrator/src/main/docker/db-migrator-pg",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "f8ec517212dd881722cc6feb159562c229a621ef",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a044246_b8028768",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator-pg",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 6722
+      },
+      "writtenOn": "2022-02-01T16:00:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bc824a63_bbfe433f",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 293,
+        "endChar": 4
+      },
+      "revId": "f8ec517212dd881722cc6feb159562c229a621ef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "97515bd7_ee396517",
+        "filename": "policy-db-migrator/src/main/docker/db-migrator-pg",
+        "patchSetId": 1
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 6722
+      },
+      "writtenOn": "2022-02-01T16:00:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "46cbaf0b_db7760b2",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 324,
+        "endChar": 11
+      },
+      "revId": "f8ec517212dd881722cc6feb159562c229a621ef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45133dc9_b2b0db78",
         "filename": "policy-db-migrator/src/main/docker/prepare_downgrade.sh",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "f8ec517212dd881722cc6feb159562c229a621ef",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "941de681_477a7f9a",
+        "filename": "policy-db-migrator/src/main/docker/prepare_downgrade.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6722
+      },
+      "writtenOn": "2022-02-01T16:00:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "45133dc9_b2b0db78",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "f8ec517212dd881722cc6feb159562c229a621ef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "3198892f_bdbc4a5a",
+        "filename": "policy-db-migrator/src/main/docker/prepare_upgrade.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6722
+      },
+      "writtenOn": "2022-02-01T16:00:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "434b79f2_07e6096b",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "f8ec517212dd881722cc6feb159562c229a621ef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9022567e_8cfa16bc",
         "filename": "policy-db-migrator/src/main/docker/prepare_upgrade.sh",
         "patchSetId": 1
@@ -174,6 +342,30 @@
       "writtenOn": "2022-02-01T14:51:15Z",
       "side": 1,
       "message": "I can\u0027t find where a value is set to this variable. How is it done? Same for downgrade script.",
+      "range": {
+        "startLine": 32,
+        "startChar": 51,
+        "endLine": 32,
+        "endChar": 67
+      },
+      "revId": "f8ec517212dd881722cc6feb159562c229a621ef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d506705_5cb3b29a",
+        "filename": "policy-db-migrator/src/main/docker/prepare_upgrade.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6722
+      },
+      "writtenOn": "2022-02-01T16:00:02Z",
+      "side": 1,
+      "message": "It is set as an environment variable when running the container. \"postgres\" or \"sql\" are the accepted values here.",
+      "parentUuid": "9022567e_8cfa16bc",
       "range": {
         "startLine": 32,
         "startChar": 51,
