@@ -7,7 +7,7 @@
         "port": 6969,
         "userName": "healthcheck",
         "password": "zb!XztG34",
-        "https": true,
+        "https": {{HTTPS_ENABLED}},
         "aaf": false,
         "prometheus": true
     },
@@ -16,7 +16,7 @@
         "port": 6969,
         "userName": "policyadmin",
         "password": "zb!XztG34",
-        "useHttps": true,
+        "useHttps": {{HTTPS_ENABLED}},
         "aaf": false
     },
     "applicationParameters": {
@@ -27,13 +27,13 @@
             "topic" : "POLICY-PDP-PAP",
             "servers" : [ "message-router" ],
             "topicCommInfrastructure" : "dmaap",
-            "useHttps" : true
+            "useHttps" : {{HTTPS_ENABLED}}
         }],
         "topicSinks" : [{
             "topic" : "POLICY-PDP-PAP",
             "servers" : [ "message-router" ],
             "topicCommInfrastructure" : "dmaap",
-            "useHttps" : true
+            "useHttps" : {{HTTPS_ENABLED}}
         }]
     }
 }
