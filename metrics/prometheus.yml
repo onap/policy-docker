@@ -1,0 +1,85 @@
+# my global config
+global:
+  scrape_interval: 60s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 60s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  #scrape_timeout is set to the global default (10s).
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+#  - job_name: "prometheus"
+#
+#    # metrics_path defaults to '/metrics'
+#    # scheme defaults to 'http'.
+#
+#    static_configs:
+#      - targets: ["localhost:9090"]
+
+  - job_name: "api-metrics"
+    scrape_timeout: 1m
+    scrape_interval: 2m
+    static_configs:
+      - targets: ["policy-api:6969"]
+    basic_auth:
+      username: policyadmin
+      password: "zb!XztG34"
+
+  - job_name: "pap-metrics"
+    static_configs:
+      - targets: ["policy-pap:6969"]
+    basic_auth:
+      username: policyadmin
+      password: "zb!XztG34"
+
+  - job_name: "apex-pdp-metrics"
+    static_configs:
+      - targets:
+          - "policy-apex-pdp:6969"
+    basic_auth:
+      username: "healthcheck"
+      password: "zb!XztG34"
+
+  - job_name: "drools-apps-metrics"
+    static_configs:
+      - targets:
+          - "drools-apps:9696"
+    basic_auth:
+      username: "demo@people.osaaf.org"
+      password: "demo123456!"
+
+  - job_name: "drools-pdp-metrics"
+    static_configs:
+      - targets:
+          - "drools:9696"
+    basic_auth:
+      username: "demo@people.osaaf.org"
+      password: "demo123456!"
+
+  - job_name: "distribution-metrics"
+    static_configs:
+      - targets:
+          - "policy-distribution:6969"
+    basic_auth:
+      username: "healthcheck"
+      password: "zb!XztG34"
+
+  - job_name: "xacml-pdp-metrics"
+    static_configs:
+      - targets:
+          - "policy-xacml-pdp:6969"
+    basic_auth:
+      username: "healthcheck"
+      password: "zb!XztG34"
