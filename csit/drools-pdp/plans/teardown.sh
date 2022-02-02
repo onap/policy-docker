@@ -1,7 +1,7 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
 # Copyright 2017-2021 AT&T Intellectual Property. All rights reserved.
-#
+# Modifications copyright (c) 2022 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,5 +15,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ============LICENSE_END=========================================================
+
+docker logs policy-api
+docker logs simulator
+docker logs policy-pap
+docker logs drools
 
 docker-compose -f ${SCRIPTS}/docker-compose-all.yml down -v

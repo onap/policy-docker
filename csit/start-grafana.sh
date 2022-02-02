@@ -1,5 +1,7 @@
+#!/bin/bash
+#
 # ============LICENSE_START====================================================
-#  Copyright (C) 2021 AT&T Intellectual Property. All rights reserved.
+#  Copyright (C) 2022 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,10 +18,27 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END======================================================
 
-export POLICY_MARIADB_VER=10.5.8
-export NEXUS_URL=https://nexus.onap.org/content/repositories/snapshots
+SCRIPTS=$(git rev-parse --show-toplevel)
+export SCRIPTS="${SCRIPTS}"/csit
 
-GIT_TOP=$(git rev-parse --show-toplevel)
-GERRIT_BRANCH=$(awk -F= '$1 == "defaultbranch" { print $2 }' \
-                    "${GIT_TOP}"/.gitreview)
-echo GERRIT_BRANCH=${GERRIT_BRANCH}
+cd ${SCRIPTS}
+
+python3 ./prepare-config-files.py --https=false
+
+source ./get-versions.sh
+
+export PROJECT="${1}"
+
+if [ -z "${PROJECT}" ]; then
+    echo "Starting all components..."
+    docker-compose -f ./compose-grafana.yml up -d
+else
+    echo "Starting ${PROJECT} application..."
+    docker-compose -f ./compose-grafana.yml up -d "${PROJECT}" grafana
+fi
+
+prometheus=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' prometheus)
+grafana=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' grafana)
+
+echo "Prometheus server: http://${prometheus}:9090"
+echo "Grafana server: http://${grafana}:3000"
