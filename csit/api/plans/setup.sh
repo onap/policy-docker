@@ -1,7 +1,7 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2019-2021 AT&T Intellectual Property. All rights reserved.
-# Modification Copyright 2021. Nordix Foundation.
+# Modifications Copyright 2021-2022 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,19 +18,15 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
-# Select branch
-source ${SCRIPTS}/get-branch-mariadb.sh
-
 echo "Uninstall docker-py and reinstall docker."
 python3 -m pip uninstall -y docker-py
 python3 -m pip uninstall -y docker
 python3 -m pip install -U docker
 
+source "${SCRIPTS}"/get-versions.sh
 
 sudo apt-get -y install libxml2-utils
-bash ${SCRIPTS}/get-models-examples.sh
-
-source ${SCRIPTS}/detmVers.sh
+bash "${SCRIPTS}"/get-models-examples.sh
 
 DATA=${WORKSPACE}/models/models-examples/src/main/resources/policies
 
@@ -44,22 +40,22 @@ sed -e 's!"version": "1.0.0"!"version": "2.0.0"!' \
         ${DATA}/vCPE.policy.monitoring.input.tosca.json \
     >${DATA}/vCPE.policy.monitoring.input.tosca.v2.json
 
-echo ${POLICY_API_VERSION}
+echo "${POLICY_API_VERSION}"
 
-cd ${SCRIPTS}
-docker-compose -f ${SCRIPTS}/docker-compose-all.yml up -d api
+cd "${SCRIPTS}"
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d api
 
 sleep 10
 unset http_proxy https_proxy
 
-POLICY_API_IP=`get-instance-ip.sh policy-api`
-MARIADB_IP=`get-instance-ip.sh mariadb`
+POLICY_API_IP=$(get-instance-ip.sh policy-api)
+MARIADB_IP=$(get-instance-ip.sh mariadb)
 
-echo API IP IS ${POLICY_API_IP}
-echo MARIADB IP IS ${MARIADB_IP}
+echo API IP IS "${POLICY_API_IP}"
+echo MARIADB IP IS "${MARIADB_IP}"
 
 # wait for the app to start up
-${SCRIPTS}/wait_for_port.sh ${POLICY_API_IP} 6969
+"${SCRIPTS}"/wait_for_port.sh "${POLICY_API_IP}" 6969
 
 ROBOT_VARIABLES=""
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_IP:${POLICY_API_IP}"

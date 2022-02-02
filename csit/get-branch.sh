@@ -1,5 +1,6 @@
 # ============LICENSE_START====================================================
 #  Copyright (C) 2021 AT&T Intellectual Property. All rights reserved.
+#  Modifications Copyright 2022 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,10 +17,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END======================================================
 
-export POLICY_MARIADB_VER=10.5.8
 export NEXUS_URL=https://nexus.onap.org/content/repositories/snapshots
 
 GIT_TOP=$(git rev-parse --show-toplevel)
 GERRIT_BRANCH=$(awk -F= '$1 == "defaultbranch" { print $2 }' \
                     "${GIT_TOP}"/.gitreview)
-echo GERRIT_BRANCH=${GERRIT_BRANCH}
+echo GERRIT_BRANCH="${GERRIT_BRANCH}"
