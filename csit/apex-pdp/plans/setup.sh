@@ -2,7 +2,7 @@
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2018 Ericsson. All rights reserved.
 #
-#  Modifications copyright (c) 2019, 2021 Nordix Foundation.
+#  Modifications Copyright (c) 2019-2022 Nordix Foundation.
 #  Modifications Copyright (C) 2020-2021 AT&T Intellectual Property.
 #  Modifications Copyright (C) 2021 Bell Canada. All rights reserved.
 # ================================================================================
@@ -20,7 +20,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
-source ${SCRIPTS}/get-branch-mariadb.sh
 
 echo "Uninstall docker-py and reinstall docker."
 python3 -m pip uninstall -y docker-py
@@ -29,27 +28,27 @@ python3 -m pip install -U docker
 
 sudo apt-get -y install libxml2-utils
 
-source ${SCRIPTS}/detmVers.sh
+source "${SCRIPTS}"/get-versions.sh
 
-docker-compose -f ${SCRIPTS}/docker-compose-all.yml up -d apex-pdp
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d apex-pdp
 
 unset http_proxy https_proxy
 
-POLICY_API_IP=`get-instance-ip.sh policy-api`
-POLICY_PAP_IP=`get-instance-ip.sh policy-pap`
-MARIADB_IP=`get-instance-ip.sh mariadb`
-APEX_IP=`get-instance-ip.sh policy-apex-pdp`
-SIM_IP=`get-instance-ip.sh simulator`
+POLICY_API_IP=$(get-instance-ip.sh policy-api)
+POLICY_PAP_IP=$(get-instance-ip.sh policy-pap)
+MARIADB_IP=$(get-instance-ip.sh mariadb)
+APEX_IP=$(get-instance-ip.sh policy-apex-pdp)
+SIM_IP=$(get-instance-ip.sh simulator)
 export SIM_IP
 
-echo PAP IP IS ${POLICY_PAP_IP}
-echo MARIADB IP IS ${MARIADB_IP}
-echo API IP IS ${POLICY_API_IP}
-echo APEX IP IS ${APEX_IP}
-echo DMAAP_IP IS ${SIM_IP}
+echo PAP IP IS "${POLICY_PAP_IP}"
+echo MARIADB IP IS "${MARIADB_IP}"
+echo API IP IS "${POLICY_API_IP}"
+echo APEX IP IS "${APEX_IP}"
+echo DMAAP_IP IS "${SIM_IP}"
 
 # wait for the app to start up
-${SCRIPTS}/wait_for_port.sh ${APEX_IP} 6969
+"${SCRIPTS}"/wait_for_port.sh "${APEX_IP}" 6969
 
 ROBOT_VARIABLES=""
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v SCRIPTS:${SCRIPTS}"

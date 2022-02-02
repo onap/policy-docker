@@ -2,6 +2,7 @@
 #
 # ===========LICENSE_START====================================================
 #  Copyright (C) 2020-2021 AT&T Intellectual Property. All rights reserved.
+#  Modifications copyright (c) 2022 Nordix Foundation.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,4 +17,11 @@
 # limitations under the License.
 # ============LICENSE_END=====================================================
 #
+
+docker logs policy-api
+docker logs simulator
+docker logs policy-pap
+docker logs xacml-pdp
+docker logs drools-apps
+
 docker-compose -f ${SCRIPTS}/docker-compose-all.yml down -v

@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2021 Nordix Foundation.
+#  Copyright (C) 2021-2022 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
-source ${SCRIPTS}/get-branch-mariadb.sh
 
 echo "Uninstall docker-py and reinstall docker."
 pip uninstall -y docker-py
@@ -25,32 +24,32 @@ pip install -U docker==2.7.0
 
 sudo apt-get -y install libxml2-utils
 
-source ${SCRIPTS}/detmVers.sh
+source "${SCRIPTS}"/get-versions.sh
 
-docker-compose -f ${SCRIPTS}/docker-compose-all.yml up -d policy-clamp-cl-runtime
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d policy-clamp-cl-runtime
 
 sleep 10
 unset http_proxy https_proxy
 
-POLICY_CONTROLLOOP_RUNTIME_IP=`get-instance-ip.sh policy-clamp-cl-runtime`
-POLICY_PARTICIPANT_IP=`get-instance-ip.sh policy-clamp-cl-pf-ppnt`
-K8S_PARTICIPANT_IP=`get-instance-ip.sh policy-clamp-cl-k8s-ppnt`
-HTTP_PARTICIPANT_IP=`get-instance-ip.sh policy-clamp-cl-http-ppnt`
-MARIADB_IP=`get-instance-ip.sh mariadb`
-DMAAP_IP=`get-instance-ip.sh simulator`
-POLICY_API_IP=`get-instance-ip.sh policy-api`
+POLICY_CONTROLLOOP_RUNTIME_IP=$(get-instance-ip.sh policy-clamp-cl-runtime)
+POLICY_PARTICIPANT_IP=$(get-instance-ip.sh policy-clamp-cl-pf-ppnt)
+K8S_PARTICIPANT_IP=$(get-instance-ip.sh policy-clamp-cl-k8s-ppnt)
+HTTP_PARTICIPANT_IP=$(get-instance-ip.sh policy-clamp-cl-http-ppnt)
+MARIADB_IP=$(get-instance-ip.sh mariadb)
+DMAAP_IP=$(get-instance-ip.sh simulator)
+POLICY_API_IP=$(get-instance-ip.sh policy-api)
 
-echo MARIADB IP IS ${MARIADB_IP}
-echo DMAAP_IP IS ${DMAAP_IP}
-echo API IP IS ${POLICY_API_IP}
-echo POLICY CONTROLLOOP RUNTIME IP IS ${POLICY_CONTROLLOOP_RUNTIME_IP}
-echo POLICY PARTICIPANT IP IS ${POLICY_PARTICIPANT_IP}
-echo K8S PARTICIPANT IP IS ${K8S_PARTICIPANT_IP}
-echo HTTP PARTICIPANT IP IS ${HTTP_PARTICIPANT_IP}
+echo MARIADB IP IS "${MARIADB_IP}"
+echo DMAAP_IP IS "${DMAAP_IP}"
+echo API IP IS "${POLICY_API_IP}"
+echo POLICY CONTROLLOOP RUNTIME IP IS "${POLICY_CONTROLLOOP_RUNTIME_IP}"
+echo POLICY PARTICIPANT IP IS "${POLICY_PARTICIPANT_IP}"
+echo K8S PARTICIPANT IP IS "${K8S_PARTICIPANT_IP}"
+echo HTTP PARTICIPANT IP IS "${HTTP_PARTICIPANT_IP}"
 
 # wait for the app to start up
-${SCRIPTS}/wait_for_port.sh ${POLICY_CONTROLLOOP_RUNTIME_IP} 6969
-${SCRIPTS}/wait_for_port.sh ${POLICY_API_IP} 6969
+"${SCRIPTS}"/wait_for_port.sh "${POLICY_CONTROLLOOP_RUNTIME_IP}" 6969
+"${SCRIPTS}"/wait_for_port.sh "${POLICY_API_IP}" 6969
 
 ROBOT_VARIABLES=""
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_CONTROLLOOP_RUNTIME_IP:${POLICY_CONTROLLOOP_RUNTIME_IP}"

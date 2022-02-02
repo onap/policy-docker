@@ -1,7 +1,7 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
 # Copyright 2017-2021 AT&T Intellectual Property. All rights reserved.
-#  Modification Copyright 2021. Nordix Foundation.
+# Modifications Copyright 2021-2022 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,9 +17,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
-source ${SCRIPTS}/get-branch-mariadb.sh
-
-# OS upgrades
 
 echo "Uninstall docker-py and reinstall docker."
 python3 -m pip uninstall -y docker-py
@@ -28,20 +25,21 @@ python3 -m pip install -U docker
 
 sudo apt-get -y install libxml2-utils
 
-source ${SCRIPTS}/detmVers.sh
+source "${SCRIPTS}"/get-versions.sh
 
-docker-compose -f ${SCRIPTS}/docker-compose-all.yml up -d drools
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d drools
 
-POLICY_DROOLS_IP=`get-instance-ip.sh drools`
-MARIADB_IP=`get-instance-ip.sh mariadb`
+POLICY_DROOLS_IP=$(get-instance-ip.sh drools)
+MARIADB_IP=$(get-instance-ip.sh mariadb)
 
-echo DROOLS IP IS ${POLICY_DROOLS_IP}
-echo MARIADB IP IS ${MARIADB_IP}
+echo DROOLS IP IS "${POLICY_DROOLS_IP}"
+echo MARIADB IP IS "${MARIADB_IP}"
 
-# wait for the app to start up - looking for telemtry service on port 9696
-${SCRIPTS}/wait_for_port.sh ${POLICY_DROOLS_IP} 9696
+# wait for the app to start up - looking for telemetry service on port 9696
+"${SCRIPTS}"/wait_for_port.sh "${POLICY_DROOLS_IP}" 9696
 
 # give enough time for the controllers to come up
 sleep 15
 
-ROBOT_VARIABLES="-v POLICY_DROOLS_IP:${POLICY_DROOLS_IP}"
+ROBOT_VARIABLES=""
+ROBOT_VARIABLES="${ROBOT_VARIABLES}-v POLICY_DROOLS_IP:${POLICY_DROOLS_IP}"
