@@ -519,6 +519,30 @@
       "revId": "f8ec517212dd881722cc6feb159562c229a621ef",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7236eb8_52fdc09a",
+        "filename": "policy-db-migrator/src/main/docker/prepare_upgrade.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-02-03T11:43:24Z",
+      "side": 1,
+      "message": "OK, yes this needs to go into the official documentation. Thanks",
+      "parentUuid": "0d9619cc_7458f267",
+      "range": {
+        "startLine": 32,
+        "startChar": 51,
+        "endLine": 32,
+        "endChar": 67
+      },
+      "revId": "f8ec517212dd881722cc6feb159562c229a621ef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
