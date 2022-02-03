@@ -495,6 +495,30 @@
       "revId": "f8ec517212dd881722cc6feb159562c229a621ef",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9619cc_7458f267",
+        "filename": "policy-db-migrator/src/main/docker/prepare_upgrade.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 6722
+      },
+      "writtenOn": "2022-02-03T08:22:23Z",
+      "side": 1,
+      "message": "It is documented here: https://wiki.onap.org/display/DW/Allow+underlying+database+to+be+configured%3A+MariaDB+or+Postgres\n\nBut a review is being raised to include this in the page outlined above by Adheli.",
+      "parentUuid": "04a93ee3_31a5f6e6",
+      "range": {
+        "startLine": 32,
+        "startChar": 51,
+        "endLine": 32,
+        "endChar": 67
+      },
+      "revId": "f8ec517212dd881722cc6feb159562c229a621ef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
