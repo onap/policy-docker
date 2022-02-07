@@ -1,7 +1,7 @@
 #   ============LICENSE_START=======================================================
 #    Copyright (C) 2019 Tieto. All rights reserved.
 #    Modifications Copyright (C) 2020, 2021 AT&T Intellectual Property. All rights reserved.
-#    Modifications Copyright (C) 2020 Nordix Foundation.
+#    Modifications Copyright (C) 2020, 2022 Nordix Foundation.
 #   ================================================================================
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -54,4 +54,5 @@ RUN rm -rf /opt/java/openjdk \
     && addgroup -S policy \
     && adduser -S  --shell /bin/sh -G policy policy \
     && mkdir -p ${POLICY_HOME}/ \
-    && chown policy:policy ${POLICY_HOME}
+    && chown policy:policy ${POLICY_HOME} \
+    && pip install --upgrade pip==22.0.3
