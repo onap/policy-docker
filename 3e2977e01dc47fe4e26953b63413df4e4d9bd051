@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2419d56_21f3a22f",
+        "filename": "csit/config/pap/papParameters.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2022-02-07T21:43:38Z",
+      "side": 1,
+      "message": "Should there be counterpart OOM changes?",
+      "revId": "3e2977e01dc47fe4e26953b63413df4e4d9bd051",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
