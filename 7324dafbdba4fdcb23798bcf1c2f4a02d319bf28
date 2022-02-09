@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0e75b297_0584c725",
+        "filename": "metrics/start.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-02-09T16:21:12Z",
+      "side": 1,
+      "message": "that\u0027s to run the compose, so probably running local, not on alpine, if that makes sense",
+      "parentUuid": "ce42fae5_a099cf74",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 11
+      },
+      "revId": "7324dafbdba4fdcb23798bcf1c2f4a02d319bf28",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e1ac730_829670b6",
         "filename": "metrics/stop.sh",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2022-02-09T15:57:48Z",
       "side": 1,
       "message": "probably \"/bin/sh\"",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 11
+      },
+      "revId": "7324dafbdba4fdcb23798bcf1c2f4a02d319bf28",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebb4a063_7b35bed6",
+        "filename": "metrics/stop.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-02-09T16:21:12Z",
+      "side": 1,
+      "message": "same as start.sh",
+      "parentUuid": "9e1ac730_829670b6",
       "range": {
         "startLine": 1,
         "startChar": 2,
