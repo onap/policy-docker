@@ -30,11 +30,7 @@ Consolidated Healthcheck
 
 Metrics
     [Documentation]  Verify policy pap is exporting prometheus metrics
-    Log  Creating session https://${POLICY_PAP_IP}:6969
-    ${policyadmin}=   Create list   policyadmin    zb!XztG34
-    ${session}=  Create Session  policy  https://${POLICY_PAP_IP}:6969  auth=${policyadmin}
-    ${resp}=  GET On Session  policy  url=/metrics  expected_status=200
-    Log  Received response from policy ${resp.text}
+    ${resp}=  GetMetrics  ${POLICY_PAP_IP}  PolicyAdminAuth
     Should Contain  ${resp.text}  jvm_threads_live_threads
 
 Statistics
