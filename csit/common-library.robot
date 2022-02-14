@@ -100,3 +100,10 @@ QueryPolicyStatus
     Should Be Equal As Strings    ${responseEntry['deploy']}  True
     Should Be Equal As Strings    ${responseEntry['state']}  SUCCESS
 
+GetMetrics
+    [Arguments]  ${hostname}  ${auth}
+    Log  Creating session https://${hostname}:6969
+    ${session}=  Create Session  policy  https://${hostname}:6969  auth=${auth}
+    ${resp}=  GET On Session  policy  /metrics  expected_status=200
+    Log  Received response from policy ${resp.text}
+    [return]  ${resp}

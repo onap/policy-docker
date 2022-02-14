@@ -14,8 +14,9 @@ Healthcheck
 
 Metrics
     [Documentation]  Verify policy-api is exporting prometheus metrics
-    ${resp}=  GetReq  /metrics
-    Should Contain  ${resp.text}  jvm_threads_current
+    ${auth}=  PolicyAdminAuth
+    ${resp}=  GetMetrics  ${POLICY_API_IP}  ${auth}
+    Should Contain  ${resp.text}  jvm_threads_live_threads
 
 Statistics
      [Documentation]  Verify policy api statistics
