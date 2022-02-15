@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd44387f_055f2aca",
+        "filename": "csit/config/apex-pdp/OnapPfConfig.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2022-02-15T15:06:18Z",
+      "side": 1,
+      "message": "q:  is it possible to make the placeholder markers for values in the config files something like {{HTTPS_ENABLED}} or {{MESSAGE_ROUTER_PORT}} or any other syntax that you would prefer but with some special characters that indicate that those values are to be pre-processed?",
+      "revId": "e77ac79665a35693a626c193b162bde40df40553",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4926f69b_b987a629",
+        "filename": "csit/prepare-config-files.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2022-02-15T15:06:18Z",
+      "side": 1,
+      "message": "is it possible to make the placeholder markers for values in the config files something like {{HTTPS_ENABLED}} or {{MESSAGE_ROUTER_PORT}} or any other syntax that you would prefer but with some special characters that indicate that those values are to be pre-processed?",
+      "revId": "e77ac79665a35693a626c193b162bde40df40553",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
