@@ -22,6 +22,30 @@
       "revId": "7abe36cd557a9c2d5abebcf54a4ed5957a4168a1",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd18b51_97643f70",
+        "filename": "csit/config/apex-pdp/OnapPfConfig.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-02-16T13:31:43Z",
+      "side": 1,
+      "message": "I tried this method, but then they were not \"reloaded\" with the values, so got errors with \"can\u0027t process $HTTPS_ENABLED\" when parsing the configuration files within the containers. sourcing them also didn\u0027t work.",
+      "parentUuid": "96377f07_315c39c9",
+      "range": {
+        "startLine": 8,
+        "startChar": 17,
+        "endLine": 8,
+        "endChar": 34
+      },
+      "revId": "7abe36cd557a9c2d5abebcf54a4ed5957a4168a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
