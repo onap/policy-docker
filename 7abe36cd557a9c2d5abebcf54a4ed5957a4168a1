@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96377f07_315c39c9",
+        "filename": "csit/config/apex-pdp/OnapPfConfig.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2022-02-16T13:27:24Z",
+      "side": 1,
+      "message": "Looks good. Still a question: I see you wrote a python script to do find and replace on all config files. Setting these as an environment variable and using something like ${HTTPS_ENABLED} doesn\u0027t work?\nSimilar to how the helm charts work https://github.com/onap/oom/blob/master/kubernetes/policy/components/policy-apex-pdp/resources/config/OnapPfConfig.json#L7 \nMaybe you tried it already and it doesn\u0027t pick up the variables in docker compose?",
+      "range": {
+        "startLine": 8,
+        "startChar": 17,
+        "endLine": 8,
+        "endChar": 34
+      },
+      "revId": "7abe36cd557a9c2d5abebcf54a4ed5957a4168a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
