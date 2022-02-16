@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "8801daed_f54c6558",
+        "filename": "csit/apex-pdp/plans/teardown.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2022-02-16T16:12:39Z",
+      "side": 1,
+      "message": "I have no preference.  I think displaying the simulator and api logs could have value as they are part of the flow and it may point to a problem with the simulator itself, or if there\u0027s any problematic race condition that depends on distribution of the simulator messages.   But I also understand the argument to keep them reduced as those situations that I mentioned will be infrequent.",
+      "parentUuid": "4fb9eb40_9fa5747b",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "7abe36cd557a9c2d5abebcf54a4ed5957a4168a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96377f07_315c39c9",
         "filename": "csit/config/apex-pdp/OnapPfConfig.json",
         "patchSetId": 8
