@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b026637c_208cf438",
+        "filename": "csit/apex-pdp/plans/teardown.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-02-16T13:44:35Z",
+      "side": 1,
+      "message": "Everytime there\u0027s an issue with the components, the error is not easy to track, so these help to see if there\u0027s an error with the component not coming up properly or if the operation wasn\u0027t correct.",
+      "parentUuid": "a9917979_31e81bc1",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "7abe36cd557a9c2d5abebcf54a4ed5957a4168a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96377f07_315c39c9",
         "filename": "csit/config/apex-pdp/OnapPfConfig.json",
         "patchSetId": 8
@@ -107,6 +131,30 @@
       "writtenOn": "2022-02-16T13:35:50Z",
       "side": 1,
       "message": "Shouldn\u0027t this also be using that variable/text ?",
+      "range": {
+        "startLine": 4,
+        "startChar": 13,
+        "endLine": 4,
+        "endChar": 18
+      },
+      "revId": "7abe36cd557a9c2d5abebcf54a4ed5957a4168a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e080a7_d1840458",
+        "filename": "csit/config/api/apiParameters.yaml",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-02-16T13:44:35Z",
+      "side": 1,
+      "message": "API by default for CSIT doesn\u0027t need any changes, so it\u0027s being used only by the docker-compose for grafana.",
+      "parentUuid": "4b101c2b_62023350",
       "range": {
         "startLine": 4,
         "startChar": 13,
