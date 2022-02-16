@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4da579c4_49c0cd57",
+        "filename": "csit/apex-pdp/plans/teardown.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2022-02-16T15:42:05Z",
+      "side": 1,
+      "message": "Agreed, and that will be really useful to just see the logs and understand the problem in Jenkins etc. But do we need logs from all these containers? There will be too much logs this way. Isn\u0027t it better to just log only the really relevant containers logs? For.e.g, we can for sure avoid simulator logs from everywhere. In this particular file, I would avoid API logs too, as PAP logs will contain the policy that gets deployed to PDP. \n@Others thoughts?",
+      "parentUuid": "b026637c_208cf438",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "7abe36cd557a9c2d5abebcf54a4ed5957a4168a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96377f07_315c39c9",
         "filename": "csit/config/apex-pdp/OnapPfConfig.json",
         "patchSetId": 8
@@ -164,6 +188,30 @@
       "revId": "7abe36cd557a9c2d5abebcf54a4ed5957a4168a1",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b27a828f_406b3874",
+        "filename": "csit/config/api/apiParameters.yaml",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2022-02-16T15:42:05Z",
+      "side": 1,
+      "message": "Ok this file is not even mounted in case of csit run. Got it. Thanks!",
+      "parentUuid": "57e080a7_d1840458",
+      "range": {
+        "startLine": 4,
+        "startChar": 13,
+        "endLine": 4,
+        "endChar": 18
+      },
+      "revId": "7abe36cd557a9c2d5abebcf54a4ed5957a4168a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
