@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e891e869_c61bda40",
+        "filename": "csit/config/apex-pdp/OnapPfConfig.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2022-02-16T13:37:17Z",
+      "side": 1,
+      "message": "Ok, so variables are not picked up here. Thanks for clarifying.",
+      "parentUuid": "fdd18b51_97643f70",
+      "range": {
+        "startLine": 8,
+        "startChar": 17,
+        "endLine": 8,
+        "endChar": 34
+      },
+      "revId": "7abe36cd557a9c2d5abebcf54a4ed5957a4168a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b101c2b_62023350",
         "filename": "csit/config/api/apiParameters.yaml",
         "patchSetId": 8
