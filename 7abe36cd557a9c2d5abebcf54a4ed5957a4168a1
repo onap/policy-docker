@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "040657d0_3973647b",
+        "filename": "csit/apex-pdp/plans/teardown.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2022-02-16T18:11:34Z",
+      "side": 1,
+      "message": "Ok! Maybe lets get this through and see how it is affecting the experience in seeing the results and logs, and then  make any changes later accordingly,",
+      "parentUuid": "8801daed_f54c6558",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "7abe36cd557a9c2d5abebcf54a4ed5957a4168a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96377f07_315c39c9",
         "filename": "csit/config/apex-pdp/OnapPfConfig.json",
         "patchSetId": 8
