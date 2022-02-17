@@ -22,6 +22,30 @@
       "revId": "d73ff862ab05c929416330fe1dbc941a23f171c6",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a670897_54bb6c92",
+        "filename": "metrics/config/db_migrator_policy_init.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-02-17T09:55:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4120ec3a_a3f78d3c",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "d73ff862ab05c929416330fe1dbc941a23f171c6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
