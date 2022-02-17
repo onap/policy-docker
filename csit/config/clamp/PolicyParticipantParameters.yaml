@@ -1,3 +1,8 @@
+spring:
+  security:
+    user:
+      name: participantUser
+      password: zb!XztG34
 
 participant:
   pdpGroup: defaultGroup
@@ -25,12 +30,12 @@ participant:
       name: org.onap.PM_Policy
       version: 1.0.0
     participantType:
-      name: org.onap.policy.controlloop.PolicyControlLoopParticipant
+      name: org.onap.policy.clamp.acm.PolicyParticipant
       version: 2.3.1
-    clampControlLoopTopics:
+    clampAutomationCompositionTopics:
       topicSources:
         -
-          topic: POLICY-CLRUNTIME-PARTICIPANT
+          topic: POLICY-ACRUNTIME-PARTICIPANT
           servers:
             - ${topicServer:message-router}
           topicCommInfrastructure: dmaap
@@ -38,8 +43,17 @@ participant:
           useHttps: true
       topicSinks:
         -
-          topic: POLICY-CLRUNTIME-PARTICIPANT
+          topic: POLICY-ACRUNTIME-PARTICIPANT
           servers:
             - ${topicServer:message-router}
           topicCommInfrastructure: dmaap
           useHttps: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+server:
+  port: 8085
+  servlet:
+    context-path: /onap/policy/clamp/acm/policyparticipant
