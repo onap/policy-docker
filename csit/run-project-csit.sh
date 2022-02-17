@@ -3,7 +3,7 @@
 # Copyright 2016-2017 Huawei Technologies Co., Ltd.
 # Modification Copyright 2019 © Samsung Electronics Co., Ltd.
 # Modification Copyright 2021 © AT&T Intellectual Property.
-# Modification Copyright 2021. Nordix Foundation.
+# Modification Copyright 2021-2022 Nordix Foundation.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -143,7 +143,11 @@ export SCRIPTS="${WORKSPACE}/csit"
 export ROBOT_VARIABLES=
 
 # get the plan from git clone
-source ${SCRIPTS}/get-branch-mariadb.sh
+source "${SCRIPTS}"/get-branch.sh
+
+# Prepare configuration files
+cd "${WORKSPACE}/csit"
+python3 ./prepare-config-files.py --https=true
 
 export PROJECT="${1}"
 
