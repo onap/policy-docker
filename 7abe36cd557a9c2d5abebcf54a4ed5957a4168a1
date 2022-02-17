@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "569d8dd8_33838db5",
+        "filename": "csit/apex-pdp/plans/teardown.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-02-17T09:52:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "040657d0_3973647b",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "7abe36cd557a9c2d5abebcf54a4ed5957a4168a1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96377f07_315c39c9",
         "filename": "csit/config/apex-pdp/OnapPfConfig.json",
         "patchSetId": 8
