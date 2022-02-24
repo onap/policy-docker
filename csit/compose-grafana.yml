@@ -239,3 +239,7 @@ services:
       hostname: grafana
       expose:
        - 3000
+      volumes:
+       - ./metrics/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
+       - ./metrics/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+       - ./metrics/dashboards:/var/lib/grafana/dashboards
