@@ -26,15 +26,15 @@ sudo apt-get -y install libxml2-utils
 
 source "${SCRIPTS}"/get-versions.sh
 
-docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d policy-clamp-cl-runtime
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d policy-clamp-runtime-acm
 
 sleep 10
 unset http_proxy https_proxy
 
-POLICY_CONTROLLOOP_RUNTIME_IP=$(get-instance-ip.sh policy-clamp-cl-runtime)
-POLICY_PARTICIPANT_IP=$(get-instance-ip.sh policy-clamp-cl-pf-ppnt)
-K8S_PARTICIPANT_IP=$(get-instance-ip.sh policy-clamp-cl-k8s-ppnt)
-HTTP_PARTICIPANT_IP=$(get-instance-ip.sh policy-clamp-cl-http-ppnt)
+POLICY_RUNTIME_ACM_IP=$(get-instance-ip.sh policy-clamp-runtime-acm)
+POLICY_PARTICIPANT_IP=$(get-instance-ip.sh policy-clamp-ac-pf-ppnt)
+K8S_PARTICIPANT_IP=$(get-instance-ip.sh policy-clamp-ac-k8s-ppnt)
+HTTP_PARTICIPANT_IP=$(get-instance-ip.sh policy-clamp-ac-http-ppnt)
 MARIADB_IP=$(get-instance-ip.sh mariadb)
 DMAAP_IP=$(get-instance-ip.sh simulator)
 POLICY_API_IP=$(get-instance-ip.sh policy-api)
@@ -42,17 +42,17 @@ POLICY_API_IP=$(get-instance-ip.sh policy-api)
 echo MARIADB IP IS "${MARIADB_IP}"
 echo DMAAP_IP IS "${DMAAP_IP}"
 echo API IP IS "${POLICY_API_IP}"
-echo POLICY CONTROLLOOP RUNTIME IP IS "${POLICY_CONTROLLOOP_RUNTIME_IP}"
+echo POLICY RUNTIME ACM IP IS "${POLICY_RUNTIME_ACM_IP}"
 echo POLICY PARTICIPANT IP IS "${POLICY_PARTICIPANT_IP}"
 echo K8S PARTICIPANT IP IS "${K8S_PARTICIPANT_IP}"
 echo HTTP PARTICIPANT IP IS "${HTTP_PARTICIPANT_IP}"
 
 # wait for the app to start up
-"${SCRIPTS}"/wait_for_port.sh "${POLICY_CONTROLLOOP_RUNTIME_IP}" 6969
+"${SCRIPTS}"/wait_for_port.sh "${POLICY_RUNTIME_ACM_IP}" 6969
 "${SCRIPTS}"/wait_for_port.sh "${POLICY_API_IP}" 6969
 
 ROBOT_VARIABLES=""
-ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_CONTROLLOOP_RUNTIME_IP:${POLICY_CONTROLLOOP_RUNTIME_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_RUNTIME_ACM_IP:${POLICY_RUNTIME_ACM_IP}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_PARTICIPANT_IP:${POLICY_PARTICIPANT_IP}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v K8S_PARTICIPANT_IP:${K8S_PARTICIPANT_IP}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v HTTP_PARTICIPANT_IP:${HTTP_PARTICIPANT_IP}"
