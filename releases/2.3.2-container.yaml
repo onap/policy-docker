@@ -1,0 +1,12 @@
+distribution_type: 'container'
+container_release_tag: '2.3.2'
+project: 'policy-docker'
+log_dir: 'policy-docker-maven-docker-stage-istanbul/137'
+ref: 8ddd9490aa574f4e57ed31ad192384c742184587
+containers:
+    - name: 'policy-jre-alpine'
+      version: '2.3.2-20220228T1150'
+    - name: 'policy-jdk-alpine'
+      version: '2.3.2-20220228T1150'
+    - name: 'policy-db-migrator'
+      version: '2.3.2-20220228T1150'
