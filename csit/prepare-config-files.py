@@ -30,6 +30,7 @@ if __name__ == '__main__':
 
     https_enabled = parser.parse_args().https
     message_router_port = '3905' if https_enabled == "true" else '3904'
+    protocol = 'https://' if https_enabled == "true" else 'http://'
 
     current_dir = os.getcwd()
     config_dir = current_dir + "/config/"
@@ -44,6 +45,7 @@ if __name__ == '__main__':
             with open(file, 'r+') as f:
                 content = f.read()
                 new_content = content.replace("{{HTTPS_ENABLED}}", https_enabled)
+                new_content = new_content.replace("{{PROTOCOL}}", protocol)
                 new_content = new_content.replace("{{MESSAGE_ROUTER_PORT}}", message_router_port)
 
                 if new_content != content:
