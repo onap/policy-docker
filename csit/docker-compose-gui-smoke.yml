@@ -1,8 +1,6 @@
 #
 # ===========LICENSE_START====================================================
-#  Copyright (C) 2020-2021 AT&T Intellectual Property. All rights reserved.
-#  Modifications Copyright (C) 2021 Bell Canada. All rights reserved.
-#  Modification Copyright 2021. Nordix Foundation.
+#  Copyright (C) 2022 Nordix Foundation.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,12 +22,12 @@ services:
       container_name: mariadb
       hostname: mariadb
       command: ['--lower-case-table-names=1', '--wait_timeout=28800']
-      env_file: config/db/db.conf
+      env_file: ./config/db/db.conf
       volumes:
-         - ./config/db:/docker-entrypoint-initdb.d:ro
          - ./config/clamp/policy-clamp-create-tables.sql:/tmp/policy-clamp-create-tables.sql
-      expose:
-       - 3306
+         - ./config/db:/docker-entrypoint-initdb.d:ro
+      ports:
+       - "3306:3306"
    policy-db-migrator:
       image: nexus3.onap.org:10001/onap/policy-db-migrator:${POLICY_DOCKER_VERSION}
       container_name: policy-db-migrator
@@ -38,7 +36,7 @@ services:
         - mariadb
       expose:
        - 6824
-      env_file: config/db/db.conf
+      env_file: ./config/db/db.conf
       environment:
         SQL_DB: policyadmin
         SQL_HOST: mariadb
@@ -153,7 +151,7 @@ services:
        - ./config/drools/custom:/tmp/policy-install/config:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       env_file:
-        - config/drools/env/base.conf
+        - ./config/drools/env/base.conf
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', '/opt/app/policy/bin/pdpd-entrypoint.sh boot',
@@ -174,12 +172,12 @@ services:
        - 9696
       volumes:
        - ./config/drools-apps/custom:/tmp/policy-install/config:ro
-       - ./config/drools-apps/custom/feature-lifecycle.properties:/opt/app/policy/features/lifecycle/config/feature-lifecycle.properties:ro
+       - ./config/feature-lifecycle.properties:/opt/app/policy/features/lifecycle/config/feature-lifecycle.properties:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       env_file:
-        - config/drools-apps/env/base.conf
-        - config/drools-apps/env/feature-healthcheck.conf
-        - config/drools-apps/env/feature-pooling-dmaap.conf
+        - ./config/drools-apps/env/base.conf
+        - ./config/drools-apps/env/feature-healthcheck.conf
+        - ./config/drools-apps/env/feature-pooling-dmaap.conf
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', '/opt/app/policy/bin/pdpd-cl-entrypoint.sh boot',
@@ -253,6 +251,7 @@ services:
        - ./config/policy-truststore:/opt/app/policy/clamp/etc/ssl/policy-truststore:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
        - ./config/ks.jks:/opt/app/policy/clamp/etc/ssl/policy-keystore:ro
+       - ./config/clamp/AcRuntimeParameters.yaml:/opt/app/policy/clamp/config/AcRuntimeParameters.yaml
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', './acm-runtime.sh',
@@ -311,3 +310,52 @@ services:
         '-c', './policy-participant.sh',
         'message-router', '3905'
         ]
+
+   policy-gui:
+     image: nexus3.onap.org:10001/onap/policy-gui:latest
+     container_name: policy-gui
+     depends_on:
+     - policy-clamp-backend
+     hostname: policy-gui
+     environment:
+       CLAMP_URL: https://policy-clamp-backend:8443
+       CLAMP_DISABLE_SSL_VALIDATION: "true"
+       SERVER_SSL_CLIENT_AUTH: want
+       KEYSTORE_PASSWD: Pol1cy_0nap
+       TRUSTSTORE_PASSWD: Pol1cy_0nap
+     ports:
+     - "2443:2443"
+     expose:
+     - 2443
+     volumes:
+     - ./config/clamp/gui/application.yaml:/opt/app/policy/gui/etc/application.yaml
+     - ./config/policy-truststore:/opt/app/policy/gui/etc/mounted/policy-truststore:ro
+     - ./config/ks.jks:/opt/app/policy/gui/etc/mounted/policy-keystore:ro
+     - ./wait_for_port.sh:/opt/app/policy/gui/bin/wait_for_port.sh:ro
+     entrypoint: ./policy-gui.sh
+     working_dir: /opt/app/policy/gui/bin
+     command: ./policy-gui.sh
+
+   policy-clamp-backend:
+     image: nexus3.onap.org:10001/onap/policy-clamp-backend:${POLICY_CLAMP_VERSION}
+     container_name: policy-clamp-backend
+     depends_on:
+     - policy-clamp-runtime-acm
+     - distribution
+     hostname: policy-clamp-backend
+     environment:
+        POLICY_API_HOST: api
+        POLICY_PAP_HOST: pap
+        MARIADB_HOST: mariadb
+        RUNTIME_HOST: policy-clamp-runtime-acm
+     ports:
+     - "8443:8443"
+     expose:
+     - 8443
+     volumes:
+     - ./config/clamp/application-smoke.properties:/opt/policy/clamp/application-smoke.properties:ro
+     - ./config/policy-truststore:/opt/policy/clamp/policy-truststore:ro
+     - ./config/ks.jks:/opt/policy/clamp/policy-keystore:ro
+     - ./config/clamp/org.onap.clamp.keyfile:/opt/policy/clamp/clamp-be-keyfile:ro
+     working_dir: /opt/policy/clamp
+     command: java -Djava.security.egd=file:/dev/./urandom -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=75 -jar ./policy-clamp-backend.jar --spring.config.name=application-smoke --spring.config.location=optional:classpath:/,optional:classpath:/config/,optional:file:./,optional:file:./config/
