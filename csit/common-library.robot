@@ -57,6 +57,14 @@ CreatePolicy
     Run Keyword If  ${expectedstatus}==200  Dictionary Should Contain Key  ${resp.json()['topology_template']['policies'][0]}  ${policyname}
     Run Keyword If  ${expectedstatus}==200  Should Be Equal As Strings  ${resp.json()['topology_template']['policies'][0]['${policyname}']['version']}  ${policyversion}
 
+CreateNodeTemplate
+    [Arguments]  ${url}  ${expectedstatus}  ${postjson}  ${nodeTemplateListLength}
+    [Documentation]  Create the node templates
+    ${policyadmin}=  PolicyAdminAuth
+    ${resp}=  PerformPostRequest  ${POLICY_API_IP}  ${url}  ${expectedstatus}  ${postjson}  \  ${policyadmin}
+    Run Keyword If  ${expectedstatus}==200  Length Should Be  ${resp.json()['topology_template']['node_templates']}  ${nodeTemplateListLength}
+
+
 QueryPdpGroups
     [Documentation]    Verify pdp group query - supports upto 2 groups
     [Arguments]  ${groupsLength}  ${group1Name}  ${group1State}  ${policiesLengthInGroup1}  ${group2Name}  ${group2State}  ${policiesLengthInGroup2}
@@ -73,13 +81,17 @@ QueryPdpGroups
 QueryPolicyAudit
     [Arguments]  ${url}  ${expectedstatus}  ${pdpGroup}  ${pdpType}  ${policyName}  ${expectedAction}
     ${policyadmin}=  PolicyAdminAuth
-    ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  ${url}  ${expectedstatus}  recordCount=1   ${policyadmin}
-    Should Be Equal As Strings    ${resp.json()[0]['pdpGroup']}  ${pdpGroup}
-    Should Be Equal As Strings    ${resp.json()[0]['pdpType']}  ${pdpType}
-    Should Be Equal As Strings    ${resp.json()[0]['policy']['name']}  ${policyName}
-    Should Be Equal As Strings    ${resp.json()[0]['policy']['version']}  1.0.0
-    Should Be Equal As Strings    ${resp.json()[0]['action']}  ${expectedAction}
-    Should Be Equal As Strings    ${resp.json()[0]['user']}  policyadmin
+    ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  ${url}  ${expectedstatus}  recordCount=2   ${policyadmin}
+    Log  Received response from queryPolicyAudit ${resp.text}
+    FOR    ${responseEntry}    IN    @{resp.json()}
+    Exit For Loop IF      '${responseEntry['policy']['name']}'=='${policyName}'
+    END
+    Should Be Equal As Strings    ${responseEntry['pdpGroup']}  ${pdpGroup}
+    Should Be Equal As Strings    ${responseEntry['pdpType']}  ${pdpType}
+    Should Be Equal As Strings    ${responseEntry['policy']['name']}  ${policyName}
+    Should Be Equal As Strings    ${responseEntry['policy']['version']}  1.0.0
+    Should Be Equal As Strings    ${responseEntry['action']}  ${expectedAction}
+    Should Be Equal As Strings    ${responseEntry['user']}  policyadmin
 
 QueryPolicyStatus
     [Documentation]    Verify policy deployment status

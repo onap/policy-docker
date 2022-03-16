@@ -30,6 +30,18 @@
                         }
                     ],
                     "policies": []
+                },
+                {
+                    "pdpType": "pdpTypeC",
+                    "desiredInstanceCount": 1,
+                    "properties": {},
+                    "supportedPolicyTypes": [
+                        {
+                            "name": "onap.policies.native.Apex",
+                            "version": "1.0.0"
+                        }
+                    ],
+                    "policies": []
                 }
             ]
         }

@@ -54,6 +54,12 @@ CreateNewMonitoringPolicyV2
      ${postjson}=  Get file  ${DATA}/vCPE.policy.monitoring.input.tosca.v2.json
      CreatePolicy  /policy/api/v1/policies  200  ${postjson}  onap.restart.tca  2.0.0
 
+
+CreateNodeTemplates
+   [Documentation]  Create node templates in database using specific api
+   ${postjson}=  Get file  ${NODETEMPLATES}/nodetemplates.metadatasets.input.tosca.json
+   CreateNodeTemplate  /policy/api/v1/nodetemplates  200  ${postjson}  3
+
 RetrievePoliciesOfType
      [Documentation]  Retrieve all policies belonging to a specific Policy Type
      FetchPolicies  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies  2
@@ -65,6 +71,20 @@ RetrieveAllPolicies
 RetrieveSpecificPolicy
      [Documentation]    Retrieve a policy named 'onap.restart.tca' and version '1.0.0' using generic api
      FetchPolicy  /policy/api/v1/policies/onap.restart.tca/versions/1.0.0  onap.restart.tca
+
+RetrieveAllNodeTemplates
+     [Documentation]  Retrieve all node templates
+     FetchNodeTemplates  /policy/api/v1/nodetemplates  3
+
+RetrieveSpecificNodeTemplate
+     [Documentation]    Retrieve a node template named 'apexMetadata_grpc' and version '1.2.1' using generic api
+     FetchNodeTemplate  /policy/api/v1/nodetemplates/apexMetadata_grpc/versions/1.2.1  apexMetadata_grpc
+
+DeleteSpecificNodeTemplate
+     [Documentation]  Delete a node template named 'apexMetadata_adaptive' and version '2.3.1' using generic api
+     DeleteReq  /policy/api/v1/nodetemplates/apexMetadata_adaptive/versions/2.3.1  200
+     DeleteReq  /policy/api/v1/nodetemplates/apexMetadata_adaptive/versions/2.3.1  404
+
 
 DeleteSpecificPolicy
      [Documentation]  Delete a policy named 'onap.restart.tca' and version '1.0.0' using generic api
@@ -126,3 +146,16 @@ FetchPolicies
      [Documentation]  Fetch all policies
      ${resp}=  GetReq  ${url}
      Length Should Be  ${resp.json()['topology_template']['policies']}  ${expectedLength}
+
+
+FetchNodeTemplates
+     [Arguments]  ${url}  ${expectedLength}
+     [Documentation]  Fetch all node templates
+     ${resp}=  GetReq  ${url}
+     Length Should Be  ${resp.json()}  ${expectedLength}
+
+FetchNodeTemplate
+     [Arguments]  ${url}  ${keyword}
+     [Documentation]  Fetch the specific node template
+     ${resp}=  GetReq  ${url}
+     Dictionary Should Contain Value  ${resp.json()[0]}  ${keyword}

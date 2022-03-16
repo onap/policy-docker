@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2022 Nordix Foundation
+ *  Copyright (C) 2022 Nordix Foundation. All rights reserved.
  *  ================================================================================
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE TABLE IF NOT EXISTS jpatoscanodetemplate_metadata (name VARCHAR(120) NULL, version VARCHAR(20) NULL, METADATA LONGTEXT  NULL, METADATA_KEY VARCHAR(255) NULL);
+ALTER TABLE jpatoscanodetemplate_metadata modify METADATA LONGTEXT;
