@@ -23,6 +23,9 @@ source "${SCRIPTS}"/get-branch.sh
 export POLICY_MARIADB_VER=10.5.8
 echo POLICY_MARIADB_VER=${POLICY_MARIADB_VER}
 
+export POLICY_POSTGRES_VER=11.1
+echo POLICY_POSTGRES_VER=${POLICY_POSTGRES_VER}
+
 function getVersion
 {
     REPO=$1

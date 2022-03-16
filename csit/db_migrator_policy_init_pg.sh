@@ -1,6 +1,6 @@
 #!/bin/sh
 # ============LICENSE_START====================================================
-#  Copyright (C) 2021 Nordix Foundation.
+#  Copyright (C) 2022 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,16 +20,16 @@
 export POLICY_HOME=/opt/app/policy
 export SQL_USER=${MYSQL_USER}
 export SQL_PASSWORD=${MYSQL_PASSWORD}
-export SCRIPT_DIRECTORY=sql
+export SCRIPT_DIRECTORY=postgres
 
 /opt/app/policy/bin/prepare_upgrade.sh ${SQL_DB}
 
-/opt/app/policy/bin/db-migrator -s ${SQL_DB} -o report
+/opt/app/policy/bin/db-migrator-pg -s ${SQL_DB} -o report
 
-/opt/app/policy/bin/db-migrator -s ${SQL_DB} -o upgrade
+/opt/app/policy/bin/db-migrator-pg -s ${SQL_DB} -o upgrade
 rc=$?
 
-/opt/app/policy/bin/db-migrator -s ${SQL_DB} -o report
+/opt/app/policy/bin/db-migrator-pg -s ${SQL_DB} -o report
 
 nc -l -p 6824
 
