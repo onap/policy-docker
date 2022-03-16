@@ -30,6 +30,8 @@ bash "${SCRIPTS}"/get-models-examples.sh
 
 DATA=${WORKSPACE}/models/models-examples/src/main/resources/policies
 
+NODETEMPLATES=${WORKSPACE}/models/models-examples/src/main/resources/nodetemplates
+
 # create a couple of variations of the policy definitions
 sed -e 's!Measurement_vGMUX!ADifferentValue!' \
         ${DATA}/vCPE.policy.monitoring.input.tosca.json \
@@ -60,3 +62,4 @@ echo MARIADB IP IS "${MARIADB_IP}"
 ROBOT_VARIABLES=""
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_IP:${POLICY_API_IP}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v DATA:${DATA}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v NODETEMPLATES:${NODETEMPLATES}"

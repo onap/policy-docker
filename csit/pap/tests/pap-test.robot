@@ -18,6 +18,16 @@ LoadPolicy
     ${postjson}=  Get file  ${DATA}/vCPE.policy.monitoring.input.tosca.json
     CreatePolicy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies  200  ${postjson}  onap.restart.tca  1.0.0
 
+LoadPolicyWithMetadataSet
+    [Documentation]  Create a policy named 'operational.apex.decisionMaker' and version '1.0.0' using specific api
+    ${postjson}=  Get file  ${CURDIR}/data/apex.policy.decisionmaker.input.tosca.json
+    CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  operational.apex.decisionMaker  1.0.0
+
+LoadNodeTemplates
+   [Documentation]  Create node templates in database using specific api
+   ${postjson}=  Get file  ${NODETEMPLATES}/nodetemplates.metadatasets.input.tosca.json
+   CreateNodeTemplate  /policy/api/v1/nodetemplates  200  ${postjson}  3
+
 Healthcheck
     [Documentation]  Verify policy pap health check
     ${resp}=  GetReq  /policy/pap/v1/healthcheck
@@ -77,10 +87,19 @@ QueryPolicyAuditAfterDeploy
     [Documentation]  Verify policy audit record after deploy
     QueryPolicyAudit  /policy/pap/v1/policies/audit  200  testGroup  pdpTypeA  onap.restart.tca  DEPLOYMENT
 
+QueryPolicyAuditWithMetadataSetAfterDeploy
+    [Documentation]  Verify policy audit record after deploy
+    QueryPolicyAudit  /policy/pap/v1/policies/audit  200  testGroup  pdpTypeC  operational.apex.decisionMaker  DEPLOYMENT
+
 UndeployPolicy
     [Documentation]  Undeploy a policy named 'onap.restart.tca' from PdpGroups
     ${auth}=  PolicyAdminAuth
     PerformDeleteRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/policies/onap.restart.tca  202  ${auth}
+
+UndeployPolicyWithMetadataSet
+    [Documentation]  Undeploy a policy named 'operational.apex.decisionMaker' from PdpGroups
+    ${auth}=  PolicyAdminAuth
+    PerformDeleteRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/policies/operational.apex.decisionMaker  202  ${auth}
 
 QueryPdpGroupsAfterUndeploy
     [Documentation]  Verify PdpGroups after undeploy
@@ -89,6 +108,10 @@ QueryPdpGroupsAfterUndeploy
 QueryPolicyAuditAfterUnDeploy
     [Documentation]  Verify policy audit record after undeploy
     QueryPolicyAudit  /policy/pap/v1/policies/audit  200  testGroup  pdpTypeA  onap.restart.tca  UNDEPLOYMENT
+
+QueryPolicyAuditWithMetadataSetAfterUnDeploy
+    [Documentation]  Verify policy audit record after undeploy
+    QueryPolicyAudit  /policy/pap/v1/policies/audit  200  testGroup  pdpTypeC  operational.apex.decisionMaker  UNDEPLOYMENT
 
 DeactivatePdpGroup
     [Documentation]  Change the state of PdpGroup named 'testGroup' to PASSIVE

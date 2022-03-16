@@ -53,6 +53,18 @@ ExecuteApexTestVnfPolicy
      Should Be Equal As Integers    ${result.rc}    0
      Wait Until Keyword Succeeds    2 min    5 sec    TriggerAndVerifyTestVnfPolicy
 
+ExecuteApexTestPnfPolicyWithMetadataSet
+      Set Test Variable    ${policyName}    onap.policies.apex.pnf.metadataSet.Test
+      ${postjson}=  Get file  ${CURDIR}/data/${policyName}.json
+      CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
+      ${postjson}=  Get file  ${CURDIR}/data/onap.pnf.metadataSet.Test.json
+      CreateNodeTemplate  /policy/api/v1/nodetemplates  200  ${postjson}  1
+      DeployPolicy
+      Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
+      ${result}=     Run Process    ${SCRIPTS}/make_topic.sh     APEX-CL-MGT2
+      Should Be Equal As Integers    ${result.rc}    0
+      Wait Until Keyword Succeeds    2 min    5 sec    TriggerAndVerifyTestPnfPolicy
+
 *** Keywords ***
 
 DeployPolicy
