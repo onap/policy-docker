@@ -242,9 +242,6 @@ services:
       depends_on:
        - mariadb
        - simulator
-       - policy-clamp-ac-http-ppnt
-       - policy-clamp-ac-k8s-ppnt
-       - policy-clamp-ac-pf-ppnt
       hostname: policy-clamp-runtime-acm
       expose:
        - 6969
@@ -260,8 +257,6 @@ services:
    policy-clamp-ac-http-ppnt:
       image: nexus3.onap.org:10001/onap/policy-clamp-ac-http-ppnt:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-ac-http-ppnt
-      depends_on:
-       - simulator
       hostname: policy-clamp-ac-http-ppnt
       expose:
        - 6971
@@ -277,8 +272,6 @@ services:
    policy-clamp-ac-k8s-ppnt:
       image: nexus3.onap.org:10001/onap/policy-clamp-ac-k8s-ppnt:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-ac-k8s-ppnt
-      depends_on:
-       - simulator
       hostname: policy-clamp-ac-k8s-ppnt
       expose:
        - 6972
@@ -297,6 +290,8 @@ services:
       depends_on:
        - simulator
        - api
+       - policy-clamp-ac-http-ppnt
+       - policy-clamp-ac-k8s-ppnt
       hostname: policy-clamp-ac-pf-ppnt
       expose:
        - 6973
