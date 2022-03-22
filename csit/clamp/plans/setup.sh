@@ -27,6 +27,8 @@ sudo apt-get -y install libxml2-utils
 source "${SCRIPTS}"/get-versions.sh
 
 docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d policy-clamp-runtime-acm
+sleep 100
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d policy-clamp-ac-pf-ppnt
 
 sleep 10
 unset http_proxy https_proxy

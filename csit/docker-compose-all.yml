@@ -244,7 +244,6 @@ services:
        - simulator
        - policy-clamp-ac-http-ppnt
        - policy-clamp-ac-k8s-ppnt
-       - policy-clamp-ac-pf-ppnt
       hostname: policy-clamp-runtime-acm
       expose:
        - 6969
@@ -297,6 +296,7 @@ services:
       depends_on:
        - simulator
        - api
+       - policy-clamp-runtime-acm
       hostname: policy-clamp-ac-pf-ppnt
       expose:
        - 6973
