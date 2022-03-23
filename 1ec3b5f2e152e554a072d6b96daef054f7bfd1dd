@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a221b5d_d5bc2774",
+        "filename": "csit/clamp/plans/setup.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2022-03-23T19:46:17Z",
+      "side": 1,
+      "message": "I don\u0027t think we can put a 100 sec. delay here.   Check out the \"wait_for_port.sh\" as other components are waiting in the docker-compose, and see if it helps.",
+      "revId": "1ec3b5f2e152e554a072d6b96daef054f7bfd1dd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
