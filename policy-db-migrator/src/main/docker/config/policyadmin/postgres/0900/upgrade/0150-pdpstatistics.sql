@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE pdpstatistics ALTER COLUMN timeStamp TIMESTAMP(6);
+ALTER TABLE pdpstatistics ALTER COLUMN timeStamp TYPE TIMESTAMP(6);
