@@ -25,6 +25,7 @@ services:
       env_file: config/db/db.conf
       volumes:
          - ./config/db:/docker-entrypoint-initdb.d:ro
+         - ./config/clamp/policy-clamp-create-tables.sql:/tmp/policy-clamp-create-tables.sql
       expose:
        - 3306
    policy-db-migrator:
