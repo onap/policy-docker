@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fb813bf4_ef7d325e",
+        "filename": "csit/apex-pdp/tests/data/onap.pnf.metadataSet.Test.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-03-25T10:36:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5c2293ba_6e266087",
+      "revId": "a8be1f7e70ea46dfd82fa74595a43df88c2497e0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22cb6326_4e0a1a22",
         "filename": "csit/apex-pdp/tests/data/onap.policies.apex.pnf.metadataSet.Test.json",
         "patchSetId": 2
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "693fa4bf_5f97b70c",
+        "filename": "csit/apex-pdp/tests/data/onap.policies.apex.pnf.metadataSet.Test.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-03-25T10:36:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "22cb6326_4e0a1a22",
+      "revId": "a8be1f7e70ea46dfd82fa74595a43df88c2497e0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e22bcc92_74bebb3d",
         "filename": "csit/pap/tests/data/apex.policy.decisionmaker.input.tosca.json",
         "patchSetId": 2
@@ -68,6 +104,24 @@
       "revId": "a8be1f7e70ea46dfd82fa74595a43df88c2497e0",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15945ae4_9d30346d",
+        "filename": "csit/pap/tests/data/apex.policy.decisionmaker.input.tosca.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-03-25T10:36:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e22bcc92_74bebb3d",
+      "revId": "a8be1f7e70ea46dfd82fa74595a43df88c2497e0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
