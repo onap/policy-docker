@@ -11,12 +11,8 @@ Healthcheck
      [Documentation]  Verify policy api health check
      ${resp}=  GetReq  /policy/api/v1/healthcheck
      Should Be Equal As Strings  ${resp.json()['code']}  200
-
-Metrics
-    [Documentation]  Verify policy-api is exporting prometheus metrics
-    ${auth}=  PolicyAdminAuth
-    ${resp}=  GetMetrics  ${POLICY_API_IP}  ${auth}
-    Should Contain  ${resp.text}  jvm_threads_live_threads
+     Should Be Equal As Strings  ${resp.json()['healthy']}  True
+     Should Be Equal As Strings  ${resp.json()['message']}  alive
 
 Statistics
      [Documentation]  Verify policy api statistics
@@ -105,6 +101,28 @@ DeleteSpecificPolicyTypeV2
      [Documentation]  Delete a policy type named 'onap.policies.monitoring.tcagen2' and version '2.0.0'
      DeleteReq  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/2.0.0  200
      DeleteReq  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/2.0.0  404
+
+Metrics
+    [Documentation]  Verify policy-api is exporting prometheus metrics
+    ${auth}=  PolicyAdminAuth
+    ${resp}=  GetMetrics  ${POLICY_API_IP}  ${auth}
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policy/api/v1/healthcheck",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policy/api/v1/statistics",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policy/api/v1/policytypes",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policy/api/v1/policies",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policy/api/v1/policies/{policyId}/versions/{policyVersion}",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policy/api/v1/policytypes/{policyTypeId}/versions/{policyTypeVersion}/policies",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="POST",outcome="SUCCESS",status="200",uri="/policy/api/v1/policytypes/{policyTypeId}/versions/{policyTypeVersion}/policies",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="POST",outcome="SUCCESS",status="200",uri="/policy/api/v1/policytypes",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="DELETE",outcome="SUCCESS",status="200",uri="/policy/api/v1/policies/{policyId}/versions/{policyVersion}",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="DELETE",outcome="SUCCESS",status="200",uri="/policy/api/v1/policytypes/{policyTypeId}/versions/{versionId}",} 2.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="DELETE",outcome="SUCCESS",status="200",uri="/policy/api/v1/policytypes/{policyTypeId}/versions/{policyTypeVersion}/policies/{policyId}/versions/{policyVersion}",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_sum
+    Should Contain  ${resp.text}  http_server_requests_seconds_max
+    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count
+    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_sum
+    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_max
+    Should Contain  ${resp.text}  jvm_threads_live_threads
 
 *** Keywords ***
 
