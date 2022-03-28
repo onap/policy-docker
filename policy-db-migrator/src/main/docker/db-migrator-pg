@@ -101,8 +101,7 @@ function usage() {
 # current_schema
 #####################################################
 
-function current_schema
-{
+function current_schema() {
     if [ "${DEBUG}" = "y" ]; then
         echo "-- current_schema --"
         set -x
@@ -125,8 +124,7 @@ function current_schema
 # ensure global metadata
 #####################################################
 
-function ensure_metadata
-{
+function ensure_metadata() {
     if [ "${DEBUG}" = "y" ]; then
         echo "-- ensure_metadata --"
         set -x
@@ -149,13 +147,11 @@ function ensure_metadata
     return $?
 }
 
-
 #####################################################
 # ensure metadata on a per schema basis
 #####################################################
 
-function ensure_metadata_schema
-{
+function ensure_metadata_schema() {
     if [ "${DEBUG}" = "y" ]; then
         echo "-- ensure_metadata_schema --"
         set -x
@@ -179,13 +175,11 @@ function ensure_metadata_schema
     return $?
 }
 
-
 #####################################################
 # target_release
 #####################################################
 
-function target_release
-{
+function target_release() {
     if [ "${DEBUG}" = "y" ]; then
         echo "-- target_release --"
         set -x
@@ -196,7 +190,7 @@ function target_release
     TARGET_UPGRADE_RELEASE=${ZERO_VERSION}
     TARGET_DOWNGRADE_RELEASE=${ZERO_VERSION}
 
-    upgradeSqls=$(ls -v -r "${UPGRADE_DIR}"/*/upgrade/*.sql 2> /dev/null)
+    upgradeSqls=$(ls -v -r "${UPGRADE_DIR}"/*/upgrade/*.sql 2>/dev/null)
     for sql in ${upgradeSqls}; do
         TARGET_UPGRADE_RELEASE="$(basename $(dirname $(dirname $sql)))"
         break
@@ -210,8 +204,7 @@ function target_release
 # is_upgrade
 #####################################################
 
-function is_upgrade
-{
+function is_upgrade() {
     if [ "${DEBUG}" = "y" ]; then
         echo "-- is_upgrade --"
         set -x
@@ -219,7 +212,7 @@ function is_upgrade
 
     local upgradeSqls
 
-    upgradeSqls=$(ls -v "${UPGRADE_DIR}"/*/upgrade/*.sql 2> /dev/null)
+    upgradeSqls=$(ls -v "${UPGRADE_DIR}"/*/upgrade/*.sql 2>/dev/null)
     if [ -z "${upgradeSqls}" ]; then
         return 1
     else
@@ -227,13 +220,11 @@ function is_upgrade
     fi
 }
 
-
 #####################################################
 # is_downgrade
 #####################################################
 
-function is_downgrade
-{
+function is_downgrade() {
     if [ "${DEBUG}" = "y" ]; then
         echo "-- is_downgrade --"
         set -x
@@ -241,7 +232,7 @@ function is_downgrade
 
     local downgradeSqls
 
-    downgradeSqls=$(ls -v -r "${DOWNGRADE_DIR}"/*/downgrade/*.sql 2> /dev/null)
+    downgradeSqls=$(ls -v -r "${DOWNGRADE_DIR}"/*/downgrade/*.sql 2>/dev/null)
     if [ -z "${downgradeSqls}" ]; then
         return 1
     else
@@ -249,36 +240,33 @@ function is_downgrade
     fi
 }
 
-
 #####################################################
 # set_current_release
 #####################################################
 
-function set_current_release
-{
-        if [ "${DEBUG}" = "y" ]; then
-                echo "-- set_current_release --"
-                set -x
-        fi
+function set_current_release() {
+    if [ "${DEBUG}" = "y" ]; then
+        echo "-- set_current_release --"
+        set -x
+    fi
 
-        CURRENT_RELEASE="${1}"
+    CURRENT_RELEASE="${1}"
 
-        local sql
-        sql="INSERT INTO ${METADATA_TABLE} (name, version) "
-        sql=${sql}"VALUES('${SCHEMA}', '${CURRENT_RELEASE}') "
-        sql=${sql}"ON CONFLICT (name) DO UPDATE SET version='${CURRENT_RELEASE}';"
+    local sql
+    sql="INSERT INTO ${METADATA_TABLE} (name, version) "
+    sql=${sql}"VALUES('${SCHEMA}', '${CURRENT_RELEASE}') "
+    sql=${sql}"ON CONFLICT (name) DO UPDATE SET version='${CURRENT_RELEASE}';"
 
-        PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${METADATA_DB}";
-        ${PSQL} --command "${sql}"
-        return $?
+    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${METADATA_DB}"
+    ${PSQL} --command "${sql}"
+    return $?
 }
 
 #####################################################
 # current_release
 #####################################################
 
-function current_release
-{
+function current_release() {
     if [ "${DEBUG}" = "y" ]; then
         echo "-- current_release --"
         set -x
@@ -302,8 +290,7 @@ function current_release
 # previous_release
 #####################################################
 
-function previous_release
-{
+function previous_release() {
     if [ "${DEBUG}" = "y" ]; then
         echo "-- previous_release --"
         set -x
@@ -312,28 +299,26 @@ function previous_release
     local current_release_int_val previous_release_int_val previous_release
 
     if [ $current_release == $ZERO_VERSION ] || [ $current_release == $BASE_VERSION ]; then
-         PREVIOUS_RELEASE=$ZERO_VERSION
+        PREVIOUS_RELEASE=$ZERO_VERSION
     else
-         current_release_int_val=$(echo $current_release  | awk '{$0=int($0)}1')
-         let previous_release_int_val=$current_release_int_val-100
-         if [ $previous_release_int_val -lt 1000 ]; then
-                 previous_release="0"$previous_release_int_val
-         else
-                 previous_release=$previous_release_int_val
-         fi
-         PREVIOUS_RELEASE=$previous_release
+        current_release_int_val=$(echo $current_release | awk '{$0=int($0)}1')
+        let previous_release_int_val=$current_release_int_val-100
+        if [ $previous_release_int_val -lt 1000 ]; then
+            previous_release="0"$previous_release_int_val
+        else
+            previous_release=$previous_release_int_val
+        fi
+        PREVIOUS_RELEASE=$previous_release
     fi
 
     return 0
 }
 
-
 #####################################################
 # last_operation_status
 #####################################################
 
-function last_operation_status
-{
+function last_operation_status() {
     if [ "${DEBUG}" = "y" ]; then
         echo "-- last_operation_status --"
         set -x
@@ -360,15 +345,14 @@ function last_operation_status
         rc=1
     fi
 
-    return $rc;
+    return $rc
 }
 
 #####################################################
 # execute sql script history
 #####################################################
 
-function track_script
-{
+function track_script() {
     if [ "${DEBUG}" = "y" ]; then
         echo "-- track_script $* --"
         set -x
@@ -376,24 +360,22 @@ function track_script
 
     local script="${1}" operation="${2}" success="${3}" from_version="${4}" to_version="${5}" tag="${6}"
     if [ $operation == "downgrade" ]; then
-       to_version=${TARGET_DOWNGRADE_RELEASE}
+        to_version=${TARGET_DOWNGRADE_RELEASE}
     fi
 
     local sql="INSERT INTO ${METADATA_HISTORY}(script,operation,from_version,to_version,tag,success,atTime) "
     sql=${sql}"VALUES ('${script}','${operation}','${from_version}','${to_version}','${tag}','${success}',now()) "
 
-    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${METADATA_DB}";
+    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${METADATA_DB}"
     ${PSQL} --command "${sql}"
     return $?
 }
-
 
 #####################################################
 # execute sql script
 #####################################################
 
-function run_script
-{
+function run_script() {
     if [ "${DEBUG}" == "y" ]; then
         echo "-- run_script $* --"
         set -x
@@ -405,7 +387,7 @@ function run_script
     echo "> ${operation} ${script}"
 
     PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${SQL_DB}"
-    ${PSQL} ${SCHEMA} < "${scriptPath}"
+    ${PSQL} <"${scriptPath}"
     local rc=$?
     if [ ${rc} -ne 0 ]; then
         success="0"
@@ -422,8 +404,7 @@ function run_script
 # upgrade
 #####################################################
 
-function upgrade
-{
+function upgrade() {
     if [ "${DEBUG}" = "y" ]; then
         echo "-- upgrade --"
         set -x
@@ -435,22 +416,22 @@ function upgrade
     echo "upgrade: ${CURRENT_RELEASE} -> ${TARGET_UPGRADE_RELEASE}"
 
     if [ ${CURRENT_RELEASE} \< ${TARGET_UPGRADE_RELEASE} ]; then
-	upgradeSqls=$(ls -v "${UPGRADE_DIR}"/*/upgrade/*.sql 2> /dev/null)
+        upgradeSqls=$(ls -v "${UPGRADE_DIR}"/*/upgrade/*.sql 2>/dev/null)
         for sqlFile in ${upgradeSqls}; do
             sqlName=$(basename "${sqlFile}")
             schemaVersion="$(basename $(dirname $(dirname $sqlFile)))"
             previous_release $schemaVersion
-            if [ "${schemaVersion}" -gt "${CURRENT_RELEASE}" ] && \
+            if [ "${schemaVersion}" -gt "${CURRENT_RELEASE}" ] &&
                 [ "${schemaVersion}" -le "${TARGET_UPGRADE_RELEASE}" ]; then
                 tag=${tagDate}"${schemaVersion}u"
-                if [ $RETRY -eq 1 ] && \
+                if [ $RETRY -eq 1 ] &&
                     # Compare the numeric portion of the filename because shell doesn't support string comparison
-                    [ $(echo ${sqlName}| awk -F- '{print $1}') -${COMPARE} $(echo ${LAST_SCRIPT}| awk -F- '{print $1}') ]; then
-                     rc=1
-		     echo "rc=1"
+                    [ $(echo ${sqlName} | awk -F- '{print $1}') -${COMPARE} $(echo ${LAST_SCRIPT} | awk -F- '{print $1}') ]; then
+                    rc=1
+                    echo "rc=1"
                 else
-                     rc=0
-		     echo "rc=0"
+                    rc=0
+                    echo "rc=0"
                 fi
                 if [ ${rc} -eq 0 ]; then
                     run_script "upgrade" "${sqlName}" "${sqlFile}" "${PREVIOUS_RELEASE}" "${schemaVersion}" "${tag}"
@@ -474,8 +455,7 @@ function upgrade
 # downgrade
 #####################################################
 
-function downgrade
-{
+function downgrade() {
     if [ "${DEBUG}" = "y" ]; then
         echo "-- downgrade --"
         set -x
@@ -487,19 +467,19 @@ function downgrade
     echo "downgrade: ${CURRENT_RELEASE} -> ${TARGET_DOWNGRADE_RELEASE}"
 
     if [ ${CURRENT_RELEASE} \> ${TARGET_DOWNGRADE_RELEASE} ]; then
-        downgradeSqls=$(ls -v -r "${DOWNGRADE_DIR}"/*/downgrade/*.sql 2> /dev/null)
+        downgradeSqls=$(ls -v -r "${DOWNGRADE_DIR}"/*/downgrade/*.sql 2>/dev/null)
         for sqlFile in ${downgradeSqls}; do
             sqlName=$(basename "${sqlFile}")
             schemaVersion="$(basename $(dirname $(dirname $sqlFile)))"
-            if [ "${schemaVersion}" -le "${CURRENT_RELEASE}" ] && \
+            if [ "${schemaVersion}" -le "${CURRENT_RELEASE}" ] &&
                 [ "${schemaVersion}" -gt "${TARGET_DOWNGRADE_RELEASE}" ]; then
                 tag=${tagDate}"${schemaVersion}d"
-                if [ $RETRY -eq 1 ] && \
+                if [ $RETRY -eq 1 ] &&
                     # Compare the numeric portion of the filename because shell doesn't support string comparison
-                    [ $(echo ${sqlName}| awk -F- '{print $1}') -${COMPARE} $(echo ${LAST_SCRIPT}| awk -F- '{print $1}') ]; then
-                     rc=1
+                    [ $(echo ${sqlName} | awk -F- '{print $1}') -${COMPARE} $(echo ${LAST_SCRIPT} | awk -F- '{print $1}') ]; then
+                    rc=1
                 else
-                     rc=0
+                    rc=0
                 fi
                 if [ ${rc} -eq 0 ]; then
                     run_script "downgrade" "${sqlName}" "${sqlFile}" "${schemaVersion}" "${PREVIOUS_RELEASE}" ${tag}
@@ -523,8 +503,7 @@ function downgrade
 # erase
 #####################################################
 
-function erase
-{
+function erase() {
     if [ "${DEBUG}" = "y" ]; then
         echo "-- erase --"
         set -x
@@ -537,7 +516,7 @@ function erase
     local deleteHistory="DELETE FROM ${METADATA_HISTORY};"
     ${PSQL} --command "${deleteHistory}"
 
-    local dropDB="DROP DATABASE IF EXISTS ${SCHEMA_DB}";
+    local dropDB="DROP DATABASE IF EXISTS ${SCHEMA_DB}"
     ${PSQL} --command "${dropDB}"
 }
 
@@ -545,8 +524,7 @@ function erase
 # report
 #####################################################
 
-function report
-{
+function report() {
     if [ "${DEBUG}" = "y" ]; then
         echo "-- report --"
         set -x
@@ -562,8 +540,7 @@ function report
     okay
 }
 
-function okay
-{
+function okay() {
     if [ "${DEBUG}" = "y" ]; then
         echo "-- okay --"
         set -x
@@ -599,40 +576,47 @@ if [ "${DEBUG}" = "y" ]; then
 fi
 until [ -z "$1" ]; do
     case $1 in
-        -s|--schema|--database)    shift
-             SCHEMA=$1
-             ;;
-        -b|--basedir)   shift
-             MIGRATION_DIR=$1
-             ;;
-        -t|--target)    shift
-             INPUT_TARGET_RELEASE=$1
-             ;;
-        -f|--from)      shift
-             INPUT_FROM_RELEASE=$1
-             ;;
-        -o|--operation) shift
-             OPERATION=$1
-             ;;
-        *)              usage
-             exit 1
-             ;;
+    -s | --schema | --database)
+        shift
+        SCHEMA=$1
+        ;;
+    -b | --basedir)
+        shift
+        MIGRATION_DIR=$1
+        ;;
+    -t | --target)
+        shift
+        INPUT_TARGET_RELEASE=$1
+        ;;
+    -f | --from)
+        shift
+        INPUT_FROM_RELEASE=$1
+        ;;
+    -o | --operation)
+        shift
+        OPERATION=$1
+        ;;
+    *)
+        usage
+        exit 1
+        ;;
     esac
     shift
 done
 
 case ${OPERATION} in
-    upgrade)    ;;
-    downgrade)  ;;
-    auto)       ;;
-    version)    ;;
-    erase)      ;;
-    report)     ;;
-    ok)         ;;
-    *)          echo "error: invalid operation provided"
-                usage
-                exit 1
-                ;;
+    upgrade) ;;
+    downgrade) ;;
+    auto) ;;
+    version) ;;
+    erase) ;;
+    report) ;;
+    ok) ;;
+    *)
+        echo "error: invalid operation provided"
+        usage
+        exit 1
+        ;;
 esac
 
 if [ -z "${SCHEMA}" ]; then
@@ -648,7 +632,7 @@ if [ -z "${SQL_HOST}" ] || [ -z "${SQL_USER}" ] || [ -z "${SQL_PASSWORD}" ]; the
     exit 4
 fi
 
-PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${SQL_DB}";
+PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${SQL_DB}"
 if ! ${PSQL} --command '\l'; then
     echo "error: No DB connectivity to ${SQL_HOST} for ${SQL_USER}"
     exit 5
@@ -658,7 +642,7 @@ if [ "${SCHEMA}" = "ALL" ]; then
     SCHEMA="*"
 fi
 
-SCHEMA_S=$(ls -d "${MIGRATION_DIR}"/${SCHEMA}/ 2> /dev/null)
+SCHEMA_S=$(ls -d "${MIGRATION_DIR}"/${SCHEMA}/ 2>/dev/null)
 if [ -z "${SCHEMA_S}" ]; then
     echo "error: no databases available"
     exit 0
@@ -679,7 +663,7 @@ for dbPath in ${SCHEMA_S}; do
     TARGET_RELEASE=${INPUT_TARGET_RELEASE}
 
     if is_upgrade && is_downgrade; then
-        echo "${SCHEMA}: failure: invalid configuration: ${UPGRADE_SQL_SUFFIX} and "\
+        echo "${SCHEMA}: failure: invalid configuration: ${UPGRADE_SQL_SUFFIX} and " \
             "${DOWNGRADE_SQL_SUFFIX} exist under ${DOWNGRADE_DIR}"
         rc=1
         continue
@@ -718,7 +702,7 @@ for dbPath in ${SCHEMA_S}; do
         fi
     fi
 
-    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${SQL_DB}";
+    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${SQL_DB};"
     # Check if the schema has already been installed
     current_schema
     RETRY=0
@@ -726,29 +710,29 @@ for dbPath in ${SCHEMA_S}; do
     last_operation_status
     last_status=$?
     if [ $last_status -eq 0 ]; then
-         echo "Partial $LAST_OPERATION detected"
-         RETRY=1
-         if [ "${OPERATION}" == 'downgrade' ] && [ "${LAST_OPERATION}" == 'downgrade' ]; then
-              CURRENT_RELEASE="${LAST_FROM_VERSION}"
-              # greater than
-              COMPARE="gt"
-              echo "Downgrade will attempt to resume at $LAST_SCRIPT"
-         elif [ "${OPERATION}" == 'downgrade' ] && [ "${LAST_OPERATION}" == 'upgrade' ]; then
-              CURRENT_RELEASE="${LAST_TO_VERSION}"
-              # greater than or equal to
-              COMPARE="ge"
-              echo "Downgrade will attempt to resume before $LAST_SCRIPT"
-         elif [ "${OPERATION}" == 'upgrade' ] && [ "${LAST_OPERATION}" == 'upgrade' ]; then
-              CURRENT_RELEASE="${LAST_FROM_VERSION}"
-              # less than
-              COMPARE="lt"
-              echo "Upgrade will attempt to resume at $LAST_SCRIPT"
-         else
-              CURRENT_RELEASE="${LAST_TO_VERSION}"
-              # less than or equal
-              COMPARE="le"
-              echo "Upgrade will attempt to resume after $LAST_SCRIPT"
-         fi
+        echo "Partial $LAST_OPERATION detected"
+        RETRY=1
+        if [ "${OPERATION}" == 'downgrade' ] && [ "${LAST_OPERATION}" == 'downgrade' ]; then
+            CURRENT_RELEASE="${LAST_FROM_VERSION}"
+            # greater than
+            COMPARE="gt"
+            echo "Downgrade will attempt to resume at $LAST_SCRIPT"
+        elif [ "${OPERATION}" == 'downgrade' ] && [ "${LAST_OPERATION}" == 'upgrade' ]; then
+            CURRENT_RELEASE="${LAST_TO_VERSION}"
+            # greater than or equal to
+            COMPARE="ge"
+            echo "Downgrade will attempt to resume before $LAST_SCRIPT"
+        elif [ "${OPERATION}" == 'upgrade' ] && [ "${LAST_OPERATION}" == 'upgrade' ]; then
+            CURRENT_RELEASE="${LAST_FROM_VERSION}"
+            # less than
+            COMPARE="lt"
+            echo "Upgrade will attempt to resume at $LAST_SCRIPT"
+        else
+            CURRENT_RELEASE="${LAST_TO_VERSION}"
+            # less than or equal
+            COMPARE="le"
+            echo "Upgrade will attempt to resume after $LAST_SCRIPT"
+        fi
     fi
 
     if [ -n "${INPUT_FROM_RELEASE}" ]; then
@@ -761,29 +745,35 @@ for dbPath in ${SCHEMA_S}; do
     fi
 
     case ${OPERATION} in
-        upgrade)     if upgrade; then
-                         echo "${SCHEMA}: OK: upgrade (${CURRENT_RELEASE})"
-                     else
-                         rc=1
-                         echo "${SCHEMA}: failure: upgrade to release ${TARGET_UPGRADE_RELEASE} (${CURRENT_RELEASE})"
-                     fi
-                     ;;
-        downgrade)   if downgrade; then
-                         echo "${SCHEMA}: OK: downgrade (${CURRENT_RELEASE})"
-                     else
-                        rc=1
-                        echo "${SCHEMA}: failure: downgrade to release ${TARGET_DOWNGRADE_RELEASE} (${CURRENT_RELEASE})"
-                     fi
-                     ;;
-        version)     echo "${SCHEMA}: ${CURRENT_RELEASE}"
-                     ;;
-        erase)       erase
-                     ;;
-        report)      report
-                     ;;
-        ok)          okay
-                     ;;
-        esac
+    upgrade)
+        if upgrade; then
+            echo "${SCHEMA}: OK: upgrade (${CURRENT_RELEASE})"
+        else
+            rc=1
+            echo "${SCHEMA}: failure: upgrade to release ${TARGET_UPGRADE_RELEASE} (${CURRENT_RELEASE})"
+        fi
+        ;;
+    downgrade)
+        if downgrade; then
+            echo "${SCHEMA}: OK: downgrade (${CURRENT_RELEASE})"
+        else
+            rc=1
+            echo "${SCHEMA}: failure: downgrade to release ${TARGET_DOWNGRADE_RELEASE} (${CURRENT_RELEASE})"
+        fi
+        ;;
+    version)
+        echo "${SCHEMA}: ${CURRENT_RELEASE}"
+        ;;
+    erase)
+        erase
+        ;;
+    report)
+        report
+        ;;
+    ok)
+        okay
+        ;;
+    esac
 
 done
 exit $rc

@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE jpatoscanodetemplate_metadata modify METADATA LONGTEXT;
+ALTER TABLE jpatoscanodetemplate_metadata MODIFY COLUMN METADATA LONGTEXT;

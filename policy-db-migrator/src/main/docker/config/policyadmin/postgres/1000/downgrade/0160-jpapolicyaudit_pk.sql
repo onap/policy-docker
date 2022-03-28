@@ -1,6 +1,7 @@
 /*
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2022 Bell Canada. All rights reserved.
+ *  Modifications Copyright (C) 2022 Nordix Foundation.
  *  ================================================================================
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,5 +18,5 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE jpapolicyaudit DROP CONSTRAINT PRIMARY KEY;
+ALTER TABLE jpapolicyaudit DROP CONSTRAINT PK_JPAPOLICYAUDIT;
 ALTER TABLE jpapolicyaudit ADD CONSTRAINT PK_JPAPOLICYAUDIT PRIMARY KEY (ID, name, version);

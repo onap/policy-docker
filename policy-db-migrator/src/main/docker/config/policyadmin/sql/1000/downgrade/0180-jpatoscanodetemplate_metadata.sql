@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE jpatoscanodetemplate_metadata modify METADATA VARCHAR;
+ALTER TABLE jpatoscanodetemplate_metadata MODIFY COLUMN METADATA VARCHAR(255);

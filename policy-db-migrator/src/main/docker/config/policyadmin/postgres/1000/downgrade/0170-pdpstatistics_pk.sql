@@ -1,6 +1,7 @@
 /*
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2022 Bell Canada. All rights reserved.
+ *  Modifications Copyright (C) 2022 Nordix Foundation.
  *  ================================================================================
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,5 +18,5 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE pdpstatistics DROP CONSTRAINT PRIMARY KEY;
+ALTER TABLE pdpstatistics DROP CONSTRAINT PK_PDPSTATISTICS;
 ALTER TABLE pdpstatistics ADD CONSTRAINT PK_PDPSTATISTICS PRIMARY KEY (ID, name, version);
