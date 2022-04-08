@@ -86,7 +86,7 @@
               "version": "1.0.0"
             }
           ],
-          "currentInstanceCount": 1,
+          "currentInstanceCount": 0,
           "desiredInstanceCount": 1,
           "policies": [
             {
@@ -111,7 +111,7 @@
               "version": "1.0.0"
             }
           ],
-          "currentInstanceCount": 1,
+          "currentInstanceCount": 0,
           "desiredInstanceCount": 1,
           "policies": []
         },
@@ -127,7 +127,7 @@
               "version": "1.0.0"
             }
           ],
-          "currentInstanceCount": 1,
+          "currentInstanceCount": 0,
           "desiredInstanceCount": 1,
           "policies": []
         }
