@@ -16,12 +16,6 @@ Healthcheck
      Should Be Equal As Strings    ${resp.json()['code']}    200
      Set Suite Variable    ${pdpName}    ${resp.json()['name']}
 
-Metrics
-     [Documentation]  Verify policy-apex-pdp is exporting prometheus metrics
-     ${hcauth}=  HealthCheckAuth
-     ${resp}=  PerformGetRequest  ${APEX_IP}  /metrics  200  null  ${hcauth}
-     Should Contain  ${resp.text}  jvm_threads_current
-
 ExecuteApexSampleDomainPolicy
      Set Test Variable    ${policyName}    onap.policies.native.apex.Sampledomain
      ${postjson}=  Get file  ${CURDIR}/data/${policyName}.json
@@ -64,6 +58,26 @@ ExecuteApexTestPnfPolicyWithMetadataSet
       ${result}=     Run Process    ${SCRIPTS}/make_topic.sh     APEX-CL-MGT2
       Should Be Equal As Integers    ${result.rc}    0
       Wait Until Keyword Succeeds    2 min    5 sec    TriggerAndVerifyTestPnfPolicy
+
+Metrics
+     [Documentation]  Verify policy-apex-pdp is exporting prometheus metrics
+     ${auth}=  HealthCheckAuth
+     ${resp}=  PerformGetRequest  ${APEX_IP}  /metrics  200  null  ${auth}
+     Should Contain  ${resp.text}  pdpa_policy_deployments_total{operation="deploy",status="TOTAL",} 4.0
+     Should Contain  ${resp.text}  pdpa_policy_deployments_total{operation="deploy",status="SUCCESS",} 4.0
+     Should Contain  ${resp.text}  pdpa_policy_executions_total{status="SUCCESS",} 3.0
+     Should Contain  ${resp.text}  pdpa_policy_executions_total{status="TOTAL",} 3.0
+     Should Match  ${resp.text}  *pdpa_engine_event_executions{engine_instance_id="NSOApexEngine-*:0.0.1",}*
+     Should Match  ${resp.text}  *pdpa_engine_event_executions{engine_instance_id="MyApexEngine-*:0.0.1",}*
+     Should Match  ${resp.text}  *pdpa_engine_state{engine_instance_id=*,} 2.0*
+     Should Contain  ${resp.text}  pdpa_engine_event_executions
+     Should Contain  ${resp.text}  pdpa_engine_average_execution_time_seconds
+     Should Contain  ${resp.text}  pdpa_engine_last_execution_time_bucket
+     Should Contain  ${resp.text}  pdpa_engine_last_execution_time_count
+     Should Contain  ${resp.text}  pdpa_engine_last_execution_time_sum
+     Should Match  ${resp.text}  *pdpa_engine_last_start_timestamp_epoch{engine_instance_id="NSOApexEngine-*:0.0.1",}*E12*
+     Should Match  ${resp.text}  *pdpa_engine_last_start_timestamp_epoch{engine_instance_id="MyApexEngine-*:0.0.1",}*E12*
+     Should Contain  ${resp.text}  jvm_threads_current
 
 *** Keywords ***
 

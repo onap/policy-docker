@@ -2164,7 +2164,8 @@
                                   }
                                 }
                               ]
-                            }
+                            },
+                            "toscaPolicyState": "EXIT_FAILURE"
                           }
                         },
                         {
@@ -2194,7 +2195,8 @@
                                   }
                                 }
                               ]
-                            }
+                            },
+                            "toscaPolicyState": ""
                           }
                         },
                         {
@@ -2356,7 +2358,8 @@
                                   }
                                 }
                               ]
-                            }
+                            },
+                            "toscaPolicyState": ""
                           }
                         },
                         {
@@ -2419,7 +2422,8 @@
                                   }
                                 }
                               ]
-                            }
+                            },
+                            "toscaPolicyState": "EXIT_FAILURE"
                           }
                         },
                         {
@@ -2471,7 +2475,8 @@
                                   }
                                 }
                               ]
-                            }
+                            },
+                            "toscaPolicyState": ""
                           }
                         },
                         {
@@ -2534,7 +2539,8 @@
                                   }
                                 }
                               ]
-                            }
+                            },
+                            "toscaPolicyState": ""
                           }
                         },
                         {
@@ -2597,7 +2603,8 @@
                                   }
                                 }
                               ]
-                            }
+                            },
+                            "toscaPolicyState": "EXIT_FAILURE"
                           }
                         },
                         {
@@ -2649,7 +2656,8 @@
                                   }
                                 }
                               ]
-                            }
+                            },
+                            "toscaPolicyState": ""
                           }
                         },
                         {
@@ -2712,7 +2720,8 @@
                                   }
                                 }
                               ]
-                            }
+                            },
+                            "toscaPolicyState": "EXIT_SUCCESS"
                           }
                         },
                         {
@@ -2742,7 +2751,8 @@
                                   }
                                 }
                               ]
-                            }
+                            },
+                            "toscaPolicyState": ""
                           }
                         },
                         {
@@ -2772,7 +2782,8 @@
                                   }
                                 }
                               ]
-                            }
+                            },
+                            "toscaPolicyState": "ENTRY"
                           }
                         }
                       ]

@@ -1232,7 +1232,8 @@
                               }
                             }
                           ]
-                        }
+                        },
+                        "toscaPolicyState": "EXIT_FAILURE"
                       },
                       "outputEvents": {
                         "entry": [
@@ -1293,7 +1294,8 @@
                                     }
                                   }
                                 ]
-                              }
+                              },
+                              "toscaPolicyState": ""
                             }
                           }
                         ]
@@ -1379,7 +1381,8 @@
                               }
                             }
                           ]
-                        }
+                        },
+                        "toscaPolicyState": "EXIT_SUCCESS"
                       },
                       "outputEvents": {
                         "entry": [
@@ -1440,7 +1443,8 @@
                                     }
                                   }
                                 ]
-                              }
+                              },
+                              "toscaPolicyState": ""
                             }
                           }
                         ]
@@ -1493,7 +1497,8 @@
                               }
                             }
                           ]
-                        }
+                        },
+                        "toscaPolicyState": "EXIT_FAILURE"
                       },
                       "outputEvents": {
                         "entry": [
@@ -1554,7 +1559,8 @@
                                     }
                                   }
                                 ]
-                              }
+                              },
+                              "toscaPolicyState": ""
                             }
                           }
                         ]
@@ -1706,7 +1712,8 @@
                               }
                             }
                           ]
-                        }
+                        },
+                        "toscaPolicyState": ""
                       },
                       "outputEvents": {
                         "entry": [
@@ -1756,7 +1763,8 @@
                                     }
                                   }
                                 ]
-                              }
+                              },
+                              "toscaPolicyState": ""
                             }
                           },
                           {
@@ -1816,7 +1824,8 @@
                                     }
                                   }
                                 ]
-                              }
+                              },
+                              "toscaPolicyState": ""
                             }
                           }
                         ]
@@ -1869,7 +1878,8 @@
                               }
                             }
                           ]
-                        }
+                        },
+                        "toscaPolicyState": "ENTRY"
                       },
                       "outputEvents": {
                         "entry": [
@@ -1897,7 +1907,8 @@
                                     }
                                   }
                                 ]
-                              }
+                              },
+                              "toscaPolicyState": ""
                             }
                           },
                           {
@@ -1957,7 +1968,8 @@
                                     }
                                   }
                                 ]
-                              }
+                              },
+                              "toscaPolicyState": ""
                             }
                           }
                         ]
@@ -2016,7 +2028,8 @@
                           }
                         ]
                       }
-                    }
+                    },
+                    "toscaPolicyState": "EXIT_FAILURE"
                   },
                   {
                     "key": {
@@ -2045,7 +2058,8 @@
                             }
                           }
                         ]
-                      }
+                      },
+                      "toscaPolicyState": ""
                     }
                   },
                   {
@@ -2174,7 +2188,8 @@
                             }
                           }
                         ]
-                      }
+                      },
+                      "toscaPolicyState": ""
                     }
                   },
                   {
@@ -2237,7 +2252,8 @@
                             }
                           }
                         ]
-                      }
+                      },
+                      "toscaPolicyState": "EXIT_FAILURE"
                     }
                   },
                   {
@@ -2289,7 +2305,8 @@
                             }
                           }
                         ]
-                      }
+                      },
+                      "toscaPolicyState": ""
                     }
                   },
                   {
@@ -2352,7 +2369,8 @@
                             }
                           }
                         ]
-                      }
+                      },
+                      "toscaPolicyState": "EXIT_SUCCESS"
                     }
                   },
                   {
@@ -2415,7 +2433,8 @@
                             }
                           }
                         ]
-                      }
+                      },
+                      "toscaPolicyState": ""
                     }
                   },
                   {
@@ -2445,7 +2464,8 @@
                             }
                           }
                         ]
-                      }
+                      },
+                      "toscaPolicyState": "ENTRY"
                     }
                   }
                 ]
