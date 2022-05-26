@@ -23,6 +23,6 @@
 docker logs policy-api
 docker logs simulator
 docker logs policy-pap
-docker logs apex-pdp
+docker logs policy-apex-pdp
 
 docker-compose -f ${SCRIPTS}/docker-compose-all.yml down -v
