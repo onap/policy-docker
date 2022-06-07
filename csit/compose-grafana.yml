@@ -224,6 +224,23 @@ services:
         'pap', '6969',
         'apex-pdp', '6969'
         ]
+   policy-clamp-runtime-acm:
+      image: nexus3.onap.org:10001/onap/policy-clamp-runtime-acm:${POLICY_CLAMP_VERSION}
+      container_name: policy-clamp-runtime-acm
+      depends_on:
+       - mariadb
+       - simulator
+      hostname: policy-clamp-runtime-acm
+      expose:
+       - 6969
+      volumes:
+       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
+       - ./config/clamp/AcRuntimeParameters.yaml:/opt/app/policy/clamp/etc/AcRuntimeParameters.yaml:ro
+      entrypoint: /opt/app/policy/bin/wait_for_port.sh
+      command: [
+        '-c', './acm-runtime.sh',
+        'message-router', '3904'
+        ]
    prometheus:
       image: prom/prometheus:v2.32.1
       container_name: prometheus

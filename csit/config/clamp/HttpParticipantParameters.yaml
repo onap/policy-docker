@@ -22,13 +22,13 @@ participant:
             - ${topicServer:message-router}
           topicCommInfrastructure: dmaap
           fetchTimeout: 15000
-          useHttps: true
+          useHttps: {{HTTPS_ENABLED}}
       topicSinks:
         - topic: POLICY-ACRUNTIME-PARTICIPANT
           servers:
             - ${topicServer:message-router}
           topicCommInfrastructure: dmaap
-          useHttps: true
+          useHttps: {{HTTPS_ENABLED}}
 management:
   endpoints:
     web:
@@ -36,5 +36,7 @@ management:
         include: health, metrics, prometheus
 server:
   port: 8084
+  ssl:
+    enabled: {{HTTPS_ENABLED}}
   servlet:
     context-path: /onap/policy/clamp/acm/httpparticipant

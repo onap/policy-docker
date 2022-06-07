@@ -32,8 +32,8 @@ security:
 
 server:
   port: 6969
-  servlet:
-    context-path: /onap/policy/clamp/acm
+  ssl:
+    enabled: {{HTTPS_ENABLED}}
   error:
     path: /error
 
@@ -52,17 +52,18 @@ runtime:
           - ${topicServer:message-router}
         topicCommInfrastructure: dmaap
         fetchTimeout: 15000
-        useHttps: true
+        useHttps: {{HTTPS_ENABLED}}
     topicSinks:
       -
         topic: POLICY-ACRUNTIME-PARTICIPANT
         servers:
           - ${topicServer:message-router}
         topicCommInfrastructure: dmaap
-        useHttps: true
+        useHttps: {{HTTPS_ENABLED}}
 
 management:
   endpoints:
     web:
+      base-path: /
       exposure:
         include: health, metrics, prometheus

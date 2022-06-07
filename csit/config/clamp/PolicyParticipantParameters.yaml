@@ -13,7 +13,7 @@ participant:
     port: 6969
     userName: policyadmin
     password: zb!XztG34
-    useHttps: true
+    useHttps: {{HTTPS_ENABLED}}
     allowSelfSignedCerts: true
   policyPapParameters:
     clientName: pap
@@ -21,7 +21,7 @@ participant:
     port: 6969
     userName: policyadmin
     password: zb!XztG34
-    useHttps: true
+    useHttps: {{HTTPS_ENABLED}}
     allowSelfSignedCerts: true
   intermediaryParameters:
     reportingTimeIntervalMs: 120000
@@ -40,14 +40,14 @@ participant:
             - ${topicServer:message-router}
           topicCommInfrastructure: dmaap
           fetchTimeout: 15000
-          useHttps: true
+          useHttps: {{HTTPS_ENABLED}}
       topicSinks:
         -
           topic: POLICY-ACRUNTIME-PARTICIPANT
           servers:
             - ${topicServer:message-router}
           topicCommInfrastructure: dmaap
-          useHttps: true
+          useHttps: {{HTTPS_ENABLED}}
 management:
   endpoints:
     web:
@@ -55,5 +55,7 @@ management:
         include: health, metrics, prometheus
 server:
   port: 8085
+  ssl:
+    enabled: {{HTTPS_ENABLED}}
   servlet:
     context-path: /onap/policy/clamp/acm/policyparticipant
