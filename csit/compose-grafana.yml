@@ -261,3 +261,18 @@ services:
        - ./metrics/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
        - ./metrics/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
        - ./metrics/dashboards:/var/lib/grafana/dashboards
+   node-exporter:
+      image: prom/node-exporter:latest
+      container_name: node-exporter
+      restart: unless-stopped
+      volumes:
+         - /proc:/host/proc:ro
+         - /sys:/host/sys:ro
+         - /:/rootfs:ro
+      command:
+         - '--path.procfs=/host/proc'
+         - '--path.rootfs=/rootfs'
+         - '--path.sysfs=/host/sys'
+         - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+      expose:
+         - 9100

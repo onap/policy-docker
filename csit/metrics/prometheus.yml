@@ -93,3 +93,7 @@ scrape_configs:
     basic_auth:
       username: "runtimeUser"
       password: "zb!XztG34"
+
+  - job_name: "node"
+    static_configs:
+    - targets: ["node-exporter:9100"]
