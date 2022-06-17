@@ -46,6 +46,30 @@
       "revId": "7fda0aca1cdb0fa5e1ebba469afc804506f1a21c",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee132d2_d8f71df8",
+        "filename": "csit/config/clamp/AcRuntimeParameters.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2022-06-17T10:05:34Z",
+      "side": 0,
+      "message": "oh okay. Thanks for the clarification",
+      "parentUuid": "6af2cd51_72dcf78c",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 40
+      },
+      "revId": "7fda0aca1cdb0fa5e1ebba469afc804506f1a21c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
