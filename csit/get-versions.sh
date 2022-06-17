@@ -1,3 +1,5 @@
+#! /bin/bash
+
 # ============LICENSE_START====================================================
 #  Copyright (C) 2020-2021 AT&T Intellectual Property. All rights reserved.
 #  Modification Copyright 2021-2022 Nordix Foundation.
@@ -18,7 +20,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END======================================================
 
-source "${SCRIPTS}"/get-branch.sh
+
+if [[ -z "$GERRIT_BRANCH" ]]
+then
+    source "${SCRIPTS}"/get-branch.sh
+else
+    echo GERRIT_BRANCH="${GERRIT_BRANCH}"
+fi
 
 export POLICY_MARIADB_VER=10.5.8
 echo POLICY_MARIADB_VER=${POLICY_MARIADB_VER}
