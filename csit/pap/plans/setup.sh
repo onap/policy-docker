@@ -29,15 +29,13 @@ sudo apt-get -y install libxml2-utils
 source "${SCRIPTS}"/get-versions.sh
 bash "${SCRIPTS}"/get-models-examples.sh
 
-docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d pap
-docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d apex-pdp
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d pap apex-pdp
 
 unset http_proxy https_proxy
 
 POLICY_PAP_IP=$(get-instance-ip.sh policy-pap)
 POLICY_API_IP=$(get-instance-ip.sh policy-api)
 MARIADB_IP=$(get-instance-ip.sh mariadb)
-POLICY_APEX_IP=$(get-instance-ip.sh policy-apex-pdp)
 
 echo PAP IP IS "${POLICY_PAP_IP}"
 echo API IP IS "${POLICY_API_IP}"
