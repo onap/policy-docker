@@ -21,6 +21,14 @@
 FROM onap/policy-jdk-alpine:2.3.1
 
 LABEL maintainer="Policy Team"
+LABEL org.opencontainers.image.title="Policy db-migrator"
+LABEL org.opencontainers.image.description="Policy db-migrator image based on Alpine"
+LABEL org.opencontainers.image.url="https://github.com/onap/policy-docker"
+LABEL org.opencontainers.image.vendor="ONAP Policy Team"
+LABEL org.opencontainers.image.licenses="Apache-2.0"
+LABEL org.opencontainers.image.created="${git.build.time}"
+LABEL org.opencontainers.image.version="${git.build.version}"
+LABEL org.opencontainers.image.revision="${git.commit.id.abbrev}"
 
 ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk
 ENV POLICY_ETC /opt/app/policy/etc

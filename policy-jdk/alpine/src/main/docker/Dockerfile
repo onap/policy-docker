@@ -26,6 +26,14 @@
 FROM onap/integration-python:9.1.0
 
 LABEL maintainer="Policy Team"
+LABEL org.opencontainers.image.title="Policy JDK Alpine"
+LABEL org.opencontainers.image.description="Policy Java 11 JDK image based on Alpine"
+LABEL org.opencontainers.image.url="https://github.com/onap/policy-docker"
+LABEL org.opencontainers.image.vendor="ONAP Policy Team"
+LABEL org.opencontainers.image.licenses="Apache-2.0"
+LABEL org.opencontainers.image.created="${git.build.time}"
+LABEL org.opencontainers.image.version="${git.build.version}"
+LABEL org.opencontainers.image.revision="${git.commit.id.abbrev}"
 
 ENV POLICY_HOME=/opt/app/policy
 

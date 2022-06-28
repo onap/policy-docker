@@ -2,7 +2,7 @@
   ============LICENSE_START=======================================================
    Copyright (C) 2018 Ericsson, Tieto. All rights reserved.
    Modifications Copyright (C) 2020 AT&T Intellectual Property. All rights reserved.
-   Modifications Copyright (C) 2021 Nordix Foundation.
+   Modifications Copyright (C) 2021-2022 Nordix Foundation.
   ================================================================================
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -35,6 +35,36 @@
 
     <packaging>pom</packaging>
     <name>policy-docker</name>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>io.github.git-commit-id</groupId>
+                    <artifactId>git-commit-id-maven-plugin</artifactId>
+                    <version>5.0.0</version>
+                    <executions>
+                        <execution>
+                            <id>get-the-git-infos</id>
+                            <goals>
+                                <goal>revision</goal>
+                            </goals>
+                            <phase>initialize</phase>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <skipPoms>false</skipPoms>
+                        <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                        <includeOnlyProperties>
+                            <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
+                            <includeOnlyProperty>^git.commit.id.abbrev$</includeOnlyProperty>
+                        </includeOnlyProperties>
+                        <commitIdGenerationMode>full</commitIdGenerationMode>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
     <profiles>
         <profile>
