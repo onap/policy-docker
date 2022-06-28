@@ -130,7 +130,7 @@ services:
         'pap', '6969'
         ]
    drools:
-      image: nexus3.onap.org:10001/onap/policy-drools:${POLICY_DROOLS_VERSION}
+      image: nexus3.onap.org:10001/onap/policy-drools:${POLICY_DROOLS_PDP_VERSION}
       container_name: drools
       depends_on:
        - mariadb
