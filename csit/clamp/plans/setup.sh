@@ -19,9 +19,9 @@
 source ${SCRIPTS}/get-branch-mariadb.sh
 
 echo "Uninstall docker-py and reinstall docker."
-pip uninstall -y docker-py
-pip uninstall -y docker
-pip install -U docker==2.7.0
+python3 -m pip uninstall -y docker-py
+python3 -m pip uninstall -y docker
+python3 -m pip install -U docker
 
 sudo apt-get -y install libxml2-utils
 
