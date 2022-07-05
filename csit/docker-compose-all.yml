@@ -138,7 +138,7 @@ services:
         'pap', '6969'
         ]
    drools:
-      image: nexus3.onap.org:10001/onap/policy-drools:${POLICY_DROOLS_VERSION}
+      image: nexus3.onap.org:10001/onap/policy-drools:${POLICY_DROOLS_PDP_VERSION}
       container_name: drools
       depends_on:
        - mariadb
@@ -237,7 +237,7 @@ services:
         'apex-pdp', '6969'
         ]
    policy-clamp-cl-runtime:
-      image: onap/policy-clamp-cl-runtime:latest
+      image: nexus3.onap.org:10001/onap/policy-clamp-cl-runtime:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-cl-runtime
       depends_on:
        - mariadb
@@ -255,16 +255,15 @@ services:
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', './controlloop-runtime.sh',
-        'message-router', '3905'
+        'message-router', '3905',
+        'policy-clamp-cl-k8s-ppnt', '8083'
         ]
    policy-clamp-cl-http-ppnt:
-      image: onap/policy-clamp-cl-http-ppnt:latest
+      image: nexus3.onap.org:10001/onap/policy-clamp-cl-http-ppnt:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-cl-http-ppnt
       depends_on:
        - simulator
       hostname: policy-clamp-cl-http-ppnt
-      expose:
-       - 6971
       volumes:
        - ./config/policy-truststore:/opt/app/policy/clamp/etc/ssl/policy-truststore:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
@@ -275,13 +274,13 @@ services:
         'message-router', '3905'
         ]
    policy-clamp-cl-k8s-ppnt:
-      image: onap/policy-clamp-cl-k8s-ppnt:latest
+      image: nexus3.onap.org:10001/onap/policy-clamp-cl-k8s-ppnt:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-cl-k8s-ppnt
       depends_on:
        - simulator
       hostname: policy-clamp-cl-k8s-ppnt
       expose:
-       - 6972
+      - 8083
       volumes:
        - ./config/policy-truststore:/opt/app/policy/clamp/etc/ssl/policy-truststore:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
@@ -292,14 +291,12 @@ services:
         'message-router', '3905'
         ]
    policy-clamp-cl-pf-ppnt:
-      image: onap/policy-clamp-cl-pf-ppnt:latest
+      image: nexus3.onap.org:10001/onap/policy-clamp-cl-pf-ppnt:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-cl-pf-ppnt
       depends_on:
        - simulator
        - api
       hostname: policy-clamp-cl-pf-ppnt
-      expose:
-       - 6973
       volumes:
        - ./config/policy-truststore:/opt/app/policy/clamp/etc/ssl/policy-truststore:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
