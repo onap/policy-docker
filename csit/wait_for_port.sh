@@ -17,7 +17,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END======================================================
 
-tmout=120
+tmout=300
 cmd=
 while getopts c:t: opt; do
     case "$opt" in
