@@ -19,9 +19,9 @@
 source ${SCRIPTS}/get-branch-mariadb.sh
 
 echo "Uninstall docker-py and reinstall docker."
-pip uninstall -y docker-py
-pip uninstall -y docker
-pip install -U docker==2.7.0
+python3 -m pip uninstall -y docker-py
+python3 -m pip uninstall -y docker
+python3 -m pip install -U docker
 
 sudo apt-get -y install libxml2-utils
 
@@ -29,7 +29,7 @@ source ${SCRIPTS}/detmVers.sh
 
 docker-compose -f ${SCRIPTS}/docker-compose-all.yml up -d policy-clamp-cl-runtime
 
-sleep 10
+sleep 300
 unset http_proxy https_proxy
 
 POLICY_CONTROLLOOP_RUNTIME_IP=`get-instance-ip.sh policy-clamp-cl-runtime`
