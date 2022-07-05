@@ -36,7 +36,7 @@ unset http_proxy https_proxy
 POLICY_API_IP=`get-instance-ip.sh policy-api`
 MARIADB_IP=`get-instance-ip.sh mariadb`
 POLICY_PDPX_IP=`get-instance-ip.sh policy-xacml-pdp`
-SIM_IP=`get-instance-ip.sh policy.api.simpledemo.onap.org`
+SIM_IP=`get-instance-ip.sh simulator`
 POLICY_PAP_IP=`get-instance-ip.sh policy-pap`
 
 echo PDP IP IS ${POLICY_PDPX_IP}

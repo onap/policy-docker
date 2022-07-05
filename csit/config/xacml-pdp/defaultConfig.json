@@ -22,14 +22,14 @@
     "topicParameterGroup": {
         "topicSources" : [{
             "topic" : "POLICY-PDP-PAP",
-            "servers" : [ "policy.api.simpledemo.onap.org" ],
+            "servers" : [ "simulator" ],
             "topicCommInfrastructure" : "dmaap",
             "useHttps" : true,
             "allowSelfSignedCerts" : true
         }],
         "topicSinks" : [{
             "topic" : "POLICY-PDP-PAP",
-            "servers" : [ "policy.api.simpledemo.onap.org" ],
+            "servers" : [ "simulator" ],
             "topicCommInfrastructure" : "dmaap",
             "useHttps" : true,
             "allowSelfSignedCerts" : true
