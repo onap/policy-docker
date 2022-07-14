@@ -105,7 +105,8 @@ QueryPdpGroupsAfterUndeploy
     QueryPdpGroups  2  defaultGroup  ACTIVE  0  testGroup  ACTIVE  0
 
 QueryPolicyAuditAfterUnDeploy
-    [Documentation]  Verify policy audit record after undeploy
+    [Documentation]   Verify policy audit record after undeploy
+    Sleep             60 seconds
     QueryPolicyAudit  /policy/pap/v1/policies/audit  200  testGroup  pdpTypeA  onap.restart.tca  UNDEPLOYMENT
 
 QueryPolicyAuditWithMetadataSetAfterUnDeploy

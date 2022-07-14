@@ -327,7 +327,7 @@ services:
      expose:
      - 2443
      volumes:
-     - ./config/clamp/gui/application.yaml:/opt/app/policy/gui/etc/application.yaml
+     - ./config/gui/application.yaml:/opt/app/policy/gui/etc/application.yaml
      - ./config/policy-truststore:/opt/app/policy/gui/etc/mounted/policy-truststore:ro
      - ./config/ks.jks:/opt/app/policy/gui/etc/mounted/policy-keystore:ro
      - ./wait_for_port.sh:/opt/app/policy/gui/bin/wait_for_port.sh:ro
