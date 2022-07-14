@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa88820f_e6551ab4",
+        "filename": "csit/pap/tests/pap-test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 3239
+      },
+      "writtenOn": "2022-07-14T15:03:13Z",
+      "side": 1,
+      "message": "Is this needed? AFAIK the audit records for undeploy should be present as soon as the processing is completed in PAP. And we don\u0027t need to wait for next heartbeat (2 mins) for it.",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 31
+      },
+      "revId": "71d8a465880f0aee32204d55e886f3f9241dc56d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
