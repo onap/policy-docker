@@ -22,6 +22,30 @@
       "revId": "71d8a465880f0aee32204d55e886f3f9241dc56d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5049b7e_e5ec4249",
+        "filename": "csit/pap/tests/pap-test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-07-14T15:28:34Z",
+      "side": 1,
+      "message": "I think this is related to the PAP test failing every other csit run",
+      "parentUuid": "fa88820f_e6551ab4",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 31
+      },
+      "revId": "71d8a465880f0aee32204d55e886f3f9241dc56d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
