@@ -142,6 +142,30 @@
       "revId": "71d8a465880f0aee32204d55e886f3f9241dc56d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6443b2df_971b9790",
+        "filename": "csit/pap/tests/pap-test.robot",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 4903
+      },
+      "writtenOn": "2022-07-15T08:38:29Z",
+      "side": 1,
+      "message": "hmm I was thinking a delay of 10 seconds or so would be enough. In this case, if it is taking more than 30 seconds to finalize the successful undeployment of both policies, something is off, maybe a missing Response message from PDP or PAP missing a message, not sure. This will need more investigation to understand what exactly is happening.",
+      "parentUuid": "ce03fb02_fce2378b",
+      "range": {
+        "startLine": 109,
+        "startChar": 4,
+        "endLine": 109,
+        "endChar": 31
+      },
+      "revId": "71d8a465880f0aee32204d55e886f3f9241dc56d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
