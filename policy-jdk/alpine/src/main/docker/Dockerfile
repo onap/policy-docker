@@ -23,7 +23,7 @@
 # $JAVA_HOME is set to /usr/lib/jvm/java-11-openjdk
 # more details at https://hub.docker.com/_/openjdk
 
-FROM onap/integration-python:9.1.0
+FROM onap/integration-python:10.1.0
 
 LABEL maintainer="Policy Team"
 LABEL org.opencontainers.image.title="Policy JDK Alpine"
