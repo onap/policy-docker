@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "027ead04_03241cf7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 3239
+      },
+      "writtenOn": "2022-07-15T19:38:18Z",
+      "side": 1,
+      "message": "The side effect of this can be, test cases for newly created features which are available in snapshot but not yet in the released version may fail. But the occurrence of such cases can be minimized by performing more frequent releases.",
+      "range": {
+        "startLine": 15,
+        "startChar": 50,
+        "endLine": 16,
+        "endChar": 24
+      },
+      "revId": "8c03111f4b7ac079e6fb5b26a4c313c4ce22a934",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
