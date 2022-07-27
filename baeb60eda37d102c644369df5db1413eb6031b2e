@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f585a9b5_771526c6",
+        "filename": "csit/pylibs.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-07-27T11:21:59Z",
+      "side": 1,
+      "message": "This seems to have been added and then commented out.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 1
+      },
+      "revId": "baeb60eda37d102c644369df5db1413eb6031b2e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6b379fb_1c86e7c5",
+        "filename": "csit/pylibs.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-07-27T11:21:59Z",
+      "side": 1,
+      "message": "Is this commented out? Better to delete it altogether.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 2
+      },
+      "revId": "baeb60eda37d102c644369df5db1413eb6031b2e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
