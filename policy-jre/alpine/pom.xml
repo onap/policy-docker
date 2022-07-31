@@ -20,8 +20,7 @@
   ============LICENSE_END=========================================================
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -38,7 +37,59 @@
 
     <properties>
         <docker.jre.imagename>onap/policy-jre-alpine</docker.jre.imagename>
+        <integration.java.name>onap/integration-java11</integration.java.name>
+        <integration.java.version>9.0.0</integration.java.version>
     </properties>
+
+    <profiles>
+        <profile>
+            <!-- This profile is activated on Apple M1 architecture to generate the ONAP base images locally -->
+            <id>baseImage</id>
+            <activation>
+                <os>
+                    <arch>aarch64</arch>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+
+                        <executions>
+                            <execution>
+                                <id>generate-base-image</id>
+                                <phase>initialize</phase>
+                                <configuration>
+                                    <verbose>true</verbose>
+                                    <apiVersion>1.23</apiVersion>
+                                    <pullRegistry>${docker.pull.registry}</pullRegistry>
+                                    <pushRegistry>${docker.push.registry}</pushRegistry>
+                                    <images>
+                                        <image>
+                                            <name>${integration.java.name}</name>
+                                            <build>
+                                                <cleanup>try</cleanup>
+                                                <dockerFile>BareAlpine.Dockerfile</dockerFile>
+                                                <tags>
+                                                    <tag>${integration.java.version}</tag>
+                                                    <tag>${integration.java.version}-${maven.build.timestamp}</tag>
+                                                    <tag>${project.docker.latest.minmax.tag.version}</tag>
+                                                </tags>
+                                            </build>
+                                        </image>
+                                    </images>
+                                </configuration>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
@@ -49,7 +100,7 @@
                 <version>2.1.1</version>
                 <executions>
                     <execution>
-                        <phase>validate</phase>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>execute</goal>
                         </goals>
@@ -83,6 +134,10 @@
                                     <tag>${project.version}-${maven.build.timestamp}</tag>
                                     <tag>${project.docker.latest.minmax.tag.version}</tag>
                                 </tags>
+                                <args>
+                                    <INTEGRATION_JAVA_NAME>${integration.java.name}</INTEGRATION_JAVA_NAME>
+                                    <INTEGRATION_JAVA_VERSION>${integration.java.version}</INTEGRATION_JAVA_VERSION>
+                                </args>
                             </build>
                         </image>
                     </images>
@@ -90,8 +145,8 @@
 
                 <executions>
                     <execution>
-                        <id>clean-images</id>
-                        <phase>pre-clean</phase>
+                        <id>clean-jre-image</id>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>remove</goal>
                         </goals>
@@ -101,15 +156,15 @@
                     </execution>
 
                     <execution>
-                        <id>generate-images</id>
-                        <phase>generate-sources</phase>
+                        <id>generate-jre-image</id>
+                        <phase>package</phase>
                         <goals>
                             <goal>build</goal>
                         </goals>
                     </execution>
 
                     <execution>
-                        <id>push-images</id>
+                        <id>push-jre-image</id>
                         <phase>deploy</phase>
                         <goals>
                             <goal>build</goal>
