@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6cf7e8f_3cbd5807",
+        "filename": "csit/metrics/dashboards/dashboard-apex-pdp.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-08-12T09:43:46Z",
+      "side": 1,
+      "message": "if you start from scratch, do you have to manually setup the prometheus database on grafana UI? if yes, then put the hardcoded uid as the other dashboards.",
+      "range": {
+        "startLine": 251,
+        "startChar": 22,
+        "endLine": 251,
+        "endChar": 35
+      },
+      "revId": "5b02ce15a566e0c3dd4908c9bdec808add5f96a4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6844cd_a31bd351",
+        "filename": "csit/metrics/dashboards/dashboard-api.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-08-12T09:43:46Z",
+      "side": 1,
+      "message": "same as on apex-pdp comment",
+      "range": {
+        "startLine": 236,
+        "startChar": 22,
+        "endLine": 236,
+        "endChar": 35
+      },
+      "revId": "5b02ce15a566e0c3dd4908c9bdec808add5f96a4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a642fb_e9bc88ba",
+        "filename": "csit/metrics/dashboards/dashboard-pap.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-08-12T09:43:46Z",
+      "side": 1,
+      "message": "same comment as on apex-pdp dashboard",
+      "range": {
+        "startLine": 141,
+        "startChar": 22,
+        "endLine": 141,
+        "endChar": 35
+      },
+      "revId": "5b02ce15a566e0c3dd4908c9bdec808add5f96a4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
