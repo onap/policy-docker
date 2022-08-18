@@ -28,12 +28,16 @@ CreateTCAPolicyTypeV1
      CreatePolicyType  /policy/api/v1/policytypes  406  onap.policy.monitoring.tcagen2.v1.json  null  null
 
 CreateTCAPolicyTypeV2
-     [Documentation]  Create a policy type named 'onap.policies.monitoring.tcagen2' and version '2.0.0'
-     CreatePolicyType  /policy/api/v1/policytypes  200  onap.policy.monitoring.tcagen2.v2.json  onap.policies.monitoring.tcagen2  2.0.0
+     [Documentation]  Create an existing policy type with modification and keeping the same version should result in error.
+     CreatePolicyType  /policy/api/v1/policytypes  406  onap.policy.monitoring.tcagen2.v2.json  null  null
+
+CreateTCAPolicyTypeV3
+     [Documentation]  Create a policy type named 'onap.policies.monitoring.tcagen2' and version '3.0.0'
+     CreatePolicyType  /policy/api/v1/policytypes  200  onap.policy.monitoring.tcagen2.v3.json  onap.policies.monitoring.tcagen2  3.0.0
 
 RetrieveMonitoringPolicyTypes
      [Documentation]  Retrieve all monitoring related policy types
-     FetchPolicyTypes  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2  2
+     FetchPolicyTypes  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2  3
 
 CreateNewMonitoringPolicyV1
      [Documentation]  Create a policy named 'onap.restart.tca' and version '1.0.0' using specific api
@@ -101,6 +105,11 @@ DeleteSpecificPolicyTypeV2
      [Documentation]  Delete a policy type named 'onap.policies.monitoring.tcagen2' and version '2.0.0'
      DeleteReq  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/2.0.0  200
      DeleteReq  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/2.0.0  404
+
+DeleteSpecificPolicyTypeV3
+     [Documentation]  Delete a policy type named 'onap.policies.monitoring.tcagen2' and version '3.0.0'
+     DeleteReq  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/3.0.0  200
+     DeleteReq  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/3.0.0  404
 
 Metrics
     [Documentation]  Verify policy-api is exporting prometheus metrics
