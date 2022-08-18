@@ -40,6 +40,7 @@ database:
 policy-preload:
   policyTypes:
     - policytypes/onap.policies.monitoring.tcagen2.yaml
+    - policytypes/onap.policies.monitoring.tcagen2.v2.yaml
     - policytypes/onap.policies.monitoring.dcaegen2.collectors.datafile.datafile-app-server.yaml
     - policytypes/onap.policies.monitoring.dcae-restconfcollector.yaml
     - policytypes/onap.policies.monitoring.dcae-pm-subscription-handler.yaml
