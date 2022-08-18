@@ -28,8 +28,12 @@ CreateTCAPolicyTypeV1
      CreatePolicyType  /policy/api/v1/policytypes  406  onap.policy.monitoring.tcagen2.v1.json  null  null
 
 CreateTCAPolicyTypeV2
-     [Documentation]  Create a policy type named 'onap.policies.monitoring.tcagen2' and version '2.0.0'
-     CreatePolicyType  /policy/api/v1/policytypes  200  onap.policy.monitoring.tcagen2.v2.json  onap.policies.monitoring.tcagen2  2.0.0
+     [Documentation]  Create an existing policy type with modification and keeping the same version should result in error.
+     CreatePolicyType  /policy/api/v1/policytypes  406  onap.policy.monitoring.tcagen2.v2.json  null  null
+
+CreateTCAPolicyTypeV3
+     [Documentation]  Create a policy type named 'onap.policies.monitoring.tcagen2' and version '3.0.0'
+     CreatePolicyType  /policy/api/v1/policytypes  200  onap.policy.monitoring.tcagen2.v3.json  onap.policies.monitoring.tcagen2  3.0.0
 
 RetrieveMonitoringPolicyTypes
      [Documentation]  Retrieve all monitoring related policy types
@@ -102,6 +106,11 @@ DeleteSpecificPolicyTypeV2
      DeleteReq  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/2.0.0  200
      DeleteReq  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/2.0.0  404
 
+DeleteSpecificPolicyTypeV3
+     [Documentation]  Delete a policy type named 'onap.policies.monitoring.tcagen2' and version '3.0.0'
+     DeleteReq  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/3.0.0  200
+     DeleteReq  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/3.0.0  404
+
 Metrics
     [Documentation]  Verify policy-api is exporting prometheus metrics
     ${auth}=  PolicyAdminAuth
@@ -115,7 +124,7 @@ Metrics
     Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="POST",outcome="SUCCESS",status="200",uri="/policy/api/v1/policytypes/{policyTypeId}/versions/{policyTypeVersion}/policies",} 1.0
     Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="POST",outcome="SUCCESS",status="200",uri="/policy/api/v1/policytypes",} 1.0
     Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="DELETE",outcome="SUCCESS",status="200",uri="/policy/api/v1/policies/{policyId}/versions/{policyVersion}",} 1.0
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="DELETE",outcome="SUCCESS",status="200",uri="/policy/api/v1/policytypes/{policyTypeId}/versions/{versionId}",} 2.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="DELETE",outcome="SUCCESS",status="200",uri="/policy/api/v1/policytypes/{policyTypeId}/versions/{versionId}",} 3.0
     Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="DELETE",outcome="SUCCESS",status="200",uri="/policy/api/v1/policytypes/{policyTypeId}/versions/{policyTypeVersion}/policies/{policyId}/versions/{policyVersion}",} 1.0
     Should Contain  ${resp.text}  http_server_requests_seconds_sum
     Should Contain  ${resp.text}  http_server_requests_seconds_max
