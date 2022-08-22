@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "398930d8_2a95bb10",
+        "filename": "policy-jre/alpine/src/main/docker/BareAlpine.Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-08-22T16:30:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "44ddfa17_4d517689",
+      "revId": "ee51430714c32fd58c3a65fc0e4941f047899256",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40a9c7b0_2fa725cc",
         "filename": "policy-jre/alpine/src/main/docker/BareAlpine.Dockerfile",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2022-08-22T15:40:11Z",
       "side": 1,
       "message": "I think this is a duplicate Dockerfile from integration project.   Would it be possible to get it from that repo if this was the case?",
+      "revId": "ee51430714c32fd58c3a65fc0e4941f047899256",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef506a1_f58a1d5a",
+        "filename": "policy-jre/alpine/src/main/docker/BareAlpine.Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-08-22T16:30:00Z",
+      "side": 1,
+      "message": "Apologies, I have removed this file from the review.\n\nThe existing docker file for onap-java11 does not work on aarm64 architecture. The reason is that they are using a base image for that one that integrates Alpine and Java 11, but that base image does not exist for aarm64. We will have to build a base image directly from Alpine and add java11 in integration for that, which is what this Dockerfile does.\n\nI will raise a review on the integration/docker/java11 repo for that one, just adding this Dockerfile so it is available for people that want to generate locally on ARM. The default remains Alpine.\n\nBTW, the onap-python image generates just fine on aarm64.\n\nSo, to get the Policy Framework working on ARM locally, we just need this review and a review to bring in the ARM dockerfile in integration. After that, the ARM build works just fine.",
+      "parentUuid": "40a9c7b0_2fa725cc",
       "revId": "ee51430714c32fd58c3a65fc0e4941f047899256",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
