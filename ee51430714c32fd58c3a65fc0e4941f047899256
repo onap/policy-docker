@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44ddfa17_4d517689",
+        "filename": "policy-jre/alpine/src/main/docker/BareAlpine.Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2022-08-22T15:40:11Z",
+      "side": 1,
+      "message": "Morgan ??",
+      "revId": "ee51430714c32fd58c3a65fc0e4941f047899256",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a9c7b0_2fa725cc",
+        "filename": "policy-jre/alpine/src/main/docker/BareAlpine.Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2022-08-22T15:40:11Z",
+      "side": 1,
+      "message": "I think this is a duplicate Dockerfile from integration project.   Would it be possible to get it from that repo if this was the case?",
+      "revId": "ee51430714c32fd58c3a65fc0e4941f047899256",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
