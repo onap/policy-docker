@@ -34,7 +34,7 @@
         "x": 0,
         "y": 0
       },
-      "id": 2,
+      "id": 19,
       "panels": [],
       "title": "Quick Info",
       "type": "row"
@@ -44,8 +44,9 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
           },
+          "decimals": 1,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -64,15 +65,15 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 6,
+        "h": 9,
+        "w": 8,
         "x": 0,
         "y": 1
       },
       "id": 4,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -80,7 +81,8 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "text": {},
+        "textMode": "value_and_name"
       },
       "pluginVersion": "8.3.4",
       "targets": [
@@ -89,14 +91,17 @@
             "type": "prometheus",
             "uid": "dkSf71fnz"
           },
-          "exemplar": true,
-          "expr": "process_start_time_seconds{job=\"distribution-metrics\"} / 86400",
+          "exemplar": false,
+          "expr": "process_cpu_seconds_total{job=\"distribution-metrics\"} * 86400",
+          "format": "time_series",
+          "instant": false,
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "process_uptime:{{pod}}",
           "refId": "A"
         }
       ],
       "title": "Process Uptime (days)",
+      "transformations": [],
       "transparent": true,
       "type": "stat"
     },
@@ -105,43 +110,74 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
           },
+          "decimals": 2,
           "mappings": [],
+          "max": 100,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
                 "value": null
-              },
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "process-1h: dev-policy-api-69f54f45cc-wq6xq"
+            },
+            "properties": [
               {
-                "color": "red",
-                "value": 80
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "process_1h: dev-policy-api-69f54f45cc-wq6xq"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
               }
             ]
           }
-        },
-        "overrides": []
+        ]
       },
       "gridPos": {
-        "h": 6,
-        "w": 8,
-        "x": 6,
+        "h": 8,
+        "w": 7,
+        "x": 9,
         "y": 1
       },
-      "id": 6,
+      "id": 26,
       "options": {
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "last"
           ],
           "fields": "",
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": false
       },
       "pluginVersion": "8.3.4",
       "targets": [
@@ -153,7 +189,7 @@
           "exemplar": true,
           "expr": "process_cpu_seconds_total{job=\"distribution-metrics\"}",
           "interval": "",
-          "legendFormat": "process_cpu: {{pod}}",
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -165,9 +201,11 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
           },
           "mappings": [],
+          "max": 100,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -180,28 +218,60 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "percent"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "{area=\"heap\", container=\"policy-api\", endpoint=\"policy-api\", id=\"Tenured Gen\", instance=\"10.42.7.19:6969\", job=\"policy-api\", namespace=\"onap\", pod=\"dev-policy-api-69f54f45cc-sb56v\", service=\"policy-api\"}"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tenured Gen - dev-policy-api-69f54f45cc-wq6xq"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
-        "h": 6,
-        "w": 8,
-        "x": 15,
+        "h": 8,
+        "w": 6,
+        "x": 17,
         "y": 1
       },
-      "id": 8,
+      "id": 27,
       "options": {
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "last"
           ],
           "fields": "",
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": false
       },
       "pluginVersion": "8.3.4",
       "targets": [
@@ -211,23 +281,11 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "100 * sum by(pod)(jvm_memory_bytes_used{area=\"heap\", job=\"distribution-metrics\"}) / sum by(pod)(jvm_memory_bytes_max{area=\"heap\", job=\"distribution-metrics\"})",
+          "expr": "100 * sum by(job)(jvm_memory_bytes_used{area=\"heap\", job=\"distribution-metrics\"}) / sum by(job)(jvm_memory_bytes_max{area=\"heap\", job=\"distribution-metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Heap : {{pod}}",
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "dkSf71fnz"
-          },
-          "exemplar": true,
-          "expr": "100 * sum by(pod)(jvm_memory_bytes_used{area=\"nonheap\", job=\"distribution-metrics\"}) / sum by(pod)(jvm_memory_bytes_max{area=\"nonheap\", job=\"distribution-metrics\"})",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Non Heap : {{pod}}",
-          "refId": "B"
         }
       ],
       "title": "Memory Usage",
@@ -239,9 +297,9 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 7
+        "y": 10
       },
-      "id": 10,
+      "id": 17,
       "panels": [],
       "title": "System",
       "type": "row"
@@ -266,8 +324,11 @@
               "viz": false
             },
             "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 1,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -294,25 +355,64 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "percent"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "process-1h: dev-policy-api-69f54f45cc-wq6xq"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "process_1h: dev-policy-api-69f54f45cc-wq6xq"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 14,
         "w": 12,
         "x": 0,
-        "y": 8
+        "y": 11
       },
-      "id": 12,
+      "id": 2,
       "options": {
         "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
+          "calcs": [
+            "max",
+            "mean",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "sortBy": "Max",
+          "sortDesc": true
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -322,7 +422,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "process_cpu_seconds_total{job=\"distribution-metrics\"} * 100",
+          "expr": "avg_over_time(process_cpu_seconds_total{job=\"distribution-metrics\"}[1m]) * 100",
           "interval": "",
           "legendFormat": "system: {{pod}}",
           "refId": "A"
@@ -333,11 +433,23 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "process_cpu_seconds_total{job=\"distribution-metrics\"} * 100",
+          "expr": "avg_over_time(process_cpu_seconds_total{job=\"distribution-metrics\"}[5m]) * 100",
           "hide": false,
           "interval": "",
           "legendFormat": "process: {{pod}}",
           "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "avg_over_time(process_cpu_seconds_total{job=\"distribution-metrics\"}[1h]) * 100",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "process_1h: {{pod}}",
+          "refId": "C"
         }
       ],
       "title": "CPU Usage",
@@ -363,8 +475,11 @@
               "viz": false
             },
             "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 1,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -391,25 +506,64 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "percent"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "{area=\"heap\", container=\"policy-api\", endpoint=\"policy-api\", id=\"Tenured Gen\", instance=\"10.42.7.19:6969\", job=\"policy-api\", namespace=\"onap\", pod=\"dev-policy-api-69f54f45cc-sb56v\", service=\"policy-api\"}"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tenured Gen - dev-policy-api-69f54f45cc-wq6xq"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
-        "h": 8,
+        "h": 11,
         "w": 12,
         "x": 12,
-        "y": 8
+        "y": 11
       },
-      "id": 34,
+      "id": 13,
       "options": {
         "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
+          "calcs": [
+            "max",
+            "mean",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "sortBy": "Last",
+          "sortDesc": false
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -420,21 +574,10 @@
           },
           "exemplar": true,
           "expr": "100 * sum(jvm_memory_bytes_used{area=\"heap\", job=\"distribution-metrics\"}) / sum(jvm_memory_bytes_max{area=\"heap\", job=\"distribution-metrics\"})",
+          "hide": false,
           "interval": "",
           "legendFormat": "Heap",
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "dkSf71fnz"
-          },
-          "exemplar": true,
-          "expr": "100 * sum(jvm_memory_bytes_used{area=\"nonheap\", job=\"distribution-metrics\"}) / sum(jvm_memory_bytes_max{area=\"nonheap\", job=\"distribution-metrics\"})",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Non Heap",
-          "refId": "B"
         }
       ],
       "title": "Memory Usage",
@@ -465,8 +608,8 @@
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "auto",
-            "spanNulls": false,
+            "showPoints": "never",
+            "spanNulls": true,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -488,7 +631,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "short"
         },
         "overrides": []
       },
@@ -496,19 +640,24 @@
         "h": 13,
         "w": 12,
         "x": 12,
-        "y": 16
+        "y": 22
       },
-      "id": 16,
+      "id": 8,
       "options": {
         "legend": {
-          "calcs": [],
-          "displayMode": "list",
+          "calcs": [
+            "max",
+            "last"
+          ],
+          "displayMode": "table",
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "multi",
+          "sort": "none"
         }
       },
+      "pluginVersion": "8.4.5",
       "targets": [
         {
           "datasource": {
@@ -532,6 +681,18 @@
           "interval": "",
           "legendFormat": "Peak Threads: {{ pod }}",
           "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "jvm_threads_state{job=\"distribution-metrics\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "State Threads: {{ pod }}",
+          "refId": "C"
         }
       ],
       "title": "JVM threads",
@@ -543,9 +704,9 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 29
+        "y": 35
       },
-      "id": 18,
+      "id": 15,
       "panels": [],
       "title": "Garbage Collection",
       "type": "row"
@@ -571,7 +732,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 1,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -598,7 +759,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "ops"
         },
         "overrides": []
       },
@@ -606,17 +768,22 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 30
+        "y": 36
       },
-      "id": 20,
+      "id": 10,
       "options": {
         "legend": {
-          "calcs": [],
-          "displayMode": "list",
+          "calcs": [
+            "max",
+            "mean",
+            "last"
+          ],
+          "displayMode": "table",
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -656,7 +823,7 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 1,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -691,17 +858,20 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 30
+        "y": 36
       },
       "id": 22,
       "options": {
         "legend": {
-          "calcs": [],
-          "displayMode": "list",
+          "calcs": [
+            "last"
+          ],
+          "displayMode": "table",
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -726,9 +896,9 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 38
+        "y": 44
       },
-      "id": 24,
+      "id": 21,
       "panels": [],
       "title": "Statistics",
       "type": "row"
@@ -761,7 +931,7 @@
         "h": 11,
         "w": 12,
         "x": 0,
-        "y": 39
+        "y": 45
       },
       "id": 32,
       "options": {
@@ -866,13 +1036,13 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
-    "to": "now"
+    "from": "2022-08-26T07:50:46.702Z",
+    "to": "2022-08-26T13:50:46.702Z"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Policy Distribution",
   "uid": "5HkCopg4z",
-  "version": 2,
+  "version": 4,
   "weekStart": ""
 }
