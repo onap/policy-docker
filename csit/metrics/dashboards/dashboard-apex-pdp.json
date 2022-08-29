@@ -1,0 +1,1527 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Grafana Dashboard for Policy APEX-PDP",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 7,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 19,
+      "panels": [],
+      "title": "Quick Info",
+      "type": "row"
+    },
+    {
+      "description": "Uptime per pod for Policy APEX-PDP application calculated in days",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "titleSize": 16
+        },
+        "textMode": "value_and_name"
+      },
+      "pluginVersion": "8.3.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "(time() - process_start_time_seconds{job=\"apex-pdp-metrics\"}) / 86400",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "process_uptime: {{ pod }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Process Uptime (days)",
+      "transformations": [],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "description": "Policy APEX-PDP CPU Usage Monitoring",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "process-1h: dev-policy-api-69f54f45cc-wq6xq"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "process_1h: dev-policy-api-69f54f45cc-wq6xq"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 7,
+        "y": 1
+      },
+      "id": 26,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": false,
+        "text": {}
+      },
+      "pluginVersion": "8.3.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "irate(process_cpu_seconds_total{job=\"apex-pdp-metrics\"}[5m])*100",
+          "interval": "",
+          "legendFormat": "{{pod}}",
+          "refId": "A"
+        }
+      ],
+      "title": "CPU Usage",
+      "type": "gauge"
+    },
+    {
+      "description": "Policy APEX-PDP Memory Usage Monitoring",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "{area=\"heap\", container=\"policy-api\", endpoint=\"policy-api\", id=\"Tenured Gen\", instance=\"10.42.7.19:6969\", job=\"policy-api\", namespace=\"onap\", pod=\"dev-policy-api-69f54f45cc-sb56v\", service=\"policy-api\"}"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tenured Gen - dev-policy-api-69f54f45cc-wq6xq"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 16,
+        "y": 1
+      },
+      "id": 27,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": false
+      },
+      "pluginVersion": "8.3.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "100 * jvm_memory_bytes_used{area=\"heap\", job=\"apex-pdp-metrics\"} / jvm_memory_bytes_max{area=\"heap\", job=\"apex-pdp-metrics\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Heap : {{ pod }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Memory Usage",
+      "type": "gauge"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "id": 17,
+      "panels": [],
+      "title": "System",
+      "type": "row"
+    },
+    {
+      "description": "Policy APEX-PDP CPU Usage Monitoring",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "process-1h: dev-policy-api-69f54f45cc-wq6xq"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "process_1h: dev-policy-api-69f54f45cc-wq6xq"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "mean",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "irate(process_cpu_seconds_total{job=\"apex-pdp-metrics\"}[5m])*100",
+          "interval": "",
+          "legendFormat": "system: {{pod}}",
+          "refId": "A"
+        }
+      ],
+      "title": "CPU Usage",
+      "type": "timeseries"
+    },
+    {
+      "description": "Policy APEX-PDP Memory Usage Monitoring",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "{area=\"heap\", container=\"policy-api\", endpoint=\"policy-api\", id=\"Tenured Gen\", instance=\"10.42.7.19:6969\", job=\"policy-api\", namespace=\"onap\", pod=\"dev-policy-api-69f54f45cc-sb56v\", service=\"policy-api\"}"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "text",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tenured Gen - dev-policy-api-69f54f45cc-wq6xq"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 13,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "mean",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "sortBy": "Last",
+          "sortDesc": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "100 * jvm_memory_bytes_used{area=\"heap\", job=\"apex-pdp-metrics\"} / jvm_memory_bytes_max{area=\"heap\", job=\"apex-pdp-metrics\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Heap : {{ pod }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Memory Usage",
+      "type": "timeseries"
+    },
+    {
+      "description": "Policy APEX-PDP JVM Threads",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 12,
+        "x": 12,
+        "y": 19
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "last",
+            "mean"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.4.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "jvm_threads_current{job=\"apex-pdp-metrics\"}",
+          "interval": "",
+          "legendFormat": "Live Threads: {{ pod }}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "jvm_threads_peak{job=\"apex-pdp-metrics\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Peak Threads: {{ pod }}",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "jvm_threads_daemon{job=\"apex-pdp-metrics\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Daemon Threads: {{ pod }}",
+          "refId": "C"
+        }
+      ],
+      "title": "JVM threads",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 32
+      },
+      "id": 15,
+      "panels": [],
+      "title": "Garbage Collection",
+      "type": "row"
+    },
+    {
+      "description": "GC operations per second",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 33
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "mean",
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "rate(jvm_gc_collection_seconds_count{job=\"apex-pdp-metrics\"}[5m])",
+          "interval": "",
+          "legendFormat": "{{ gc }} : {{ pod }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Collection",
+      "type": "timeseries"
+    },
+    {
+      "description": "Average GC Time",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 33
+      },
+      "id": 22,
+      "options": {
+        "legend": {
+          "calcs": [
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "rate(jvm_gc_collection_seconds_sum{job=\"apex-pdp-metrics\"}[5m])/rate(jvm_gc_collection_seconds_count{job=\"apex-pdp-metrics\"}[5m])",
+          "interval": "",
+          "legendFormat": "avg {{ gc }} : {{ pod }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Pause Durations",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 41
+      },
+      "id": 21,
+      "panels": [],
+      "title": "Requests",
+      "type": "row"
+    },
+    {
+      "description": "Policy Deployments Total for APEX-PDP",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 42
+      },
+      "id": 12,
+      "options": {
+        "displayMode": "gradient",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "8.3.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "avg by(service)(pdpa_policy_deployments_total{job=\"apex-pdp-metrics\", operation=\"deploy\", status=\"SUCCESS\"})",
+          "interval": "",
+          "legendFormat": "Deploy - Success",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "avg by(service)(pdpa_policy_deployments_total{job=\"apex-pdp-metrics\", operation=\"deploy\", status=\"FAIL\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Deploy - Failure",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "avg by(service)(pdpa_policy_deployments_total{job=\"apex-pdp-metrics\", operation=\"deploy\", status=\"TOTAL\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Deploy - Total",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "avg by(service)(pdpa_policy_deployments_total{job=\"apex-pdp-metrics\", operation=\"undeploy\", status=\"SUCCESS\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Undeploy - Success",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "avg by(service)(pdpa_policy_deployments_total{job=\"apex-pdp-metrics\", operation=\"undeploy\", status=\"FAIL\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Undeploy - Failure",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "avg by(service)(pdpa_policy_deployments_total{job=\"apex-pdp-metrics\", operation=\"undeploy\", status=\"TOTAL\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Undeploy - Total",
+          "refId": "F"
+        }
+      ],
+      "title": "Policy Deployments Total",
+      "type": "bargauge"
+    },
+    {
+      "description": "Policy Executions Total for APEX-PDP per instance",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 42
+      },
+      "id": 30,
+      "options": {
+        "displayMode": "gradient",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "8.3.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "pdpa_policy_executions_total{job=\"apex-pdp-metrics\", status=\"SUCCESS\"}",
+          "interval": "",
+          "legendFormat": "Executions - SUCCESS : {{ pod }}",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "pdpa_policy_executions_total{job=\"apex-pdp-metrics\", status=\"FAIL\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Executions - FAILURE : {{ pod }}",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "pdpa_policy_executions_total{job=\"apex-pdp-metrics\", status=\"TOTAL\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Executions - TOTAL :  {{ pod }}",
+          "refId": "C"
+        }
+      ],
+      "title": "Policy Executions Total",
+      "type": "bargauge"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 50
+      },
+      "id": 34,
+      "panels": [],
+      "title": "Engine Stats",
+      "type": "row"
+    },
+    {
+      "description": "Policy Engine States for APEX-PDP per engine per instance",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "text",
+                  "index": 0,
+                  "text": "UNDEFINED"
+                },
+                "1": {
+                  "color": "dark-red",
+                  "index": 1,
+                  "text": "STOPPED"
+                },
+                "2": {
+                  "color": "dark-green",
+                  "index": 2,
+                  "text": "READY"
+                },
+                "3": {
+                  "color": "dark-yellow",
+                  "index": 3,
+                  "text": "EXECUTING"
+                },
+                "4": {
+                  "color": "dark-red",
+                  "index": 4,
+                  "text": "STOPPING"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "max": 4,
+          "min": 0
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 51
+      },
+      "id": 31,
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "values": [
+            "value"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.4.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "pdpa_engine_state{job=\"apex-pdp-metrics\"}",
+          "interval": "",
+          "legendFormat": "{{ engine_instance_id }} : {{ pod }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Engine States",
+      "type": "piechart"
+    },
+    {
+      "description": "Uptime per engine for Policy APEX-PDP application calculated in days",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 51
+      },
+      "id": 32,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "avg by(engine_instance_id)((time() - pdpa_engine_last_start_timestamp_epoch{job=\"apex-pdp-metrics\"}/1000)/86400)",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "{{ engine_instance_id }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Engine Uptime (days)",
+      "transformations": [],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "description": "Number of APEX event execution counter per engine thread",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 59
+      },
+      "id": 35,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.4.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "avg by (engine_instance_id)(rate(pdpa_engine_event_executions{job=\"apex-pdp-metrics\"}[5m]))",
+          "interval": "",
+          "legendFormat": "{{ engine_instance_id }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Engine Executions",
+      "type": "timeseries"
+    },
+    {
+      "description": "Average time taken to execute an APEX policy in seconds per engine instance per pod",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 59
+      },
+      "id": 36,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.4.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "pdpa_engine_average_execution_time_seconds{job=\"apex-pdp-metrics\"}",
+          "interval": "",
+          "legendFormat": "{{ engine_instance_id }} : {{ pod }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Engine Average Latency",
+      "type": "timeseries"
+    },
+    {
+      "cards": {},
+      "color": {
+        "cardColor": "#b4ff00",
+        "colorScale": "sqrt",
+        "colorScheme": "interpolateSpectral",
+        "exponent": 0.5,
+        "mode": "spectrum"
+      },
+      "dataFormat": "tsbuckets",
+      "description": "Time taken to execute the last APEX policy in seconds expressed as a histogram over time",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 67
+      },
+      "heatmap": {},
+      "hideZeroBuckets": true,
+      "highlightCards": true,
+      "id": 38,
+      "legend": {
+        "show": true
+      },
+      "maxDataPoints": 100,
+      "reverseYBuckets": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "sum by(le)(increase(pdpa_engine_last_execution_time_bucket{job=\"apex-pdp-metrics\"}[$__interval]))",
+          "format": "heatmap",
+          "interval": "",
+          "legendFormat": "{{ le }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Engine Latency distribution",
+      "tooltip": {
+        "show": true,
+        "showHistogram": false
+      },
+      "tooltipDecimals": 0,
+      "transparent": true,
+      "type": "heatmap",
+      "xAxis": {
+        "show": true
+      },
+      "yAxis": {
+        "format": "s",
+        "logBase": 1,
+        "show": true
+      },
+      "yBucketBound": "upper"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 34,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-3h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Policy APEX-PDP Jakarta",
+  "uid": "DM56uTogk",
+  "version": 2,
+  "weekStart": ""
+}

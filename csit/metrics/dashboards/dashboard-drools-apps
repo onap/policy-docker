@@ -1,0 +1,1068 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Grafana Dashboard for Policy Drools-APPS",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 10,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 19,
+      "panels": [
+        {
+          "description": "Uptime per pod for Policy Drools-APPS application calculated in days",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "decimals": 1,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 6,
+            "x": 0,
+            "y": 1
+          },
+          "id": 4,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "vertical",
+            "reduceOptions": {
+              "calcs": [],
+              "fields": "",
+              "values": false
+            },
+            "text": {
+              "titleSize": 16
+            },
+            "textMode": "value_and_name"
+          },
+          "pluginVersion": "8.3.4",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "dkSf71fnz"
+              },
+              "exemplar": true,
+              "expr": "(time() - process_start_time_seconds{job=\"drools-apps-metrics\"}) / 86400",
+              "format": "time_series",
+              "instant": false,
+              "interval": "",
+              "legendFormat": "{{ pod }}",
+              "refId": "A"
+            }
+          ],
+          "title": "Process Uptime (days)",
+          "transformations": [],
+          "transparent": true,
+          "type": "stat"
+        },
+        {
+          "description": "Policy Drools-APPS CPU Usage Monitoring",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "decimals": 2,
+              "mappings": [],
+              "max": 100,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "process-1h: dev-policy-api-69f54f45cc-wq6xq"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-purple",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "process_1h: dev-policy-api-69f54f45cc-wq6xq"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-purple",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 8,
+            "x": 7,
+            "y": 1
+          },
+          "id": 26,
+          "options": {
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "last"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": false,
+            "text": {}
+          },
+          "pluginVersion": "8.3.4",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "dkSf71fnz"
+              },
+              "exemplar": true,
+              "expr": "irate(process_cpu_seconds_total{job=\"drools-apps-metrics\"}[5m])*100",
+              "interval": "",
+              "legendFormat": "{{pod}}",
+              "refId": "A"
+            }
+          ],
+          "title": "CPU Usage",
+          "type": "gauge"
+        },
+        {
+          "description": "Policy Drools-APPS Memory Usage Monitoring",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "mappings": [],
+              "max": 100,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "{area=\"heap\", container=\"policy-api\", endpoint=\"policy-api\", id=\"Tenured Gen\", instance=\"10.42.7.19:6969\", job=\"policy-api\", namespace=\"onap\", pod=\"dev-policy-api-69f54f45cc-sb56v\", service=\"policy-api\"}"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "text",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Tenured Gen - dev-policy-api-69f54f45cc-wq6xq"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-purple",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 8,
+            "x": 16,
+            "y": 1
+          },
+          "id": 27,
+          "options": {
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "last"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": false
+          },
+          "pluginVersion": "8.3.4",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "dkSf71fnz"
+              },
+              "exemplar": true,
+              "expr": "100 * jvm_memory_bytes_used{area=\"heap\", job=\"drools-apps-metrics\"} / jvm_memory_bytes_max{area=\"heap\", job=\"drools-apps-metrics\"}",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "Heap : {{ pod }}",
+              "refId": "A"
+            }
+          ],
+          "title": "Memory Usage",
+          "type": "gauge"
+        }
+      ],
+      "title": "Quick Info",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 17,
+      "panels": [
+        {
+          "description": "Policy Drools-APPS CPU Usage Monitoring",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 1,
+                "pointSize": 1,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "process-1h: dev-policy-api-69f54f45cc-wq6xq"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-purple",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "process_1h: dev-policy-api-69f54f45cc-wq6xq"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-purple",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 14,
+            "w": 12,
+            "x": 0,
+            "y": 2
+          },
+          "id": 2,
+          "options": {
+            "legend": {
+              "calcs": [
+                "max",
+                "mean",
+                "last"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "sortBy": "Max",
+              "sortDesc": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "dkSf71fnz"
+              },
+              "exemplar": true,
+              "expr": "irate(process_cpu_seconds_total{job=\"drools-apps-metrics\"}[5m])*100",
+              "interval": "",
+              "legendFormat": "system: {{pod}}",
+              "refId": "A"
+            }
+          ],
+          "title": "CPU Usage",
+          "type": "timeseries"
+        },
+        {
+          "description": "Policy Drools-APPS Memory Usage Monitoring",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 1,
+                "pointSize": 1,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "{area=\"heap\", container=\"policy-api\", endpoint=\"policy-api\", id=\"Tenured Gen\", instance=\"10.42.7.19:6969\", job=\"policy-api\", namespace=\"onap\", pod=\"dev-policy-api-69f54f45cc-sb56v\", service=\"policy-api\"}"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "text",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Tenured Gen - dev-policy-api-69f54f45cc-wq6xq"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-purple",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 11,
+            "w": 12,
+            "x": 12,
+            "y": 2
+          },
+          "id": 13,
+          "options": {
+            "legend": {
+              "calcs": [
+                "max",
+                "mean",
+                "last"
+              ],
+              "displayMode": "table",
+              "placement": "bottom",
+              "sortBy": "Last",
+              "sortDesc": false
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "dkSf71fnz"
+              },
+              "exemplar": true,
+              "expr": "100 * jvm_memory_bytes_used{area=\"heap\", job=\"drools-apps-metrics\"} / jvm_memory_bytes_max{area=\"heap\", job=\"drools-apps-metrics\"}",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "Heap : {{ pod }}",
+              "refId": "A"
+            }
+          ],
+          "title": "Memory Usage",
+          "type": "timeseries"
+        },
+        {
+          "description": "Policy Drools-APPS JVM Threads",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 13,
+            "w": 12,
+            "x": 12,
+            "y": 13
+          },
+          "id": 8,
+          "options": {
+            "legend": {
+              "calcs": [
+                "max",
+                "last",
+                "mean"
+              ],
+              "displayMode": "table",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "8.4.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "dkSf71fnz"
+              },
+              "exemplar": true,
+              "expr": "jvm_threads_current{job=\"drools-apps-metrics\"}",
+              "interval": "",
+              "legendFormat": "Live Threads: {{ pod }}",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "dkSf71fnz"
+              },
+              "exemplar": true,
+              "expr": "jvm_threads_peak{job=\"drools-apps-metrics\"}",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "Peak Threads: {{ pod }}",
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "dkSf71fnz"
+              },
+              "exemplar": true,
+              "expr": "jvm_threads_daemon{job=\"drools-apps-metrics\"}",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "Daemon Threads: {{ pod }}",
+              "refId": "C"
+            }
+          ],
+          "title": "JVM threads",
+          "type": "timeseries"
+        }
+      ],
+      "title": "System",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 2
+      },
+      "id": 15,
+      "panels": [
+        {
+          "description": "GC operations per second",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 1,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "ops"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 3
+          },
+          "id": 10,
+          "options": {
+            "legend": {
+              "calcs": [
+                "max",
+                "mean",
+                "last"
+              ],
+              "displayMode": "table",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "dkSf71fnz"
+              },
+              "exemplar": true,
+              "expr": "rate(jvm_gc_collection_seconds_count{job=\"drools-apps-metrics\"}[5m])",
+              "interval": "",
+              "legendFormat": "{{ gc }} : {{ pod }}",
+              "refId": "A"
+            }
+          ],
+          "title": "Collection",
+          "type": "timeseries"
+        },
+        {
+          "description": "Average GC Time",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 1,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 3
+          },
+          "id": 22,
+          "options": {
+            "legend": {
+              "calcs": [
+                "last"
+              ],
+              "displayMode": "table",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "dkSf71fnz"
+              },
+              "exemplar": true,
+              "expr": "rate(jvm_gc_collection_seconds_sum{job=\"drools-apps-metrics\"}[5m])/rate(jvm_gc_collection_seconds_count{job=\"drools-apps-metrics\"}[5m])",
+              "interval": "",
+              "legendFormat": "avg {{ gc }} : {{ pod }}",
+              "refId": "A"
+            }
+          ],
+          "title": "Pause Durations",
+          "type": "timeseries"
+        }
+      ],
+      "title": "Garbage Collection",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 3
+      },
+      "id": 21,
+      "panels": [
+        {
+          "description": "Policy Deployments Total for Drools-APPS",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 4
+          },
+          "id": 12,
+          "options": {
+            "displayMode": "gradient",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true
+          },
+          "pluginVersion": "8.3.4",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "dkSf71fnz"
+              },
+              "exemplar": true,
+              "expr": "avg by(job)(pdpd_policy_deployments_total{job=\"drools-apps-metrics\", operation=\"deploy\", status=\"SUCCESS\"})",
+              "interval": "",
+              "legendFormat": "Deploy - Success",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "dkSf71fnz"
+              },
+              "exemplar": true,
+              "expr": "avg by(job)(pdpd_policy_deployments_total{job=\"drools-apps-metrics\", operation=\"deploy\", status=\"FAILURE\"})",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "Deploy - Failure",
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "dkSf71fnz"
+              },
+              "exemplar": true,
+              "expr": "avg by(job)(pdpd_policy_deployments_total{job=\"drools-apps-metrics\", operation=\"undeploy\", status=\"SUCCESS\"})",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "Undeploy - Success",
+              "refId": "D"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "dkSf71fnz"
+              },
+              "exemplar": true,
+              "expr": "avg by(job)(pdpd_policy_deployments_total{job=\"drools-apps-metrics\", operation=\"undeploy\", status=\"FAILURE\"})",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "Undeploy - Failure",
+              "refId": "E"
+            }
+          ],
+          "title": "Policy Deployments Total",
+          "type": "bargauge"
+        },
+        {
+          "description": "Policy Executions Total for Drools-APPS per instance",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 4
+          },
+          "id": 30,
+          "options": {
+            "displayMode": "gradient",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true
+          },
+          "pluginVersion": "8.3.4",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "dkSf71fnz"
+              },
+              "exemplar": true,
+              "expr": "pdpd_policy_executions_latency_seconds_count{job=\"drools-apps-metrics\", status=\"SUCCESS\"}",
+              "interval": "",
+              "legendFormat": "Executions - Count",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "dkSf71fnz"
+              },
+              "exemplar": true,
+              "expr": "pdpd_policy_executions_latency_seconds_sum{job=\"drools-apps-metrics\"}",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "Executions - Sum",
+              "refId": "B"
+            }
+          ],
+          "title": "Policy Executions",
+          "type": "bargauge"
+        }
+      ],
+      "title": "Requests",
+      "type": "row"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 34,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-3h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Policy Drools-APPS",
+  "uid": "i9l6oyz4z",
+  "version": 3,
+  "weekStart": ""
+}
