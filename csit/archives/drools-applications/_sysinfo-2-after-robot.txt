@@ -1,0 +1,22 @@
+> top -bn1 | head -3
+
+> free -h
+
+> docker ps
+CONTAINER ID   IMAGE                                              COMMAND                  CREATED              STATUS              PORTS                                              NAMES
+9953162fdf50   onap/policy-pdpd-cl:1.11-SNAPSHOT-latest           "/opt/app/policy/bin…"   About a minute ago   Up About a minute   0.0.0.0:30221->6969/tcp, 0.0.0.0:30219->9696/tcp   drools-apps
+46416e1b1d7f   onap/policy-xacml-pdp:2.7-SNAPSHOT-latest          "./wait_for_port.sh …"   About a minute ago   Up About a minute   0.0.0.0:30441->6969/tcp                            policy-xacml-pdp
+e36e9b39ad07   onap/policy-pap:2.7-SNAPSHOT-latest                "./wait_for_port.sh …"   About a minute ago   Up About a minute   0.0.0.0:30442->6969/tcp                            policy-pap
+133777f36c42   onap/policy-api:2.7-SNAPSHOT-latest                "./wait_for_port.sh …"   About a minute ago   Up About a minute   0.0.0.0:30440->6969/tcp                            policy-api
+a816676a96c8   mariadb:10.5.8                                     "docker-entrypoint.s…"   About a minute ago   Up About a minute   3306/tcp                                           mariadb
+e556caf0ef07   onap/policy-models-simulator:2.7-SNAPSHOT-latest   "./simulators.sh"        About a minute ago   Up About a minute   3904/tcp, 6666/tcp, 6668-6670/tcp, 6680/tcp        simulator
+
+> docker stats --no-stream
+CONTAINER ID   NAME               CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O        PIDS
+9953162fdf50   drools-apps        3.08%     551.4MiB / 7.667GiB   7.02%     60.2kB / 79.5kB   2.63MB / 578kB   101
+46416e1b1d7f   policy-xacml-pdp   2.27%     172.5MiB / 7.667GiB   2.20%     34.6kB / 20.7kB   139kB / 430kB    42
+e36e9b39ad07   policy-pap         3.83%     529.6MiB / 7.667GiB   6.75%     6.49MB / 1.96MB   561kB / 103MB    53
+133777f36c42   policy-api         1.28%     505.6MiB / 7.667GiB   6.44%     3.42MB / 1.42MB   160kB / 160kB    47
+a816676a96c8   mariadb            0.36%     86.52MiB / 7.667GiB   1.10%     3.65MB / 10MB     0B / 49MB        37
+e556caf0ef07   simulator          2.49%     207.1MiB / 7.667GiB   2.64%     98kB / 143kB      0B / 328kB       96
+

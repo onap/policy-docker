@@ -32,7 +32,7 @@
                 "taskParameters": [
                   {
                     "key": "logUrl",
-                    "value": "https://message-router:3905/events/APEX-CL-MGT"
+                    "value": "http://message-router:3904/events/APEX-CL-MGT"
                   }
                 ]
               },
@@ -2778,7 +2778,7 @@
                   "carrierTechnology": "RESTCLIENT",
                   "parameterClassName": "org.onap.policy.apex.plugins.event.carrier.restclient.RestClientCarrierTechnologyParameters",
                   "parameters": {
-                    "url": "https://message-router:3905/events/unauthenticated.DCAE_CL_OUTPUT/cl/apex?timeout=30000"
+                    "url": "http://message-router:3904/events/unauthenticated.DCAE_CL_OUTPUT/cl/apex?timeout=30000"
                   }
                 },
                 "eventProtocolParameters": {
@@ -2791,7 +2791,7 @@
                   "carrierTechnology": "RESTREQUESTOR",
                   "parameterClassName": "org.onap.policy.apex.plugins.event.carrier.restrequestor.RestRequestorCarrierTechnologyParameters",
                   "parameters": {
-                    "url": "https://aai-sim:6666/aai/v16/network/pnfs/pnf/{pnfName}",
+                    "url": "http://aai-sim:6666/aai/v16/network/pnfs/pnf/{pnfName}",
                     "httpMethod": "GET",
                     "httpCodeFilter": "[2-5][0-1][0-9]",
                     "httpHeaders": [
@@ -2879,7 +2879,7 @@
                   "carrierTechnology": "RESTCLIENT",
                   "parameterClassName": "org.onap.policy.apex.plugins.event.carrier.restclient.RestClientCarrierTechnologyParameters",
                   "parameters": {
-                    "url": "https://message-router:3905/events/APEX-CL-MGT"
+                    "url": "http://message-router:3904/events/APEX-CL-MGT"
                   }
                 },
                 "eventProtocolParameters": {

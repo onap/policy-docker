@@ -1,0 +1,20 @@
+> top -bn1 | head -3
+
+> free -h
+
+> docker ps
+CONTAINER ID   IMAGE                                               COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+f27b9436e9b2   onap/policy-clamp-ac-pf-ppnt:6.3-SNAPSHOT-latest    "/opt/app/policy/bin…"   12 seconds ago   Up 11 seconds   8085/tcp, 0.0.0.0:30218->6969/tcp             policy-clamp-ac-pf-ppnt
+88ac410b965a   onap/policy-api:2.7-SNAPSHOT-latest                 "./wait_for_port.sh …"   12 seconds ago   Up 11 seconds   0.0.0.0:30440->6969/tcp                       policy-api
+19bb7aff3034   onap/policy-clamp-runtime-acm:6.3-SNAPSHOT-latest   "/opt/app/policy/bin…"   24 seconds ago   Up 23 seconds   0.0.0.0:30258->6969/tcp                       policy-clamp-runtime-acm
+de2e9bf7727a   mariadb:10.5.8                                      "docker-entrypoint.s…"   24 seconds ago   Up 23 seconds   3306/tcp                                      mariadb
+3e4b94afa5e9   onap/policy-models-simulator:2.7-SNAPSHOT-latest    "./simulators.sh"        24 seconds ago   Up 23 seconds   3904/tcp, 6666/tcp, 6668-6670/tcp, 6680/tcp   simulator
+
+> docker stats --no-stream
+CONTAINER ID   NAME                       CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O        PIDS
+f27b9436e9b2   policy-clamp-ac-pf-ppnt    3.03%     436.2MiB / 7.667GiB   5.56%     4.36kB / 4.48kB   41kB / 98.3kB    47
+88ac410b965a   policy-api                 2.06%     496.5MiB / 7.667GiB   6.32%     575kB / 617kB     0B / 69.6kB      47
+19bb7aff3034   policy-clamp-runtime-acm   1.11%     540.9MiB / 7.667GiB   6.89%     43.1kB / 73.7kB   1.21MB / 139kB   51
+de2e9bf7727a   mariadb                    0.18%     95.61MiB / 7.667GiB   1.22%     981kB / 818kB     0B / 58.5MB      38
+3e4b94afa5e9   simulator                  1.33%     210.4MiB / 7.667GiB   2.68%     8.65kB / 6.34kB   0B / 119kB       87
+

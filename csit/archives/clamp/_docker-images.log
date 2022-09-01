@@ -1,0 +1,5 @@
+onap/policy-clamp-ac-pf-ppnt:6.3-SNAPSHOT-latest
+onap/policy-api:2.7-SNAPSHOT-latest
+onap/policy-clamp-runtime-acm:6.3-SNAPSHOT-latest
+mariadb:10.5.8
+onap/policy-models-simulator:2.7-SNAPSHOT-latest

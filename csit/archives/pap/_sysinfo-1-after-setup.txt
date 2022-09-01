@@ -1,0 +1,20 @@
+> top -bn1 | head -3
+
+> free -h
+
+> docker ps
+CONTAINER ID   IMAGE                                              COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+edea96bebca0   onap/policy-apex-pdp:2.8-SNAPSHOT-latest           "/opt/app/policy/bin…"   23 seconds ago   Up 22 seconds   0.0.0.0:30237->6969/tcp                       policy-apex-pdp
+a5326ed11252   onap/policy-pap:2.7-SNAPSHOT-latest                "./wait_for_port.sh …"   23 seconds ago   Up 22 seconds   0.0.0.0:30442->6969/tcp                       policy-pap
+154efcc78ed6   onap/policy-api:2.7-SNAPSHOT-latest                "./wait_for_port.sh …"   23 seconds ago   Up 23 seconds   0.0.0.0:30440->6969/tcp                       policy-api
+ad5b65189a84   mariadb:10.5.8                                     "docker-entrypoint.s…"   24 seconds ago   Up 23 seconds   3306/tcp                                      mariadb
+050c4c59fdf7   onap/policy-models-simulator:2.7-SNAPSHOT-latest   "./simulators.sh"        24 seconds ago   Up 23 seconds   3904/tcp, 6666/tcp, 6668-6670/tcp, 6680/tcp   simulator
+
+> docker stats --no-stream
+CONTAINER ID   NAME              CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O        PIDS
+edea96bebca0   policy-apex-pdp   26.97%    201.1MiB / 7.667GiB   2.56%     11kB / 10.8kB     45.1kB / 0B      42
+a5326ed11252   policy-pap        2.55%     464.8MiB / 7.667GiB   5.92%     69kB / 62.3kB     8.19kB / 103MB   52
+154efcc78ed6   policy-api        0.34%     488.4MiB / 7.667GiB   6.22%     577kB / 619kB     4.1kB / 41kB     45
+ad5b65189a84   mariadb           0.10%     85.55MiB / 7.667GiB   1.09%     966kB / 827kB     176kB / 48.3MB   38
+050c4c59fdf7   simulator         11.15%    206.2MiB / 7.667GiB   2.63%     18.8kB / 22.8kB   545kB / 193kB    88
+

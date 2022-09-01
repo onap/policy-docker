@@ -1,0 +1,1 @@
+/Users/liam/git/onap/policy/docker/csit/drools-pdp/tests/drools-pdp-test.robot

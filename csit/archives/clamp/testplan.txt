@@ -1,0 +1,1 @@
+/Users/liam/git/onap/policy/docker/csit/clamp/tests/policy-clamp-test.robot

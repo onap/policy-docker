@@ -1,0 +1,22 @@
+> top -bn1 | head -3
+
+> free -h
+
+> docker ps
+CONTAINER ID   IMAGE                                              COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+683a57bf83a0   onap/policy-distribution:2.8-SNAPSHOT-latest       "/opt/app/policy/bin…"   27 seconds ago   Up 26 seconds                                                 policy-distribution
+68e2f7b3be92   onap/policy-apex-pdp:2.8-SNAPSHOT-latest           "/opt/app/policy/bin…"   28 seconds ago   Up 27 seconds   0.0.0.0:30237->6969/tcp                       policy-apex-pdp
+3a0ebc7931b3   onap/policy-pap:2.7-SNAPSHOT-latest                "./wait_for_port.sh …"   28 seconds ago   Up 27 seconds   0.0.0.0:30442->6969/tcp                       policy-pap
+f3abc1fcbd20   onap/policy-api:2.7-SNAPSHOT-latest                "./wait_for_port.sh …"   28 seconds ago   Up 27 seconds   0.0.0.0:30440->6969/tcp                       policy-api
+05ccaecd32ae   mariadb:10.5.8                                     "docker-entrypoint.s…"   29 seconds ago   Up 28 seconds   3306/tcp                                      mariadb
+8f222f155c15   onap/policy-models-simulator:2.7-SNAPSHOT-latest   "./simulators.sh"        29 seconds ago   Up 28 seconds   3904/tcp, 6666/tcp, 6668-6670/tcp, 6680/tcp   simulator
+
+> docker stats --no-stream
+CONTAINER ID   NAME                  CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O        PIDS
+683a57bf83a0   policy-distribution   0.70%     149MiB / 7.667GiB     1.90%     6.16kB / 4.91kB   15.6MB / 0B      40
+68e2f7b3be92   policy-apex-pdp       1.40%     189.5MiB / 7.667GiB   2.41%     12kB / 11.2kB     1.35MB / 0B      42
+3a0ebc7931b3   policy-pap            8.69%     463.2MiB / 7.667GiB   5.90%     103kB / 90.8kB    8.19kB / 103MB   52
+f3abc1fcbd20   policy-api            2.34%     506.6MiB / 7.667GiB   6.45%     577kB / 619kB     143kB / 41kB     45
+05ccaecd32ae   mariadb               0.49%     85.57MiB / 7.667GiB   1.09%     996kB / 860kB     176kB / 48.3MB   38
+8f222f155c15   simulator             0.81%     208MiB / 7.667GiB     2.65%     19.5kB / 23.5kB   1.31MB / 238kB   88
+

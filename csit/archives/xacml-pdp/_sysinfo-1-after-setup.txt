@@ -1,0 +1,20 @@
+> top -bn1 | head -3
+
+> free -h
+
+> docker ps
+CONTAINER ID   IMAGE                                              COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+7174c55273ec   onap/policy-xacml-pdp:2.7-SNAPSHOT-latest          "./wait_for_port.sh …"   26 seconds ago   Up 24 seconds   0.0.0.0:30441->6969/tcp                       policy-xacml-pdp
+9b01f3d014c5   onap/policy-pap:2.7-SNAPSHOT-latest                "./wait_for_port.sh …"   26 seconds ago   Up 25 seconds   0.0.0.0:30442->6969/tcp                       policy-pap
+c772c9abbf2c   onap/policy-api:2.7-SNAPSHOT-latest                "./wait_for_port.sh …"   26 seconds ago   Up 25 seconds   0.0.0.0:30440->6969/tcp                       policy-api
+a1635dafd639   mariadb:10.5.8                                     "docker-entrypoint.s…"   27 seconds ago   Up 26 seconds   3306/tcp                                      mariadb
+83a0a0dc24ad   onap/policy-models-simulator:2.7-SNAPSHOT-latest   "./simulators.sh"        27 seconds ago   Up 26 seconds   3904/tcp, 6666/tcp, 6668-6670/tcp, 6680/tcp   simulator
+
+> docker stats --no-stream
+CONTAINER ID   NAME               CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O       PIDS
+7174c55273ec   policy-xacml-pdp   1.31%     199.9MiB / 7.667GiB   2.55%     16.6kB / 15.1kB   422kB / 4.1kB   41
+9b01f3d014c5   policy-pap         1.57%     524.5MiB / 7.667GiB   6.68%     1.94MB / 581kB    0B / 103MB      53
+c772c9abbf2c   policy-api         0.59%     495.9MiB / 7.667GiB   6.32%     577kB / 619kB     0B / 45.1kB     45
+a1635dafd639   mariadb            0.36%     85.88MiB / 7.667GiB   1.09%     1.48MB / 2.7MB    0B / 48.4MB     40
+83a0a0dc24ad   simulator          4.36%     200.5MiB / 7.667GiB   2.55%     23.6kB / 28.2kB   0B / 184kB      88
+

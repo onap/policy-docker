@@ -1,0 +1,2836 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.1a2 (Python 3.10.6 on darwin)" generated="20220902 13:56:08.213" rpa="false" schemaversion="3">
+<suite id="s1" name="drools-applications" source="/Users/liam/git/onap/policy/docker/csit/drools-applications/tests/drools-applications-test.robot">
+<test id="s1-t1" name="Alive" line="10">
+<kw name="PeformGetRequest">
+<var>${resp}</var>
+<arg>/policy/pdp/engine</arg>
+<arg>${DROOLS_IP}</arg>
+<arg>9696</arg>
+<arg>200</arg>
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>demo@people.osaaf.org</arg>
+<arg>demo123456!</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:56:08.253" level="INFO">${auth} = ['demo@people.osaaf.org', 'demo123456!']</msg>
+<status status="PASS" starttime="20220902 13:56:08.253" endtime="20220902 13:56:08.253"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${hostname}:${port}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:08.253" level="INFO">Creating session http://192.168.16.8:9696</msg>
+<status status="PASS" starttime="20220902 13:56:08.253" endtime="20220902 13:56:08.253"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${hostname}:${port}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:56:08.254" level="INFO">Creating Session using : alias=policy, url=http://192.168.16.8:9696, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x105e27fa0&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:56:08.254" level="INFO">${session} = &lt;requests.sessions.Session object at 0x105e78040&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.253" endtime="20220902 13:56:08.254"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/json</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:56:08.254" level="INFO">${headers} = {'Accept': 'application/json', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20220902 13:56:08.254" endtime="20220902 13:56:08.254"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>${url}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=${expectedstatus}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:56:08.356" level="INFO">GET Request : url=http://192.168.16.8:9696/policy/pdp/engine 
+ path_url=/policy/pdp/engine 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Basic ZGVtb0BwZW9wbGUub3NhYWYub3JnOmRlbW8xMjM0NTYh'} 
+ body=None 
+ </msg>
+<msg timestamp="20220902 13:56:08.357" level="INFO">GET Response : url=http://192.168.16.8:9696/policy/pdp/engine 
+ status=200, reason=OK 
+ headers={'Date': 'Fri, 02 Sep 2022 12:56:08 GMT', 'Content-Type': 'application/json', 'Content-Length': '676', 'Server': 'Jetty(9.4.48.v20220622)'} 
+ body={"sources":[],"alive":true,"sinks":[],"features":["org.onap.policy.drools.lifecycle.LifecycleFeature","org.onap.policy.drools.apps.controlloop.feature.usecases.UsecasesFeature","org.onap.policy.drools.healthcheck.HealthCheckFeature"],"stats":{"subgroupStats":{},"groupStat":{"policyExecutedCount":0,"policyExecutedSuccessCount":0,"totalElapsedTime":0.0,"averageExecutionTime":0.0,"lastStart":0,"birthTime":1662123348522,"lastExecutionTime":0,"policyExecutedFailCount":0}},"controllers":["usecases"],"httpServers":[{"password":"demo123456!","alive":true,"port":9696,"aaf":false,"name":"CONFIG","host":"0.0.0.0","prometheus":true,"user":"demo@people.osaaf.org"}],"locked":false} 
+ </msg>
+<msg timestamp="20220902 13:56:08.357" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.254" endtime="20220902 13:56:08.357"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from policy ${resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:08.357" level="INFO">Received response from policy {"sources":[],"alive":true,"sinks":[],"features":["org.onap.policy.drools.lifecycle.LifecycleFeature","org.onap.policy.drools.apps.controlloop.feature.usecases.UsecasesFeature","org.onap.policy.drools.healthcheck.HealthCheckFeature"],"stats":{"subgroupStats":{},"groupStat":{"policyExecutedCount":0,"policyExecutedSuccessCount":0,"totalElapsedTime":0.0,"averageExecutionTime":0.0,"lastStart":0,"birthTime":1662123348522,"lastExecutionTime":0,"policyExecutedFailCount":0}},"controllers":["usecases"],"httpServers":[{"password":"demo123456!","alive":true,"port":9696,"aaf":false,"name":"CONFIG","host":"0.0.0.0","prometheus":true,"user":"demo@people.osaaf.org"}],"locked":false}</msg>
+<status status="PASS" starttime="20220902 13:56:08.357" endtime="20220902 13:56:08.357"/>
+</kw>
+<msg timestamp="20220902 13:56:08.357" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.253" endtime="20220902 13:56:08.357"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${resp.json()['alive']}</arg>
+<arg>True</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20220902 13:56:08.358" level="INFO">Argument types are:
+&lt;class 'bool'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.357" endtime="20220902 13:56:08.358"/>
+</kw>
+<doc>Runs Policy PDP Alive Check</doc>
+<status status="PASS" starttime="20220902 13:56:08.253" endtime="20220902 13:56:08.358"/>
+</test>
+<test id="s1-t2" name="Metrics" line="15">
+<kw name="PeformGetRequest">
+<var>${resp}</var>
+<arg>/metrics</arg>
+<arg>${DROOLS_IP}</arg>
+<arg>9696</arg>
+<arg>200</arg>
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>demo@people.osaaf.org</arg>
+<arg>demo123456!</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:56:08.358" level="INFO">${auth} = ['demo@people.osaaf.org', 'demo123456!']</msg>
+<status status="PASS" starttime="20220902 13:56:08.358" endtime="20220902 13:56:08.358"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${hostname}:${port}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:08.358" level="INFO">Creating session http://192.168.16.8:9696</msg>
+<status status="PASS" starttime="20220902 13:56:08.358" endtime="20220902 13:56:08.358"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${hostname}:${port}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:56:08.359" level="INFO">Creating Session using : alias=policy, url=http://192.168.16.8:9696, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x105e79600&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:56:08.359" level="INFO">${session} = &lt;requests.sessions.Session object at 0x105e797e0&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.358" endtime="20220902 13:56:08.359"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/json</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:56:08.359" level="INFO">${headers} = {'Accept': 'application/json', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20220902 13:56:08.359" endtime="20220902 13:56:08.359"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>${url}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=${expectedstatus}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:56:08.374" level="INFO">GET Request : url=http://192.168.16.8:9696/metrics 
+ path_url=/metrics 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Basic ZGVtb0BwZW9wbGUub3NhYWYub3JnOmRlbW8xMjM0NTYh'} 
+ body=None 
+ </msg>
+<msg timestamp="20220902 13:56:08.374" level="INFO">GET Response : url=http://192.168.16.8:9696/metrics 
+ status=200, reason=OK 
+ headers={'Date': 'Fri, 02 Sep 2022 12:56:08 GMT', 'Content-Type': 'text/plain; version=0.0.4; charset=utf-8', 'Transfer-Encoding': 'chunked', 'Server': 'Jetty(9.4.48.v20220622)'} 
+ body=# HELP jvm_info VM version info
+# TYPE jvm_info gauge
+jvm_info{runtime="OpenJDK Runtime Environment",vendor="Alpine",version="11.0.16.1+1-alpine-r0",} 1.0
+# HELP jvm_threads_current Current thread count of a JVM
+# TYPE jvm_threads_current gauge
+jvm_threads_current 63.0
+# HELP jvm_threads_daemon Daemon thread count of a JVM
+# TYPE jvm_threads_daemon gauge
+jvm_threads_daemon 16.0
+# HELP jvm_threads_peak Peak thread count of a JVM
+# TYPE jvm_threads_peak gauge
+jvm_threads_peak 63.0
+# HELP jvm_threads_started_total Started thread count of a JVM
+# TYPE jvm_threads_started_total counter
+jvm_threads_started_total 64.0
+# HELP jvm_threads_deadlocked Cycles of JVM-threads that are in deadlock waiting to acquire object monitors or ownable synchronizers
+# TYPE jvm_threads_deadlocked gauge
+jvm_threads_deadlocked 0.0
+# HELP jvm_threads_deadlocked_monitor Cycles of JVM-threads that are in deadlock waiting to acquire object monitors
+# TYPE jvm_threads_deadlocked_monitor gauge
+jvm_threads_deadlocked_monitor 0.0
+# HELP jvm_threads_state Current count of threads by state
+# TYPE jvm_threads_state gauge
+jvm_threads_state{state="TERMINATED",} 0.0
+jvm_threads_state{state="NEW",} 0.0
+jvm_threads_state{state="WAITING",} 14.0
+jvm_threads_state{state="TIMED_WAITING",} 30.0
+jvm_threads_state{state="RUNNABLE",} 19.0
+jvm_threads_state{state="BLOCKED",} 0.0
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 11.44
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1.662123347734E9
+# HELP process_open_fds Number of open file descriptors.
+# TYPE process_open_fds gauge
+process_open_fds 379.0
+# HELP process_max_fds Maximum number of open file descriptors.
+# TYPE process_max_fds gauge
+process_max_fds 1048576.0
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 2.401660928E9
+# HELP process_resident_memory_bytes Resident memory size in bytes.
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 5.52116224E8
+# HELP jvm_memory_objects_pending_finalization The number of objects waiting in the finalizer queue.
+# TYPE jvm_memory_objects_pending_finalization gauge
+jvm_memory_objects_pending_finalization 0.0
+# HELP jvm_memory_bytes_used Used bytes of a given JVM memory area.
+# TYPE jvm_memory_bytes_used gauge
+jvm_memory_bytes_used{area="heap",} 7.0226432E7
+jvm_memory_bytes_used{area="nonheap",} 1.1989148E8
+# HELP jvm_memory_bytes_committed Committed (bytes) of a given JVM memory area.
+# TYPE jvm_memory_bytes_committed gauge
+jvm_memory_bytes_committed{area="heap",} 5.36870912E8
+jvm_memory_bytes_committed{area="nonheap",} 1.24796928E8
+# HELP jvm_memory_bytes_max Max (bytes) of a given JVM memory area.
+# TYPE jvm_memory_bytes_max gauge
+jvm_memory_bytes_max{area="heap",} 5.36870912E8
+jvm_memory_bytes_max{area="nonheap",} -1.0
+# HELP jvm_memory_bytes_init Initial bytes of a given JVM memory area.
+# TYPE jvm_memory_bytes_init gauge
+jvm_memory_bytes_init{area="heap",} 5.36870912E8
+jvm_memory_bytes_init{area="nonheap",} 7667712.0
+# HELP jvm_memory_pool_bytes_used Used bytes of a given JVM memory pool.
+# TYPE jvm_memory_pool_bytes_used gauge
+jvm_memory_pool_bytes_used{pool="CodeHeap 'non-nmethods'",} 1412608.0
+jvm_memory_pool_bytes_used{pool="Metaspace",} 8.4618408E7
+jvm_memory_pool_bytes_used{pool="CodeHeap 'profiled nmethods'",} 1.9990656E7
+jvm_memory_pool_bytes_used{pool="Compressed Class Space",} 9580656.0
+jvm_memory_pool_bytes_used{pool="G1 Eden Space",} 1.2582912E7
+jvm_memory_pool_bytes_used{pool="G1 Old Gen",} 2.7234816E7
+jvm_memory_pool_bytes_used{pool="G1 Survivor Space",} 3.0408704E7
+jvm_memory_pool_bytes_used{pool="CodeHeap 'non-profiled nmethods'",} 4289152.0
+# HELP jvm_memory_pool_bytes_committed Committed bytes of a given JVM memory pool.
+# TYPE jvm_memory_pool_bytes_committed gauge
+jvm_memory_pool_bytes_committed{pool="CodeHeap 'non-nmethods'",} 2555904.0
+jvm_memory_pool_bytes_committed{pool="Metaspace",} 8.72448E7
+jvm_memory_pool_bytes_committed{pool="CodeHeap 'profiled nmethods'",} 2.0054016E7
+jvm_memory_pool_bytes_committed{pool="Compressed Class Space",} 1.0616832E7
+jvm_memory_pool_bytes_committed{pool="G1 Eden Space",} 3.08281344E8
+jvm_memory_pool_bytes_committed{pool="G1 Old Gen",} 1.98180864E8
+jvm_memory_pool_bytes_committed{pool="G1 Survivor Space",} 3.0408704E7
+jvm_memory_pool_bytes_committed{pool="CodeHeap 'non-profiled nmethods'",} 4325376.0
+# HELP jvm_memory_pool_bytes_max Max bytes of a given JVM memory pool.
+# TYPE jvm_memory_pool_bytes_max gauge
+jvm_memory_pool_bytes_max{pool="CodeHeap 'non-nmethods'",} 5832704.0
+jvm_memory_pool_bytes_max{pool="Metaspace",} -1.0
+jvm_memory_pool_bytes_max{pool="CodeHeap 'profiled nmethods'",} 1.22912768E8
+jvm_memory_pool_bytes_max{pool="Compressed Class Space",} 1.073741824E9
+jvm_memory_pool_bytes_max{pool="G1 Eden Space",} -1.0
+jvm_memory_pool_bytes_max{pool="G1 Old Gen",} 5.36870912E8
+jvm_memory_pool_bytes_max{pool="G1 Survivor Space",} -1.0
+jvm_memory_pool_bytes_max{pool="CodeHeap 'non-profiled nmethods'",} 1.22912768E8
+# HELP jvm_memory_pool_bytes_init Initial bytes of a given JVM memory pool.
+# TYPE jvm_memory_pool_bytes_init gauge
+jvm_memory_pool_bytes_init{pool="CodeHeap 'non-nmethods'",} 2555904.0
+jvm_memory_pool_bytes_init{pool="Metaspace",} 0.0
+jvm_memory_pool_bytes_init{pool="CodeHeap 'profiled nmethods'",} 2555904.0
+jvm_memory_pool_bytes_init{pool="Compressed Class Space",} 0.0
+jvm_memory_pool_bytes_init{pool="G1 Eden Space",} 2.8311552E7
+jvm_memory_pool_bytes_init{pool="G1 Old Gen",} 5.0855936E8
+jvm_memory_pool_bytes_init{pool="G1 Survivor Space",} 0.0
+jvm_memory_pool_bytes_init{pool="CodeHeap 'non-profiled nmethods'",} 2555904.0
+# HELP jvm_memory_pool_collection_used_bytes Used bytes after last collection of a given JVM memory pool.
+# TYPE jvm_memory_pool_collection_used_bytes gauge
+jvm_memory_pool_collection_used_bytes{pool="G1 Eden Space",} 0.0
+jvm_memory_pool_collection_used_bytes{pool="G1 Old Gen",} 0.0
+jvm_memory_pool_collection_used_bytes{pool="G1 Survivor Space",} 3.0408704E7
+# HELP jvm_memory_pool_collection_committed_bytes Committed after last collection bytes of a given JVM memory pool.
+# TYPE jvm_memory_pool_collection_committed_bytes gauge
+jvm_memory_pool_collection_committed_bytes{pool="G1 Eden Space",} 3.08281344E8
+jvm_memory_pool_collection_committed_bytes{pool="G1 Old Gen",} 0.0
+jvm_memory_pool_collection_committed_bytes{pool="G1 Survivor Space",} 3.0408704E7
+# HELP jvm_memory_pool_collection_max_bytes Max bytes after last collection of a given JVM memory pool.
+# TYPE jvm_memory_pool_collection_max_bytes gauge
+jvm_memory_pool_collection_max_bytes{pool="G1 Eden Space",} -1.0
+jvm_memory_pool_collection_max_bytes{pool="G1 Old Gen",} 5.36870912E8
+jvm_memory_pool_collection_max_bytes{pool="G1 Survivor Space",} -1.0
+# HELP jvm_memory_pool_collection_init_bytes Initial after last collection bytes of a given JVM memory pool.
+# TYPE jvm_memory_pool_collection_init_bytes gauge
+jvm_memory_pool_collection_init_bytes{pool="G1 Eden Space",} 2.8311552E7
+jvm_memory_pool_collection_init_bytes{pool="G1 Old Gen",} 5.0855936E8
+jvm_memory_pool_collection_init_bytes{pool="G1 Survivor Space",} 0.0
+# HELP pdpd_policy_executions_latency_seconds The latency in seconds of TOSCA policy executions.
+# TYPE pdpd_policy_executions_latency_seconds summary
+# HELP jvm_classes_loaded The number of classes that are currently loaded in the JVM
+# TYPE jvm_classes_loaded gauge
+jvm_classes_loaded 13528.0
+# HELP jvm_classes_loaded_total The total number of classes that have been loaded since the JVM has started execution
+# TYPE jvm_classes_loaded_total counter
+jvm_classes_loaded_total 13528.0
+# HELP jvm_classes_unloaded_total The total number of classes that have been unloaded since the JVM has started execution
+# TYPE jvm_classes_unloaded_total counter
+jvm_classes_unloaded_total 0.0
+# HELP jvm_memory_pool_allocated_bytes_total Total bytes allocated in a given JVM memory pool. Only updated after GC, not continuously.
+# TYPE jvm_memory_pool_allocated_bytes_total counter
+jvm_memory_pool_allocated_bytes_total{pool="CodeHeap 'profiled nmethods'",} 1.9688832E7
+jvm_memory_pool_allocated_bytes_total{pool="G1 Old Gen",} 3.0787792E7
+jvm_memory_pool_allocated_bytes_total{pool="G1 Eden Space",} 8.11597824E8
+jvm_memory_pool_allocated_bytes_total{pool="CodeHeap 'non-profiled nmethods'",} 4229760.0
+jvm_memory_pool_allocated_bytes_total{pool="G1 Survivor Space",} 3.0408704E7
+jvm_memory_pool_allocated_bytes_total{pool="Compressed Class Space",} 9444000.0
+jvm_memory_pool_allocated_bytes_total{pool="Metaspace",} 8.3616296E7
+jvm_memory_pool_allocated_bytes_total{pool="CodeHeap 'non-nmethods'",} 1409664.0
+# HELP jvm_gc_collection_seconds Time spent in a given JVM garbage collector in seconds.
+# TYPE jvm_gc_collection_seconds summary
+jvm_gc_collection_seconds_count{gc="G1 Young Generation",} 9.0
+jvm_gc_collection_seconds_sum{gc="G1 Young Generation",} 0.117
+jvm_gc_collection_seconds_count{gc="G1 Old Generation",} 0.0
+jvm_gc_collection_seconds_sum{gc="G1 Old Generation",} 0.0
+# HELP pdpd_policy_deployments_total The total number of policy deployments.
+# TYPE pdpd_policy_deployments_total counter
+# HELP jvm_buffer_pool_used_bytes Used bytes of a given JVM buffer pool.
+# TYPE jvm_buffer_pool_used_bytes gauge
+jvm_buffer_pool_used_bytes{pool="mapped",} 0.0
+jvm_buffer_pool_used_bytes{pool="direct",} 58020.0
+# HELP jvm_buffer_pool_capacity_bytes Bytes capacity of a given JVM buffer pool.
+# TYPE jvm_buffer_pool_capacity_bytes gauge
+jvm_buffer_pool_capacity_bytes{pool="mapped",} 0.0
+jvm_buffer_pool_capacity_bytes{pool="direct",} 58020.0
+# HELP jvm_buffer_pool_used_buffers Used buffers of a given JVM buffer pool.
+# TYPE jvm_buffer_pool_used_buffers gauge
+jvm_buffer_pool_used_buffers{pool="mapped",} 0.0
+jvm_buffer_pool_used_buffers{pool="dir... (set the log level to DEBUG or TRACE to see the full content) 
+ </msg>
+<msg timestamp="20220902 13:56:08.374" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.359" endtime="20220902 13:56:08.374"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from policy ${resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:08.374" level="INFO">Received response from policy # HELP jvm_info VM version info
+# TYPE jvm_info gauge
+jvm_info{runtime="OpenJDK Runtime Environment",vendor="Alpine",version="11.0.16.1+1-alpine-r0",} 1.0
+# HELP jvm_threads_current Current thread count of a JVM
+# TYPE jvm_threads_current gauge
+jvm_threads_current 63.0
+# HELP jvm_threads_daemon Daemon thread count of a JVM
+# TYPE jvm_threads_daemon gauge
+jvm_threads_daemon 16.0
+# HELP jvm_threads_peak Peak thread count of a JVM
+# TYPE jvm_threads_peak gauge
+jvm_threads_peak 63.0
+# HELP jvm_threads_started_total Started thread count of a JVM
+# TYPE jvm_threads_started_total counter
+jvm_threads_started_total 64.0
+# HELP jvm_threads_deadlocked Cycles of JVM-threads that are in deadlock waiting to acquire object monitors or ownable synchronizers
+# TYPE jvm_threads_deadlocked gauge
+jvm_threads_deadlocked 0.0
+# HELP jvm_threads_deadlocked_monitor Cycles of JVM-threads that are in deadlock waiting to acquire object monitors
+# TYPE jvm_threads_deadlocked_monitor gauge
+jvm_threads_deadlocked_monitor 0.0
+# HELP jvm_threads_state Current count of threads by state
+# TYPE jvm_threads_state gauge
+jvm_threads_state{state="TERMINATED",} 0.0
+jvm_threads_state{state="NEW",} 0.0
+jvm_threads_state{state="WAITING",} 14.0
+jvm_threads_state{state="TIMED_WAITING",} 30.0
+jvm_threads_state{state="RUNNABLE",} 19.0
+jvm_threads_state{state="BLOCKED",} 0.0
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 11.44
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1.662123347734E9
+# HELP process_open_fds Number of open file descriptors.
+# TYPE process_open_fds gauge
+process_open_fds 379.0
+# HELP process_max_fds Maximum number of open file descriptors.
+# TYPE process_max_fds gauge
+process_max_fds 1048576.0
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 2.401660928E9
+# HELP process_resident_memory_bytes Resident memory size in bytes.
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 5.52116224E8
+# HELP jvm_memory_objects_pending_finalization The number of objects waiting in the finalizer queue.
+# TYPE jvm_memory_objects_pending_finalization gauge
+jvm_memory_objects_pending_finalization 0.0
+# HELP jvm_memory_bytes_used Used bytes of a given JVM memory area.
+# TYPE jvm_memory_bytes_used gauge
+jvm_memory_bytes_used{area="heap",} 7.0226432E7
+jvm_memory_bytes_used{area="nonheap",} 1.1989148E8
+# HELP jvm_memory_bytes_committed Committed (bytes) of a given JVM memory area.
+# TYPE jvm_memory_bytes_committed gauge
+jvm_memory_bytes_committed{area="heap",} 5.36870912E8
+jvm_memory_bytes_committed{area="nonheap",} 1.24796928E8
+# HELP jvm_memory_bytes_max Max (bytes) of a given JVM memory area.
+# TYPE jvm_memory_bytes_max gauge
+jvm_memory_bytes_max{area="heap",} 5.36870912E8
+jvm_memory_bytes_max{area="nonheap",} -1.0
+# HELP jvm_memory_bytes_init Initial bytes of a given JVM memory area.
+# TYPE jvm_memory_bytes_init gauge
+jvm_memory_bytes_init{area="heap",} 5.36870912E8
+jvm_memory_bytes_init{area="nonheap",} 7667712.0
+# HELP jvm_memory_pool_bytes_used Used bytes of a given JVM memory pool.
+# TYPE jvm_memory_pool_bytes_used gauge
+jvm_memory_pool_bytes_used{pool="CodeHeap 'non-nmethods'",} 1412608.0
+jvm_memory_pool_bytes_used{pool="Metaspace",} 8.4618408E7
+jvm_memory_pool_bytes_used{pool="CodeHeap 'profiled nmethods'",} 1.9990656E7
+jvm_memory_pool_bytes_used{pool="Compressed Class Space",} 9580656.0
+jvm_memory_pool_bytes_used{pool="G1 Eden Space",} 1.2582912E7
+jvm_memory_pool_bytes_used{pool="G1 Old Gen",} 2.7234816E7
+jvm_memory_pool_bytes_used{pool="G1 Survivor Space",} 3.0408704E7
+jvm_memory_pool_bytes_used{pool="CodeHeap 'non-profiled nmethods'",} 4289152.0
+# HELP jvm_memory_pool_bytes_committed Committed bytes of a given JVM memory pool.
+# TYPE jvm_memory_pool_bytes_committed gauge
+jvm_memory_pool_bytes_committed{pool="CodeHeap 'non-nmethods'",} 2555904.0
+jvm_memory_pool_bytes_committed{pool="Metaspace",} 8.72448E7
+jvm_memory_pool_bytes_committed{pool="CodeHeap 'profiled nmethods'",} 2.0054016E7
+jvm_memory_pool_bytes_committed{pool="Compressed Class Space",} 1.0616832E7
+jvm_memory_pool_bytes_committed{pool="G1 Eden Space",} 3.08281344E8
+jvm_memory_pool_bytes_committed{pool="G1 Old Gen",} 1.98180864E8
+jvm_memory_pool_bytes_committed{pool="G1 Survivor Space",} 3.0408704E7
+jvm_memory_pool_bytes_committed{pool="CodeHeap 'non-profiled nmethods'",} 4325376.0
+# HELP jvm_memory_pool_bytes_max Max bytes of a given JVM memory pool.
+# TYPE jvm_memory_pool_bytes_max gauge
+jvm_memory_pool_bytes_max{pool="CodeHeap 'non-nmethods'",} 5832704.0
+jvm_memory_pool_bytes_max{pool="Metaspace",} -1.0
+jvm_memory_pool_bytes_max{pool="CodeHeap 'profiled nmethods'",} 1.22912768E8
+jvm_memory_pool_bytes_max{pool="Compressed Class Space",} 1.073741824E9
+jvm_memory_pool_bytes_max{pool="G1 Eden Space",} -1.0
+jvm_memory_pool_bytes_max{pool="G1 Old Gen",} 5.36870912E8
+jvm_memory_pool_bytes_max{pool="G1 Survivor Space",} -1.0
+jvm_memory_pool_bytes_max{pool="CodeHeap 'non-profiled nmethods'",} 1.22912768E8
+# HELP jvm_memory_pool_bytes_init Initial bytes of a given JVM memory pool.
+# TYPE jvm_memory_pool_bytes_init gauge
+jvm_memory_pool_bytes_init{pool="CodeHeap 'non-nmethods'",} 2555904.0
+jvm_memory_pool_bytes_init{pool="Metaspace",} 0.0
+jvm_memory_pool_bytes_init{pool="CodeHeap 'profiled nmethods'",} 2555904.0
+jvm_memory_pool_bytes_init{pool="Compressed Class Space",} 0.0
+jvm_memory_pool_bytes_init{pool="G1 Eden Space",} 2.8311552E7
+jvm_memory_pool_bytes_init{pool="G1 Old Gen",} 5.0855936E8
+jvm_memory_pool_bytes_init{pool="G1 Survivor Space",} 0.0
+jvm_memory_pool_bytes_init{pool="CodeHeap 'non-profiled nmethods'",} 2555904.0
+# HELP jvm_memory_pool_collection_used_bytes Used bytes after last collection of a given JVM memory pool.
+# TYPE jvm_memory_pool_collection_used_bytes gauge
+jvm_memory_pool_collection_used_bytes{pool="G1 Eden Space",} 0.0
+jvm_memory_pool_collection_used_bytes{pool="G1 Old Gen",} 0.0
+jvm_memory_pool_collection_used_bytes{pool="G1 Survivor Space",} 3.0408704E7
+# HELP jvm_memory_pool_collection_committed_bytes Committed after last collection bytes of a given JVM memory pool.
+# TYPE jvm_memory_pool_collection_committed_bytes gauge
+jvm_memory_pool_collection_committed_bytes{pool="G1 Eden Space",} 3.08281344E8
+jvm_memory_pool_collection_committed_bytes{pool="G1 Old Gen",} 0.0
+jvm_memory_pool_collection_committed_bytes{pool="G1 Survivor Space",} 3.0408704E7
+# HELP jvm_memory_pool_collection_max_bytes Max bytes after last collection of a given JVM memory pool.
+# TYPE jvm_memory_pool_collection_max_bytes gauge
+jvm_memory_pool_collection_max_bytes{pool="G1 Eden Space",} -1.0
+jvm_memory_pool_collection_max_bytes{pool="G1 Old Gen",} 5.36870912E8
+jvm_memory_pool_collection_max_bytes{pool="G1 Survivor Space",} -1.0
+# HELP jvm_memory_pool_collection_init_bytes Initial after last collection bytes of a given JVM memory pool.
+# TYPE jvm_memory_pool_collection_init_bytes gauge
+jvm_memory_pool_collection_init_bytes{pool="G1 Eden Space",} 2.8311552E7
+jvm_memory_pool_collection_init_bytes{pool="G1 Old Gen",} 5.0855936E8
+jvm_memory_pool_collection_init_bytes{pool="G1 Survivor Space",} 0.0
+# HELP pdpd_policy_executions_latency_seconds The latency in seconds of TOSCA policy executions.
+# TYPE pdpd_policy_executions_latency_seconds summary
+# HELP jvm_classes_loaded The number of classes that are currently loaded in the JVM
+# TYPE jvm_classes_loaded gauge
+jvm_classes_loaded 13528.0
+# HELP jvm_classes_loaded_total The total number of classes that have been loaded since the JVM has started execution
+# TYPE jvm_classes_loaded_total counter
+jvm_classes_loaded_total 13528.0
+# HELP jvm_classes_unloaded_total The total number of classes that have been unloaded since the JVM has started execution
+# TYPE jvm_classes_unloaded_total counter
+jvm_classes_unloaded_total 0.0
+# HELP jvm_memory_pool_allocated_bytes_total Total bytes allocated in a given JVM memory pool. Only updated after GC, not continuously.
+# TYPE jvm_memory_pool_allocated_bytes_total counter
+jvm_memory_pool_allocated_bytes_total{pool="CodeHeap 'profiled nmethods'",} 1.9688832E7
+jvm_memory_pool_allocated_bytes_total{pool="G1 Old Gen",} 3.0787792E7
+jvm_memory_pool_allocated_bytes_total{pool="G1 Eden Space",} 8.11597824E8
+jvm_memory_pool_allocated_bytes_total{pool="CodeHeap 'non-profiled nmethods'",} 4229760.0
+jvm_memory_pool_allocated_bytes_total{pool="G1 Survivor Space",} 3.0408704E7
+jvm_memory_pool_allocated_bytes_total{pool="Compressed Class Space",} 9444000.0
+jvm_memory_pool_allocated_bytes_total{pool="Metaspace",} 8.3616296E7
+jvm_memory_pool_allocated_bytes_total{pool="CodeHeap 'non-nmethods'",} 1409664.0
+# HELP jvm_gc_collection_seconds Time spent in a given JVM garbage collector in seconds.
+# TYPE jvm_gc_collection_seconds summary
+jvm_gc_collection_seconds_count{gc="G1 Young Generation",} 9.0
+jvm_gc_collection_seconds_sum{gc="G1 Young Generation",} 0.117
+jvm_gc_collection_seconds_count{gc="G1 Old Generation",} 0.0
+jvm_gc_collection_seconds_sum{gc="G1 Old Generation",} 0.0
+# HELP pdpd_policy_deployments_total The total number of policy deployments.
+# TYPE pdpd_policy_deployments_total counter
+# HELP jvm_buffer_pool_used_bytes Used bytes of a given JVM buffer pool.
+# TYPE jvm_buffer_pool_used_bytes gauge
+jvm_buffer_pool_used_bytes{pool="mapped",} 0.0
+jvm_buffer_pool_used_bytes{pool="direct",} 58020.0
+# HELP jvm_buffer_pool_capacity_bytes Bytes capacity of a given JVM buffer pool.
+# TYPE jvm_buffer_pool_capacity_bytes gauge
+jvm_buffer_pool_capacity_bytes{pool="mapped",} 0.0
+jvm_buffer_pool_capacity_bytes{pool="direct",} 58020.0
+# HELP jvm_buffer_pool_used_buffers Used buffers of a given JVM buffer pool.
+# TYPE jvm_buffer_pool_used_buffers gauge
+jvm_buffer_pool_used_buffers{pool="mapped",} 0.0
+jvm_buffer_pool_used_buffers{pool="direct",} 5.0
+# HELP jvm_memory_pool_allocated_bytes_created Total bytes allocated in a given JVM memory pool. Only updated after GC, not continuously.
+# TYPE jvm_memory_pool_allocated_bytes_created gauge
+jvm_memory_pool_allocated_bytes_created{pool="CodeHeap 'profiled nmethods'",} 1.662123348923E9
+jvm_memory_pool_allocated_bytes_created{pool="G1 Old Gen",} 1.662123348935E9
+jvm_memory_pool_allocated_bytes_created{pool="G1 Eden Space",} 1.662123348935E9
+jvm_memory_pool_allocated_bytes_created{pool="CodeHeap 'non-profiled nmethods'",} 1.662123348935E9
+jvm_memory_pool_allocated_bytes_created{pool="G1 Survivor Space",} 1.662123348935E9
+jvm_memory_pool_allocated_bytes_created{pool="Compressed Class Space",} 1.662123348935E9
+jvm_memory_pool_allocated_bytes_created{pool="Metaspace",} 1.662123348935E9
+jvm_memory_pool_allocated_bytes_created{pool="CodeHeap 'non-nmethods'",} 1.662123348935E9
+</msg>
+<status status="PASS" starttime="20220902 13:56:08.374" endtime="20220902 13:56:08.374"/>
+</kw>
+<msg timestamp="20220902 13:56:08.374" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.358" endtime="20220902 13:56:08.374"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${resp.text}</arg>
+<arg>jvm_threads_current</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20220902 13:56:08.375" endtime="20220902 13:56:08.375"/>
+</kw>
+<doc>Verify drools-apps is exporting metrics</doc>
+<status status="PASS" starttime="20220902 13:56:08.358" endtime="20220902 13:56:08.375"/>
+</test>
+<test id="s1-t3" name="Healthcheck" line="20">
+<kw name="PeformGetRequest">
+<var>${resp}</var>
+<arg>/healthcheck</arg>
+<arg>${DROOLS_IP}</arg>
+<arg>6969</arg>
+<arg>200</arg>
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>demo@people.osaaf.org</arg>
+<arg>demo123456!</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:56:08.376" level="INFO">${auth} = ['demo@people.osaaf.org', 'demo123456!']</msg>
+<status status="PASS" starttime="20220902 13:56:08.375" endtime="20220902 13:56:08.376"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${hostname}:${port}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:08.376" level="INFO">Creating session http://192.168.16.8:6969</msg>
+<status status="PASS" starttime="20220902 13:56:08.376" endtime="20220902 13:56:08.376"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${hostname}:${port}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:56:08.376" level="INFO">Creating Session using : alias=policy, url=http://192.168.16.8:6969, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x105e7ae00&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:56:08.376" level="INFO">${session} = &lt;requests.sessions.Session object at 0x105e7afe0&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.376" endtime="20220902 13:56:08.376"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/json</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:56:08.376" level="INFO">${headers} = {'Accept': 'application/json', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20220902 13:56:08.376" endtime="20220902 13:56:08.376"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>${url}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=${expectedstatus}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:56:08.743" level="INFO">GET Request : url=http://192.168.16.8:6969/healthcheck 
+ path_url=/healthcheck 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Basic ZGVtb0BwZW9wbGUub3NhYWYub3JnOmRlbW8xMjM0NTYh'} 
+ body=None 
+ </msg>
+<msg timestamp="20220902 13:56:08.743" level="INFO">GET Response : url=http://192.168.16.8:6969/healthcheck 
+ status=200, reason=OK 
+ headers={'Date': 'Fri, 02 Sep 2022 12:56:08 GMT', 'Content-Type': 'application/json', 'Content-Length': '908', 'Server': 'Jetty(9.4.48.v20220622)'} 
+ body={"healthy":true,"details":[{"code":200,"healthy":true,"name":"PDP-D","startTime":1662123368387,"endTime":1662123368387,"message":"enabled","url":"engine","elapsedTime":0},{"code":1,"healthy":true,"name":"usecases","startTime":1662123368387,"endTime":1662123368393,"message":"[usecases:{org.onap.policy.controlloop.eventmanager.EventManagerServices=1}]","url":"org.onap.policy.drools-applications.controlloop.common:controller-usecases:1.11.0-SNAPSHOT","elapsedTime":6},{"code":200,"healthy":true,"name":"PAP","startTime":1662123368389,"endTime":1662123368739,"message":"OK","url":"http://policy-pap:6969/policy/pap/v1/healthcheck","elapsedTime":350},{"code":200,"healthy":true,"name":"PDPX","startTime":1662123368389,"endTime":1662123368562,"message":"OK","url":"http://policy-xacml-pdp:6969/policy/pdpx/v1/healthcheck","elapsedTime":173}],"startTime":1662123368386,"endTime":1662123368740,"elapsedTime":354} 
+ </msg>
+<msg timestamp="20220902 13:56:08.743" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.376" endtime="20220902 13:56:08.743"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from policy ${resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:08.744" level="INFO">Received response from policy {"healthy":true,"details":[{"code":200,"healthy":true,"name":"PDP-D","startTime":1662123368387,"endTime":1662123368387,"message":"enabled","url":"engine","elapsedTime":0},{"code":1,"healthy":true,"name":"usecases","startTime":1662123368387,"endTime":1662123368393,"message":"[usecases:{org.onap.policy.controlloop.eventmanager.EventManagerServices=1}]","url":"org.onap.policy.drools-applications.controlloop.common:controller-usecases:1.11.0-SNAPSHOT","elapsedTime":6},{"code":200,"healthy":true,"name":"PAP","startTime":1662123368389,"endTime":1662123368739,"message":"OK","url":"http://policy-pap:6969/policy/pap/v1/healthcheck","elapsedTime":350},{"code":200,"healthy":true,"name":"PDPX","startTime":1662123368389,"endTime":1662123368562,"message":"OK","url":"http://policy-xacml-pdp:6969/policy/pdpx/v1/healthcheck","elapsedTime":173}],"startTime":1662123368386,"endTime":1662123368740,"elapsedTime":354}</msg>
+<status status="PASS" starttime="20220902 13:56:08.743" endtime="20220902 13:56:08.744"/>
+</kw>
+<msg timestamp="20220902 13:56:08.745" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.375" endtime="20220902 13:56:08.745"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${resp.json()['healthy']}</arg>
+<arg>True</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20220902 13:56:08.746" level="INFO">Argument types are:
+&lt;class 'bool'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.745" endtime="20220902 13:56:08.747"/>
+</kw>
+<doc>Runs Policy PDP-D Health check</doc>
+<status status="PASS" starttime="20220902 13:56:08.375" endtime="20220902 13:56:08.748"/>
+</test>
+<test id="s1-t4" name="Controller" line="25">
+<kw name="Wait Until Keyword Succeeds" library="BuiltIn">
+<arg>2 min</arg>
+<arg>15 sec</arg>
+<arg>VerifyController</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<kw name="VerifyController">
+<kw name="PeformGetRequest">
+<var>${resp}</var>
+<arg>/policy/pdp/engine/controllers/usecases/drools/facts</arg>
+<arg>${DROOLS_IP}</arg>
+<arg>9696</arg>
+<arg>200</arg>
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>demo@people.osaaf.org</arg>
+<arg>demo123456!</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:56:08.754" level="INFO">${auth} = ['demo@people.osaaf.org', 'demo123456!']</msg>
+<status status="PASS" starttime="20220902 13:56:08.754" endtime="20220902 13:56:08.754"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${hostname}:${port}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:08.754" level="INFO">Creating session http://192.168.16.8:9696</msg>
+<status status="PASS" starttime="20220902 13:56:08.754" endtime="20220902 13:56:08.755"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${hostname}:${port}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:56:08.755" level="INFO">Creating Session using : alias=policy, url=http://192.168.16.8:9696, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x105e7bac0&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:56:08.755" level="INFO">${session} = &lt;requests.sessions.Session object at 0x105e7bca0&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.755" endtime="20220902 13:56:08.755"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/json</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:56:08.755" level="INFO">${headers} = {'Accept': 'application/json', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20220902 13:56:08.755" endtime="20220902 13:56:08.755"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>${url}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=${expectedstatus}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:56:08.763" level="INFO">GET Request : url=http://192.168.16.8:9696/policy/pdp/engine/controllers/usecases/drools/facts 
+ path_url=/policy/pdp/engine/controllers/usecases/drools/facts 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Basic ZGVtb0BwZW9wbGUub3NhYWYub3JnOmRlbW8xMjM0NTYh'} 
+ body=None 
+ </msg>
+<msg timestamp="20220902 13:56:08.763" level="INFO">GET Response : url=http://192.168.16.8:9696/policy/pdp/engine/controllers/usecases/drools/facts 
+ status=200, reason=OK 
+ headers={'Date': 'Fri, 02 Sep 2022 12:56:08 GMT', 'Content-Type': 'application/json', 'Content-Length': '14', 'Server': 'Jetty(9.4.48.v20220622)'} 
+ body={"usecases":1} 
+ </msg>
+<msg timestamp="20220902 13:56:08.763" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.755" endtime="20220902 13:56:08.763"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from policy ${resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:08.764" level="INFO">Received response from policy {"usecases":1}</msg>
+<status status="PASS" starttime="20220902 13:56:08.763" endtime="20220902 13:56:08.764"/>
+</kw>
+<msg timestamp="20220902 13:56:08.764" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.754" endtime="20220902 13:56:08.764"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${resp.json()['usecases']}</arg>
+<arg>1</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20220902 13:56:08.764" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.764" endtime="20220902 13:56:08.764"/>
+</kw>
+<status status="PASS" starttime="20220902 13:56:08.754" endtime="20220902 13:56:08.764"/>
+</kw>
+<status status="PASS" starttime="20220902 13:56:08.753" endtime="20220902 13:56:08.764"/>
+</kw>
+<doc>Checks controller is up</doc>
+<status status="PASS" starttime="20220902 13:56:08.751" endtime="20220902 13:56:08.764"/>
+</test>
+<test id="s1-t5" name="MakeTopics" line="29">
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/make_topic.sh</arg>
+<arg>POLICY-PDP-PAP</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20220902 13:56:08.765" level="INFO">Starting process:
+/Users/liam/git/onap/policy/docker/csit/make_topic.sh POLICY-PDP-PAP</msg>
+<msg timestamp="20220902 13:56:08.768" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20220902 13:56:08.779" level="INFO">Process completed.</msg>
+<msg timestamp="20220902 13:56:08.780" level="INFO">${result} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.765" endtime="20220902 13:56:08.780"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20220902 13:56:08.780" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.780" endtime="20220902 13:56:08.780"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/make_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20220902 13:56:08.781" level="INFO">Starting process:
+/Users/liam/git/onap/policy/docker/csit/make_topic.sh POLICY-CL-MGT</msg>
+<msg timestamp="20220902 13:56:08.783" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20220902 13:56:08.796" level="INFO">Process completed.</msg>
+<msg timestamp="20220902 13:56:08.797" level="INFO">${result} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.780" endtime="20220902 13:56:08.797"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20220902 13:56:08.798" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.797" endtime="20220902 13:56:08.798"/>
+</kw>
+<doc>Creates the Policy topics</doc>
+<status status="PASS" starttime="20220902 13:56:08.764" endtime="20220902 13:56:08.798"/>
+</test>
+<test id="s1-t6" name="CreateVcpeXacmlPolicy" line="36">
+<kw name="PerformPostRequest">
+<arg>/policy/api/v1/policies</arg>
+<arg>null</arg>
+<arg>${API_IP}</arg>
+<arg>6969</arg>
+<arg>vCPE.policy.monitoring.input.tosca.yaml</arg>
+<arg>${DATA}</arg>
+<arg>yaml</arg>
+<arg>200</arg>
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>policyadmin</arg>
+<arg>zb!XztG34</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:56:08.799" level="INFO">${auth} = ['policyadmin', 'zb!XztG34']</msg>
+<status status="PASS" starttime="20220902 13:56:08.798" endtime="20220902 13:56:08.799"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${postjson}</var>
+<arg>${filepath}/${jsonfile}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20220902 13:56:08.799" level="INFO" html="true">Getting file '&lt;a href="file:///Users/liam/git/onap/policy/docker/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.yaml"&gt;/Users/liam/git/onap/policy/docker/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.yaml&lt;/a&gt;'.</msg>
+<msg timestamp="20220902 13:56:08.799" level="INFO">${postjson} = tosca_definitions_version: tosca_simple_yaml_1_1_0
+topology_template:
+   policies:
+     -
+       onap.restart.tca:
+           type: onap.policies.monitoring.tcagen2
+           type_version: 1.0.0
+    ...</msg>
+<status status="PASS" starttime="20220902 13:56:08.799" endtime="20220902 13:56:08.799"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${hostname}:${port}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:08.799" level="INFO">Creating session http://192.168.16.5:6969</msg>
+<status status="PASS" starttime="20220902 13:56:08.799" endtime="20220902 13:56:08.799"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${hostname}:${port}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:56:08.799" level="INFO">Creating Session using : alias=policy, url=http://192.168.16.5:6969, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x105e7a380&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:56:08.799" level="INFO">${session} = &lt;requests.sessions.Session object at 0x105e7bb80&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.799" endtime="20220902 13:56:08.799"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/${contenttype}</arg>
+<arg>Content-Type=application/${contenttype}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:56:08.800" level="INFO">${headers} = {'Accept': 'application/yaml', 'Content-Type': 'application/yaml'}</msg>
+<status status="PASS" starttime="20220902 13:56:08.799" endtime="20220902 13:56:08.800"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>${url}</arg>
+<arg>params=${params}</arg>
+<arg>data=${postjson}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=${expectedstatus}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:56:09.301" level="INFO">POST Request : url=http://192.168.16.5:6969/policy/api/v1/policies?null 
+ path_url=/policy/api/v1/policies?null 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/yaml', 'Connection': 'keep-alive', 'Content-Type': 'application/yaml', 'Content-Length': '1712', 'Authorization': 'Basic cG9saWN5YWRtaW46emIhWHp0RzM0'} 
+ body=tosca_definitions_version: tosca_simple_yaml_1_1_0
+topology_template:
+   policies:
+     -
+       onap.restart.tca:
+           type: onap.policies.monitoring.tcagen2
+           type_version: 1.0.0
+           version: 1.0.0
+           name: onap.restart.tca
+           metadata:
+             policy-id: onap.restart.tca
+             policy-version: 1
+           properties:
+             tca.policy:
+                domain: measurementsForVfScaling
+                metricsPerEventName:
+                  -
+                    eventName: Measurement_vGMUX
+                    controlLoopSchemaType: VNF
+                    policyScope: DCAE
+                    policyName: "DCAE.Config_tca-hi-lo"
+                    policyVersion: "v0.0.1"
+                    thresholds:
+                      -
+                        closedLoopControlName: "ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e"
+                        version: "1.0.2"
+                        fieldPath: "$.event.measurementsForVfScalingFields.additionalMeasurements[*].arrayOfFields[0].value"
+                        thresholdValue: 0
+                        direction: EQUAL
+                        severity: MAJOR
+                        closedLoopEventStatus: ABATED
+                      -
+                        closedLoopControlName: "ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e"
+                        version: "1.0.2"
+                        fieldPath: "$.event.measurementsForVfScalingFields.additionalMeasurements[*].arrayOfFields[0].value"
+                        thresholdValue: 0
+                        direction: GREATER
+                        severity: CRITICAL
+                        closedLoopEventStatus: ONSET 
+ </msg>
+<msg timestamp="20220902 13:56:09.301" level="INFO">POST Response : url=http://192.168.16.5:6969/policy/api/v1/policies?null 
+ status=200, reason= 
+ headers={'Set-Cookie': 'JSESSIONID=8D4D1AC2187CC1CAE0C700904D67BE42; Path=/; HttpOnly', 'X-MinorVersion': '0', 'X-PatchVersion': '0', 'X-LatestVersion': '1.0.0', 'X-ONAP-RequestID': 'a4a187a5-7c15-4076-aac0-cb88b3a03a95', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/yaml;charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Date': 'Fri, 02 Sep 2022 12:56:09 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body=tosca_definitions_version: tosca_simple_yaml_1_1_0
+topology_template:
+  policies:
+  - onap.restart.tca:
+      type: onap.policies.monitoring.tcagen2
+      type_version: 1.0.0
+      properties:
+        tca.policy:
+          domain: measurementsForVfScaling
+          metricsPerEventName:
+          - eventName: Measurement_vGMUX
+            controlLoopSchemaType: VNF
+            policyScope: DCAE
+            policyName: DCAE.Config_tca-hi-lo
+            policyVersion: v0.0.1
+            thresholds:
+            - closedLoopControlName: ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+              version: 1.0.2
+              fieldPath: $.event.measurementsForVfScalingFields.additionalMeasurements[*].arrayOfFields[0].value
+              thresholdValue: 0.0
+              direction: EQUAL
+              severity: MAJOR
+              closedLoopEventStatus: ABATED
+            - closedLoopControlName: ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+              version: 1.0.2
+              fieldPath: $.event.measurementsForVfScalingFields.additionalMeasurements[*].arrayOfFields[0].value
+              thresholdValue: 0.0
+              direction: GREATER
+              severity: CRITICAL
+              closedLoopEventStatus: ONSET
+      name: onap.restart.tca
+      version: 1.0.0
+      metadata:
+        policy-id: onap.restart.tca
+        policy-version: 1.0
+name: 'NULL'
+version: 0.0.0
+ 
+ </msg>
+<msg timestamp="20220902 13:56:09.301" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:08.800" endtime="20220902 13:56:09.301"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from policy ${resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:09.303" level="INFO">Received response from policy tosca_definitions_version: tosca_simple_yaml_1_1_0
+topology_template:
+  policies:
+  - onap.restart.tca:
+      type: onap.policies.monitoring.tcagen2
+      type_version: 1.0.0
+      properties:
+        tca.policy:
+          domain: measurementsForVfScaling
+          metricsPerEventName:
+          - eventName: Measurement_vGMUX
+            controlLoopSchemaType: VNF
+            policyScope: DCAE
+            policyName: DCAE.Config_tca-hi-lo
+            policyVersion: v0.0.1
+            thresholds:
+            - closedLoopControlName: ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+              version: 1.0.2
+              fieldPath: $.event.measurementsForVfScalingFields.additionalMeasurements[*].arrayOfFields[0].value
+              thresholdValue: 0.0
+              direction: EQUAL
+              severity: MAJOR
+              closedLoopEventStatus: ABATED
+            - closedLoopControlName: ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+              version: 1.0.2
+              fieldPath: $.event.measurementsForVfScalingFields.additionalMeasurements[*].arrayOfFields[0].value
+              thresholdValue: 0.0
+              direction: GREATER
+              severity: CRITICAL
+              closedLoopEventStatus: ONSET
+      name: onap.restart.tca
+      version: 1.0.0
+      metadata:
+        policy-id: onap.restart.tca
+        policy-version: 1.0
+name: 'NULL'
+version: 0.0.0
+</msg>
+<status status="PASS" starttime="20220902 13:56:09.302" endtime="20220902 13:56:09.303"/>
+</kw>
+<status status="PASS" starttime="20220902 13:56:08.798" endtime="20220902 13:56:09.303"/>
+</kw>
+<doc>Create VCPE Policy for Xacml</doc>
+<status status="PASS" starttime="20220902 13:56:08.798" endtime="20220902 13:56:09.304"/>
+</test>
+<test id="s1-t7" name="CreateVcpeDroolsPolicy" line="40">
+<kw name="PerformPostRequest">
+<arg>/policy/api/v1/policies</arg>
+<arg>null</arg>
+<arg>${API_IP}</arg>
+<arg>6969</arg>
+<arg>vCPE.policy.operational.input.tosca.yaml</arg>
+<arg>${DATA}</arg>
+<arg>yaml</arg>
+<arg>200</arg>
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>policyadmin</arg>
+<arg>zb!XztG34</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:56:09.305" level="INFO">${auth} = ['policyadmin', 'zb!XztG34']</msg>
+<status status="PASS" starttime="20220902 13:56:09.305" endtime="20220902 13:56:09.305"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${postjson}</var>
+<arg>${filepath}/${jsonfile}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20220902 13:56:09.306" level="INFO" html="true">Getting file '&lt;a href="file:///Users/liam/git/onap/policy/docker/models/models-examples/src/main/resources/policies/vCPE.policy.operational.input.tosca.yaml"&gt;/Users/liam/git/onap/policy/docker/models/models-examples/src/main/resources/policies/vCPE.policy.operational.input.tosca.yaml&lt;/a&gt;'.</msg>
+<msg timestamp="20220902 13:56:09.306" level="INFO">${postjson} = tosca_definitions_version: tosca_simple_yaml_1_1_0
+topology_template:
+    policies:
+    -   operational.restart:
+            type: onap.policies.controlloop.operational.common.Drools
+            type_...</msg>
+<status status="PASS" starttime="20220902 13:56:09.305" endtime="20220902 13:56:09.306"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${hostname}:${port}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:09.306" level="INFO">Creating session http://192.168.16.5:6969</msg>
+<status status="PASS" starttime="20220902 13:56:09.306" endtime="20220902 13:56:09.306"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${hostname}:${port}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:56:09.306" level="INFO">Creating Session using : alias=policy, url=http://192.168.16.5:6969, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x105ec9180&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:56:09.306" level="INFO">${session} = &lt;requests.sessions.Session object at 0x105ec8b80&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:09.306" endtime="20220902 13:56:09.306"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/${contenttype}</arg>
+<arg>Content-Type=application/${contenttype}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:56:09.306" level="INFO">${headers} = {'Accept': 'application/yaml', 'Content-Type': 'application/yaml'}</msg>
+<status status="PASS" starttime="20220902 13:56:09.306" endtime="20220902 13:56:09.306"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>${url}</arg>
+<arg>params=${params}</arg>
+<arg>data=${postjson}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=${expectedstatus}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:56:09.551" level="INFO">POST Request : url=http://192.168.16.5:6969/policy/api/v1/policies?null 
+ path_url=/policy/api/v1/policies?null 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/yaml', 'Connection': 'keep-alive', 'Content-Type': 'application/yaml', 'Content-Length': '1336', 'Authorization': 'Basic cG9saWN5YWRtaW46emIhWHp0RzM0'} 
+ body=tosca_definitions_version: tosca_simple_yaml_1_1_0
+topology_template:
+    policies:
+    -   operational.restart:
+            type: onap.policies.controlloop.operational.common.Drools
+            type_version: 1.0.0
+            version: 1.0.0
+            name: operational.restart
+            metadata:
+                policy-id: operational.restart
+                policy-version: 1
+            properties:
+                id: ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+                timeout: 3600
+                abatement: true
+                trigger: unique-policy-id-1-restart
+                operations:
+                -   id: unique-policy-id-1-restart
+                    description: Restart the VM
+                    operation:
+                        actor: APPC
+                        operation: Restart
+                        target:
+                            targetType: VNF
+                    timeout: 1200
+                    retries: 3
+                    success: final_success
+                    failure: final_failure
+                    failure_timeout: final_failure_timeout
+                    failure_retries: final_failure_retries
+                    failure_exception: final_failure_exception
+                    failure_guard: final_failure_guard
+                controllerName: usecases
+ 
+ </msg>
+<msg timestamp="20220902 13:56:09.552" level="INFO">POST Response : url=http://192.168.16.5:6969/policy/api/v1/policies?null 
+ status=200, reason= 
+ headers={'Set-Cookie': 'JSESSIONID=589FD72661A7E14484D4D618C06679D3; Path=/; HttpOnly', 'X-MinorVersion': '0', 'X-PatchVersion': '0', 'X-LatestVersion': '1.0.0', 'X-ONAP-RequestID': 'ec9d1791-cd8f-4238-afe4-c5b392032d3d', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/yaml;charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Date': 'Fri, 02 Sep 2022 12:56:09 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body=tosca_definitions_version: tosca_simple_yaml_1_1_0
+topology_template:
+  policies:
+  - operational.restart:
+      type: onap.policies.controlloop.operational.common.Drools
+      type_version: 1.0.0
+      properties:
+        id: ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+        timeout: 3600.0
+        abatement: true
+        trigger: unique-policy-id-1-restart
+        operations:
+        - id: unique-policy-id-1-restart
+          description: Restart the VM
+          operation:
+            actor: APPC
+            operation: Restart
+            target:
+              targetType: VNF
+          timeout: 1200.0
+          retries: 3.0
+          success: final_success
+          failure: final_failure
+          failure_timeout: final_failure_timeout
+          failure_retries: final_failure_retries
+          failure_exception: final_failure_exception
+          failure_guard: final_failure_guard
+        controllerName: usecases
+      name: operational.restart
+      version: 1.0.0
+      metadata:
+        policy-id: operational.restart
+        policy-version: 1.0
+name: 'NULL'
+version: 0.0.0
+ 
+ </msg>
+<msg timestamp="20220902 13:56:09.552" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:09.306" endtime="20220902 13:56:09.552"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from policy ${resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:09.554" level="INFO">Received response from policy tosca_definitions_version: tosca_simple_yaml_1_1_0
+topology_template:
+  policies:
+  - operational.restart:
+      type: onap.policies.controlloop.operational.common.Drools
+      type_version: 1.0.0
+      properties:
+        id: ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+        timeout: 3600.0
+        abatement: true
+        trigger: unique-policy-id-1-restart
+        operations:
+        - id: unique-policy-id-1-restart
+          description: Restart the VM
+          operation:
+            actor: APPC
+            operation: Restart
+            target:
+              targetType: VNF
+          timeout: 1200.0
+          retries: 3.0
+          success: final_success
+          failure: final_failure
+          failure_timeout: final_failure_timeout
+          failure_retries: final_failure_retries
+          failure_exception: final_failure_exception
+          failure_guard: final_failure_guard
+        controllerName: usecases
+      name: operational.restart
+      version: 1.0.0
+      metadata:
+        policy-id: operational.restart
+        policy-version: 1.0
+name: 'NULL'
+version: 0.0.0
+</msg>
+<status status="PASS" starttime="20220902 13:56:09.552" endtime="20220902 13:56:09.554"/>
+</kw>
+<status status="PASS" starttime="20220902 13:56:09.305" endtime="20220902 13:56:09.555"/>
+</kw>
+<doc>Create VCPE Policy for Drools</doc>
+<status status="PASS" starttime="20220902 13:56:09.305" endtime="20220902 13:56:09.555"/>
+</test>
+<test id="s1-t8" name="CreateVdnsXacmlPolicy" line="44">
+<kw name="PerformPostRequest">
+<arg>/policy/api/v1/policies</arg>
+<arg>null</arg>
+<arg>${API_IP}</arg>
+<arg>6969</arg>
+<arg>vDNS.policy.monitoring.input.tosca.yaml</arg>
+<arg>${DATA}</arg>
+<arg>yaml</arg>
+<arg>200</arg>
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>policyadmin</arg>
+<arg>zb!XztG34</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:56:09.556" level="INFO">${auth} = ['policyadmin', 'zb!XztG34']</msg>
+<status status="PASS" starttime="20220902 13:56:09.556" endtime="20220902 13:56:09.556"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${postjson}</var>
+<arg>${filepath}/${jsonfile}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20220902 13:56:09.556" level="INFO" html="true">Getting file '&lt;a href="file:///Users/liam/git/onap/policy/docker/models/models-examples/src/main/resources/policies/vDNS.policy.monitoring.input.tosca.yaml"&gt;/Users/liam/git/onap/policy/docker/models/models-examples/src/main/resources/policies/vDNS.policy.monitoring.input.tosca.yaml&lt;/a&gt;'.</msg>
+<msg timestamp="20220902 13:56:09.556" level="INFO">${postjson} = tosca_definitions_version: tosca_simple_yaml_1_1_0
+topology_template:
+   policies:
+      -
+         onap.scaleout.tca:
+            type: onap.policies.monitoring.tcagen2
+            type_version: 1.0....</msg>
+<status status="PASS" starttime="20220902 13:56:09.556" endtime="20220902 13:56:09.556"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${hostname}:${port}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:09.557" level="INFO">Creating session http://192.168.16.5:6969</msg>
+<status status="PASS" starttime="20220902 13:56:09.556" endtime="20220902 13:56:09.557"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${hostname}:${port}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:56:09.557" level="INFO">Creating Session using : alias=policy, url=http://192.168.16.5:6969, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x105e79090&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:56:09.557" level="INFO">${session} = &lt;requests.sessions.Session object at 0x105e7a530&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:09.557" endtime="20220902 13:56:09.557"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/${contenttype}</arg>
+<arg>Content-Type=application/${contenttype}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:56:09.557" level="INFO">${headers} = {'Accept': 'application/yaml', 'Content-Type': 'application/yaml'}</msg>
+<status status="PASS" starttime="20220902 13:56:09.557" endtime="20220902 13:56:09.557"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>${url}</arg>
+<arg>params=${params}</arg>
+<arg>data=${postjson}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=${expectedstatus}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:56:09.810" level="INFO">POST Request : url=http://192.168.16.5:6969/policy/api/v1/policies?null 
+ path_url=/policy/api/v1/policies?null 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/yaml', 'Connection': 'keep-alive', 'Content-Type': 'application/yaml', 'Content-Length': '1290', 'Authorization': 'Basic cG9saWN5YWRtaW46emIhWHp0RzM0'} 
+ body=tosca_definitions_version: tosca_simple_yaml_1_1_0
+topology_template:
+   policies:
+      -
+         onap.scaleout.tca:
+            type: onap.policies.monitoring.tcagen2
+            type_version: 1.0.0
+            version: 1.0.0
+            name: onap.scaleout.tca
+            metadata:
+               policy-id: onap.scaleout.tca
+            properties:
+               tca.policy:
+                  domain: measurementsForVfScaling
+                  metricsPerEventName:
+                     -
+                        eventName: vLoadBalancer
+                        controlLoopSchemaType: VM
+                        policyScope: "DCAE"
+                        policyName: "DCAE.Config_tca-hi-lo"
+                        policyVersion: "v0.0.1"
+                        thresholds:
+                        -
+                           closedLoopControlName: "ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3"
+                           closedLoopEventStatus: ONSET
+                           version: "1.0.2"
+                           fieldPath: "$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedTotalPacketsDelta"
+                           thresholdValue: 300
+                           direction: GREATER_OR_EQUAL
+                           severity: CRITICAL 
+ </msg>
+<msg timestamp="20220902 13:56:09.811" level="INFO">POST Response : url=http://192.168.16.5:6969/policy/api/v1/policies?null 
+ status=200, reason= 
+ headers={'Set-Cookie': 'JSESSIONID=5E51FD8A5E3E3FBCC07C2ABDC8757E2E; Path=/; HttpOnly', 'X-MinorVersion': '0', 'X-PatchVersion': '0', 'X-LatestVersion': '1.0.0', 'X-ONAP-RequestID': '03e5ddae-ee97-42aa-a068-081e58728f36', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/yaml;charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Date': 'Fri, 02 Sep 2022 12:56:09 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body=tosca_definitions_version: tosca_simple_yaml_1_1_0
+topology_template:
+  policies:
+  - onap.scaleout.tca:
+      type: onap.policies.monitoring.tcagen2
+      type_version: 1.0.0
+      properties:
+        tca.policy:
+          domain: measurementsForVfScaling
+          metricsPerEventName:
+          - eventName: vLoadBalancer
+            controlLoopSchemaType: VM
+            policyScope: DCAE
+            policyName: DCAE.Config_tca-hi-lo
+            policyVersion: v0.0.1
+            thresholds:
+            - closedLoopControlName: ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
+              closedLoopEventStatus: ONSET
+              version: 1.0.2
+              fieldPath: $.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedTotalPacketsDelta
+              thresholdValue: 300.0
+              direction: GREATER_OR_EQUAL
+              severity: CRITICAL
+      name: onap.scaleout.tca
+      version: 1.0.0
+      metadata:
+        policy-id: onap.scaleout.tca
+name: 'NULL'
+version: 0.0.0
+ 
+ </msg>
+<msg timestamp="20220902 13:56:09.811" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:09.557" endtime="20220902 13:56:09.811"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from policy ${resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:09.813" level="INFO">Received response from policy tosca_definitions_version: tosca_simple_yaml_1_1_0
+topology_template:
+  policies:
+  - onap.scaleout.tca:
+      type: onap.policies.monitoring.tcagen2
+      type_version: 1.0.0
+      properties:
+        tca.policy:
+          domain: measurementsForVfScaling
+          metricsPerEventName:
+          - eventName: vLoadBalancer
+            controlLoopSchemaType: VM
+            policyScope: DCAE
+            policyName: DCAE.Config_tca-hi-lo
+            policyVersion: v0.0.1
+            thresholds:
+            - closedLoopControlName: ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
+              closedLoopEventStatus: ONSET
+              version: 1.0.2
+              fieldPath: $.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedTotalPacketsDelta
+              thresholdValue: 300.0
+              direction: GREATER_OR_EQUAL
+              severity: CRITICAL
+      name: onap.scaleout.tca
+      version: 1.0.0
+      metadata:
+        policy-id: onap.scaleout.tca
+name: 'NULL'
+version: 0.0.0
+</msg>
+<status status="PASS" starttime="20220902 13:56:09.811" endtime="20220902 13:56:09.813"/>
+</kw>
+<status status="PASS" starttime="20220902 13:56:09.556" endtime="20220902 13:56:09.813"/>
+</kw>
+<doc>Create VDNS Policy for Xacml</doc>
+<status status="PASS" starttime="20220902 13:56:09.555" endtime="20220902 13:56:09.813"/>
+</test>
+<test id="s1-t9" name="CreateVdnsDroolsPolicy" line="48">
+<kw name="PerformPostRequest">
+<arg>/policy/api/v1/policies</arg>
+<arg>null</arg>
+<arg>${API_IP}</arg>
+<arg>6969</arg>
+<arg>vDNS.policy.operational.input.tosca.json</arg>
+<arg>${DATA}</arg>
+<arg>json</arg>
+<arg>200</arg>
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>policyadmin</arg>
+<arg>zb!XztG34</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:56:09.818" level="INFO">${auth} = ['policyadmin', 'zb!XztG34']</msg>
+<status status="PASS" starttime="20220902 13:56:09.818" endtime="20220902 13:56:09.818"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${postjson}</var>
+<arg>${filepath}/${jsonfile}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20220902 13:56:09.818" level="INFO" html="true">Getting file '&lt;a href="file:///Users/liam/git/onap/policy/docker/models/models-examples/src/main/resources/policies/vDNS.policy.operational.input.tosca.json"&gt;/Users/liam/git/onap/policy/docker/models/models-examples/src/main/resources/policies/vDNS.policy.operational.input.tosca.json&lt;/a&gt;'.</msg>
+<msg timestamp="20220902 13:56:09.818" level="INFO">${postjson} = {
+    "tosca_definitions_version": "tosca_simple_yaml_1_1_0",
+    "topology_template": {
+        "policies": [
+            {
+                "operational.scaleout": {
+                    "type": "onap...</msg>
+<status status="PASS" starttime="20220902 13:56:09.818" endtime="20220902 13:56:09.818"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${hostname}:${port}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:09.818" level="INFO">Creating session http://192.168.16.5:6969</msg>
+<status status="PASS" starttime="20220902 13:56:09.818" endtime="20220902 13:56:09.818"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${hostname}:${port}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:56:09.818" level="INFO">Creating Session using : alias=policy, url=http://192.168.16.5:6969, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x105eca8c0&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:56:09.819" level="INFO">${session} = &lt;requests.sessions.Session object at 0x105ecaa10&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:09.818" endtime="20220902 13:56:09.819"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/${contenttype}</arg>
+<arg>Content-Type=application/${contenttype}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:56:09.819" level="INFO">${headers} = {'Accept': 'application/json', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20220902 13:56:09.819" endtime="20220902 13:56:09.819"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>${url}</arg>
+<arg>params=${params}</arg>
+<arg>data=${postjson}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=${expectedstatus}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:56:10.039" level="INFO">POST Request : url=http://192.168.16.5:6969/policy/api/v1/policies?null 
+ path_url=/policy/api/v1/policies?null 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '3095', 'Authorization': 'Basic cG9saWN5YWRtaW46emIhWHp0RzM0'} 
+ body={
+    "tosca_definitions_version": "tosca_simple_yaml_1_1_0",
+    "topology_template": {
+        "policies": [
+            {
+                "operational.scaleout": {
+                    "type": "onap.policies.controlloop.operational.common.Drools",
+                    "type_version": "1.0.0",
+                    "version": "1.0.0",
+                    "name": "operational.scaleout",
+                    "metadata": {
+                        "policy-id": "operational.scaleout"
+                    },
+                    "properties": {
+                        "id": "ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3",
+                        "timeout": 1200,
+                        "abatement": false,
+                        "trigger": "unique-policy-id-1-scale-up",
+                        "operations": [
+                            {
+                                "id": "unique-policy-id-1-scale-up",
+                                "description": "Create a new VF Module",
+                                "operation": {
+                                    "actor": "SO",
+                                    "operation": "VF Module Create",
+                                    "target": {
+                                        "targetType": "VFMODULE",
+                                        "entityIds": {
+                                            "modelInvariantId": "e6130d03-56f1-4b0a-9a1d-e1b2ebc30e0e",
+                                            "modelVersionId": "94b18b1d-cc91-4f43-911a-e6348665f292",
+                                            "modelName": "VfwclVfwsnkBbefb8ce2bde..base_vfw..module-0",
+                                            "modelVersion": "1",
+                                            "modelCustomizationId": "47958575-138f-452a-8c8d-d89b595f8164"
+                                        }
+                                    },
+                                    "payload": {
+                                        "requestParameters": "{\"usePreload\":true,\"userParams\":[]}",
+                                        "configurationParameters": "[{\"ip-addr\":\"$.vf-module-topology.vf-module-parameters.param[9]\",\"oam-ip-addr\":\"$.vf-module-topology.vf-module-parameters.param[16]\",\"enabled\":\"$.vf-module-topology.vf-module-parameters.param[23]\"}]"
+                                    }
+                                },
+                                "timeout": 1200,
+                                "retries": 0,
+                                "success": "final_success",
+                                "failure": "final_failure",
+                                "failure_timeout": "final_failure_timeout",
+                                "failure_retries": "final_failure_retries",
+                                "failure_exception": "final_failure_exception",
+                                "failure_guard": "final_failure_guard"
+                            }
+                        ],
+                        "controllerName": "usecases"
+                    }
+                }
+            }
+        ]
+    }
+}
+ 
+ </msg>
+<msg timestamp="20220902 13:56:10.039" level="INFO">POST Response : url=http://192.168.16.5:6969/policy/api/v1/policies?null 
+ status=200, reason= 
+ headers={'Set-Cookie': 'JSESSIONID=76FCB95B8CE72A94C52D9C9B2607E1CF; Path=/; HttpOnly', 'X-MinorVersion': '0', 'X-PatchVersion': '0', 'X-LatestVersion': '1.0.0', 'X-ONAP-RequestID': '424cee73-44d8-44fd-9680-1e9ade355a27', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/json;charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Date': 'Fri, 02 Sep 2022 12:56:09 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"tosca_definitions_version":"tosca_simple_yaml_1_1_0","topology_template":{"policies":[{"operational.scaleout":{"type":"onap.policies.controlloop.operational.common.Drools","type_version":"1.0.0","properties":{"id":"ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3","timeout":1200.0,"abatement":false,"trigger":"unique-policy-id-1-scale-up","operations":[{"id":"unique-policy-id-1-scale-up","description":"Create a new VF Module","operation":{"actor":"SO","operation":"VF Module Create","target":{"targetType":"VFMODULE","entityIds":{"modelInvariantId":"e6130d03-56f1-4b0a-9a1d-e1b2ebc30e0e","modelVersionId":"94b18b1d-cc91-4f43-911a-e6348665f292","modelName":"VfwclVfwsnkBbefb8ce2bde..base_vfw..module-0","modelVersion":"1","modelCustomizationId":"47958575-138f-452a-8c8d-d89b595f8164"}},"payload":{"requestParameters":"{\"usePreload\":true,\"userParams\":[]}","configurationParameters":"[{\"ip-addr\":\"$.vf-module-topology.vf-module-parameters.param[9]\",\"oam-ip-addr\":\"$.vf-module-topology.vf-module-parameters.param[16]\",\"enabled\":\"$.vf-module-topology.vf-module-parameters.param[23]\"}]"}},"timeout":1200.0,"retries":0.0,"success":"final_success","failure":"final_failure","failure_timeout":"final_failure_timeout","failure_retries":"final_failure_retries","failure_exception":"final_failure_exception","failure_guard":"final_failure_guard"}],"controllerName":"usecases"},"name":"operational.scaleout","version":"1.0.0","metadata":{"policy-id":"operational.scaleout"}}}]},"name":"NULL","version":"0.0.0"} 
+ </msg>
+<msg timestamp="20220902 13:56:10.040" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:09.819" endtime="20220902 13:56:10.040"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from policy ${resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:10.041" level="INFO">Received response from policy {"tosca_definitions_version":"tosca_simple_yaml_1_1_0","topology_template":{"policies":[{"operational.scaleout":{"type":"onap.policies.controlloop.operational.common.Drools","type_version":"1.0.0","properties":{"id":"ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3","timeout":1200.0,"abatement":false,"trigger":"unique-policy-id-1-scale-up","operations":[{"id":"unique-policy-id-1-scale-up","description":"Create a new VF Module","operation":{"actor":"SO","operation":"VF Module Create","target":{"targetType":"VFMODULE","entityIds":{"modelInvariantId":"e6130d03-56f1-4b0a-9a1d-e1b2ebc30e0e","modelVersionId":"94b18b1d-cc91-4f43-911a-e6348665f292","modelName":"VfwclVfwsnkBbefb8ce2bde..base_vfw..module-0","modelVersion":"1","modelCustomizationId":"47958575-138f-452a-8c8d-d89b595f8164"}},"payload":{"requestParameters":"{\"usePreload\":true,\"userParams\":[]}","configurationParameters":"[{\"ip-addr\":\"$.vf-module-topology.vf-module-parameters.param[9]\",\"oam-ip-addr\":\"$.vf-module-topology.vf-module-parameters.param[16]\",\"enabled\":\"$.vf-module-topology.vf-module-parameters.param[23]\"}]"}},"timeout":1200.0,"retries":0.0,"success":"final_success","failure":"final_failure","failure_timeout":"final_failure_timeout","failure_retries":"final_failure_retries","failure_exception":"final_failure_exception","failure_guard":"final_failure_guard"}],"controllerName":"usecases"},"name":"operational.scaleout","version":"1.0.0","metadata":{"policy-id":"operational.scaleout"}}}]},"name":"NULL","version":"0.0.0"}</msg>
+<status status="PASS" starttime="20220902 13:56:10.040" endtime="20220902 13:56:10.041"/>
+</kw>
+<status status="PASS" starttime="20220902 13:56:09.815" endtime="20220902 13:56:10.041"/>
+</kw>
+<doc>Create VDNS Policy for Drools</doc>
+<status status="PASS" starttime="20220902 13:56:09.814" endtime="20220902 13:56:10.042"/>
+</test>
+<test id="s1-t10" name="CreateVfwXacmlPolicy" line="52">
+<kw name="PerformPostRequest">
+<arg>/policy/api/v1/policies</arg>
+<arg>null</arg>
+<arg>${API_IP}</arg>
+<arg>6969</arg>
+<arg>vFirewall.policy.monitoring.input.tosca.yaml</arg>
+<arg>${DATA}</arg>
+<arg>yaml</arg>
+<arg>200</arg>
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>policyadmin</arg>
+<arg>zb!XztG34</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:56:10.043" level="INFO">${auth} = ['policyadmin', 'zb!XztG34']</msg>
+<status status="PASS" starttime="20220902 13:56:10.043" endtime="20220902 13:56:10.043"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${postjson}</var>
+<arg>${filepath}/${jsonfile}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20220902 13:56:10.043" level="INFO" html="true">Getting file '&lt;a href="file:///Users/liam/git/onap/policy/docker/models/models-examples/src/main/resources/policies/vFirewall.policy.monitoring.input.tosca.yaml"&gt;/Users/liam/git/onap/policy/docker/models/models-examples/src/main/resources/policies/vFirewall.policy.monitoring.input.tosca.yaml&lt;/a&gt;'.</msg>
+<msg timestamp="20220902 13:56:10.044" level="INFO">${postjson} = tosca_definitions_version: tosca_simple_yaml_1_1_0
+topology_template:
+  policies:
+    -
+      onap.vfirewall.tca:
+        type: onap.policies.monitoring.tcagen2
+        type_version: 1.0.0
+        ver...</msg>
+<status status="PASS" starttime="20220902 13:56:10.043" endtime="20220902 13:56:10.044"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${hostname}:${port}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:10.044" level="INFO">Creating session http://192.168.16.5:6969</msg>
+<status status="PASS" starttime="20220902 13:56:10.044" endtime="20220902 13:56:10.044"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${hostname}:${port}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:56:10.044" level="INFO">Creating Session using : alias=policy, url=http://192.168.16.5:6969, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x105f000d0&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:56:10.044" level="INFO">${session} = &lt;requests.sessions.Session object at 0x105f00190&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:10.044" endtime="20220902 13:56:10.044"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/${contenttype}</arg>
+<arg>Content-Type=application/${contenttype}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:56:10.044" level="INFO">${headers} = {'Accept': 'application/yaml', 'Content-Type': 'application/yaml'}</msg>
+<status status="PASS" starttime="20220902 13:56:10.044" endtime="20220902 13:56:10.044"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>${url}</arg>
+<arg>params=${params}</arg>
+<arg>data=${postjson}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=${expectedstatus}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:56:10.269" level="INFO">POST Request : url=http://192.168.16.5:6969/policy/api/v1/policies?null 
+ path_url=/policy/api/v1/policies?null 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/yaml', 'Connection': 'keep-alive', 'Content-Type': 'application/yaml', 'Content-Length': '1651', 'Authorization': 'Basic cG9saWN5YWRtaW46emIhWHp0RzM0'} 
+ body=tosca_definitions_version: tosca_simple_yaml_1_1_0
+topology_template:
+  policies:
+    -
+      onap.vfirewall.tca:
+        type: onap.policies.monitoring.tcagen2
+        type_version: 1.0.0
+        version: 1.0.0
+        name: onap.vfirewall.tca
+        metadata:
+           policy-id: onap.vfirewall.tca
+        properties:
+           tca.policy:
+              domain: measurementsForVfScaling
+              metricsPerEventName:
+              -
+                eventName: vFirewallBroadcastPackets
+                controlLoopSchemaType: VM
+                policyScope: "DCAE"
+                policyName: "DCAE.Config_tca-hi-lo"
+                policyVersion: "v0.0.1"
+                thresholds:
+                   -
+                       closedLoopControlName: "ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a"
+                       version: "1.0.2"
+                       fieldPath: "$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedTotalPacketsDelta"
+                       thresholdValue: 300
+                       direction: LESS_OR_EQUAL
+                       severity: MAJOR
+                       closedLoopEventStatus: ONSET
+                   -
+                       closedLoopControlName: "ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a"
+                       version: "1.0.2"
+                       fieldPath: "$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedTotalPacketsDelta"
+                       thresholdValue: 700
+                       direction: GREATER_OR_EQUAL
+                       severity: CRITICAL
+                       closedLoopEventStatus: ONSET 
+ </msg>
+<msg timestamp="20220902 13:56:10.270" level="INFO">POST Response : url=http://192.168.16.5:6969/policy/api/v1/policies?null 
+ status=200, reason= 
+ headers={'Set-Cookie': 'JSESSIONID=799BCBFC78F59C12ECBFC595BF4F80E6; Path=/; HttpOnly', 'X-MinorVersion': '0', 'X-PatchVersion': '0', 'X-LatestVersion': '1.0.0', 'X-ONAP-RequestID': '383d85c1-7e64-4576-8e47-6f79e13ee1a9', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/yaml;charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Date': 'Fri, 02 Sep 2022 12:56:09 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body=tosca_definitions_version: tosca_simple_yaml_1_1_0
+topology_template:
+  policies:
+  - onap.vfirewall.tca:
+      type: onap.policies.monitoring.tcagen2
+      type_version: 1.0.0
+      properties:
+        tca.policy:
+          domain: measurementsForVfScaling
+          metricsPerEventName:
+          - eventName: vFirewallBroadcastPackets
+            controlLoopSchemaType: VM
+            policyScope: DCAE
+            policyName: DCAE.Config_tca-hi-lo
+            policyVersion: v0.0.1
+            thresholds:
+            - closedLoopControlName: ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
+              version: 1.0.2
+              fieldPath: $.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedTotalPacketsDelta
+              thresholdValue: 300.0
+              direction: LESS_OR_EQUAL
+              severity: MAJOR
+              closedLoopEventStatus: ONSET
+            - closedLoopControlName: ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
+              version: 1.0.2
+              fieldPath: $.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedTotalPacketsDelta
+              thresholdValue: 700.0
+              direction: GREATER_OR_EQUAL
+              severity: CRITICAL
+              closedLoopEventStatus: ONSET
+      name: onap.vfirewall.tca
+      version: 1.0.0
+      metadata:
+        policy-id: onap.vfirewall.tca
+name: 'NULL'
+version: 0.0.0
+ 
+ </msg>
+<msg timestamp="20220902 13:56:10.270" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:10.044" endtime="20220902 13:56:10.270"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from policy ${resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:10.272" level="INFO">Received response from policy tosca_definitions_version: tosca_simple_yaml_1_1_0
+topology_template:
+  policies:
+  - onap.vfirewall.tca:
+      type: onap.policies.monitoring.tcagen2
+      type_version: 1.0.0
+      properties:
+        tca.policy:
+          domain: measurementsForVfScaling
+          metricsPerEventName:
+          - eventName: vFirewallBroadcastPackets
+            controlLoopSchemaType: VM
+            policyScope: DCAE
+            policyName: DCAE.Config_tca-hi-lo
+            policyVersion: v0.0.1
+            thresholds:
+            - closedLoopControlName: ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
+              version: 1.0.2
+              fieldPath: $.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedTotalPacketsDelta
+              thresholdValue: 300.0
+              direction: LESS_OR_EQUAL
+              severity: MAJOR
+              closedLoopEventStatus: ONSET
+            - closedLoopControlName: ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
+              version: 1.0.2
+              fieldPath: $.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedTotalPacketsDelta
+              thresholdValue: 700.0
+              direction: GREATER_OR_EQUAL
+              severity: CRITICAL
+              closedLoopEventStatus: ONSET
+      name: onap.vfirewall.tca
+      version: 1.0.0
+      metadata:
+        policy-id: onap.vfirewall.tca
+name: 'NULL'
+version: 0.0.0
+</msg>
+<status status="PASS" starttime="20220902 13:56:10.270" endtime="20220902 13:56:10.272"/>
+</kw>
+<status status="PASS" starttime="20220902 13:56:10.042" endtime="20220902 13:56:10.273"/>
+</kw>
+<doc>Create VFW Policy for Xacml</doc>
+<status status="PASS" starttime="20220902 13:56:10.042" endtime="20220902 13:56:10.273"/>
+</test>
+<test id="s1-t11" name="CreateVfwDroolsPolicy" line="56">
+<kw name="PerformPostRequest">
+<arg>/policy/api/v1/policies</arg>
+<arg>null</arg>
+<arg>${API_IP}</arg>
+<arg>6969</arg>
+<arg>vFirewall.policy.operational.input.tosca.json</arg>
+<arg>${DATA}</arg>
+<arg>json</arg>
+<arg>200</arg>
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>policyadmin</arg>
+<arg>zb!XztG34</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:56:10.274" level="INFO">${auth} = ['policyadmin', 'zb!XztG34']</msg>
+<status status="PASS" starttime="20220902 13:56:10.274" endtime="20220902 13:56:10.274"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${postjson}</var>
+<arg>${filepath}/${jsonfile}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20220902 13:56:10.274" level="INFO" html="true">Getting file '&lt;a href="file:///Users/liam/git/onap/policy/docker/models/models-examples/src/main/resources/policies/vFirewall.policy.operational.input.tosca.json"&gt;/Users/liam/git/onap/policy/docker/models/models-examples/src/main/resources/policies/vFirewall.policy.operational.input.tosca.json&lt;/a&gt;'.</msg>
+<msg timestamp="20220902 13:56:10.274" level="INFO">${postjson} = {
+    "tosca_definitions_version": "tosca_simple_yaml_1_1_0",
+    "topology_template": {
+        "policies": [
+            {
+                "operational.modifyconfig": {
+                    "type": "...</msg>
+<status status="PASS" starttime="20220902 13:56:10.274" endtime="20220902 13:56:10.274"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${hostname}:${port}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:10.275" level="INFO">Creating session http://192.168.16.5:6969</msg>
+<status status="PASS" starttime="20220902 13:56:10.275" endtime="20220902 13:56:10.275"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${hostname}:${port}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:56:10.275" level="INFO">Creating Session using : alias=policy, url=http://192.168.16.5:6969, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x105e27c10&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:56:10.275" level="INFO">${session} = &lt;requests.sessions.Session object at 0x105e276a0&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:10.275" endtime="20220902 13:56:10.275"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/${contenttype}</arg>
+<arg>Content-Type=application/${contenttype}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:56:10.275" level="INFO">${headers} = {'Accept': 'application/json', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20220902 13:56:10.275" endtime="20220902 13:56:10.275"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>${url}</arg>
+<arg>params=${params}</arg>
+<arg>data=${postjson}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=${expectedstatus}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:56:10.489" level="INFO">POST Request : url=http://192.168.16.5:6969/policy/api/v1/policies?null 
+ path_url=/policy/api/v1/policies?null 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '2426', 'Authorization': 'Basic cG9saWN5YWRtaW46emIhWHp0RzM0'} 
+ body={
+    "tosca_definitions_version": "tosca_simple_yaml_1_1_0",
+    "topology_template": {
+        "policies": [
+            {
+                "operational.modifyconfig": {
+                    "type": "onap.policies.controlloop.operational.common.Drools",
+                    "type_version": "1.0.0",
+                    "version": "1.0.0",
+                    "name": "operational.modifyconfig",
+                    "metadata": {
+                        "policy-id": "operational.modifyconfig"
+                    },
+                    "properties": {
+                        "id": "ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a",
+                        "timeout": 1200,
+                        "abatement": false,
+                        "trigger": "unique-policy-id-1-modifyConfig",
+                        "operations": [
+                            {
+                                "id": "unique-policy-id-1-modifyConfig",
+                                "description": "Modify the packet generator",
+                                "operation": {
+                                    "actor": "APPC",
+                                    "operation": "ModifyConfig",
+                                    "target": {
+                                        "targetType": "VNF",
+                                        "entityIds": {
+                                            "resourceID": "bbb3cefd-01c8-413c-9bdd-2b92f9ca3d38"
+                                        }
+                                    },
+                                    "payload": {
+                                        "streams": "{\"active-streams\": 5 }"
+                                    }
+                                },
+                                "timeout": 300,
+                                "retries": 0,
+                                "success": "final_success",
+                                "failure": "final_failure",
+                                "failure_timeout": "final_failure_timeout",
+                                "failure_retries": "final_failure_retries",
+                                "failure_exception": "final_failure_exception",
+                                "failure_guard": "final_failure_guard"
+                            }
+                        ],
+                        "controllerName": "usecases"
+                    }
+                }
+            }
+        ]
+    }
+}
+ 
+ </msg>
+<msg timestamp="20220902 13:56:10.489" level="INFO">POST Response : url=http://192.168.16.5:6969/policy/api/v1/policies?null 
+ status=200, reason= 
+ headers={'Set-Cookie': 'JSESSIONID=52EB9356B516A09FAAFF065155207E4C; Path=/; HttpOnly', 'X-MinorVersion': '0', 'X-PatchVersion': '0', 'X-LatestVersion': '1.0.0', 'X-ONAP-RequestID': '5574a8fd-ce99-423a-ac42-d3cdd9f66233', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/json;charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Date': 'Fri, 02 Sep 2022 12:56:10 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"tosca_definitions_version":"tosca_simple_yaml_1_1_0","topology_template":{"policies":[{"operational.modifyconfig":{"type":"onap.policies.controlloop.operational.common.Drools","type_version":"1.0.0","properties":{"id":"ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a","timeout":1200.0,"abatement":false,"trigger":"unique-policy-id-1-modifyConfig","operations":[{"id":"unique-policy-id-1-modifyConfig","description":"Modify the packet generator","operation":{"actor":"APPC","operation":"ModifyConfig","target":{"targetType":"VNF","entityIds":{"resourceID":"bbb3cefd-01c8-413c-9bdd-2b92f9ca3d38"}},"payload":{"streams":"{\"active-streams\": 5 }"}},"timeout":300.0,"retries":0.0,"success":"final_success","failure":"final_failure","failure_timeout":"final_failure_timeout","failure_retries":"final_failure_retries","failure_exception":"final_failure_exception","failure_guard":"final_failure_guard"}],"controllerName":"usecases"},"name":"operational.modifyconfig","version":"1.0.0","metadata":{"policy-id":"operational.modifyconfig"}}}]},"name":"NULL","version":"0.0.0"} 
+ </msg>
+<msg timestamp="20220902 13:56:10.489" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:10.275" endtime="20220902 13:56:10.489"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from policy ${resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:10.491" level="INFO">Received response from policy {"tosca_definitions_version":"tosca_simple_yaml_1_1_0","topology_template":{"policies":[{"operational.modifyconfig":{"type":"onap.policies.controlloop.operational.common.Drools","type_version":"1.0.0","properties":{"id":"ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a","timeout":1200.0,"abatement":false,"trigger":"unique-policy-id-1-modifyConfig","operations":[{"id":"unique-policy-id-1-modifyConfig","description":"Modify the packet generator","operation":{"actor":"APPC","operation":"ModifyConfig","target":{"targetType":"VNF","entityIds":{"resourceID":"bbb3cefd-01c8-413c-9bdd-2b92f9ca3d38"}},"payload":{"streams":"{\"active-streams\": 5 }"}},"timeout":300.0,"retries":0.0,"success":"final_success","failure":"final_failure","failure_timeout":"final_failure_timeout","failure_retries":"final_failure_retries","failure_exception":"final_failure_exception","failure_guard":"final_failure_guard"}],"controllerName":"usecases"},"name":"operational.modifyconfig","version":"1.0.0","metadata":{"policy-id":"operational.modifyconfig"}}}]},"name":"NULL","version":"0.0.0"}</msg>
+<status status="PASS" starttime="20220902 13:56:10.490" endtime="20220902 13:56:10.491"/>
+</kw>
+<status status="PASS" starttime="20220902 13:56:10.274" endtime="20220902 13:56:10.491"/>
+</kw>
+<doc>Create VFW Policy for Drools</doc>
+<status status="PASS" starttime="20220902 13:56:10.274" endtime="20220902 13:56:10.491"/>
+</test>
+<test id="s1-t12" name="DeployXacmlPolicies" line="60">
+<kw name="PerformPostRequest">
+<arg>/policy/pap/v1/pdps/deployments/batch</arg>
+<arg>null</arg>
+<arg>${PAP_IP}</arg>
+<arg>6969</arg>
+<arg>deploy.xacml.policies.json</arg>
+<arg>${DATA2}</arg>
+<arg>json</arg>
+<arg>202</arg>
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>policyadmin</arg>
+<arg>zb!XztG34</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:56:10.493" level="INFO">${auth} = ['policyadmin', 'zb!XztG34']</msg>
+<status status="PASS" starttime="20220902 13:56:10.493" endtime="20220902 13:56:10.493"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${postjson}</var>
+<arg>${filepath}/${jsonfile}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20220902 13:56:10.493" level="INFO" html="true">Getting file '&lt;a href="file:///Users/liam/git/onap/policy/docker/csit/drools-applications/tests/data/deploy.xacml.policies.json"&gt;/Users/liam/git/onap/policy/docker/csit/drools-applications/tests/data/deploy.xacml.policies.json&lt;/a&gt;'.</msg>
+<msg timestamp="20220902 13:56:10.494" level="INFO">${postjson} = {
+    "groups": [
+        {
+            "name": "defaultGroup",
+            "deploymentSubgroups": [
+                {
+                    "pdpType": "xacml",
+                    "action": "POST",
+   ...</msg>
+<status status="PASS" starttime="20220902 13:56:10.493" endtime="20220902 13:56:10.494"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${hostname}:${port}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:10.494" level="INFO">Creating session http://192.168.16.6:6969</msg>
+<status status="PASS" starttime="20220902 13:56:10.494" endtime="20220902 13:56:10.494"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${hostname}:${port}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:56:10.494" level="INFO">Creating Session using : alias=policy, url=http://192.168.16.6:6969, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x105f016f0&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:56:10.494" level="INFO">${session} = &lt;requests.sessions.Session object at 0x105f01840&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:10.494" endtime="20220902 13:56:10.494"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/${contenttype}</arg>
+<arg>Content-Type=application/${contenttype}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:56:10.494" level="INFO">${headers} = {'Accept': 'application/json', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20220902 13:56:10.494" endtime="20220902 13:56:10.494"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>${url}</arg>
+<arg>params=${params}</arg>
+<arg>data=${postjson}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=${expectedstatus}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:56:10.791" level="INFO">POST Request : url=http://192.168.16.6:6969/policy/pap/v1/pdps/deployments/batch?null 
+ path_url=/policy/pap/v1/pdps/deployments/batch?null 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '773', 'Authorization': 'Basic cG9saWN5YWRtaW46emIhWHp0RzM0'} 
+ body={
+    "groups": [
+        {
+            "name": "defaultGroup",
+            "deploymentSubgroups": [
+                {
+                    "pdpType": "xacml",
+                    "action": "POST",
+                    "policies": [
+                        {
+                            "name": "onap.restart.tca",
+                            "version": "1.0.0"
+                        },
+                        {
+                            "name": "onap.scaleout.tca",
+                            "version": "1.0.0"
+                        },
+                        {
+                            "name": "onap.vfirewall.tca",
+                            "version": "1.0.0"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+ 
+ </msg>
+<msg timestamp="20220902 13:56:10.791" level="INFO">POST Response : url=http://192.168.16.6:6969/policy/pap/v1/pdps/deployments/batch?null 
+ status=202, reason= 
+ headers={'Set-Cookie': 'JSESSIONID=84607EEDA5FD9463D2B75441F5D04B10; Path=/; HttpOnly', 'X-MinorVersion': '0', 'X-PatchVersion': '0', 'X-LatestVersion': '1.0.0', 'X-ONAP-RequestID': 'b4e71a6c-c19d-4040-b131-7bf0d37c93e3', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/json;charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Date': 'Fri, 02 Sep 2022 12:56:10 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"message":"Use the policy status url to fetch the latest status. Kindly note that when a policy is successfully undeployed, it will no longer appear in policy status response.","uri":"/policy/pap/v1/policies/status"} 
+ </msg>
+<msg timestamp="20220902 13:56:10.791" level="INFO">${resp} = &lt;Response [202]&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:10.494" endtime="20220902 13:56:10.791"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from policy ${resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:10.793" level="INFO">Received response from policy {"message":"Use the policy status url to fetch the latest status. Kindly note that when a policy is successfully undeployed, it will no longer appear in policy status response.","uri":"/policy/pap/v1/policies/status"}</msg>
+<status status="PASS" starttime="20220902 13:56:10.792" endtime="20220902 13:56:10.793"/>
+</kw>
+<status status="PASS" starttime="20220902 13:56:10.492" endtime="20220902 13:56:10.793"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-PDP-PAP</arg>
+<arg>responseTo</arg>
+<arg>xacml</arg>
+<arg>ACTIVE</arg>
+<arg>restart</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20220902 13:56:10.794" level="INFO">Starting process:
+/Users/liam/git/onap/policy/docker/csit/wait_topic.sh POLICY-PDP-PAP responseTo xacml ACTIVE restart</msg>
+<msg timestamp="20220902 13:56:10.798" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20220902 13:56:10.877" level="INFO">Process completed.</msg>
+<msg timestamp="20220902 13:56:10.877" level="INFO">${result} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:10.794" endtime="20220902 13:56:10.877"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received status ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:10.878" level="INFO">Received status ["{\"pdpType\":\"xacml\",\"state\":\"ACTIVE\",\"healthy\":\"HEALTHY\",\"policies\":[{\"name\":\"onap.vfirewall.tca\",\"version\":\"1.0.0\"},{\"name\":\"onap.scaleout.tca\",\"version\":\"1.0.0\"},{\"name\":\"SDNC_Policy.ONAP_NF_NAMING_TIMESTAMP\",\"version\":\"1.0.0\"},{\"name\":\"onap.restart.tca\",\"version\":\"1.0.0\"}],\"response\":{\"responseTo\":\"d9408e6e-5b89-4b23-9886-3f149cdd9180\",\"responseStatus\":\"SUCCESS\"},\"messageName\":\"PDP_STATUS\",\"requestId\":\"72bd701b-35c1-4ed8-b243-f124e3d7f4a1\",\"timestampMs\":1662123370852,\"name\":\"xacml-f72f8050-b70a-41b6-9412-5c1c16c9b244\",\"pdpGroup\":\"defaultGroup\",\"pdpSubgroup\":\"xacml\"}"]</msg>
+<status status="PASS" starttime="20220902 13:56:10.878" endtime="20220902 13:56:10.878"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20220902 13:56:10.879" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:10.878" endtime="20220902 13:56:10.879"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>onap.restart.tca</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20220902 13:56:10.879" endtime="20220902 13:56:10.879"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>onap.scaleout.tca</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20220902 13:56:10.879" endtime="20220902 13:56:10.879"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>onap.vfirewall.tca</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20220902 13:56:10.879" endtime="20220902 13:56:10.879"/>
+</kw>
+<doc>Deploys the Policies to Xacml</doc>
+<status status="PASS" starttime="20220902 13:56:10.492" endtime="20220902 13:56:10.880"/>
+</test>
+<test id="s1-t13" name="DeployDroolsPolicies" line="71">
+<kw name="PerformPostRequest">
+<arg>/policy/pap/v1/pdps/deployments/batch</arg>
+<arg>null</arg>
+<arg>${PAP_IP}</arg>
+<arg>6969</arg>
+<arg>deploy.drools.policies.json</arg>
+<arg>${DATA2}</arg>
+<arg>json</arg>
+<arg>202</arg>
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>policyadmin</arg>
+<arg>zb!XztG34</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:56:10.880" level="INFO">${auth} = ['policyadmin', 'zb!XztG34']</msg>
+<status status="PASS" starttime="20220902 13:56:10.880" endtime="20220902 13:56:10.880"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${postjson}</var>
+<arg>${filepath}/${jsonfile}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20220902 13:56:10.880" level="INFO" html="true">Getting file '&lt;a href="file:///Users/liam/git/onap/policy/docker/csit/drools-applications/tests/data/deploy.drools.policies.json"&gt;/Users/liam/git/onap/policy/docker/csit/drools-applications/tests/data/deploy.drools.policies.json&lt;/a&gt;'.</msg>
+<msg timestamp="20220902 13:56:10.881" level="INFO">${postjson} = {
+    "groups": [
+        {
+            "name": "defaultGroup",
+            "deploymentSubgroups": [
+                {
+                    "pdpType": "drools",
+                    "action": "POST",
+  ...</msg>
+<status status="PASS" starttime="20220902 13:56:10.880" endtime="20220902 13:56:10.881"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${hostname}:${port}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:10.881" level="INFO">Creating session http://192.168.16.6:6969</msg>
+<status status="PASS" starttime="20220902 13:56:10.881" endtime="20220902 13:56:10.881"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${hostname}:${port}</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:56:10.881" level="INFO">Creating Session using : alias=policy, url=http://192.168.16.6:6969, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x105ec8f40&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:56:10.882" level="INFO">${session} = &lt;requests.sessions.Session object at 0x105ec9090&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:10.881" endtime="20220902 13:56:10.882"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/${contenttype}</arg>
+<arg>Content-Type=application/${contenttype}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:56:10.882" level="INFO">${headers} = {'Accept': 'application/json', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20220902 13:56:10.882" endtime="20220902 13:56:10.882"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>${url}</arg>
+<arg>params=${params}</arg>
+<arg>data=${postjson}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=${expectedstatus}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:56:11.358" level="INFO">POST Request : url=http://192.168.16.6:6969/policy/pap/v1/pdps/deployments/batch?null 
+ path_url=/policy/pap/v1/pdps/deployments/batch?null 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '786', 'Authorization': 'Basic cG9saWN5YWRtaW46emIhWHp0RzM0'} 
+ body={
+    "groups": [
+        {
+            "name": "defaultGroup",
+            "deploymentSubgroups": [
+                {
+                    "pdpType": "drools",
+                    "action": "POST",
+                    "policies": [
+                        {
+                            "name": "operational.restart",
+                            "version": "1.0.0"
+                        },
+                        {
+                            "name": "operational.scaleout",
+                            "version": "1.0.0"
+                        },
+                        {
+                            "name": "operational.modifyconfig",
+                            "version": "1.0.0"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+ 
+ </msg>
+<msg timestamp="20220902 13:56:11.358" level="INFO">POST Response : url=http://192.168.16.6:6969/policy/pap/v1/pdps/deployments/batch?null 
+ status=202, reason= 
+ headers={'Set-Cookie': 'JSESSIONID=B010FF071C21D22A380E5136389B2A22; Path=/; HttpOnly', 'X-MinorVersion': '0', 'X-PatchVersion': '0', 'X-LatestVersion': '1.0.0', 'X-ONAP-RequestID': '2c329981-f20a-46bb-8fbe-601617fd4530', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/json;charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Date': 'Fri, 02 Sep 2022 12:56:10 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"message":"Use the policy status url to fetch the latest status. Kindly note that when a policy is successfully undeployed, it will no longer appear in policy status response.","uri":"/policy/pap/v1/policies/status"} 
+ </msg>
+<msg timestamp="20220902 13:56:11.359" level="INFO">${resp} = &lt;Response [202]&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:10.882" endtime="20220902 13:56:11.359"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from policy ${resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:11.360" level="INFO">Received response from policy {"message":"Use the policy status url to fetch the latest status. Kindly note that when a policy is successfully undeployed, it will no longer appear in policy status response.","uri":"/policy/pap/v1/policies/status"}</msg>
+<status status="PASS" starttime="20220902 13:56:11.359" endtime="20220902 13:56:11.360"/>
+</kw>
+<status status="PASS" starttime="20220902 13:56:10.880" endtime="20220902 13:56:11.360"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-PDP-PAP</arg>
+<arg>responseTo</arg>
+<arg>drools</arg>
+<arg>ACTIVE</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20220902 13:56:11.361" level="INFO">Starting process:
+/Users/liam/git/onap/policy/docker/csit/wait_topic.sh POLICY-PDP-PAP responseTo drools ACTIVE</msg>
+<msg timestamp="20220902 13:56:11.365" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20220902 13:56:11.756" level="INFO">Process completed.</msg>
+<msg timestamp="20220902 13:56:11.756" level="INFO">${result} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:11.360" endtime="20220902 13:56:11.756"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received status ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:11.757" level="INFO">Received status ["{\"pdpType\":\"drools\",\"state\":\"ACTIVE\",\"healthy\":\"HEALTHY\",\"policies\":[{\"name\":\"operational.modifyconfig\",\"version\":\"1.0.0\"},{\"name\":\"operational.scaleout\",\"version\":\"1.0.0\"},{\"name\":\"operational.restart\",\"version\":\"1.0.0\"}],\"statistics\":{\"pdpInstanceId\":\"drools-ec89da0b-645c-4dd4-8fe5-60dda572d538\",\"timeStamp\":\"2022-09-02T12:56:11.726074Z\",\"pdpGroupName\":\"defaultGroup\",\"pdpSubGroupName\":\"drools\",\"policyExecutedCount\":0,\"policyExecutedSuccessCount\":0,\"policyExecutedFailCount\":0,\"policyDeployCount\":3,\"policyDeploySuccessCount\":3,\"policyDeployFailCount\":0,\"policyUndeployCount\":0,\"policyUndeploySuccessCount\":0,\"policyUndeployFailCount\":0},\"response\":{\"responseTo\":\"29f39014-e7e7-4cdb-b65c-09184f4f6ad1\",\"responseStatus\":\"SUCCESS\",\"responseMessage\":\"[]\"},\"messageName\":\"PDP_STATUS\",\"requestId\":\"29f39014-e7e7-4cdb-b65c-09184f4f6ad1\",\"timestampMs\":1662123371726,\"name\":\"drools-ec89da0b-645c-4dd4-8fe5-60dda572d538\",\"pdpGroup\":\"defaultGroup\",\"pdpSubgroup\":\"drools\"}"]</msg>
+<status status="PASS" starttime="20220902 13:56:11.757" endtime="20220902 13:56:11.757"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>3s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20220902 13:56:14.759" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" starttime="20220902 13:56:11.757" endtime="20220902 13:56:14.760"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20220902 13:56:14.763" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:14.761" endtime="20220902 13:56:14.763"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>operational.restart</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20220902 13:56:14.763" endtime="20220902 13:56:14.764"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>operational.scaleout</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20220902 13:56:14.765" endtime="20220902 13:56:14.766"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>operational.modifyconfig</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20220902 13:56:14.766" endtime="20220902 13:56:14.766"/>
+</kw>
+<doc>Deploys the Policies to Drools</doc>
+<status status="PASS" starttime="20220902 13:56:10.880" endtime="20220902 13:56:14.767"/>
+</test>
+<test id="s1-t14" name="VcpeExecute" line="83">
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/onset.sh</arg>
+<arg>${DATA2}/vcpeOnset.json</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20220902 13:56:14.769" level="INFO">Starting process:
+/Users/liam/git/onap/policy/docker/csit/onset.sh /Users/liam/git/onap/policy/docker/csit/drools-applications/tests/data/vcpeOnset.json</msg>
+<msg timestamp="20220902 13:56:14.776" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20220902 13:56:14.821" level="INFO">Process completed.</msg>
+<msg timestamp="20220902 13:56:14.822" level="INFO">${result} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:14.768" endtime="20220902 13:56:14.822"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20220902 13:56:14.823" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:14.822" endtime="20220902 13:56:14.823"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<arg>ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20220902 13:56:14.824" level="INFO">Starting process:
+/Users/liam/git/onap/policy/docker/csit/wait_topic.sh POLICY-CL-MGT ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e</msg>
+<msg timestamp="20220902 13:56:14.827" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20220902 13:56:14.966" level="INFO">Process completed.</msg>
+<msg timestamp="20220902 13:56:14.966" level="INFO">${result} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:14.823" endtime="20220902 13:56:14.967"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received notification ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:14.967" level="INFO">Received notification ["{\n  \"AAI\": {\n    \"vserver.prov-status\": \"ACTIVE\",\n    \"vserver.is-closed-loop-disabled\": \"false\",\n    \"generic-vnf.vnf-id\": \"vCPE_Infrastructure_vGMUX_demo_app\"\n  },\n  \"closedLoopAlarmStart\": 1463679805324,\n  \"closedLoopControlName\": \"ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e\",\n  \"version\": \"1.0.2\",\n  \"requestId\": \"664be3d2-6c12-4f4b-a3e7-c349acced200\",\n  \"closedLoopEventClient\": \"DCAE_INSTANCE_ID.dcae-tca\",\n  \"targetType\": \"VNF\",\n  \"target\": \"generic-vnf.vnf-id\",\n  \"from\": \"policy:usecases:[org.onap.policy.drools-applications.controlloop.common:controller-usecases:1.11.0-SNAPSHOT:usecases]\",\n  \"policyScope\": \"EVENT.MANAGER.ACCEPT\",\n  \"policyName\": \"operational.restart\",\n  \"policyVersion\": \"1.0.0\",\n  \"notification\": \"ACTIVE\",\n  \"notificationTime\": \"2022-09-02 12:56:14.920880+00:00\",\n  \"history\": []\n}"]</msg>
+<status status="PASS" starttime="20220902 13:56:14.967" endtime="20220902 13:56:14.967"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20220902 13:56:14.968" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:14.967" endtime="20220902 13:56:14.968"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>ACTIVE</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20220902 13:56:14.968" endtime="20220902 13:56:14.968"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<arg>ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20220902 13:56:14.968" level="INFO">Starting process:
+/Users/liam/git/onap/policy/docker/csit/wait_topic.sh POLICY-CL-MGT ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e</msg>
+<msg timestamp="20220902 13:56:14.971" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20220902 13:56:15.005" level="INFO">Process completed.</msg>
+<msg timestamp="20220902 13:56:15.005" level="INFO">${result} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:14.968" endtime="20220902 13:56:15.005"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received notification ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:15.006" level="INFO">Received notification ["{\n  \"AAI\": {\n    \"vserver.prov-status\": \"ACTIVE\",\n    \"vserver.is-closed-loop-disabled\": \"false\",\n    \"generic-vnf.vnf-id\": \"vCPE_Infrastructure_vGMUX_demo_app\"\n  },\n  \"closedLoopAlarmStart\": 1463679805324,\n  \"closedLoopControlName\": \"ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e\",\n  \"version\": \"1.0.2\",\n  \"requestId\": \"664be3d2-6c12-4f4b-a3e7-c349acced200\",\n  \"closedLoopEventClient\": \"DCAE_INSTANCE_ID.dcae-tca\",\n  \"targetType\": \"VNF\",\n  \"target\": \"generic-vnf.vnf-id\",\n  \"from\": \"policy:usecases:[org.onap.policy.drools-applications.controlloop.common:controller-usecases:1.11.0-SNAPSHOT:usecases]\",\n  \"policyScope\": \"EVENT.MANAGER.PROCESS.GUARD.OUTCOME\",\n  \"policyName\": \"operational.restart\",\n  \"policyVersion\": \"1.0.0\",\n  \"notification\": \"OPERATION\",\n  \"message\": \"Sending guard query for APPC Restart\",\n  \"notificationTime\": \"2022-09-02 12:56:14.950599+00:00\",\n  \"history\": []\n}"]</msg>
+<status status="PASS" starttime="20220902 13:56:15.006" endtime="20220902 13:56:15.006"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20220902 13:56:15.006" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:15.006" endtime="20220902 13:56:15.006"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>OPERATION</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20220902 13:56:15.007" endtime="20220902 13:56:15.007"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>Sending guard query for APPC Restart</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20220902 13:56:15.007" endtime="20220902 13:56:15.007"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20220902 13:56:15.007" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:15.007" endtime="20220902 13:56:15.007"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<arg>ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20220902 13:56:15.008" level="INFO">Starting process:
+/Users/liam/git/onap/policy/docker/csit/wait_topic.sh POLICY-CL-MGT ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e</msg>
+<msg timestamp="20220902 13:56:15.010" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20220902 13:56:15.056" level="INFO">Process completed.</msg>
+<msg timestamp="20220902 13:56:15.056" level="INFO">${result} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:15.007" endtime="20220902 13:56:15.056"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received notification ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:15.057" level="INFO">Received notification ["{\n  \"AAI\": {\n    \"vserver.prov-status\": \"ACTIVE\",\n    \"vserver.is-closed-loop-disabled\": \"false\",\n    \"generic-vnf.vnf-id\": \"vCPE_Infrastructure_vGMUX_demo_app\"\n  },\n  \"closedLoopAlarmStart\": 1463679805324,\n  \"closedLoopControlName\": \"ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e\",\n  \"version\": \"1.0.2\",\n  \"requestId\": \"664be3d2-6c12-4f4b-a3e7-c349acced200\",\n  \"closedLoopEventClient\": \"DCAE_INSTANCE_ID.dcae-tca\",\n  \"targetType\": \"VNF\",\n  \"target\": \"generic-vnf.vnf-id\",\n  \"from\": \"policy:usecases:[org.onap.policy.drools-applications.controlloop.common:controller-usecases:1.11.0-SNAPSHOT:usecases]\",\n  \"policyScope\": \"EVENT.MANAGER.PROCESS.GUARD.OUTCOME\",\n  \"policyName\": \"operational.restart\",\n  \"policyVersion\": \"1.0.0\",\n  \"notification\": \"OPERATION\",\n  \"message\": \"Guard result for APPC Restart is Deny\",\n  \"notificationTime\": \"2022-09-02 12:56:15.021323+00:00\",\n  \"history\": []\n}"]</msg>
+<status status="PASS" starttime="20220902 13:56:15.056" endtime="20220902 13:56:15.057"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20220902 13:56:15.057" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:15.057" endtime="20220902 13:56:15.057"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>OPERATION</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20220902 13:56:15.057" endtime="20220902 13:56:15.057"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>Guard result for APPC Restart is Permit</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<msg timestamp="20220902 13:56:15.058" level="FAIL">'["{\n  \"AAI\": {\n    \"vserver.prov-status\": \"ACTIVE\",\n    \"vserver.is-closed-loop-disabled\": \"false\",\n    \"generic-vnf.vnf-id\": \"vCPE_Infrastructure_vGMUX_demo_app\"\n  },\n  \"closedLoopAlarmStart\": 1463679805324,\n  \"closedLoopControlName\": \"ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e\",\n  \"version\": \"1.0.2\",\n  \"requestId\": \"664be3d2-6c12-4f4b-a3e7-c349acced200\",\n  \"closedLoopEventClient\": \"DCAE_INSTANCE_ID.dcae-tca\",\n  \"targetType\": \"VNF\",\n  \"target\": \"generic-vnf.vnf-id\",\n  \"from\": \"policy:usecases:[org.onap.policy.drools-applications.controlloop.common:controller-usecases:1.11.0-SNAPSHOT:usecases]\",\n  \"policyScope\": \"EVENT.MANAGER.PROCESS.GUARD.OUTCOME\",\n  \"policyName\": \"operational.restart\",\n  \"policyVersion\": \"1.0.0\",\n  \"notification\": \"OPERATION\",\n  \"message\": \"Guard result for APPC Restart is Deny\",\n  \"notificationTime\": \"2022-09-02 12:56:15.021323+00:00\",\n  \"history\": []\n}"]' does not contain 'Guard result for APPC Restart is Permit'</msg>
+<status status="FAIL" starttime="20220902 13:56:15.058" endtime="20220902 13:56:15.058"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<arg>ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.058" endtime="20220902 13:56:15.058"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received notification ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.058" endtime="20220902 13:56:15.058"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.058" endtime="20220902 13:56:15.058"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>OPERATION</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.058" endtime="20220902 13:56:15.058"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>actor=APPC,operation=Restart</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.058" endtime="20220902 13:56:15.058"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<arg>ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.058" endtime="20220902 13:56:15.058"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received notification ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.058" endtime="20220902 13:56:15.058"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.058" endtime="20220902 13:56:15.058"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>OPERATION: SUCCESS</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.058" endtime="20220902 13:56:15.058"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>actor=APPC,operation=Restart</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.059" endtime="20220902 13:56:15.059"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<arg>ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.059" endtime="20220902 13:56:15.059"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received notification ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.059" endtime="20220902 13:56:15.059"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.059" endtime="20220902 13:56:15.059"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>FINAL: SUCCESS</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.059" endtime="20220902 13:56:15.059"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>APPC</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.059" endtime="20220902 13:56:15.059"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>Restart</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.059" endtime="20220902 13:56:15.059"/>
+</kw>
+<doc>Executes VCPE Policy</doc>
+<status status="FAIL" starttime="20220902 13:56:14.767" endtime="20220902 13:56:15.059">'["{\n  \"AAI\": {\n    \"vserver.prov-status\": \"ACTIVE\",\n    \"vserver.is-closed-loop-disabled\": \"false\",\n    \"generic-vnf.vnf-id\": \"vCPE_Infrastructure_vGMUX_demo_app\"\n  },\n  \"closedLoopAlarmStart\": 1463679805324,\n  \"closedLoopControlName\": \"ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e\",\n  \"version\": \"1.0.2\",\n  \"requestId\": \"664be3d2-6c12-4f4b-a3e7-c349acced200\",\n  \"closedLoopEventClient\": \"DCAE_INSTANCE_ID.dcae-tca\",\n  \"targetType\": \"VNF\",\n  \"target\": \"generic-vnf.vnf-id\",\n  \"from\": \"policy:usecases:[org.onap.policy.drools-applications.controlloop.common:controller-usecases:1.11.0-SNAPSHOT:usecases]\",\n  \"policyScope\": \"EVENT.MANAGER.PROCESS.GUARD.OUTCOME\",\n  \"policyName\": \"operational.restart\",\n  \"policyVersion\": \"1.0.0\",\n  \"notification\": \"OPERATION\",\n  \"message\": \"Guard result for APPC Restart is Deny\",\n  \"notificationTime\": \"2022-09-02 12:56:15.021323+00:00\",\n  \"history\": []\n}"]' does not contain 'Guard result for APPC Restart is Permit'</status>
+</test>
+<test id="s1-t15" name="VdnsExecute" line="125">
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/onset.sh</arg>
+<arg>${DATA2}/vdnsOnset.json</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20220902 13:56:15.060" level="INFO">Starting process:
+/Users/liam/git/onap/policy/docker/csit/onset.sh /Users/liam/git/onap/policy/docker/csit/drools-applications/tests/data/vdnsOnset.json</msg>
+<msg timestamp="20220902 13:56:15.062" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20220902 13:56:15.077" level="INFO">Process completed.</msg>
+<msg timestamp="20220902 13:56:15.077" level="INFO">${result} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:15.060" endtime="20220902 13:56:15.077"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20220902 13:56:15.078" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:15.077" endtime="20220902 13:56:15.078"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<arg>ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20220902 13:56:15.078" level="INFO">Starting process:
+/Users/liam/git/onap/policy/docker/csit/wait_topic.sh POLICY-CL-MGT ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3</msg>
+<msg timestamp="20220902 13:56:15.081" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20220902 13:56:15.128" level="INFO">Process completed.</msg>
+<msg timestamp="20220902 13:56:15.129" level="INFO">${result} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:15.078" endtime="20220902 13:56:15.129"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received notification ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:15.129" level="INFO">Received notification ["{\n  \"AAI\": {\n    \"vserver.prov-status\": \"ACTIVE\",\n    \"vserver.is-closed-loop-disabled\": \"false\",\n    \"vserver.vserver-name\": \"OzVServer\"\n  },\n  \"closedLoopAlarmStart\": 1463679805324,\n  \"closedLoopControlName\": \"ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3\",\n  \"version\": \"1.0.2\",\n  \"requestId\": \"c7c6a4aa-bb61-4a15-b831-ba1472dd4a65\",\n  \"closedLoopEventClient\": \"microservice.stringmatcher\",\n  \"targetType\": \"VNF\",\n  \"target\": \"vserver.vserver-name\",\n  \"from\": \"policy:usecases:[org.onap.policy.drools-applications.controlloop.common:controller-usecases:1.11.0-SNAPSHOT:usecases]\",\n  \"policyScope\": \"EVENT.MANAGER.ACCEPT\",\n  \"policyName\": \"operational.scaleout\",\n  \"policyVersion\": \"1.0.0\",\n  \"notification\": \"ACTIVE\",\n  \"notificationTime\": \"2022-09-02 12:56:15.089234+00:00\",\n  \"history\": []\n}"]</msg>
+<status status="PASS" starttime="20220902 13:56:15.129" endtime="20220902 13:56:15.129"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20220902 13:56:15.130" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:15.129" endtime="20220902 13:56:15.130"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>ACTIVE</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20220902 13:56:15.130" endtime="20220902 13:56:15.130"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<arg>ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20220902 13:56:15.130" level="INFO">Starting process:
+/Users/liam/git/onap/policy/docker/csit/wait_topic.sh POLICY-CL-MGT ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3</msg>
+<msg timestamp="20220902 13:56:15.134" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20220902 13:56:15.161" level="INFO">Process completed.</msg>
+<msg timestamp="20220902 13:56:15.161" level="INFO">${result} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:15.130" endtime="20220902 13:56:15.161"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received notification ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:15.162" level="INFO">Received notification ["{\n  \"AAI\": {\n    \"vserver.prov-status\": \"ACTIVE\",\n    \"vserver.is-closed-loop-disabled\": \"false\",\n    \"vserver.vserver-name\": \"OzVServer\"\n  },\n  \"closedLoopAlarmStart\": 1463679805324,\n  \"closedLoopControlName\": \"ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3\",\n  \"version\": \"1.0.2\",\n  \"requestId\": \"c7c6a4aa-bb61-4a15-b831-ba1472dd4a65\",\n  \"closedLoopEventClient\": \"microservice.stringmatcher\",\n  \"targetType\": \"VNF\",\n  \"target\": \"vserver.vserver-name\",\n  \"from\": \"policy:usecases:[org.onap.policy.drools-applications.controlloop.common:controller-usecases:1.11.0-SNAPSHOT:usecases]\",\n  \"policyScope\": \"EVENT.MANAGER.PROCESS.FINAL.FAILURE.ACCEPTED\",\n  \"policyName\": \"operational.scaleout\",\n  \"policyVersion\": \"1.0.0\",\n  \"notification\": \"OPERATION: FAILURE\",\n  \"message\": \"actor=AAI,operation=Tenant,target=OperationalTarget(targetType=VFMODULE, entityIds={modelInvariantId=e6130d03-56f1-4b0a-9a1d-e1b2ebc30e0e, modelVersionId=94b18b1d-cc91-4f43-911a-e6348665f292, modelName=VfwclVfwsnkBbefb8ce2bde..base_vfw..module-0, modelVersion=1, modelCustomizationId=47958575-138f-452a-8c8d-d89b595f8164}),start=2022-09-02T12:56:15.097818Z,end=2022-09-02T12:56:15.124758Z,subRequestId=1,outcome=Failure_Exception,message=Failed\",\n  \"notificationTime\": \"2022-09-02 12:56:15.125913+00:00\",\n  \"history\": [\n    {\n      \"actor\": \"AAI\",\n      \"operation\": \"Tenant\",\n      \"target\": \"OperationalTarget(targetType=VFMODULE, entityIds={modelInvariantId=e6130d03-56f1-4b0a-9a1d-e1b2ebc30e0e, modelVersionId=94b18b1d-cc91-4f43-911a-e6348665f292, modelName=VfwclVfwsnkBbefb8ce2bde..base_vfw..module-0, modelVersion=1, modelCustomizationId=47958575-138f-452a-8c8d-d89b595f8164})\",\n      \"start\": 1662123375097,\n      \"end\": 1662123375124,\n      \"subRequestId\": \"1\",\n      \"outcome\": \"Failure_Exception\",\n      \"message\": \"Failed\"\n    }\n  ]\n}"]</msg>
+<status status="PASS" starttime="20220902 13:56:15.162" endtime="20220902 13:56:15.162"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20220902 13:56:15.162" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:15.162" endtime="20220902 13:56:15.163"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>OPERATION</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20220902 13:56:15.163" endtime="20220902 13:56:15.163"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>Sending guard query for SO VF Module Create</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<msg timestamp="20220902 13:56:15.163" level="FAIL">'["{\n  \"AAI\": {\n    \"vserver.prov-status\": \"ACTIVE\",\n    \"vserver.is-closed-loop-disabled\": \"false\",\n    \"vserver.vserver-name\": \"OzVServer\"\n  },\n  \"closedLoopAlarmStart\": 1463679805324,\n  \"closedLoopControlName\": \"ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3\",\n  \"version\": \"1.0.2\",\n  \"requestId\": \"c7c6a4aa-bb61-4a15-b831-ba1472dd4a65\",\n  \"closedLoopEventClient\": \"microservice.stringmatcher\",\n  \"targetType\": \"VNF\",\n  \"target\": \"vserver.vserver-name\",\n  \"from\": \"policy:usecases:[org.onap.policy.drools-applications.controlloop.common:controller-usecases:1.11.0-SNAPSHOT:usecases]\",\n  \"policyScope\": \"EVENT.MANAGER.PROCESS.FINAL.FAILURE.ACCEPTED\",\n  \"policyName\": \"operational.scaleout\",\n  \"policyVersion\": \"1.0.0\",\n  \"notification\": \"OPERATION: FAILURE\",\n  \"message\": \"actor=AAI,operation=Tenant,target=OperationalTarget(targetType=VFMODULE, entityIds={modelInvariantId=e6130d03-56f1-4b0a-9a1d-e1b2ebc30e0e, modelVersionId=94b18b1d-cc91-4f43-911a-e6348665f292, modelName=VfwclVfwsnkBbefb8ce2bde..base_vfw..module-0, modelVersion=1, modelCustomizationId=47958575-138f-452a-8c8d-d89b595f8164}),start=2022-09-02T12:56:15.097818Z,end=2022-09-02T12:56:15.124758Z,subRequestId=1,outcome=Failure_Exception,message=Failed\",\n  \"notificationTime\": \"2022-09-02 12:56:15.125913+00:00\",\n  \"history\": [\n    {\n      \"actor\": \"AAI\",\n      \"operation\": \"Tenant\",\n      \"target\": \"OperationalTarget(targetType=VFMODULE, entityIds={modelInvariantId=e6130d03-56f1-4b0a-9a1d-e1b2ebc30e0e, modelVersionId=94b18b1d-cc91-4f43-911a-e6348665f292, modelName=VfwclVfwsnkBbefb8ce2bde..base_vfw..module-0, modelVersion=1, modelCustomizationId=47958575-138f-452a-8c8d-d89b595f8164})\",\n      \"start\": 1662123375097,\n      \"end\": 1662123375124,\n      \"subRequestId\": \"1\",\n      \"outcome\": \"Failure_Exception\",\n      \"message\": \"Failed\"\n    }\n  ]\n}"]' does not contain 'Sending guard query for SO VF Module Create'</msg>
+<status status="FAIL" starttime="20220902 13:56:15.163" endtime="20220902 13:56:15.163"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<arg>ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.163" endtime="20220902 13:56:15.163"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received notification ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.164" endtime="20220902 13:56:15.164"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.164" endtime="20220902 13:56:15.164"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>OPERATION</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.164" endtime="20220902 13:56:15.164"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>Guard result for SO VF Module Create is Permit</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.164" endtime="20220902 13:56:15.164"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<arg>ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.164" endtime="20220902 13:56:15.164"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received notification ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.164" endtime="20220902 13:56:15.164"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.164" endtime="20220902 13:56:15.164"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>OPERATION</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.164" endtime="20220902 13:56:15.164"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>actor=SO,operation=VF Module Create</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.164" endtime="20220902 13:56:15.164"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<arg>ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.164" endtime="20220902 13:56:15.164"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received notification ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.164" endtime="20220902 13:56:15.164"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.164" endtime="20220902 13:56:15.165"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>OPERATION: SUCCESS</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.165" endtime="20220902 13:56:15.165"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>actor=SO,operation=VF Module Create</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.165" endtime="20220902 13:56:15.165"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<arg>ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.165" endtime="20220902 13:56:15.165"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received notification ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.165" endtime="20220902 13:56:15.165"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.165" endtime="20220902 13:56:15.165"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>FINAL: SUCCESS</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.165" endtime="20220902 13:56:15.165"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>SO</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.165" endtime="20220902 13:56:15.165"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>VF Module Create</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:15.165" endtime="20220902 13:56:15.165"/>
+</kw>
+<doc>Executes VDNS Policy</doc>
+<status status="FAIL" starttime="20220902 13:56:15.059" endtime="20220902 13:56:15.165">'["{\n  \"AAI\": {\n    \"vserver.prov-status\": \"ACTIVE\",\n    \"vserver.is-closed-loop-disabled\": \"false\",\n    \"vserver.vserver-name\": \"OzVServer\"\n  },\n  \"closedLoopAlarmStart\": 1463679805324,\n  \"closedLoopControlName\": \"ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3\",\n  \"version\": \"1.0.2\",\n  \"requestId\": \"c7c6a4aa-bb61-4a15-b831-ba1472dd4a65\",\n  \"closedLoopEventClient\": \"microservice.stringmatcher\",\n  \"targetType\": \"VNF\",\n  \"target\": \"vserver.vserver-name\",\n  \"from\": \"policy:usecases:[org.onap.policy.drools-applications.controlloop.common:controller-usecases:1.11.0-SNAPSHOT:usecases]\",\n  \"policyScope\": \"EVENT.MANAGER.PROCESS.FINAL.FAILURE.ACCEPTED\",\n  \"policyName\": \"operational.scaleout\",\n  \"policyVersion\": \"1.0.0\",\n  \"notification\": \"OPERATION: FAILURE\",\n  \"message\": \"actor=AAI,operation=Tenant,target=OperationalTarget(targetType=VFMODULE, entityIds={modelInvariantId=e6130d03-56f1-4b0a-9a1d-e1b2ebc30e0e, modelVersionId=94b18b1d-cc91-4f43-911a-e6348665f292, modelName=VfwclVfwsnkBbefb8ce2bde..base_vfw..module-0, modelVersion=1, modelCustomizationId=47958575-138f-452a-8c8d-d89b595f8164}),start=2022-09-02T12:56:15.097818Z,end=2022-09-02T12:56:15.124758Z,subRequestId=1,outcome=Failure_Exception,message=Failed\",\n  \"notificationTime\": \"2022-09-02 12:56:15.125913+00:00\",\n  \"history\": [\n    {\n      \"actor\": \"AAI\",\n      \"operation\": \"Tenant\",\n      \"target\": \"OperationalTarget(targetType=VFMODULE, entityIds={modelInvariantId=e6130d03-56f1-4b0a-9a1d-e1b2ebc30e0e, modelVersionId=94b18b1d-cc91-4f43-911a-e6348665f292, modelName=VfwclVfwsnkBbefb8ce2bde..base_vfw..module-0, modelVersion=1, modelCustomizationId=47958575-138f-452a-8c8d-d89b595f8164})\",\n      \"start\": 1662123375097,\n      \"end\": 1662123375124,\n      \"subRequestId\": \"1\",\n      \"outcome\": \"Failure_Exception\",\n      \"message\": \"Failed\"\n    }\n  ]\n}"]' does not contain 'Sending guard query for SO VF Module Create'</status>
+</test>
+<test id="s1-t16" name="VfwExecute" line="166">
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/onset.sh</arg>
+<arg>${DATA2}/vfwOnset.json</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20220902 13:56:15.166" level="INFO">Starting process:
+/Users/liam/git/onap/policy/docker/csit/onset.sh /Users/liam/git/onap/policy/docker/csit/drools-applications/tests/data/vfwOnset.json</msg>
+<msg timestamp="20220902 13:56:15.169" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20220902 13:56:15.184" level="INFO">Process completed.</msg>
+<msg timestamp="20220902 13:56:15.184" level="INFO">${result} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:15.166" endtime="20220902 13:56:15.184"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20220902 13:56:15.185" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:15.184" endtime="20220902 13:56:15.185"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<arg>ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20220902 13:56:15.185" level="INFO">Starting process:
+/Users/liam/git/onap/policy/docker/csit/wait_topic.sh POLICY-CL-MGT ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a</msg>
+<msg timestamp="20220902 13:56:15.189" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20220902 13:56:15.257" level="INFO">Process completed.</msg>
+<msg timestamp="20220902 13:56:15.258" level="INFO">${result} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:15.185" endtime="20220902 13:56:15.258"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received notification ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:15.258" level="INFO">Received notification ["{\n  \"AAI\": {\n    \"vserver.prov-status\": \"ACTIVE\",\n    \"vserver.is-closed-loop-disabled\": \"false\",\n    \"generic-vnf.vnf-name\": \"fw0002vm002fw002\",\n    \"vserver.vserver-name\": \"OzVServer\"\n  },\n  \"closedLoopAlarmStart\": 1463679805324,\n  \"closedLoopControlName\": \"ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a\",\n  \"version\": \"1.0.2\",\n  \"requestId\": \"c7c6a4aa-bb61-4a15-b831-ba1472dd4a65\",\n  \"closedLoopEventClient\": \"microservice.stringmatcher\",\n  \"targetType\": \"VNF\",\n  \"target\": \"generic-vnf.vnf-name\",\n  \"from\": \"policy:usecases:[org.onap.policy.drools-applications.controlloop.common:controller-usecases:1.11.0-SNAPSHOT:usecases]\",\n  \"policyScope\": \"EVENT.MANAGER.PROCESS.FINAL.FAILURE.REJECTED\",\n  \"policyName\": \"operational.modifyconfig\",\n  \"policyVersion\": \"1.0.0\",\n  \"notification\": \"REJECTED\",\n  \"message\": \"actor=AAI,operation=Tenant,target=OperationalTarget(targetType=VNF, entityIds={resourceID=bbb3cefd-01c8-413c-9bdd-2b92f9ca3d38}),start=2022-09-02T12:56:15.189199Z,end=2022-09-02T12:56:15.196996Z,subRequestId=1,outcome=Failure_Exception,message=Failed\",\n  \"notificationTime\": \"2022-09-02 12:56:15.200277+00:00\",\n  \"history\": [\n    {\n      \"actor\": \"AAI\",\n      \"operation\": \"Tenant\",\n      \"target\": \"OperationalTarget(targetType=VNF, entityIds={resourceID=bbb3cefd-01c8-413c-9bdd-2b92f9ca3d38})\",\n      \"start\": 1662123375189,\n      \"end\": 1662123375196,\n      \"subRequestId\": \"1\",\n      \"outcome\": \"Failure_Exception\",\n      \"message\": \"Failed\"\n    }\n  ]\n}"]</msg>
+<status status="PASS" starttime="20220902 13:56:15.258" endtime="20220902 13:56:15.258"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20220902 13:56:15.259" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:15.259" endtime="20220902 13:56:15.259"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>ACTIVE</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20220902 13:56:15.259" endtime="20220902 13:56:15.259"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<arg>ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<msg timestamp="20220902 13:56:15.260" level="INFO">Starting process:
+/Users/liam/git/onap/policy/docker/csit/wait_topic.sh POLICY-CL-MGT ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a</msg>
+<msg timestamp="20220902 13:56:15.262" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20220902 13:56:30.281" level="INFO">Process completed.</msg>
+<msg timestamp="20220902 13:56:30.282" level="INFO">${result} = &lt;result object with rc 2&gt;</msg>
+<status status="PASS" starttime="20220902 13:56:15.259" endtime="20220902 13:56:30.282"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received notification ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:56:30.285" level="INFO">Received notification </msg>
+<status status="PASS" starttime="20220902 13:56:30.284" endtime="20220902 13:56:30.285"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<msg timestamp="20220902 13:56:30.286" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<msg timestamp="20220902 13:56:30.286" level="FAIL">2 != 0</msg>
+<status status="FAIL" starttime="20220902 13:56:30.285" endtime="20220902 13:56:30.286"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>OPERATION</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.286" endtime="20220902 13:56:30.286"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>Sending guard query for APPC ModifyConfig</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.286" endtime="20220902 13:56:30.286"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<arg>ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.286" endtime="20220902 13:56:30.286"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received notification ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.286" endtime="20220902 13:56:30.286"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.286" endtime="20220902 13:56:30.286"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>OPERATION</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.286" endtime="20220902 13:56:30.286"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>Guard result for APPC ModifyConfig is Permit</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.286" endtime="20220902 13:56:30.286"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<arg>ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.286" endtime="20220902 13:56:30.286"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received notification ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.287" endtime="20220902 13:56:30.287"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.287" endtime="20220902 13:56:30.287"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>OPERATION</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.287" endtime="20220902 13:56:30.287"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>actor=APPC,operation=ModifyConfig</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.287" endtime="20220902 13:56:30.287"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<arg>ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.287" endtime="20220902 13:56:30.287"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received notification ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.287" endtime="20220902 13:56:30.287"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.287" endtime="20220902 13:56:30.288"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>OPERATION: SUCCESS</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.288" endtime="20220902 13:56:30.288"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>actor=APPC,operation=ModifyConfig</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.288" endtime="20220902 13:56:30.288"/>
+</kw>
+<kw name="Run Process" library="Process">
+<var>${result}</var>
+<arg>${SCR2}/wait_topic.sh</arg>
+<arg>POLICY-CL-MGT</arg>
+<arg>ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.288" endtime="20220902 13:56:30.288"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received notification ${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.288" endtime="20220902 13:56:30.288"/>
+</kw>
+<kw name="Should Be Equal As Integers" library="BuiltIn">
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.288" endtime="20220902 13:56:30.288"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>FINAL: SUCCESS</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.288" endtime="20220902 13:56:30.288"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>APPC</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.288" endtime="20220902 13:56:30.289"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${result.stdout}</arg>
+<arg>ModifyConfig</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="NOT RUN" starttime="20220902 13:56:30.289" endtime="20220902 13:56:30.289"/>
+</kw>
+<doc>Executes VFW Policy</doc>
+<status status="FAIL" starttime="20220902 13:56:15.166" endtime="20220902 13:56:30.289">2 != 0</status>
+</test>
+<status status="FAIL" starttime="20220902 13:56:08.213" endtime="20220902 13:56:30.290"/>
+</suite>
+<statistics>
+<total>
+<stat pass="13" fail="3" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="13" fail="3" skip="0" id="s1" name="drools-applications">drools-applications</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

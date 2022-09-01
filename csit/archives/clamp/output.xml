@@ -1,0 +1,1018 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.1a2 (Python 3.10.6 on darwin)" generated="20220902 13:42:39.956" rpa="false" schemaversion="3">
+<suite id="s1" name="clamp" source="/Users/liam/git/onap/policy/docker/csit/clamp/tests/policy-clamp-test.robot">
+<test id="s1-t1" name="CommissionAutomationCompositionV1" line="9">
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>runtimeUser</arg>
+<arg>zb!XztG34</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:42:39.991" level="INFO">${auth} = ['runtimeUser', 'zb!XztG34']</msg>
+<status status="PASS" starttime="20220902 13:42:39.991" endtime="20220902 13:42:39.991"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${POLICY_RUNTIME_ACM_IP}:6969</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:42:39.991" level="INFO">Creating session http://172.28.0.4:6969</msg>
+<status status="PASS" starttime="20220902 13:42:39.991" endtime="20220902 13:42:39.991"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${postyaml}</var>
+<arg>/Users/liam/git/onap/policy/docker/csit/clamp/tests/data/PMSHMultipleACTosca.yaml</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20220902 13:42:39.991" level="INFO" html="true">Getting file '&lt;a href="file:///Users/liam/git/onap/policy/docker/csit/clamp/tests/data/PMSHMultipleACTosca.yaml"&gt;/Users/liam/git/onap/policy/docker/csit/clamp/tests/data/PMSHMultipleACTosca.yaml&lt;/a&gt;'.</msg>
+<msg timestamp="20220902 13:42:39.992" level="INFO">${postyaml} = tosca_definitions_version: tosca_simple_yaml_1_3
+data_types:
+  onap.datatypes.ToscaConceptIdentifier:
+    derived_from: tosca.datatypes.Root
+    properties:
+      name:
+        type: string
+        re...</msg>
+<status status="PASS" starttime="20220902 13:42:39.991" endtime="20220902 13:42:39.992"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${POLICY_RUNTIME_ACM_IP}:6969</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:42:39.992" level="INFO">Creating Session using : alias=policy, url=http://172.28.0.4:6969, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x106d080a0&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:42:39.992" level="INFO">${session} = &lt;requests.sessions.Session object at 0x106d08400&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:39.992" endtime="20220902 13:42:39.992"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/yaml</arg>
+<arg>Content-Type=application/yaml</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:42:39.992" level="INFO">${headers} = {'Accept': 'application/yaml', 'Content-Type': 'application/yaml'}</msg>
+<status status="PASS" starttime="20220902 13:42:39.992" endtime="20220902 13:42:39.992"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>/onap/policy/clamp/acm/v2/commission</arg>
+<arg>data=${postyaml}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:42:40.502" level="INFO">POST Request : url=http://172.28.0.4:6969/onap/policy/clamp/acm/v2/commission 
+ path_url=/onap/policy/clamp/acm/v2/commission 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/yaml', 'Connection': 'keep-alive', 'Content-Type': 'application/yaml', 'Content-Length': '28510', 'Authorization': 'Basic cnVudGltZVVzZXI6emIhWHp0RzM0'} 
+ body=tosca_definitions_version: tosca_simple_yaml_1_3
+data_types:
+  onap.datatypes.ToscaConceptIdentifier:
+    derived_from: tosca.datatypes.Root
+    properties:
+      name:
+        type: string
+        required: true
+      version:
+        type: string
+        required: true
+  onap.datatype.acm.Target:
+    derived_from: tosca.datatypes.Root
+    description: &gt;-
+      Definition for a entity in A&amp;AI to perform an Automation Composition
+      operation on
+    properties:
+      targetType:
+        type: string
+        description: Category for the target type
+        required: true
+        constraints:
+          - valid_values:
+              - VNF
+              - VM
+              - VFMODULE
+              - PNF
+      entityIds:
+        type: map
+        description: &gt;
+          Map of values that identify the resource. If none are provided, it is
+          assumed that the
+
+          entity that generated the ONSET event will be the target.
+        required: false
+        metadata:
+          clamp_possible_values: 'ClampExecution:CSAR_RESOURCES'
+        entry_schema:
+          type: string
+  onap.datatype.acm.Actor:
+    derived_from: tosca.datatypes.Root
+    description: An actor/operation/target definition
+    properties:
+      actor:
+        type: string
+        description: The actor performing the operation.
+        required: true
+        metadata:
+          clamp_possible_values: 'Dictionary:DefaultActors,ClampExecution:CDS/actor'
+      operation:
+        type: string
+        description: The operation the actor is performing.
+        metadata:
+          clamp_possible_values: 'Dictionary:DefaultOperations,ClampExecution:CDS/operation'
+        required: true
+      target:
+        type: onap.datatype.acm.Target
+        description: The resource the operation should be performed on.
+        required: true
+      payload:
+        type: map
+        description: Name/value pairs of payload information passed by Policy to the actor
+        required: false
+        metadata:
+          clamp_possible_values: 'ClampExecution:CDS/payload'
+        entry_schema:
+          type: string
+  onap.datatype.acm.Operation:
+    derived_from: tosca.datatypes.Root
+    description: An operation supported by an actor
+    properties:
+      id:
+        type: string
+        description: Unique identifier for the operation
+        required: true
+      description:
+        type: string
+        description: A user-friendly description of the intent for the operation
+        required: false
+      operation:
+        type: onap.datatype.acm.Actor
+        description: The definition of the operation to be performed.
+        required: true
+      timeout:
+        type: integer
+        description: The amount of time for the actor to perform the operation.
+        required: true
+      retries:
+        type: integer
+        description: &gt;-
+          The number of retries the actor should attempt to perform the
+          operation.
+        required: true
+        default: 0
+      success:
+        type: string
+        description: &gt;-
+          Points to the operation to invoke on success. A value of
+          "final_success" indicates and end to the operation.
+        required: false
+        default: final_success
+      failure:
+        type: string
+        description: Points to the operation to invoke on Actor operation failure.
+        required: false
+        default: final_failure
+      failure_timeout:
+        type: string
+        description: &gt;-
+          Points to the operation to invoke when the time out for the operation
+          occurs.
+        required: false
+        default: final_failure_timeout
+      failure_retries:
+        type: string
+        description: &gt;-
+          Points to the operation to invoke when the current operation has
+          exceeded its max retries.
+        required: false
+        default: final_failure_retries
+      failure_exception:
+        type: string
+        description: &gt;-
+          Points to the operation to invoke when the current operation causes an
+          exception.
+        required: false
+        default: final_failure_exception
+      failure_guard:
+        type: string
+        description: &gt;-
+          Points to the operation to invoke when the current operation is
+          blocked due to guard policy enforcement.
+        required: false
+        default: final_failure_guard
+  onap.datatypes.monitoring.managedObjectDNsBasic:
+    constraints: []
+    properties:
+      DN:
+        name: DN
+        type: string
+        typeVersion: 0.0.0
+        description: Managed object distinguished name
+        required: true
+        constraints: []
+        metadata: {}
+    name: onap.datatypes.monitoring.managedObjectDNsBasic
+    version: 0.0.0
+    derived_from: tosca.datatypes.Root
+    metadata: {}
+  onap.datatypes.monitoring.managedObjectDNsBasics:
+    constraints: []
+    properties:
+      managedObjectDNsBasic:
+        name: managedObjectDNsBasic
+        type: map
+        typeVersion: 0.0.0
+        description: Managed object distinguished name object
+        required: true
+        constraints: []
+        entry_schema:
+          type: onap.datatypes.monitoring.managedObjectDNsBasic
+          typeVersion: 0.0.0
+          constraints: []
+        metadata: {}
+    name: onap.datatypes.monitoring.managedObjectDNsBasics
+    version: 0.0.0
+    derived_from: tosca.datatypes.Root
+    metadata: {}
+  onap.datatypes.monitoring.measurementGroup:
+    constraints: []
+    properties:
+      measurementTypes:
+        name: measurementTypes
+        type: list
+        typeVersion: 0.0.0
+        description: List of measurement types
+        required: true
+        constraints: []
+        entry_schema:
+          type: onap.datatypes.monitoring.measurementTypes
+          typeVersion: 0.0.0
+          constraints: []
+        metadata: {}
+      managedObjectDNsBasic:
+        name: managedObjectDNsBasic
+        type: list
+        typeVersion: 0.0.0
+        description: List of managed object distinguished names
+        required: true
+        constraints: []
+        entry_schema:
+          type: onap.datatypes.monitoring.managedObjectDNsBasics
+          typeVersion: 0.0.0
+          constraints: []
+        metadata: {}
+    name: onap.datatypes.monitoring.measurementGroup
+    version: 0.0.0
+    derived_from: tosca.datatypes.Root
+    metadata: {}
+  onap.datatypes.monitoring.measurementGroups:
+    constraints: []
+    properties:
+      measurementGroup:
+        name: measurementGroup
+        type: map
+        typeVersion: 0.0.0
+        description: Measurement Group
+        required: true
+        constraints: []
+        entry_schema:
+          type: onap.datatypes.monitoring.measurementGroup
+          typeVersion: 0.0.0
+          constraints: []
+        metadata: {}
+    name: onap.datatypes.monitoring.measurementGroups
+    version: 0.0.0
+    derived_from: tosca.datatypes.Root
+    metadata: {}
+  onap.datatypes.monitoring.measurementType:
+    constraints: []
+    properties:
+      measurementType:
+        name: measurementType
+        type: string
+        typeVersion: 0.0.0
+        description: Measurement type
+        required: true
+        constraints: []
+        metadata: {}
+    name: onap.datatypes.monitoring.measurementType
+    version: 0.0.0
+    derived_from: tosca.datatypes.Root
+    metadata: {}
+  onap.datatypes.monitoring.measurementTypes:
+    constraints: []
+    properties:
+      measurementType:
+        name: measurementType
+        type: map
+        typeVersion: 0.0.0
+        description: Measurement type object
+        required: true
+        constraints: []
+        entry_schema:
+          type: onap.datatypes.monitoring.measurementType
+          typeVersion: 0.0.0
+          constraints: []
+        metadata: {}
+    name: onap.datatypes.monitoring.measurementTypes
+    version: 0.0.0
+    derived_from: tosca.datatypes.Root
+    metadata: {}
+  onap.datatypes.monitoring.nfFilter:
+    constraints: []
+    properties:
+      modelNames:
+        name: modelNames
+        type: list
+        typeVersion: 0.0.0
+        description: List of model names
+        required: true
+        constraints: []
+        entry_schema:
+          type: string
+          typeVersion: 0.0.0
+          constraints: []
+        metadata: {}
+      modelInvariantIDs:
+        name: modelInvariantIDs
+        type: list
+        typeVersion: 0.0.0
+        description: List of model invariant IDs
+        required: true
+        constraints: []
+        entry_schema:
+          type: string
+          typeVersion: 0.0.0
+          constraints: []
+        metadata: {}
+      modelVersionIDs:
+        name: modelVersionIDs
+        type: list
+        typeVersion: 0.0.0
+        description: List of model version IDs
+        required: true
+        constraints: []
+        entry_schema:
+          type: string
+          typeVersion: 0.0.0
+          constraints: []
+        metadata: {}
+      nfNames:
+        name: nfNames
+        type: list
+        typeVersion: 0.0.0
+        description: List of network functions
+        required: true
+        constraints: []
+        entry_schema:
+          type: string
+          typeVersion: 0.0.0
+          constraints: []
+        metadata: {}
+    name: onap.datatypes.monitoring.nfFilter
+    version: 0.0.0
+    derived_from: tosca.datatypes.Root
+    metadata: {}
+  onap.datatypes.monitoring.subscription:
+    constraints: []
+    properties:
+      measurementGroups:
+        name: measurementGroups
+        type: list
+        typeVersion: 0.0.0
+        description: Measurement Groups
+        required: true
+        constraints: []
+        entry_schema:
+          type: onap.datatypes.monitoring.measurementGroups
+          typeVersion: 0.0.0
+          constraints: []
+        metadata: {}
+      fileBasedGP:
+        name: fileBasedGP
+        type: integer
+        typeVersion: 0.0.0
+        description: File based granularity period
+        required: true
+        constraints: []
+        metadata: {}
+      fileLocation:
+        name: fileLocation
+        type: string
+        typeVer... (set the log level to DEBUG or TRACE to see the full content) 
+ </msg>
+<msg timestamp="20220902 13:42:40.509" level="INFO">POST Response : url=http://172.28.0.4:6969/onap/policy/clamp/acm/v2/commission 
+ status=200, reason= 
+ headers={'Set-Cookie': 'JSESSIONID=75CBCF53EA523C47D433ADE7631833EE; Path=/; HttpOnly', 'X-ONAP-RequestID': '0f8295a8-baae-4ead-be45-7af76687e910', 'X-MinorVersion': '0', 'X-PatchVersion': '0', 'X-LatestVersion': '1.0.0', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/yaml', 'Transfer-Encoding': 'chunked', 'Date': 'Fri, 02 Sep 2022 12:42:40 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body=affectedAutomationCompositionDefinitions:
+- name: org.onap.domain.database.Http_PMSHMicroserviceAutomationCompositionElement
+  version: 1.2.3
+- name: org.onap.domain.database.PMSH_K8SMicroserviceAutomationCompositionElement
+  version: 1.2.3
+- name: org.onap.domain.pmsh.PMSH_MonitoringPolicyAutomationCompositionElement
+  version: 1.2.3
+- name: org.onap.domain.pmsh.PMSH_OperationalPolicyAutomationCompositionElement
+  version: 1.2.3
+- name: org.onap.domain.sample.GenericK8s_AutomationCompositionDefinition
+  version: 1.2.3
+- name: org.onap.policy.clamp.acm.HttpParticipant
+  version: 2.3.4
+- name: org.onap.policy.clamp.acm.KubernetesParticipant
+  version: 2.3.4
+- name: org.onap.policy.clamp.acm.PolicyParticipant
+  version: 2.3.1
+ 
+ </msg>
+<msg timestamp="20220902 13:42:40.509" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:39.992" endtime="20220902 13:42:40.509"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from runtime acm ${resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:42:40.510" level="INFO">Received response from runtime acm affectedAutomationCompositionDefinitions:
+- name: org.onap.domain.database.Http_PMSHMicroserviceAutomationCompositionElement
+  version: 1.2.3
+- name: org.onap.domain.database.PMSH_K8SMicroserviceAutomationCompositionElement
+  version: 1.2.3
+- name: org.onap.domain.pmsh.PMSH_MonitoringPolicyAutomationCompositionElement
+  version: 1.2.3
+- name: org.onap.domain.pmsh.PMSH_OperationalPolicyAutomationCompositionElement
+  version: 1.2.3
+- name: org.onap.domain.sample.GenericK8s_AutomationCompositionDefinition
+  version: 1.2.3
+- name: org.onap.policy.clamp.acm.HttpParticipant
+  version: 2.3.4
+- name: org.onap.policy.clamp.acm.KubernetesParticipant
+  version: 2.3.4
+- name: org.onap.policy.clamp.acm.PolicyParticipant
+  version: 2.3.1
+</msg>
+<status status="PASS" starttime="20220902 13:42:40.509" endtime="20220902 13:42:40.510"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20220902 13:42:40.510" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:40.510" endtime="20220902 13:42:40.510"/>
+</kw>
+<doc>Commission automation composition.</doc>
+<status status="PASS" starttime="20220902 13:42:39.991" endtime="20220902 13:42:40.510"/>
+</test>
+<test id="s1-t2" name="InstantiateAutomationCompositionV1" line="20">
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>runtimeUser</arg>
+<arg>zb!XztG34</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:42:40.511" level="INFO">${auth} = ['runtimeUser', 'zb!XztG34']</msg>
+<status status="PASS" starttime="20220902 13:42:40.511" endtime="20220902 13:42:40.511"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${POLICY_RUNTIME_ACM_IP}:6969</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:42:40.511" level="INFO">Creating session http://172.28.0.4:6969</msg>
+<status status="PASS" starttime="20220902 13:42:40.511" endtime="20220902 13:42:40.511"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${postjson}</var>
+<arg>/Users/liam/git/onap/policy/docker/csit/clamp/tests/data/InstantiateAC.json</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20220902 13:42:40.511" level="INFO" html="true">Getting file '&lt;a href="file:///Users/liam/git/onap/policy/docker/csit/clamp/tests/data/InstantiateAC.json"&gt;/Users/liam/git/onap/policy/docker/csit/clamp/tests/data/InstantiateAC.json&lt;/a&gt;'.</msg>
+<msg timestamp="20220902 13:42:40.511" level="INFO">${postjson} = {
+    "automationCompositionList": [
+        {
+            "name": "PMSHInstance0",
+            "version": "1.0.1",
+            "definition": {
+                "name": "org.onap.domain.sample.GenericK...</msg>
+<status status="PASS" starttime="20220902 13:42:40.511" endtime="20220902 13:42:40.511"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${POLICY_RUNTIME_ACM_IP}:6969</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:42:40.511" level="INFO">Creating Session using : alias=policy, url=http://172.28.0.4:6969, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x106d0b580&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:42:40.512" level="INFO">${session} = &lt;requests.sessions.Session object at 0x106d0b8e0&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:40.511" endtime="20220902 13:42:40.512"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/json</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:42:40.512" level="INFO">${headers} = {'Accept': 'application/json', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20220902 13:42:40.512" endtime="20220902 13:42:40.512"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>/onap/policy/clamp/acm/v2/instantiation</arg>
+<arg>data=${postjson}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:42:40.696" level="INFO">POST Request : url=http://172.28.0.4:6969/onap/policy/clamp/acm/v2/instantiation 
+ path_url=/onap/policy/clamp/acm/v2/instantiation 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '2355', 'Authorization': 'Basic cnVudGltZVVzZXI6emIhWHp0RzM0'} 
+ body={
+    "automationCompositionList": [
+        {
+            "name": "PMSHInstance0",
+            "version": "1.0.1",
+            "definition": {
+                "name": "org.onap.domain.sample.GenericK8s_AutomationCompositionDefinition",
+                "version": "1.2.3"
+            },
+            "state": "UNINITIALISED",
+            "orderedState": "UNINITIALISED",
+            "description": "PMSH automation composition instance 0",
+            "elements": {
+                "709c62b3-8918-41b9-a747-d21eb79c6c21": {
+                    "id": "709c62b3-8918-41b9-a747-d21eb79c6c21",
+                    "definition": {
+                        "name": "org.onap.domain.pmsh.PMSH_MonitoringPolicyAutomationCompositionElement",
+                        "version": "1.2.3"
+                    },
+                    "participantId": {
+                        "name": "org.onap.PM_Policy",
+                        "version": "1.0.0"
+                    },
+                    "participantType": {
+                        "name": "org.onap.policy.clamp.acm.PolicyParticipant",
+                        "version": "2.3.1"
+                    },
+                    "state": "UNINITIALISED",
+                    "orderedState": "UNINITIALISED",
+                    "description": "Monitoring Policy Automation Composition Element for the PMSH instance 0 automation composition"
+                },
+                "709c62b3-8918-41b9-a747-d21eb79c6c22": {
+                    "id": "709c62b3-8918-41b9-a747-d21eb79c6c22",
+                    "definition": {
+                        "name": "org.onap.domain.pmsh.PMSH_OperationalPolicyAutomationCompositionElement",
+                        "version": "1.2.3"
+                    },
+                    "participantId": {
+                        "name": "org.onap.PM_Policy",
+                        "version": "1.0.0"
+                    },
+                    "participantType": {
+                        "name": "org.onap.policy.clamp.acm.PolicyParticipant",
+                        "version": "2.3.1"
+                    },
+                    "state": "UNINITIALISED",
+                    "orderedState": "UNINITIALISED",
+                    "description": "Operational Policy Automation Composition Element for the PMSH instance 0 automation composition"
+                }
+            }
+        }
+    ]
+}
+
+ 
+ </msg>
+<msg timestamp="20220902 13:42:40.696" level="INFO">POST Response : url=http://172.28.0.4:6969/onap/policy/clamp/acm/v2/instantiation 
+ status=200, reason= 
+ headers={'Set-Cookie': 'JSESSIONID=95C506902DA7843FDF72A4677E578FF5; Path=/; HttpOnly', 'X-ONAP-RequestID': '59ab000c-5b71-481a-b0b0-bb0c1c671e0f', 'X-MinorVersion': '0', 'X-PatchVersion': '0', 'X-LatestVersion': '1.0.0', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Date': 'Fri, 02 Sep 2022 12:42:40 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"errorDetails":null,"affectedAutomationCompositions":[{"name":"PMSHInstance0","version":"1.0.1"}]} 
+ </msg>
+<msg timestamp="20220902 13:42:40.697" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:40.512" endtime="20220902 13:42:40.697"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from runtime acm ${resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:42:40.699" level="INFO">Received response from runtime acm {"errorDetails":null,"affectedAutomationCompositions":[{"name":"PMSHInstance0","version":"1.0.1"}]}</msg>
+<status status="PASS" starttime="20220902 13:42:40.698" endtime="20220902 13:42:40.699"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20220902 13:42:40.699" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:40.699" endtime="20220902 13:42:40.699"/>
+</kw>
+<doc>Instantiate automation composition.</doc>
+<status status="PASS" starttime="20220902 13:42:40.510" endtime="20220902 13:42:40.700"/>
+</test>
+<test id="s1-t3" name="PassivateAutomationComposition" line="31">
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>runtimeUser</arg>
+<arg>zb!XztG34</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:42:40.700" level="INFO">${auth} = ['runtimeUser', 'zb!XztG34']</msg>
+<status status="PASS" starttime="20220902 13:42:40.700" endtime="20220902 13:42:40.700"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${POLICY_RUNTIME_ACM_IP}:6969</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:42:40.700" level="INFO">Creating session http://172.28.0.4:6969</msg>
+<status status="PASS" starttime="20220902 13:42:40.700" endtime="20220902 13:42:40.700"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${postjson}</var>
+<arg>/Users/liam/git/onap/policy/docker/csit/clamp/tests/data/PassivateAC.json</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20220902 13:42:40.700" level="INFO" html="true">Getting file '&lt;a href="file:///Users/liam/git/onap/policy/docker/csit/clamp/tests/data/PassivateAC.json"&gt;/Users/liam/git/onap/policy/docker/csit/clamp/tests/data/PassivateAC.json&lt;/a&gt;'.</msg>
+<msg timestamp="20220902 13:42:40.701" level="INFO">${postjson} = {
+    "orderedState": "PASSIVE",
+    "automationCompositionIdentifierList": [
+        {
+            "name": "PMSHInstance0",
+            "version": "1.0.1"
+        }
+    ]
+}
+</msg>
+<status status="PASS" starttime="20220902 13:42:40.700" endtime="20220902 13:42:40.701"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${POLICY_RUNTIME_ACM_IP}:6969</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:42:40.701" level="INFO">Creating Session using : alias=policy, url=http://172.28.0.4:6969, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x106d60640&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:42:40.701" level="INFO">${session} = &lt;requests.sessions.Session object at 0x106d609a0&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:40.701" endtime="20220902 13:42:40.701"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/json</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:42:40.701" level="INFO">${headers} = {'Accept': 'application/json', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20220902 13:42:40.701" endtime="20220902 13:42:40.701"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>/onap/policy/clamp/acm/v2/instantiation/command</arg>
+<arg>data=${postjson}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:42:40.844" level="INFO">PUT Request : url=http://172.28.0.4:6969/onap/policy/clamp/acm/v2/instantiation/command 
+ path_url=/onap/policy/clamp/acm/v2/instantiation/command 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '174', 'Authorization': 'Basic cnVudGltZVVzZXI6emIhWHp0RzM0'} 
+ body={
+    "orderedState": "PASSIVE",
+    "automationCompositionIdentifierList": [
+        {
+            "name": "PMSHInstance0",
+            "version": "1.0.1"
+        }
+    ]
+}
+ 
+ </msg>
+<msg timestamp="20220902 13:42:40.845" level="INFO">PUT Response : url=http://172.28.0.4:6969/onap/policy/clamp/acm/v2/instantiation/command 
+ status=202, reason= 
+ headers={'Set-Cookie': 'JSESSIONID=CF0817748EE3BA041F02B9576E458CD0; Path=/; HttpOnly', 'X-ONAP-RequestID': '4ee35709-982b-4169-b91a-2016a8a504bb', 'X-MinorVersion': '0', 'X-PatchVersion': '0', 'X-LatestVersion': '1.0.0', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Date': 'Fri, 02 Sep 2022 12:42:40 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"errorDetails":null,"affectedAutomationCompositions":[{"name":"PMSHInstance0","version":"1.0.1"}]} 
+ </msg>
+<msg timestamp="20220902 13:42:40.845" level="INFO">${resp} = &lt;Response [202]&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:40.701" endtime="20220902 13:42:40.845"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from runtime acm ${resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:42:40.846" level="INFO">Received response from runtime acm {"errorDetails":null,"affectedAutomationCompositions":[{"name":"PMSHInstance0","version":"1.0.1"}]}</msg>
+<status status="PASS" starttime="20220902 13:42:40.845" endtime="20220902 13:42:40.847"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${resp.status_code}</arg>
+<arg>202</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20220902 13:42:40.848" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:40.847" endtime="20220902 13:42:40.848"/>
+</kw>
+<doc>Passivate automation composition.</doc>
+<status status="PASS" starttime="20220902 13:42:40.700" endtime="20220902 13:42:40.848"/>
+</test>
+<test id="s1-t4" name="QueryPolicies" line="42">
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>policyadmin</arg>
+<arg>zb!XztG34</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:42:40.848" level="INFO">${auth} = ['policyadmin', 'zb!XztG34']</msg>
+<status status="PASS" starttime="20220902 13:42:40.848" endtime="20220902 13:42:40.848"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${POLICY_API_IP}:6969</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:42:40.848" level="INFO">Creating session http://172.28.0.6:6969</msg>
+<status status="PASS" starttime="20220902 13:42:40.848" endtime="20220902 13:42:40.848"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${POLICY_API_IP}:6969</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:42:40.849" level="INFO">Creating Session using : alias=policy, url=http://172.28.0.6:6969, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x106d61bd0&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:42:40.849" level="INFO">${session} = &lt;requests.sessions.Session object at 0x106d61db0&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:40.848" endtime="20220902 13:42:40.849"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/json</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:42:40.849" level="INFO">${headers} = {'Accept': 'application/json', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20220902 13:42:40.849" endtime="20220902 13:42:40.849"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>/policy/api/v1/policies</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:42:41.261" level="INFO">GET Request : url=http://172.28.0.6:6969/policy/api/v1/policies 
+ path_url=/policy/api/v1/policies 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Basic cG9saWN5YWRtaW46emIhWHp0RzM0'} 
+ body=None 
+ </msg>
+<msg timestamp="20220902 13:42:41.261" level="INFO">GET Response : url=http://172.28.0.6:6969/policy/api/v1/policies 
+ status=200, reason= 
+ headers={'Set-Cookie': 'JSESSIONID=A2B4E5FC90388798A4681A3E731C66B8; Path=/; HttpOnly', 'X-MinorVersion': '0', 'X-PatchVersion': '0', 'X-LatestVersion': '1.0.0', 'X-ONAP-RequestID': 'e92223f0-89e3-422e-a196-6adee6fc3165', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/json;charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Date': 'Fri, 02 Sep 2022 12:42:41 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"tosca_definitions_version":"tosca_simple_yaml_1_1_0","topology_template":{"inputs":{},"policies":[{"SDNC_Policy.ONAP_NF_NAMING_TIMESTAMP":{"type":"onap.policies.Naming","type_version":"1.0.0","properties":{"policy-instance-name":"ONAP_NF_NAMING_TIMESTAMP","naming-models":[{"naming-type":"VNF","naming-recipe":"AIC_CLOUD_REGION|DELIMITER|CONSTANT|DELIMITER|TIMESTAMP","name-operation":"to_lower_case()","naming-properties":[{"property-name":"AIC_CLOUD_REGION"},{"property-name":"CONSTANT","property-value":"onap-nf"},{"property-name":"TIMESTAMP"},{"property-value":"-","property-name":"DELIMITER"}]},{"naming-type":"VNFC","naming-recipe":"VNF_NAME|DELIMITER|NFC_NAMING_CODE|DELIMITER|SEQUENCE","name-operation":"to_lower_case()","naming-properties":[{"property-name":"VNF_NAME"},{"property-name":"SEQUENCE","increment-sequence":{"max":"zzz","scope":"ENTIRETY","start-value":"1","length":"3","increment":"1","sequence-type":"alpha-numeric"}},{"property-name":"NFC_NAMING_CODE"},{"property-value":"-","property-name":"DELIMITER"}]},{"naming-type":"VF-MODULE","naming-recipe":"VNF_NAME|DELIMITER|VF_MODULE_LABEL|DELIMITER|VF_MODULE_TYPE|DELIMITER|SEQUENCE","name-operation":"to_lower_case()","naming-properties":[{"property-name":"VNF_NAME"},{"property-value":"-","property-name":"DELIMITER"},{"property-name":"VF_MODULE_LABEL"},{"property-name":"VF_MODULE_TYPE"},{"property-name":"SEQUENCE","increment-sequence":{"max":"zzz","scope":"PRECEEDING","start-value":"1","length":"3","increment":"1","sequence-type":"alpha-numeric"}}]}]},"name":"SDNC_Policy.ONAP_NF_NAMING_TIMESTAMP","version":"1.0.0","metadata":{"policy-id":"SDNC_Policy.ONAP_NF_NAMING_TIMESTAMP","policy-version":"1.0.0"}}}]},"name":"ToscaServiceTemplateSimple","version":"1.0.0"} 
+ </msg>
+<msg timestamp="20220902 13:42:41.261" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:40.849" endtime="20220902 13:42:41.262"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from policy-api {resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:42:41.262" level="INFO">Received response from policy-api {resp.text}</msg>
+<status status="PASS" starttime="20220902 13:42:41.262" endtime="20220902 13:42:41.263"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20220902 13:42:41.265" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:41.263" endtime="20220902 13:42:41.265"/>
+</kw>
+<doc>Runs Policy Participant Query New Policies</doc>
+<status status="PASS" starttime="20220902 13:42:40.848" endtime="20220902 13:42:41.265"/>
+</test>
+<test id="s1-t5" name="QueryPolicyTypes" line="52">
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>policyadmin</arg>
+<arg>zb!XztG34</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:42:41.266" level="INFO">${auth} = ['policyadmin', 'zb!XztG34']</msg>
+<status status="PASS" starttime="20220902 13:42:41.266" endtime="20220902 13:42:41.266"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${POLICY_API_IP}:6969</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:42:41.266" level="INFO">Creating session http://172.28.0.6:6969</msg>
+<status status="PASS" starttime="20220902 13:42:41.266" endtime="20220902 13:42:41.266"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${POLICY_API_IP}:6969</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:42:41.267" level="INFO">Creating Session using : alias=policy, url=http://172.28.0.6:6969, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x106d606d0&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:42:41.267" level="INFO">${session} = &lt;requests.sessions.Session object at 0x106d601f0&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:41.267" endtime="20220902 13:42:41.267"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/json</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:42:41.267" level="INFO">${headers} = {'Accept': 'application/json', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20220902 13:42:41.267" endtime="20220902 13:42:41.267"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>/policy/api/v1/policytypes</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:42:42.257" level="INFO">GET Request : url=http://172.28.0.6:6969/policy/api/v1/policytypes 
+ path_url=/policy/api/v1/policytypes 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Basic cG9saWN5YWRtaW46emIhWHp0RzM0'} 
+ body=None 
+ </msg>
+<msg timestamp="20220902 13:42:42.258" level="INFO">GET Response : url=http://172.28.0.6:6969/policy/api/v1/policytypes 
+ status=200, reason= 
+ headers={'Set-Cookie': 'JSESSIONID=7E3E7AE78AFD3D42DDD2C278A2621854; Path=/; HttpOnly', 'X-MinorVersion': '0', 'X-PatchVersion': '0', 'X-LatestVersion': '1.0.0', 'X-ONAP-RequestID': '39bc1e19-0a95-4a59-a589-68c0fa18066c', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/json;charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Date': 'Fri, 02 Sep 2022 12:42:41 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"tosca_definitions_version":"tosca_simple_yaml_1_1_0","data_types":{"onap.datatype.controlloop.Actor":{"constraints":[],"properties":{"actor":{"name":"actor","type":"string","type_version":"0.0.0","description":"The actor performing the operation.","required":true,"metadata":{"clamp_possible_values":"Dictionary:DefaultActors,ClampExecution:CDS/actor"}},"payload":{"name":"payload","type":"map","type_version":"0.0.0","description":"Name/value pairs of payload information passed by Policy to the actor","required":false,"entry_schema":{"type":"string","type_version":"0.0.0"},"metadata":{"clamp_possible_values":"ClampExecution:CDS/payload"}},"operation":{"name":"operation","type":"string","type_version":"0.0.0","description":"The operation the actor is performing.","required":true,"metadata":{"clamp_possible_values":"Dictionary:DefaultOperations,ClampExecution:CDS/operation"}},"target":{"name":"target","type":"onap.datatype.controlloop.Target","type_version":"0.0.0","description":"The resource the operation should be performed on.","required":true}},"name":"onap.datatype.controlloop.Actor","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{},"description":"An actor/operation/target definition"},"onap.datatype.controlloop.Operation":{"constraints":[],"properties":{"retries":{"name":"retries","type":"integer","type_version":"0.0.0","description":"The number of retries the actor should attempt to perform the operation.","default":0.0,"required":true},"failure_timeout":{"name":"failure_timeout","type":"string","type_version":"0.0.0","description":"Points to the operation to invoke when the time out for the operation occurs.","default":"final_failure_timeout","required":false},"success":{"name":"success","type":"string","type_version":"0.0.0","description":"Points to the operation to invoke on success. A value of \"final_success\" indicates and end to the operation.","default":"final_success","required":false},"failure":{"name":"failure","type":"string","type_version":"0.0.0","description":"Points to the operation to invoke on Actor operation failure.","default":"final_failure","required":false},"failure_exception":{"name":"failure_exception","type":"string","type_version":"0.0.0","description":"Points to the operation to invoke when the current operation causes an exception.","default":"final_failure_exception","required":false},"failure_retries":{"name":"failure_retries","type":"string","type_version":"0.0.0","description":"Points to the operation to invoke when the current operation has exceeded its max retries.","default":"final_failure_retries","required":false},"description":{"name":"description","type":"string","type_version":"0.0.0","description":"A user-friendly description of the intent for the operation","required":false},"id":{"name":"id","type":"string","type_version":"0.0.0","description":"Unique identifier for the operation","required":true},"operation":{"name":"operation","type":"onap.datatype.controlloop.Actor","type_version":"0.0.0","description":"The definition of the operation to be performed.","required":true},"failure_guard":{"name":"failure_guard","type":"string","type_version":"0.0.0","description":"Points to the operation to invoke when the current operation is blocked due to guard policy enforcement.","default":"final_failure_guard","required":false},"timeout":{"name":"timeout","type":"integer","type_version":"0.0.0","description":"The amount of time for the actor to perform the operation.","required":true}},"name":"onap.datatype.controlloop.Operation","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{},"description":"An operation supported by an actor"},"onap.datatype.controlloop.Target":{"constraints":[],"properties":{"targetType":{"name":"targetType","type":"string","type_version":"0.0.0","description":"Category for the target type","required":true,"constraints":[{"valid_values":["VNF","VM","VFMODULE","PNF"]}]},"entityIds":{"name":"entityIds","type":"map","type_version":"0.0.0","description":"Map of values that identify the resource. If none are provided, it is assumed that the\nentity that generated the ONSET event will be the target.\n","required":false,"entry_schema":{"type":"string","type_version":"0.0.0"},"metadata":{"clamp_possible_values":"ClampExecution:CSAR_RESOURCES"}}},"name":"onap.datatype.controlloop.Target","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{},"description":"Definition for a entity in A\u0026AI to perform a control loop operation on"},"onap.datatypes.dmaap.custom_serialization":{"constraints":[],"properties":{"jsonParser":{"name":"jsonParser","type":"string","type_version":"0.0.0","description":"static field in customSerialized class with the json parser (currently only gson supported)","required":true},"customSerializerClass":{"name":"customSerializerClass","type":"string","type_version":"0.0.0","description":"the class that contains the JSON parser serializer/deserializer.","required":true}},"name":"onap.datatypes.dmaap.custom_serialization","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.dmaap.events":{"constraints":[],"properties":{"eventClass":{"name":"eventClass","type":"string","type_version":"0.0.0","description":"the event canonical class for serialization","required":true},"eventFilter":{"name":"eventFilter","type":"string","type_version":"0.0.0","description":"the JSONPath based condition to filter out the events to serialize","required":false},"customSerialization":{"name":"customSerialization","type":"onap.datatypes.dmaap.custom_serialization","type_version":"0.0.0","description":"overrides the default serialization/deserialization mechanisms with custom ones","required":false}},"name":"onap.datatypes.dmaap.events","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.dmaap.topic":{"constraints":[],"properties":{"topicName":{"name":"topicName","type":"string","type_version":"0.0.0","description":"the dmaap topic name","required":true},"events":{"name":"events","type":"list","type_version":"0.0.0","description":"events used by this topic","required":true,"entry_schema":{"type":"onap.datatypes.dmaap.events","type_version":"0.0.0"}}},"name":"onap.datatypes.dmaap.topic","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.drools.controller.relation":{"constraints":[],"properties":{"name":{"name":"name","type":"string","type_version":"0.0.0","description":"the name of drools controller policy","required":true}},"name":"onap.datatypes.drools.controller.relation","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.guard.filter":{"constraints":[],"properties":{"filter":{"name":"filter","type":"string","type_version":"0.0.0","description":"The filter value itself. For example, \"RegionOne\" \"vFWCL*\"","required":true},"field":{"name":"field","type":"string","type_version":"0.0.0","description":"Name of the field to perform the filter on using the A\u0026AI \u003cnode\u003e.\u003cproperty\u003e syntax.","required":true,"constraints":[{"valid_values":["generic-vnf.vnf-name","generic-vnf.vnf-id","generic-vnf.vnf-type","generic-vnf.nf-naming-code","vserver.vserver-id","cloud-region.cloud-region-id"]}]},"function":{"name":"function","type":"string","type_version":"0.0.0","description":"The function applied to the filter.","required":true,"constraints":[{"valid_values":["string-equal","string-equal-ignore-case","string-regexp-match","string-contains","string-greater-than","string-greater-than-or-equal","string-less-than","string-less-than-or-equal","string-starts-with","string-ends-with"]}]},"blacklist":{"name":"blacklist","type":"boolean","type_version":"0.0.0","description":"Indicates if the filter should be treated as a blacklist (true)\nor whitelist (false).\n","default":true,"required":true}},"name":"onap.datatypes.guard.filter","version":"0.0.0","derived_from":"tosca.nodes.Root","metadata":{}},"onap.datatypes.monitoring.filters":{"constraints":[],"properties":{"measTypes":{"name":"measTypes","type":"list","type_version":"0.0.0","description":"Measurement types to collect","required":true,"entry_schema":{"type":"string","type_version":"0.0.0"}},"vendor":{"name":"vendor","type":"string","type_version":"0.0.0","description":"Vendor name","required":true},"nfType":{"name":"nfType","type":"string","type_version":"0.0.0","description":"NF type","required":true},"pmDefVsn":{"name":"pmDefVsn","type":"string","type_version":"0.0.0","description":"PM Dictionary version","required":true}},"name":"onap.datatypes.monitoring.filters","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.monitoring.managedObjectDNsBasic":{"constraints":[],"properties":{"DN":{"name":"DN","type":"string","type_version":"0.0.0","description":"Managed object distinguished name","required":true}},"name":"onap.datatypes.monitoring.managedObjectDNsBasic","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.monitoring.managedObjectDNsBasics":{"constraints":[],"properties":{"managedObjectDNsBasic":{"name":"managedObjectDNsBasic","type":"map","type_version":"0.0.0","description":"Managed object distinguished name object","required":true,"entry_schema":{"type":"onap.datatypes.monitoring.managedObjectDNsBasic","type_version":"0.0.0"}}},"name":"onap.datatypes.monitoring.managedObjectDNsBasics","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.monitoring.measurementGroup":{"constraints":[],"properties":{"measurementTypes":{"name":"measurementTypes","type":"list","type_version":"0.0.0","description":"List of measurement types","required":true,"entry_schema":{"type":"onap.datatypes.monitoring.measurementTypes","type_version":"0.0.0"}},"managedObjectDNsBasic":{"name":"managedObjectDNsBasic","type":"list","type_version":"0.0.0","description":"List of managed object distinguished names","required":true,"entry_sche... (set the log level to DEBUG or TRACE to see the full content) 
+ </msg>
+<msg timestamp="20220902 13:42:42.258" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:41.267" endtime="20220902 13:42:42.258"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from policy-api ${resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:42:42.261" level="INFO">Received response from policy-api {"tosca_definitions_version":"tosca_simple_yaml_1_1_0","data_types":{"onap.datatype.controlloop.Actor":{"constraints":[],"properties":{"actor":{"name":"actor","type":"string","type_version":"0.0.0","description":"The actor performing the operation.","required":true,"metadata":{"clamp_possible_values":"Dictionary:DefaultActors,ClampExecution:CDS/actor"}},"payload":{"name":"payload","type":"map","type_version":"0.0.0","description":"Name/value pairs of payload information passed by Policy to the actor","required":false,"entry_schema":{"type":"string","type_version":"0.0.0"},"metadata":{"clamp_possible_values":"ClampExecution:CDS/payload"}},"operation":{"name":"operation","type":"string","type_version":"0.0.0","description":"The operation the actor is performing.","required":true,"metadata":{"clamp_possible_values":"Dictionary:DefaultOperations,ClampExecution:CDS/operation"}},"target":{"name":"target","type":"onap.datatype.controlloop.Target","type_version":"0.0.0","description":"The resource the operation should be performed on.","required":true}},"name":"onap.datatype.controlloop.Actor","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{},"description":"An actor/operation/target definition"},"onap.datatype.controlloop.Operation":{"constraints":[],"properties":{"retries":{"name":"retries","type":"integer","type_version":"0.0.0","description":"The number of retries the actor should attempt to perform the operation.","default":0.0,"required":true},"failure_timeout":{"name":"failure_timeout","type":"string","type_version":"0.0.0","description":"Points to the operation to invoke when the time out for the operation occurs.","default":"final_failure_timeout","required":false},"success":{"name":"success","type":"string","type_version":"0.0.0","description":"Points to the operation to invoke on success. A value of \"final_success\" indicates and end to the operation.","default":"final_success","required":false},"failure":{"name":"failure","type":"string","type_version":"0.0.0","description":"Points to the operation to invoke on Actor operation failure.","default":"final_failure","required":false},"failure_exception":{"name":"failure_exception","type":"string","type_version":"0.0.0","description":"Points to the operation to invoke when the current operation causes an exception.","default":"final_failure_exception","required":false},"failure_retries":{"name":"failure_retries","type":"string","type_version":"0.0.0","description":"Points to the operation to invoke when the current operation has exceeded its max retries.","default":"final_failure_retries","required":false},"description":{"name":"description","type":"string","type_version":"0.0.0","description":"A user-friendly description of the intent for the operation","required":false},"id":{"name":"id","type":"string","type_version":"0.0.0","description":"Unique identifier for the operation","required":true},"operation":{"name":"operation","type":"onap.datatype.controlloop.Actor","type_version":"0.0.0","description":"The definition of the operation to be performed.","required":true},"failure_guard":{"name":"failure_guard","type":"string","type_version":"0.0.0","description":"Points to the operation to invoke when the current operation is blocked due to guard policy enforcement.","default":"final_failure_guard","required":false},"timeout":{"name":"timeout","type":"integer","type_version":"0.0.0","description":"The amount of time for the actor to perform the operation.","required":true}},"name":"onap.datatype.controlloop.Operation","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{},"description":"An operation supported by an actor"},"onap.datatype.controlloop.Target":{"constraints":[],"properties":{"targetType":{"name":"targetType","type":"string","type_version":"0.0.0","description":"Category for the target type","required":true,"constraints":[{"valid_values":["VNF","VM","VFMODULE","PNF"]}]},"entityIds":{"name":"entityIds","type":"map","type_version":"0.0.0","description":"Map of values that identify the resource. If none are provided, it is assumed that the\nentity that generated the ONSET event will be the target.\n","required":false,"entry_schema":{"type":"string","type_version":"0.0.0"},"metadata":{"clamp_possible_values":"ClampExecution:CSAR_RESOURCES"}}},"name":"onap.datatype.controlloop.Target","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{},"description":"Definition for a entity in A\u0026AI to perform a control loop operation on"},"onap.datatypes.dmaap.custom_serialization":{"constraints":[],"properties":{"jsonParser":{"name":"jsonParser","type":"string","type_version":"0.0.0","description":"static field in customSerialized class with the json parser (currently only gson supported)","required":true},"customSerializerClass":{"name":"customSerializerClass","type":"string","type_version":"0.0.0","description":"the class that contains the JSON parser serializer/deserializer.","required":true}},"name":"onap.datatypes.dmaap.custom_serialization","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.dmaap.events":{"constraints":[],"properties":{"eventClass":{"name":"eventClass","type":"string","type_version":"0.0.0","description":"the event canonical class for serialization","required":true},"eventFilter":{"name":"eventFilter","type":"string","type_version":"0.0.0","description":"the JSONPath based condition to filter out the events to serialize","required":false},"customSerialization":{"name":"customSerialization","type":"onap.datatypes.dmaap.custom_serialization","type_version":"0.0.0","description":"overrides the default serialization/deserialization mechanisms with custom ones","required":false}},"name":"onap.datatypes.dmaap.events","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.dmaap.topic":{"constraints":[],"properties":{"topicName":{"name":"topicName","type":"string","type_version":"0.0.0","description":"the dmaap topic name","required":true},"events":{"name":"events","type":"list","type_version":"0.0.0","description":"events used by this topic","required":true,"entry_schema":{"type":"onap.datatypes.dmaap.events","type_version":"0.0.0"}}},"name":"onap.datatypes.dmaap.topic","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.drools.controller.relation":{"constraints":[],"properties":{"name":{"name":"name","type":"string","type_version":"0.0.0","description":"the name of drools controller policy","required":true}},"name":"onap.datatypes.drools.controller.relation","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.guard.filter":{"constraints":[],"properties":{"filter":{"name":"filter","type":"string","type_version":"0.0.0","description":"The filter value itself. For example, \"RegionOne\" \"vFWCL*\"","required":true},"field":{"name":"field","type":"string","type_version":"0.0.0","description":"Name of the field to perform the filter on using the A\u0026AI \u003cnode\u003e.\u003cproperty\u003e syntax.","required":true,"constraints":[{"valid_values":["generic-vnf.vnf-name","generic-vnf.vnf-id","generic-vnf.vnf-type","generic-vnf.nf-naming-code","vserver.vserver-id","cloud-region.cloud-region-id"]}]},"function":{"name":"function","type":"string","type_version":"0.0.0","description":"The function applied to the filter.","required":true,"constraints":[{"valid_values":["string-equal","string-equal-ignore-case","string-regexp-match","string-contains","string-greater-than","string-greater-than-or-equal","string-less-than","string-less-than-or-equal","string-starts-with","string-ends-with"]}]},"blacklist":{"name":"blacklist","type":"boolean","type_version":"0.0.0","description":"Indicates if the filter should be treated as a blacklist (true)\nor whitelist (false).\n","default":true,"required":true}},"name":"onap.datatypes.guard.filter","version":"0.0.0","derived_from":"tosca.nodes.Root","metadata":{}},"onap.datatypes.monitoring.filters":{"constraints":[],"properties":{"measTypes":{"name":"measTypes","type":"list","type_version":"0.0.0","description":"Measurement types to collect","required":true,"entry_schema":{"type":"string","type_version":"0.0.0"}},"vendor":{"name":"vendor","type":"string","type_version":"0.0.0","description":"Vendor name","required":true},"nfType":{"name":"nfType","type":"string","type_version":"0.0.0","description":"NF type","required":true},"pmDefVsn":{"name":"pmDefVsn","type":"string","type_version":"0.0.0","description":"PM Dictionary version","required":true}},"name":"onap.datatypes.monitoring.filters","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.monitoring.managedObjectDNsBasic":{"constraints":[],"properties":{"DN":{"name":"DN","type":"string","type_version":"0.0.0","description":"Managed object distinguished name","required":true}},"name":"onap.datatypes.monitoring.managedObjectDNsBasic","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.monitoring.managedObjectDNsBasics":{"constraints":[],"properties":{"managedObjectDNsBasic":{"name":"managedObjectDNsBasic","type":"map","type_version":"0.0.0","description":"Managed object distinguished name object","required":true,"entry_schema":{"type":"onap.datatypes.monitoring.managedObjectDNsBasic","type_version":"0.0.0"}}},"name":"onap.datatypes.monitoring.managedObjectDNsBasics","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.monitoring.measurementGroup":{"constraints":[],"properties":{"measurementTypes":{"name":"measurementTypes","type":"list","type_version":"0.0.0","description":"List of measurement types","required":true,"entry_schema":{"type":"onap.datatypes.monitoring.measurementTypes","type_version":"0.0.0"}},"managedObjectDNsBasic":{"name":"managedObjectDNsBasic","type":"list","type_version":"0.0.0","description":"List of managed object distinguished names","required":true,"entry_schema":{"type":"onap.datatypes.monitoring.managedObjectDNsBasics","type_version":"0.0.0"}}},"name":"onap.datatypes.monitoring.measurementGroup","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.monitoring.measurementGroups":{"constraints":[],"properties":{"measurementGroup":{"name":"measurementGroup","type":"map","type_version":"0.0.0","description":"Measurement Group","required":true,"entry_schema":{"type":"onap.datatypes.monitoring.measurementGroup","type_version":"0.0.0"}}},"name":"onap.datatypes.monitoring.measurementGroups","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.monitoring.measurementType":{"constraints":[],"properties":{"measurementType":{"name":"measurementType","type":"string","type_version":"0.0.0","description":"Measurement type","required":true}},"name":"onap.datatypes.monitoring.measurementType","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.monitoring.measurementTypes":{"constraints":[],"properties":{"measurementType":{"name":"measurementType","type":"map","type_version":"0.0.0","description":"Measurement type object","required":true,"entry_schema":{"type":"onap.datatypes.monitoring.measurementType","type_version":"0.0.0"}}},"name":"onap.datatypes.monitoring.measurementTypes","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.monitoring.metricsPerEventName":{"constraints":[],"properties":{"policyVersion":{"name":"policyVersion","type":"string","type_version":"0.0.0","description":"TCA Policy Scope Version","required":true},"thresholds":{"name":"thresholds","type":"list","type_version":"0.0.0","description":"Thresholds associated with eventName","required":true,"entry_schema":{"type":"onap.datatypes.monitoring.thresholds","type_version":"0.0.0"}},"policyName":{"name":"policyName","type":"string","type_version":"0.0.0","description":"TCA Policy Scope Name","required":true},"controlLoopSchemaType":{"name":"controlLoopSchemaType","type":"string","type_version":"0.0.0","description":"Specifies Control Loop Schema Type for the event Name e.g. VNF, VM","required":true,"constraints":[{"valid_values":["VM","VNF"]}]},"policyScope":{"name":"policyScope","type":"string","type_version":"0.0.0","description":"TCA Policy Scope","required":true},"eventName":{"name":"eventName","type":"string","type_version":"0.0.0","description":"Event name to which thresholds need to be applied","required":true}},"name":"onap.datatypes.monitoring.metricsPerEventName","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.monitoring.nfFilter":{"constraints":[],"properties":{"nfNames":{"name":"nfNames","type":"list","type_version":"0.0.0","description":"List of network functions","required":true,"entry_schema":{"type":"string","type_version":"0.0.0"}},"swVersions":{"name":"swVersions","type":"list","type_version":"0.0.0","description":"List of software versions","required":true,"entry_schema":{"type":"string","type_version":"0.0.0"}}},"name":"onap.datatypes.monitoring.nfFilter","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.monitoring.pm-mapper-filter":{"constraints":[],"properties":{"filters":{"name":"filters","type":"list","type_version":"0.0.0","description":"Filter configuration","required":true,"entry_schema":{"type":"onap.datatypes.monitoring.filters","type_version":"0.0.0"}}},"name":"onap.datatypes.monitoring.pm-mapper-filter","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.monitoring.rcc_event_details":{"constraints":[],"properties":{"event_sseventsUrl":{"name":"event_sseventsUrl","type":"string","type_version":"0.0.0","description":"Explicit SSE url","required":true},"event_sseventsField":{"name":"event_sseventsField","type":"string","type_version":"0.0.0","description":"Field name to access SSE url in subscription response","required":true},"event_subscriptionTemplate":{"name":"event_subscriptionTemplate","type":"string","type_version":"0.0.0","description":"Subscription template file path","required":true},"userData":{"name":"userData","type":"string","type_version":"0.0.0","description":"The user specific data","required":false},"event_unSubscriptionTemplate":{"name":"event_unSubscriptionTemplate","type":"string","type_version":"0.0.0","description":"Unsubscription template file path","required":false},"event_sseventUrlEmbed":{"name":"event_sseventUrlEmbed","type":"boolean","type_version":"0.0.0","description":"Whether SSE url is embedded in subscription response","default":true,"required":true},"event_description":{"name":"event_description","type":"string","type_version":"0.0.0","description":"description of event","required":false},"modifyData":{"name":"modifyData","type":"boolean","type_version":"0.0.0","description":"Whether to modify the received SSE event","default":false,"required":true},"modifyMethod":{"name":"modifyMethod","type":"string","type_version":"0.0.0","description":"The java method name to modify data","required":false},"event_name":{"name":"event_name","type":"string","type_version":"0.0.0","description":"event name","required":true},"event_ruleId":{"name":"event_ruleId","type":"integer","type_version":"0.0.0","description":"Rule Id","required":false}},"name":"onap.datatypes.monitoring.rcc_event_details","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.monitoring.rcc_policy":{"constraints":[],"properties":{"controller_accessTokenUrl":{"name":"controller_accessTokenUrl","type":"string","type_version":"0.0.0","description":"URL to get access token","required":true},"controller_disableSsl":{"name":"controller_disableSsl","type":"boolean","type_version":"0.0.0","description":"Option to disable ssl","default":true,"required":true},"controller_restapiPassword":{"name":"controller_restapiPassword","type":"string","type_version":"0.0.0","description":"Controller\u0027s password","required":true},"controller_accessTokenMethod":{"name":"controller_accessTokenMethod","type":"string","type_version":"0.0.0","description":"Access token method POST/GET/PUT etc","required":true,"constraints":[{"valid_values":["post","get","put"]}]},"controller_subsMethod":{"name":"controller_subsMethod","type":"string","type_version":"0.0.0","description":"Subscription method POST/GET/PUT etc","default":"post","required":true,"constraints":[{"valid_values":["post","get","put"]}]},"controller_accessTokenFile":{"name":"controller_accessTokenFile","type":"string","type_version":"0.0.0","description":"Access token file path","required":true},"controller_subscriptionUrl":{"name":"controller_subscriptionUrl","type":"string","type_version":"0.0.0","description":"URL to establish subscription","required":true},"controller_restapiUser":{"name":"controller_restapiUser","type":"string","type_version":"0.0.0","description":"Controller\u0027s username","required":true},"controller_name":{"name":"controller_name","type":"string","type_version":"0.0.0","description":"Name of controller","required":true},"controller_restapiUrl":{"name":"controller_restapiUrl","type":"string","type_version":"0.0.0","description":"Controller\u0027s ip and port","required":true},"event_details":{"name":"event_details","type":"list","type_version":"0.0.0","description":"event details","required":true,"entry_schema":{"type":"onap.datatypes.monitoring.rcc_event_details","type_version":"0.0.0"}}},"name":"onap.datatypes.monitoring.rcc_policy","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.monitoring.subscription":{"constraints":[],"properties":{"administrativeState":{"name":"administrativeState","type":"string","type_version":"0.0.0","description":"State of the subscription","required":true,"constraints":[{"valid_values":["LOCKED","UNLOCKED"]}]},"subscriptionName":{"name":"subscriptionName","type":"string","type_version":"0.0.0","description":"Name of the subscription","required":true},"measurementGroups":{"name":"measurementGroups","type":"list","type_version":"0.0.0","description":"Measurement Groups","required":true,"entry_schema":{"type":"onap.datatypes.monitoring.measurementGroups","type_version":"0.0.0"}},"fileBasedGP":{"name":"fileBasedGP","type":"integer","type_version":"0.0.0","description":"File based granularity period","required":true},"nfFilter":{"name":"nfFilter","type":"map","type_version":"0.0.0","description":"Network function filter","required":true,"entry_schema":{"type":"onap.datatypes.monitoring.nfFilter","type_version":"0.0.0"}},"fileLocation":{"name":"fileLocation","type":"string","type_version":"0.0.0","description":"ROP file location","required":true},"nfTypeModelInvariantId":{"name":"nfTypeModelInvariantId","type":"string","type_version":"0.0.0","description":"Network function invariant ID","required":true}},"name":"onap.datatypes.monitoring.subscription","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.monitoring.tca_policy":{"constraints":[],"properties":{"domain":{"name":"domain","type":"string","type_version":"0.0.0","description":"Domain name to which TCA needs to be applied","default":"measurementsForVfScaling","required":true,"constraints":[{"equal":"measurementsForVfScaling"}]},"metricsPerEventName":{"name":"metricsPerEventName","type":"list","type_version":"0.0.0","description":"Contains eventName and threshold details that need to be applied to given eventName","required":true,"entry_schema":{"type":"onap.datatypes.monitoring.metricsPerEventName","type_version":"0.0.0"}}},"name":"onap.datatypes.monitoring.tca_policy","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.monitoring.thresholds":{"constraints":[],"properties":{"severity":{"name":"severity","type":"string","type_version":"0.0.0","description":"Threshold Event Severity","required":true,"constraints":[{"valid_values":["CRITICAL","MAJOR","MINOR","WARNING","NORMAL"]}]},"fieldPath":{"name":"fieldPath","type":"string","type_version":"0.0.0","description":"Json field Path as per CEF message which needs to be analyzed for TCA","required":true,"constraints":[{"valid_values":["$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedTotalPacketsDelta","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedOctetsDelta","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedUnicastPacketsDelta","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedMulticastPacketsDelta","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsDelta","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedDiscardedPacketsDelta","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedErrorPacketsDelta","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedTotalPacketsAccumulated","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedOctetsAccumulated","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedUnicastPacketsAccumulated","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedMulticastPacketsAccumulated","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedBroadcastPacketsAccumulated","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedDiscardedPacketsAccumulated","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].receivedErrorPacketsAccumulated","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].transmittedTotalPacketsDelta","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].transmittedOctetsDelta","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].transmittedUnicastPacketsDelta","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].transmittedMulticastPacketsDelta","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].transmittedBroadcastPacketsDelta","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].transmittedDiscardedPacketsDelta","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].transmittedErrorPacketsDelta","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].transmittedTotalPacketsAccumulated","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].transmittedOctetsAccumulated","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].transmittedUnicastPacketsAccumulated","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].transmittedMulticastPacketsAccumulated","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].transmittedBroadcastPacketsAccumulated","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].transmittedDiscardedPacketsAccumulated","$.event.measurementsForVfScalingFields.vNicPerformanceArray[*].transmittedErrorPacketsAccumulated","$.event.measurementsForVfScalingFields.cpuUsageArray[*].cpuIdle","$.event.measurementsForVfScalingFields.cpuUsageArray[*].cpuUsageInterrupt","$.event.measurementsForVfScalingFields.cpuUsageArray[*].cpuUsageNice","$.event.measurementsForVfScalingFields.cpuUsageArray[*].cpuUsageSoftIrq","$.event.measurementsForVfScalingFields.cpuUsageArray[*].cpuUsageSteal","$.event.measurementsForVfScalingFields.cpuUsageArray[*].cpuUsageSystem","$.event.measurementsForVfScalingFields.cpuUsageArray[*].cpuWait","$.event.measurementsForVfScalingFields.cpuUsageArray[*].percentUsage","$.event.measurementsForVfScalingFields.meanRequestLatency","$.event.measurementsForVfScalingFields.memoryUsageArray[*].memoryBuffered","$.event.measurementsForVfScalingFields.memoryUsageArray[*].memoryCached","$.event.measurementsForVfScalingFields.memoryUsageArray[*].memoryConfigured","$.event.measurementsForVfScalingFields.memoryUsageArray[*].memoryFree","$.event.measurementsForVfScalingFields.memoryUsageArray[*].memoryUsed","$.event.measurementsForVfScalingFields.additionalMeasurements[*].arrayOfFields[0].value"]}]},"thresholdValue":{"name":"thresholdValue","type":"integer","type_version":"0.0.0","description":"Threshold value for the field Path inside CEF message","required":true},"closedLoopEventStatus":{"name":"closedLoopEventStatus","type":"string","type_version":"0.0.0","description":"Closed Loop Event Status of the threshold","required":true,"constraints":[{"valid_values":["ONSET","ABATED"]}]},"closedLoopControlName":{"name":"closedLoopControlName","type":"string","type_version":"0.0.0","description":"Closed Loop Control Name associated with the threshold","required":true},"version":{"name":"version","type":"string","type_version":"0.0.0","description":"Version number associated with the threshold","required":true},"direction":{"name":"direction","type":"string","type_version":"0.0.0","description":"Direction of the threshold","required":true,"constraints":[{"valid_values":["LESS","LESS_OR_EQUAL","GREATER","GREATER_OR_EQUAL","EQUAL"]}]}},"name":"onap.datatypes.monitoring.thresholds","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.native.apex.CarrierTechnology":{"constraints":[],"properties":{"plugin_parameter_class_name":{"name":"plugin_parameter_class_name","type":"string","type_version":"0.0.0","description":"The class name of the class that overrides default handling of event input or output for this carrier technology, defaults to the supplied input or output class","required":false},"label":{"name":"label","type":"string","type_version":"0.0.0","description":"The label (name) of the carrier technology (such as REST, Kafka, WebSocket)","required":true}},"name":"onap.datatypes.native.apex.CarrierTechnology","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.native.apex.EngineService":{"constraints":[],"properties":{"engine":{"name":"engine","type":"onap.datatypes.native.apex.engineservice.Engine","type_version":"0.0.0","description":"The parameters for all engines in the APEX engine service","required":true},"periodic_event_period":{"name":"periodic_event_period","type":"string","type_version":"0.0.0","description":"The time interval in milliseconds for the periodic scanning event, 0 means don\u0027t scan","required":false},"policy_type_impl":{"name":"policy_type_impl","type":"string","type_version":"0.0.0","description":"The policy type implementation from which to read the APEX policy model","required":false},"name":{"name":"name","type":"string","type_version":"0.0.0","description":"Specifies the engine name","default":"ApexEngineService","required":false},"deployment_port":{"name":"deployment_port","type":"integer","type_version":"0.0.0","description":"Specifies the port to connect to for engine administration","default":1.0,"required":false},"policy_model_file_name":{"name":"policy_model_file_name","type":"string","type_version":"0.0.0","description":"The name of the file from which to read the APEX policy model","required":false},"id":{"name":"id","type":"integer","type_version":"0.0.0","description":"Specifies the engine id","required":true},"version":{"name":"version","type":"string","type_version":"0.0.0","description":"Specifies the engine version in double dotted format","default":"1.0.0","required":false},"instance_count":{"name":"instance_count","type":"integer","type_version":"0.0.0","description":"Specifies the number of engine threads that should be run","required":true}},"name":"onap.datatypes.native.apex.EngineService","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.native.apex.Environment":{"constraints":[],"properties":{"name":{"name":"name","type":"string","type_version":"0.0.0","description":"The name of the environment variable","required":true},"value":{"name":"value","type":"string","type_version":"0.0.0","description":"The value of the environment variable","required":true}},"name":"onap.datatypes.native.apex.Environment","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.native.apex.EventHandler":{"constraints":[],"properties":{"event_name_filter":{"name":"event_name_filter","type":"string","type_version":"0.0.0","description":"Specifies a filter as a regular expression, events that do not match the filter are dropped, the default is to let all events through","required":false},"synchronous_mode":{"name":"synchronous_mode","type":"boolean","type_version":"0.0.0","description":"Specifies the event handler is syncronous (receive event and send response)","default":false,"required":false},"synchronous_peer":{"name":"synchronous_peer","type":"string","type_version":"0.0.0","description":"The peer event handler (output for input or input for output) of this event handler in synchronous mode, this parameter is mandatory if the event handler is in synchronous mode","required":false},"name":{"name":"name","type":"string","type_version":"0.0.0","description":"Specifies the event handler name, if not specified this is set to the key name","required":false},"event_name":{"name":"event_name","type":"string","type_version":"0.0.0","description":"Specifies the event name for events on this event handler, if not specified, the event name is read from or written to the event being received or sent","required":false},"event_protocol":{"name":"event_protocol","type":"onap.datatypes.native.apex.EventProtocol","type_version":"0.0.0","description":"Specifies the event protocol of events for the event handler (such as Yaml/JSON/XML/POJO)","required":true},"requestor_timeout":{"name":"requestor_timeout","type":"integer","type_version":"0.0.0","description":"The timeout in milliseconds for wait for responses to requests, this parameter is mandatory if the event handler is in requestor mode","required":false},"synchronous_timeout":{"name":"synchronous_timeout","type":"integer","type_version":"0.0.0","description":"The timeout in milliseconds for responses to be issued by APEX torequests, this parameter is mandatory if the event handler is in synchronous mode","required":false},"requestor_mode":{"name":"requestor_mode","type":"boolean","type_version":"0.0.0","description":"Specifies the event handler is in requestor mode (send event and wait for response mode)","default":false,"required":false},"carrier_technology":{"name":"carrier_technology","type":"onap.datatypes.native.apex.CarrierTechnology","type_version":"0.0.0","description":"Specifies the carrier technology of the event handler (such as REST/Web Socket/Kafka)","required":true},"requestor_peer":{"name":"requestor_peer","type":"string","type_version":"0.0.0","description":"The peer event handler (output for input or input for output) of this event handler in requestor mode, this parameter is mandatory if the event handler is in requestor mode","required":false}},"name":"onap.datatypes.native.apex.EventHandler","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.native.apex.EventProtocol":{"constraints":[],"properties":{"event_protocol_plugin_class":{"name":"event_protocol_plugin_class","type":"string","type_version":"0.0.0","description":"The class name of the class that overrides default handling of the event protocol for this carrier technology, defaults to the supplied event protocol class","required":false},"label":{"name":"label","type":"string","type_version":"0.0.0","description":"The label (name) of the event protocol (such as Yaml, JSON, XML, or POJO)","required":true}},"name":"onap.datatypes.native.apex.EventProtocol","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.native.apex.Plugin":{"constraints":[],"properties":{"plugin_class_name":{"name":"plugin_class_name","type":"string","type_version":"0.0.0","description":"The class path of the plugin class for this executor","required":false},"name":{"name":"name","type":"string","type_version":"0.0.0","description":"The name of the executor such as Javascript, Jython or MVEL","required":true}},"name":"onap.datatypes.native.apex.Plugin","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.native.apex.engineservice.Engine":{"constraints":[],"properties":{"context":{"name":"context","type":"onap.datatypes.native.apex.engineservice.engine.Context","type_version":"0.0.0","description":"The properties for handling context in APEX engines, defaults to using Java maps for context","required":false},"executors":{"name":"executors","type":"map","type_version":"0.0.0","description":"The plugins for policy executors used in engines such as javascript, MVEL, Jython","required":true,"entry_schema":{"type":"string","type_version":"0.0.0","description":"The plugin class path for this policy executor"}}},"name":"onap.datatypes.native.apex.engineservice.Engine","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.native.apex.engineservice.engine.Context":{"constraints":[],"properties":{"schemas":{"name":"schemas","type":"map","type_version":"0.0.0","description":"The plugins for context schemas available in APEX PDPs such as Java and Avro","required":false,"entry_schema":{"type":"onap.datatypes.native.apex.Plugin","type_version":"0.0.0"}},"locking":{"name":"locking","type":"onap.datatypes.native.apex.Plugin","type_version":"0.0.0","description":"The plugin to be used for locking context in and between APEX PDPs at runtime","required":false},"persistence":{"name":"persistence","type":"onap.datatypes.native.apex.Plugin","type_version":"0.0.0","description":"The plugin to be used for persisting context for APEX PDPs at runtime","required":false},"distributor":{"name":"distributor","type":"onap.datatypes.native.apex.Plugin","type_version":"0.0.0","description":"The plugin to be used for distributing context between APEX PDPs at runtime","required":false}},"name":"onap.datatypes.native.apex.engineservice.engine.Context","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"onap.datatypes.native.rules_artifact":{"constraints":[],"properties":{"groupId":{"name":"groupId","type":"string","type_version":"0.0.0","description":"the groupId of the maven artifact","required":true},"artifactId":{"name":"artifactId","type":"string","type_version":"0.0.0","description":"the artifactId of the maven artifact","required":true},"version":{"name":"version","type":"string","type_version":"0.0.0","description":"the version of the maven artifact","required":true}},"name":"onap.datatypes.native.rules_artifact","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"policy.data.affinityProperties_properties":{"constraints":[],"properties":{"qualifier":{"name":"qualifier","type":"string","type_version":"0.0.0","required":false,"constraints":[{"valid_values":["same","different"]}]},"category":{"name":"category","type":"string","type_version":"0.0.0","required":true}},"name":"policy.data.affinityProperties_properties","version":"0.0.0","derived_from":"tosca.nodes.Root","metadata":{}},"policy.data.capacityProperties_properties":{"constraints":[],"properties":{"request":{"name":"request","type":"string","type_version":"0.0.0","required":true},"controller":{"name":"controller","type":"string","type_version":"0.0.0","required":true}},"name":"policy.data.capacityProperties_properties","version":"0.0.0","derived_from":"tosca.nodes.Root","metadata":{}},"policy.data.directives_attributes_properties":{"constraints":[],"properties":{"attribute_name":{"name":"attribute_name","type":"string","type_version":"0.0.0","required":false},"attribute_value":{"name":"attribute_value","type":"string","type_version":"0.0.0","required":false}},"name":"policy.data.directives_attributes_properties","version":"0.0.0","derived_from":"tosca.nodes.Root","metadata":{}},"policy.data.directives_properties":{"constraints":[],"properties":{"attributes":{"name":"attributes","type":"list","type_version":"0.0.0","required":false,"entry_schema":{"type":"policy.data.directives_attributes_properties","type_version":"0.0.0"}},"type":{"name":"type","type":"string","type_version":"0.0.0","required":false}},"name":"policy.data.directives_properties","version":"0.0.0","derived_from":"tosca.nodes.Root","metadata":{}},"policy.data.distanceProperties_properties":{"constraints":[],"properties":{"locationInfo":{"name":"locationInfo","type":"string","type_version":"0.0.0","required":true},"distance":{"name":"distance","type":"policy.data.distance_properties","type_version":"0.0.0","required":true,"entry_schema":{"type":"policy.data.distance_properties","type_version":"0.0.0"}}},"name":"policy.data.distanceProperties_properties","version":"0.0.0","derived_from":"tosca.nodes.Root","metadata":{}},"policy.data.distance_properties":{"constraints":[],"properties":{"unit":{"name":"unit","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"string","type_version":"0.0.0","constraints":[{"valid_values":["km"]}]}},"value":{"name":"value","type":"string","type_version":"0.0.0","required":true},"operator":{"name":"operator","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"string","type_version":"0.0.0","constraints":[{"valid_values":["\u003c","\u003c\u003d","\u003e","\u003e\u003d","\u003d"]}]}}},"name":"policy.data.distance_properties","version":"0.0.0","derived_from":"tosca.nodes.Root","metadata":{}},"policy.data.flavorFeatures_properties":{"constraints":[],"properties":{"directives":{"name":"directives","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"policy.data.directives_properties","type_version":"0.0.0"}},"flavorProperties":{"name":"flavorProperties","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"policy.data.flavorProperties_properties","type_version":"0.0.0"}},"id":{"name":"id","type":"string","type_version":"0.0.0","required":true},"type":{"name":"type","type":"string","type_version":"0.0.0","required":true}},"name":"policy.data.flavorFeatures_properties","version":"0.0.0","derived_from":"tosca.nodes.Root","metadata":{}},"policy.data.flavorProperties_properties":{"constraints":[],"properties":{"score":{"name":"score","type":"string","type_version":"0.0.0","required":false},"directives":{"name":"directives","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"policy.data.directives_properties","type_version":"0.0.0"}},"hpa-feature-attributes":{"name":"hpa-feature-attributes","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"policy.data.hpa-feature-attributes_properties","type_version":"0.0.0"}},"hpa-version":{"name":"hpa-version","type":"string","type_version":"0.0.0","required":true},"hpa-feature":{"name":"hpa-feature","type":"string","type_version":"0.0.0","required":true},"mandatory":{"name":"mandatory","type":"string","type_version":"0.0.0","required":true},"architecture":{"name":"architecture","type":"string","type_version":"0.0.0","required":true}},"name":"policy.data.flavorProperties_properties","version":"0.0.0","derived_from":"tosca.nodes.Root","metadata":{}},"policy.data.hpa-feature-attributes_properties":{"constraints":[],"properties":{"hpa-attribute-value":{"name":"hpa-attribute-value","type":"string","type_version":"0.0.0","required":true},"unit":{"name":"unit","type":"string","type_version":"0.0.0","required":false},"hpa-attribute-key":{"name":"hpa-attribute-key","type":"string","type_version":"0.0.0","required":true},"operator":{"name":"operator","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"string","type_version":"0.0.0","constraints":[{"valid_values":["\u003c","\u003c\u003d","\u003e","\u003e\u003d","\u003d","!\u003d","any","all","subset"]}]}}},"name":"policy.data.hpa-feature-attributes_properties","version":"0.0.0","derived_from":"tosca.nodes.Root","metadata":{}},"policy.data.increment-sequence":{"constraints":[],"properties":{"max":{"name":"max","type":"string","type_version":"0.0.0","required":false},"scope":{"name":"scope","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"string","type_version":"0.0.0","constraints":[{"valid_values":["CLOUD_REGION_ID","LOCATION_CLLI","VNF","VM","VFMODULE","PRECEEDING","TRAILING","ENTIRETY"]}]}},"start-value":{"name":"start-value","type":"string","type_version":"0.0.0","required":true},"length":{"name":"length","type":"string","type_version":"0.0.0","required":true},"increment":{"name":"increment","type":"string","type_version":"0.0.0","required":true},"sequence-type":{"name":"sequence-type","type":"string","type_version":"0.0.0","required":false,"entry_schema":{"type":"string","type_version":"0.0.0","constraints":[{"valid_values":["numeric","alpha-numeric"]}]}}},"name":"policy.data.increment-sequence","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"policy.data.naming-model-entity":{"constraints":[],"properties":{"naming-properties":{"name":"naming-properties","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"policy.data.naming-property","type_version":"0.0.0"}},"name-operation":{"name":"name-operation","type":"string","type_version":"0.0.0","required":false},"nfRole":{"name":"nfRole","type":"string","type_version":"0.0.0","required":false,"metadata":{"matchable":"true"}},"naming-type":{"name":"naming-type","type":"string","type_version":"0.0.0","required":true,"metadata":{"matchable":"true"}},"naming-recipe":{"name":"naming-recipe","type":"string","type_version":"0.0.0","required":true}},"name":"policy.data.naming-model-entity","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"policy.data.naming-property":{"constraints":[],"properties":{"property-value":{"name":"property-value","type":"string","type_version":"0.0.0","required":false},"property-operation":{"name":"property-operation","type":"string","type_version":"0.0.0","required":false},"source-endpoint":{"name":"source-endpoint","type":"string","type_version":"0.0.0","required":false},"property-name":{"name":"property-name","type":"string","type_version":"0.0.0","required":true,"metadata":{"matchable":"true"}},"increment-sequence":{"name":"increment-sequence","type":"policy.data.increment-sequence","type_version":"0.0.0","required":false},"source-system":{"name":"source-system","type":"string","type_version":"0.0.0","required":false}},"name":"policy.data.naming-property","version":"0.0.0","derived_from":"tosca.datatypes.Root","metadata":{}},"policy.data.objectiveParameter_properties":{"constraints":[],"properties":{"parameterAttributes":{"name":"parameterAttributes","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"policy.data.parameterAttributes_properties","type_version":"0.0.0"}},"operator":{"name":"operator","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"string","type_version":"0.0.0","constraints":[{"valid_values":["*","+","-","/","%"]}]}}},"name":"policy.data.objectiveParameter_properties","version":"0.0.0","derived_from":"tosca.nodes.Root","metadata":{}},"policy.data.parameterAttributes_properties":{"constraints":[],"properties":{"customerLocationInfo":{"name":"customerLocationInfo","type":"string","type_version":"0.0.0","required":true},"parameter":{"name":"parameter","type":"string","type_version":"0.0.0","required":true},"resources":{"name":"resources","type":"string","type_version":"0.0.0","required":true},"weight":{"name":"weight","type":"string","type_version":"0.0.0","required":true},"operator":{"name":"operator","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"string","type_version":"0.0.0","constraints":[{"valid_values":["*","+","-","/","%"]}]}}},"name":"policy.data.parameterAttributes_properties","version":"0.0.0","derived_from":"tosca.nodes.Root","metadata":{}},"policy.data.pciProperties_properties":{"constraints":[],"properties":{"pciOptimizationNwConstraint":{"name":"pciOptimizationNwConstraint","type":"string","type_version":"0.0.0","required":false},"pciOptimizationTimeConstraint":{"name":"pciOptimizationTimeConstraint","type":"string","type_version":"0.0.0","required":false},"algoCategory":{"name":"algoCategory","type":"string","type_version":"0.0.0","required":false},"pciOptmizationAlgoName":{"name":"pciOptmizationAlgoName","type":"string","type_version":"0.0.0","required":false},"pciOptimizationPriority":{"name":"pciOptimizationPriority","type":"string","type_version":"0.0.0","required":false}},"name":"policy.data.pciProperties_properties","version":"0.0.0","derived_from":"tosca.nodes.Root","metadata":{}},"policy.data.queryProperties_properties":{"constraints":[],"properties":{"attribute_location":{"name":"attribute_location","type":"string","type_version":"0.0.0","required":true},"attribute":{"name":"attribute","type":"string","type_version":"0.0.0","required":true},"value":{"name":"value","type":"string","type_version":"0.0.0","required":true}},"name":"policy.data.queryProperties_properties","version":"0.0.0","derived_from":"tosca.nodes.Root","metadata":{}},"policy.data.subscriberProperties_properties":{"constraints":[],"properties":{"provStatus":{"name":"provStatus","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"string","type_version":"0.0.0"},"metadata":{"contextAttribute":"true"}},"subscriberName":{"name":"subscriberName","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"string","type_version":"0.0.0"},"metadata":{"contextProvider":"true"}},"subscriberRole":{"name":"subscriberRole","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"string","type_version":"0.0.0"},"metadata":{"contextMatchable":"scope"}}},"name":"policy.data.subscriberProperties_properties","version":"0.0.0","derived_from":"tosca.nodes.Root","metadata":{}},"policy.data.vnfProperties_properties":{"constraints":[],"properties":{"inventoryProvider":{"name":"inventoryProvider","type":"string","type_version":"0.0.0","required":true},"serviceType":{"name":"serviceType","type":"string","type_version":"0.0.0","required":true},"inventoryType":{"name":"inventoryType","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"string","type_version":"0.0.0","constraints":[{"valid_values":["serviceInstanceId","vnfName","cloudRegionId","vimId"]}]}},"customerId":{"name":"customerId","type":"string","type_version":"0.0.0","required":true}},"name":"policy.data.vnfProperties_properties","version":"0.0.0","derived_from":"tosca.nodes.Root","metadata":{}}},"policy_types":{"onap.policies.Match":{"properties":{},"name":"onap.policies.Match","version":"1.0.0","derived_from":"tosca.policies.Root","metadata":{},"description":"Base Policy Type for matchable Policies"},"onap.policies.Monitoring":{"properties":{},"name":"onap.policies.Monitoring","version":"1.0.0","derived_from":"tosca.policies.Root","metadata":{},"description":"a base policy type for all policies that govern monitoring provisioning"},"onap.policies.Naming":{"properties":{"policy-instance-name":{"name":"policy-instance-name","type":"string","type_version":"0.0.0","required":false},"naming-models":{"name":"naming-models","type":"list","type_version":"0.0.0","required":false,"entry_schema":{"type":"policy.data.naming-model-entity","type_version":"0.0.0"}}},"name":"onap.policies.Naming","version":"1.0.0","derived_from":"tosca.policies.Root","metadata":{},"description":"Virtual policy node for naming"},"onap.policies.Native":{"properties":{},"name":"onap.policies.Native","version":"1.0.0","derived_from":"tosca.policies.Root","metadata":{},"description":"a base policy type for all native PDP policies"},"onap.policies.Optimization":{"properties":{"geography":{"name":"geography","type":"list","type_version":"0.0.0","description":"One or more geographic regions","required":true,"entry_schema":{"type":"string","type_version":"0.0.0","constraints":[{"valid_values":["US","International"]}]},"metadata":{"matchable":"true"}},"identity":{"name":"identity","type":"string","type_version":"0.0.0","description":"Used internally for identification","required":true},"scope":{"name":"scope","type":"list","type_version":"0.0.0","description":"Scope for the policy - could be for a specific release.","required":true,"entry_schema":{"type":"string","type_version":"0.0.0"},"metadata":{"matchable":"true"}}},"name":"onap.policies.Optimization","version":"1.0.0","derived_from":"tosca.policies.Root","metadata":{},"description":"The base policy type for all policies that govern optimization"},"onap.policies.controlloop.Guard":{"properties":{},"name":"onap.policies.controlloop.Guard","version":"1.0.0","derived_from":"tosca.policies.Root","metadata":{},"description":"Guard Policies for Control Loop Operational Policies"},"onap.policies.controlloop.guard.Common":{"properties":{"actor":{"name":"actor","type":"string","type_version":"0.0.0","description":"Specifies the Actor the guard applies to.","required":true},"id":{"name":"id","type":"string","type_version":"0.0.0","description":"The Control Loop id this applies to.","required":false},"operation":{"name":"operation","type":"string","type_version":"0.0.0","description":"Specified the operation that the actor is performing the guard applies to.","required":true},"timeRange":{"name":"timeRange","type":"tosca.datatypes.TimeInterval","type_version":"0.0.0","description":"An optional range of time during the day the guard policy is valid for.\n","required":false}},"name":"onap.policies.controlloop.guard.Common","version":"1.0.0","derived_from":"tosca.policies.Root","metadata":{},"description":"This is the base Policy Type for Guard policies that guard the execution of Operational\nPolicies.\n"},"onap.policies.controlloop.guard.Coordination":{"properties":{},"name":"onap.policies.controlloop.guard.Coordination","version":"1.0.0","derived_from":"onap.policies.controlloop.Guard","metadata":{},"description":"Guard Policies for Control Loop Coordination"},"onap.policies.controlloop.guard.common.Blacklist":{"properties":{"blacklist":{"name":"blacklist","type":"list","type_version":"0.0.0","description":"List of entity id\u0027s not allowed to have control loop operations on.","required":true,"entry_schema":{"type":"string","type_version":"0.0.0"}}},"name":"onap.policies.controlloop.guard.common.Blacklist","version":"1.0.0","derived_from":"onap.policies.controlloop.guard.Common","metadata":{},"description":"Supports blacklist of entity id\u0027s from performing control loop actions on."},"onap.policies.controlloop.guard.common.Filter":{"properties":{"filters":{"name":"filters","type":"list","type_version":"0.0.0","description":"List of filters to be applied.","required":true,"entry_schema":{"type":"onap.datatypes.guard.filter","type_version":"0.0.0"}},"algorithm":{"name":"algorithm","type":"string","type_version":"0.0.0","description":"Designates the precendence of blacklist vs whitelist","default":"blacklist-overrides","required":true,"constraints":[{"valid_values":["blacklist-overrides","whitelist-overrides"]}]}},"name":"onap.policies.controlloop.guard.common.Filter","version":"1.0.0","derived_from":"onap.policies.controlloop.guard.Common","metadata":{},"description":"Supports filtering of A\u0026AI entities such as vnf-id, type, service, geographic region, etc."},"onap.policies.controlloop.guard.common.FrequencyLimiter":{"properties":{"timeWindow":{"name":"timeWindow","type":"integer","type_version":"0.0.0","description":"The time window to count the actions against.","required":true},"limit":{"name":"limit","type":"integer","type_version":"0.0.0","description":"The limit","required":true,"constraints":[{"greater_than":"0"}]},"timeUnits":{"name":"timeUnits","type":"string","type_version":"0.0.0","description":"The units of time the window is counting.","required":true,"constraints":[{"valid_values":["second","minute","hour","day","week","month","year"]}]}},"name":"onap.policies.controlloop.guard.common.FrequencyLimiter","version":"1.0.0","derived_from":"onap.policies.controlloop.guard.Common","metadata":{},"description":"Supports limiting the frequency of actions being taken by a Actor."},"onap.policies.controlloop.guard.common.MinMax":{"properties":{"min":{"name":"min","type":"integer","type_version":"0.0.0","description":"The minimum instances of this entity","required":false},"max":{"name":"max","type":"integer","type_version":"0.0.0","description":"The maximum instances of this entity","required":false},"target":{"name":"target","type":"string","type_version":"0.0.0","description":"The target entity that has scaling restricted","required":true}},"name":"onap.policies.controlloop.guard.common.MinMax","version":"1.0.0","derived_from":"onap.policies.controlloop.guard.Common","metadata":{},"description":"Supports Min/Max number of entity for scaling operations. Although min and max fields are marked as not\nrequired, you need to have at least one or the other.\n"},"onap.policies.controlloop.guard.coordination.FirstBlocksSecond":{"properties":{"controlLoop":{"name":"controlLoop","type":"list","type_version":"0.0.0","description":"Specific Control Loops to which to apply this guard","required":true,"entry_schema":{"type":"string","type_version":"0.0.0"}}},"name":"onap.policies.controlloop.guard.coordination.FirstBlocksSecond","version":"1.0.0","derived_from":"onap.policies.controlloop.guard.Coordination","metadata":{},"description":"Supports one Control Loop blocking another"},"onap.policies.controlloop.operational.Common":{"properties":{"operations":{"name":"operations","type":"list","type_version":"0.0.0","description":"List of operations to be performed when Control Loop is triggered.","required":true,"entry_schema":{"type":"onap.datatype.controlloop.Operation","type_version":"0.0.0"}},"id":{"name":"id","type":"string","type_version":"0.0.0","description":"The unique control loop id.","required":true},"trigger":{"name":"trigger","type":"string","type_version":"0.0.0","description":"Initial operation to execute upon receiving an Onset event message for the Control Loop.","required":true},"abatement":{"name":"abatement","type":"boolean","type_version":"0.0.0","description":"Whether an abatement event message will be expected for the control loop from DCAE.","default":false,"required":true},"timeout":{"name":"timeout","type":"integer","type_version":"0.0.0","description":"Overall timeout for executing all the operations. This timeout should equal or exceed the total\ntimeout for each operation listed.\n","required":true}},"name":"onap.policies.controlloop.operational.Common","version":"1.0.0","derived_from":"tosca.policies.Root","metadata":{},"description":"Operational Policy for Control Loop execution. Originated in Frankfurt to support TOSCA Compliant\nPolicy Types. This does NOT support the legacy Policy YAML policy type.\n"},"onap.policies.controlloop.operational.common.Apex":{"properties":{"engineServiceParameters":{"name":"engineServiceParameters","type":"string","type_version":"0.0.0","description":"The engine parameters like name, instanceCount, policy implementation, parameters etc.","required":true},"javaProperties":{"name":"javaProperties","type":"string","type_version":"0.0.0","description":"Name/value pairs of properties to be set for APEX if needed.","required":false},"eventInputParameters":{"name":"eventInputParameters","type":"string","type_version":"0.0.0","description":"The event input parameters.","required":true},"eventOutputParameters":{"name":"eventOutputParameters","type":"string","type_version":"0.0.0","description":"The event output parameters.","required":true}},"name":"onap.policies.controlloop.operational.common.Apex","version":"1.0.0","derived_from":"onap.policies.controlloop.operational.Common","metadata":{},"description":"Operational policies for Apex PDP"},"onap.policies.controlloop.operational.common.Drools":{"properties":{"controllerName":{"name":"controllerName","type":"string","type_version":"0.0.0","description":"Drools controller properties","required":false}},"name":"onap.policies.controlloop.operational.common.Drools","version":"1.0.0","derived_from":"onap.policies.controlloop.operational.Common","metadata":{},"description":"Operational policies for Drools PDP"},"onap.policies.monitoring.dcae-pm-mapper":{"properties":{"pm-mapper-filter":{"name":"pm-mapper-filter","type":"map","type_version":"0.0.0","description":"PM mapper filter on measInfo, measInfoId, measType, instanceId","required":false,"entry_schema":{"type":"onap.datatypes.monitoring.pm-mapper-filter","type_version":"0.0.0"}}},"name":"onap.policies.monitoring.dcae-pm-mapper","version":"1.0.0","derived_from":"onap.policies.Monitoring","metadata":{}},"onap.policies.monitoring.dcae-pm-subscription-handler":{"properties":{"subscription":{"name":"subscription","type":"map","type_version":"0.0.0","description":"PM Subscription Handler Subscription","required":false,"entry_schema":{"type":"onap.datatypes.monitoring.subscription","type_version":"0.0.0"}}},"name":"onap.policies.monitoring.dcae-pm-subscription-handler","version":"1.0.0","derived_from":"onap.policies.Monitoring","metadata":{}},"onap.policies.monitoring.dcae-restconfcollector":{"properties":{"rcc_policy":{"name":"rcc_policy","type":"list","type_version":"0.0.0","description":"RCC Policy JSON","required":false,"entry_schema":{"type":"onap.datatypes.monitoring.rcc_policy","type_version":"0.0.0"}}},"name":"onap.policies.monitoring.dcae-restconfcollector","version":"1.0.0","derived_from":"onap.policies.Monitoring","metadata":{}},"onap.policies.monitoring.dcaegen2.collectors.datafile.datafile-app-server":{"properties":{"datafile.policy":{"name":"datafile.policy","type":"string","type_version":"0.0.0","description":"datafile Policy JSON as string","required":false},"buscontroller_feed_publishing_endpoint":{"name":"buscontroller_feed_publishing_endpoint","type":"string","type_version":"0.0.0","description":"DMAAP Bus Controller feed endpoint","required":false}},"name":"onap.policies.monitoring.dcaegen2.collectors.datafile.datafile-app-server","version":"1.0.0","derived_from":"onap.policies.Monitoring","metadata":{}},"onap.policies.monitoring.tcagen2":{"properties":{"tca.policy":{"name":"tca.policy","type":"onap.datatypes.monitoring.tca_policy","type_version":"0.0.0","description":"TCA Policy JSON","required":true}},"name":"onap.policies.monitoring.tcagen2","version":"1.0.0","derived_from":"onap.policies.Monitoring","metadata":{}},"onap.policies.native.Apex":{"properties":{"outputs":{"name":"outputs","type":"map","type_version":"0.0.0","description":"Outputs for handling events going out of the APEX engine","required":false,"entry_schema":{"type":"onap.datatypes.native.apex.EventHandler","type_version":"0.0.0"}},"environment":{"name":"environment","type":"list","type_version":"0.0.0","description":"Envioronmental parameters for the APEX engine","required":false,"entry_schema":{"type":"onap.datatypes.native.apex.Environment","type_version":"0.0.0"}},"inputs":{"name":"inputs","type":"map","type_version":"0.0.0","description":"Inputs for handling events coming into the APEX engine","required":false,"entry_schema":{"type":"onap.datatypes.native.apex.EventHandler","type_version":"0.0.0"}},"engine_service":{"name":"engine_service","type":"onap.datatypes.native.apex.EngineService","type_version":"0.0.0","description":"APEX Engine Service Parameters","required":false}},"name":"onap.policies.native.Apex","version":"1.0.0","derived_from":"onap.policies.Native","metadata":{},"description":"a policy type for native apex policies"},"onap.policies.native.Drools":{"properties":{},"name":"onap.policies.native.Drools","version":"1.0.0","derived_from":"onap.policies.Native","metadata":{},"description":"a base policy type for all native PDP policies"},"onap.policies.native.Xacml":{"properties":{"policy":{"name":"policy","type":"string","type_version":"0.0.0","description":"The XML XACML 3.0 PolicySet or Policy","required":true,"metadata":{"encoding":"Base64"}}},"name":"onap.policies.native.Xacml","version":"1.0.0","derived_from":"onap.policies.Native","metadata":{},"description":"a policy type for native xacml policies"},"onap.policies.native.drools.Artifact":{"properties":{"rulesArtifact":{"name":"rulesArtifact","type":"onap.datatypes.native.rules_artifact","type_version":"0.0.0","description":"the GAV information of the maven artifact","required":true},"controller":{"name":"controller","type":"onap.datatypes.drools.controller.relation","type_version":"0.0.0","description":"the drools controller to which the current native policy is assigned","required":true}},"name":"onap.policies.native.drools.Artifact","version":"1.0.0","derived_from":"onap.policies.native.Drools","metadata":{},"description":"a policy type for native drools artifact policies"},"onap.policies.native.drools.Controller":{"properties":{"sinkTopics":{"name":"sinkTopics","type":"list","type_version":"0.0.0","description":"sink topics and applicable events","required":false,"entry_schema":{"type":"onap.datatypes.dmaap.topic","type_version":"0.0.0"}},"customConfig":{"name":"customConfig","type":"map","type_version":"0.0.0","description":"any use case specific configurations relevant to the drools controller","required":false,"entry_schema":{"type":"string","type_version":"0.0.0"}},"controllerName":{"name":"controllerName","type":"string","type_version":"0.0.0","description":"the drools controller name","required":true},"sourceTopics":{"name":"sourceTopics","type":"list","type_version":"0.0.0","description":"source topics and applicable events","required":false,"entry_schema":{"type":"onap.datatypes.dmaap.topic","type_version":"0.0.0"}}},"name":"onap.policies.native.drools.Controller","version":"1.0.0","derived_from":"onap.policies.native.Drools","metadata":{},"description":"a policy type for a drools controller configuration"},"onap.policies.optimization.Resource":{"properties":{"resources":{"name":"resources","type":"list","type_version":"0.0.0","description":"One or more VNF resources that the policy applies to.","required":true,"entry_schema":{"type":"string","type_version":"0.0.0"},"metadata":{"matchable":"true"}},"services":{"name":"services","type":"list","type_version":"0.0.0","description":"One or more services that the policy applies to.","required":true,"entry_schema":{"type":"string","type_version":"0.0.0"},"metadata":{"matchable":"true"}}},"name":"onap.policies.optimization.Resource","version":"1.0.0","derived_from":"onap.policies.Optimization","metadata":{},"description":"The base policy type for all policies that govern optimization for a Resource in a Service."},"onap.policies.optimization.Service":{"properties":{"services":{"name":"services","type":"list","type_version":"0.0.0","description":"One or more services that the policy applies to.","required":true,"entry_schema":{"type":"string","type_version":"0.0.0"},"metadata":{"matchable":"true"}}},"name":"onap.policies.optimization.Service","version":"1.0.0","derived_from":"onap.policies.Optimization","metadata":{},"description":"The base policy type for all policies that govern optimization for a Service."},"onap.policies.optimization.resource.AffinityPolicy":{"properties":{"affinityProperties":{"name":"affinityProperties","type":"policy.data.affinityProperties_properties","type_version":"0.0.0","required":true},"applicableResources":{"name":"applicableResources","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"string","type_version":"0.0.0","constraints":[{"valid_values":["any","all"]}]}}},"name":"onap.policies.optimization.resource.AffinityPolicy","version":"1.0.0","derived_from":"onap.policies.optimization.Resource","metadata":{}},"onap.policies.optimization.resource.DistancePolicy":{"properties":{"distanceProperties":{"name":"distanceProperties","type":"policy.data.distanceProperties_properties","type_version":"0.0.0","required":true},"applicableResources":{"name":"applicableResources","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"string","type_version":"0.0.0","constraints":[{"valid_values":["any","all"]}]}}},"name":"onap.policies.optimization.resource.DistancePolicy","version":"1.0.0","derived_from":"onap.policies.optimization.Resource","metadata":{}},"onap.policies.optimization.resource.HpaPolicy":{"properties":{"flavorFeatures":{"name":"flavorFeatures","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"policy.data.flavorFeatures_properties","type_version":"0.0.0"}}},"name":"onap.policies.optimization.resource.HpaPolicy","version":"1.0.0","derived_from":"onap.policies.optimization.Resource","metadata":{}},"onap.policies.optimization.resource.OptimizationPolicy":{"properties":{"objectiveParameter":{"name":"objectiveParameter","type":"policy.data.objectiveParameter_properties","type_version":"0.0.0","required":true},"objective":{"name":"objective","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"string","type_version":"0.0.0","constraints":[{"valid_values":["minimize","maximize"]}]}}},"name":"onap.policies.optimization.resource.OptimizationPolicy","version":"1.0.0","derived_from":"onap.policies.optimization.Resource","metadata":{}},"onap.policies.optimization.resource.PciPolicy":{"properties":{"pciProperties":{"name":"pciProperties","type":"list","type_version":"0.0.0","required":false,"entry_schema":{"type":"policy.data.pciProperties_properties","type_version":"0.0.0"}}},"name":"onap.policies.optimization.resource.PciPolicy","version":"1.0.0","derived_from":"onap.policies.optimization.Resource","metadata":{}},"onap.policies.optimization.resource.Vim_fit":{"properties":{"capacityProperties":{"name":"capacityProperties","type":"policy.data.capacityProperties_properties","type_version":"0.0.0","required":true},"applicableResources":{"name":"applicableResources","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"string","type_version":"0.0.0","constraints":[{"valid_values":["any","all"]}]}}},"name":"onap.policies.optimization.resource.Vim_fit","version":"1.0.0","derived_from":"onap.policies.optimization.Resource","metadata":{}},"onap.policies.optimization.resource.VnfPolicy":{"properties":{"vnfProperties":{"name":"vnfProperties","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"policy.data.vnfProperties_properties","type_version":"0.0.0"}},"applicableResources":{"name":"applicableResources","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"string","type_version":"0.0.0","constraints":[{"valid_values":["any","all"]}]}}},"name":"onap.policies.optimization.resource.VnfPolicy","version":"1.0.0","derived_from":"onap.policies.optimization.Resource","metadata":{}},"onap.policies.optimization.service.QueryPolicy":{"properties":{"queryProperties":{"name":"queryProperties","type":"list","type_version":"0.0.0","required":true,"entry_schema":{"type":"policy.data.queryProperties_properties","type_version":"0.0.0"}}},"name":"onap.policies.optimization.service.QueryPolicy","version":"1.0.0","derived_from":"onap.policies.optimization.Service","metadata":{}},"onap.policies.optimization.service.SubscriberPolicy":{"properties":{"subscriberProperties":{"name":"subscriberProperties","type":"policy.data.subscriberProperties_properties","type_version":"0.0.0","required":true}},"name":"onap.policies.optimization.service.SubscriberPolicy","version":"1.0.0","derived_from":"onap.policies.optimization.Service","metadata":{}}},"name":"ToscaServiceTemplateSimple","version":"1.0.0"}</msg>
+<status status="PASS" starttime="20220902 13:42:42.259" endtime="20220902 13:42:42.261"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20220902 13:42:42.262" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:42.261" endtime="20220902 13:42:42.262"/>
+</kw>
+<doc>Runs Policy Participant Query New Policy Types</doc>
+<status status="PASS" starttime="20220902 13:42:41.265" endtime="20220902 13:42:42.262"/>
+</test>
+<test id="s1-t6" name="StateChangeRunningAutomationComposition" line="62">
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>runtimeUser</arg>
+<arg>zb!XztG34</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:42:42.262" level="INFO">${auth} = ['runtimeUser', 'zb!XztG34']</msg>
+<status status="PASS" starttime="20220902 13:42:42.262" endtime="20220902 13:42:42.262"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${POLICY_RUNTIME_ACM_IP}:6969</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:42:42.262" level="INFO">Creating session http://172.28.0.4:6969</msg>
+<status status="PASS" starttime="20220902 13:42:42.262" endtime="20220902 13:42:42.262"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${postjson}</var>
+<arg>/Users/liam/git/onap/policy/docker/csit/clamp/tests/data/StateChangeRunningAC.json</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20220902 13:42:42.263" level="INFO" html="true">Getting file '&lt;a href="file:///Users/liam/git/onap/policy/docker/csit/clamp/tests/data/StateChangeRunningAC.json"&gt;/Users/liam/git/onap/policy/docker/csit/clamp/tests/data/StateChangeRunningAC.json&lt;/a&gt;'.</msg>
+<msg timestamp="20220902 13:42:42.263" level="INFO">${postjson} = {
+    "orderedState": "RUNNING",
+    "automationCompositionIdentifierList": [
+        {
+            "name": "PMSHInstance0",
+            "version": "1.0.1"
+        }
+    ]
+}
+</msg>
+<status status="PASS" starttime="20220902 13:42:42.263" endtime="20220902 13:42:42.263"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${POLICY_RUNTIME_ACM_IP}:6969</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:42:42.264" level="INFO">Creating Session using : alias=policy, url=http://172.28.0.4:6969, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x106d63040&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:42:42.264" level="INFO">${session} = &lt;requests.sessions.Session object at 0x106d633a0&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:42.263" endtime="20220902 13:42:42.264"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/json</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:42:42.264" level="INFO">${headers} = {'Accept': 'application/json', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20220902 13:42:42.264" endtime="20220902 13:42:42.264"/>
+</kw>
+<kw name="PUT On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>/onap/policy/clamp/acm/v2/instantiation/command</arg>
+<arg>data=${postjson}</arg>
+<arg>headers=${headers}</arg>
+<arg>expected_status=406</arg>
+<doc>Sends a PUT request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:42:42.366" level="INFO">PUT Request : url=http://172.28.0.4:6969/onap/policy/clamp/acm/v2/instantiation/command 
+ path_url=/onap/policy/clamp/acm/v2/instantiation/command 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '174', 'Authorization': 'Basic cnVudGltZVVzZXI6emIhWHp0RzM0'} 
+ body={
+    "orderedState": "RUNNING",
+    "automationCompositionIdentifierList": [
+        {
+            "name": "PMSHInstance0",
+            "version": "1.0.1"
+        }
+    ]
+}
+ 
+ </msg>
+<msg timestamp="20220902 13:42:42.366" level="INFO">PUT Response : url=http://172.28.0.4:6969/onap/policy/clamp/acm/v2/instantiation/command 
+ status=406, reason= 
+ headers={'Set-Cookie': 'JSESSIONID=78FFD8030AF0742F74E8A8A438E73BB3; Path=/; HttpOnly', 'X-ONAP-RequestID': 'a89295c1-bf24-438b-b85a-7e7f38e4f6c9', 'X-MinorVersion': '0', 'X-PatchVersion': '0', 'X-LatestVersion': '1.0.0', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/json;charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Date': 'Fri, 02 Sep 2022 12:42:42 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"errorDetails":"Automation composition can't transition from state UNINITIALISED2PASSIVE to state RUNNING"} 
+ </msg>
+<msg timestamp="20220902 13:42:42.366" level="INFO">${resp} = &lt;Response [406]&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:42.264" endtime="20220902 13:42:42.366"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from runtime acm ${resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:42:42.368" level="INFO">Received response from runtime acm {"errorDetails":"Automation composition can't transition from state UNINITIALISED2PASSIVE to state RUNNING"}</msg>
+<status status="PASS" starttime="20220902 13:42:42.367" endtime="20220902 13:42:42.368"/>
+</kw>
+<doc>AutomationComposition State Change to RUNNING.</doc>
+<status status="PASS" starttime="20220902 13:42:42.262" endtime="20220902 13:42:42.368"/>
+</test>
+<test id="s1-t7" name="QueryInstantiatedACs" line="72">
+<kw name="Create List" library="BuiltIn">
+<var>${auth}</var>
+<arg>runtimeUser</arg>
+<arg>zb!XztG34</arg>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20220902 13:42:42.369" level="INFO">${auth} = ['runtimeUser', 'zb!XztG34']</msg>
+<status status="PASS" starttime="20220902 13:42:42.369" endtime="20220902 13:42:42.369"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Creating session http://${POLICY_RUNTIME_ACM_IP}:6969</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:42:42.369" level="INFO">Creating session http://172.28.0.4:6969</msg>
+<status status="PASS" starttime="20220902 13:42:42.369" endtime="20220902 13:42:42.370"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<var>${session}</var>
+<arg>policy</arg>
+<arg>http://${POLICY_RUNTIME_ACM_IP}:6969</arg>
+<arg>auth=${auth}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20220902 13:42:42.370" level="INFO">Creating Session using : alias=policy, url=http://172.28.0.4:6969, headers={},                     cookies={}, auth=&lt;requests.auth.HTTPBasicAuth object at 0x106d62920&gt;, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<msg timestamp="20220902 13:42:42.370" level="INFO">${session} = &lt;requests.sessions.Session object at 0x106d60760&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:42.370" endtime="20220902 13:42:42.370"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>Accept=application/json</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20220902 13:42:42.370" level="INFO">${headers} = {'Accept': 'application/json', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20220902 13:42:42.370" endtime="20220902 13:42:42.370"/>
+</kw>
+<kw name="GET On Session" library="RequestsLibrary">
+<var>${resp}</var>
+<arg>policy</arg>
+<arg>/onap/policy/clamp/acm/v2/instantiation</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<msg timestamp="20220902 13:42:42.470" level="INFO">GET Request : url=http://172.28.0.4:6969/onap/policy/clamp/acm/v2/instantiation 
+ path_url=/onap/policy/clamp/acm/v2/instantiation 
+ headers={'User-Agent': 'python-requests/2.28.1', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Basic cnVudGltZVVzZXI6emIhWHp0RzM0'} 
+ body=None 
+ </msg>
+<msg timestamp="20220902 13:42:42.471" level="INFO">GET Response : url=http://172.28.0.4:6969/onap/policy/clamp/acm/v2/instantiation 
+ status=200, reason= 
+ headers={'Set-Cookie': 'JSESSIONID=FCE8273635ACFC27956987D83A05B424; Path=/; HttpOnly', 'X-ONAP-RequestID': '143d6f67-a7d0-4ba0-850a-80bf39343c2b', 'X-MinorVersion': '0', 'X-PatchVersion': '0', 'X-LatestVersion': '1.0.0', 'X-Content-Type-Options': 'nosniff', 'X-XSS-Protection': '1; mode=block', 'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate', 'Pragma': 'no-cache', 'Expires': '0', 'X-Frame-Options': 'DENY', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Date': 'Fri, 02 Sep 2022 12:42:42 GMT', 'Keep-Alive': 'timeout=60', 'Connection': 'keep-alive'} 
+ body={"automationCompositionList":[{"name":"PMSHInstance0","version":"1.0.1","derivedFrom":null,"metadata":null,"description":"PMSH automation composition instance 0","definition":{"name":"org.onap.domain.sample.GenericK8s_AutomationCompositionDefinition","version":"1.2.3"},"state":"UNINITIALISED2PASSIVE","orderedState":"RUNNING","elements":{"709c62b3-8918-41b9-a747-d21eb79c6c22":{"id":"709c62b3-8918-41b9-a747-d21eb79c6c22","definition":{"name":"org.onap.domain.pmsh.PMSH_OperationalPolicyAutomationCompositionElement","version":"1.2.3"},"participantType":{"name":"org.onap.policy.clamp.acm.PolicyParticipant","version":"2.3.1"},"participantId":{"name":"org.onap.PM_Policy","version":"1.0.0"},"state":"UNINITIALISED","orderedState":"RUNNING","toscaServiceTemplateFragment":null,"description":"Operational Policy Automation Composition Element for the PMSH instance 0 automation composition","acElementStatistics":null,"propertiesMap":{}},"709c62b3-8918-41b9-a747-d21eb79c6c21":{"id":"709c62b3-8918-41b9-a747-d21eb79c6c21","definition":{"name":"org.onap.domain.pmsh.PMSH_MonitoringPolicyAutomationCompositionElement","version":"1.2.3"},"participantType":{"name":"org.onap.policy.clamp.acm.PolicyParticipant","version":"2.3.1"},"participantId":{"name":"org.onap.PM_Policy","version":"1.0.0"},"state":"UNINITIALISED","orderedState":"RUNNING","toscaServiceTemplateFragment":null,"description":"Monitoring Policy Automation Composition Element for the PMSH instance 0 automation composition","acElementStatistics":null,"propertiesMap":{}}},"primed":false,"typeVersion":"1.2.3","type":"org.onap.domain.sample.GenericK8s_AutomationCompositionDefinition","definedName":"PMSHInstance0","definedVersion":"1.0.1","key":{"name":"PMSHInstance0","version":"1.0.1"}}]} 
+ </msg>
+<msg timestamp="20220902 13:42:42.471" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:42.370" endtime="20220902 13:42:42.471"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Received response from runtime acm ${resp.text}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20220902 13:42:42.473" level="INFO">Received response from runtime acm {"automationCompositionList":[{"name":"PMSHInstance0","version":"1.0.1","derivedFrom":null,"metadata":null,"description":"PMSH automation composition instance 0","definition":{"name":"org.onap.domain.sample.GenericK8s_AutomationCompositionDefinition","version":"1.2.3"},"state":"UNINITIALISED2PASSIVE","orderedState":"RUNNING","elements":{"709c62b3-8918-41b9-a747-d21eb79c6c22":{"id":"709c62b3-8918-41b9-a747-d21eb79c6c22","definition":{"name":"org.onap.domain.pmsh.PMSH_OperationalPolicyAutomationCompositionElement","version":"1.2.3"},"participantType":{"name":"org.onap.policy.clamp.acm.PolicyParticipant","version":"2.3.1"},"participantId":{"name":"org.onap.PM_Policy","version":"1.0.0"},"state":"UNINITIALISED","orderedState":"RUNNING","toscaServiceTemplateFragment":null,"description":"Operational Policy Automation Composition Element for the PMSH instance 0 automation composition","acElementStatistics":null,"propertiesMap":{}},"709c62b3-8918-41b9-a747-d21eb79c6c21":{"id":"709c62b3-8918-41b9-a747-d21eb79c6c21","definition":{"name":"org.onap.domain.pmsh.PMSH_MonitoringPolicyAutomationCompositionElement","version":"1.2.3"},"participantType":{"name":"org.onap.policy.clamp.acm.PolicyParticipant","version":"2.3.1"},"participantId":{"name":"org.onap.PM_Policy","version":"1.0.0"},"state":"UNINITIALISED","orderedState":"RUNNING","toscaServiceTemplateFragment":null,"description":"Monitoring Policy Automation Composition Element for the PMSH instance 0 automation composition","acElementStatistics":null,"propertiesMap":{}}},"primed":false,"typeVersion":"1.2.3","type":"org.onap.domain.sample.GenericK8s_AutomationCompositionDefinition","definedName":"PMSHInstance0","definedVersion":"1.0.1","key":{"name":"PMSHInstance0","version":"1.0.1"}}]}</msg>
+<status status="PASS" starttime="20220902 13:42:42.471" endtime="20220902 13:42:42.473"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<msg timestamp="20220902 13:42:42.474" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<status status="PASS" starttime="20220902 13:42:42.473" endtime="20220902 13:42:42.474"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${resp.json()['automationCompositionList'][0]['state']}</arg>
+<arg>UNINITIALISED2PASSIVE</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20220902 13:42:42.474" endtime="20220902 13:42:42.475"/>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<arg>${resp.json()['automationCompositionList'][0]['orderedState']}</arg>
+<arg>RUNNING</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" starttime="20220902 13:42:42.475" endtime="20220902 13:42:42.475"/>
+</kw>
+<doc>Get Instantiated AutomationCompositions</doc>
+<status status="PASS" starttime="20220902 13:42:42.368" endtime="20220902 13:42:42.475"/>
+</test>
+<status status="PASS" starttime="20220902 13:42:39.957" endtime="20220902 13:42:42.476"/>
+</suite>
+<statistics>
+<total>
+<stat pass="7" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="7" fail="0" skip="0" id="s1" name="clamp">clamp</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
