@@ -24,13 +24,17 @@ python3 -m pip uninstall -y docker-py
 python3 -m pip uninstall -y docker
 python3 -m pip install -U docker
 
-sudo apt-get -y install libxml2-utils
-
 source "${SCRIPTS}"/get-versions.sh
+
+sudo apt-get -y install libxml2-utils
 bash "${SCRIPTS}"/get-models-examples.sh
 
+echo "${POLICY_PAP_VERSION}"
+
+cd "${SCRIPTS}"
 docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d pap apex-pdp
 
+sleep 10
 unset http_proxy https_proxy
 
 POLICY_PAP_IP=$(get-instance-ip.sh policy-pap)
@@ -43,7 +47,6 @@ echo MARIADB IP IS "${MARIADB_IP}"
 
 # wait for the app to start up
 "${SCRIPTS}"/wait_for_port.sh "${POLICY_PAP_IP}" 6969
-
 
 DATA=${WORKSPACE}/models/models-examples/src/main/resources/policies
 

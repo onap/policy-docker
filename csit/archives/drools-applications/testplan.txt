@@ -1,0 +1,1 @@
+/Users/liam/git/onap/policy/docker/csit/drools-applications/tests/drools-applications-test.robot

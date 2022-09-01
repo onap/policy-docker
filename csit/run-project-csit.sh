@@ -120,6 +120,19 @@ function source_safely() {
 # main
 #
 
+if $(docker images | grep -q "onap\/policy-api")
+then
+    echo where
+    export CONTAINER_LOCATION=$(
+        docker images |
+        grep onap/policy-api |
+        head -1 |
+        sed 's/onap\/policy-api.*$//'
+    )
+else
+    export CONTAINER_LOCATION="nexus3.onap.org:10001"
+fi
+
 # set and save options for quick failure
 harden_set && save_set
 
@@ -145,10 +158,6 @@ export ROBOT_VARIABLES=
 # get the plan from git clone
 source "${SCRIPTS}"/get-branch.sh
 
-# Prepare configuration files
-cd "${WORKSPACE}/csit"
-python3 ./prepare-config-files.py --https=true
-
 export PROJECT="${1}"
 
 cd ${WORKSPACE}
@@ -170,19 +179,6 @@ cd "${WORKDIR}"
 
 # Sign in to nexus3 docker repo
 docker login -u docker -p docker nexus3.onap.org:10001
-
-# Generate truststore and keystore to be used by repos
-${SCRIPTS}/gen_truststore.sh
-${SCRIPTS}/gen_keystore.sh
-cp ${SCRIPTS}/config/ks.jks ${SCRIPTS}/config/drools/custom/policy-keystore
-cp ${SCRIPTS}/config/ks.jks ${SCRIPTS}/config/drools-apps/custom/policy-keystore
-cp ${SCRIPTS}/config/policy-truststore \
-    ${SCRIPTS}/config/drools/custom/policy-truststore
-cp ${SCRIPTS}/config/policy-truststore \
-    ${SCRIPTS}/config/drools-apps/custom/policy-truststore
-chmod 644 \
-    ${SCRIPTS}/config/drools/custom/policy-* \
-    ${SCRIPTS}/config/drools-apps/custom/policy-*
 
 # Run setup script plan if it exists
 cd "${TESTPLANDIR}/plans/"

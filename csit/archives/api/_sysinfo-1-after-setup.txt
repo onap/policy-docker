@@ -1,0 +1,14 @@
+> top -bn1 | head -3
+
+> free -h
+
+> docker ps
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED          STATUS          PORTS                     NAMES
+29853d1d978a   onap/policy-api:2.7-SNAPSHOT-latest   "./wait_for_port.sh …"   16 seconds ago   Up 15 seconds   0.0.0.0:30440->6969/tcp   policy-api
+a34524b6ae06   mariadb:10.5.8                        "docker-entrypoint.s…"   16 seconds ago   Up 16 seconds   3306/tcp                  mariadb
+
+> docker stats --no-stream
+CONTAINER ID   NAME         CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O     PIDS
+29853d1d978a   policy-api   2.38%     497.5MiB / 7.667GiB   6.34%     576kB / 618kB   0B / 41kB     47
+a34524b6ae06   mariadb      0.08%     84.21MiB / 7.667GiB   1.07%     915kB / 777kB   0B / 46.2MB   29
+

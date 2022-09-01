@@ -1,0 +1,20 @@
+> top -bn1 | head -3
+
+> free -h
+
+> docker ps
+CONTAINER ID   IMAGE                                              COMMAND                  CREATED          STATUS          PORTS                                              NAMES
+07552ebe4a5c   onap/policy-drools:1.11-SNAPSHOT-latest            "/opt/app/policy/bin…"   21 seconds ago   Up 21 seconds   0.0.0.0:30217->6969/tcp, 0.0.0.0:30216->9696/tcp   drools
+e1bcdd2a19ef   onap/policy-pap:2.7-SNAPSHOT-latest                "./wait_for_port.sh …"   22 seconds ago   Up 21 seconds   0.0.0.0:30442->6969/tcp                            policy-pap
+99d198290f71   onap/policy-api:2.7-SNAPSHOT-latest                "./wait_for_port.sh …"   22 seconds ago   Up 22 seconds   0.0.0.0:30440->6969/tcp                            policy-api
+d22845d64ac6   mariadb:10.5.8                                     "docker-entrypoint.s…"   23 seconds ago   Up 22 seconds   3306/tcp                                           mariadb
+a4d4135a3ebc   onap/policy-models-simulator:2.7-SNAPSHOT-latest   "./simulators.sh"        23 seconds ago   Up 22 seconds   3904/tcp, 6666/tcp, 6668-6670/tcp, 6680/tcp        simulator
+
+> docker stats --no-stream
+CONTAINER ID   NAME         CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O        PIDS
+07552ebe4a5c   drools       1.49%     165.6MiB / 7.667GiB   2.11%     3.85kB / 2.73kB   754kB / 61.4kB   44
+e1bcdd2a19ef   policy-pap   104.53%   501.3MiB / 7.667GiB   6.39%     24kB / 31.6kB     0B / 103MB       54
+99d198290f71   policy-api   0.36%     432.8MiB / 7.667GiB   5.51%     577kB / 619kB     0B / 41kB        45
+d22845d64ac6   mariadb      0.05%     85.39MiB / 7.667GiB   1.09%     944kB / 802kB     0B / 48.4MB      38
+a4d4135a3ebc   simulator    0.35%     209.2MiB / 7.667GiB   2.66%     2.24kB / 580B     0B / 188kB       85
+

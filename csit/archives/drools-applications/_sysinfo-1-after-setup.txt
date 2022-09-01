@@ -1,0 +1,22 @@
+> top -bn1 | head -3
+
+> free -h
+
+> docker ps
+CONTAINER ID   IMAGE                                              COMMAND                  CREATED          STATUS          PORTS                                              NAMES
+9953162fdf50   onap/policy-pdpd-cl:1.11-SNAPSHOT-latest           "/opt/app/policy/bin…"   41 seconds ago   Up 40 seconds   0.0.0.0:30221->6969/tcp, 0.0.0.0:30219->9696/tcp   drools-apps
+46416e1b1d7f   onap/policy-xacml-pdp:2.7-SNAPSHOT-latest          "./wait_for_port.sh …"   42 seconds ago   Up 41 seconds   0.0.0.0:30441->6969/tcp                            policy-xacml-pdp
+e36e9b39ad07   onap/policy-pap:2.7-SNAPSHOT-latest                "./wait_for_port.sh …"   42 seconds ago   Up 41 seconds   0.0.0.0:30442->6969/tcp                            policy-pap
+133777f36c42   onap/policy-api:2.7-SNAPSHOT-latest                "./wait_for_port.sh …"   42 seconds ago   Up 41 seconds   0.0.0.0:30440->6969/tcp                            policy-api
+a816676a96c8   mariadb:10.5.8                                     "docker-entrypoint.s…"   43 seconds ago   Up 42 seconds   3306/tcp                                           mariadb
+e556caf0ef07   onap/policy-models-simulator:2.7-SNAPSHOT-latest   "./simulators.sh"        43 seconds ago   Up 42 seconds   3904/tcp, 6666/tcp, 6668-6670/tcp, 6680/tcp        simulator
+
+> docker stats --no-stream
+CONTAINER ID   NAME               CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O        PIDS
+9953162fdf50   drools-apps        3.54%     471.7MiB / 7.667GiB   6.01%     27.7kB / 32.2kB   2.63MB / 332kB   83
+46416e1b1d7f   policy-xacml-pdp   3.64%     168.3MiB / 7.667GiB   2.14%     21.3kB / 16.1kB   0B / 238kB       40
+e36e9b39ad07   policy-pap         2.11%     518.3MiB / 7.667GiB   6.60%     2.06MB / 670kB    0B / 103MB       52
+133777f36c42   policy-api         0.54%     494.3MiB / 7.667GiB   6.30%     577kB / 619kB     0B / 94.2kB      46
+a816676a96c8   mariadb            0.36%     85.99MiB / 7.667GiB   1.10%     1.58MB / 2.81MB   0B / 48.7MB      39
+e556caf0ef07   simulator          1.41%     204.8MiB / 7.667GiB   2.61%     47.5kB / 59.5kB   0B / 283kB       93
+
