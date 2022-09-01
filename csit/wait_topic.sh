@@ -39,7 +39,7 @@ matched=no
 
 while [ ${matched} = "no" ]
 do
-    msg=`curl -s -k "https://${SIM_IP}:3905/events/${topic}/script/1?limit=1"`
+    msg=`curl -s -k "http://${SIM_IP}:3904/events/${topic}/script/1?limit=1"`
     if [ $? -ne 0 -o "${msg}" = "[]" ]
     then
         echo not found >&2
