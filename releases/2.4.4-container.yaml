@@ -1,0 +1,12 @@
+distribution_type: 'container'
+container_release_tag: '2.4.4'
+project: 'policy-docker'
+log_dir: 'policy-docker-maven-docker-stage-jakarta/117'
+ref: 439feb39d14ea9ce50f5da4f6f1fd3dd4b255b7c
+containers:
+    - name: 'policy-jre-alpine'
+      version: '2.4.4-20220901T0044'
+    - name: 'policy-jdk-alpine'
+      version: '2.4.4-20220901T0044'
+    - name: 'policy-db-migrator'
+      version: '2.4.4-20220901T0044'
