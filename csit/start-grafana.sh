@@ -21,20 +21,16 @@
 SCRIPTS=$(git rev-parse --show-toplevel)
 export SCRIPTS="${SCRIPTS}"/csit
 
-cd ${SCRIPTS}
-
-python3 ./prepare-config-files.py --https=false
-
-source ./get-versions.sh
+source "${SCRIPTS}"/get-versions.sh
 
 export PROJECT="${1}"
 
 if [ -z "${PROJECT}" ]; then
     echo "Starting all components..."
-    docker-compose -f ./compose-grafana.yml up -d
+    docker-compose -f "${SCRIPTS}"/compose-grafana.yml up -d
 else
     echo "Starting ${PROJECT} application..."
-    docker-compose -f ./compose-grafana.yml up -d "${PROJECT}" grafana
+    docker-compose -f "${SCRIPTS}"/compose-grafana.yml up -d "${PROJECT}" grafana
 fi
 
 prometheus=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' prometheus)
