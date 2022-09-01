@@ -46,6 +46,30 @@
       "revId": "88fafe963d61a80d0d3b193a108fc18f151fbcd7",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ec07cfc_9f3056ae",
+        "filename": "policy-db-migrator/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-09-01T16:00:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b9de200_4b8c5ca0",
+      "range": {
+        "startLine": 21,
+        "startChar": 34,
+        "endLine": 21,
+        "endChar": 42
+      },
+      "revId": "88fafe963d61a80d0d3b193a108fc18f151fbcd7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
