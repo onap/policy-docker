@@ -18,7 +18,7 @@
 server:
   port: 2443
   ssl:
-    enabled: {{HTTPS_ENABLED}}
+    enabled: false
     enabled-protocols: TLSv1.2
     client-auth: want
     key-store: file:${KEYSTORE}
