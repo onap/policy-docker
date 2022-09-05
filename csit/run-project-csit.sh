@@ -192,6 +192,10 @@ if [ -f "${SETUP}" ]; then
     source_safely "${SETUP}"
 fi
 
+docker logs policy-db-migrator
+docker logs policy-api
+docker exec policy-api cat /var/log/onap/policy/api/debug.log
+
 # show memory consumption after all docker instances initialized
 docker_stats | tee "${WORKSPACE}/csit/archives/${PROJECT}/_sysinfo-1-after-setup.txt"
 
