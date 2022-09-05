@@ -192,6 +192,18 @@ if [ -f "${SETUP}" ]; then
     source_safely "${SETUP}"
 fi
 
+tmout=300
+while [ "$tmout" -gt 0 ]
+do
+    docker ps
+    docker logs policy-api
+    docker exec policy-api cat /var/log/onap/policy/api/error.log
+    docker exec policy-api cat /var/log/onap/policy/api/debug.log
+
+    tmout=$((tmout-1))
+    sleep 1
+done
+
 # show memory consumption after all docker instances initialized
 docker_stats | tee "${WORKSPACE}/csit/archives/${PROJECT}/_sysinfo-1-after-setup.txt"
 
