@@ -172,8 +172,8 @@ cd "${WORKDIR}"
 docker login -u docker -p docker nexus3.onap.org:10001
 
 # Generate truststore and keystore to be used by repos
-${SCRIPTS}/gen_truststore.sh
-${SCRIPTS}/gen_keystore.sh
+#${SCRIPTS}/gen_truststore.sh
+#${SCRIPTS}/gen_keystore.sh
 cp ${SCRIPTS}/config/ks.jks ${SCRIPTS}/config/drools/custom/policy-keystore
 cp ${SCRIPTS}/config/ks.jks ${SCRIPTS}/config/drools-apps/custom/policy-keystore
 cp ${SCRIPTS}/config/policy-truststore \
