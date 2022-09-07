@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE TABLE IF NOT EXISTS jpatoscarelationshiptype_properties (name VARCHAR(120) NULL, version VARCHAR(20) NULL, PROPERTIES BYTEA DEFAULT NULL NULL, PROPERTIES_KEY VARCHAR(255) NULL);
+CREATE TABLE IF NOT EXISTS jpatoscarelationshiptype_properties (name VARCHAR(120) NULL, version VARCHAR(20) NULL, PROPERTIES BYTEA USING PROPERTIES::bytea DEFAULT NULL NULL, PROPERTIES_KEY VARCHAR(255) NULL);
