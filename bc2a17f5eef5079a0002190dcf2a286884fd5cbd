@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56f593c2_04dc6034",
+        "filename": "csit/docker-compose-gui-smoke.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 7603
+      },
+      "writtenOn": "2022-09-07T16:58:50Z",
+      "side": 1,
+      "message": "This should be /opt/app/policy/gui/etc/application.yml as the image uses yml not yaml. Thus any changes in the config will not be taken",
+      "revId": "bc2a17f5eef5079a0002190dcf2a286884fd5cbd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf4032a_68bff431",
+        "filename": "csit/start-gui-smoke-components.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 7603
+      },
+      "writtenOn": "2022-09-07T16:58:50Z",
+      "side": 1,
+      "message": "Add line \"python3 ./prepare-config-files.py --https\u003dfalse\" This will change the tags {{HTTPS_ENABLED}} to false and {{PROTOCOL}} to \"http\"",
+      "revId": "bc2a17f5eef5079a0002190dcf2a286884fd5cbd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
