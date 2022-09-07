@@ -22,4 +22,4 @@ source "${SCRIPTS}"/get-versions.sh
 
 docker-compose -f "${SCRIPTS}"/docker-compose-gui-smoke.yml up -d policy-gui
 
-echo "Clamp GUI: https://localhost:2443/clamp"
+echo "Clamp GUI: https://localhost:2445/clamp"
