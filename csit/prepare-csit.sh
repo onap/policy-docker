@@ -2,7 +2,7 @@
 #
 # Copyright 2019 © Samsung Electronics Co., Ltd.
 # Modification Copyright 2021 © AT&T Intellectual Property.
-# Modification Copyright 2021. Nordix Foundation.
+# Modification Copyright 2021-2022 Nordix Foundation.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,25 +20,25 @@
 #
 
 if [ -z "$WORKSPACE" ]; then
-    export WORKSPACE=`git rev-parse --show-toplevel`
+    export WORKSPACE=$(git rev-parse --show-toplevel)
 fi
 
 # Assume that if ROBOT_VENV is set and virtualenv with system site packages can be activated,
 # include-raw-integration-install-robotframework.sh has already been executed
 
-if [ -f ${WORKSPACE}/env.properties ]; then
-    source ${WORKSPACE}/env.properties
+if [ -f "${WORKSPACE}"/env.properties ]; then
+    source "${WORKSPACE}"/env.properties
 fi
-if [ -f ${ROBOT_VENV}/bin/activate ]; then
-    source ${ROBOT_VENV}/bin/activate
+if [ -f "${ROBOT_VENV}"/bin/activate ]; then
+    source "${ROBOT_VENV}"/bin/activate
 else
-    source ./include-raw-integration-install-robotframework.sh
+    source ${SCRIPTS}/include-raw-integration-install-robotframework.sh
 fi
 
 
 # install eteutils
-mkdir -p ${ROBOT_VENV}/src/onap
-rm -rf ${ROBOT_VENV}/src/onap/testsuite
+mkdir -p "${ROBOT_VENV}"/src/onap
+rm -rf "${ROBOT_VENV}"/src/onap/testsuite
 python3 -m pip install --upgrade --extra-index-url="https://nexus3.onap.org/repository/PyPi.staging/simple" 'robotframework-onap==0.5.1.*' --pre
 
 python3 -m pip freeze

@@ -19,7 +19,7 @@
 # ============LICENSE_END=====================================================
 #
 
-ROBOT_VENV=$(mktemp -d --suffix=robot_venv)
+ROBOT_VENV=$(mktemp -d)
 echo "ROBOT_VENV=${ROBOT_VENV}" >> "${WORKSPACE}/env.properties"
 
 echo "Python version is: $(python3 --version)"
@@ -33,5 +33,5 @@ set -exu
 python3 -m pip install --upgrade pip
 
 echo "Installing Python Requirements"
-python3 -m pip install -r pylibs.txt
+python3 -m pip install -r ${SCRIPTS}/pylibs.txt
 python3 -m pip freeze
