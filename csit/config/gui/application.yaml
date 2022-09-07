@@ -16,19 +16,14 @@
 # ============LICENSE_END=====================================================
 #
 server:
-  port: 2443
+  port: 2445
   ssl:
     enabled: false
     enabled-protocols: TLSv1.2
-    client-auth: want
-    key-store: file:${KEYSTORE}
-    key-store-password: ${KEYSTORE_PASSWD}
-    trust-store: file:${TRUSTSTORE}
-    trust-store-password: ${TRUSTSTORE_PASSWD}
 
 clamp:
-  url: https://policy-clamp-be:8443
-  disable-ssl-validation: false
+  url: http://policy-clamp-be:8445
+  disable-ssl-validation: true
   disable-ssl-hostname-check: true
 
 apex-editor:
