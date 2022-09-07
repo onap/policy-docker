@@ -32,7 +32,7 @@ fi
 if [ -f "${ROBOT_VENV}"/bin/activate ]; then
     source "${ROBOT_VENV}"/bin/activate
 else
-    source ./include-raw-integration-install-robotframework.sh
+    source ${SCRIPTS}/include-raw-integration-install-robotframework.sh
 fi
 
 

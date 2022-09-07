@@ -2,7 +2,7 @@
 #
 # ============LICENSE_START===================================================
 # Copyright (c) 2016 The Linux Foundation and others.
-# Modification Copyright 2021. Nordix Foundation.
+# Modification Copyright 2021-2022 Nordix Foundation.
 # Modification Copyright 2021 AT&T Intellectual Property. All rights reserved.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,7 +19,7 @@
 # ============LICENSE_END=====================================================
 #
 
-ROBOT_VENV=$(mktemp -d --suffix=robot_venv)
+ROBOT_VENV=$(mktemp -d)
 echo "ROBOT_VENV=${ROBOT_VENV}" >> "${WORKSPACE}/env.properties"
 
 echo "Python version is: $(python3 --version)"
@@ -33,5 +33,5 @@ set -exu
 python3 -m pip install --upgrade pip
 
 echo "Installing Python Requirements"
-python3 -m pip install -r pylibs.txt
+python3 -m pip install -r ${SCRIPTS}/pylibs.txt
 python3 -m pip freeze
