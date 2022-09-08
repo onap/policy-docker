@@ -6,3 +6,5 @@ install.log*
 *.sw?
 **/*.iml
 .idea/
+csit/archives
+env.properties
