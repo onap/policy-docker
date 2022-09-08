@@ -8,3 +8,4 @@ install.log*
 .idea/
 csit/archives
 env.properties
+.pydevproject
