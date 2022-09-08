@@ -2,7 +2,7 @@
 #
 # ============LICENSE_START===================================================
 # Copyright (c) 2016 The Linux Foundation and others.
-# Modification Copyright 2021-2022 Nordix Foundation.
+# Modification Copyright 2021. Nordix Foundation.
 # Modification Copyright 2021 AT&T Intellectual Property. All rights reserved.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
