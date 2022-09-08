@@ -2,6 +2,7 @@
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2019-2022 Nordix Foundation.
 #  Modifications Copyright (C) 2019-2021 AT&T Intellectual Property.
+#  Modifications Copyright (C) 2022 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,13 +24,17 @@ python3 -m pip uninstall -y docker-py
 python3 -m pip uninstall -y docker
 python3 -m pip install -U docker
 
-sudo apt-get -y install libxml2-utils
-
 source "${SCRIPTS}"/get-versions.sh
+
+sudo apt-get -y install libxml2-utils
 bash "${SCRIPTS}"/get-models-examples.sh
 
-docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d pap
+echo "${POLICY_PAP_VERSION}"
 
+cd "${SCRIPTS}"
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d pap apex-pdp
+
+sleep 10
 unset http_proxy https_proxy
 
 POLICY_PAP_IP=$(get-instance-ip.sh policy-pap)
@@ -42,7 +47,6 @@ echo MARIADB IP IS "${MARIADB_IP}"
 
 # wait for the app to start up
 "${SCRIPTS}"/wait_for_port.sh "${POLICY_PAP_IP}" 6969
-
 
 DATA=${WORKSPACE}/models/models-examples/src/main/resources/policies
 
