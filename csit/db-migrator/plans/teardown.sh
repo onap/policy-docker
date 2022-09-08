@@ -17,6 +17,4 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
-docker logs postgres
-
 docker-compose -f ${SCRIPTS}/compose-postgres.yml down -v
