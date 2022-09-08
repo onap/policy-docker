@@ -16,9 +16,4 @@
 # limitations under the License.
 # ============LICENSE_END=========================================================
 
-docker logs policy-api
-docker logs simulator
-docker logs policy-pap
-docker logs drools
-
 docker-compose -f ${SCRIPTS}/docker-compose-all.yml down -v

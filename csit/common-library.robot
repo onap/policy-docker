@@ -16,8 +16,8 @@ HealthCheckAuth
 
 PerformPostRequest
     [Arguments]  ${hostname}  ${url}  ${expectedstatus}  ${postjson}  ${params}  ${auth}
-    Log  Creating session https://${hostname}:6969
-    ${session}=  Create Session  policy  https://${hostname}:6969  auth=${auth}
+    Log  Creating session http://${hostname}:6969
+    ${session}=  Create Session  policy  http://${hostname}:6969  auth=${auth}
     ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
     ${resp}=  POST On Session  policy  ${url}  data=${postjson}  params=${params}  headers=${headers}  expected_status=${expectedstatus}
     Log  Received response from policy ${resp.text}
@@ -25,8 +25,8 @@ PerformPostRequest
 
 PerformPutRequest
     [Arguments]  ${hostname}  ${url}  ${expectedstatus}  ${params}  ${auth}
-    Log  Creating session https://${hostname}:6969
-    ${session}=  Create Session  policy  https://${hostname}:6969  auth=${auth}
+    Log  Creating session http://${hostname}:6969
+    ${session}=  Create Session  policy  http://${hostname}:6969  auth=${auth}
     ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
     ${resp}=  PUT On Session  policy  ${url}  params=${params}  headers=${headers}  expected_status=${expectedstatus}
     Log  Received response from policy ${resp.text}
@@ -34,8 +34,8 @@ PerformPutRequest
 
 PerformGetRequest
     [Arguments]  ${hostname}  ${url}  ${expectedstatus}  ${params}  ${auth}
-    Log  Creating session https://${hostname}:6969
-    ${session}=  Create Session  policy  https://${hostname}:6969  auth=${auth}
+    Log  Creating session http://${hostname}:6969
+    ${session}=  Create Session  policy  http://${hostname}:6969  auth=${auth}
     ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
     ${resp}=  GET On Session  policy  ${url}  params=${params}  headers=${headers}  expected_status=${expectedstatus}
     Log  Received response from policy ${resp.text}
@@ -43,8 +43,8 @@ PerformGetRequest
 
 PerformDeleteRequest
     [Arguments]  ${hostname}  ${url}  ${expectedstatus}  ${auth}
-    Log  Creating session https://${hostname}:6969
-    ${session}=  Create Session  policy  https://${hostname}:6969  auth=${auth}
+    Log  Creating session http://${hostname}:6969
+    ${session}=  Create Session  policy  http://${hostname}:6969  auth=${auth}
     ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
     ${resp}=  DELETE On Session  policy  ${url}  headers=${headers}  expected_status=${expectedstatus}
     Log  Received response from policy ${resp.text}
@@ -114,8 +114,8 @@ QueryPolicyStatus
 
 GetMetrics
     [Arguments]  ${hostname}  ${auth}
-    Log  Creating session https://${hostname}:6969
-    ${session}=  Create Session  policy  https://${hostname}:6969  auth=${auth}
+    Log  Creating session http://${hostname}:6969
+    ${session}=  Create Session  policy  http://${hostname}:6969  auth=${auth}
     ${resp}=  GET On Session  policy  /metrics  expected_status=200
     Log  Received response from policy ${resp.text}
     [return]  ${resp}

@@ -20,9 +20,4 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
-docker logs policy-api
-docker logs simulator
-docker logs policy-pap
-docker logs apex-pdp
-
 docker-compose -f ${SCRIPTS}/docker-compose-all.yml down -v
