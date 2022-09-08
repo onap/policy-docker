@@ -53,6 +53,40 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-scm-plugin</artifactId>
+                        <version>1.13.0</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.codehaus.plexus</groupId>
+                                <artifactId>plexus-utils</artifactId>
+                                <version>3.4.2</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.apache.maven.scm</groupId>
+                                <artifactId>maven-scm-provider-gitexe</artifactId>
+                                <version>1.13.0</version>
+                            </dependency>
+                        </dependencies>
+                        <configuration>
+                            <connectionType>connection</connectionType>
+                            <checkoutDirectory>src/main/resources/meta</checkoutDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>checkout-onap-python</id>
+                                <phase>validate</phase>
+                                <configuration>
+                                    <connectionUrl>scm:git:https://gerrit.onap.org/r/integration/docker/onap-java11</connectionUrl>
+                                    <checkoutDirectory>${project.build.directory}/onap-java11</checkoutDirectory>
+                                </configuration>
+                                <goals>
+                                    <goal>checkout</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
                         <groupId>io.fabric8</groupId>
                         <artifactId>docker-maven-plugin</artifactId>
 
@@ -70,6 +104,7 @@
                                             <name>${integration.java.name}</name>
                                             <build>
                                                 <cleanup>try</cleanup>
+                                                <contextDir>${project.build.directory}/onap-java11</contextDir>
                                                 <dockerFile>BareAlpine.Dockerfile</dockerFile>
                                                 <tags>
                                                     <tag>${integration.java.version}</tag>
