@@ -44,6 +44,8 @@ echo POLICY RUNTIME ACM IP IS "${POLICY_RUNTIME_ACM_IP}"
 "${SCRIPTS}"/wait_for_port.sh "${POLICY_RUNTIME_ACM_IP}" 6969
 
 # Bringup ACM participant containers
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d policy-clamp-ac-k8s-ppnt
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d policy-clamp-ac-http-ppnt
 docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d policy-clamp-ac-pf-ppnt
 
 sleep 10
