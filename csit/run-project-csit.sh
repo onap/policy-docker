@@ -31,10 +31,13 @@ function on_exit(){
             rsync -av "${WORKDIR}/" "${WORKSPACE}/csit/archives/${PROJECT}"
         fi
         # Record list of active docker containers
-        docker ps --format "{{.Image}}" > "${WORKSPACE}/csit/archives/${PROJECT}/_docker-images.log"
+        docker ps
+
+        # Show the logs from all containers
+        docker-compose -f "${WORKSPACE}/csit/docker-compose-all.yml" logs
 
         # show memory consumption after all docker instances initialized
-        docker_stats | tee "${WORKSPACE}/csit/archives/${PROJECT}/_sysinfo-2-after-robot.txt"
+        docker_stats
     fi
     # Run teardown script plan if it exists
     cd "${TESTPLANDIR}/plans/"
