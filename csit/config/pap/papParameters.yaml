@@ -24,7 +24,7 @@ spring:
 server:
   port: 6969
   ssl:
-    enabled: {{HTTPS_ENABLED}}
+    enabled: false
 
 pap:
   name: PapGroup
@@ -44,7 +44,7 @@ pap:
       servers:
       - message-router
       topicCommInfrastructure: dmaap
-      useHttps: {{HTTPS_ENABLED}}
+      useHttps: false
       fetchTimeout: 15000
     - topic: POLICY-HEARTBEAT
       effectiveTopic: POLICY-PDP-PAP
@@ -52,26 +52,26 @@ pap:
       servers:
       - message-router
       topicCommInfrastructure: dmaap
-      useHttps: {{HTTPS_ENABLED}}
+      useHttps: false
       fetchTimeout: 15000
     topicSinks:
     - topic: POLICY-PDP-PAP
       servers:
       - message-router
       topicCommInfrastructure: dmaap
-      useHttps: {{HTTPS_ENABLED}}
+      useHttps: false
     - topic: POLICY-NOTIFICATION
       servers:
       - message-router
       topicCommInfrastructure: dmaap
-      useHttps: {{HTTPS_ENABLED}}
+      useHttps: false
   healthCheckRestClientParameters:
   - clientName: api
     hostname: policy-api
     port: 6969
     userName: policyadmin
     password: zb!XztG34
-    useHttps: {{HTTPS_ENABLED}}
+    useHttps: false
     basePath: policy/api/v1/healthcheck
 
 management:

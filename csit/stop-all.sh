@@ -23,4 +23,4 @@ export SCRIPTS="${SCRIPTS}"/csit
 
 source "${SCRIPTS}"/get-versions.sh
 
-docker-compose -f "${SCRIPTS}"/docker-compose-gui-smoke.yml down
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml down

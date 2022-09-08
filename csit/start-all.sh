@@ -18,12 +18,8 @@
 SCRIPTS=$(git rev-parse --show-toplevel)
 export SCRIPTS="${SCRIPTS}"/csit
 
-cd ${SCRIPTS}
+source "${SCRIPTS}"/get-versions.sh
 
-python3 ./prepare-config-files.py --https=true
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d policy-gui
 
-source ./get-versions.sh
-
-docker-compose -f docker-compose-gui-smoke.yml up -d policy-gui
-
-echo "Clamp GUI: https://localhost:2443/clamp"
+echo "Clamp GUI: https://localhost:2445/clamp"

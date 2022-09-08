@@ -46,7 +46,6 @@ Metrics
     Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policy/pap/v1/components/healthcheck",} 1.0
     Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="save",repository="PdpGroupRepository",state="SUCCESS",} 1.0
     Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findByKeyName",repository="PdpGroupRepository",state="SUCCESS",} 1.0
-    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findAll",repository="PdpGroupRepository",state="SUCCESS",} 1.0
     Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findAll",repository="PolicyStatusRepository",state="SUCCESS",} 1.0
 
 Statistics
@@ -106,7 +105,8 @@ QueryPdpGroupsAfterUndeploy
     QueryPdpGroups  2  defaultGroup  ACTIVE  0  testGroup  ACTIVE  0
 
 QueryPolicyAuditAfterUnDeploy
-    [Documentation]  Verify policy audit record after undeploy
+    [Documentation]   Verify policy audit record after undeploy
+    Sleep             60 seconds
     QueryPolicyAudit  /policy/pap/v1/policies/audit  200  testGroup  pdpTypeA  onap.restart.tca  UNDEPLOYMENT
 
 QueryPolicyAuditWithMetadataSetAfterUnDeploy

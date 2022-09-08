@@ -165,7 +165,6 @@ services:
        - 9696
       volumes:
        - ./config/drools-apps/custom:/tmp/policy-install/config:ro
-       - ./config/drools-apps/custom/feature-lifecycle.properties:/opt/app/policy/features/lifecycle/config/feature-lifecycle.properties:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       env_file:
         - config/drools-apps/env/base.conf
@@ -224,6 +223,23 @@ services:
         'pap', '6969',
         'apex-pdp', '6969'
         ]
+   policy-clamp-runtime-acm:
+      image: nexus3.onap.org:10001/onap/policy-clamp-runtime-acm:${POLICY_CLAMP_VERSION}
+      container_name: policy-clamp-runtime-acm
+      depends_on:
+       - mariadb
+       - simulator
+      hostname: policy-clamp-runtime-acm
+      expose:
+       - 6969
+      volumes:
+       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
+       - ./config/clamp/AcRuntimeParameters.yaml:/opt/app/policy/clamp/etc/AcRuntimeParameters.yaml:ro
+      entrypoint: /opt/app/policy/bin/wait_for_port.sh
+      command: [
+        '-c', './acm-runtime.sh',
+        'message-router', '3904'
+        ]
    prometheus:
       image: prom/prometheus:v2.32.1
       container_name: prometheus
@@ -244,3 +260,18 @@ services:
        - ./metrics/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
        - ./metrics/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
        - ./metrics/dashboards:/var/lib/grafana/dashboards
+   node-exporter:
+      image: prom/node-exporter:latest
+      container_name: node-exporter
+      restart: unless-stopped
+      volumes:
+         - /proc:/host/proc:ro
+         - /sys:/host/sys:ro
+         - /:/rootfs:ro
+      command:
+         - '--path.procfs=/host/proc'
+         - '--path.rootfs=/rootfs'
+         - '--path.sysfs=/host/sys'
+         - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+      expose:
+         - 9100
