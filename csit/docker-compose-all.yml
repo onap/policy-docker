@@ -246,6 +246,7 @@ services:
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', './acm-runtime.sh',
+        'mariadb', '3306',
         'message-router', '3904'
         ]
    policy-clamp-ac-http-ppnt:
@@ -298,7 +299,8 @@ services:
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', './policy-participant.sh',
-        'message-router', '3904'
+        'message-router', '3904',
+        'api', '6969'
         ]
    policy-gui:
      image: ${CONTAINER_LOCATION}onap/policy-gui:latest
