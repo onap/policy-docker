@@ -1,0 +1,9 @@
+Code-Review+1: Liam Fallon <liam.fallon@est.tech>
+Code-Review+2: Jorge Hernandez <jorge.hernandez-herrero@att.com>
+Code-Review+1: Adheli Tavares <adheli.tavares@est.tech>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Submitted-by: Liam Fallon <liam.fallon@est.tech>
+Submitted-at: Thu, 08 Sep 2022 14:12:08 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/policy/docker/+/130505
+Project: policy/docker
+Branch: refs/heads/master
