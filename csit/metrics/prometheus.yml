@@ -84,3 +84,16 @@ scrape_configs:
     basic_auth:
       username: "healthcheck"
       password: "zb!XztG34"
+
+  - job_name: "acm-metrics"
+    metrics_path: "/prometheus"
+    static_configs:
+      - targets:
+          - "policy-clamp-runtime-acm:6969"
+    basic_auth:
+      username: "runtimeUser"
+      password: "zb!XztG34"
+
+  - job_name: "node"
+    static_configs:
+    - targets: ["node-exporter:9100"]
