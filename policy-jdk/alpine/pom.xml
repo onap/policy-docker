@@ -180,8 +180,8 @@
 
                 <executions>
                     <execution>
-                        <id>clean-images</id>
-                        <phase>prepare-jdk-package</phase>
+                        <id>clean-jdk-image</id>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>remove</goal>
                         </goals>
@@ -191,7 +191,7 @@
                     </execution>
 
                     <execution>
-                        <id>generate-jdk-images</id>
+                        <id>generate-jdk-image</id>
                         <phase>package</phase>
                         <goals>
                             <goal>build</goal>
@@ -199,7 +199,7 @@
                     </execution>
 
                     <execution>
-                        <id>push-jdk-images</id>
+                        <id>push-jdk-image</id>
                         <phase>deploy</phase>
                         <goals>
                             <goal>build</goal>
