@@ -3,7 +3,7 @@
 # Copyright 2016-2017 Huawei Technologies Co., Ltd.
 # Modification Copyright 2019 © Samsung Electronics Co., Ltd.
 # Modification Copyright 2021 © AT&T Intellectual Property.
-# Modification Copyright 2021. Nordix Foundation.
+# Modification Copyright 2021-2022 Nordix Foundation.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,10 +31,13 @@ function on_exit(){
             rsync -av "${WORKDIR}/" "${WORKSPACE}/csit/archives/${PROJECT}"
         fi
         # Record list of active docker containers
-        docker ps --format "{{.Image}}" > "${WORKSPACE}/csit/archives/${PROJECT}/_docker-images.log"
+        docker ps
+
+        # Show the logs from all containers
+        docker-compose -f "${WORKSPACE}/csit/docker-compose-all.yml" logs
 
         # show memory consumption after all docker instances initialized
-        docker_stats | tee "${WORKSPACE}/csit/archives/${PROJECT}/_sysinfo-2-after-robot.txt"
+        docker_stats
     fi
     # Run teardown script plan if it exists
     cd "${TESTPLANDIR}/plans/"
@@ -51,16 +54,23 @@ function on_exit(){
 trap on_exit EXIT
 
 function docker_stats(){
-    #General memory details
-    echo "> top -bn1 | head -3"
-    top -bn1 | head -3
-    echo
+    # General memory details
+    if [ "$(uname -s)" == "Darwin" ]
+    then
+        echo "> top -l1 | head -10"
+        sh -c "top -l1 | head -10"
+        echo
+    else
+        echo "> top -bn1 | head -3"
+        sh -c "top -bn1 | head -3"
+        echo
 
-    echo "> free -h"
-    free -h
-    echo
+        echo "> free -h"
+        sh -c "free -h"
+        echo
+    fi
 
-    #Memory details per Docker
+    # Memory details per Docker
     echo "> docker ps"
     docker ps
     echo
@@ -120,6 +130,19 @@ function source_safely() {
 # main
 #
 
+if $(docker images | grep -q "onap\/policy-api")
+then
+    echo where
+    export CONTAINER_LOCATION=$(
+        docker images |
+        grep onap/policy-api |
+        head -1 |
+        sed 's/onap\/policy-api.*$//'
+    )
+else
+    export CONTAINER_LOCATION="nexus3.onap.org:10001/"
+fi
+
 # set and save options for quick failure
 harden_set && save_set
 
@@ -161,7 +184,7 @@ source_safely "${SCRIPTS}/prepare-csit.sh"
 # Activate the virtualenv containing all the required libraries installed by prepare-csit.sh
 source_safely "${ROBOT_VENV}/bin/activate"
 
-WORKDIR=$(mktemp -d --suffix=-robot-workdir)
+WORKDIR=$(mktemp -d)
 cd "${WORKDIR}"
 
 # Sign in to nexus3 docker repo
@@ -196,7 +219,7 @@ cd "${WORKDIR}"
 echo "Reading the testplan:"
 cat "${TESTPLANDIR}/plans/testplan.txt" | egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' | sed "s|^|${TESTPLANDIR}/tests/|" > testplan.txt
 cat testplan.txt
-SUITES=$( xargs -a testplan.txt )
+SUITES=$( xargs < testplan.txt )
 
 echo ROBOT_VARIABLES="${ROBOT_VARIABLES}"
 echo "Starting Robot test suites ${SUITES} ..."
