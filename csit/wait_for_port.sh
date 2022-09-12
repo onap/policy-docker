@@ -62,6 +62,11 @@ do
 
     while [ "$tmout" -gt 0 ]
     do
+        if command -v docker > /dev/null 2>&1
+        then
+            docker ps
+        fi
+
         nc -vz "$host" "$port"
         rc=$?
 
@@ -69,7 +74,6 @@ do
         then
             break
         else
-            docker ps
             tmout=$((tmout-1))
             sleep 1
         fi

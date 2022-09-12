@@ -20,7 +20,7 @@
 version: '2'
 services:
    mariadb:
-      image: nexus3.onap.org:10001/mariadb:${POLICY_MARIADB_VER}
+      image: ${CONTAINER_LOCATION}mariadb:${POLICY_MARIADB_VER}
       container_name: mariadb
       hostname: mariadb
       command: ['--lower-case-table-names=1', '--wait_timeout=28800']
@@ -30,7 +30,7 @@ services:
       expose:
        - 3306
    policy-db-migrator:
-      image: nexus3.onap.org:10001/onap/policy-db-migrator:${POLICY_DOCKER_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-db-migrator:${POLICY_DOCKER_VERSION}
       container_name: policy-db-migrator
       hostname: policy-db-migrator
       depends_on:
@@ -51,7 +51,7 @@ services:
                 'mariadb', '3306'
                ]
    simulator:
-      image: nexus3.onap.org:10001/onap/policy-models-simulator:${POLICY_MODELS_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-models-simulator:${POLICY_MODELS_VERSION}
       container_name: simulator
       hostname: simulator
       networks:
@@ -75,7 +75,7 @@ services:
        - 3905
        - 6680
    api:
-      image: nexus3.onap.org:10001/onap/policy-api:${POLICY_API_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-api:${POLICY_API_VERSION}
       container_name: policy-api
       depends_on:
        - policy-db-migrator
@@ -93,7 +93,7 @@ services:
         'policy-db-migrator', '6824'
         ]
    pap:
-      image: nexus3.onap.org:10001/onap/policy-pap:${POLICY_PAP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-pap:${POLICY_PAP_VERSION}
       container_name: policy-pap
       depends_on:
        - mariadb
@@ -116,7 +116,7 @@ services:
         'api', '6969'
         ]
    xacml-pdp:
-      image: nexus3.onap.org:10001/onap/policy-xacml-pdp:${POLICY_XACML_PDP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-xacml-pdp:${POLICY_XACML_PDP_VERSION}
       container_name: policy-xacml-pdp
       depends_on:
        - mariadb
@@ -138,7 +138,7 @@ services:
         'pap', '6969'
         ]
    drools:
-      image: nexus3.onap.org:10001/onap/policy-drools:${POLICY_DROOLS_PDP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-drools:${POLICY_DROOLS_PDP_VERSION}
       container_name: drools
       depends_on:
        - mariadb
@@ -160,7 +160,7 @@ services:
         'message-router', '3905'
         ]
    drools-apps:
-      image: nexus3.onap.org:10001/onap/policy-pdpd-cl:${POLICY_DROOLS_APPS_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-pdpd-cl:${POLICY_DROOLS_APPS_VERSION}
       container_name: drools-apps
       depends_on:
        - mariadb
@@ -191,7 +191,7 @@ services:
         'vfc-sim', '6670'
         ]
    apex-pdp:
-      image: nexus3.onap.org:10001/onap/policy-apex-pdp:${POLICY_APEX_PDP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-apex-pdp:${POLICY_APEX_PDP_VERSION}
       container_name: policy-apex-pdp
       depends_on:
        - mariadb
@@ -214,7 +214,7 @@ services:
         'pap', '6969'
         ]
    distribution:
-      image: nexus3.onap.org:10001/onap/policy-distribution:${POLICY_DISTRIBUTION_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-distribution:${POLICY_DISTRIBUTION_VERSION}
       container_name: policy-distribution
       depends_on:
        - mariadb
@@ -237,7 +237,7 @@ services:
         'apex-pdp', '6969'
         ]
    policy-clamp-cl-runtime:
-      image: nexus3.onap.org:10001/onap/policy-clamp-cl-runtime:${POLICY_CLAMP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-clamp-cl-runtime:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-cl-runtime
       depends_on:
        - mariadb
@@ -259,7 +259,7 @@ services:
         'policy-clamp-cl-k8s-ppnt', '8083'
         ]
    policy-clamp-cl-http-ppnt:
-      image: nexus3.onap.org:10001/onap/policy-clamp-cl-http-ppnt:${POLICY_CLAMP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-clamp-cl-http-ppnt:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-cl-http-ppnt
       depends_on:
        - simulator
@@ -274,7 +274,7 @@ services:
         'message-router', '3905'
         ]
    policy-clamp-cl-k8s-ppnt:
-      image: nexus3.onap.org:10001/onap/policy-clamp-cl-k8s-ppnt:${POLICY_CLAMP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-clamp-cl-k8s-ppnt:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-cl-k8s-ppnt
       depends_on:
        - simulator
@@ -291,7 +291,7 @@ services:
         'message-router', '3905'
         ]
    policy-clamp-cl-pf-ppnt:
-      image: nexus3.onap.org:10001/onap/policy-clamp-cl-pf-ppnt:${POLICY_CLAMP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-clamp-cl-pf-ppnt:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-cl-pf-ppnt
       depends_on:
        - simulator

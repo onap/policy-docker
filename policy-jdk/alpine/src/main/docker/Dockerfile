@@ -23,8 +23,10 @@
 # $JAVA_HOME is set to /usr/lib/jvm/java-11-openjdk
 # more details at https://hub.docker.com/_/openjdk
 
-FROM onap/integration-python:9.1.0
+ARG INTEGRATION_PYTHON_NAME=${INTEGRATION_PYTHON_NAME}
+ARG INTEGRATION_PYTHON_VERSION=${INTEGRATION_PYTHON_VERSION}
 
+FROM ${INTEGRATION_PYTHON_NAME}:${INTEGRATION_PYTHON_VERSION}
 LABEL maintainer="Policy Team"
 
 ENV POLICY_HOME=/opt/app/policy
