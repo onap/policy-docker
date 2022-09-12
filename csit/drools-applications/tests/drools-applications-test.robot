@@ -213,8 +213,8 @@ VerifyController
 PeformGetRequest
      [Arguments]  ${url}  ${hostname}  ${port}  ${expectedstatus}
      ${auth}=  Create List  demo@people.osaaf.org  demo123456!
-     Log  Creating session https://${hostname}:${port}
-     ${session}=  Create Session  policy  https://${hostname}:${port}  auth=${auth}
+     Log  Creating session http://${hostname}:${port}
+     ${session}=  Create Session  policy  http://${hostname}:${port}  auth=${auth}
      ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
      ${resp}=  GET On Session  policy  ${url}  headers=${headers}  expected_status=${expectedstatus}
      Log  Received response from policy ${resp.text}
@@ -224,8 +224,8 @@ PerformPostRequest
      [Arguments]  ${url}  ${params}  ${hostname}  ${port}  ${jsonfile}  ${filepath}  ${contenttype}  ${expectedstatus}
      ${auth}=  Create List  healthcheck  zb!XztG34
      ${postjson}=  Get file  ${filepath}/${jsonfile}
-     Log  Creating session https://${hostname}:6969
-     ${session}=  Create Session  policy  https://${hostname}:6969  auth=${auth}
+     Log  Creating session http://${hostname}:6969
+     ${session}=  Create Session  policy  http://${hostname}:6969  auth=${auth}
      ${headers}=  Create Dictionary  Accept=application/${contenttype}  Content-Type=application/${contenttype}
      ${resp}=  POST On Session  policy  ${url}  params=${params}  data=${postjson}  headers=${headers}  expected_status=${expectedstatus}
      Log  Received response from policy ${resp.text}

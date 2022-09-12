@@ -62,7 +62,7 @@ RunEventOnApexEngine
 
 TriggerAndVerifyControlLoopPolicy
     [Documentation]    Send event to DMaaP and read notifications to verify policy execution
-    Create Session   apexSession  https://${DMAAP_IP}:3905   max_retries=1
+    Create Session   apexSession  http://${DMAAP_IP}:3904   max_retries=1
     ${data}=    Get Binary File     ${CURDIR}/data/VesEvent.json
     &{headers}=  Create Dictionary    Content-Type=application/json    Accept=application/json
     ${resp}=    POST On Session    apexSession    /events/unauthenticated.DCAE_CL_OUTPUT    data=${data}   headers=${headers}

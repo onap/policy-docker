@@ -16,7 +16,8 @@ server:
     context-path: /onap/controlloop
   error:
     path: /error
-
+  ssl:
+    enabled: false
 
 runtime:
   supervisionScannerIntervalSec: 1000
@@ -44,14 +45,14 @@ runtime:
           - ${topicServer:message-router}
         topicCommInfrastructure: dmaap
         fetchTimeout: 15000
-        useHttps: true
+        useHttps: false
     topicSinks:
       -
         topic: POLICY-CLRUNTIME-PARTICIPANT
         servers:
           - ${topicServer:message-router}
         topicCommInfrastructure: dmaap
-        useHttps: true
+        useHttps: false
 
 management:
   endpoints:

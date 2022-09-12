@@ -5,7 +5,7 @@
         "port": 6969,
         "userName": "healthcheck",
         "password": "zb!XztG34",
-        "https": true,
+        "https": false,
         "aaf": false,
         "prometheus": true
     },
@@ -35,7 +35,7 @@
             "topic" : "POLICY-PDP-PAP",
             "servers" : [ "message-router" ],
             "topicCommInfrastructure" : "dmaap",
-            "useHttps": true
+            "useHttps": false
         },
         {
             "topic" : "POLICY-HEARTBEAT",
@@ -43,19 +43,19 @@
             "consumerGroup": "policy-pap",
             "servers" : [ "message-router" ],
             "topicCommInfrastructure" : "dmaap",
-            "useHttps": true
+            "useHttps": false
         }],
         "topicSinks" : [{
             "topic" : "POLICY-PDP-PAP",
             "servers" : [ "message-router" ],
             "topicCommInfrastructure" : "dmaap",
-            "useHttps": true
+            "useHttps": false
         },
         {
             "topic" : "POLICY-NOTIFICATION",
             "servers" : [ "message-router" ],
             "topicCommInfrastructure" : "dmaap",
-            "useHttps": true
+            "useHttps": false
         }]
     },
     "healthCheckRestClientParameters":[{
@@ -64,7 +64,7 @@
         "port": 6969,
         "userName": "healthcheck",
         "password": "zb!XztG34",
-        "useHttps": true,
+        "useHttps": false,
         "basePath": "policy/api/v1/healthcheck"
     }]
 }

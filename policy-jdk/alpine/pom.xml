@@ -37,7 +37,94 @@
 
     <properties>
         <docker.jdk.imagename>onap/policy-jdk-alpine</docker.jdk.imagename>
+        <integration.python.name>onap/integration-python</integration.python.name>
+        <integration.python.version>9.1.0</integration.python.version>
     </properties>
+
+    <profiles>
+        <profile>
+            <!-- This profile is activated on Apple M1 architecture to generate the ONAP base Java image locally -->
+            <id>baseImage</id>
+            <activation>
+                <os>
+                    <arch>aarch64</arch>
+                </os>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-scm-plugin</artifactId>
+                        <version>1.13.0</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.codehaus.plexus</groupId>
+                                <artifactId>plexus-utils</artifactId>
+                                <version>3.4.2</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.apache.maven.scm</groupId>
+                                <artifactId>maven-scm-provider-gitexe</artifactId>
+                                <version>1.13.0</version>
+                            </dependency>
+                        </dependencies>
+                        <configuration>
+                            <connectionType>connection</connectionType>
+                            <checkoutDirectory>src/main/resources/meta</checkoutDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>checkout-onap-python</id>
+                                <phase>validate</phase>
+                                <configuration>
+                                    <connectionUrl>scm:git:https://gerrit.onap.org/r/integration/docker/onap-python</connectionUrl>
+                                    <checkoutDirectory>${project.build.directory}/onap-python</checkoutDirectory>
+                                </configuration>
+                                <goals>
+                                    <goal>checkout</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+
+                        <executions>
+                            <execution>
+                                <id>generate-python-image</id>
+                                <phase>initialize</phase>
+                                <configuration>
+                                    <verbose>true</verbose>
+                                    <apiVersion>1.23</apiVersion>
+                                    <pullRegistry>${docker.pull.registry}</pullRegistry>
+                                    <pushRegistry>${docker.push.registry}</pushRegistry>
+                                    <images>
+                                        <image>
+                                            <name>${integration.python.name}</name>
+                                            <build>
+                                                <cleanup>try</cleanup>
+                                                <contextDir>${project.build.directory}/onap-python</contextDir>
+                                                <dockerFile>Dockerfile</dockerFile>
+                                                <tags>
+                                                    <tag>${integration.python.version}</tag>
+                                                    <tag>${integration.python.version}-${maven.build.timestamp}</tag>
+                                                    <tag>${project.docker.latest.minmax.tag.version}</tag>
+                                                </tags>
+                                            </build>
+                                        </image>
+                                    </images>
+                                </configuration>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <build>
         <finalName>${project.artifactId}-${project.version}</finalName>
@@ -59,6 +146,10 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>io.github.git-commit-id</groupId>
+                <artifactId>git-commit-id-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
 
@@ -78,6 +169,10 @@
                                     <tag>${project.version}-${maven.build.timestamp}</tag>
                                     <tag>${project.docker.latest.minmax.tag.version}</tag>
                                 </tags>
+                                <args>
+                                    <INTEGRATION_PYTHON_NAME>${integration.python.name}</INTEGRATION_PYTHON_NAME>
+                                    <INTEGRATION_PYTHON_VERSION>${integration.python.version}</INTEGRATION_PYTHON_VERSION>
+                                </args>
                             </build>
                         </image>
                     </images>
@@ -85,8 +180,8 @@
 
                 <executions>
                     <execution>
-                        <id>clean-images</id>
-                        <phase>pre-clean</phase>
+                        <id>clean-jdk-image</id>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>remove</goal>
                         </goals>
@@ -96,15 +191,15 @@
                     </execution>
 
                     <execution>
-                        <id>generate-images</id>
-                        <phase>generate-sources</phase>
+                        <id>generate-jdk-image</id>
+                        <phase>package</phase>
                         <goals>
                             <goal>build</goal>
                         </goals>
                     </execution>
 
                     <execution>
-                        <id>push-images</id>
+                        <id>push-jdk-image</id>
                         <phase>deploy</phase>
                         <goals>
                             <goal>build</goal>
@@ -133,3 +228,4 @@
         </plugins>
     </build>
 </project>
+
