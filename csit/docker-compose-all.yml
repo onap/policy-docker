@@ -2,7 +2,7 @@
 # ===========LICENSE_START====================================================
 #  Copyright (C) 2020-2021 AT&T Intellectual Property. All rights reserved.
 #  Modifications Copyright (C) 2021 Bell Canada. All rights reserved.
-#  Modification Copyright 2021. Nordix Foundation.
+#  Modifications Copyright (C) 2022 Nordix Foundation.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 version: '2'
 services:
    mariadb:
-      image: nexus3.onap.org:10001/mariadb:${POLICY_MARIADB_VER}
+      image: ${CONTAINER_LOCATION}mariadb:${POLICY_MARIADB_VER}
       container_name: mariadb
       hostname: mariadb
       command: ['--lower-case-table-names=1', '--wait_timeout=28800']
@@ -30,7 +30,7 @@ services:
       expose:
        - 3306
    policy-db-migrator:
-      image: nexus3.onap.org:10001/onap/policy-db-migrator:${POLICY_DOCKER_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-db-migrator:${POLICY_DOCKER_VERSION}
       container_name: policy-db-migrator
       hostname: policy-db-migrator
       depends_on:
@@ -51,7 +51,7 @@ services:
                 'mariadb', '3306'
                ]
    simulator:
-      image: nexus3.onap.org:10001/onap/policy-models-simulator:${POLICY_MODELS_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-models-simulator:${POLICY_MODELS_VERSION}
       container_name: simulator
       hostname: simulator
       networks:
@@ -65,17 +65,15 @@ services:
                   - vfc-sim
       volumes:
        - ./config/sim-all:/opt/app/policy/simulators/etc/mounted:ro
-       - ./config/ks.jks:/opt/app/policy/simulators/etc/ssl/policy-keystore:ro
-       - ./config/policy-truststore:/opt/app/policy/simulators/etc/ssl/policy-truststore:ro
       expose:
        - 6666
        - 6668
        - 6669
        - 6670
-       - 3905
+       - 3904
        - 6680
    api:
-      image: nexus3.onap.org:10001/onap/policy-api:${POLICY_API_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-api:${POLICY_API_VERSION}
       container_name: policy-api
       depends_on:
        - policy-db-migrator
@@ -83,8 +81,8 @@ services:
       expose:
        - 6969
       volumes:
-       - ./config/ks.jks:/opt/app/policy/api/etc/ssl/policy-keystore:ro
-       - ./config/policy-truststore:/opt/app/policy/api/etc/ssl/policy-truststore:ro
+       - ./config/api/defaultConfig.json:/opt/app/policy/api/etc/defaultConfig.json:ro
+       - ./config/api/logback.xml:/opt/app/policy/api/etc/logback.xml:ro
        - ./wait_for_port.sh:/opt/app/policy/api/bin/wait_for_port.sh:ro
       entrypoint: ./wait_for_port.sh
       command: [
@@ -93,7 +91,7 @@ services:
         'policy-db-migrator', '6824'
         ]
    pap:
-      image: nexus3.onap.org:10001/onap/policy-pap:${POLICY_PAP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-pap:${POLICY_PAP_VERSION}
       container_name: policy-pap
       depends_on:
        - mariadb
@@ -104,19 +102,18 @@ services:
        - 6969
       volumes:
        - ./config/pap/defaultConfig.json:/opt/app/policy/pap/etc/defaultConfig.json:ro
+       - ./config/pap/logback.xml:/opt/app/policy/pap/etc/logback.xml:ro
        - ./config/pap/groups.json:/opt/app/policy/pap/etc/mounted/groups.json:ro
-       - ./config/ks.jks:/opt/app/policy/pap/etc/ssl/policy-keystore:ro
-       - ./config/policy-truststore:/opt/app/policy/pap/etc/ssl/policy-truststore:ro
        - ./wait_for_port.sh:/opt/app/policy/pap/bin/wait_for_port.sh:ro
       entrypoint: ./wait_for_port.sh
       command: [
         '-c', './policy-pap.sh',
         'mariadb', '3306',
-        'message-router', '3905',
+        'message-router', '3904',
         'api', '6969'
         ]
    xacml-pdp:
-      image: nexus3.onap.org:10001/onap/policy-xacml-pdp:${POLICY_XACML_PDP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-xacml-pdp:${POLICY_XACML_PDP_VERSION}
       container_name: policy-xacml-pdp
       depends_on:
        - mariadb
@@ -127,18 +124,16 @@ services:
        - 6969
       volumes:
        - ./config/xacml-pdp/defaultConfig.json:/opt/app/policy/pdpx/etc/defaultConfig.json:ro
-       - ./config/ks.jks:/opt/app/policy/pdpx/etc/ssl/policy-keystore:ro
-       - ./config/policy-truststore:/opt/app/policy/pdpx/etc/ssl/policy-truststore:ro
        - ./wait_for_port.sh:/opt/app/policy/pdpx/bin/wait_for_port.sh:ro
       entrypoint: ./wait_for_port.sh
       command: [
         '-c', './policy-pdpx.sh',
         'mariadb', '3306',
-        'message-router', '3905',
+        'message-router', '3904',
         'pap', '6969'
         ]
    drools:
-      image: nexus3.onap.org:10001/onap/policy-drools:${POLICY_DROOLS_PDP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-drools:${POLICY_DROOLS_PDP_VERSION}
       container_name: drools
       depends_on:
        - mariadb
@@ -157,10 +152,10 @@ services:
       command: [
         '-c', '/opt/app/policy/bin/pdpd-entrypoint.sh boot',
         'mariadb', '3306',
-        'message-router', '3905'
+        'message-router', '3904'
         ]
    drools-apps:
-      image: nexus3.onap.org:10001/onap/policy-pdpd-cl:${POLICY_DROOLS_APPS_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-pdpd-cl:${POLICY_DROOLS_APPS_VERSION}
       container_name: drools-apps
       depends_on:
        - mariadb
@@ -183,7 +178,7 @@ services:
       command: [
         '-c', '/opt/app/policy/bin/pdpd-cl-entrypoint.sh boot',
         'mariadb', '3306',
-        'message-router', '3905',
+        'message-router', '3904',
         'pap', '6969',
         'aai-sim', '6666',
         'sdnc-sim', '6668',
@@ -191,7 +186,7 @@ services:
         'vfc-sim', '6670'
         ]
    apex-pdp:
-      image: nexus3.onap.org:10001/onap/policy-apex-pdp:${POLICY_APEX_PDP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-apex-pdp:${POLICY_APEX_PDP_VERSION}
       container_name: policy-apex-pdp
       depends_on:
        - mariadb
@@ -203,18 +198,16 @@ services:
        - 23324
       volumes:
        - ./config/apex-pdp/OnapPfConfig.json:/opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json:ro
-       - ./config/ks.jks:/opt/app/policy/apex-pdp/etc/ssl/policy-keystore:ro
-       - ./config/policy-truststore:/opt/app/policy/apex-pdp/etc/ssl/policy-truststore:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', '/opt/app/policy/apex-pdp/bin/apexOnapPf.sh -c /opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json',
         'mariadb', '3306',
-        'message-router', '3905',
+        'message-router', '3904',
         'pap', '6969'
         ]
    distribution:
-      image: nexus3.onap.org:10001/onap/policy-distribution:${POLICY_DISTRIBUTION_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-distribution:${POLICY_DISTRIBUTION_VERSION}
       container_name: policy-distribution
       depends_on:
        - mariadb
@@ -224,20 +217,18 @@ services:
       hostname: policy-distribution
       volumes:
        - ./config/distribution/defaultConfig.json:/opt/app/policy/distribution/etc/defaultConfig.json:ro
-       - ./config/ks.jks:/opt/app/policy/distribution/etc/ssl/policy-keystore:ro
-       - ./config/policy-truststore:/opt/app/policy/distribution/etc/ssl/policy-truststore:ro
        - ./distribution/config/temp/:/opt/app/policy/distribution/etc/temp/:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', './policy-dist.sh',
         'mariadb', '3306',
-        'message-router', '3905',
+        'message-router', '3904',
         'pap', '6969',
         'apex-pdp', '6969'
         ]
    policy-clamp-cl-runtime:
-      image: nexus3.onap.org:10001/onap/policy-clamp-cl-runtime:${POLICY_CLAMP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-clamp-cl-runtime:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-cl-runtime
       depends_on:
        - mariadb
@@ -249,32 +240,30 @@ services:
       expose:
        - 6969
       volumes:
-       - ./config/policy-truststore:/opt/app/policy/clamp/etc/ssl/policy-truststore:ro
+       - ./config/clamp/ClRuntimeParameters.yaml:/opt/app/policy/clamp/config/ClRuntimeParameters.yaml:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
-       - ./config/ks.jks:/opt/app/policy/clamp/etc/ssl/policy-keystore:ro
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', './controlloop-runtime.sh',
-        'message-router', '3905',
+        'message-router', '3904',
         'policy-clamp-cl-k8s-ppnt', '8083'
         ]
    policy-clamp-cl-http-ppnt:
-      image: nexus3.onap.org:10001/onap/policy-clamp-cl-http-ppnt:${POLICY_CLAMP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-clamp-cl-http-ppnt:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-cl-http-ppnt
       depends_on:
        - simulator
       hostname: policy-clamp-cl-http-ppnt
       volumes:
-       - ./config/policy-truststore:/opt/app/policy/clamp/etc/ssl/policy-truststore:ro
+       - ./config/clamp/HttpParticipantParameters.yaml:/opt/app/policy/clamp/config/HttpParticipantParameters.yaml:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
-       - ./config/ks.jks:/opt/app/policy/clamp/etc/ssl/policy-keystore:ro
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', './http-participant.sh',
-        'message-router', '3905'
+        'message-router', '3904'
         ]
    policy-clamp-cl-k8s-ppnt:
-      image: nexus3.onap.org:10001/onap/policy-clamp-cl-k8s-ppnt:${POLICY_CLAMP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-clamp-cl-k8s-ppnt:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-cl-k8s-ppnt
       depends_on:
        - simulator
@@ -282,28 +271,25 @@ services:
       expose:
       - 8083
       volumes:
-       - ./config/policy-truststore:/opt/app/policy/clamp/etc/ssl/policy-truststore:ro
+       - ./config/clamp/KubernetesParticipantParameters.yaml:/opt/app/policy/clamp/config/KubernetesParticipantParameters.yaml:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
-       - ./config/ks.jks:/opt/app/policy/clamp/etc/ssl/policy-keystore:ro
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', './kubernetes-participant.sh',
-        'message-router', '3905'
+        'message-router', '3904'
         ]
    policy-clamp-cl-pf-ppnt:
-      image: nexus3.onap.org:10001/onap/policy-clamp-cl-pf-ppnt:${POLICY_CLAMP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-clamp-cl-pf-ppnt:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-cl-pf-ppnt
       depends_on:
        - simulator
        - api
       hostname: policy-clamp-cl-pf-ppnt
       volumes:
-       - ./config/policy-truststore:/opt/app/policy/clamp/etc/ssl/policy-truststore:ro
-       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
-       - ./config/ks.jks:/opt/app/policy/clamp/etc/ssl/policy-keystore:ro
        - ./config/clamp/PolicyParticipantParameters.yaml:/opt/app/policy/clamp/config/PolicyParticipantParameters.yaml:ro
+       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', './policy-participant.sh',
-        'message-router', '3905'
+        'message-router', '3904'
         ]

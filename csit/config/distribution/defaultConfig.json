@@ -5,7 +5,7 @@
         "port":6969,
         "userName":"healthcheck",
         "password":"zb!XztG34",
-        "https": true,
+        "https": false,
         "prometheus": true
     },
     "receptionHandlerParameters":{
@@ -59,7 +59,7 @@
                     "port": 6969,
                     "userName": "healthcheck",
                     "password": "zb!XztG34",
-                    "useHttps": true
+                    "useHttps": false
                 },
                 "papParameters": {
                     "clientName": "policy-pap",
@@ -67,7 +67,7 @@
                     "port": 6969,
                     "userName": "healthcheck",
                     "password": "zb!XztG34",
-                    "useHttps": true
+                    "useHttps": false
                 },
                 "deployPolicies": true
             }

@@ -15,10 +15,15 @@ participant:
             - ${topicServer:message-router}
           topicCommInfrastructure: dmaap
           fetchTimeout: 15000
-          useHttps: true
+          useHttps: false
       topicSinks:
         - topic: POLICY-CLRUNTIME-PARTICIPANT
           servers:
             - ${topicServer:message-router}
           topicCommInfrastructure: dmaap
-          useHttps: true
+          useHttps: false
+
+server:
+  ssl:
+    enabled: false
+          

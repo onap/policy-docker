@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2021 Nordix Foundation.
+#  Copyright (C) 2021-2022 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -33,6 +33,8 @@ sleep 300
 unset http_proxy https_proxy
 
 POLICY_CONTROLLOOP_RUNTIME_IP=`get-instance-ip.sh policy-clamp-cl-runtime`
+MARIADB_IP=$(get-instance-ip.sh mariadb)
+DMAAP_IP=$(get-instance-ip.sh simulator)
 POLICY_PARTICIPANT_IP=`get-instance-ip.sh policy-clamp-cl-pf-ppnt`
 K8S_PARTICIPANT_IP=`get-instance-ip.sh policy-clamp-cl-k8s-ppnt`
 HTTP_PARTICIPANT_IP=`get-instance-ip.sh policy-clamp-cl-http-ppnt`
@@ -40,7 +42,8 @@ MARIADB_IP=`get-instance-ip.sh mariadb`
 DMAAP_IP=`get-instance-ip.sh simulator`
 POLICY_API_IP=`get-instance-ip.sh policy-api`
 
-echo MARIADB IP IS ${MARIADB_IP}
+echo MARIADB IP IS "${MARIADB_IP}"
+echo DMAAP_IP IS "${DMAAP_IP}"
 echo DMAAP_IP IS ${DMAAP_IP}
 echo API IP IS ${POLICY_API_IP}
 echo POLICY CONTROLLOOP RUNTIME IP IS ${POLICY_CONTROLLOOP_RUNTIME_IP}
