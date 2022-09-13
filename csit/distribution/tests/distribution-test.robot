@@ -34,8 +34,8 @@ InvokeDistributionUsingFile And RunEventOnApexEngine
 PeformGetRequest
      [Arguments]  ${url}  ${expectedstatus}
      ${auth}=  Create List  healthcheck  zb!XztG34
-     Log  Creating session https://${POLICY_DISTRIBUTION_IP}:6969
-     ${session}=  Create Session  policy  https://${POLICY_DISTRIBUTION_IP}:6969  auth=${auth}
+     Log  Creating session http://${POLICY_DISTRIBUTION_IP}:6969
+     ${session}=  Create Session  policy  http://${POLICY_DISTRIBUTION_IP}:6969  auth=${auth}
      ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
      ${resp}=  GET On Session  policy  ${url}  headers=${headers}  expected_status=${expectedstatus}
      Log  Received response from policy ${resp.text}

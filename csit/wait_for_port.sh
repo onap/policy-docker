@@ -1,6 +1,7 @@
 #!/bin/sh
 # ============LICENSE_START====================================================
 #  Copyright (C) 2021 AT&T Intellectual Property. All rights reserved.
+#  Modifications Copyright (C) 2022 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,35 +18,69 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END======================================================
 
+usage() {
+    echo args: [-t timeout] [-c command] hostname1 port1 hostname2 port2 ... >&2
+    exit 1
+}
+
 tmout=300
 cmd=
-while getopts c:t: opt; do
+while getopts c:t: opt
+do
     case "$opt" in
-    c) cmd="$OPTARG" ;;
-    t) tmout="$OPTARG" ;;
+        c)
+            cmd="$OPTARG"
+            ;;
+
+        t)
+            tmout="$OPTARG"
+            ;;
+
+        *)
+            usage
+            ;;
     esac
 done
-nargs=$(expr $OPTIND - 1)
-shift $nargs
 
-even_args=$(expr $# % 2)
-if [ $# -lt 2 -o $even_args -ne 0 ]; then
-    echo "args: [-t timeout] [-c command] hostname1 port1 hostname2 port2 ..." >&2
-    exit 1
+nargs=$((OPTIND-1))
+shift "$nargs"
+
+even_args=$(($#%2))
+if [ $# -lt 2 ] || [ "$even_args" -ne 0 ]
+then
+    usage
 fi
 
-while [ $# -ge 2 ]; do
-    export host=$1
-    export port=$2
+while [ $# -ge 2 ]
+do
+    export host="$1"
+    export port="$2"
     shift
     shift
 
     echo "Waiting for $host port $port..."
-    timeout $tmout sh -c 'until nc -vz "$host" "$port"; do echo -n ".";
-        sleep 1; done'
-    rc=$?
 
-    if [ $rc != 0 ]; then
+    while [ "$tmout" -gt 0 ]
+    do
+        if command -v docker > /dev/null 2>&1
+        then
+            docker ps
+        fi
+
+        nc -vz "$host" "$port"
+        rc=$?
+
+        if [ $rc -eq 0 ]
+        then
+            break
+        else
+            tmout=$((tmout-1))
+            sleep 1
+        fi
+    done
+
+    if [ $rc -ne 0 ]
+    then
         echo "$host port $port cannot be reached"
         exit $rc
     fi

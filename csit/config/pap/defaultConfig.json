@@ -5,7 +5,7 @@
         "port": 6969,
         "userName": "healthcheck",
         "password": "zb!XztG34",
-        "https": true,
+        "https": false,
         "aaf": false
     },
     "pdpParameters": {
@@ -34,21 +34,21 @@
             "topic" : "POLICY-PDP-PAP",
             "servers" : [ "simulator" ],
             "topicCommInfrastructure" : "dmaap",
-            "useHttps": true,
+            "useHttps": false,
             "allowSelfSignedCerts" : true
         }],
         "topicSinks" : [{
             "topic" : "POLICY-PDP-PAP",
             "servers" : [ "simulator" ],
             "topicCommInfrastructure" : "dmaap",
-            "useHttps": true,
+            "useHttps": false,
             "allowSelfSignedCerts" : true
         },
         {
             "topic" : "POLICY-NOTIFICATION",
             "servers" : [ "simulator" ],
             "topicCommInfrastructure" : "dmaap",
-            "useHttps": true,
+            "useHttps": false,
             "allowSelfSignedCerts" : true
         }]
     },
@@ -58,7 +58,7 @@
         "port": 6969,
         "userName": "healthcheck",
         "password": "zb!XztG34",
-        "useHttps": true,
+        "useHttps": false,
         "allowSelfSignedCerts" : true,
         "basePath": "policy/api/v1/healthcheck"
     }]

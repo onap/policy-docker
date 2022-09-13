@@ -1,7 +1,7 @@
 #   ============LICENSE_START=======================================================
 #    Copyright (C) 2019 Tieto. All rights reserved.
 #    Modifications Copyright (C) 2020 AT&T Intellectual Property. All rights reserved.
-#    Modifications Copyright (C) 2020 Nordix Foundation.
+#    Modifications Copyright (C) 2020,2022 Nordix Foundation.
 #   ================================================================================
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -23,7 +23,10 @@
 # $JAVA_HOME is set to /usr/lib/jvm/java-11-openjdk
 # more details at https://hub.docker.com/_/openjdk
 
-FROM onap/integration-java11:8.0.0
+ARG INTEGRATION_JAVA_NAME=${INTEGRATION_JAVA_NAME}
+ARG INTEGRATION_JAVA_VERSION=${INTEGRATION_JAVA_VERSION}
+
+FROM ${INTEGRATION_JAVA_NAME}:${INTEGRATION_JAVA_VERSION}
 
 LABEL maintainer="Policy Team"
 
