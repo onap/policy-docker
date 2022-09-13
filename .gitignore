@@ -6,3 +6,8 @@ install.log*
 *.sw?
 **/*.iml
 .idea/
+csit/archives
+env.properties
+.pydevproject
+models
+csar_temp.csar

@@ -5,7 +5,7 @@
         "port":6969,
         "userName":"healthcheck",
         "password":"zb!XztG34",
-        "https": true
+        "https": false
     },
     "receptionHandlerParameters":{
         "FileReceptionHandler":{
@@ -64,7 +64,7 @@
                     "userName": "healthcheck",
                     "password": "zb!XztG34"
                 },
-                "isHttps": true,
+                "isHttps": false,
                 "deployPolicies": true
             }
         }

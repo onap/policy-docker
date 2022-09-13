@@ -2,6 +2,7 @@
 #
 # ===========LICENSE_START====================================================
 #  Copyright (C) 2020-2021 AT&T Intellectual Property. All rights reserved.
+#  Modifications Copyright (C) 2022 Nordix Foundation.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,5 +30,5 @@ fi
 
 topic="${1}"
 
-curl -s -k "https://${SIM_IP}:3905/events/${topic}/script/1?limit=1&timeout=0"
+curl -s -k "http://${SIM_IP}:3904/events/${topic}/script/1?limit=1&timeout=0"
 echo

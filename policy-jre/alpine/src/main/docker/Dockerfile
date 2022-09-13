@@ -23,7 +23,10 @@
 # $JAVA_HOME is set to /usr/lib/jvm/java-11-openjdk
 # more details at https://hub.docker.com/_/openjdk
 
-FROM onap/integration-java11:8.0.0
+ARG INTEGRATION_JAVA_NAME=${INTEGRATION_JAVA_NAME}
+ARG INTEGRATION_JAVA_VERSION=${INTEGRATION_JAVA_VERSION}
+
+FROM ${INTEGRATION_JAVA_NAME}:${INTEGRATION_JAVA_VERSION}
 
 LABEL maintainer="Policy Team"
 
