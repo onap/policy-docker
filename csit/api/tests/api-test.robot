@@ -110,8 +110,8 @@ PerformCreateRequest
      [Arguments]  ${url}  ${expectedstatus}  ${jsonfile}  ${filepath}
      ${auth}=  Create List  healthcheck  zb!XztG34
      ${postjson}=  Get file  ${filepath}/${jsonfile}
-     Log  Creating session https://${POLICY_API_IP}:6969
-     ${session}=  Create Session  policy  https://${POLICY_API_IP}:6969  auth=${auth}
+     Log  Creating session http://${POLICY_API_IP}:6969
+     ${session}=  Create Session  policy  http://${POLICY_API_IP}:6969  auth=${auth}
      ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
      ${resp}=  POST On Session  policy  ${url}  data=${postjson}  headers=${headers}  expected_status=${expectedstatus}
      Log  Received response from policy ${resp.text}
@@ -120,8 +120,8 @@ PerformCreateRequest
 PeformGetRequest
      [Arguments]  ${url}  ${expectedstatus}
      ${auth}=  Create List  healthcheck  zb!XztG34
-     Log  Creating session https://${POLICY_API_IP}:6969
-     ${session}=  Create Session  policy  https://${POLICY_API_IP}:6969  auth=${auth}
+     Log  Creating session http://${POLICY_API_IP}:6969
+     ${session}=  Create Session  policy  http://${POLICY_API_IP}:6969  auth=${auth}
      ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
      ${resp}=  GET On Session  policy  ${url}  headers=${headers}  expected_status=${expectedstatus}
      Log  Received response from policy ${resp.text}
@@ -130,8 +130,8 @@ PeformGetRequest
 PeformDeleteRequest
      [Arguments]  ${url}
      ${auth}=  Create List  healthcheck  zb!XztG34
-     Log  Creating session https://${POLICY_API_IP}:6969
-     ${session}=  Create Session  policy  https://${POLICY_API_IP}:6969  auth=${auth}
+     Log  Creating session http://${POLICY_API_IP}:6969
+     ${session}=  Create Session  policy  http://${POLICY_API_IP}:6969  auth=${auth}
      ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
      ${resp}=  DELETE On Session  policy  ${url}  headers=${headers}  expected_status=200
      Log  Received response from policy ${resp.text}
