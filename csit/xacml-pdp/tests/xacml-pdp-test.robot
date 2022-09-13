@@ -132,8 +132,8 @@ PerformPostRequest
      [Arguments]  ${url}  ${params}  ${hostname}  ${expectedstatus}  ${jsonfile}  ${filepath}
      ${auth}=  Create List  healthcheck  zb!XztG34
      ${postjson}=  Get file  ${filepath}/${jsonfile}
-     Log  Creating session https://${hostname}:6969
-     ${session}=  Create Session  policy  https://${hostname}:6969  auth=${auth}
+     Log  Creating session http://${hostname}:6969
+     ${session}=  Create Session  policy  http://${hostname}:6969  auth=${auth}
      ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
      ${resp}=  POST On Session  policy  ${url}  params=${params}  data=${postjson}  headers=${headers}  expected_status=${expectedstatus}
      Log  Received response from policy ${resp.text}
@@ -142,8 +142,8 @@ PerformPostRequest
 PeformGetRequest
      [Arguments]  ${url}  ${expectedstatus}
      ${auth}=  Create List  healthcheck  zb!XztG34
-     Log  Creating session https://${POLICY_PDPX_IP}:6969
-     ${session}=  Create Session  policy  https://${POLICY_PDPX_IP}:6969  auth=${auth}
+     Log  Creating session http://${POLICY_PDPX_IP}:6969
+     ${session}=  Create Session  policy  http://${POLICY_PDPX_IP}:6969  auth=${auth}
      ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
      ${resp}=  GET On Session  policy  ${url}  headers=${headers}  expected_status=${expectedstatus}
      Log  Received response from policy ${resp.text}
@@ -152,8 +152,8 @@ PeformGetRequest
 PeformDeleteRequest
      [Arguments]  ${url}  ${expectedstatus}
      ${auth}=  Create List  healthcheck  zb!XztG34
-     Log  Creating session https://${POLICY_PAP_IP}:6969
-     ${session}=  Create Session  policy  https://${POLICY_PAP_IP}:6969  auth=${auth}
+     Log  Creating session http://${POLICY_PAP_IP}:6969
+     ${session}=  Create Session  policy  http://${POLICY_PAP_IP}:6969  auth=${auth}
      ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
      ${resp}=  DELETE On Session  policy  ${url}  headers=${headers}  expected_status=${expectedstatus}
      Log  Received response from policy ${resp.text}
