@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fbd086d_ba971dd0",
+        "filename": "csit/compose-postgres.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-09-15T12:41:55Z",
+      "side": 1,
+      "message": "Rather than having a proliferation of docker compose files, is it possible to re-use docker_compose_all and parameterize it for PG configuration?",
+      "revId": "84fc1085abf435e0c88c20e75ae23223f745fa71",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd4f1570_a4fb15b6",
+        "filename": "csit/compose-postgres.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-09-15T12:41:55Z",
+      "side": 1,
+      "message": "Use the $IMAGE_LOCATION environment variable for image locations. If you are running locally, it\u0027ll use the images you ahve locally in Docker rather than downloading the ones from Mave every time, handy for testing.\n\nHave a look at docker_compose_all.yaml.",
+      "range": {
+        "startLine": 53,
+        "startChar": 11,
+        "endLine": 53,
+        "endChar": 33
+      },
+      "revId": "84fc1085abf435e0c88c20e75ae23223f745fa71",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
