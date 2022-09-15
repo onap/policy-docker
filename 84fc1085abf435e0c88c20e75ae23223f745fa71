@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "41e3f99f_aa6260d5",
+        "filename": "csit/compose-postgres.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-09-15T14:29:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2fbd086d_ba971dd0",
+      "revId": "84fc1085abf435e0c88c20e75ae23223f745fa71",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd4f1570_a4fb15b6",
         "filename": "csit/compose-postgres.yml",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "84fc1085abf435e0c88c20e75ae23223f745fa71",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e76fd8e_a2a3af98",
+        "filename": "csit/compose-postgres.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-09-15T14:29:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cd4f1570_a4fb15b6",
+      "range": {
+        "startLine": 53,
+        "startChar": 11,
+        "endLine": 53,
+        "endChar": 33
+      },
+      "revId": "84fc1085abf435e0c88c20e75ae23223f745fa71",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
