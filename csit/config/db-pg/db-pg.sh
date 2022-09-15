@@ -13,10 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-psql -U postgres -d postgres --command "CREATE USER ${MYSQL_USER} WITH PASSWORD '${MYSQL_PASSWORD}';"
+psql -U postgres -d postgres --command "CREATE USER ${PGSQL_USER} WITH PASSWORD '${PGSQL_PASSWORD}';"
 
 for db in migration pooling policyadmin policyclamp operationshistory clampacm
 do
     psql -U postgres -d postgres --command "CREATE DATABASE ${db};"
-    psql -U postgres -d postgres --command "GRANT ALL PRIVILEGES ON DATABASE ${db} TO ${MYSQL_USER} ;"
+    psql -U postgres -d postgres --command "GRANT ALL PRIVILEGES ON DATABASE ${db} TO ${PGSQL_USER} ;"
 done

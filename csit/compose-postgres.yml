@@ -49,6 +49,28 @@ services:
       '/opt/app/policy/bin/db_migrator_policy_init_pg.sh',
       'postgres', '5432'
     ]
+  simulator:
+    image: nexus3.onap.org:10001/onap/policy-models-simulator:${POLICY_MODELS_VERSION}
+    container_name: simulator
+    hostname: simulator
+    networks:
+        default:
+            aliases:
+                - message-router
+                - aai-sim
+                - grpc-sim
+                - sdnc-sim
+                - so-sim
+                - vfc-sim
+    volumes:
+      - ./config/sim-all:/opt/app/policy/simulators/etc/mounted:ro
+    expose:
+      - 6666
+      - 6668
+      - 6669
+      - 6670
+      - 3904
+      - 6680
   api:
     image: nexus3.onap.org:10001/onap/policy-api:${POLICY_API_VERSION}
     container_name: policy-api
@@ -56,10 +78,10 @@ services:
       - policy-db-migrator-postgres
     hostname: policy-api
     expose:
-      - 6980
+      - 6969
     volumes:
-      - ./config/ks.jks:/opt/app/policy/api/etc/ssl/policy-keystore:ro
-      - ./config/policy-truststore:/opt/app/policy/api/etc/ssl/policy-truststore:ro
+      - ./config/api/apiParametersPostgres.yaml:/opt/app/policy/api/etc/apiParameters.yaml:ro
+      - ./config/api/logback.xml:/opt/app/policy/api/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/api/bin/wait_for_port.sh:ro
     entrypoint: ./wait_for_port.sh
     command: [
@@ -67,3 +89,25 @@ services:
       'postgres', '5432',
       'policy-db-migrator-postgres', '6824'
     ]
+  pap:
+    image: nexus3.onap.org:10001/onap/policy-pap:${POLICY_PAP_VERSION}
+    container_name: policy-pap
+    depends_on:
+      - postgres
+      - simulator
+      - api
+    hostname: policy-pap
+    expose:
+      - 6969
+    volumes:
+      - ./config/pap/papParametersPostgres.yaml:/opt/app/policy/pap/etc/papParameters.yaml:ro
+      - ./config/pap/groups.json:/opt/app/policy/pap/etc/mounted/groups.json:ro
+      - ./config/pap/logback.xml:/opt/app/policy/pap/etc/logback.xml:ro
+      - ./wait_for_port.sh:/opt/app/policy/pap/bin/wait_for_port.sh:ro
+    entrypoint: ./wait_for_port.sh
+    command: [
+      '-c', './policy-pap.sh',
+      'postgres', '5432',
+      'message-router', '3904',
+      'api', '6969'
+      ]

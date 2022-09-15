@@ -18,8 +18,8 @@
 # ============LICENSE_END======================================================
 
 export POLICY_HOME=/opt/app/policy
-export SQL_USER=${MYSQL_USER}
-export SQL_PASSWORD=${MYSQL_PASSWORD}
+export SQL_USER=${PGSQL_USER}
+export SQL_PASSWORD=${PGSQL_PASSWORD}
 export SCRIPT_DIRECTORY=postgres
 
 /opt/app/policy/bin/prepare_upgrade.sh ${SQL_DB}
