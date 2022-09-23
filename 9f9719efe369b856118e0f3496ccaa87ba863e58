@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7109b4b_13cf52cf",
+        "filename": "csit/docker-compose-all.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2022-09-23T02:00:40Z",
+      "side": 1,
+      "message": "last argument for compatibility with mysql 8.x.   It works for both mariadb and mysql.",
+      "revId": "9f9719efe369b856118e0f3496ccaa87ba863e58",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
