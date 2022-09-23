@@ -16,6 +16,24 @@
       "revId": "9f9719efe369b856118e0f3496ccaa87ba863e58",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce9f9d87_81d97c26",
+        "filename": "csit/docker-compose-all.yml",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-09-23T06:12:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c7109b4b_13cf52cf",
+      "revId": "9f9719efe369b856118e0f3496ccaa87ba863e58",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
