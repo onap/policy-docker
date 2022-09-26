@@ -17,5 +17,5 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE jpapolicyaudit DROP CONSTRAINT PRIMARY KEY;
+ALTER TABLE jpapolicyaudit DROP PRIMARY KEY;
 ALTER TABLE jpapolicyaudit ADD CONSTRAINT PK_JPAPOLICYAUDIT PRIMARY KEY (ID, name, version);
