@@ -144,7 +144,7 @@ services:
        - ./config/drools/custom:/tmp/policy-install/config:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       env_file:
-        - config/drools/env/base.conf
+        - config/drools-pdp/env/base.conf
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', '/opt/app/policy/bin/pdpd-entrypoint.sh boot',
@@ -167,9 +167,9 @@ services:
        - ./config/drools-apps/custom:/tmp/policy-install/config:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       env_file:
-        - config/drools-apps/env/base.conf
-        - config/drools-apps/env/feature-healthcheck.conf
-        - config/drools-apps/env/feature-pooling-dmaap.conf
+        - config/drools-applications/env/base.conf
+        - config/drools-applications/env/feature-healthcheck.conf
+        - config/drools-applications/env/feature-pooling-dmaap.conf
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', '/opt/app/policy/bin/pdpd-cl-entrypoint.sh boot',
