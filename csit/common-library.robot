@@ -116,6 +116,6 @@ GetMetrics
     [Arguments]  ${hostname}  ${auth}
     Log  Creating session http://${hostname}:6969
     ${session}=  Create Session  policy  http://${hostname}:6969  auth=${auth}
-    ${resp}=  GET On Session  policy  /metrics  expected_status=200
+    ${resp}=  GET On Session  policy  /prometheus  expected_status=200
     Log  Received response from policy ${resp.text}
     [return]  ${resp}

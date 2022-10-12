@@ -80,4 +80,3 @@ management:
       base-path: /
       exposure:
         include: health, metrics, prometheus
-      path-mapping.prometheus: metrics
