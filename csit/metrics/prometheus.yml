@@ -86,7 +86,7 @@ scrape_configs:
       password: "zb!XztG34"
 
   - job_name: "acm-metrics"
-    metrics_path: "/prometheus"
+    metrics_path: "/onap/policy/clamp/acm/prometheus"
     static_configs:
       - targets:
           - "policy-clamp-runtime-acm:6969"
