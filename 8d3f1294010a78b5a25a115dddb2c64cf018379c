@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "499e85a4_5ae111ac",
+        "filename": "csit/config/drools-applications/env/base.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-10-18T15:51:20Z",
+      "side": 1,
+      "message": "Yes, something has changed, maybe it was an update on the dependencies. I got a warning something along the lines of \"The template password1$ could not be found\". When I single quoted the fields with $ characters it worked. Incidentally, double quotes did not work.",
+      "parentUuid": "0b7682db_cb43be2d",
+      "revId": "8d3f1294010a78b5a25a115dddb2c64cf018379c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11c7af2b_49f9a1a8",
         "filename": "csit/start-containter.sh",
         "patchSetId": 1
