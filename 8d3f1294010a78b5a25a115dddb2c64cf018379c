@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec82fbf4_0c9437a6",
+        "filename": "csit/config/drools-applications/env/base.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 477
+      },
+      "writtenOn": "2022-10-18T14:01:09Z",
+      "side": 1,
+      "message": "I think the other ones should be ok, guessing the issue that Liam reported may be with the $ as these are sourced in by the shell.   Not sure though why before this was working ok though, I have to look at the tests more in detail.",
+      "parentUuid": "c3283e43_228fb3a9",
+      "revId": "8d3f1294010a78b5a25a115dddb2c64cf018379c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11c7af2b_49f9a1a8",
         "filename": "csit/start-containter.sh",
         "patchSetId": 1
