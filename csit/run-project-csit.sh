@@ -132,7 +132,6 @@ function source_safely() {
 
 if $(docker images | grep -q "onap\/policy-api")
 then
-    echo where
     export CONTAINER_LOCATION=$(
         docker images |
         grep onap/policy-api |

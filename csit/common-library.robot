@@ -11,7 +11,7 @@ PolicyAdminAuth
     [return]  ${policyadmin}
 
 HealthCheckAuth
-    ${healthcheck}=   Create list   healthcheck    zb!XztG34
+    ${healthcheck}=   Create list   policyadmin    zb!XztG34
     [return]  ${healthcheck}
 
 PerformPostRequest

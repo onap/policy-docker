@@ -74,6 +74,8 @@ services:
        - 6670
        - 3904
        - 6680
+      ports:
+       - 30227:3904
    api:
       image: ${CONTAINER_LOCATION}onap/policy-api:${POLICY_API_VERSION}
       container_name: policy-api
@@ -124,6 +126,7 @@ services:
       hostname: policy-xacml-pdp
       ports:
        - 30441:6969
+       - 30999:3904
       volumes:
        - ./config/xacml-pdp/defaultConfig.json:/opt/app/policy/pdpx/etc/defaultConfig.json:ro
        - ./config/xacml-pdp/logback.xml:/opt/app/policy/pdpx/etc/logback.xml:ro

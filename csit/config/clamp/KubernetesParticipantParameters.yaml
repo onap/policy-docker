@@ -3,6 +3,11 @@ spring:
     user:
       name: participantUser
       password: zb!XztG34
+  autoconfigure:
+    exclude: >
+      org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,
+      org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration,
+      org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
 security:
   enable-csrf: false
 
