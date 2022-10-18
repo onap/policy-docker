@@ -75,5 +75,16 @@
                 <module>policy-db-migrator</module>
             </modules>
         </profile>
+        <profile>
+            <id>dockersuse</id>
+            <modules>
+                <module>policy-jre</module>
+                <module>policy-jdk</module>
+                <module>policy-db-migrator</module>
+            </modules>
+            <properties>
+                <docker.dbm.dockerFile>suse.Dockerfile</docker.dbm.dockerFile>
+            </properties>
+        </profile>
     </profiles>
 </project>
