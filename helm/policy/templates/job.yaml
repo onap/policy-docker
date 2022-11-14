@@ -1,0 +1,180 @@
+{{/*
+# Copyright (C) 2022 Nordix Foundation.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+*/}}
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: policy-galera-init
+  namespace: default
+  labels:
+    app: policy-galera-init
+spec:
+  template:
+    metadata:
+      labels:
+        app: policy-galera-init
+      name: policy-galera-init
+    spec:
+      imagePullSecrets:
+      - name: "default-docker-registry-key"
+      initContainers:
+      - name: policy-mariadb-readiness
+        image: {{ .Values.repository }}/{{ .Values.readiness.image }}
+        imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
+        command:
+        - /app/ready.py
+        - --container-name
+        - {{ index .Values "mariadb-galera" "service" "name" }}
+        env:
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+      containers:
+      - name: policy-galera-config
+        image: {{ .Values.dockerRepository }}/{{ .Values.mariadb.image }}
+        imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
+        volumeMounts:
+        - mountPath: /dbcmd-config/db.sh
+          name: {{ .Chart.Name }}-config
+          subPath: db.sh
+        command:
+        - /bin/sh
+        - -cx
+        - |
+           /dbcmd-config/db.sh
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mariadb-galera-db-root-password
+              key: password
+              optional: false
+        - name: MYSQL_HOST
+          value: "{{ index .Values "mariadb-galera" "service" "name" }}"
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: mariadb-galera-db-user-credentials
+              key: login
+              optional: false
+        - name: MYSQL_PORT
+          value: "{{ index .Values "mariadb-galera" "service" "internalPort" }}"
+        resources:
+          limits:
+            cpu: 1
+            memory: 4Gi
+          requests:
+            cpu: 100m
+            memory: 1Gi
+      restartPolicy: Never
+      serviceAccount: {{ .Chart.Name }}-read
+      serviceAccountName: {{ .Chart.Name }}-read
+      volumes:
+        - name: {{ .Chart.Name }}-config
+          configMap:
+            name: {{ .Chart.Name }}-db-configmap
+            defaultMode: 0755
+            items:
+              - key: db.sh
+                path: db.sh
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: policy-galera-config
+  namespace: default
+  labels:
+    app: policy-galera-config
+spec:
+  template:
+    metadata:
+      labels:
+        app: policy-galera-config
+      name: policy-galera-config
+    spec:
+      imagePullSecrets:
+      - name: "default-docker-registry-key"
+      initContainers:
+        - name: policy-init-readiness
+          image: {{ .Values.repository }}/{{ .Values.readiness.image }}
+          imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
+          command:
+          - /app/ready.py
+          args:
+          - --job-name
+          - policy-galera-init
+          env:
+          - name: NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+      containers:
+      - name: policy-galera-db-migrator
+        image: {{ .Values.repository }}/{{ .Values.dbmigrator.image }}
+        imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
+        volumeMounts:
+        - mountPath: /dbcmd-config/db_migrator_policy_init.sh
+          name: {{ .Chart.Name }}-config
+          subPath: db_migrator_policy_init.sh
+        command:
+        - /bin/sh
+        - -cx
+        - |
+           /dbcmd-config/db_migrator_policy_init.sh
+        env:
+        - name: SQL_HOST
+          value: "{{ index .Values "mariadb-galera" "service" "name" }}"
+        - name: SQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: mariadb-galera-db-user-credentials
+              key: login
+              optional: false
+        - name: SQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mariadb-galera-db-user-credentials
+              key: password
+              optional: false
+        - name: SQL_DB
+          value: {{ .Values.dbmigrator.schema }}
+        - name: POLICY_HOME
+          value: {{ .Values.dbmigrator.policy_home }}
+        - name: SCRIPT_DIRECTORY
+          value: "sql"
+        resources:
+          limits:
+            cpu: 1
+            memory: 4Gi
+          requests:
+            cpu: 100m
+            memory: 1Gi
+      restartPolicy: Never
+      serviceAccountName: {{ .Chart.Name }}-read
+      volumes:
+        - name: {{ .Chart.Name }}-config
+          configMap:
+            name: {{ .Chart.Name }}-db-configmap
+            defaultMode: 0755
+            items:
+              - key: db_migrator_policy_init.sh
+                path: db_migrator_policy_init.sh
+
