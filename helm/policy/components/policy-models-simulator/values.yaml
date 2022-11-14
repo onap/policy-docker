@@ -31,12 +31,24 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+# probe configuration parameters
+liveness:
+  initialDelaySeconds: 20
+  periodSeconds: 10
+  # necessary to disable liveness probe when setting breakpoints
+  # in debugger so K8s doesn't restart unresponsive container
+  enabled: true
+  port: message-router
+
+readiness:
+  initialDelaySeconds: 20
+  periodSeconds: 10
+  port: message-router
+
 service:
   type: ClusterIP
-  name: policy-models-simulator
-  portName: policy-models-simulator
-  externalPort: 3905
-  internalPort: 3905
+  name: message-router
+  portName: message-router
   externalPort2: 6667
   internalPort2: 6667
   externalPort3: 6668
@@ -47,6 +59,8 @@ service:
   internalPort5: 6670 
   externalPort6: 6680
   internalPort6: 6680
+  externalPort7: 3904
+  internalPort7: 3904
 
 ingress:
   enabled: false
