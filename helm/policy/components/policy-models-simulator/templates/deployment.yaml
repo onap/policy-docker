@@ -32,28 +32,22 @@ spec:
           command: ["/opt/app/policy/simulators/bin/simulators.sh"]
           args: ["/opt/app/policy/simulators/etc/mounted/simParameters.json"]
           ports:
-          - containerPort: {{ .Values.service.internalPort }}
           - containerPort: {{ .Values.service.internalPort2 }}
           - containerPort: {{ .Values.service.internalPort3 }}
           - containerPort: {{ .Values.service.internalPort4 }}
           - containerPort: {{ .Values.service.internalPort5 }}
           - containerPort: {{ .Values.service.internalPort6 }}
+          - containerPort: {{ .Values.service.internalPort7 }}
           livenessProbe:
-            exec:
-              command:
-              - /bin/bash
-              - -c
-              - nodetool status | grep $POD_IP | awk '$1!="UN" { exit 1; }'
-            initialDelaySeconds: 120
-            periodSeconds: 20
+            tcpSocket:
+              port: 3904
+            initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.liveness.periodSeconds }}
           readinessProbe:
-            exec:
-              command:
-              - /bin/bash
-              - -c
-              - nodetool status | grep $POD_IP | awk '$1!="UN" { exit 1; }'
-            initialDelaySeconds: 120
-            periodSeconds: 20
+            tcpSocket:
+              port: 3904
+            initialDelaySeconds: {{ .Values.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readiness.periodSeconds }}
           volumeMounts:
             - mountPath: /opt/app/policy/simulators/etc/mounted/
               name: simconfig
