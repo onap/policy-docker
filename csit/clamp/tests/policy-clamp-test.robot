@@ -15,7 +15,7 @@ CommissionAutomationCompositionV1
      ${headers}=  Create Dictionary     Accept=application/yaml    Content-Type=application/yaml
      ${resp}=   POST On Session     policy  /onap/policy/clamp/acm/v2/commission   data=${postyaml}  headers=${headers}
      Log    Received response from runtime acm ${resp.text}
-     Should Be Equal As Strings    ${resp.status_code}     200
+     Should Be Equal As Strings    ${resp.status_code}     201
 
 InstantiateAutomationCompositionV1
      [Documentation]  Instantiate automation composition.
