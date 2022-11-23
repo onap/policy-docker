@@ -29,6 +29,10 @@ server:
 pap:
   name: PapGroup
   aaf: false
+  topic:
+    pdp-pap.name: POLICY-PDP-PAP
+    notification.name: POLICY-NOTIFICATION
+    heartbeat.name: POLICY-HEARTBEAT
   pdpParameters:
     heartBeatMs: 120000
     updateParameters:
@@ -40,14 +44,14 @@ pap:
   savePdpStatisticsInDb: true
   topicParameterGroup:
     topicSources:
-    - topic: POLICY-PDP-PAP
+    - topic: ${pap.topic.pdp-pap.name}
       servers:
       - message-router
       topicCommInfrastructure: dmaap
       useHttps: false
       fetchTimeout: 15000
-    - topic: POLICY-HEARTBEAT
-      effectiveTopic: POLICY-PDP-PAP
+    - topic: ${pap.topic.heartbeat.name}
+      effectiveTopic: ${pap.topic.pdp-pap.name}
       consumerGroup: policy-pap
       servers:
       - message-router
@@ -55,12 +59,12 @@ pap:
       useHttps: false
       fetchTimeout: 15000
     topicSinks:
-    - topic: POLICY-PDP-PAP
+    - topic: ${pap.topic.pdp-pap.name}
       servers:
       - message-router
       topicCommInfrastructure: dmaap
       useHttps: false
-    - topic: POLICY-NOTIFICATION
+    - topic: ${pap.topic.notification.name}
       servers:
       - message-router
       topicCommInfrastructure: dmaap
