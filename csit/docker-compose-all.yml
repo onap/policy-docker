@@ -305,6 +305,23 @@ services:
         'message-router', '3904',
         'api', '6969'
         ]
+   policy-clamp-ac-a1pms-ppnt:
+      image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-a1pms-ppnt:${POLICY_CLAMP_VERSION}
+      container_name: policy-clamp-ac-a1pms-ppnt
+      depends_on:
+       - simulator
+      hostname: policy-clamp-ac-a1pms-ppnt
+      ports:
+       - 30296:6969
+      volumes:
+       - ./config/clamp/A1pmsParticipantParameters.yaml:/opt/app/policy/clamp/etc/A1pmsParticipantParameters.yaml:ro
+       - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
+       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
+      entrypoint: /opt/app/policy/bin/wait_for_port.sh
+      command: [
+        '-c', './a1pms-participant.sh',
+        'message-router', '3904'
+        ]
    policy-gui:
      image: ${CONTAINER_LOCATION}onap/policy-gui:latest
      container_name: policy-gui

@@ -421,6 +421,27 @@ data_types:
               org.onap.datatypes.policy.clamp.acm.httpAutomationCompositionElement.RestRequest
             typeVersion: 1.0.0
           description: A sequence of REST commands to send to the REST endpoint
+  org.onap.datatypes.policy.clamp.acm.a1PmsAutomationCompositionElement.A1PolicyServiceEntity:
+    version: 1.0.0
+    derived_from: tosca.datatypes.Root
+    properties:
+      a1PolicyServiceEntityId:
+        type: onap.datatypes.ToscaConceptIdentifier
+        typeVersion: 1.0.0
+        required: true
+        description: The name and version of a Configuration Entity to be handled by the A1 PMS Automation Composition Element
+      clientId:
+        type: string
+        required: true
+        description: Client Id to be created
+      callbackUrl:
+        type: string
+        required: true
+        description: The callback URL to get registered
+      keepAliveIntervalSeconds:
+        type: integer
+        required: true
+        description: Keep alive interval time for the callback URL
 policy_types:
   onap.policies.Monitoring:
     derived_from: tosca.policies.Root
@@ -690,6 +711,17 @@ node_types:
         description: >-
           The connfiguration entities the Automation Composition Element is
           managing and their associated REST requests
+  org.onap.policy.clamp.acm.A1PMSAutomationCompositionElement:
+    version: 1.0.1
+    derived_from: org.onap.policy.clamp.acm.AutomationCompositionElement
+    properties:
+      policyServiceEntities:
+        type: list
+        required: true
+        entry_schema:
+          type: org.onap.datatypes.policy.clamp.acm.a1pmsAutomationCompositionElement.A1PolicyServiceEntity
+          typeVersion: 1.0.0
+        description: The configuration entities of A1 PMS policy services
 topology_template:
   inputs:
     pmsh_monitoring_policy:
@@ -845,6 +877,36 @@ topology_template:
                   "DN":"ManagedElement=1,ENodeBFunction=1,EUtranCell=CityCenter1,
                   EUtranCellRelation=CityCenter3" } ] } } ] } }
                 expectedResponse: 201
+    org.onap.k8s.acm.A1PMSAutomationCompositionParticipant:
+      version: 2.3.4
+      type: org.onap.policy.clamp.acm.Participant
+      type_version: 1.0.1
+      description: Participant for A1 PMS requests
+      properties:
+        provider: ONAP
+    org.onap.domain.database.PMSH_A1PMSAutomationCompositionElement:
+      version: 1.2.3
+      type: org.onap.policy.clamp.acm.A1PMSAutomationCompositionElement
+      type_version: 1.0.1
+      description: Automation composition element for the A1 PMS Requests
+      properties:
+        provider: ONAP
+        participantType:
+          name: org.onap.policy.clamp.acm.A1PMSParticipant
+          version: 2.3.4
+        policyServiceEntities:
+          - a1PolicyServiceEntityId:
+              name: entity1
+              version: 1.0.1
+            clientId: firstService
+            callbackUrl: http://localhost
+            keepAliveIntervalSeconds: 0
+          - a1PolicyServiceEntityId:
+              name: entity2
+              version: 1.0.1
+            clientId: secondService
+            callbackUrl: http://127.0.0.1
+            keepAliveIntervalSeconds: 0
     org.onap.domain.sample.GenericK8s_AutomationCompositionDefinition:
       version: 1.2.3
       type: org.onap.policy.clamp.acm.AutomationComposition
@@ -858,6 +920,9 @@ topology_template:
             version: 1.2.3
           - name: >-
               org.onap.domain.database.Http_PMSHMicroserviceAutomationCompositionElement
+            version: 1.2.3
+          - name: >-
+              org.onap.domain.database.PMSH_A1PMSAutomationCompositionElement
             version: 1.2.3
           - name: >-
               org.onap.domain.pmsh.PMSH_MonitoringPolicyAutomationCompositionElement

@@ -47,6 +47,7 @@ echo POLICY RUNTIME ACM IP IS "${POLICY_RUNTIME_ACM_IP}"
 docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d policy-clamp-ac-k8s-ppnt
 docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d policy-clamp-ac-http-ppnt
 docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d policy-clamp-ac-pf-ppnt
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d policy-clamp-ac-a1pms-ppnt
 
 sleep 10
 unset http_proxy https_proxy
@@ -55,11 +56,13 @@ POLICY_PARTICIPANT_IP=$(get-instance-ip.sh policy-clamp-ac-pf-ppnt)
 POLICY_API_IP=$(get-instance-ip.sh policy-api)
 K8S_PARTICIPANT_IP=$(get-instance-ip.sh policy-clamp-ac-k8s-ppnt)
 HTTP_PARTICIPANT_IP=$(get-instance-ip.sh policy-clamp-ac-http-ppnt)
+A1PMS_PARTICIPANT_IP=$(get-instance-ip.sh policy-clamp-ac-a1pms-ppnt)
 
 echo POLICY PARTICIPANT IP IS "${POLICY_PARTICIPANT_IP}"
 echo API IP IS "${POLICY_API_IP}"
 echo K8S PARTICIPANT IP IS "${K8S_PARTICIPANT_IP}"
 echo HTTP PARTICIPANT IP IS "${HTTP_PARTICIPANT_IP}"
+echo A1PMS PARTICIPANT IP IS "${A1PMS_PARTICIPANT_IP}"
 
 # wait for the app to start up
 "${SCRIPTS}"/wait_for_port.sh "${POLICY_PARTICIPANT_IP}" 6969
@@ -69,5 +72,6 @@ ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_RUNTIME_ACM_IP:${POLICY_RUNTIME_AC
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_PARTICIPANT_IP:${POLICY_PARTICIPANT_IP}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v K8S_PARTICIPANT_IP:${K8S_PARTICIPANT_IP}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v HTTP_PARTICIPANT_IP:${HTTP_PARTICIPANT_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v A1PMS_PARTICIPANT_IP:${A1PMS_PARTICIPANT_IP}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_IP:${POLICY_API_IP}"
 
