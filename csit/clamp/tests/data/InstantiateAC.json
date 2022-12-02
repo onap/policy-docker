@@ -3,10 +3,7 @@
         {
             "name": "PMSHInstance0",
             "version": "1.0.1",
-            "definition": {
-                "name": "org.onap.domain.sample.GenericK8s_AutomationCompositionDefinition",
-                "version": "1.2.3"
-            },
+            "compositionId": "COMPOSITIONIDPLACEHOLDER",
             "state": "UNINITIALISED",
             "orderedState": "UNINITIALISED",
             "description": "PMSH automation composition instance 0",

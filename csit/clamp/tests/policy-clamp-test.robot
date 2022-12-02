@@ -2,7 +2,9 @@
 Library     Collections
 Library     RequestsLibrary
 Library     OperatingSystem
+Library     String
 Library     json
+Library     yaml
 
 *** Test Cases ***
 
@@ -15,6 +17,8 @@ CommissionAutomationCompositionV1
      ${headers}=  Create Dictionary     Accept=application/yaml    Content-Type=application/yaml
      ${resp}=   POST On Session     policy  /onap/policy/clamp/acm/v2/commission   data=${postyaml}  headers=${headers}
      Log    Received response from runtime acm ${resp.text}
+     ${respyaml}=  yaml.Safe Load  ${resp.text}
+     set Suite variable  ${compositionId}  ${respyaml["compositionId"]}
      Should Be Equal As Strings    ${resp.status_code}     201
 
 InstantiateAutomationCompositionV1
@@ -22,9 +26,10 @@ InstantiateAutomationCompositionV1
      ${auth}=    Create List    runtimeUser    zb!XztG34
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}:6969
      ${postjson}=  Get file  ${CURDIR}/data/InstantiateAC.json
+     ${updatedpostjson}=   Replace String     ${postjson}     COMPOSITIONIDPLACEHOLDER       ${compositionId}
      ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   POST On Session     policy  /onap/policy/clamp/acm/v2/instantiation   data=${postjson}  headers=${headers}
+     ${resp}=   POST On Session     policy  /onap/policy/clamp/acm/v2/instantiation   data=${updatedpostjson}  headers=${headers}
      Log    Received response from runtime acm ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
 
