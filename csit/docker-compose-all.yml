@@ -240,7 +240,7 @@ services:
       expose:
        - 6969
       volumes:
-       - ./config/clamp/ClRuntimeParameters.yaml:/opt/app/policy/clamp/config/ClRuntimeParameters.yaml:ro
+       - ./config/clamp/ClRuntimeParameters.yaml:/opt/app/policy/clamp/etc/ClRuntimeParameters.yaml:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
@@ -255,7 +255,7 @@ services:
        - simulator
       hostname: policy-clamp-cl-http-ppnt
       volumes:
-       - ./config/clamp/HttpParticipantParameters.yaml:/opt/app/policy/clamp/config/HttpParticipantParameters.yaml:ro
+       - ./config/clamp/HttpParticipantParameters.yaml:/opt/app/policy/clamp/etc/HttpParticipantParameters.yaml:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
@@ -271,7 +271,7 @@ services:
       expose:
       - 8083
       volumes:
-       - ./config/clamp/KubernetesParticipantParameters.yaml:/opt/app/policy/clamp/config/KubernetesParticipantParameters.yaml:ro
+       - ./config/clamp/KubernetesParticipantParameters.yaml:/opt/app/policy/clamp/etc/KubernetesParticipantParameters.yaml:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
@@ -286,7 +286,7 @@ services:
        - api
       hostname: policy-clamp-cl-pf-ppnt
       volumes:
-       - ./config/clamp/PolicyParticipantParameters.yaml:/opt/app/policy/clamp/config/PolicyParticipantParameters.yaml:ro
+       - ./config/clamp/PolicyParticipantParameters.yaml:/opt/app/policy/clamp/etc/PolicyParticipantParameters.yaml:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
