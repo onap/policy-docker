@@ -35,14 +35,14 @@ scrape_configs:
     static_configs:
       - targets: ["policy-api:6969"]
     basic_auth:
-      username: policyadmin
+      username: "policyadmin"
       password: "zb!XztG34"
 
   - job_name: "pap-metrics"
     static_configs:
       - targets: ["policy-pap:6969"]
     basic_auth:
-      username: policyadmin
+      username: "policyadmin"
       password: "zb!XztG34"
 
   - job_name: "apex-pdp-metrics"
@@ -50,7 +50,7 @@ scrape_configs:
       - targets:
           - "policy-apex-pdp:6969"
     basic_auth:
-      username: "healthcheck"
+      username: "policyadmin"
       password: "zb!XztG34"
 
   - job_name: "drools-apps-metrics"
@@ -74,7 +74,7 @@ scrape_configs:
       - targets:
           - "policy-distribution:6969"
     basic_auth:
-      username: "healthcheck"
+      username: "policyadmin"
       password: "zb!XztG34"
 
   - job_name: "xacml-pdp-metrics"
@@ -82,7 +82,7 @@ scrape_configs:
       - targets:
           - "policy-xacml-pdp:6969"
     basic_auth:
-      username: "healthcheck"
+      username: "policyadmin"
       password: "zb!XztG34"
 
   - job_name: "acm-metrics"
