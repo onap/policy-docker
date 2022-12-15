@@ -10,3 +10,4 @@ csit/archives
 env.properties
 .pydevproject
 models
+.vscode/

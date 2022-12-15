@@ -71,14 +71,16 @@ services:
        - 6670
        - 3904
        - 6680
+      ports:
+       - 30227:3904
    api:
       image: nexus3.onap.org:10001/onap/policy-api:${POLICY_API_VERSION}
       container_name: policy-api
       depends_on:
        - policy-db-migrator
       hostname: policy-api
-      expose:
-       - 6969
+      ports:
+       - 30440:6969
       volumes:
        - ./config/api/apiParameters.yaml:/opt/app/policy/api/etc/apiParameters.yaml:ro
        - ./wait_for_port.sh:/opt/app/policy/api/bin/wait_for_port.sh:ro
@@ -96,8 +98,8 @@ services:
        - simulator
        - api
       hostname: policy-pap
-      expose:
-       - 6969
+      ports:
+       - 30442:6969
       volumes:
        - ./config/pap/papParameters.yaml:/opt/app/policy/pap/etc/papParameters.yaml:ro
        - ./config/pap/groups.json:/opt/app/policy/pap/etc/mounted/groups.json:ro
@@ -117,8 +119,9 @@ services:
        - simulator
        - pap
       hostname: policy-xacml-pdp
-      expose:
-       - 6969
+      ports:
+       - 30441:6969
+       - 30999:3904
       volumes:
        - ./config/xacml-pdp/defaultConfig.json:/opt/app/policy/pdpx/etc/defaultConfig.json:ro
        - ./wait_for_port.sh:/opt/app/policy/pdpx/bin/wait_for_port.sh:ro
@@ -137,11 +140,11 @@ services:
        - simulator
        - pap
       hostname: drools
-      expose:
-       - 6969
-       - 9696
+      ports:
+       - 30217:6969
+       - 30216:9696
       volumes:
-       - ./config/drools/custom:/tmp/policy-install/config:ro
+       - ./config/drools-pdp/custom:/tmp/policy-install/config:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       env_file:
         - config/drools-pdp/env/base.conf
@@ -160,11 +163,11 @@ services:
        - pap
        - xacml-pdp
       hostname: drools-apps
-      expose:
-       - 6969
-       - 9696
+      ports:
+       - 30221:6969
+       - 30219:9696
       volumes:
-       - ./config/drools-apps/custom:/tmp/policy-install/config:ro
+       - ./config/drools-applications/custom:/tmp/policy-install/config:ro
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
       env_file:
         - config/drools-applications/env/base.conf
@@ -189,8 +192,9 @@ services:
        - simulator
        - pap
       hostname: policy-apex-pdp
+      ports:
+       - 30237:6969
       expose:
-       - 6969
        - 23324
       volumes:
        - ./config/apex-pdp/OnapPfConfig.json:/opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json:ro
@@ -211,6 +215,8 @@ services:
        - pap
        - apex-pdp
       hostname: policy-distribution
+      ports:
+       - 30238:6969
       volumes:
        - ./config/distribution/defaultConfig.json:/opt/app/policy/distribution/etc/defaultConfig.json:ro
        - ./distribution/config/temp/:/opt/app/policy/distribution/etc/temp/:ro
@@ -230,8 +236,8 @@ services:
        - mariadb
        - simulator
       hostname: policy-clamp-runtime-acm
-      expose:
-       - 6969
+      ports:
+       - 30258:6969
       volumes:
        - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
        - ./config/clamp/AcRuntimeParameters.yaml:/opt/app/policy/clamp/etc/AcRuntimeParameters.yaml:ro
@@ -244,8 +250,8 @@ services:
       image: prom/prometheus:v2.32.1
       container_name: prometheus
       hostname: prometheus
-      expose:
-       - 9090
+      ports:
+       - 30259:9090
       volumes:
        - ./metrics/prometheus.yml:/etc/prometheus/prometheus.yml
    grafana:
@@ -254,8 +260,8 @@ services:
       depends_on:
        - prometheus
       hostname: grafana
-      expose:
-       - 3000
+      ports:
+       - 30269:3000
       volumes:
        - ./metrics/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
        - ./metrics/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
