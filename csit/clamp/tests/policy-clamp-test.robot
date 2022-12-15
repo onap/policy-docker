@@ -12,10 +12,10 @@ CommissionAutomationCompositionV1
      [Documentation]  Commission automation composition.
      ${auth}=    Create List    runtimeUser    zb!XztG34
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}:6969
-     ${postyaml}=  Get file  ${CURDIR}/data/PMSHMultipleACTosca.yaml
+     ${postyaml}=  Get file  ${CURDIR}/data/functional-pmsh-usecase.yaml
      ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/yaml    Content-Type=application/yaml
-     ${resp}=   POST On Session     policy  /onap/policy/clamp/acm/v2/commission   data=${postyaml}  headers=${headers}
+     ${resp}=   POST On Session     policy  /onap/policy/clamp/acm/v2/compositions   data=${postyaml}  headers=${headers}
      Log    Received response from runtime acm ${resp.text}
      ${respyaml}=  yaml.Safe Load  ${resp.text}
      set Suite variable  ${compositionId}  ${respyaml["compositionId"]}
@@ -25,24 +25,26 @@ InstantiateAutomationCompositionV1
      [Documentation]  Instantiate automation composition.
      ${auth}=    Create List    runtimeUser    zb!XztG34
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}:6969
-     ${postjson}=  Get file  ${CURDIR}/data/InstantiateAC.json
+     ${postjson}=  Get file  ${CURDIR}/data/AutomationComposition.json
      ${updatedpostjson}=   Replace String     ${postjson}     COMPOSITIONIDPLACEHOLDER       ${compositionId}
      ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   POST On Session     policy  /onap/policy/clamp/acm/v2/instantiation   data=${updatedpostjson}  headers=${headers}
+     ${resp}=   POST On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances   data=${updatedpostjson}  headers=${headers}
      Log    Received response from runtime acm ${resp.text}
-     Should Be Equal As Strings    ${resp.status_code}     200
+     ${respyaml}=  yaml.Safe Load  ${resp.text}
+     set Suite variable  ${instanceId}    ${respyaml["instanceId"]}
+     Should Be Equal As Strings    ${resp.status_code}     201
 
 PassivateAutomationComposition
      [Documentation]  Passivate automation composition.
      ${auth}=    Create List    runtimeUser    zb!XztG34
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}:6969
-     ${postjson}=  Get file  ${CURDIR}/data/PassivateAC.json
+     ${postjson}=  Get file  ${CURDIR}/data/PassiveCommand.json
      ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/instantiation/command   data=${postjson}  headers=${headers}
+     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}   data=${postjson}  headers=${headers}
      Log    Received response from runtime acm ${resp.text}
-     Should Be Equal As Strings    ${resp.status_code}     202
+     Should Be Equal As Strings    ${resp.status_code}     200
 
 QueryPolicies
      [Documentation]    Runs Policy Participant Query New Policies
@@ -68,10 +70,10 @@ StateChangeRunningAutomationComposition
      [Documentation]  AutomationComposition State Change to RUNNING.
      ${auth}=    Create List    runtimeUser    zb!XztG34
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}:6969
-     ${postjson}=  Get file  ${CURDIR}/data/StateChangeRunningAC.json
+     ${postjson}=  Get file  ${CURDIR}/data/RunningCommand.json
      ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/instantiation/command   data=${postjson}  headers=${headers}  expected_status=406
+     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}   data=${postjson}  headers=${headers}  expected_status=400
      Log    Received response from runtime acm ${resp.text}
 
 QueryInstantiatedACs
@@ -80,8 +82,8 @@ QueryInstantiatedACs
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}:6969
      ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}:6969   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   GET On Session     policy  /onap/policy/clamp/acm/v2/instantiation     headers=${headers}
+     ${resp}=   GET On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}     headers=${headers}
      Log    Received response from runtime acm ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
-     Should Be Equal As Strings  ${resp.json()['automationCompositionList'][0]['state']}  UNINITIALISED2PASSIVE
-     Should Be Equal As Strings  ${resp.json()['automationCompositionList'][0]['orderedState']}  RUNNING
+     Should Be Equal As Strings  ${resp.json()['state']}  UNINITIALISED2PASSIVE
+     Should Be Equal As Strings  ${resp.json()['orderedState']}  PASSIVE
