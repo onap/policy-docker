@@ -24,7 +24,7 @@
   "gnetId": 14430,
   "graphTooltip": 0,
   "id": 3,
-  "iteration": 1655133658474,
+  "iteration": 1671098389991,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -42,10 +42,6 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dkSf71fnz"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -106,10 +102,16 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "process_uptime_seconds{application=\"$application\", instance=\"$instance\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "process_uptime_seconds",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "",
+          "legendFormat": "{{job}}",
           "metric": "",
           "refId": "A",
           "step": 14400
@@ -119,10 +121,6 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dkSf71fnz"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -182,10 +180,16 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "process_start_time_seconds{application=\"$application\", instance=\"$instance\"}*1000",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "process_start_time_seconds{job=~\"api-metrics|acm-metrics|pap-metrics\"}*1000",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "",
+          "legendFormat": "{{instance}}",
           "metric": "",
           "refId": "A",
           "step": 14400
@@ -195,10 +199,6 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dkSf71fnz"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -242,8 +242,8 @@
       "gridPos": {
         "h": 6,
         "w": 6,
-        "x": 12,
-        "y": 1
+        "x": 0,
+        "y": 7
       },
       "id": 58,
       "links": [],
@@ -263,8 +263,14 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "sum(jvm_memory_used_bytes{application=\"$application\", instance=\"$instance\", area=\"heap\"})*100/sum(jvm_memory_max_bytes{application=\"$application\",instance=\"$instance\", area=\"heap\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "sum(jvm_memory_used_bytes{job=~\"api-metrics|acm-metrics|pap-metrics\", area=\"heap\"})*100/sum(jvm_memory_max_bytes{job=~\"api-metrics|acm-metrics|pap-metrics\", area=\"heap\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "",
           "refId": "A",
@@ -275,10 +281,6 @@
       "type": "gauge"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dkSf71fnz"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -332,8 +334,8 @@
       "gridPos": {
         "h": 6,
         "w": 6,
-        "x": 18,
-        "y": 1
+        "x": 6,
+        "y": 7
       },
       "id": 60,
       "links": [],
@@ -353,8 +355,14 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "sum(jvm_memory_used_bytes{application=\"$application\", instance=\"$instance\", area=\"nonheap\"})*100/sum(jvm_memory_max_bytes{application=\"$application\",instance=\"$instance\", area=\"nonheap\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "sum(jvm_memory_used_bytes{job=~\"api-metrics|acm-metrics|pap-metrics\", area=\"nonheap\"})*100/sum(jvm_memory_max_bytes{job=~\"api-metrics|acm-metrics|pap-metrics\", area=\"nonheap\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 2,
           "legendFormat": "",
           "refId": "A",
@@ -365,10 +373,114 @@
       "type": "gauge"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dkSf71fnz"
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
       },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 13
+      },
+      "id": 96,
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.3.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "avg(system_load_average_1m{job=~\"api-metrics|acm-metrics|pap-metrics\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "Load Average [1m] ",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "avg(system_cpu_count{job=~\"api-metrics|acm-metrics|pap-metrics\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "CPU Core Size",
+          "refId": "B"
+        }
+      ],
+      "title": "Load Average",
+      "type": "timeseries"
+    },
+    {
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -425,7 +537,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 7
+        "y": 21
       },
       "id": 95,
       "links": [],
@@ -447,121 +559,33 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "system_cpu_usage{instance=\"$instance\", application=\"$application\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "avg(system_cpu_usage{job=~\"api-metrics|acm-metrics|pap-metrics\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "System CPU Usage",
           "refId": "A"
         },
         {
-          "expr": "process_cpu_usage{instance=\"$instance\", application=\"$application\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "avg(process_cpu_usage{job=~\"api-metrics|acm-metrics|pap-metrics\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "Process CPU Usage",
           "refId": "B"
         }
       ],
       "title": "CPU Usage",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dkSf71fnz"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "links": [],
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 7
-      },
-      "id": 96,
-      "links": [],
-      "options": {
-        "legend": {
-          "calcs": [
-            "mean",
-            "lastNotNull",
-            "max",
-            "min"
-          ],
-          "displayMode": "table",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "8.3.4",
-      "targets": [
-        {
-          "expr": "system_load_average_1m{instance=\"$instance\", application=\"$application\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "Load Average [1m]",
-          "refId": "A"
-        },
-        {
-          "expr": "system_cpu_count{instance=\"$instance\", application=\"$application\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "CPU Core Size",
-          "refId": "B"
-        }
-      ],
-      "title": "Load Average",
       "type": "timeseries"
     },
     {
@@ -620,7 +644,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 14
+        "y": 28
       },
       "id": 113,
       "options": {
@@ -644,7 +668,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "jvm_memory_used_bytes{instance=\"$instance\"}",
+          "expr": "avg by (id) (jvm_memory_used_bytes{job=~\"api-metrics|acm-metrics|pap-metrics\"})",
           "interval": "",
           "legendFormat": "{{id}}",
           "refId": "A"
@@ -659,7 +683,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 22
+        "y": 36
       },
       "id": 18,
       "panels": [],
@@ -667,10 +691,6 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dkSf71fnz"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -724,16 +744,19 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
-        "w": 13,
+        "h": 10,
+        "w": 18,
         "x": 0,
-        "y": 23
+        "y": 37
       },
       "id": 4,
       "links": [],
       "options": {
         "legend": {
-          "calcs": [],
+          "calcs": [
+            "lastNotNull",
+            "sum"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -744,11 +767,16 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "irate(http_server_requests_seconds_count{instance=\"$instance\", application=\"$application\", uri!~\".*actuator.*\"}[5m])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "rate(http_server_requests_seconds_count[5m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{method}} [{{status}}] - {{uri}}",
+          "legendFormat": "{{method}} [{{status}}] - {{instance}}{{uri}}",
           "refId": "A"
         }
       ],
@@ -756,10 +784,6 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dkSf71fnz"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -814,9 +838,9 @@
       },
       "gridPos": {
         "h": 10,
-        "w": 13,
+        "w": 18,
         "x": 0,
-        "y": 32
+        "y": 47
       },
       "id": 2,
       "links": [],
@@ -837,10 +861,16 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "irate(http_server_requests_seconds_sum{instance=\"$instance\", application=\"$application\", exception=\"None\", uri!~\".*actuator.*\"}[5m]) / irate(http_server_requests_seconds_count{instance=\"$instance\", application=\"$application\", exception=\"None\", uri!~\".*actuator.*\"}[5m])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "irate(http_server_requests_seconds_sum{job=~\"api-metrics|acm-metrics|pap-metrics\", exception=\"None\", uri!~\".*metrics.*\"}[5m]) / irate(http_server_requests_seconds_count{job=~\"api-metrics|acm-metrics|pap-metrics\", exception=\"None\", uri!~\".*metrics.*\"}[5m])",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{method}} [{{status}}] - {{uri}}",
+          "legendFormat": "{{method}} [{{status}}] - {{instance}}{{uri}}",
           "refId": "A"
         }
       ],
@@ -848,10 +878,6 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dkSf71fnz"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -908,15 +934,18 @@
         "h": 8,
         "w": 13,
         "x": 0,
-        "y": 42
+        "y": 57
       },
       "id": 111,
       "links": [],
       "options": {
         "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right"
         },
         "tooltip": {
           "mode": "single"
@@ -925,15 +954,358 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "http_server_requests_seconds_max{instance=\"$instance\", application=\"$application\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "http_server_requests_seconds_max{job=~\"api-metrics|acm-metrics|pap-metrics\", uri!~\".*metrics.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{method}} [{{status}}] - {{uri}}",
+          "legendFormat": "{{method}} [{{status}}] - {{instance}}{{uri}}",
           "refId": "A"
         }
       ],
       "title": "HTTP Server Requests Max",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 65
+      },
+      "id": 115,
+      "panels": [],
+      "title": "Deployment statistics",
+      "type": "row"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 3,
+        "x": 0,
+        "y": 66
+      },
+      "id": 117,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "pap_policy_deployments_total{operation=\"deploy\", status=\"SUCCESS\"}",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Successful deployments",
+      "type": "stat"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 3,
+        "x": 3,
+        "y": 66
+      },
+      "id": 118,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "pap_policy_deployments_total{operation=\"undeploy\", status=\"SUCCESS\"}",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Successful undeployments",
+      "type": "stat"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 3,
+        "x": 6,
+        "y": 66
+      },
+      "id": 119,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "pap_policy_deployments_total{operation=\"deploy\", status=\"FAILURE\"}",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Failed deployments",
+      "type": "stat"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 3,
+        "x": 9,
+        "y": 66
+      },
+      "id": 120,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "pap_policy_deployments_total{operation=\"undeploy\", status=\"FAILURE\"}",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Failed undeployments",
+      "type": "stat"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 400
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 72
+      },
+      "id": 122,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "min",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "irate(pap_policy_deployments_seconds_sum[5m])/irate(pap_policy_deployments_seconds_count[5m])",
+          "interval": "",
+          "legendFormat": "{{operation}} - {{status}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Deployment timing",
       "type": "timeseries"
     }
   ],
@@ -972,132 +1344,11 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
-      },
-      {
-        "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "dkSf71fnz"
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": false,
-        "label": "Application",
-        "multi": false,
-        "name": "application",
-        "options": [],
-        "query": {
-          "query": "label_values(jvm_classes_loaded{instance=\"$instance\"}, application)",
-          "refId": "Prometheus-application-Variable-Query"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "current": {
-          "selected": false,
-          "text": "HikariPool-1",
-          "value": "HikariPool-1"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "dkSf71fnz"
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": false,
-        "label": "HikariCP-Pool",
-        "multi": false,
-        "name": "hikaricp",
-        "options": [],
-        "query": {
-          "query": "label_values(hikaricp_connections{instance=\"$instance\", application=\"$application\"}, pool)",
-          "refId": "Prometheus-hikaricp-Variable-Query"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "dkSf71fnz"
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Memory Pool (heap)",
-        "multi": false,
-        "name": "memory_pool_heap",
-        "options": [],
-        "query": {
-          "query": "label_values(jvm_memory_used_bytes{application=\"$application\", instance=\"$instance\", area=\"heap\"},id)",
-          "refId": "Prometheus-memory_pool_heap-Variable-Query"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "dkSf71fnz"
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Memory Pool (nonheap)",
-        "multi": false,
-        "name": "memory_pool_nonheap",
-        "options": [],
-        "query": {
-          "query": "label_values(jvm_memory_used_bytes{application=\"$application\", instance=\"$instance\", area=\"nonheap\"},id)",
-          "refId": "Prometheus-memory_pool_nonheap-Variable-Query"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
       }
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
@@ -1127,6 +1378,6 @@
   "timezone": "",
   "title": "SLA's Metrics",
   "uid": "ySoel0jnk",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }
