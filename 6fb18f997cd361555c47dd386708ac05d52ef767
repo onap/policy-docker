@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92786d1e_907675de",
+        "filename": "helm/policy/components/policy-clamp-runtime-acm/resources/config/acRuntimeParameters.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 7603
+      },
+      "writtenOn": "2022-12-16T09:53:20Z",
+      "side": 1,
+      "message": "This has to change to mvc or the new endpoint changes",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 6
+      },
+      "revId": "6fb18f997cd361555c47dd386708ac05d52ef767",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
