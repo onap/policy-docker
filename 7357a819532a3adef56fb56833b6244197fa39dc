@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7baa98db_a7f18256",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/postgres/1200/downgrade/0100-jpapolicyaudit_remaneuser.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-12-19T09:20:20Z",
+      "side": 1,
+      "message": "missing new line\nalso the name of the file is remane, typo on rename?",
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a62154c_74e15e0a",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/postgres/1200/downgrade/0110-idx_tsidx1.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-12-19T09:20:20Z",
+      "side": 1,
+      "message": "2022",
+      "range": {
+        "startLine": 3,
+        "startChar": 18,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191f2e76_d17f67fa",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/postgres/1200/downgrade/0999-downgrade.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-12-19T09:20:20Z",
+      "side": 1,
+      "message": "you probably don\u0027t need this file, as there are sql files executing then there\u0027s a \"completed\" msg\nsame for the others completed sqls",
+      "range": {
+        "startLine": 20,
+        "startChar": 42,
+        "endLine": 20,
+        "endChar": 45
+      },
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4374c5db_e6c9c55d",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/postgres/1200/upgrade/0100-jpapolicyaudit_remaneuser.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-12-19T09:20:20Z",
+      "side": 1,
+      "message": "missing new line\ntypo on file name (remane -\u003e rename)",
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac8f688d_d9cfb99b",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/postgres/1200/upgrade/0110-idx_tsidx1.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-12-19T09:20:20Z",
+      "side": 1,
+      "message": "2022",
+      "range": {
+        "startLine": 3,
+        "startChar": 18,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c3657a_8a792acf",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/1200/downgrade/0100-jpapolicyaudit_remaneuser.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-12-19T09:20:20Z",
+      "side": 1,
+      "message": "missing new line\ntypo on file name (remane -\u003e rename)",
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afde2b2a_22aecfb0",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/1200/downgrade/0110-idx_tsidx1.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-12-19T09:20:20Z",
+      "side": 1,
+      "message": "2022",
+      "range": {
+        "startLine": 3,
+        "startChar": 18,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd80022c_eae3ea52",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/1200/upgrade/0100-jpapolicyaudit_remaneuser.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-12-19T09:20:20Z",
+      "side": 1,
+      "message": "missing new line\ntypo on file name (remane -\u003e rename)",
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f796be_770b10fd",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/1200/upgrade/0110-idx_tsidx1.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2022-12-19T09:20:20Z",
+      "side": 1,
+      "message": "2022",
+      "range": {
+        "startLine": 3,
+        "startChar": 18,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
