@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "58b7c9c2_ab1526f5",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/postgres/1200/downgrade/0100-jpapolicyaudit_renameuser.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-12-19T09:53:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7baa98db_a7f18256",
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a62154c_74e15e0a",
         "filename": "policy-db-migrator/src/main/docker/config/policyadmin/postgres/1200/downgrade/0110-idx_tsidx1.sql",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "815795b5_f77b238c",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/postgres/1200/downgrade/0110-idx_tsidx1.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-12-19T09:53:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a62154c_74e15e0a",
+      "range": {
+        "startLine": 3,
+        "startChar": 18,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "30b1c7c3_86c5776e",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/postgres/1200/downgrade/0999-downgrade.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-12-19T09:53:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "191f2e76_d17f67fa",
+      "range": {
+        "startLine": 20,
+        "startChar": 42,
+        "endLine": 20,
+        "endChar": 45
+      },
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4374c5db_e6c9c55d",
         "filename": "policy-db-migrator/src/main/docker/config/policyadmin/postgres/1200/upgrade/0100-jpapolicyaudit_remaneuser.sql",
         "patchSetId": 1
@@ -79,6 +145,24 @@
       "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ae8514_744f6e1e",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/postgres/1200/upgrade/0100-jpapolicyaudit_renameuser.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-12-19T09:53:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4374c5db_e6c9c55d",
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "8ddaea72_19f5d6c3",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/postgres/1200/upgrade/0110-idx_tsidx1.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-12-19T09:53:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac8f688d_d9cfb99b",
+      "range": {
+        "startLine": 3,
+        "startChar": 18,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66c3657a_8a792acf",
         "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/1200/downgrade/0100-jpapolicyaudit_remaneuser.sql",
         "patchSetId": 1
@@ -119,6 +227,42 @@
       "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1001310c_608c95a7",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/1200/downgrade/0100-jpapolicyaudit_remaneuser.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-12-19T09:53:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66c3657a_8a792acf",
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d56dd7a4_deaa6b61",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/1200/downgrade/0100-jpapolicyaudit_renameuser.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-12-19T09:53:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7baa98db_a7f18256",
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +289,30 @@
     },
     {
       "key": {
+        "uuid": "d00f641c_384ea943",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/1200/downgrade/0110-idx_tsidx1.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-12-19T09:53:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afde2b2a_22aecfb0",
+      "range": {
+        "startLine": 3,
+        "startChar": 18,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd80022c_eae3ea52",
         "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/1200/upgrade/0100-jpapolicyaudit_remaneuser.sql",
         "patchSetId": 1
@@ -159,6 +327,42 @@
       "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d914130_0a7d9e5f",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/1200/upgrade/0100-jpapolicyaudit_remaneuser.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-12-19T09:53:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd80022c_eae3ea52",
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31a8f350_2e367f7a",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/1200/upgrade/0100-jpapolicyaudit_renameuser.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-12-19T09:53:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4374c5db_e6c9c55d",
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -182,6 +386,30 @@
       "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e8cf53_a7374ce0",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/1200/upgrade/0110-idx_tsidx1.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2022-12-19T09:53:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02f796be_770b10fd",
+      "range": {
+        "startLine": 3,
+        "startChar": 18,
+        "endLine": 3,
+        "endChar": 22
+      },
+      "revId": "7357a819532a3adef56fb56833b6244197fa39dc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
