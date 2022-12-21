@@ -84,10 +84,12 @@ QueryPdpGroupsAfterDeploy
 
 QueryPolicyAuditAfterDeploy
     [Documentation]  Verify policy audit record after deploy
+    Sleep             30 seconds
     QueryPolicyAudit  /policy/pap/v1/policies/audit  200  testGroup  pdpTypeA  onap.restart.tca  DEPLOYMENT
 
 QueryPolicyAuditWithMetadataSetAfterDeploy
     [Documentation]  Verify policy audit record after deploy
+    Sleep             30 seconds
     QueryPolicyAudit  /policy/pap/v1/policies/audit  200  testGroup  pdpTypeC  operational.apex.decisionMaker  DEPLOYMENT
 
 UndeployPolicy
@@ -106,11 +108,12 @@ QueryPdpGroupsAfterUndeploy
 
 QueryPolicyAuditAfterUnDeploy
     [Documentation]   Verify policy audit record after undeploy
-    Sleep             130 seconds
+    Sleep             30 seconds
     QueryPolicyAudit  /policy/pap/v1/policies/audit  200  testGroup  pdpTypeA  onap.restart.tca  UNDEPLOYMENT
 
 QueryPolicyAuditWithMetadataSetAfterUnDeploy
     [Documentation]  Verify policy audit record after undeploy
+    Sleep             30 seconds
     QueryPolicyAudit  /policy/pap/v1/policies/audit  200  testGroup  pdpTypeC  operational.apex.decisionMaker  UNDEPLOYMENT
 
 DeactivatePdpGroup
