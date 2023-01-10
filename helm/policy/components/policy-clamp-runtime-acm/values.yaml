@@ -1,0 +1,115 @@
+#  ============LICENSE_START=======================================================
+#   Copyright (C) 2022 Nordix Foundation.
+#  ================================================================================
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+#  SPDX-License-Identifier: Apache-2.0
+#  ============LICENSE_END=========================================================
+
+
+#################################################################
+# Application configuration defaults.
+#################################################################
+# application image
+image: nexus3.onap.org:10001/onap/policy-clamp-runtime-acm:6.3.1
+pullPolicy: Always
+
+# flag to enable debugging - application support required
+debugEnabled: false
+
+# application configuration
+config:
+  policyAppUserName: runtimeUser
+  policyAppUserPassword: zb!XztG34
+  jaas: JuzgCumoDahj9*
+
+# Event consumption (kafka) properties
+  useStrimziKafka: true
+  kafkaBootstrap: strimzi-kafka-bootstrap
+  kafka:
+    consumer:
+      groupId: policy-group
+  app:
+    listener:
+      acRuntimeTopic: policy.policy-acruntime-participant
+# If targeting a custom kafka cluster, ie useStrimziKakfa: false
+# uncomment below config and target your kafka bootstrap servers,
+# along with any other security config.
+#
+# eventConsumption:
+#   spring.kafka.bootstrap-servers: <kafka-bootstrap>:9092
+#   spring.kafka.security.protocol: PLAINTEXT
+#   spring.kafka.consumer.group-id: policy-group
+#
+# Any new property can be added in the env by setting in overrides in the format mentioned below
+# All the added properties must be in "key: value" format instead of yaml.
+# additional:
+#   spring.config.max-size: 200
+#   spring.config.min-size: 10
+
+db:
+  user: policy-user
+  password: policy-user
+  service:
+    name: mariadb-galera
+    internalPort: 3306
+
+# default number of instances
+replicaCount: 1
+
+nodeSelector: {}
+
+affinity: {}
+
+# probe configuration parameters
+liveness:
+  initialDelaySeconds: 20
+  periodSeconds: 10
+  # necessary to disable liveness probe when setting breakpoints
+  # in debugger so K8s doesn't restart unresponsive container
+  enabled: true
+  port: http-api
+
+readiness:
+  initialDelaySeconds: 20
+  periodSeconds: 10
+  port: http-api
+
+service:
+  type: NodePort
+  name: policy-clamp-runtime-acm
+  useNodePortExt: true
+  ports:
+    name: http-api
+    port: 6969
+    nodePort: 30442
+
+ingress:
+  enabled: false
+
+flavor: small
+resources:
+  small:
+    limits:
+      cpu: 1
+      memory: 4Gi
+    requests:
+      cpu: 100m
+      memory: 1Gi
+  unlimited: {}
+
+#Pods Service Account
+serviceAccount:
+  nameOverride: policy-clamp-runtime-acm
+  roles:
+    - read

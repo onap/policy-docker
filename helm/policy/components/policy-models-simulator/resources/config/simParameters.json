@@ -8,43 +8,41 @@
             "name": "DMaaP simulator",
             "providerClass": "org.onap.policy.models.sim.dmaap.rest.DmaapSimRestControllerV1",
             "host": "0.0.0.0",
-            "port": 3905,
-            "https": true
+            "port": 3904,
+            "https": false
         },
         {
             "name": "A&AI simulator",
             "providerClass": "org.onap.policy.simulators.AaiSimulatorJaxRs",
             "host": "0.0.0.0",
             "port": 6666,
-            "https": true
-        },
-        {
-            "name": "Guard simulator",
-            "providerClass": "org.onap.policy.simulators.GuardSimulatorJaxRs",
-            "host": "0.0.0.0",
-            "port": 6667,
-            "https": true
+            "https": false,
+            "userName": "policy@policy.onap.org",
+            "password": "demo123456!",
+            "resourceLocation": "/opt/app/policy/simulators/etc/mounted/aairesponse/"
         },
         {
             "name": "SDNC simulator",
             "providerClass": "org.onap.policy.simulators.SdncSimulatorJaxRs",
             "host": "0.0.0.0",
             "port": 6668,
-            "https": true
+            "https": false
         },
         {
             "name": "SO simulator",
             "providerClass": "org.onap.policy.simulators.SoSimulatorJaxRs",
             "host": "0.0.0.0",
             "port": 6669,
-            "https": true
+            "https": false,
+            "userName": "InfraPortalClient",
+            "password": "password1$"
         },
         {
             "name": "VFC simulator",
             "providerClass": "org.onap.policy.simulators.VfcSimulatorJaxRs",
             "host": "0.0.0.0",
             "port": 6670,
-            "https": true
+            "https": false
         }
     ],
     "topicSinks": [
@@ -52,22 +50,17 @@
             "topic": "APPC-CL",
             "servers": ["${HOST_NAME}"],
             "topicCommInfrastructure": "DMAAP",
-            "useHttps": true,
-            "allowSelfSignedCerts" : true
+            "useHttps": false,
+            "apiKey": "some-key",
+            "apiSecret": "some-secret"
         },
         {
             "topic": "APPC-LCM-WRITE",
             "servers": ["${HOST_NAME}"],
             "topicCommInfrastructure": "DMAAP",
-            "useHttps": true,
-            "allowSelfSignedCerts" : true
-        },
-        {
-            "topic": "SDNR-CL",
-            "servers": ["${HOST_NAME}"],
-            "topicCommInfrastructure": "DMAAP",
-            "useHttps": true,
-            "allowSelfSignedCerts" : true
+            "useHttps": false,
+            "apiKey": "some-key",
+            "apiSecret": "some-secret"
         }
     ],
     "topicSources": [
@@ -75,22 +68,17 @@
             "topic": "APPC-CL",
             "servers": ["${HOST_NAME}"],
             "topicCommInfrastructure": "DMAAP",
-            "useHttps": true,
-            "allowSelfSignedCerts" : true
+            "useHttps": false,
+            "apiKey": "some-key",
+            "apiSecret": "some-secret"
         },
         {
             "topic": "APPC-LCM-READ",
             "servers": ["${HOST_NAME}"],
             "topicCommInfrastructure": "DMAAP",
-            "useHttps": true,
-            "allowSelfSignedCerts" : true
-        },
-        {
-            "topic": "SDNR-CL-RSP",
-            "servers": ["${HOST_NAME}"],
-            "topicCommInfrastructure": "DMAAP",
-            "useHttps": true,
-            "allowSelfSignedCerts" : true
+            "useHttps": false,
+            "apiKey": "some-key",
+            "apiSecret": "some-secret"
         }
     ],
     "topicServers": [
@@ -105,12 +93,6 @@
             "providerClass": "org.onap.policy.simulators.AppcLcmTopicServer",
             "sink": "APPC-LCM-WRITE",
             "source": "APPC-LCM-READ"
-        },
-        {
-            "name": "SDNR simulator",
-            "providerClass": "org.onap.policy.simulators.SdnrTopicServer",
-            "sink": "SDNR-CL",
-            "source": "SDNR-CL-RSP"
         }
     ],
     "grpcServer": {
@@ -121,7 +103,7 @@
         "timeout": 30,
         "username": "ccsdkapps",
         "password": "ccsdkapps",
-        "resourceLocation": "/opt/app/policy/simulators/etc/mounted/",
+        "resourceLocation": "/opt/app/policy/simulators/etc/mounted/cdsresponse/",
         "successRepeatCount": 0,
         "requestedResponseDelayMs": 0
     }
