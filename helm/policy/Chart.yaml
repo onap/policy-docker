@@ -33,3 +33,19 @@ dependencies:
     version: ~11.x-0
     repository: 'file://components/policy-models-simulator'
     condition: policy-models-simulator.enabled
+  - name: policy-api
+    version: ~11.x-0
+    repository: 'file://components/policy-api'
+    condition: policy-api.enabled
+  - name: policy-pap
+    version: ~11.x-0
+    repository: 'file://components/policy-pap'
+    condition: policy-pap.enabled
+  - name: policy-apex-pdp
+    version: ~11.x-0
+    repository: 'file://components/policy-apex-pdp'
+    condition: policy-apex-pdp.enabled
+  - name: policy-clamp-ac-pf-ppnt
+    version: ~11.x-0
+    repository: 'file://components/policy-clamp-ac-pf-ppnt'
+    condition: policy-clamp-ac-pf-ppnt.enabled
