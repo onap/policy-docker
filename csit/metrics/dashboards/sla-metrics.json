@@ -23,114 +23,18 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 14430,
   "graphTooltip": 0,
-  "id": 5,
-  "iteration": 1673087127172,
+  "id": 3,
+  "iteration": 1673599566103,
   "links": [],
   "liveNow": false,
   "panels": [
-    {
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 0
-      },
-      "id": 135,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "dkSf71fnz"
-          },
-          "exemplar": true,
-          "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "dkSf71fnz"
-          },
-          "exemplar": true,
-          "expr": "",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "B"
-        }
-      ],
-      "title": "Panel Title",
-      "type": "timeseries"
-    },
     {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 0
       },
       "id": 54,
       "panels": [],
@@ -176,7 +80,7 @@
         "h": 6,
         "w": 6,
         "x": 0,
-        "y": 9
+        "y": 1
       },
       "id": 52,
       "links": [],
@@ -254,7 +158,7 @@
         "h": 6,
         "w": 6,
         "x": 6,
-        "y": 9
+        "y": 1
       },
       "id": 56,
       "links": [],
@@ -339,7 +243,7 @@
         "h": 6,
         "w": 6,
         "x": 0,
-        "y": 15
+        "y": 7
       },
       "id": 58,
       "links": [],
@@ -431,7 +335,7 @@
         "h": 6,
         "w": 6,
         "x": 6,
-        "y": 15
+        "y": 7
       },
       "id": 60,
       "links": [],
@@ -525,7 +429,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 21
+        "y": 13
       },
       "id": 96,
       "links": [],
@@ -633,7 +537,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 29
+        "y": 21
       },
       "id": 95,
       "links": [],
@@ -740,7 +644,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 36
+        "y": 28
       },
       "id": 113,
       "options": {
@@ -779,7 +683,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 44
+        "y": 36
       },
       "id": 18,
       "panels": [],
@@ -841,9 +745,9 @@
       },
       "gridPos": {
         "h": 10,
-        "w": 18,
+        "w": 23,
         "x": 0,
-        "y": 45
+        "y": 37
       },
       "id": 4,
       "links": [],
@@ -934,9 +838,9 @@
       },
       "gridPos": {
         "h": 10,
-        "w": 18,
+        "w": 23,
         "x": 0,
-        "y": 55
+        "y": 47
       },
       "id": 2,
       "links": [],
@@ -945,7 +849,8 @@
           "calcs": [
             "mean",
             "max",
-            "min"
+            "min",
+            "lastNotNull"
           ],
           "displayMode": "table",
           "placement": "right"
@@ -1027,10 +932,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 13,
+        "h": 10,
+        "w": 22,
         "x": 0,
-        "y": 65
+        "y": 57
       },
       "id": 111,
       "links": [],
@@ -1072,7 +977,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 73
+        "y": 67
       },
       "id": 115,
       "panels": [],
@@ -1104,7 +1009,7 @@
         "h": 6,
         "w": 3,
         "x": 0,
-        "y": 74
+        "y": 68
       },
       "id": 117,
       "options": {
@@ -1163,7 +1068,7 @@
         "h": 6,
         "w": 3,
         "x": 3,
-        "y": 74
+        "y": 68
       },
       "id": 118,
       "options": {
@@ -1222,7 +1127,7 @@
         "h": 6,
         "w": 3,
         "x": 6,
-        "y": 74
+        "y": 68
       },
       "id": 119,
       "options": {
@@ -1281,7 +1186,7 @@
         "h": 6,
         "w": 3,
         "x": 9,
-        "y": 74
+        "y": 68
       },
       "id": 120,
       "options": {
@@ -1341,7 +1246,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 80
+        "y": 74
       },
       "id": 128,
       "options": {
@@ -1455,7 +1360,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 88
+        "y": 82
       },
       "id": 122,
       "options": {
@@ -1494,7 +1399,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 96
+        "y": 90
       },
       "id": 124,
       "panels": [],
@@ -1560,7 +1465,7 @@
         "h": 8,
         "w": 5,
         "x": 0,
-        "y": 97
+        "y": 91
       },
       "id": 126,
       "options": {
@@ -1599,7 +1504,7 @@
       "type": "stat"
     },
     {
-      "description": "Uptime per engine for Policy APEX-PDP application calculated in days",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1620,15 +1525,15 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "ms"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 8,
-        "w": 5,
+        "w": 8,
         "x": 5,
-        "y": 97
+        "y": 91
       },
       "id": 130,
       "options": {
@@ -1656,16 +1561,16 @@
             "type": "prometheus",
             "uid": "dkSf71fnz"
           },
-          "exemplar": true,
-          "expr": "avg by(engine_instance_id)((time() - pdpa_engine_last_start_timestamp_epoch{job=\"apex-pdp-metrics\"}/1000)/86400)",
+          "exemplar": false,
+          "expr": "(time() * 1000) - (pdpa_engine_last_start_timestamp_epoch{job=\"apex-pdp-metrics\"})",
           "format": "time_series",
-          "instant": false,
+          "instant": true,
           "interval": "",
           "legendFormat": "{{ engine_instance_id }}",
           "refId": "A"
         }
       ],
-      "title": "Engine Uptime (days)",
+      "title": "Engine Uptime (since last start)",
       "transformations": [],
       "type": "stat"
     },
@@ -1726,7 +1631,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 105
+        "y": 99
       },
       "id": 132,
       "options": {
@@ -1785,7 +1690,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 113
+        "y": 107
       },
       "id": 133,
       "options": {
@@ -1835,38 +1740,7 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": [
-      {
-        "current": {
-          "selected": false,
-          "text": "policy-api:6969",
-          "value": "policy-api:6969"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "dkSf71fnz"
-        },
-        "definition": "label_values(jvm_classes_loaded_classes, instance)",
-        "hide": 0,
-        "includeAll": false,
-        "label": "Instance",
-        "multi": false,
-        "name": "instance",
-        "options": [],
-        "query": {
-          "query": "label_values(jvm_classes_loaded_classes, instance)",
-          "refId": "Prometheus-instance-Variable-Query"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      }
-    ]
+    "list": []
   },
   "time": {
     "from": "now-5m",
@@ -1899,6 +1773,6 @@
   "timezone": "",
   "title": "SLA's Metrics",
   "uid": "ySoel0jnk",
-  "version": 4,
+  "version": 6,
   "weekStart": ""
 }
