@@ -1,0 +1,136 @@
+#  ============LICENSE_START=======================================================
+#   Copyright (C) 2023 Nordix Foundation. All rights reserved.
+#  ================================================================================
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+#  SPDX-License-Identifier: Apache-2.0
+#  ============LICENSE_END=========================================================
+
+spring:
+  security:
+    user:
+      name: "${RESTSERVER_USER}"
+      password: "${RESTSERVER_PASSWORD}"
+  http:
+    converters:
+      preferred-json-mapper: gson
+  datasource:
+    url: jdbc:mariadb://{{ .Values.db.service.name }}:{{ .Values.db.service.internalPort}}/policyadmin
+    driverClassName: org.mariadb.jdbc.Driver
+    username: "${SQL_USER}"
+    password: "${SQL_PASSWORD}"
+    hikari:
+      maximumPoolSize: 20
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDB103Dialect
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.onap.policy.common.spring.utils.CustomImplicitNamingStrategy
+  kafka:
+    consumer:
+      group-id: {{ .Values.config.kafka.consumer.groupId }}
+{{- if .Values.config.useStrimziKafka }}
+    bootstrap-servers: {{ .Values.config.kafkaBootstrap }}:9092
+    security.protocol: SASL_PLAINTEXT
+    properties.sasl:
+      mechanism: SCRAM-SHA-512
+      jaas.config: ${JAASLOGIN}
+{{ else }}
+{{ toYaml .Values.config.eventConsumption | nindent 2 }}
+{{- end }}
+
+server:
+  port: 6969
+  ssl:
+    enabled: false
+
+pap:
+  name: PapGroup
+  aaf: false
+  pdpParameters:
+    heartBeatMs: 120000
+    updateParameters:
+      maxRetryCount: 1
+      maxWaitMs: 30000
+    stateChangeParameters:
+      maxRetryCount: 1
+      maxWaitMs: 30000
+  savePdpStatisticsInDb: false
+  topicParameterGroup:
+    topicSources:
+    - topic: POLICY-PDP-PAP
+      servers:
+      - message-router
+      useHttps: false
+      fetchTimeout: 15000
+      topicCommInfrastructure: dmaap
+    - topic: POLICY-HEARTBEAT
+      effectiveTopic: POLICY-PDP-PAP
+      consumerGroup: policy-pap
+      servers:
+      - message-router
+      useHttps: false
+      fetchTimeout: 15000
+      topicCommInfrastructure: dmaap
+    topicSinks:
+    - topic: POLICY-PDP-PAP
+      servers:
+      - message-router
+      useHttps: false
+      topicCommInfrastructure: dmaap
+    - topic: POLICY-NOTIFICATION
+      servers:
+      - message-router
+      useHttps: false
+      topicCommInfrastructure: dmaap
+# If Strimzi Kafka to be used for communication, replace following configuration for topicSources and topicSinks
+#          servers:
+#            - {{ .Values.config.kafkaBootstrap }}:9092
+#          topicCommInfrastructure: kafka
+#          additionalProps:
+#            security.protocol: SASL_PLAINTEXT
+#            sasl.mechanism: SCRAM-SHA-512
+#            sasl.jaas.config: ${JAASLOGIN}
+
+  healthCheckRestClientParameters:
+  - clientName: api
+    hostname: policy-api
+    port: 6969
+    userName: "${API_USER}"
+    password: "${API_PASSWORD}"
+    useHttps: false
+    basePath: policy/api/v1/healthcheck
+  - clientName: distribution
+    hostname: policy-distribution
+    port: 6969
+    userName: "${DISTRIBUTION_USER}"
+    password: "${DISTRIBUTION_PASSWORD}"
+    useHttps: false
+    basePath: healthcheck
+  - clientName: dmaap
+    hostname: message-router
+    port: 3904
+    useHttps: false
+    basePath: topics
+
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: health, metrics, prometheus
+      path-mapping.prometheus: metrics
