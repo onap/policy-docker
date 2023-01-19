@@ -113,9 +113,9 @@ QueryPolicyStatus
     Should Be Equal As Strings    ${responseEntry['state']}  SUCCESS
 
 GetMetrics
-    [Arguments]  ${hostname}  ${auth}
+    [Arguments]  ${hostname}  ${auth}  ${context_path}
     Log  Creating session http://${hostname}:6969
     ${session}=  Create Session  policy  http://${hostname}:6969  auth=${auth}
-    ${resp}=  GET On Session  policy  /metrics  expected_status=200
+    ${resp}=  GET On Session  policy  ${context_path}metrics  expected_status=200
     Log  Received response from policy ${resp.text}
     [return]  ${resp}

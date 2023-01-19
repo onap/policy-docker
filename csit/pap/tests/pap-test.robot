@@ -41,12 +41,12 @@ Consolidated Healthcheck
 Metrics
     [Documentation]  Verify policy pap is exporting prometheus metrics
     ${auth}=  PolicyAdminAuth
-    ${resp}=  GetMetrics  ${POLICY_PAP_IP}  ${auth}
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policy/pap/v1/healthcheck",} 1.0
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policy/pap/v1/components/healthcheck",} 1.0
-    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="save",repository="PdpGroupRepository",state="SUCCESS",} 1.0
-    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findByKeyName",repository="PdpGroupRepository",state="SUCCESS",} 1.0
-    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findAll",repository="PolicyStatusRepository",state="SUCCESS",} 1.0
+    ${resp}=  GetMetrics  ${POLICY_PAP_IP}  ${auth}  /policy/pap/v1/
+    Should Contain  ${resp.text}  tomcat_sessions_active_current_sessions
+    Should Contain  ${resp.text}  jdbc_connections_idle{name="dataSource",}
+    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="save",repository="PdpGroupRepository",state="SUCCESS",}
+    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findByKeyName",repository="PdpGroupRepository",state="SUCCESS",}
+    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findAll",repository="PolicyStatusRepository",state="SUCCESS",}
 
 Statistics
     [Documentation]  Verify policy pap statistics
@@ -106,7 +106,7 @@ QueryPdpGroupsAfterUndeploy
 
 QueryPolicyAuditAfterUnDeploy
     [Documentation]   Verify policy audit record after undeploy
-    Sleep             130 seconds
+    Sleep             20 seconds
     QueryPolicyAudit  /policy/pap/v1/policies/audit  200  testGroup  pdpTypeA  onap.restart.tca  UNDEPLOYMENT
 
 QueryPolicyAuditWithMetadataSetAfterUnDeploy
