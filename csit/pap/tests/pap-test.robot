@@ -42,11 +42,11 @@ Metrics
     [Documentation]  Verify policy pap is exporting prometheus metrics
     ${auth}=  PolicyAdminAuth
     ${resp}=  GetMetrics  ${POLICY_PAP_IP}  ${auth}  /policy/pap/v1/
-    Should Contain  ${resp.text}  tomcat_sessions_active_current_sessions
-    Should Contain  ${resp.text}  jdbc_connections_idle{name="dataSource",}
-    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="save",repository="PdpGroupRepository",state="SUCCESS",}
-    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findByKeyName",repository="PdpGroupRepository",state="SUCCESS",}
-    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findAll",repository="PolicyStatusRepository",state="SUCCESS",}
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/healthcheck",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/components/healthcheck",} 1.0
+    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="save",repository="PdpGroupRepository",state="SUCCESS",} 1.0
+    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findByKeyName",repository="PdpGroupRepository",state="SUCCESS",} 1.0
+    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findAll",repository="PolicyStatusRepository",state="SUCCESS",} 1.0
 
 Statistics
     [Documentation]  Verify policy pap statistics
