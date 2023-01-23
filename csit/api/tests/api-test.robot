@@ -114,7 +114,7 @@ DeleteSpecificPolicyTypeV3
 Metrics
     [Documentation]  Verify policy-api is exporting prometheus metrics
     ${auth}=  PolicyAdminAuth
-    ${resp}=  GetMetrics  ${POLICY_API_IP}  ${auth}  /
+    ${resp}=  GetMetrics  ${POLICY_API_IP}  ${auth}  /policy/api/v1/
     Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policy/api/v1/healthcheck",} 1.0
     Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policy/api/v1/statistics",} 1.0
     Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policy/api/v1/policytypes",} 1.0
