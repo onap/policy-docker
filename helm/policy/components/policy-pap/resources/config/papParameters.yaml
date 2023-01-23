@@ -55,6 +55,8 @@ spring:
 
 server:
   port: 6969
+  servlet:
+    context-path: /policy/pap/v1
   ssl:
     enabled: false
 
@@ -133,4 +135,5 @@ management:
       base-path: /
       exposure:
         include: health, metrics, prometheus
+      path-mapping.metrics: plain-metrics
       path-mapping.prometheus: metrics

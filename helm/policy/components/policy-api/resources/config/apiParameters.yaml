@@ -20,6 +20,8 @@ server:
   port: {{ .Values.service.internalPort }}
   ssl:
     enabled: false
+  servlet:
+    context-path: /policy/api/v1
 
 spring:
   security.user:
@@ -99,4 +101,5 @@ management:
       base-path: /
       exposure:
         include: health,metrics,prometheus
+      path-mapping.metrics: plain-metrics
       path-mapping.prometheus: metrics

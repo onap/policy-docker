@@ -124,5 +124,6 @@ runtime:
 management:
   endpoints:
     web:
+      base-path: /
       exposure:
         include: health, metrics, prometheus
