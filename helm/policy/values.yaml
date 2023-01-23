@@ -60,7 +60,7 @@ mariadb:
   image: mariadb:10.5.8
 
 dbmigrator:
-  image: onap/policy-db-migrator:2.5.1
+  image: onap/policy-db-migrator:2.6-SNAPSHOT-latest
   schema: policyadmin
   policy_home: "/opt/app/policy"
 
