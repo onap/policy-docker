@@ -105,7 +105,7 @@ spec:
           command: ["/opt/app/policy/clamp/bin/acm-runtime.sh"]
           args: ["/opt/app/policy/clamp/etc/mounted/acRuntimeParameters.yaml"]
           ports:
-            - containerPort: 6969
+            - containerPort: {{ .Values.service.ports.port }}
               name: http-api
           # disable liveness probe when breakpoints set in debugger
           # so K8s doesn't restart unresponsive container

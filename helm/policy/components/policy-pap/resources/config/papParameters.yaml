@@ -63,6 +63,10 @@ server:
 pap:
   name: PapGroup
   aaf: false
+  topic:
+    pdp-pap.name: POLICY-PDP-PAP
+    notification.name: POLICY-NOTIFICATION
+    heartbeat.name: POLICY-HEARTBEAT
   pdpParameters:
     heartBeatMs: 120000
     updateParameters:
@@ -71,43 +75,34 @@ pap:
     stateChangeParameters:
       maxRetryCount: 1
       maxWaitMs: 30000
-  savePdpStatisticsInDb: false
+  savePdpStatisticsInDb: true
   topicParameterGroup:
     topicSources:
-    - topic: POLICY-PDP-PAP
+    - topic: ${pap.topic.pdp-pap.name}
       servers:
       - message-router
+      topicCommInfrastructure: dmaap
       useHttps: false
       fetchTimeout: 15000
-      topicCommInfrastructure: dmaap
-    - topic: POLICY-HEARTBEAT
-      effectiveTopic: POLICY-PDP-PAP
+    - topic: ${pap.topic.heartbeat.name}
+      effectiveTopic: ${pap.topic.pdp-pap.name}
       consumerGroup: policy-pap
       servers:
       - message-router
+      topicCommInfrastructure: dmaap
       useHttps: false
       fetchTimeout: 15000
-      topicCommInfrastructure: dmaap
     topicSinks:
-    - topic: POLICY-PDP-PAP
+    - topic: ${pap.topic.pdp-pap.name}
       servers:
       - message-router
-      useHttps: false
       topicCommInfrastructure: dmaap
-    - topic: POLICY-NOTIFICATION
+      useHttps: false
+    - topic: ${pap.topic.notification.name}
       servers:
       - message-router
-      useHttps: false
       topicCommInfrastructure: dmaap
-# If Strimzi Kafka to be used for communication, replace following configuration for topicSources and topicSinks
-#          servers:
-#            - {{ .Values.config.kafkaBootstrap }}:9092
-#          topicCommInfrastructure: kafka
-#          additionalProps:
-#            security.protocol: SASL_PLAINTEXT
-#            sasl.mechanism: SCRAM-SHA-512
-#            sasl.jaas.config: ${JAASLOGIN}
-
+      useHttps: false
   healthCheckRestClientParameters:
   - clientName: api
     hostname: policy-api
@@ -116,18 +111,6 @@ pap:
     password: "${API_PASSWORD}"
     useHttps: false
     basePath: policy/api/v1/healthcheck
-  - clientName: distribution
-    hostname: policy-distribution
-    port: 6969
-    userName: "${DISTRIBUTION_USER}"
-    password: "${DISTRIBUTION_PASSWORD}"
-    useHttps: false
-    basePath: healthcheck
-  - clientName: dmaap
-    hostname: message-router
-    port: 3904
-    useHttps: false
-    basePath: topics
 
 management:
   endpoints:

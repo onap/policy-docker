@@ -27,12 +27,13 @@ export NODETEMPLATES=/opt/robotworkspace/models/models-examples/src/main/resourc
 export POLICY_RUNTIME_ACM_IP=policy-clamp-runtime-acm
 export POLICY_API_IP=policy-api
 export POLICY_PAP_IP=policy-pap
-export POLICY_APEX_PDP_IP=policy-apex-pdp
+export APEX_IP=policy-apex-pdp
+export DMAAP_IP=message-router
 
 
 export ROBOT_VARIABLES=
 ROBOT_VARIABLES="-v DATA:$DATA -v NODETEMPLATES:$NODETEMPLATES -v POLICY_RUNTIME_ACM_IP:$POLICY_RUNTIME_ACM_IP -v POLICY_API_IP:$POLICY_API_IP
--v POLICY_PAP_IP:$POLICY_PAP_IP -v POLICY_APEX_PDP_IP:$POLICY_APEX_PDP_IP"
+-v POLICY_PAP_IP:$POLICY_PAP_IP -v APEX_IP:$APEX_IP -v DMAAP_IP:$DMAAP_IP"
 
 echo "Run Robot test"
 echo ROBOT_VARIABLES="${ROBOT_VARIABLES}"

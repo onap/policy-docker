@@ -24,10 +24,9 @@ metadata:
   name: {{ .Chart.Name }}
   namespace: default
   labels:
-    name: {{ .Chart.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: RELEASE
-    heritage: Helm
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    app.kubernetes.io/managed-by: Helm
 
 spec:
   ports:
@@ -38,6 +37,5 @@ spec:
   ipFamilyPolicy: PreferDualStack
   type: {{ .Values.service.type }}
   selector:
-    app: {{ .Chart.Name }}
-    release: RELEASE
+    app.kubernetes.io/name: {{ .Chart.Name }}
   sessionAffinity: None

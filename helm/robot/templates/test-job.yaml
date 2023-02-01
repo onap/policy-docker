@@ -29,9 +29,12 @@ spec:
           image: {{ .Values.imageCredentials.readinessImage.name }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
-            - /app/ready.py
-            - --container-name
-            - {{ .Values.readiness }}
+          - /app/ready.py
+          args:
+          {{- range $container := .Values.readiness }}
+          - --container-name
+          - {{ $container}}
+          {{- end }}
           env:
             - name: NAMESPACE
               valueFrom:
