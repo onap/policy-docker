@@ -38,7 +38,7 @@ debugEnabled: false
 # application configuration
 
 restServer:
-  user: healthcheck
+  user: policyadmin
   password: zb!XztG34
 
 

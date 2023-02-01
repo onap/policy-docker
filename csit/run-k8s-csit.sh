@@ -36,7 +36,7 @@ POLICY_APEX_CONTAINER="policy-apex-pdp"
 
 export PROJECT=""
 export ROBOT_FILE=""
-export READINESS_CONTAINER=""
+export READINESS_CONTAINERS=()
 
 function spin_microk8s_cluster () {
     echo "Verify if Microk8s cluster is running.."
@@ -93,7 +93,7 @@ function build_robot_image () {
         rm -rf tests/models/
         echo "---------------------------------------------"
         echo "Installing Robot framework pod for running CSIT"
-        helm install csit-robot robot --set robot=$ROBOT_FILE --set readiness=$READINESS_CONTAINER;
+        microk8s helm install csit-robot robot --set robot=$ROBOT_FILE --set "readiness={${READINESS_CONTAINERS[*]}}";
         echo "Please check the logs of policy-csit-robot pod for the test execution results"
     fi
 }
@@ -105,6 +105,16 @@ function clone_models () {
     echo GERRIT_BRANCH="${GERRIT_BRANCH}"
     # download models examples
     git clone -b "${GERRIT_BRANCH}" --single-branch https://github.com/onap/policy-models.git tests/models
+
+    # create a couple of variations of the policy definitions
+    sed -e 's!Measurement_vGMUX!ADifferentValue!' \
+            tests/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.json \
+        >tests/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.v1_2.json
+
+    sed -e 's!"version": "1.0.0"!"version": "2.0.0"!' \
+           -e 's!"policy-version": 1!"policy-version": 2!' \
+           tests/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.json \
+        >tests/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.v2.json
 }
 
 
@@ -113,30 +123,30 @@ function get_robot_file () {
 
   clamp | policy-clamp)
     export ROBOT_FILE=$POLICY_CLAMP_ROBOT
-    export READINESS_CONTAINER=$POLICY_CLAMP_CONTAINER
+    export READINESS_CONTAINERS=($POLICY_CLAMP_CONTAINER)
     ;;
 
   api | policy-api)
     export ROBOT_FILE=$POLICY_API_ROBOT
-    export READINESS_CONTAINER=$POLICY_API_CONTAINER
+    export READINESS_CONTAINERS=($POLICY_API_CONTAINER)
     ;;
 
   pap | policy-pap)
     export ROBOT_FILE=$POLICY_PAP_ROBOT
-    export READINESS_CONTAINER=$POLICY_PAP_CONTAINER
+    export READINESS_CONTAINERS=($POLICY_PAP_CONTAINER,$POLICY_API_CONTAINER)
     ;;
 
   apex-pdp | policy-apex-pdp)
     export ROBOT_FILE=$POLICY_APEX_PDP_ROBOT
-    export READINESS_CONTAINER=$POLICY_APEX_CONTAINER
+    export READINESS_CONTAINERS=($POLICY_APEX_CONTAINER,$POLICY_API_CONTAINER,$POLICY_PAP_CONTAINER)
     ;;
 
   xacml-pdp | policy-xacml-pdp)
-    export ROBOT_FILE=$POLICY_XACML_PDP_ROBOT
+    export ROBOT_FILE=($POLICY_XACML_PDP_ROBOT)
     ;;
 
   drools-pdp | policy-drools-pdp)
-    export ROBOT_FILE=$POLICY_DROOLS_PDP_ROBOT
+    export ROBOT_FILE=($POLICY_DROOLS_PDP_ROBOT)
     ;;
 
   *)
@@ -151,7 +161,7 @@ if [ $1 == "install" ];  then
     spin_microk8s_cluster
     if [ "${?}" -eq 0 ];  then
         echo "Installing policy helm charts in the default namespace"
-        cd ../helm/;helm dependency build policy;microk8s helm install csit-policy policy;
+        cd ../helm/;microk8s helm dependency build policy;microk8s helm install csit-policy policy;
         echo "Policy chart installation completed"
 	      echo "-------------------------------------------"
     fi
@@ -160,7 +170,8 @@ if [ $1 == "install" ];  then
         export PROJECT=$2
         get_robot_file
         echo "CSIT will be invoked from $ROBOT_FILE"
-        echo "Readiness container: $READINESS_CONTAINER"
+        echo "Readiness containers: ${READINESS_CONTAINERS[*]}"
+        echo "-------------------------------------------"
         build_robot_image
     else
         echo "No project supplied for running CSIT"

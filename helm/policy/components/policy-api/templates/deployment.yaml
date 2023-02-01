@@ -23,19 +23,19 @@ kind: Deployment
 metadata:
   name: {{ .Chart.Name }}
   namespace: default
-  labels:
-    app: {{ .Chart.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    heritage: Helm
 spec:
   selector:
     matchLabels:
-      app: {{ .Chart.Name }}
+      app.kubernetes.io/name: {{ .Chart.Name }}
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
-        app: {{ .Chart.Name }}
+        app.kubernetes.io/name: {{ .Chart.Name }}
+        helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+        app.kubernetes.io/instance: RELEASE
+        app.kubernetes.io/managed-by: Helm
+      name: {{ .Chart.Name }}
     spec:
       initContainers:
         - command:
@@ -93,20 +93,21 @@ spec:
           command: ["/opt/app/policy/api/bin/policy-api.sh"]
           args: ["/opt/app/policy/api/etc/mounted/apiParameters.yaml"]
           ports:
-          - containerPort: {{ .Values.service.internalPort }}
+            - containerPort: {{ .Values.service.port }}
+              name: http
           # disable liveness probe when breakpoints set in debugger
           # so K8s doesn't restart unresponsive container
           {{- if eq .Values.liveness.enabled true }}
           livenessProbe:
             tcpSocket:
-              port: {{ .Values.service.internalPort }}
+              port: {{ .Values.service.port }}
             initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds }}
             periodSeconds: {{ .Values.liveness.periodSeconds }}
           {{ end -}}
           readinessProbe:
             httpGet:
               path: {{ .Values.readiness.api }}
-              port: {{ .Values.service.internalPort }}
+              port: {{ .Values.service.port }}
               httpHeaders:
                 - name: Authorization
                   value: Basic {{ printf "%s:%s" .Values.restServer.user .Values.restServer.password | b64enc }}
