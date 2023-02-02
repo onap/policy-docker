@@ -2,7 +2,7 @@
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2019-2022 Nordix Foundation.
 #  Modifications Copyright (C) 2019-2021 AT&T Intellectual Property.
-#  Modifications Copyright (C) 2022 Nordix Foundation.
+#  Modifications Copyright (C) 2022-2023 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ bash "${SCRIPTS}"/get-models-examples.sh
 echo "${POLICY_PAP_VERSION}"
 
 cd "${SCRIPTS}"
-docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d pap apex-pdp
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d pap apex-pdp grafana
 
 sleep 10
 unset http_proxy https_proxy

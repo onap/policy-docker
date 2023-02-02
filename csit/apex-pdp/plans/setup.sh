@@ -30,7 +30,7 @@ sudo apt-get -y install libxml2-utils
 
 source "${SCRIPTS}"/get-versions.sh
 
-docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d apex-pdp
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d apex-pdp grafana
 
 unset http_proxy https_proxy
 

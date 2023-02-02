@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2021-2022 Nordix Foundation.
+#  Copyright (C) 2021-2023 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ sudo apt-get -y install libxml2-utils
 source "${SCRIPTS}"/get-versions.sh
 
 # Bringup ACM runtime containers
-docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d policy-clamp-runtime-acm
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d policy-clamp-runtime-acm grafana
 
 sleep 10
 unset http_proxy https_proxy

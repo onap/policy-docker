@@ -2,7 +2,7 @@
 # ===========LICENSE_START====================================================
 #  Copyright (C) 2020-2021 AT&T Intellectual Property. All rights reserved.
 #  Modifications Copyright (C) 2021 Bell Canada. All rights reserved.
-#  Modification Copyright 2021-2022 Nordix Foundation.
+#  Modification Copyright 2021-2023 Nordix Foundation.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -365,3 +365,39 @@ services:
       -jar ./policy-clamp-backend.jar
       --spring.config.name=ClampBackend
       --spring.config.location=/opt/policy/clamp/config/ClampBackend.properties
+   prometheus:
+      image: prom/prometheus:v2.32.1
+      container_name: prometheus
+      hostname: prometheus
+      ports:
+       - 30259:9090
+      volumes:
+       - ./metrics/prometheus.yml:/etc/prometheus/prometheus.yml
+   grafana:
+      image: grafana/grafana-oss:8.3.4
+      container_name: grafana
+      depends_on:
+       - prometheus
+      hostname: grafana
+      ports:
+       - 30269:3000
+      volumes:
+       - ./metrics/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
+       - ./metrics/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+       - ./metrics/dashboards:/var/lib/grafana/dashboards
+   node-exporter:
+      image: prom/node-exporter:latest
+      container_name: node-exporter
+      restart: unless-stopped
+      volumes:
+         - /proc:/host/proc:ro
+         - /sys:/host/sys:ro
+         - /:/rootfs:ro
+      command:
+         - '--path.procfs=/host/proc'
+         - '--path.rootfs=/rootfs'
+         - '--path.sysfs=/host/sys'
+         - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+      expose:
+         - 9100
+

@@ -1,7 +1,7 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2019-2021 AT&T Intellectual Property. All rights reserved.
-# Modifications Copyright 2021-2022 Nordix Foundation.
+# Copyright (C) 2019-2021 AT&T Intellectual Property. All rights reserved.
+# Modifications Copyright 2021-2023 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@ sed -e 's!"version": "1.0.0"!"version": "2.0.0"!' \
 echo "${POLICY_API_VERSION}"
 
 cd "${SCRIPTS}"
-docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d api
+docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d api grafana
 
 sleep 10
 unset http_proxy https_proxy

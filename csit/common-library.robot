@@ -119,3 +119,8 @@ GetMetrics
     ${resp}=  GET On Session  policy  ${context_path}metrics  expected_status=200
     Log  Received response from policy ${resp.text}
     [return]  ${resp}
+
+QueryPrometheus ${query}
+    ${resp}=  GET http://localhost:30259/api/v1/query?query=${query}  expected_status=200
+    Log  Received response from policy ${resp.text}
+    [return]  ${resp}
