@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41874048_a1389464",
+        "filename": "csit/prepare-robot-env.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2023-02-02T13:11:37Z",
+      "side": 0,
+      "message": "this assumption was a problem when the first run of install dependencies had issues, as the venv wouldn\u0027t get recreated.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "0700486a08b2bc08589f7e6b0be8338d6bbb4efa",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
