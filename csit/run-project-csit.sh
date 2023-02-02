@@ -3,7 +3,7 @@
 # Copyright 2016-2017 Huawei Technologies Co., Ltd.
 # Modification Copyright 2019 © Samsung Electronics Co., Ltd.
 # Modification Copyright 2021 © AT&T Intellectual Property.
-# Modification Copyright 2021-2022 Nordix Foundation.
+# Modification Copyright 2021-2023 Nordix Foundation.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -178,9 +178,9 @@ rm -rf "${WORKSPACE}/csit/archives/${PROJECT}"
 mkdir -p "${WORKSPACE}/csit/archives/${PROJECT}"
 
 # Run installation of prerequired libraries
-source_safely "${SCRIPTS}/prepare-csit.sh"
+source_safely "${SCRIPTS}/prepare-robot-env.sh"
 
-# Activate the virtualenv containing all the required libraries installed by prepare-csit.sh
+# Activate the virtualenv containing all the required libraries installed by prepare-robot-env.sh
 source_safely "${ROBOT_VENV}/bin/activate"
 
 WORKDIR=$(mktemp -d)

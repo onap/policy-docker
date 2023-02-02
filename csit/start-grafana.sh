@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # ============LICENSE_START====================================================
-#  Copyright (C) 2022 Nordix Foundation.
+#  Copyright (C) 2022-2023 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 
 SCRIPTS=$(git rev-parse --show-toplevel)
 export SCRIPTS="${SCRIPTS}"/csit
+export CONTAINER_LOCATION="nexus3.onap.org:10001/"
 
 source "${SCRIPTS}"/get-versions.sh
 
@@ -27,14 +28,11 @@ export PROJECT="${1}"
 
 if [ -z "${PROJECT}" ]; then
     echo "Starting all components..."
-    docker-compose -f "${SCRIPTS}"/compose-grafana.yml up -d
+    docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d
 else
     echo "Starting ${PROJECT} application..."
-    docker-compose -f "${SCRIPTS}"/compose-grafana.yml up -d "${PROJECT}" grafana
+    docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d "${PROJECT}" grafana
 fi
 
-prometheus=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' prometheus)
-grafana=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' grafana)
-
-echo "Prometheus server: http://${prometheus}:9090"
-echo "Grafana server: http://${grafana}:3000"
+echo "Prometheus server: http://localhost:30259"
+echo "Grafana server: http://localhost:30269"
