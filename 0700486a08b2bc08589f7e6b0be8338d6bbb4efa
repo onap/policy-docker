@@ -22,6 +22,30 @@
       "revId": "0700486a08b2bc08589f7e6b0be8338d6bbb4efa",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40dfb1b9_0eea19fb",
+        "filename": "csit/prepare-robot-env.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2023-02-02T13:18:20Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "41874048_a1389464",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "0700486a08b2bc08589f7e6b0be8338d6bbb4efa",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
