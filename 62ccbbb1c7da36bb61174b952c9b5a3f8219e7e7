@@ -46,6 +46,30 @@
       "revId": "62ccbbb1c7da36bb61174b952c9b5a3f8219e7e7",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc16f67_181e6e01",
+        "filename": "helm/policy/components/policy-api/values.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 3239
+      },
+      "writtenOn": "2023-02-07T15:58:34Z",
+      "side": 1,
+      "message": "Should we keep both then?",
+      "parentUuid": "1a8da4cf_78fd1b43",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "62ccbbb1c7da36bb61174b952c9b5a3f8219e7e7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
