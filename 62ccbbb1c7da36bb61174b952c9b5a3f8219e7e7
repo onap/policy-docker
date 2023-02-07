@@ -94,6 +94,30 @@
       "revId": "62ccbbb1c7da36bb61174b952c9b5a3f8219e7e7",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "872145dc_2f27dc4f",
+        "filename": "helm/policy/components/policy-api/values.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 3239
+      },
+      "writtenOn": "2023-02-07T17:33:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ce89864b_21204bd1",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "62ccbbb1c7da36bb61174b952c9b5a3f8219e7e7",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
