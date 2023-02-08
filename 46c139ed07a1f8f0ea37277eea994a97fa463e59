@@ -22,6 +22,30 @@
       "revId": "46c139ed07a1f8f0ea37277eea994a97fa463e59",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ec20bfd_cec3238c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2023-02-08T11:31:22Z",
+      "side": 1,
+      "message": "hopefully it will improve a bit the performance.",
+      "parentUuid": "badfcced_77f5a119",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 1
+      },
+      "revId": "46c139ed07a1f8f0ea37277eea994a97fa463e59",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
