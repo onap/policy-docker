@@ -18,7 +18,7 @@ Healthcheck
 
 ExecuteApexSampleDomainPolicy
      Set Test Variable    ${policyName}    onap.policies.native.apex.Sampledomain
-     ${postjson}=  Get file  ${CURDIR}/data/${policyName}.json
+     ${postjson}=  Get file  ./data/${policyName}.json
      CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
      Wait Until Keyword Succeeds    3 min    5 sec    VerifyPdpStatistics    0    0    0    0
      DeployPolicy
@@ -29,33 +29,33 @@ ExecuteApexSampleDomainPolicy
 
 ExecuteApexTestPnfPolicy
      Set Test Variable    ${policyName}    onap.policies.apex.pnf.Test
-     ${postjson}=  Get file  ${CURDIR}/data/${policyName}.json
+     ${postjson}=  Get file  ./data/${policyName}.json
      CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
      DeployPolicy
      Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
-     ${result}=     Run Process    ${SCRIPTS}/make_topic.sh     APEX-CL-MGT
+     ${result}=     Run Process    ./data/make_topic.sh     APEX-CL-MGT
      Should Be Equal As Integers    ${result.rc}    0
      Wait Until Keyword Succeeds    2 min    5 sec    TriggerAndVerifyTestPnfPolicy
 
 ExecuteApexTestVnfPolicy
      Set Test Variable    ${policyName}    onap.policies.apex.vnf.Test
-     ${postjson}=  Get file  ${CURDIR}/data/${policyName}.json
+     ${postjson}=  Get file  ./data/${policyName}.json
      CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
      DeployPolicy
      Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
-     ${result}=     Run Process    ${SCRIPTS}/make_topic.sh     APEX-CL-MGT
+     ${result}=     Run Process    ./data/make_topic.sh     APEX-CL-MGT
      Should Be Equal As Integers    ${result.rc}    0
      Wait Until Keyword Succeeds    2 min    5 sec    TriggerAndVerifyTestVnfPolicy
 
 ExecuteApexTestPnfPolicyWithMetadataSet
       Set Test Variable    ${policyName}    onap.policies.apex.pnf.metadataSet.Test
-      ${postjson}=  Get file  ${CURDIR}/data/${policyName}.json
+      ${postjson}=  Get file  ./data/${policyName}.json
       CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
-      ${postjson}=  Get file  ${CURDIR}/data/onap.pnf.metadataSet.Test.json
+      ${postjson}=  Get file  ./data/onap.pnf.metadataSet.Test.json
       CreateNodeTemplate  /policy/api/v1/nodetemplates  200  ${postjson}  1
       DeployPolicy
       Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
-      ${result}=     Run Process    ${SCRIPTS}/make_topic.sh     APEX-CL-MGT2
+      ${result}=     Run Process    ./data/make_topic.sh     APEX-CL-MGT2
       Should Be Equal As Integers    ${result.rc}    0
       Wait Until Keyword Succeeds    2 min    5 sec    TriggerAndVerifyTestPnfPolicy
 
@@ -83,7 +83,7 @@ Metrics
 
 DeployPolicy
      [Documentation]    Deploy the policy in apex-pdp engine
-     ${postjson}=    Get file  ${CURDIR}/data/policy_deploy.json
+     ${postjson}=    Get file  ./data/policy_deploy.json
      ${postjson}=    evaluate    json.loads('''${postjson}''')    json
      set to dictionary    ${postjson['groups'][0]['deploymentSubgroups'][0]['policies'][0]}    name=${policyName}
      ${postjson}=    evaluate    json.dumps(${postjson})    json
@@ -93,7 +93,7 @@ DeployPolicy
 RunEventOnApexEngine
     [Documentation]    Send event to verify policy execution
     Create Session   apexSession  http://${APEX_IP}:23324   max_retries=1
-    ${data}=    Get Binary File     ${CURDIR}${/}data${/}event.json
+    ${data}=    Get Binary File     ./data/event.json
     &{headers}=  Create Dictionary    Content-Type=application/json    Accept=application/json
     ${resp}=    PUT On Session    apexSession    /apex/FirstConsumer/EventIn    data=${data}   headers=${headers}
     Should Be Equal As Strings    ${resp.status_code}   200
@@ -101,7 +101,7 @@ RunEventOnApexEngine
 TriggerAndVerifyTestPnfPolicy
     [Documentation]    Send TestPnf policy trigger event to DMaaP and read notifications to verify policy execution
     Create Session   apexSession  http://${DMAAP_IP}:3904   max_retries=1
-    ${data}=    Get Binary File     ${CURDIR}/data/VesEventForPnfPolicy.json
+    ${data}=    Get Binary File     ./data/VesEventForPnfPolicy.json
     &{headers}=  Create Dictionary    Content-Type=application/json    Accept=application/json
     ${resp}=    POST On Session    apexSession    /events/unauthenticated.DCAE_CL_OUTPUT    data=${data}   headers=${headers}
     Should Be Equal As Strings    ${resp.status_code}   200
@@ -112,7 +112,7 @@ TriggerAndVerifyTestPnfPolicy
 TriggerAndVerifyTestVnfPolicy
     [Documentation]    Send TestVnf policy trigger event to DMaaP and read notifications to verify policy execution
     Create Session   apexSession  http://${DMAAP_IP}:3904   max_retries=1
-    ${data}=    Get Binary File     ${CURDIR}/data/VesEventForVnfPolicy.json
+    ${data}=    Get Binary File     ./data/VesEventForVnfPolicy.json
     &{headers}=  Create Dictionary    Content-Type=application/json    Accept=application/json
     ${resp}=    POST On Session    apexSession    /events/unauthenticated.DCAE_POLICY_EXAMPLE_OUTPUT    data=${data}   headers=${headers}
     Should Be Equal As Strings    ${resp.status_code}   200
@@ -124,7 +124,7 @@ TriggerAndVerifyTestVnfPolicy
 CheckLogMessage
     [Documentation]    Read log messages received and check for expected content.
     [Arguments]    ${status}    ${expectedMsg}
-    ${result}=     Run Process    ${SCRIPTS}/wait_topic.sh     APEX-CL-MGT    ${status}
+    ${result}=     Run Process    ./data/wait_topic.sh     APEX-CL-MGT    ${status}
     Log    Received log event on APEX-CL-MGT topic ${result.stdout}
     Should Be Equal As Integers    ${result.rc}    0
     Should Contain    ${result.stdout}    ${expectedMsg}

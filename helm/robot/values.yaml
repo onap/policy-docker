@@ -66,5 +66,5 @@ tolerations: []
 affinity: {}
 
 robot: ""
-readiness: ""
+readiness: []
 

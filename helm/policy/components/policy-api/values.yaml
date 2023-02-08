@@ -20,7 +20,6 @@
 # Global configuration defaults.
 #################################################################
 global:
-  nodePortPrefix: 304
   persistence: {}
   aafEnabled: false
 
@@ -61,6 +60,7 @@ liveness:
   # necessary to disable liveness probe when setting breakpoints
   # in debugger so K8s doesn't restart unresponsive container
   enabled: true
+  port: http
 
 readiness:
   initialDelaySeconds: 10
@@ -69,14 +69,13 @@ readiness:
   successThreshold: 1
   failureThreshold: 3
   timeout: 60
+  port: http
 
 service:
-  type: ClusterIP
-  name: policy-api
+  type: NodePort
   portName: http
-  externalPort: 6969
-  internalPort: 6969
-  nodePort: 40
+  port: 6969
+  nodePort: 30441
 
 ingress:
   enabled: false
