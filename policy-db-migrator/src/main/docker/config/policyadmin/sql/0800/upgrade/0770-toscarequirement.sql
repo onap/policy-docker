@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2021 Nordix Foundation
+ *  Copyright (C) 2021, 2023 Nordix Foundation
  *  ================================================================================
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE TABLE IF NOT EXISTS toscarequirement (CAPABILITY VARCHAR(255) NULL, `DESCRIPTION` VARCHAR(255) NULL, NODE VARCHAR(255) NULL, RELATIONSHIP VARCHAR(255) NULL, derived_from_name VARCHAR(255) NULL, derived_from_version VARCHAR(255) NULL, name VARCHAR(120) NOT NULL, version VARCHAR(20) NOT NULL, type_name VARCHAR(255) NULL, type_version VARCHAR(255) NULL, CONSTRAINT PK_TOSCAREQUIREMENT PRIMARY KEY (name, version));
+CREATE TABLE IF NOT EXISTS toscarequirement (CAPABILITY VARCHAR(255) NULL, `DESCRIPTION` VARCHAR(255) NULL, NODE VARCHAR(255) NULL, RELATIONSHIP VARCHAR(255) NULL, derived_from_name VARCHAR(255) NULL, derived_from_version VARCHAR(255) NULL, name VARCHAR(120) NOT NULL, version VARCHAR(20) NOT NULL, type_name VARCHAR(255) NULL, type_version VARCHAR(255) NULL, PRIMARY KEY PK_TOSCAREQUIREMENT (name, version));

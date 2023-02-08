@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2021 Nordix Foundation
+ *  Copyright (C) 2021, 2023 Nordix Foundation
  *  ================================================================================
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE TABLE IF NOT EXISTS toscatrigger (ACTION VARCHAR(255) NULL, toscaCondition LONGBLOB DEFAULT NULL NULL, toscaConstraint LONGBLOB DEFAULT NULL NULL, `DESCRIPTION` VARCHAR(255) NULL, EVALUATIONS INT DEFAULT NULL NULL, EVENTTYPE VARCHAR(255) NULL, METHOD VARCHAR(255) NULL, `PERIOD` LONGBLOB DEFAULT NULL NULL, SCHEDULE LONGBLOB DEFAULT NULL NULL, TARGETFILTER LONGBLOB DEFAULT NULL NULL, parentLocalName VARCHAR(120) NOT NULL, localName VARCHAR(120) NOT NULL, parentKeyVersion VARCHAR(15) NOT NULL, parentKeyName VARCHAR(120) NOT NULL, CONSTRAINT PK_TOSCATRIGGER PRIMARY KEY (parentLocalName, localName, parentKeyVersion, parentKeyName));
+CREATE TABLE IF NOT EXISTS toscatrigger (ACTION VARCHAR(255) NULL, toscaCondition LONGBLOB DEFAULT NULL, toscaConstraint LONGBLOB DEFAULT NULL, `DESCRIPTION` VARCHAR(255) NULL, EVALUATIONS INT DEFAULT NULL, EVENTTYPE VARCHAR(255) NULL, METHOD VARCHAR(255) NULL, `PERIOD` LONGBLOB DEFAULT NULL, SCHEDULE LONGBLOB DEFAULT NULL, TARGETFILTER LONGBLOB DEFAULT NULL, parentLocalName VARCHAR(120) NOT NULL, localName VARCHAR(120) NOT NULL, parentKeyVersion VARCHAR(15) NOT NULL, parentKeyName VARCHAR(120) NOT NULL, PRIMARY KEY PK_TOSCATRIGGER (parentLocalName, localName, parentKeyVersion, parentKeyName));

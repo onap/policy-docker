@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2021 Nordix Foundation
+ *  Copyright (C) 2021, 2023 Nordix Foundation
  *  ================================================================================
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE TABLE IF NOT EXISTS toscatopologytemplate (`description` VARCHAR(255) NULL, parentLocalName VARCHAR(120) NOT NULL, localName VARCHAR(120) NOT NULL, parentKeyVersion VARCHAR(15) NOT NULL, parentKeyName VARCHAR(120) NOT NULL, nodeTemplatessVersion VARCHAR(20) NULL, nodeTemplatesName VARCHAR(120) NULL, policyVersion VARCHAR(20) NULL, policyName VARCHAR(120) NULL, CONSTRAINT PK_TOSCATOPOLOGYTEMPLATE PRIMARY KEY (parentLocalName, localName, parentKeyVersion, parentKeyName));
+CREATE TABLE IF NOT EXISTS toscatopologytemplate (`description` VARCHAR(255) NULL, parentLocalName VARCHAR(120) NOT NULL, localName VARCHAR(120) NOT NULL, parentKeyVersion VARCHAR(15) NOT NULL, parentKeyName VARCHAR(120) NOT NULL, nodeTemplatessVersion VARCHAR(20) NULL, nodeTemplatesName VARCHAR(120) NULL, policyVersion VARCHAR(20) NULL, policyName VARCHAR(120) NULL, PRIMARY KEY PK_TOSCATOPOLOGYTEMPLATE (parentLocalName, localName, parentKeyVersion, parentKeyName));

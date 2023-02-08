@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2021 Nordix Foundation
+ *  Copyright (C) 2021, 2023 Nordix Foundation
  *  ================================================================================
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE TABLE IF NOT EXISTS toscacapabilityassignments_toscacapabilityassignment (conceptContainerMapName VARCHAR(120) NOT NULL, concpetContainerMapVersion VARCHAR(20) NOT NULL, conceptContainerName VARCHAR(120) NOT NULL, conceptContainerVersion VARCHAR(20) NOT NULL, name VARCHAR(120) NULL, version VARCHAR(20) NULL, CONSTRAINT PK_TOSCACAPABILITYASSIGNMENTS_TOSCACAPABILITYASSIGNMENT PRIMARY KEY (conceptContainerMapName, concpetContainerMapVersion, conceptContainerName, conceptContainerVersion));
+CREATE TABLE IF NOT EXISTS toscacapabilityassignments_toscacapabilityassignment (conceptContainerMapName VARCHAR(120) NOT NULL, concpetContainerMapVersion VARCHAR(20) NOT NULL, conceptContainerName VARCHAR(120) NOT NULL, conceptContainerVersion VARCHAR(20) NOT NULL, name VARCHAR(120) NULL, version VARCHAR(20) NULL, PRIMARY KEY PK_TOSCACAPABILITYASSIGNMENTS_TOSCACAPABILITYASSIGNMENT (conceptContainerMapName, concpetContainerMapVersion, conceptContainerName, conceptContainerVersion));

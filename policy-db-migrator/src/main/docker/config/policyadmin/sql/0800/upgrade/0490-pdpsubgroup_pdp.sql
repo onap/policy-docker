@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2021 Nordix Foundation
+ *  Copyright (C) 2021, 2023 Nordix Foundation
  *  ================================================================================
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE TABLE IF NOT EXISTS pdpsubgroup_pdp (pdpParentKeyName VARCHAR(120) NOT NULL, pdpParentKeyVersion VARCHAR(15) NOT NULL, pdpParentLocalName VARCHAR(120) NOT NULL, pdpLocalName VARCHAR(120) NOT NULL, parentLocalName VARCHAR(120) NOT NULL, localName VARCHAR(120) NOT NULL, parentKeyVersion VARCHAR(15) NOT NULL, parentKeyName VARCHAR(120) NOT NULL, CONSTRAINT PK_PDPSUBGROUP_PDP PRIMARY KEY (pdpParentKeyName, pdpParentKeyVersion, pdpParentLocalName, pdpLocalName, parentLocalName, localName, parentKeyVersion, parentKeyName));
+CREATE TABLE IF NOT EXISTS pdpsubgroup_pdp (pdpParentKeyName VARCHAR(120) NOT NULL, pdpParentKeyVersion VARCHAR(15) NOT NULL, pdpParentLocalName VARCHAR(120) NOT NULL, pdpLocalName VARCHAR(120) NOT NULL, parentLocalName VARCHAR(120) NOT NULL, localName VARCHAR(120) NOT NULL, parentKeyVersion VARCHAR(15) NOT NULL, parentKeyName VARCHAR(120) NOT NULL, PRIMARY KEY PK_PDPSUBGROUP_PDP (pdpParentKeyName, pdpParentKeyVersion, pdpParentLocalName, pdpLocalName, parentLocalName, localName, parentKeyVersion, parentKeyName));

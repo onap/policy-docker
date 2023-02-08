@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2021 Nordix Foundation
+ *  Copyright (C) 2021, 2023 Nordix Foundation
  *  ================================================================================
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE TABLE IF NOT EXISTS toscanodetypes_toscanodetype (conceptContainerMapName VARCHAR(120) NOT NULL, concpetContainerMapVersion VARCHAR(20) NOT NULL, conceptContainerName VARCHAR(120) NOT NULL, conceptContainerVersion VARCHAR(20) NOT NULL, name VARCHAR(120) NULL, version VARCHAR(20) NULL, CONSTRAINT PK_TOSCANODETYPES_TOSCANODETYPE PRIMARY KEY (conceptContainerMapName, concpetContainerMapVersion, conceptContainerName, conceptContainerVersion));
+CREATE TABLE IF NOT EXISTS toscanodetypes_toscanodetype (conceptContainerMapName VARCHAR(120) NOT NULL, concpetContainerMapVersion VARCHAR(20) NOT NULL, conceptContainerName VARCHAR(120) NOT NULL, conceptContainerVersion VARCHAR(20) NOT NULL, name VARCHAR(120) NULL, version VARCHAR(20) NULL, PRIMARY KEY PK_TOSCANODETYPES_TOSCANODETYPE (conceptContainerMapName, concpetContainerMapVersion, conceptContainerName, conceptContainerVersion));

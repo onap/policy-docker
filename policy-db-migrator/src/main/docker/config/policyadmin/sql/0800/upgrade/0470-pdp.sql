@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE TABLE IF NOT EXISTS pdp (HEALTHY INT DEFAULT NULL NULL, MESSAGE VARCHAR(255) NULL, PDPSTATE INT DEFAULT NULL NULL, parentLocalName VARCHAR(120) NOT NULL, localName VARCHAR(120) NOT NULL, parentKeyVersion VARCHAR(15) NOT NULL, parentKeyName VARCHAR(120) NOT NULL, CONSTRAINT PK_PDP PRIMARY KEY (parentLocalName, localName, parentKeyVersion, parentKeyName));
+CREATE TABLE IF NOT EXISTS pdp (HEALTHY INT DEFAULT NULL, MESSAGE VARCHAR(255) DEFAULT NULL, PDPSTATE INT DEFAULT NULL, parentLocalName VARCHAR(120) NOT NULL, localName VARCHAR(120) NOT NULL, parentKeyVersion VARCHAR(15) NOT NULL, parentKeyName VARCHAR(120) NOT NULL, PRIMARY KEY PK_PDP (parentLocalName, localName, parentKeyVersion, parentKeyName));

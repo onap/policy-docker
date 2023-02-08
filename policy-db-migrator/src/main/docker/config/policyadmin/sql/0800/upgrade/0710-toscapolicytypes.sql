@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE TABLE IF NOT EXISTS toscapolicytypes (name VARCHAR(120) NOT NULL, version VARCHAR(20) NOT NULL, CONSTRAINT PK_TOSCAPOLICYTYPES PRIMARY KEY (name, version));
+CREATE TABLE IF NOT EXISTS toscapolicytypes (name VARCHAR(120) NOT NULL, version VARCHAR(20) NOT NULL, PRIMARY KEY PK_TOSCAPOLICYTYPES (name, version));

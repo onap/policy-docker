@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2021 Nordix Foundation
+ *  Copyright (C) 2021, 2023 Nordix Foundation
  *  ================================================================================
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE TABLE IF NOT EXISTS toscaproperty (DEFAULTVALUE VARCHAR(255) NULL, `DESCRIPTION` VARCHAR(255) NULL, ENTRYSCHEMA LONGBLOB DEFAULT NULL NULL, REQUIRED BIT DEFAULT 0 NULL, STATUS INT DEFAULT NULL NULL, parentLocalName VARCHAR(120) NOT NULL, localName VARCHAR(120) NOT NULL, parentKeyVersion VARCHAR(15) NOT NULL, parentKeyName VARCHAR(120) NOT NULL, name VARCHAR(120) NULL, version VARCHAR(20) NULL, CONSTRAINT PK_TOSCAPROPERTY PRIMARY KEY (parentLocalName, localName, parentKeyVersion, parentKeyName));
+CREATE TABLE IF NOT EXISTS toscaproperty (DEFAULTVALUE VARCHAR(255) DEFAULT NULL, `DESCRIPTION` VARCHAR(255) DEFAULT NULL, ENTRYSCHEMA LONGBLOB DEFAULT NULL, REQUIRED BOOLEAN DEFAULT 0, STATUS INT DEFAULT NULL, parentLocalName VARCHAR(120) NOT NULL, localName VARCHAR(120) NOT NULL, parentKeyVersion VARCHAR(15) NOT NULL, parentKeyName VARCHAR(120) NOT NULL, name VARCHAR(120) DEFAULT NULL, version VARCHAR(20) DEFAULT NULL, PRIMARY KEY PK_TOSCAPROPERTY (parentLocalName, localName, parentKeyVersion, parentKeyName));

@@ -31,12 +31,30 @@ export SCRIPT_DIRECTORY=sql
 
 # Test variables
 TOTAL_COUNT=0
-HONOLULU_UPGRADE_COUNT=$(ls /home/policy/sql/0800/upgrade/*.sql | wc -l)
-HONOLULU_DOWNGRADE_COUNT=$(ls /home/policy/sql/0800/downgrade/*.sql | wc -l)
-ISTANBUL_UPGRADE_COUNT=$(ls /home/policy/sql/0900/upgrade/*.sql | wc -l)
-ISTANBUL_DOWNGRADE_COUNT=$(ls /home/policy/sql/0900/downgrade/*.sql | wc -l)
-JAKARTA_UPGRADE_COUNT=$(ls /home/policy/sql/1000/upgrade/*.sql | wc -l)
-JAKARTA_DOWNGRADE_COUNT=$(ls /home/policy/sql/1000/downgrade/*.sql | wc -l)
+H_UPGRADE_COUNT=$(ls /home/policy/sql/0800/upgrade/*.sql | wc -l)
+H_DOWNGRADE_COUNT=$(ls /home/policy/sql/0800/downgrade/*.sql | wc -l)
+TOTAL_SQLS_UPGRADE=$H_UPGRADE_COUNT
+TOTAL_SQLS_DOWNGRADE=$H_DOWNGRADE_COUNT
+
+I_UPGRADE_COUNT=$(ls /home/policy/sql/0900/upgrade/*.sql | wc -l)
+I_DOWNGRADE_COUNT=$(ls /home/policy/sql/0900/downgrade/*.sql | wc -l)
+TOTAL_SQLS_UPGRADE=$(($TOTAL_SQLS_UPGRADE+$I_UPGRADE_COUNT))
+TOTAL_SQLS_DOWNGRADE=$(($TOTAL_SQLS_DOWNGRADE+$I_DOWNGRADE_COUNT))
+
+J_UPGRADE_COUNT=$(ls /home/policy/sql/1000/upgrade/*.sql | wc -l)
+J_DOWNGRADE_COUNT=$(ls /home/policy/sql/1000/downgrade/*.sql | wc -l)
+TOTAL_SQLS_UPGRADE=$(($TOTAL_SQLS_UPGRADE+$J_UPGRADE_COUNT))
+TOTAL_SQLS_DOWNGRADE=$(($TOTAL_SQLS_DOWNGRADE+$J_DOWNGRADE_COUNT))
+
+K_UPGRADE_COUNT=$(ls /home/policy/sql/1100/upgrade/*.sql | wc -l)
+K_DOWNGRADE_COUNT=$(ls /home/policy/sql/1100/downgrade/*.sql | wc -l)
+TOTAL_SQLS_UPGRADE=$(($TOTAL_SQLS_UPGRADE+$K_UPGRADE_COUNT))
+TOTAL_SQLS_DOWNGRADE=$(($TOTAL_SQLS_DOWNGRADE+$K_DOWNGRADE_COUNT))
+
+L_UPGRADE_COUNT=$(ls /home/policy/sql/1200/upgrade/*.sql | wc -l)
+L_DOWNGRADE_COUNT=$(ls /home/policy/sql/1200/downgrade/*.sql | wc -l)
+TOTAL_SQLS_UPGRADE=$(($TOTAL_SQLS_UPGRADE+$L_UPGRADE_COUNT))
+TOTAL_SQLS_DOWNGRADE=$(($TOTAL_SQLS_DOWNGRADE+$L_DOWNGRADE_COUNT))
 
 NEW_SQL_EXECUTIONS=0
 START_VERSION=""
@@ -154,7 +172,7 @@ check_results() {
 start_test
 /opt/app/policy/bin/db-migrator -s ${SQL_DB} -o upgrade -t 0900
 end_test
-let TOTAL_COUNT=$HONOLULU_UPGRADE_COUNT+$ISTANBUL_UPGRADE_COUNT
+let TOTAL_COUNT=$H_UPGRADE_COUNT+$I_UPGRADE_COUNT
 check_results $END_STATUS 'upgrade' "${START_VERSION}" "${END_VERSION}" $RECENT_SQL_EXECUTIONS $TOTAL_COUNT
 
 sleep 5
@@ -165,7 +183,7 @@ start_test
 /opt/app/policy/bin/db-migrator -s ${SQL_DB} -o downgrade -f 0900 -t 0800
 end_test
 let NEW_SQL_EXECUTIONS=$RECENT_SQL_EXECUTIONS-$PREVIOUS_SQL_EXECUTIONS
-check_results $END_STATUS 'downgrade' "${START_VERSION}" "${END_VERSION}" $NEW_SQL_EXECUTIONS $ISTANBUL_DOWNGRADE_COUNT
+check_results $END_STATUS 'downgrade' "${START_VERSION}" "${END_VERSION}" $NEW_SQL_EXECUTIONS $I_UPGRADE_COUNT
 
 sleep 5
 
@@ -175,7 +193,7 @@ start_test
 /opt/app/policy/bin/db-migrator -s ${SQL_DB} -o upgrade -f 0800 -t 0900
 end_test
 let NEW_SQL_EXECUTIONS=$RECENT_SQL_EXECUTIONS-$PREVIOUS_SQL_EXECUTIONS
-check_results $END_STATUS 'upgrade' "${START_VERSION}" "${END_VERSION}" $NEW_SQL_EXECUTIONS $ISTANBUL_UPGRADE_COUNT
+check_results $END_STATUS 'upgrade' "${START_VERSION}" "${END_VERSION}" $NEW_SQL_EXECUTIONS $I_UPGRADE_COUNT
 
 sleep 5
 
@@ -188,7 +206,7 @@ run_sql "root" "${MYSQL_ROOT_PASSWORD}" "${SCHEMA}" "DROP DATABASE IF EXISTS mig
 /opt/app/policy/bin/db-migrator -s ${SQL_DB} -o upgrade -t 0900
 end_test
 let NEW_SQL_EXECUTIONS=$RECENT_SQL_EXECUTIONS
-check_results $END_STATUS 'upgrade' "0800" "${END_VERSION}" $NEW_SQL_EXECUTIONS $ISTANBUL_UPGRADE_COUNT
+check_results $END_STATUS 'upgrade' "0800" "${END_VERSION}" $NEW_SQL_EXECUTIONS $I_UPGRADE_COUNT
 
 sleep 5
 
@@ -220,7 +238,7 @@ run_sql "${SQL_USER}" "${SQL_PASSWORD}" "${SCHEMA}" "${IDX_TSIDX1}"
 end_test
 let NEW_SQL_EXECUTIONS=$RECENT_SQL_EXECUTIONS-$PREVIOUS_SQL_EXECUTIONS
 # +1 to run the file again
-let TOTAL_COUNT=$ISTANBUL_DOWNGRADE_COUNT+1
+let TOTAL_COUNT=$I_UPGRADE_COUNT+1
 check_results $END_STATUS 'downgrade' "${START_VERSION}" "${END_VERSION}" $NEW_SQL_EXECUTIONS $TOTAL_COUNT
 
 sleep 5
@@ -251,7 +269,7 @@ run_sql "${SQL_USER}" "${SQL_PASSWORD}" "${SCHEMA}" "${PDPSTATISTICS}"
 end_test
 let NEW_SQL_EXECUTIONS=$RECENT_SQL_EXECUTIONS-$PREVIOUS_SQL_EXECUTIONS
 # +1 to run the file again
-let TOTAL_COUNT=$ISTANBUL_UPGRADE_COUNT+1
+let TOTAL_COUNT=$I_UPGRADE_COUNT+1
 check_results $END_STATUS 'upgrade' "${START_VERSION}" "${END_VERSION}" $NEW_SQL_EXECUTIONS $TOTAL_COUNT
 
 sleep 5
@@ -272,7 +290,7 @@ run_sql "${SQL_USER}" "${SQL_PASSWORD}" "${SCHEMA}" "${SQL4}"
 end_test
 let NEW_SQL_EXECUTIONS=$RECENT_SQL_EXECUTIONS-$PREVIOUS_SQL_EXECUTIONS
 # +1 to run the file again
-let TOTAL_COUNT=$ISTANBUL_UPGRADE_COUNT
+let TOTAL_COUNT=$I_UPGRADE_COUNT
 check_results $END_STATUS 'upgrade' "${START_VERSION}" "${END_VERSION}" $NEW_SQL_EXECUTIONS $TOTAL_COUNT
 
 sleep 5
@@ -286,7 +304,7 @@ sleep 1
 run_sql "${SQL_USER}" "${SQL_PASSWORD}" "${SCHEMA}" "${SQL6}"
 end_test
 let NEW_SQL_EXECUTIONS=$RECENT_SQL_EXECUTIONS-$PREVIOUS_SQL_EXECUTIONS
-check_results $END_STATUS 'downgrade' "${START_VERSION}" "${END_VERSION}" $NEW_SQL_EXECUTIONS $ISTANBUL_DOWNGRADE_COUNT
+check_results $END_STATUS 'downgrade' "${START_VERSION}" "${END_VERSION}" $NEW_SQL_EXECUTIONS $I_UPGRADE_COUNT
 
 sleep 5
 
@@ -296,7 +314,7 @@ start_test
 /opt/app/policy/bin/db-migrator -s ${SQL_DB} -o downgrade -f 0800
 end_test
 let NEW_SQL_EXECUTIONS=$RECENT_SQL_EXECUTIONS-$PREVIOUS_SQL_EXECUTIONS
-check_results $END_STATUS 'downgrade' "${START_VERSION}" "${END_VERSION}" $NEW_SQL_EXECUTIONS $HONOLULU_DOWNGRADE_COUNT
+check_results $END_STATUS 'downgrade' "${START_VERSION}" "${END_VERSION}" $NEW_SQL_EXECUTIONS $H_DOWNGRADE_COUNT
 
 sleep 5
 
@@ -306,19 +324,22 @@ start_test
 /opt/app/policy/bin/db-migrator -s ${SQL_DB} -o upgrade
 end_test
 let NEW_SQL_EXECUTIONS=$RECENT_SQL_EXECUTIONS-$PREVIOUS_SQL_EXECUTIONS
-let TOTAL_COUNT=$HONOLULU_UPGRADE_COUNT+$ISTANBUL_UPGRADE_COUNT+$JAKARTA_UPGRADE_COUNT
-check_results $END_STATUS 'upgrade' "0" "${END_VERSION}" $NEW_SQL_EXECUTIONS $TOTAL_COUNT
+check_results $END_STATUS 'upgrade' "0" "${END_VERSION}" $NEW_SQL_EXECUTIONS $TOTAL_SQLS_UPGRADE
 
 sleep 5
 
 # Test 13 - Full downgrade
 start_test
 /opt/app/policy/bin/prepare_downgrade.sh ${SQL_DB}
-/opt/app/policy/bin/db-migrator -s ${SQL_DB} -o downgrade -f 1000 -t 0
+/opt/app/policy/bin/db-migrator -s ${SQL_DB} -o downgrade -f 1200 -t 0
 end_test
 let NEW_SQL_EXECUTIONS=$RECENT_SQL_EXECUTIONS-$PREVIOUS_SQL_EXECUTIONS
-let TOTAL_COUNT=$HONOLULU_DOWNGRADE_COUNT+$ISTANBUL_DOWNGRADE_COUNT+$JAKARTA_DOWNGRADE_COUNT
-check_results $END_STATUS 'downgrade' "${START_VERSION}" "0" $NEW_SQL_EXECUTIONS $TOTAL_COUNT
+check_results $END_STATUS 'downgrade' "${START_VERSION}" "0" $NEW_SQL_EXECUTIONS $TOTAL_SQLS_DOWNGRADE
+
+# Install database
+/opt/app/policy/bin/prepare_upgrade.sh ${SQL_DB}
+/opt/app/policy/bin/db-migrator -s ${SQL_DB} -o upgrade
+/opt/app/policy/bin/db-migrator -s ${SQL_DB} -o report
 
 echo
 echo "-----------------------------------------------------------------------"

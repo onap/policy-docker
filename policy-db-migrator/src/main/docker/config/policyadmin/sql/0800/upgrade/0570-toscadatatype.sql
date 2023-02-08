@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE TABLE IF NOT EXISTS toscadatatype (`DESCRIPTION` VARCHAR(255) NULL, derived_from_name VARCHAR(255) NULL, derived_from_version VARCHAR(255) NULL, name VARCHAR(120) NOT NULL, version VARCHAR(20) NOT NULL, CONSTRAINT PK_TOSCADATATYPE PRIMARY KEY (name, version));
+CREATE TABLE IF NOT EXISTS toscadatatype (`DESCRIPTION` VARCHAR(255) NULL, derived_from_name VARCHAR(255) NULL, derived_from_version VARCHAR(255) NULL, name VARCHAR(120) NOT NULL, version VARCHAR(20) NOT NULL, PRIMARY KEY PK_TOSCADATATYPE (name, version));
