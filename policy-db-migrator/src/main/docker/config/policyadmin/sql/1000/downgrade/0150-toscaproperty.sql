@@ -1,6 +1,7 @@
 /*
  * ============LICENSE_START=======================================================
  *  Copyright (C) 2022 Bell Canada. All rights reserved.
+ *  Modifications Copyright (C) 2023 Nordix Foundation
  *  ================================================================================
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,4 +20,4 @@
 
 CREATE TABLE IF NOT EXISTS jpatoscaproperty_constraints (parentLocalName VARCHAR(120) NULL, localName VARCHAR(120) NULL, parentKeyVersion VARCHAR(15) NULL, parentKeyName VARCHAR(120) NULL, CONSTRAINTS VARCHAR(255) NULL);
 CREATE TABLE IF NOT EXISTS jpatoscaproperty_metadata (parentLocalName VARCHAR(120) NULL, localName VARCHAR(120) NULL, parentKeyVersion VARCHAR(15) NULL, parentKeyName VARCHAR(120) NULL, METADATA VARCHAR(255) NULL, METADATA_KEY VARCHAR(255) NULL);
-CREATE TABLE IF NOT EXISTS toscaproperty (DEFAULTVALUE VARCHAR(255) NULL, `DESCRIPTION` VARCHAR(255) NULL, ENTRYSCHEMA LONGBLOB DEFAULT NULL NULL, REQUIRED BIT DEFAULT 0 NULL, STATUS INT DEFAULT NULL NULL, parentLocalName VARCHAR(120) NOT NULL, localName VARCHAR(120) NOT NULL, parentKeyVersion VARCHAR(15) NOT NULL, parentKeyName VARCHAR(120) NOT NULL, name VARCHAR(120) NULL, version VARCHAR(20) NULL, CONSTRAINT PK_TOSCAPROPERTY PRIMARY KEY (parentLocalName, localName, parentKeyVersion, parentKeyName));
+CREATE TABLE IF NOT EXISTS toscaproperty (DEFAULTVALUE VARCHAR(255) NULL, `DESCRIPTION` VARCHAR(255) NULL, ENTRYSCHEMA LONGBLOB DEFAULT NULL, REQUIRED BIT DEFAULT 0 NULL, STATUS INT DEFAULT NULL, parentLocalName VARCHAR(120) NOT NULL, localName VARCHAR(120) NOT NULL, parentKeyVersion VARCHAR(15) NOT NULL, parentKeyName VARCHAR(120) NOT NULL, name VARCHAR(120) NULL, version VARCHAR(20) NULL, PRIMARY KEY PK_TOSCAPROPERTY (parentLocalName, localName, parentKeyVersion, parentKeyName));

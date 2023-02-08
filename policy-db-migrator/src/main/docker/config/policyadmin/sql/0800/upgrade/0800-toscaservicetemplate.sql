@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2021 Nordix Foundation
+ *  Copyright (C) 2021, 2023 Nordix Foundation
  *  ================================================================================
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE TABLE IF NOT EXISTS toscaservicetemplate (`DESCRIPTION` VARCHAR(255) NULL, TOSCADEFINITIONSVERSION VARCHAR(255) NULL, derived_from_name VARCHAR(255) NULL, derived_from_version VARCHAR(255) NULL, name VARCHAR(120) NOT NULL, version VARCHAR(20) NOT NULL, capabilityTypesVersion VARCHAR(20) NULL, capabilityTypesName VARCHAR(120) NULL, dataTypesName VARCHAR(120) NULL, dataTypesVersion VARCHAR(20) NULL, nodeTypesVersion VARCHAR(20) NULL, nodeTypesName VARCHAR(120) NULL, policyTypesName VARCHAR(120) NULL, policyTypesVersion VARCHAR(20) NULL, relationshipTypesVersion VARCHAR(20) NULL, relationshipTypesName VARCHAR(120) NULL, topologyTemplateLocalName VARCHAR(120) NULL, topologyTemplateParentKeyName VARCHAR(120) NULL, topologyTemplateParentKeyVersion VARCHAR(15) NULL, topologyTemplateParentLocalName VARCHAR(120) NULL, CONSTRAINT PK_TOSCASERVICETEMPLATE PRIMARY KEY (name, version));
+CREATE TABLE IF NOT EXISTS toscaservicetemplate (`DESCRIPTION` VARCHAR(255) NULL, TOSCADEFINITIONSVERSION VARCHAR(255) NULL, derived_from_name VARCHAR(255) NULL, derived_from_version VARCHAR(255) NULL, name VARCHAR(120) NOT NULL, version VARCHAR(20) NOT NULL, capabilityTypesVersion VARCHAR(20) NULL, capabilityTypesName VARCHAR(120) NULL, dataTypesName VARCHAR(120) NULL, dataTypesVersion VARCHAR(20) NULL, nodeTypesVersion VARCHAR(20) NULL, nodeTypesName VARCHAR(120) NULL, policyTypesName VARCHAR(120) NULL, policyTypesVersion VARCHAR(20) NULL, relationshipTypesVersion VARCHAR(20) NULL, relationshipTypesName VARCHAR(120) NULL, topologyTemplateLocalName VARCHAR(120) NULL, topologyTemplateParentKeyName VARCHAR(120) NULL, topologyTemplateParentKeyVersion VARCHAR(15) NULL, topologyTemplateParentLocalName VARCHAR(120) NULL, PRIMARY KEY PK_TOSCASERVICETEMPLATE (name, version));

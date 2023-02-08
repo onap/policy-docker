@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2021 Nordix Foundation
+ *  Copyright (C) 2021, 2023 Nordix Foundation
  *  ================================================================================
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE TABLE IF NOT EXISTS jpatoscacapabilityassignment_attributes (name VARCHAR(120) NULL, version VARCHAR(20) NULL, ATTRIBUTES LONGTEXT NULL, ATTRIBUTES_KEY VARCHAR(255) NULL);
+CREATE TABLE IF NOT EXISTS jpatoscacapabilityassignment_attributes (name VARCHAR(120) DEFAULT NULL, version VARCHAR(20) DEFAULT NULL, ATTRIBUTES LONGTEXT DEFAULT NULL, ATTRIBUTES_KEY VARCHAR(255) DEFAULT NULL);

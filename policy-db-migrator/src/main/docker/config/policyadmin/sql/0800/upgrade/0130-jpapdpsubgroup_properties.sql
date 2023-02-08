@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2021 Nordix Foundation
+ *  Copyright (C) 2021, 2023 Nordix Foundation
  *  ================================================================================
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE TABLE IF NOT EXISTS jpapdpsubgroup_properties (parentLocalName VARCHAR(120) NULL, localName VARCHAR(120) NULL, parentKeyVersion VARCHAR(15) NULL, parentKeyName VARCHAR(120) NULL, PROPERTIES VARCHAR(255) NULL, PROPERTIES_KEY VARCHAR(255) NULL);
+CREATE TABLE IF NOT EXISTS jpapdpsubgroup_properties (parentLocalName VARCHAR(120) DEFAULT NULL, localName VARCHAR(120) DEFAULT NULL, parentKeyVersion VARCHAR(15) DEFAULT NULL, parentKeyName VARCHAR(120) DEFAULT NULL, PROPERTIES VARCHAR(255) DEFAULT NULL, PROPERTIES_KEY VARCHAR(255) DEFAULT NULL);

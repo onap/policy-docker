@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2021 Nordix Foundation
+ *  Copyright (C) 2021, 2023 Nordix Foundation
  *  ================================================================================
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE TABLE IF NOT EXISTS sequence (SEQ_NAME VARCHAR(50) NOT NULL, SEQ_COUNT DECIMAL(38) DEFAULT NULL NULL, CONSTRAINT PK_SEQUENCE PRIMARY KEY (SEQ_NAME));
+CREATE TABLE IF NOT EXISTS sequence (SEQ_NAME VARCHAR(50) NOT NULL, SEQ_COUNT DECIMAL(38) DEFAULT NULL, PRIMARY KEY PK_SEQUENCE (SEQ_NAME));

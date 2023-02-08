@@ -1,6 +1,6 @@
 /*
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2021 Nordix Foundation
+ *  Copyright (C) 2021, 2023 Nordix Foundation
  *  ================================================================================
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE TABLE IF NOT EXISTS pdppolicystatus (DEPLOY BIT DEFAULT 0 NULL, PDPGROUP VARCHAR(255) NULL, PDPTYPE VARCHAR(255) NULL, STATE INT DEFAULT NULL NULL, parentLocalName VARCHAR(120) NOT NULL, localName VARCHAR(120) NOT NULL, parentKeyVersion VARCHAR(15) NOT NULL, parentKeyName VARCHAR(120) NOT NULL, name VARCHAR(120) NULL, version VARCHAR(20) NULL, CONSTRAINT PK_PDPPOLICYSTATUS PRIMARY KEY (parentLocalName, localName, parentKeyVersion, parentKeyName));
+CREATE TABLE IF NOT EXISTS pdppolicystatus (DEPLOY BOOLEAN DEFAULT 0, PDPGROUP VARCHAR(255) DEFAULT NULL, PDPTYPE VARCHAR(255) DEFAULT NULL, STATE INT DEFAULT NULL, parentLocalName VARCHAR(120) NOT NULL, localName VARCHAR(120) NOT NULL, parentKeyVersion VARCHAR(15) NOT NULL, parentKeyName VARCHAR(120) NOT NULL, name VARCHAR(120) DEFAULT NULL, version VARCHAR(20) DEFAULT NULL, PRIMARY KEY PK_PDPPOLICYSTATUS (parentLocalName, localName, parentKeyVersion, parentKeyName));
