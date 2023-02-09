@@ -27,17 +27,18 @@
 function on_exit(){
     rc=$?
     if [[ ${WORKSPACE} ]]; then
-        if [[ ${WORKDIR} ]]; then
-            rsync -av "${WORKDIR}/" "${WORKSPACE}/csit/archives/${PROJECT}"
-        fi
         # Record list of active docker containers
-        docker ps
+        docker ps --format "table {{ .Names }}\t{{ .Status }}"
 
         # Show the logs from all containers
-        docker-compose -f "${WORKSPACE}/csit/docker-compose-all.yml" logs
+        docker-compose -f "${WORKSPACE}/csit/docker-compose-all.yml" logs > docker_compose.log
 
         # show memory consumption after all docker instances initialized
         docker_stats
+
+        if [[ ${WORKDIR} ]]; then
+            rsync -av "${WORKDIR}/" "${WORKSPACE}/csit/archives/${PROJECT}"
+        fi
     fi
     # Run teardown script plan if it exists
     cd "${TESTPLANDIR}/plans/"
@@ -57,25 +58,20 @@ function docker_stats(){
     # General memory details
     if [ "$(uname -s)" == "Darwin" ]
     then
-        echo "> top -l1 | head -10"
         sh -c "top -l1 | head -10"
         echo
     else
-        echo "> top -bn1 | head -3"
         sh -c "top -bn1 | head -3"
         echo
 
-        echo "> free -h"
         sh -c "free -h"
         echo
     fi
 
     # Memory details per Docker
-    echo "> docker ps"
-    docker ps
+    docker ps --format "table {{ .Names }}\t{{ .Status }}"
     echo
 
-    echo "> docker stats --no-stream"
     docker stats --no-stream
     echo
 }

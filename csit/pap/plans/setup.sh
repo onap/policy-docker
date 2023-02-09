@@ -37,11 +37,8 @@ docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d pap apex-pdp grafana
 sleep 10
 unset http_proxy https_proxy
 
-POLICY_PAP_IP=$(get-instance-ip.sh policy-pap)
 POLICY_PAP_PORT=30442
-POLICY_API_IP=$(get-instance-ip.sh policy-api)
 POLICY_API_PORT=30440
-MARIADB_IP=$(get-instance-ip.sh mariadb)
 
 echo PAP IP IS "${POLICY_PAP_IP}"
 echo API IP IS "${POLICY_API_IP}"
@@ -55,8 +52,6 @@ DATA=${WORKSPACE}/models/models-examples/src/main/resources/policies
 NODETEMPLATES=${WORKSPACE}/models/models-examples/src/main/resources/nodetemplates
 
 ROBOT_VARIABLES=""
-ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_PAP_IP:${POLICY_PAP_IP}"
-ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_IP:${POLICY_API_IP}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_PAP_PORT:${POLICY_PAP_PORT}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_PORT:${POLICY_API_PORT}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v DATA:${DATA}"
