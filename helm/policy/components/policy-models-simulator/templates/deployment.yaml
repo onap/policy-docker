@@ -52,6 +52,12 @@ spec:
             - mountPath: /opt/app/policy/simulators/etc/mounted/
               name: simconfig
               readOnly: true
+            - mountPath: /opt/app/policy/simulators/etc/mounted/cdsresponse/
+              name: cdsconfig
+              readOnly: true
+            - mountPath: /opt/app/policy/simulators/etc/mounted/aairesponse
+              name: aaiconfig
+              readOnly: true
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -70,4 +76,12 @@ spec:
         - name: simconfig
           configMap:
             name: {{ include "policy-models-simulator.fullname" . }}-configmap
+            defaultMode: 0755
+        - name: cdsconfig
+          configMap:
+            name: {{ include "policy-models-simulator.fullname" . }}-cds-configmap
+            defaultMode: 0755
+        - name: aaiconfig
+          configMap:
+            name: {{ include "policy-models-simulator.fullname" . }}-aai-configmap
             defaultMode: 0755
