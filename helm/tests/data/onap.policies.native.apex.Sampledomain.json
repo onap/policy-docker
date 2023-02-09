@@ -7402,8 +7402,8 @@
                   "parameterClassName": "org.onap.policy.apex.plugins.event.carrier.restserver.RestServerCarrierTechnologyParameters",
                   "parameters": {
                     "standalone": true,
-                    "host": "0.0.0.0",
-                    "port": 23324
+                    "host": "policy-apex-pdp",
+                    "port": 6969
                   }
                 },
                 "eventProtocolParameters": {

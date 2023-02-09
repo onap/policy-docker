@@ -49,8 +49,8 @@ service:
   type: ClusterIP
   name: message-router
   portName: message-router
-  externalPort2: 6667
-  internalPort2: 6667
+  externalPort2: 6666
+  internalPort2: 6666
   externalPort3: 6668
   internalPort3: 6668
   externalPort4: 6669
