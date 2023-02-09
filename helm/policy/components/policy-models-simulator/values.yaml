@@ -49,14 +49,14 @@ service:
   type: ClusterIP
   name: message-router
   portName: message-router
-  externalPort2: 6667
-  internalPort2: 6667
+  externalPort2: 6666
+  internalPort2: 6666
   externalPort3: 6668
   internalPort3: 6668
   externalPort4: 6669
   internalPort4: 6669
   externalPort5: 6670
-  internalPort5: 6670 
+  internalPort5: 6670
   externalPort6: 6680
   internalPort6: 6680
   externalPort7: 3904

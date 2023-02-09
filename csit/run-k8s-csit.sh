@@ -94,8 +94,17 @@ function build_robot_image () {
         echo "---------------------------------------------"
         echo "Installing Robot framework pod for running CSIT"
         microk8s helm install csit-robot robot --set robot=$ROBOT_FILE --set "readiness={${READINESS_CONTAINERS[*]}}";
-        echo "Please check the logs of policy-csit-robot pod for the test execution results"
+        print_robot_log
     fi
+}
+
+function print_robot_log () {
+    robotpod=$(microk8s kubectl get po | grep policy-csit)
+    podName=$(echo $robotpod | awk '{print $1}')
+    echo "The robot tests will begin once the policy components {${READINESS_CONTAINERS[*]}} are up and running..."
+    microk8s kubectl wait --for=condition=ready --timeout=180s pod/$podName
+    microk8s kubectl logs -f $podName
+    echo "Please check the logs of policy-csit-robot pod for the test execution results"
 }
 
 function clone_models () {
