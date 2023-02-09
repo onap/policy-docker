@@ -1,7 +1,7 @@
 #!/bin/sh
 # ============LICENSE_START====================================================
 #  Copyright (C) 2021 AT&T Intellectual Property. All rights reserved.
-#  Modifications Copyright (C) 2022 Nordix Foundation.
+#  Modifications Copyright (C) 2022-2023 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ do
     do
         if command -v docker > /dev/null 2>&1
         then
-            docker ps
+            docker ps --format "table {{ .Names }}\t{{ .Status }}"
         fi
 
         nc -vz "$host" "$port"
