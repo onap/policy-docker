@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5d65660d_8d6544a0",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/postgres/1200/downgrade/0120-audit_sequence.sql",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2023-02-09T15:02:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "90a9a321_4ac21f79",
+      "range": {
+        "startLine": 20,
+        "startChar": 41,
+        "endLine": 20,
+        "endChar": 42
+      },
+      "revId": "625fbec31e33257cc3045f5f31b507784f757753",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e08816c_0ffa77dd",
         "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/1200/downgrade/0120-audit_sequence.sql",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "625fbec31e33257cc3045f5f31b507784f757753",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23857027_bd1c8d99",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/sql/1200/downgrade/0120-audit_sequence.sql",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2023-02-09T15:02:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6e08816c_0ffa77dd",
+      "range": {
+        "startLine": 20,
+        "startChar": 41,
+        "endLine": 20,
+        "endChar": 42
+      },
+      "revId": "625fbec31e33257cc3045f5f31b507784f757753",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
