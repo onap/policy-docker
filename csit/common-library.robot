@@ -120,7 +120,18 @@ GetMetrics
     Log  Received response from policy ${resp.text}
     [return]  ${resp}
 
-QueryPrometheus ${query}
-    ${resp}=  GET http://localhost:30259/api/v1/query?query=${query}  expected_status=200
-    Log  Received response from policy ${resp.text}
-    [return]  ${resp}
+QueryPrometheus
+    [Arguments]  ${query}
+    ${params}=  Create Dictionary  query=${query}
+    ${resp}=  GET  http://localhost:30259/api/v1/query  ${params}
+    Status Should Be    OK
+    Log  Received response from Prometheus ${resp.text}
+    [return]  ${resp.json()}
+
+ValidateResponseTime
+    [Arguments]  ${job}  ${uri}  ${method}  ${timeLimit}
+    [Documentation]  Check if uri response is under the required time
+    ${resp}=  QueryPrometheus  http_server_requests_seconds_sum{uri="${uri}",method="${method}",job="${job}"}/http_server_requests_seconds_count{uri="${uri}",method="${method}",job="${job}"}
+    ${rawNumber}=  Evaluate  ${resp['data']['result'][0]['value'][1]}
+    ${actualTime}=   Set Variable  ${rawNumber * ${1000}}
+    Should Be True   ${actualTime} <= ${timeLimit}
