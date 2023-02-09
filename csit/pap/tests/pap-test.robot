@@ -12,6 +12,11 @@ GetReq
     ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  ${url}  200  null  ${auth}
     [return]  ${resp}
 
+ValidateResponseTimeForPap
+    [Arguments]  ${uri}  ${method}
+    [Documentation]  Check if uri response is under the required time for pap metrics
+    ValidateResponseTime  pap-metrics  ${uri}  ${method}  500
+
 *** Test Cases ***
 LoadPolicy
     [Documentation]  Create a policy named 'onap.restart.tca' and version '1.0.0' using specific api
@@ -126,3 +131,17 @@ DeletePdpGroups
 QueryPdpGroupsAfterDelete
     [Documentation]    Verify PdpGroups after delete
     QueryPdpGroups  1  defaultGroup  ACTIVE  0  null  null  null
+
+ValidateSlaForPap
+    [Documentation]  Run checks against Prometheus server to check response time
+    Sleep    30s
+    ValidateResponseTimeForPap  /healthcheck  GET
+    ValidateResponseTime  pap-metrics  /components/healthcheck  GET  10000
+    ValidateResponseTimeForPap  /statistics  GET
+    ValidateResponseTimeForPap  /policies/audit  GET
+    ValidateResponseTimeForPap  /pdps/groups/batch  POST
+    ValidateResponseTimeForPap  /pdps/deployments/batch  POST
+    ValidateResponseTimeForPap  /pdps/groups/{name}  PUT
+    ValidateResponseTimeForPap  /pdps/groups/{name}  PUT
+    ValidateResponseTimeForPap  /pdps/policies/{name}  DELETE
+    ValidateResponseTimeForPap  /pdps/groups/{name}  DELETE
