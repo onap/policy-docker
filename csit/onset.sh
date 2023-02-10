@@ -29,5 +29,5 @@ then
 fi
 
 curl -k -H "Content-type: application/json" --data-binary @$1 \
-    http://${SIM_IP}:3904/events/unauthenticated.DCAE_CL_OUTPUT
+    http://localhost:30227/events/unauthenticated.DCAE_CL_OUTPUT
 echo

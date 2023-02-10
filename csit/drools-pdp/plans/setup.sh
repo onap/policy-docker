@@ -30,16 +30,18 @@ source "${SCRIPTS}"/get-versions.sh
 docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d drools
 
 POLICY_DROOLS_IP=$(get-instance-ip.sh drools)
+POLICY_DROOLS_PORT=$(get-container-published-port.sh drools)
 MARIADB_IP=$(get-instance-ip.sh mariadb)
 
 echo DROOLS IP IS "${POLICY_DROOLS_IP}"
 echo MARIADB IP IS "${MARIADB_IP}"
 
-# wait for the app to start up - looking for telemetry service on port 9696
-"${SCRIPTS}"/wait_for_port.sh "${POLICY_DROOLS_IP}" 9696
+# wait for the app to start up - looking for telemetry service on port 30216 forwarded from 9696
+"${SCRIPTS}"/wait_for_rest.sh localhost 30216
 
 # give enough time for the controllers to come up
 sleep 15
 
 ROBOT_VARIABLES=""
-ROBOT_VARIABLES="${ROBOT_VARIABLES}-v POLICY_DROOLS_IP:${POLICY_DROOLS_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_DROOLS_IP:${POLICY_DROOLS_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_DROOLS_PORT:${POLICY_DROOLS_PORT}"
