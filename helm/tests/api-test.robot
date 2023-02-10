@@ -115,17 +115,17 @@ Metrics
     [Documentation]  Verify policy-api is exporting prometheus metrics
     ${auth}=  PolicyAdminAuth
     ${resp}=  GetMetrics  ${POLICY_API_IP}  ${auth}  /policy/api/v1/
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policy/api/v1/healthcheck",} 1.0
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policy/api/v1/statistics",} 1.0
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policy/api/v1/policytypes",} 1.0
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policy/api/v1/policies",} 1.0
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policy/api/v1/policies/{policyId}/versions/{policyVersion}",} 1.0
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policy/api/v1/policytypes/{policyTypeId}/versions/{policyTypeVersion}/policies",} 1.0
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="POST",outcome="SUCCESS",status="200",uri="/policy/api/v1/policytypes/{policyTypeId}/versions/{policyTypeVersion}/policies",} 1.0
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="POST",outcome="SUCCESS",status="200",uri="/policy/api/v1/policytypes",} 1.0
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="DELETE",outcome="SUCCESS",status="200",uri="/policy/api/v1/policies/{policyId}/versions/{policyVersion}",} 1.0
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="DELETE",outcome="SUCCESS",status="200",uri="/policy/api/v1/policytypes/{policyTypeId}/versions/{versionId}",} 3.0
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="DELETE",outcome="SUCCESS",status="200",uri="/policy/api/v1/policytypes/{policyTypeId}/versions/{policyTypeVersion}/policies/{policyId}/versions/{policyVersion}",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/healthcheck",}
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/statistics",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policytypes",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policies",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policies/{policyId}/versions/{policyVersion}",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policytypes/{policyTypeId}/versions/{policyTypeVersion}/policies",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="POST",outcome="SUCCESS",status="200",uri="/policytypes/{policyTypeId}/versions/{policyTypeVersion}/policies",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="POST",outcome="SUCCESS",status="200",uri="/policytypes",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="DELETE",outcome="SUCCESS",status="200",uri="/policies/{policyId}/versions/{policyVersion}",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="DELETE",outcome="SUCCESS",status="200",uri="/policytypes/{policyTypeId}/versions/{versionId}",} 3.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="DELETE",outcome="SUCCESS",status="200",uri="/policytypes/{policyTypeId}/versions/{policyTypeVersion}/policies/{policyId}/versions/{policyVersion}",} 1.0
     Should Contain  ${resp.text}  http_server_requests_seconds_sum
     Should Contain  ${resp.text}  http_server_requests_seconds_max
     Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count

@@ -60,7 +60,7 @@
                   "carrierTechnology": "RESTREQUESTOR",
                   "parameterClassName": "org.onap.policy.apex.plugins.event.carrier.restrequestor.RestRequestorCarrierTechnologyParameters",
                   "parameters": {
-                    "url": "http://aai-sim:6666/aai/v16/network/pnfs/pnf/{pnfName}",
+                    "url": "http://message-router:6666/aai/v16/network/pnfs/pnf/{pnfName}",
                     "httpMethod": "GET",
                     "httpCodeFilter": "[2-5][0-1][0-9]",
                     "httpHeaders": [
@@ -128,7 +128,7 @@
                   "carrierTechnology": "GRPC",
                   "parameterClassName": "org.onap.policy.apex.plugins.event.carrier.grpc.GrpcCarrierTechnologyParameters",
                   "parameters": {
-                    "host": "grpc-sim",
+                    "host": "message-router",
                     "port": 6680,
                     "username": "ccsdkapps",
                     "password": "ccsdkapps",
