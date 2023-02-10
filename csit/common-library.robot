@@ -15,36 +15,36 @@ HealthCheckAuth
     [return]  ${healthcheck}
 
 PerformPostRequest
-    [Arguments]  ${hostname}  ${url}  ${expectedstatus}  ${postjson}  ${params}  ${auth}
-    Log  Creating session http://${hostname}:6969
-    ${session}=  Create Session  policy  http://${hostname}:6969  auth=${auth}
+    [Arguments]  ${port}  ${url}  ${expectedstatus}  ${postjson}  ${params}  ${auth}
+    Log  Creating session http://localhost:${port}
+    ${session}=  Create Session  policy  http://localhost:${port}  auth=${auth}
     ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
     ${resp}=  POST On Session  policy  ${url}  data=${postjson}  params=${params}  headers=${headers}  expected_status=${expectedstatus}
     Log  Received response from policy ${resp.text}
     [return]  ${resp}
 
 PerformPutRequest
-    [Arguments]  ${hostname}  ${url}  ${expectedstatus}  ${params}  ${auth}
-    Log  Creating session http://${hostname}:6969
-    ${session}=  Create Session  policy  http://${hostname}:6969  auth=${auth}
+    [Arguments]  ${port}  ${url}  ${expectedstatus}  ${params}  ${auth}
+    Log  Creating session http://localhost:${port}
+    ${session}=  Create Session  policy  http://localhost:${port}  auth=${auth}
     ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
     ${resp}=  PUT On Session  policy  ${url}  params=${params}  headers=${headers}  expected_status=${expectedstatus}
     Log  Received response from policy ${resp.text}
     [return]  ${resp}
 
 PerformGetRequest
-    [Arguments]  ${hostname}  ${url}  ${expectedstatus}  ${params}  ${auth}
-    Log  Creating session http://${hostname}:6969
-    ${session}=  Create Session  policy  http://${hostname}:6969  auth=${auth}
+    [Arguments]  ${port}  ${url}  ${expectedstatus}  ${params}  ${auth}
+    Log  Creating session http://localhost:${port}
+    ${session}=  Create Session  policy  http://localhost:${port}  auth=${auth}
     ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
     ${resp}=  GET On Session  policy  ${url}  params=${params}  headers=${headers}  expected_status=${expectedstatus}
     Log  Received response from policy ${resp.text}
     [return]  ${resp}
 
 PerformDeleteRequest
-    [Arguments]  ${hostname}  ${url}  ${expectedstatus}  ${auth}
-    Log  Creating session http://${hostname}:6969
-    ${session}=  Create Session  policy  http://${hostname}:6969  auth=${auth}
+    [Arguments]  ${port}  ${url}  ${expectedstatus}  ${auth}
+    Log  Creating session http://localhost:${port}
+    ${session}=  Create Session  policy  http://localhost:${port}  auth=${auth}
     ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
     ${resp}=  DELETE On Session  policy  ${url}  headers=${headers}  expected_status=${expectedstatus}
     Log  Received response from policy ${resp.text}
@@ -53,7 +53,7 @@ CreatePolicy
     [Arguments]  ${url}  ${expectedstatus}  ${postjson}  ${policyname}  ${policyversion}
     [Documentation]  Create the specific policy
     ${policyadmin}=  PolicyAdminAuth
-    ${resp}=  PerformPostRequest  ${POLICY_API_IP}  ${url}  ${expectedstatus}  ${postjson}  null  ${policyadmin}
+    ${resp}=  PerformPostRequest  ${POLICY_API_PORT}  ${url}  ${expectedstatus}  ${postjson}  null  ${policyadmin}
     Run Keyword If  ${expectedstatus}==200  Dictionary Should Contain Key  ${resp.json()['topology_template']['policies'][0]}  ${policyname}
     Run Keyword If  ${expectedstatus}==200  Should Be Equal As Strings  ${resp.json()['topology_template']['policies'][0]['${policyname}']['version']}  ${policyversion}
 
@@ -61,7 +61,7 @@ CreateNodeTemplate
     [Arguments]  ${url}  ${expectedstatus}  ${postjson}  ${nodeTemplateListLength}
     [Documentation]  Create the node templates
     ${policyadmin}=  PolicyAdminAuth
-    ${resp}=  PerformPostRequest  ${POLICY_API_IP}  ${url}  ${expectedstatus}  ${postjson}  \  ${policyadmin}
+    ${resp}=  PerformPostRequest  ${POLICY_API_PORT}  ${url}  ${expectedstatus}  ${postjson}  \  ${policyadmin}
     Run Keyword If  ${expectedstatus}==200  Length Should Be  ${resp.json()['topology_template']['node_templates']}  ${nodeTemplateListLength}
 
 
@@ -69,7 +69,7 @@ QueryPdpGroups
     [Documentation]    Verify pdp group query - supports upto 2 groups
     [Arguments]  ${groupsLength}  ${group1Name}  ${group1State}  ${policiesLengthInGroup1}  ${group2Name}  ${group2State}  ${policiesLengthInGroup2}
     ${policyadmin}=  PolicyAdminAuth
-    ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps  200  null  ${policyadmin}
+    ${resp}=  PerformGetRequest  ${POLICY_PAP_PORT}  /policy/pap/v1/pdps  200  null  ${policyadmin}
     Length Should Be  ${resp.json()['groups']}  ${groupsLength}
     Should Be Equal As Strings  ${resp.json()['groups'][0]['name']}  ${group1Name}
     Should Be Equal As Strings  ${resp.json()['groups'][0]['pdpGroupState']}  ${group1State}
@@ -81,7 +81,7 @@ QueryPdpGroups
 QueryPolicyAudit
     [Arguments]  ${url}  ${expectedstatus}  ${pdpGroup}  ${pdpType}  ${policyName}  ${expectedAction}
     ${policyadmin}=  PolicyAdminAuth
-    ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  ${url}  ${expectedstatus}  recordCount=2   ${policyadmin}
+    ${resp}=  PerformGetRequest  ${POLICY_PAP_PORT}  ${url}  ${expectedstatus}  recordCount=2   ${policyadmin}
     Log  Received response from queryPolicyAudit ${resp.text}
     FOR    ${responseEntry}    IN    @{resp.json()}
     Exit For Loop IF      '${responseEntry['policy']['name']}'=='${policyName}'
@@ -97,7 +97,7 @@ QueryPolicyStatus
     [Documentation]    Verify policy deployment status
     [Arguments]  ${policyName}  ${pdpGroup}  ${pdpType}  ${pdpName}  ${policyTypeName}
     ${policyadmin}=  PolicyAdminAuth
-    ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/policies/status  200  null   ${policyadmin}
+    ${resp}=  PerformGetRequest  ${POLICY_PAP_PORT}  /policy/pap/v1/policies/status  200  null   ${policyadmin}
     FOR    ${responseEntry}    IN    @{resp.json()}
     Exit For Loop IF      '${responseEntry['policy']['name']}'=='${policyName}'
     END
@@ -113,9 +113,9 @@ QueryPolicyStatus
     Should Be Equal As Strings    ${responseEntry['state']}  SUCCESS
 
 GetMetrics
-    [Arguments]  ${hostname}  ${auth}  ${context_path}
-    Log  Creating session http://${hostname}:6969
-    ${session}=  Create Session  policy  http://${hostname}:6969  auth=${auth}
+    [Arguments]  ${port}  ${auth}  ${context_path}
+    Log  Creating session http://localhost:${port}
+    ${session}=  Create Session  policy  http://localhost:${port}  auth=${auth}
     ${resp}=  GET On Session  policy  ${context_path}metrics  expected_status=200
     Log  Received response from policy ${resp.text}
     [return]  ${resp}

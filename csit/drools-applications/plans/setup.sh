@@ -2,7 +2,7 @@
 #
 # ===========LICENSE_START====================================================
 #  Copyright (C) 2019-2021 AT&T Intellectual Property. All rights reserved.
-#  Modifications Copyright 2021-2022 Nordix Foundation.
+#  Modifications Copyright 2021-2023 Nordix Foundation.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -33,9 +33,13 @@ docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d drools-apps
 unset http_proxy https_proxy
 
 DROOLS_IP=$(get-instance-ip.sh drools-apps)
+DROOLS_PORT=30221
 API_IP=$(get-instance-ip.sh policy-api)
+API_PORT=30440
 PAP_IP=$(get-instance-ip.sh policy-pap)
+PAP_PORT=30442
 XACML_IP=$(get-instance-ip.sh policy-xacml-pdp)
+XACML_PORT=30441
 SIM_IP=$(get-instance-ip.sh simulator)
 export SIM_IP
 
@@ -46,7 +50,7 @@ echo XACML IP IS "${XACML_IP}"
 echo SIMULATORS IP IS "${SIM_IP}"
 
 # wait for the app to start up
-"${SCRIPTS}"/wait_for_port.sh "${DROOLS_IP}" 6969
+"${SCRIPTS}"/wait_for_rest.sh localhost 30219
 
 # give enough time for the controllers to come up
 sleep 15
@@ -59,7 +63,11 @@ ROBOT_VARIABLES="${ROBOT_VARIABLES} -v SCR2:${SCRIPTS}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v DATA:${DATA}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v DATA2:${DATA2}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v DROOLS_IP:${DROOLS_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v DROOLS_PORT:${DROOLS_PORT}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v API_IP:${API_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v API_PORT:${API_PORT}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v PAP_IP:${PAP_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v PAP_PORT:${PAP_PORT}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v XACML_IP:${XACML_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v XACML_PORT:${XACML_PORT}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v SIM_IP:${SIM_IP}"

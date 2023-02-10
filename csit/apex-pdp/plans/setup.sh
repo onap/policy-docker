@@ -2,7 +2,7 @@
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2018 Ericsson. All rights reserved.
 #
-#  Modifications Copyright (c) 2019-2022 Nordix Foundation.
+#  Modifications Copyright (c) 2019-2023 Nordix Foundation.
 #  Modifications Copyright (C) 2020-2021 AT&T Intellectual Property.
 #  Modifications Copyright (C) 2021 Bell Canada. All rights reserved.
 # ================================================================================
@@ -35,9 +35,12 @@ docker-compose -f "${SCRIPTS}"/docker-compose-all.yml up -d apex-pdp grafana
 unset http_proxy https_proxy
 
 POLICY_API_IP=$(get-instance-ip.sh policy-api)
+POLICY_API_PORT=30440
 POLICY_PAP_IP=$(get-instance-ip.sh policy-pap)
+POLICY_PAP_PORT=30442
 MARIADB_IP=$(get-instance-ip.sh mariadb)
 APEX_IP=$(get-instance-ip.sh policy-apex-pdp)
+APEX_PORT=30237
 SIM_IP=$(get-instance-ip.sh simulator)
 export SIM_IP
 
@@ -48,11 +51,14 @@ echo APEX IP IS "${APEX_IP}"
 echo DMAAP_IP IS "${SIM_IP}"
 
 # wait for the app to start up
-"${SCRIPTS}"/wait_for_port.sh "${APEX_IP}" 6969
+"${SCRIPTS}"/wait_for_rest.sh localhost "${APEX_PORT}"
 
 ROBOT_VARIABLES=""
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v SCRIPTS:${SCRIPTS}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v APEX_IP:${APEX_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v APEX_PORT:${APEX_PORT}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_IP:${POLICY_API_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_PORT:${POLICY_API_PORT}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_PAP_IP:${POLICY_PAP_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_PAP_PORT:${POLICY_PAP_PORT}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v DMAAP_IP:${SIM_IP}"
