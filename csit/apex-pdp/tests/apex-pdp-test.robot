@@ -12,7 +12,7 @@ Resource    ${CURDIR}/../../common-library.robot
 Healthcheck
      [Documentation]    Runs Apex PDP Health check
      ${hcauth}=  HealthCheckAuth
-     ${resp}=  PerformGetRequest  ${APEX_IP}  /policy/apex-pdp/v1/healthcheck  200  null  ${hcauth}
+     ${resp}=  PerformGetRequest  localhost  ${APEX_PORT}  /policy/apex-pdp/v1/healthcheck  200  null  ${hcauth}
      Should Be Equal As Strings    ${resp.json()['code']}    200
      Set Suite Variable    ${pdpName}    ${resp.json()['name']}
 
@@ -62,7 +62,7 @@ ExecuteApexTestPnfPolicyWithMetadataSet
 Metrics
      [Documentation]  Verify policy-apex-pdp is exporting prometheus metrics
      ${auth}=  HealthCheckAuth
-     ${resp}=  PerformGetRequest  ${APEX_IP}  /metrics  200  null  ${auth}
+     ${resp}=  PerformGetRequest  localhost  ${APEX_PORT}  /metrics  200  null  ${auth}
      Should Contain  ${resp.text}  pdpa_policy_deployments_total{operation="deploy",status="TOTAL",} 4.0
      Should Contain  ${resp.text}  pdpa_policy_deployments_total{operation="deploy",status="SUCCESS",} 4.0
      Should Contain  ${resp.text}  pdpa_policy_executions_total{status="SUCCESS",} 3.0
@@ -88,11 +88,11 @@ DeployPolicy
      set to dictionary    ${postjson['groups'][0]['deploymentSubgroups'][0]['policies'][0]}    name=${policyName}
      ${postjson}=    evaluate    json.dumps(${postjson})    json
      ${policyadmin}=  PolicyAdminAuth
-     PerformPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/deployments/batch  202  ${postjson}  null  ${policyadmin}
+     PerformPostRequest  localhost  ${POLICY_PAP_PORT}  /policy/pap/v1/pdps/deployments/batch  202  ${postjson}  null  ${policyadmin}
 
 RunEventOnApexEngine
     [Documentation]    Send event to verify policy execution
-    Create Session   apexSession  http://${APEX_IP}:23324   max_retries=1
+    Create Session   apexSession  http://localhost:23324   max_retries=1
     ${data}=    Get Binary File     ${CURDIR}${/}data${/}event.json
     &{headers}=  Create Dictionary    Content-Type=application/json    Accept=application/json
     ${resp}=    PUT On Session    apexSession    /apex/FirstConsumer/EventIn    data=${data}   headers=${headers}
@@ -100,7 +100,7 @@ RunEventOnApexEngine
 
 TriggerAndVerifyTestPnfPolicy
     [Documentation]    Send TestPnf policy trigger event to DMaaP and read notifications to verify policy execution
-    Create Session   apexSession  http://${DMAAP_IP}:3904   max_retries=1
+    Create Session   apexSession  http://localhost:30227   max_retries=1
     ${data}=    Get Binary File     ${CURDIR}/data/VesEventForPnfPolicy.json
     &{headers}=  Create Dictionary    Content-Type=application/json    Accept=application/json
     ${resp}=    POST On Session    apexSession    /events/unauthenticated.DCAE_CL_OUTPUT    data=${data}   headers=${headers}
@@ -111,7 +111,7 @@ TriggerAndVerifyTestPnfPolicy
 
 TriggerAndVerifyTestVnfPolicy
     [Documentation]    Send TestVnf policy trigger event to DMaaP and read notifications to verify policy execution
-    Create Session   apexSession  http://${DMAAP_IP}:3904   max_retries=1
+    Create Session   apexSession  http://localhost:30227   max_retries=1
     ${data}=    Get Binary File     ${CURDIR}/data/VesEventForVnfPolicy.json
     &{headers}=  Create Dictionary    Content-Type=application/json    Accept=application/json
     ${resp}=    POST On Session    apexSession    /events/unauthenticated.DCAE_POLICY_EXAMPLE_OUTPUT    data=${data}   headers=${headers}
@@ -133,7 +133,7 @@ VerifyPdpStatistics
      [Documentation]    Verify pdp statistics after policy execution
      [Arguments]    ${deployCount}    ${deploySuccessCount}    ${executedCount}    ${executedSuccessCount}
      ${policyadmin}=  PolicyAdminAuth
-     ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/statistics/defaultGroup/apex/${pdpName}  200  null  ${policyadmin}
+     ${resp}=  PerformGetRequest  localhost  ${POLICY_PAP_PORT}  /policy/pap/v1/pdps/statistics/defaultGroup/apex/${pdpName}  200  null  ${policyadmin}
      Should Be Equal As Strings    ${resp.status_code}     200
      Should Be Equal As Strings    ${resp.json()['defaultGroup']['apex'][0]['pdpInstanceId']}  ${pdpName}
      Should Be Equal As Strings    ${resp.json()['defaultGroup']['apex'][0]['pdpGroupName']}  defaultGroup

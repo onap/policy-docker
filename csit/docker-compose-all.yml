@@ -200,6 +200,7 @@ services:
       hostname: policy-apex-pdp
       ports:
        - 30237:6969
+       - 23324:23324
       volumes:
        - ./config/apex-pdp/OnapPfConfig.json:/opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json:ro
        - ./config/apex-pdp/logback.xml:/opt/app/policy/apex-pdp/etc/logback.xml:ro
@@ -220,6 +221,8 @@ services:
        - pap
        - apex-pdp
       hostname: policy-distribution
+      ports:
+       - 30238:6969
       volumes:
        - ./config/distribution/defaultConfig.json:/opt/app/policy/distribution/etc/defaultConfig.json:ro
        - ./distribution/config/temp/:/opt/app/policy/distribution/etc/temp/:ro

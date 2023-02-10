@@ -38,7 +38,9 @@ sleep 10
 unset http_proxy https_proxy
 
 POLICY_PAP_IP=$(get-instance-ip.sh policy-pap)
+POLICY_PAP_PORT=$(get-container-published-port.sh policy-pap)
 POLICY_API_IP=$(get-instance-ip.sh policy-api)
+POLICY_API_PORT=$(get-container-published-port.sh policy-api)
 MARIADB_IP=$(get-instance-ip.sh mariadb)
 
 echo PAP IP IS "${POLICY_PAP_IP}"
@@ -46,7 +48,7 @@ echo API IP IS "${POLICY_API_IP}"
 echo MARIADB IP IS "${MARIADB_IP}"
 
 # wait for the app to start up
-"${SCRIPTS}"/wait_for_port.sh "${POLICY_PAP_IP}" 6969
+"${SCRIPTS}"/wait_for_rest.sh localhost "${POLICY_PAP_PORT}"
 
 DATA=${WORKSPACE}/models/models-examples/src/main/resources/policies
 
@@ -55,5 +57,7 @@ NODETEMPLATES=${WORKSPACE}/models/models-examples/src/main/resources/nodetemplat
 ROBOT_VARIABLES=""
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_PAP_IP:${POLICY_PAP_IP}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_IP:${POLICY_API_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_PAP_PORT:${POLICY_PAP_PORT}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_PORT:${POLICY_API_PORT}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v DATA:${DATA}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v NODETEMPLATES:${NODETEMPLATES}"
