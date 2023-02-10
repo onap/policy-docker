@@ -9,17 +9,17 @@ Library     json
 *** Test Cases ***
 Alive
     [Documentation]    Runs Policy PDP Alive Check
-    ${resp}=  PeformGetRequest  /policy/pdp/engine  ${DROOLS_IP}  9696  200
+    ${resp}=  PeformGetRequest  /policy/pdp/engine  localhost  30219  200
     Should Be Equal As Strings    ${resp.json()['alive']}  True
 
 Metrics
     [Documentation]    Verify drools-apps is exporting metrics
-    ${resp}=  PeformGetRequest  /metrics  ${DROOLS_IP}  9696  200
+    ${resp}=  PeformGetRequest  /metrics  localhost  30219  200
     Should Contain  ${resp.text}  jvm_threads_current
 
 Healthcheck
     [Documentation]    Runs Policy PDP-D Health check
-    ${resp}=  PeformGetRequest  /healthcheck  ${DROOLS_IP}  6969  200
+    ${resp}=  PeformGetRequest  /healthcheck  localhost  ${DROOLS_PORT}  200
     Should Be Equal As Strings    ${resp.json()['healthy']}  True
 
 Controller
@@ -35,31 +35,31 @@ MakeTopics
 
 CreateVcpeXacmlPolicy
     [Documentation]    Create VCPE Policy for Xacml
-    PerformPostRequest  /policy/api/v1/policies  null  ${API_IP}  6969  vCPE.policy.monitoring.input.tosca.yaml  ${DATA}  yaml  200
+    PerformPostRequest  /policy/api/v1/policies  null  localhost  ${API_PORT}  vCPE.policy.monitoring.input.tosca.yaml  ${DATA}  yaml  200
 
 CreateVcpeDroolsPolicy
     [Documentation]    Create VCPE Policy for Drools
-    PerformPostRequest  /policy/api/v1/policies  null  ${API_IP}  6969  vCPE.policy.operational.input.tosca.yaml  ${DATA}  yaml  200
+    PerformPostRequest  /policy/api/v1/policies  null  localhost  ${API_PORT}  vCPE.policy.operational.input.tosca.yaml  ${DATA}  yaml  200
 
 CreateVdnsXacmlPolicy
     [Documentation]    Create VDNS Policy for Xacml
-    PerformPostRequest  /policy/api/v1/policies  null  ${API_IP}  6969  vDNS.policy.monitoring.input.tosca.yaml  ${DATA}  yaml  200
+    PerformPostRequest  /policy/api/v1/policies  null  localhost  ${API_PORT}  vDNS.policy.monitoring.input.tosca.yaml  ${DATA}  yaml  200
 
 CreateVdnsDroolsPolicy
     [Documentation]    Create VDNS Policy for Drools
-    PerformPostRequest  /policy/api/v1/policies  null  ${API_IP}  6969  vDNS.policy.operational.input.tosca.json  ${DATA}  json  200
+    PerformPostRequest  /policy/api/v1/policies  null  localhost  ${API_PORT}  vDNS.policy.operational.input.tosca.json  ${DATA}  json  200
 
 CreateVfwXacmlPolicy
     [Documentation]    Create VFW Policy for Xacml
-    PerformPostRequest  /policy/api/v1/policies  null  ${API_IP}  6969  vFirewall.policy.monitoring.input.tosca.yaml  ${DATA}  yaml  200
+    PerformPostRequest  /policy/api/v1/policies  null  localhost  ${API_PORT}  vFirewall.policy.monitoring.input.tosca.yaml  ${DATA}  yaml  200
 
 CreateVfwDroolsPolicy
     [Documentation]    Create VFW Policy for Drools
-    PerformPostRequest  /policy/api/v1/policies  null  ${API_IP}  6969  vFirewall.policy.operational.input.tosca.json  ${DATA}  json  200
+    PerformPostRequest  /policy/api/v1/policies  null  localhost  ${API_PORT}  vFirewall.policy.operational.input.tosca.json  ${DATA}  json  200
 
 DeployXacmlPolicies
     [Documentation]    Deploys the Policies to Xacml
-    PerformPostRequest  /policy/pap/v1/pdps/deployments/batch  null  ${PAP_IP}  6969  deploy.xacml.policies.json  ${DATA2}  json  202
+    PerformPostRequest  /policy/pap/v1/pdps/deployments/batch  null  localhost  ${PAP_PORT}  deploy.xacml.policies.json  ${DATA2}  json  202
     ${result}=     Run Process        ${SCR2}/wait_topic.sh     POLICY-PDP-PAP
     ...            responseTo    xacml    ACTIVE    restart
     Log    Received status ${result.stdout}
@@ -70,7 +70,7 @@ DeployXacmlPolicies
 
 DeployDroolsPolicies
     [Documentation]    Deploys the Policies to Drools
-    PerformPostRequest  /policy/pap/v1/pdps/deployments/batch  null  ${PAP_IP}  6969  deploy.drools.policies.json  ${DATA2}  json  202
+    PerformPostRequest  /policy/pap/v1/pdps/deployments/batch  null  localhost  ${PAP_PORT}  deploy.drools.policies.json  ${DATA2}  json  202
     ${result}=     Run Process        ${SCR2}/wait_topic.sh     POLICY-PDP-PAP
     ...            responseTo    drools    ACTIVE
     Log    Received status ${result.stdout}
@@ -207,7 +207,7 @@ VfwExecute
 *** Keywords ***
 
 VerifyController
-    ${resp}=  PeformGetRequest  /policy/pdp/engine/controllers/usecases/drools/facts  ${DROOLS_IP}  9696  200
+    ${resp}=  PeformGetRequest  /policy/pdp/engine/controllers/usecases/drools/facts  localhost  30219  200
     Should Be Equal As Strings  ${resp.json()['usecases']}  1
 
 PeformGetRequest

@@ -30,5 +30,5 @@ fi
 
 topic="${1}"
 
-curl -s -k "http://${SIM_IP}:3904/events/${topic}/script/1?limit=1&timeout=0"
+curl -s -k "http://localhost:30227/events/${topic}/script/1?limit=1&timeout=0"
 echo

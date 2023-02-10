@@ -51,15 +51,17 @@ sleep 10
 unset http_proxy https_proxy
 
 POLICY_API_IP=$(get-instance-ip.sh policy-api)
+POLICY_API_PORT=$(get-container-published-port.sh policy-api)
 MARIADB_IP=$(get-instance-ip.sh mariadb)
 
 echo API IP IS "${POLICY_API_IP}"
 echo MARIADB IP IS "${MARIADB_IP}"
 
 # wait for the app to start up
-"${SCRIPTS}"/wait_for_port.sh "${POLICY_API_IP}" 6969
+"${SCRIPTS}"/wait_for_rest.sh localhost "$POLICY_API_PORT"
 
 ROBOT_VARIABLES=""
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_IP:${POLICY_API_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_API_PORT:${POLICY_API_PORT}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v DATA:${DATA}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v NODETEMPLATES:${NODETEMPLATES}"
