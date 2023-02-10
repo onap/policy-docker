@@ -54,7 +54,6 @@ CreateNewMonitoringPolicyV2
      ${postjson}=  Get file  ${DATA}/vCPE.policy.monitoring.input.tosca.v2.json
      CreatePolicy  /policy/api/v1/policies  200  ${postjson}  onap.restart.tca  2.0.0
 
-
 CreateNodeTemplates
    [Documentation]  Create node templates in database using specific api
    ${postjson}=  Get file  ${NODETEMPLATES}/nodetemplates.metadatasets.input.tosca.json
@@ -114,7 +113,7 @@ DeleteSpecificPolicyTypeV3
 Metrics
     [Documentation]  Verify policy-api is exporting prometheus metrics
     ${auth}=  PolicyAdminAuth
-    ${resp}=  GetMetrics  ${POLICY_API_IP}  ${auth}  /policy/api/v1/
+    ${resp}=  GetMetrics  ${POLICY_API_PORT}  ${auth}  /policy/api/v1/
     Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/healthcheck",} 1.0
     Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/statistics",} 1.0
     Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policytypes",} 1.0
@@ -138,13 +137,13 @@ Metrics
 GetReq
      [Arguments]  ${url}
      ${auth}=  PolicyAdminAuth
-     ${resp}=  PerformGetRequest  ${POLICY_API_IP}  ${url}  200  null  ${auth}
+     ${resp}=  PerformGetRequest  ${POLICY_API_PORT}  ${url}  200  null  ${auth}
      [return]  ${resp}
 
 DeleteReq
      [Arguments]  ${url}  ${expectedstatus}
      ${auth}=  PolicyAdminAuth
-     ${resp}=  PerformDeleteRequest  ${POLICY_API_IP}  ${url}  ${expectedstatus}  ${auth}
+     ${resp}=  PerformDeleteRequest  ${POLICY_API_PORT}  ${url}  ${expectedstatus}  ${auth}
      [return]  ${resp}
 
 CreatePolicyType
@@ -152,7 +151,7 @@ CreatePolicyType
      [Documentation]  Create the specific policy type
      ${postjson}=  Get file  ${CURDIR}/data/${jsonfile}
      ${auth}=  PolicyAdminAuth
-     ${resp}=  PerformPostRequest  ${POLICY_API_IP}  ${url}  ${expectedstatus}  ${postjson}  null  ${auth}
+     ${resp}=  PerformPostRequest  ${POLICY_API_PORT}  ${url}  ${expectedstatus}  ${postjson}  null  ${auth}
      Run Keyword If  ${expectedstatus}==200  List Should Contain Value  ${resp.json()['policy_types']}  ${policytypename}
      Run Keyword If  ${expectedstatus}==200  Should Be Equal As Strings  ${resp.json()['policy_types']['${policytypename}']['version']}  ${policytypeversion}
 

@@ -64,7 +64,7 @@ DeployPolicies
     [Documentation]   Runs Policy PAP to deploy a policy
     ${postjson}=  Get file  ${CURDIR}/data/vCPE.policy.input.tosca.deploy.json
     ${policyadmin}=  PolicyAdminAuth
-    PerformPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/policies  202  ${postjson}  null  ${policyadmin}
+    PerformPostRequest  ${POLICY_PAP_PORT}  /policy/pap/v1/pdps/policies  202  ${postjson}  null  ${policyadmin}
     ${result}=     Run Process    ${SCR_DMAAP}/wait_topic.sh    POLICY-PDP-PAP
     ...            responseTo    xacml    ACTIVE    onap.restart.tca
     Should Be Equal As Integers        ${result.rc}    0
@@ -129,7 +129,7 @@ GetStatisticsAfterDecision
 UndeployMonitorPolicy
     [Documentation]    Runs Policy PAP to undeploy a policy
     ${policyadmin}=  PolicyAdminAuth
-    PerformDeleteRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/policies/onap.restart.tca  202  ${policyadmin}
+    PerformDeleteRequest  ${POLICY_PAP_PORT}  /policy/pap/v1/pdps/policies/onap.restart.tca  202  ${policyadmin}
 
 GetStatisticsAfterUndeploy
     [Documentation]    Runs Policy Xacml PDP Statistics after policy is undeployed
@@ -140,11 +140,11 @@ GetStatisticsAfterUndeploy
 PdpxGetReq
     [Arguments]  ${url}
     ${hcauth}=  HealthCheckAuth
-    ${resp}=  PerformGetRequest  ${POLICY_PDPX_IP}  ${url}  200  null  ${hcauth}
+    ${resp}=  PerformGetRequest  ${POLICY_PDPX_PORT}  ${url}  200  null  ${hcauth}
     [return]  ${resp}
 
 DecisionPostReq
     [Arguments]  ${postjson}  ${abbr}
     ${hcauth}=  HealthCheckAuth
-    ${resp}=  PerformPostRequest  ${POLICY_PDPX_IP}  /policy/pdpx/v1/decision  200  ${postjson}  ${abbr}  ${hcauth}
+    ${resp}=  PerformPostRequest  ${POLICY_PDPX_PORT}  /policy/pdpx/v1/decision  200  ${postjson}  ${abbr}  ${hcauth}
     [return]  ${resp}

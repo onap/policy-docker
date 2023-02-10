@@ -1,7 +1,7 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2018 Ericsson. All rights reserved.
-#  Modifications Copyright (c) 2019-2022 Nordix Foundation.
+#  Modifications Copyright (c) 2019-2023 Nordix Foundation.
 #  Modifications Copyright (C) 2020-2021 AT&T Intellectual Property.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,8 +45,10 @@ POLICY_API_IP=$(get-instance-ip.sh policy-api)
 POLICY_PAP_IP=$(get-instance-ip.sh policy-pap)
 MARIADB_IP=$(get-instance-ip.sh mariadb)
 APEX_IP=$(get-instance-ip.sh policy-apex-pdp)
+APEX_PORT=30237
 DMAAP_IP=$(get-instance-ip.sh simulator)
 POLICY_DISTRIBUTION_IP=$(get-instance-ip.sh policy-distribution)
+POLICY_DISTRIBUTION_PORT=30238
 
 echo PAP IP IS "${POLICY_PAP_IP}"
 echo MARIADB IP IS "${MARIADB_IP}"
@@ -56,9 +58,11 @@ echo DMAAP_IP IS "${DMAAP_IP}"
 echo POLICY_DISTRIBUTION_IP IS "${POLICY_DISTRIBUTION_IP}"
 
 # wait for the app to start up
-"${SCRIPTS}"/wait_for_port.sh "${POLICY_DISTRIBUTION_IP}" 6969
+"${SCRIPTS}"/wait_for_rest.sh localhost "${POLICY_DISTRIBUTION_PORT}"
 
 ROBOT_VARIABLES=""
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v APEX_IP:${APEX_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v APEX_PORT:${APEX_PORT}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v SCRIPT_DIR:${SCRIPT_DIR}"
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_DISTRIBUTION_IP:${POLICY_DISTRIBUTION_IP}"
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v POLICY_DISTRIBUTION_PORT:${POLICY_DISTRIBUTION_PORT}"
