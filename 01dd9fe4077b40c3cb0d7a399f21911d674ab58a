@@ -22,6 +22,30 @@
       "revId": "01dd9fe4077b40c3cb0d7a399f21911d674ab58a",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55286b0f_13f50c14",
+        "filename": "helm/policy/components/policy-models-simulator/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2023-02-10T10:38:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7836e09_4f442154",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 5
+      },
+      "revId": "01dd9fe4077b40c3cb0d7a399f21911d674ab58a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
