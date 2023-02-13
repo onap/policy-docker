@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbb9db6f_bc01c56f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2023-02-13T09:50:45Z",
+      "side": 1,
+      "message": "environment",
+      "range": {
+        "startLine": 9,
+        "startChar": 45,
+        "endLine": 9,
+        "endChar": 56
+      },
+      "revId": "5156180b47db4175c5ff687bbf0b8dedd3bd012f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7edd859a_542e3ebc",
+        "filename": "csit/apex-pdp/plans/setup.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2023-02-13T09:50:45Z",
+      "side": 1,
+      "message": "missing Nordix?",
+      "range": {
+        "startLine": 5,
+        "startChar": 39,
+        "endLine": 5,
+        "endChar": 41
+      },
+      "revId": "5156180b47db4175c5ff687bbf0b8dedd3bd012f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa819782_2f5aec7b",
+        "filename": "csit/common-library.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2023-02-13T09:50:45Z",
+      "side": 1,
+      "message": "this probably can be static, now ip is the common to all components and just port can change",
+      "range": {
+        "startLine": 18,
+        "startChar": 17,
+        "endLine": 18,
+        "endChar": 28
+      },
+      "revId": "5156180b47db4175c5ff687bbf0b8dedd3bd012f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3017ff58_987d8308",
+        "filename": "csit/get-container-published-port.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2023-02-13T09:50:45Z",
+      "side": 1,
+      "message": "the ports are static, maybe they can be set to the variable direct without this script?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 42
+      },
+      "revId": "5156180b47db4175c5ff687bbf0b8dedd3bd012f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0de918f_a9ca8c6a",
+        "filename": "csit/wait_for_rest.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2023-02-13T09:50:45Z",
+      "side": 1,
+      "message": "copyright",
+      "range": {
+        "startLine": 3,
+        "startChar": 3,
+        "endLine": 4,
+        "endChar": 59
+      },
+      "revId": "5156180b47db4175c5ff687bbf0b8dedd3bd012f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
