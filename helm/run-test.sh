@@ -38,6 +38,6 @@ ROBOT_VARIABLES="-v DATA:$DATA -v NODETEMPLATES:$NODETEMPLATES -v POLICY_RUNTIME
 echo "Run Robot test"
 echo ROBOT_VARIABLES="${ROBOT_VARIABLES}"
 echo "Starting Robot test suites ..."
-python3 -m robot.run $ROBOT_VARIABLES $1
+python3 -m robot.run -d /tmp/ $ROBOT_VARIABLES $1
 RESULT=$?
 echo "RESULT: ${RESULT}"
