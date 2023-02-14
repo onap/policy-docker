@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------------
 # Dockerfile
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2021-2022 Nordix Foundation.
+#  Copyright (C) 2021-2023 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 #-------------------------------------------------------------------------------
-FROM onap/policy-jdk-alpine:2.6.1-SNAPSHOT
+FROM onap/policy-jre-alpine:2.6.1-SNAPSHOT
 
 LABEL maintainer="Policy Team"
 LABEL org.opencontainers.image.title="Policy db-migrator"
@@ -35,10 +35,16 @@ ENV POLICY_ETC /opt/app/policy/etc
 ENV POLICY_PROFILE /opt/app/policy/etc/profile.d
 ENV POLICY_BIN /opt/app/policy/bin
 
+USER root
 RUN apk update && \
-    apk add --no-cache mariadb-client && \
-    apk add postgresql-client \
-    net-tools netcat-openbsd sudo less vim && \
+    apk add --no-cache \
+        mariadb-client \
+        postgresql-client \
+        net-tools \
+        netcat-openbsd \
+        sudo \
+        less \
+        vim && \
     mkdir -p $POLICY_PROFILE $POLICY_BIN && \
     chown -R policy:policy $POLICY_ETC $POLICY_BIN
 
