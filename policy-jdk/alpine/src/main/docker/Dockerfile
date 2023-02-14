@@ -1,7 +1,7 @@
 #   ============LICENSE_START=======================================================
 #    Copyright (C) 2019 Tieto. All rights reserved.
 #    Modifications Copyright (C) 2020, 2021 AT&T Intellectual Property. All rights reserved.
-#    Modifications Copyright (C) 2020, 2022 Nordix Foundation.
+#    Modifications Copyright (C) 2020, 2022-2023 Nordix Foundation.
 #   ================================================================================
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -18,19 +18,11 @@
 #   SPDX-License-Identifier: Apache-2.0
 #   ============LICENSE_END=========================================================
 
-# Docker file to build a base image for all policy components images
-#
-# $JAVA_HOME is set to /usr/lib/jvm/java-11-openjdk
-# more details at https://hub.docker.com/_/openjdk
-
-ARG INTEGRATION_PYTHON_NAME=${INTEGRATION_PYTHON_NAME}
-ARG INTEGRATION_PYTHON_VERSION=${INTEGRATION_PYTHON_VERSION}
-
-FROM ${INTEGRATION_PYTHON_NAME}:${INTEGRATION_PYTHON_VERSION}
+FROM alpine:3.17
 
 LABEL maintainer="Policy Team"
-LABEL org.opencontainers.image.title="Policy JDK Alpine"
-LABEL org.opencontainers.image.description="Policy Java 11 JDK image based on Alpine"
+LABEL org.opencontainers.image.title="Policy JRE Alpine"
+LABEL org.opencontainers.image.description="Policy Java 11 JRE image based on Alpine"
 LABEL org.opencontainers.image.url="https://github.com/onap/policy-docker"
 LABEL org.opencontainers.image.vendor="ONAP Policy Team"
 LABEL org.opencontainers.image.licenses="Apache-2.0"
@@ -38,32 +30,61 @@ LABEL org.opencontainers.image.created="${git.build.time}"
 LABEL org.opencontainers.image.version="${git.build.version}"
 LABEL org.opencontainers.image.revision="${git.commit.id.abbrev}"
 
+ENV JAVA_HOME /usr/lib/jvm/default-jvm
+ENV JAVA_OPTS="-Xms256m -Xmx1g"
+ENV JAVA_SEC_OPTS=""
+ENV PYTHONUNBUFFERED=1
 ENV POLICY_HOME=/opt/app/policy
+ENV PATH $JAVA_HOME/bin:$PATH
 
-USER root
+ARG user=onap
+ARG group=onap
 
-RUN rm -rf /opt/java/openjdk \
-    && mkdir -p /opt/java/openjdk \
-    && mkdir -p /usr/lib/jvm/ \
-    && ln -s /opt/java/openjdk /usr/lib/jvm/java-11-openjdk \
-    && apk update \
-    && apk add --no-cache \
+# Default to UTF-8 file.encoding
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
+# Generic additions
+RUN apk add --no-cache \
+        libretls \
+        musl-locales \
+        musl-locales-lang \
+        openjdk11-jdk \
+        openssl \
+        ca-certificates && \
+    rm -rf /var/cache/apk/* && \
+# ONAP additions
+    addgroup -S $group && \
+    adduser -G $group -D $user && \
+    mkdir /var/log/$user && \
+    mkdir /app && \
+    chown -R $user:$group /var/log/$user && \
+    chown -R $user:$group /app && \
+# Policy Framework additions
+    apk update && \
+    apk add --no-cache \
         busybox-extras \
         curl \
         jq \
         procps \
         unzip \
         zip \
-        openjdk11 \
-    && curl --fail --silent --show-error --retry 3 \
-            --output /tmp/apache-maven-3.6.3-bin.tar.gz \
-            https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz \
-    && tar zxC /usr/share </tmp/apache-maven-3.6.3-bin.tar.gz \
-    && chown -R root:root /usr/share/apache-maven-3.6.3 \
-    && ln -s /usr/share/apache-maven-3.6.3/bin/mvn /usr/bin/mvn \
-    && rm -f /tmp/apache-maven-3.6.3-bin.tar.gz \
-    && addgroup -S policy \
-    && adduser -S  --shell /bin/sh -G policy policy \
-    && mkdir -p ${POLICY_HOME}/ \
-    && chown policy:policy ${POLICY_HOME} \
-    && pip install --upgrade pip==22.0.3
+        python3 && \
+    rm -rf /var/cache/apk/* && \
+    addgroup -S policy && \
+    adduser -S  --shell /bin/sh -G policy policy && \
+    mkdir -p ${POLICY_HOME}/ && \
+    chown policy:policy ${POLICY_HOME} && \
+    mkdir -p /usr/lib/jvm/ && \
+    ln -s /opt/java/openjdk /usr/lib/jvm/default-jvm && \
+    python3 -m ensurepip && \
+    pip3 install --no-cache --upgrade pip setuptools
+
+# Install python/pip
+RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
+RUN python3 -m ensurepip
+RUN pip3 install --no-cache --upgrade pip setuptools
+
+
+# Tell docker that all future commands should be run as the onap user
+USER $user
+WORKDIR /app

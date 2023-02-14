@@ -1,7 +1,7 @@
 #   ============LICENSE_START=======================================================
 #    Copyright (C) 2019 Tieto. All rights reserved.
 #    Modifications Copyright (C) 2020, 2021 AT&T Intellectual Property. All rights reserved.
-#    Modifications Copyright (C) 2020, 2022 Nordix Foundation.
+#    Modifications Copyright (C) 2020, 2022-2023 Nordix Foundation.
 #   ================================================================================
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -18,15 +18,7 @@
 #   SPDX-License-Identifier: Apache-2.0
 #   ============LICENSE_END=========================================================
 
-# Docker file to build a base image for all policy components images
-#
-# $JAVA_HOME is set to /usr/lib/jvm/java-11-openjdk
-# more details at https://hub.docker.com/_/openjdk
-
-ARG INTEGRATION_JAVA_NAME=${INTEGRATION_JAVA_NAME}
-ARG INTEGRATION_JAVA_VERSION=${INTEGRATION_JAVA_VERSION}
-
-FROM ${INTEGRATION_JAVA_NAME}:${INTEGRATION_JAVA_VERSION}
+FROM alpine:3.17
 
 LABEL maintainer="Policy Team"
 LABEL org.opencontainers.image.title="Policy JRE Alpine"
@@ -38,21 +30,53 @@ LABEL org.opencontainers.image.created="${git.build.time}"
 LABEL org.opencontainers.image.version="${git.build.version}"
 LABEL org.opencontainers.image.revision="${git.commit.id.abbrev}"
 
+ENV JAVA_HOME /usr/lib/jvm/default-jvm
+ENV JAVA_OPTS="-Xms256m -Xmx1g"
+ENV JAVA_SEC_OPTS=""
 ENV POLICY_HOME=/opt/app/policy
+ENV PATH $JAVA_HOME/bin:$PATH
 
-USER root
+ARG user=onap
+ARG group=onap
 
-RUN apk update \
-    && apk add --no-cache \
+# Default to UTF-8 file.encoding
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
+# Generic additions
+RUN apk add --no-cache \
+        libretls \
+        musl-locales \
+        musl-locales-lang \
+        openjdk11-jre \
+        openssl \
+        ca-certificates && \
+    rm -rf /var/cache/apk/* && \
+# ONAP additions
+    addgroup -S $group && \
+    adduser -G $group -D $user && \
+    mkdir /var/log/$user && \
+    mkdir /app && \
+    chown -R $user:$group /var/log/$user && \
+    chown -R $user:$group /app && \
+# Policy Framework additions
+    apk update && \
+    apk add --no-cache \
         busybox-extras \
         curl \
         jq \
         procps \
         unzip \
-        zip \
-    && addgroup -S policy \
-    && adduser -S  --shell /bin/sh -G policy policy \
-    && mkdir -p ${POLICY_HOME}/ \
-    && chown policy:policy ${POLICY_HOME} \
-    && mkdir -p /usr/lib/jvm/ \
-    && ln -s /opt/java/openjdk /usr/lib/jvm/java-11-openjdk
+        zip && \
+    rm -rf /var/cache/apk/* && \
+    addgroup -S policy && \
+    adduser -S  --shell /bin/sh -G policy policy && \
+    mkdir -p ${POLICY_HOME}/ && \
+    chown policy:policy ${POLICY_HOME} && \
+    mkdir -p /usr/lib/jvm/ && \
+    ln -s /opt/java/openjdk /usr/lib/jvm/default-jvm
+
+# Tell docker that all future commands should be run as the onap user
+USER $user
+WORKDIR /app
+
+ENTRYPOINT exec java $JAVA_SEC_OPTS $JAVA_OPTS -jar /app/app.jar
