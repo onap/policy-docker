@@ -36,6 +36,7 @@ POLICY_APEX_CONTAINER="policy-apex-pdp"
 
 export PROJECT=""
 export ROBOT_FILE=""
+export ROBOT_LOG_DIR=${PWD}/archives
 export READINESS_CONTAINERS=()
 
 function spin_microk8s_cluster () {
@@ -54,7 +55,7 @@ function spin_microk8s_cluster () {
         echo "Microk8s cluster installed successfully"
         sudo usermod -a -G microk8s $USER
         echo "Enabling DNS and helm3 plugins"
-        microk8s.enable dns helm3
+        microk8s.enable dns helm3 hostpath-storage
         echo "Creating configuration file for Microk8s"
         microk8s kubectl config view --raw > $HOME/.kube/config
         chmod 600 $HOME/.kube/config
@@ -79,7 +80,6 @@ function teardown_cluster () {
 
 function build_robot_image () {
     echo "Build docker image for robot framework"
-    cd ../helm;
     clone_models
     echo "Build robot framework docker image"
     docker login -u docker -p docker nexus3.onap.org:10001
@@ -93,7 +93,7 @@ function build_robot_image () {
         rm -rf tests/models/
         echo "---------------------------------------------"
         echo "Installing Robot framework pod for running CSIT"
-        microk8s helm install csit-robot robot --set robot=$ROBOT_FILE --set "readiness={${READINESS_CONTAINERS[*]}}";
+        microk8s helm install csit-robot robot --set robot=$ROBOT_FILE --set "readiness={${READINESS_CONTAINERS[*]}}" --set robotLogDir=$ROBOT_LOG_DIR;
         print_robot_log
     fi
 }

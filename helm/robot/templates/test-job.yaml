@@ -49,4 +49,11 @@ spec:
             - name: ROBOT_FILE
               value: {{ .Values.robot }}
           command: [ "./run-test.sh", "$(ROBOT_FILE)" ]
+          volumeMounts:
+            - name: robot-csit-pv
+              mountPath: /tmp
       restartPolicy: Never
+      volumes:
+        - name: robot-csit-pv
+          hostPath:
+            path: {{ .Values.robotLogDir }}

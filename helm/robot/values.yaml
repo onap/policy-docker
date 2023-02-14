@@ -67,4 +67,4 @@ affinity: {}
 
 robot: ""
 readiness: []
-
+robotLogDir: ""
