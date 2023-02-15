@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ece9244_8bf2b888",
+        "filename": "csit/pap/tests/pap-slas.robot",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2023-02-15T08:24:24Z",
+      "side": 1,
+      "message": "Do we need to add this for kubernetes CSIT as well?",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "9fc9fa480d5b18b0988b9388d13db8328032fc52",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
