@@ -12,3 +12,5 @@ env.properties
 models
 .vscode/
 **/*.log
+**/*/Chart.lock
+**/*/charts/
