@@ -1,4 +1,0 @@
-# Test suites are relative paths under [policy/docker.git]/csit/[project]/tests.
-# Place the suites in run order.
-pap-test.robot
-pap-slas.robot

@@ -30,22 +30,15 @@ function on_exit(){
         # Record list of active docker containers
         docker ps --format "table {{ .Names }}\t{{ .Status }}"
 
-        # Show the logs from all containers
-        docker-compose -f "${WORKSPACE}/csit/docker-compose-all.yml" logs > docker_compose.log
-
         # show memory consumption after all docker instances initialized
         docker_stats
+
+        source_safely ${WORKSPACE}/compose/stop-compose.sh
 
         if [[ ${WORKDIR} ]]; then
             rsync -av "${WORKDIR}/" "${WORKSPACE}/csit/archives/${PROJECT}"
         fi
-    fi
-    # Run teardown script plan if it exists
-    cd "${TESTPLANDIR}/plans/"
-    TEARDOWN="${TESTPLANDIR}/plans/teardown.sh"
-    if [ -f "${TEARDOWN}" ]; then
-        echo "Running teardown script ${TEARDOWN}"
-        source_safely "${TEARDOWN}"
+        rm -rf ${WORKSPACE}/models
     fi
     # TODO: do something with the output
      exit $rc
@@ -126,18 +119,6 @@ function source_safely() {
 # main
 #
 
-if $(docker images | grep -q "onap\/policy-api")
-then
-    export CONTAINER_LOCATION=$(
-        docker images |
-        grep onap/policy-api |
-        head -1 |
-        sed 's/onap\/policy-api.*$//'
-    )
-else
-    export CONTAINER_LOCATION="nexus3.onap.org:10001/"
-fi
-
 # set and save options for quick failure
 harden_set && save_set
 
@@ -152,32 +133,30 @@ then
 fi
 
 if [ -z "${WORKSPACE}" ]; then
-    export WORKSPACE=$(git rev-parse --show-toplevel)
+    WORKSPACE=$(git rev-parse --show-toplevel)
+    export WORKSPACE
 fi
 
 # Add csit scripts to PATH
 export PATH="${PATH}:${WORKSPACE}/csit:${WORKSPACE}/scripts:${ROBOT_VENV}/bin"
-export SCRIPTS="${WORKSPACE}/csit"
+export SCRIPTS="${WORKSPACE}/csit/resources/scripts"
 export ROBOT_VARIABLES=
-
-# get the plan from git clone
-source "${SCRIPTS}"/get-branch.sh
 
 export PROJECT="${1}"
 
-cd ${WORKSPACE}
-
-export TESTPLANDIR="${WORKSPACE}/csit/${PROJECT}"
-export TESTOPTIONS="${2}"
+cd "${WORKSPACE}"
 
 rm -rf "${WORKSPACE}/csit/archives/${PROJECT}"
 mkdir -p "${WORKSPACE}/csit/archives/${PROJECT}"
 
-# Run installation of prerequired libraries
+# Run installation of pre-required libraries
 source_safely "${SCRIPTS}/prepare-robot-env.sh"
 
 # Activate the virtualenv containing all the required libraries installed by prepare-robot-env.sh
 source_safely "${ROBOT_VENV}/bin/activate"
+
+export TEST_PLAN_DIR="${WORKSPACE}/csit/resources/tests"
+export TEST_OPTIONS="${2}"
 
 WORKDIR=$(mktemp -d)
 cd "${WORKDIR}"
@@ -186,8 +165,7 @@ cd "${WORKDIR}"
 docker login -u docker -p docker nexus3.onap.org:10001
 
 # Run setup script plan if it exists
-cd "${TESTPLANDIR}/plans/"
-SETUP="${TESTPLANDIR}/plans/setup.sh"
+SETUP="${SCRIPTS}/setup-${PROJECT}.sh"
 if [ -f "${SETUP}" ]; then
     echo "Running setup script ${SETUP}"
     source_safely "${SETUP}"
@@ -199,14 +177,14 @@ docker_stats | tee "${WORKSPACE}/csit/archives/${PROJECT}/_sysinfo-1-after-setup
 # Run test plan
 cd "${WORKDIR}"
 echo "Reading the testplan:"
-cat "${TESTPLANDIR}/plans/testplan.txt" | egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' | sed "s|^|${TESTPLANDIR}/tests/|" > testplan.txt
+echo "${SUITES}" | egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' | sed "s|^|${TEST_PLAN_DIR}/|" > testplan.txt
 cat testplan.txt
 SUITES=$( xargs < testplan.txt )
 
 echo ROBOT_VARIABLES="${ROBOT_VARIABLES}"
 echo "Starting Robot test suites ${SUITES} ..."
 relax_set
-python3 -m robot.run -N ${PROJECT} -v WORKSPACE:/tmp ${ROBOT_VARIABLES} ${SUITES}
+python3 -m robot.run -N "${PROJECT}" -v WORKSPACE:/tmp ${ROBOT_VARIABLES} ${SUITES}
 RESULT=$?
 load_set
 echo "RESULT: ${RESULT}"
