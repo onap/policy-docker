@@ -1,4 +1,4 @@
-# Copyright © 2022 Nordix Foundation
+# Copyright © 2022-2023 Nordix Foundation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -44,6 +44,10 @@ policy-pap:
 policy-apex-pdp:
   enabled: true
 policy-clamp-ac-pf-ppnt:
+  enabled: true
+policy-drools-pdp:
+  enabled: true
+policy-xacml-pdp:
   enabled: true
 
 
