@@ -1,0 +1,152 @@
+{{/*
+#  ============LICENSE_START=======================================================
+#   Copyright (C) 2023 Nordix Foundation.
+#  ================================================================================
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+#  SPDX-License-Identifier: Apache-2.0
+#  ============LICENSE_END=========================================================
+*/}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: default
+  labels:
+    app: {{ .Chart.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: release
+    heritage: Helm
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+        release: release
+    spec:
+      initContainers:
+      - command:
+        - /app/ready.py
+        args:
+        - --job-name
+        - policy-galera-config
+        env:
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        image: nexus3.onap.org:10001/onap/oom/readiness:3.0.1
+        imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
+        name: {{ .Chart.Name }}-readiness
+      - command:
+        - sh
+        args:
+        - -c
+        - "cd /config-input && for PFILE in `ls -1`; do envsubst <${PFILE} >/config/${PFILE}; done"
+        env:
+        - name: RESTSERVER_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Chart.Name }}-restserver-creds
+              key: login
+        - name: RESTSERVER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Chart.Name }}-restserver-creds
+              key: password
+        - name: API_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Chart.Name }}-api-creds
+              key: login
+        - name: API_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Chart.Name }}-api-creds
+              key: password
+        - name: SQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Chart.Name }}-db-secret
+              key: login
+        - name: SQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Chart.Name }}-db-secret
+              key: password
+        volumeMounts:
+        - mountPath: /config-input
+          name: pdpxconfig
+        - mountPath: /config
+          name: pdpxconfig-processed
+        image: docker.io/dibi/envsubst:1
+        imagePullPolicy: {{ .Values.pullPolicy }}
+        name: {{ .Chart.Name }}-update-config
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image }}
+          imagePullPolicy: {{ .Values.pullPolicy }}
+          command: ["/opt/app/policy/pdpx/bin/policy-pdpx.sh"]
+          args: ["/opt/app/policy/pdpx/etc/mounted/config.json"]
+          ports:
+          - containerPort: {{ .Values.service.internalPort }}
+          # disable liveness probe when breakpoints set in debugger
+          # so K8s doesn't restart unresponsive container
+          {{- if eq .Values.liveness.enabled true }}
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.liveness.periodSeconds }}
+          {{ end -}}
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: {{ .Values.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readiness.periodSeconds }}
+          volumeMounts:
+          - mountPath: /etc/localtime
+            name: localtime
+            readOnly: true
+          - mountPath: /opt/app/policy/pdpx/etc/mounted
+            name: pdpxconfig-processed
+          resources:
+{{ toYaml .Values.resources.small | indent 12 }}
+        {{- if .Values.nodeSelector }}
+        nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 10 }}
+        {{- end -}}
+        {{- if .Values.affinity }}
+        affinity:
+{{ toYaml .Values.affinity | indent 10 }}
+        {{- end }}
+      serviceAccountName: {{ .Chart.Name }}-read
+      volumes:
+        - name: localtime
+          hostPath:
+             path: /etc/localtime
+        - name: pdpxconfig
+          configMap:
+            name: {{ .Chart.Name }}-configmap
+            defaultMode: 0755
+        - name: pdpxconfig-processed
+          emptyDir:
+            medium: Memory
+      imagePullSecrets:
+      - name: "default-docker-registry-key"

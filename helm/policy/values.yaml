@@ -45,6 +45,10 @@ policy-apex-pdp:
   enabled: true
 policy-clamp-ac-pf-ppnt:
   enabled: true
+policy-drools-pdp:
+  enabled: true
+policy-xacml-pdp:
+  enabled: true
 
 
 #################################################################

@@ -24,7 +24,7 @@ Metrics
 
 MakeTopics
     [Documentation]    Creates the Policy topics
-    ${result}=     Run Process     ${SCR_DMAAP}/make_topic.sh   POLICY-PDP-PAP
+    ${result}=     Run Process     data/make_topic.sh   POLICY-PDP-PAP
     Should Be Equal As Integers        ${result.rc}    0
 
 ExecuteXacmlPolicy
@@ -45,24 +45,24 @@ ExecuteXacmlPolicy
 
 CreateMonitorPolicy
     [Documentation]  Create a Monitoring policy
-    ${postjson}=  Get file  ${DATA2}/vCPE.policy.monitoring.input.tosca.json
+    ${postjson}=  Get file  ${DATA}/vCPE.policy.monitoring.input.tosca.json
     CreatePolicy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies  200  ${postjson}  onap.restart.tca  1.0.0
 
 CreateOptimizationPolicy
     [Documentation]  Create an Optimization policy
-    ${postjson}=  Get file  ${DATA2}/vCPE.policies.optimization.input.tosca.json
+    ${postjson}=  Get file  ${DATA}/vCPE.policies.optimization.input.tosca.json
     CreatePolicy  /policy/api/v1/policytypes/onap.policies.optimization.resource.AffinityPolicy/versions/1.0.0/policies  200  ${postjson}  OSDF_CASABLANCA.Affinity_Default  1.0.0
 
 GetDefaultDecision
     [Documentation]  Get Default Decision with no policies in Xacml PDP
-    ${postjson}=  Get file  ${CURDIR}/data/onap.policy.guard.decision.request.json
+    ${postjson}=  Get file  ./data/onap.policy.guard.decision.request.json
     ${resp}=  DecisionPostReq  ${postjson}  abbrev=true
     ${status}=  Get From Dictionary  ${resp.json()}  status
     Should Be Equal As Strings  ${status}  Permit
 
 DeployPolicies
     [Documentation]   Runs Policy PAP to deploy a policy
-    ${postjson}=  Get file  ${CURDIR}/data/vCPE.policy.input.tosca.deploy.json
+    ${postjson}=  Get file  ./data/vCPE.policy.input.tosca.deploy.json
     ${policyadmin}=  PolicyAdminAuth
     PerformPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/policies  202  ${postjson}  null  ${policyadmin}
     ${result}=     Run Process    ${SCR_DMAAP}/wait_topic.sh    POLICY-PDP-PAP
@@ -77,7 +77,7 @@ GetStatisticsAfterDeployed
 
 GetAbbreviatedDecisionResult
     [Documentation]    Get Decision with abbreviated results from Policy Xacml PDP
-    ${postjson}=  Get file  ${CURDIR}/data/onap.policy.monitoring.decision.request.json
+    ${postjson}=  Get file  ./data/onap.policy.monitoring.decision.request.json
     ${resp}=  DecisionPostReq  ${postjson}  abbrev=true
     ${policy}=    Get From Dictionary    ${resp.json()['policies']}   onap.restart.tca
     Dictionary Should Contain Key    ${policy}    type
@@ -89,7 +89,7 @@ GetAbbreviatedDecisionResult
 
 GetMonitoringDecision
     [Documentation]    Get Decision from Monitoring Policy Xacml PDP
-    ${postjson}=  Get file  ${CURDIR}/data/onap.policy.monitoring.decision.request.json
+    ${postjson}=  Get file  ./data/onap.policy.monitoring.decision.request.json
     ${resp}=  DecisionPostReq  ${postjson}  null
     ${policy}=    Get From Dictionary    ${resp.json()['policies']}   onap.restart.tca
     Dictionary Should Contain Key    ${policy}    type
@@ -101,7 +101,7 @@ GetMonitoringDecision
 
 GetNamingDecision
     [Documentation]    Get Decision from Naming Policy Xacml PDP
-    ${postjson}=  Get file  ${CURDIR}/data/onap.policy.naming.decision.request.json
+    ${postjson}=  Get file  ./data/onap.policy.naming.decision.request.json
     ${resp}=  DecisionPostReq  ${postjson}  null
     ${policy}=    Get From Dictionary    ${resp.json()['policies']}   SDNC_Policy.ONAP_NF_NAMING_TIMESTAMP
     Dictionary Should Contain Key    ${policy}    type
@@ -111,7 +111,7 @@ GetNamingDecision
 
 GetOptimizationDecision
     [Documentation]    Get Decision from Optimization Policy Xacml PDP
-    ${postjson}=  Get file  ${CURDIR}/data/onap.policy.optimization.decision.request.json
+    ${postjson}=  Get file  ./data/onap.policy.optimization.decision.request.json
     ${resp}=  DecisionPostReq  ${postjson}  null
     ${policy}=    Get From Dictionary    ${resp.json()['policies']}   OSDF_CASABLANCA.Affinity_Default
     Dictionary Should Contain Key    ${policy}    type
