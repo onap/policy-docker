@@ -28,7 +28,8 @@ unset http_proxy https_proxy
 # wait for the app to start up
 bash "${SCRIPTS}"/wait_for_rest.sh localhost ${API_PORT}
 
-export SUITES="api-test.robot"
+export SUITES="api-test.robot
+api-slas.robot"
 
 ROBOT_VARIABLES="-v POLICY_API_IP:localhost:${API_PORT} -v PROMETHEUS_IP:localhost:${PROMETHEUS_PORT}
 -v DATA:${DATA} -v NODETEMPLATES:${NODETEMPLATES}"
