@@ -1,0 +1,12 @@
+distribution_type: 'container'
+container_release_tag: '2.6.1'
+project: 'policy-docker'
+log_dir: 'policy-docker-maven-docker-stage-master/993'
+ref: 6dce3808bd195ba775f02cd4f529853873ab60b0
+containers:
+    - name: 'policy-jre-alpine'
+      version: '2.6.1-20230228T1221'
+    - name: 'policy-jdk-alpine'
+      version: '2.6.1-20230228T1221'
+    - name: 'policy-db-migrator'
+      version: '2.6.1-20230228T1221'
