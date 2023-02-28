@@ -25,11 +25,11 @@ source "${WORKSPACE}"/compose/start-compose.sh xacml-pdp
 sleep 10
 unset http_proxy https_proxy
 
-export DMAAP_IP="localhost:${DMAAP_PORT}"
 export SUITES="xacml-pdp-test.robot"
 
 # wait for the app to start up
 "${SCRIPTS}"/wait_for_rest.sh localhost "${XACML_PORT}"
 
 ROBOT_VARIABLES="-v DATA:${DATA} -v POLICY_PDPX_IP:localhost:${XACML_PORT}
--v POLICY_API_IP:localhost:${API_PORT} -v POLICY_PAP_IP:localhost:${PAP_PORT}"
+-v POLICY_API_IP:localhost:${API_PORT} -v POLICY_PAP_IP:localhost:${PAP_PORT}
+-v DMAAP_IP:localhost:${DMAAP_PORT}"

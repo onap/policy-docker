@@ -5,6 +5,7 @@ Library     RequestsLibrary
 Library     OperatingSystem
 Library     Process
 Library     json
+Resource    common-library.robot
 
 *** Test Cases ***
 Alive
@@ -28,10 +29,8 @@ Controller
 
 MakeTopics
     [Documentation]    Creates the Policy topics
-    ${result}=     Run Process        ${CURDIR}/data/make_topic.sh     POLICY-PDP-PAP
-    Should Be Equal As Integers        ${result.rc}    0
-    ${result}=     Run Process        ${CURDIR}/data/make_topic.sh     POLICY-CL-MGT
-    Should Be Equal As Integers        ${result.rc}    0
+    GetTopic     POLICY-PDP-PAP
+    GetTopic     POLICY-CL-MGT
 
 CreateVcpeXacmlPolicy
     [Documentation]    Create VCPE Policy for Xacml
@@ -60,149 +59,93 @@ CreateVfwDroolsPolicy
 DeployXacmlPolicies
     [Documentation]    Deploys the Policies to Xacml
     PerformPostRequest  /policy/pap/v1/pdps/deployments/batch  null  ${POLICY_PAP_IP}  deploy.xacml.policies.json  ${CURDIR}/data  json  202
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-PDP-PAP
-    ...            responseTo    xacml    ACTIVE    restart
-    Log    Received status ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    onap.restart.tca
-    Should Contain    ${result.stdout}    onap.scaleout.tca
-    Should Contain    ${result.stdout}    onap.vfirewall.tca
+    ${result}=    CheckTopic     POLICY-PDP-PAP    PDP_UPDATE
+    Sleep    5s
+    ${result}=    CheckTopic     POLICY-PDP-PAP    ACTIVE
+    Should Contain    ${result}    responseTo
+    Should Contain    ${result}    xacml
+    Should Contain    ${result}    restart
+    Should Contain    ${result}    onap.restart.tca
+    Should Contain    ${result}    onap.scaleout.tca
+    Should Contain    ${result}    onap.vfirewall.tca
 
 DeployDroolsPolicies
     [Documentation]    Deploys the Policies to Drools
     PerformPostRequest  /policy/pap/v1/pdps/deployments/batch  null  ${POLICY_PAP_IP}  deploy.drools.policies.json  ${CURDIR}/data  json  202
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-PDP-PAP
-    ...            responseTo    drools    ACTIVE
-    Log    Received status ${result.stdout}
-    Sleep    3s
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    operational.restart
-    Should Contain    ${result.stdout}    operational.scaleout
-    Should Contain    ${result.stdout}    operational.modifyconfig
+    ${result}=    CheckTopic     POLICY-PDP-PAP    PDP_UPDATE
+    Sleep    5s
+    ${result}=    CheckTopic     POLICY-PDP-PAP    ACTIVE
+    Should Contain    ${result}    responseTo
+    Should Contain    ${result}    drools
+    Should Contain    ${result}    operational.restart
+    Should Contain    ${result}    operational.scaleout
+    Should Contain    ${result}    operational.modifyconfig
 
 VcpeExecute
     [Documentation]    Executes VCPE Policy
-    ${result}=     Run Process        ${CURDIR}/data/onset.sh     ${CURDIR}/data/vcpeOnset.json
-    Should Be Equal As Integers        ${result.rc}    0
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-CL-MGT
-    ...            ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
-    Log    Received notification ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    ACTIVE
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-CL-MGT
-    ...            ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
-    Log    Received notification ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    OPERATION
-    Should Contain    ${result.stdout}    Sending guard query for APPC Restart
-    Should Be Equal As Integers        ${result.rc}    0
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-CL-MGT
-    ...            ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
-    Log    Received notification ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    OPERATION
-    Should Contain    ${result.stdout}    Guard result for APPC Restart is Permit
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-CL-MGT
-    ...            ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
-    Log    Received notification ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    OPERATION
-    Should Contain    ${result.stdout}    actor=APPC,operation=Restart
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-CL-MGT
-    ...            ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
-    Log    Received notification ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    OPERATION: SUCCESS
-    Should Contain    ${result.stdout}    actor=APPC,operation=Restart
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-CL-MGT
-    ...            ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
-    Log    Received notification ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    FINAL: SUCCESS
-    Should Contain    ${result.stdout}    APPC
-    Should Contain    ${result.stdout}    Restart
+    OnSet     ${CURDIR}/data/vcpeOnset.json
+    ${result}=    CheckTopic     POLICY-CL-MGT    ACTIVE
+    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
+    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+    Should Contain    ${result}    Sending guard query for APPC Restart
+    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
+    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+    Should Contain    ${result}    Guard result for APPC Restart is Permit
+    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
+    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+    Should Contain    ${result}    actor=APPC,operation=Restart
+    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION: SUCCESS
+    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+    Should Contain    ${result}    actor=APPC,operation=Restart
+    ${result}=    CheckTopic     POLICY-CL-MGT    FINAL: SUCCESS
+    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+    Should Contain    ${result}    APPC
+    Should Contain    ${result}    Restart
 
 VdnsExecute
     [Documentation]    Executes VDNS Policy
-    ${result}=     Run Process        ${CURDIR}/data/onset.sh     ${CURDIR}/data/vdnsOnset.json
-    Should Be Equal As Integers        ${result.rc}    0
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-CL-MGT
-    ...            ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
-    Log    Received notification ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    ACTIVE
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-CL-MGT
-    ...            ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
-    Log    Received notification ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    OPERATION
-    Should Contain    ${result.stdout}    Sending guard query for SO VF Module Create
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-CL-MGT
-    ...            ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
-    Log    Received notification ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    OPERATION
-    Should Contain    ${result.stdout}    Guard result for SO VF Module Create is Permit
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-CL-MGT
-    ...            ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
-    Log    Received notification ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    OPERATION
-    Should Contain    ${result.stdout}    actor=SO,operation=VF Module Create
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-CL-MGT
-    ...            ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
-    Log    Received notification ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    OPERATION: SUCCESS
-    Should Contain    ${result.stdout}    actor=SO,operation=VF Module Create
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-CL-MGT
-    ...            ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
-    Log    Received notification ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    FINAL: SUCCESS
-    Should Contain    ${result.stdout}    SO
-    Should Contain    ${result.stdout}    VF Module Create
+    OnSet     ${CURDIR}/data/vdnsOnset.json
+    ${result}=    CheckTopic     POLICY-CL-MGT    ACTIVE
+    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
+    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
+    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
+    Should Contain    ${result}    Sending guard query for SO VF Module Create
+    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
+    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
+    Should Contain    ${result}    Guard result for SO VF Module Create is Permit
+    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
+    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
+    Should Contain    ${result}    actor=SO,operation=VF Module Create
+    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION: SUCCESS
+    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
+    Should Contain    ${result}    actor=SO,operation=VF Module Create
+    ${result}=    CheckTopic     POLICY-CL-MGT    FINAL: SUCCESS
+    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
+    Should Contain    ${result}    SO
+    Should Contain    ${result}    VF Module Create
 
 VfwExecute
     [Documentation]    Executes VFW Policy
-    ${result}=     Run Process        ${CURDIR}/data/onset.sh     ${CURDIR}/data/vfwOnset.json
-    Should Be Equal As Integers        ${result.rc}    0
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-CL-MGT
-    ...            ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
-    Log    Received notification ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    ACTIVE
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-CL-MGT
-    ...            ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
-    Log    Received notification ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    OPERATION
-    Should Contain    ${result.stdout}    Sending guard query for APPC ModifyConfig
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-CL-MGT
-    ...            ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
-    Log    Received notification ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    OPERATION
-    Should Contain    ${result.stdout}    Guard result for APPC ModifyConfig is Permit
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-CL-MGT
-    ...            ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
-    Log    Received notification ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    OPERATION
-    Should Contain    ${result.stdout}    actor=APPC,operation=ModifyConfig
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-CL-MGT
-    ...            ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
-    Log    Received notification ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    OPERATION: SUCCESS
-    Should Contain    ${result.stdout}    actor=APPC,operation=ModifyConfig
-    ${result}=     Run Process        ${CURDIR}/data/wait_topic.sh     POLICY-CL-MGT
-    ...            ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
-    Log    Received notification ${result.stdout}
-    Should Be Equal As Integers        ${result.rc}    0
-    Should Contain    ${result.stdout}    FINAL: SUCCESS
-    Should Contain    ${result.stdout}    APPC
-    Should Contain    ${result.stdout}    ModifyConfig
+    OnSet     ${CURDIR}/data/vfwOnset.json
+    ${result}=    CheckTopic     POLICY-CL-MGT    ACTIVE
+    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
+    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
+    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
+    Should Contain    ${result}    Sending guard query for APPC ModifyConfig
+    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
+    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
+    Should Contain    ${result}    Guard result for APPC ModifyConfig is Permit
+    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
+    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
+    Should Contain    ${result}    actor=APPC,operation=ModifyConfig
+    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION: SUCCESS
+    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
+    Should Contain    ${result}    actor=APPC,operation=ModifyConfig
+    ${result}=    CheckTopic     POLICY-CL-MGT    FINAL: SUCCESS
+    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
+    Should Contain    ${result}    APPC
+    Should Contain    ${result}    ModifyConfig
 
 *** Keywords ***
 
@@ -230,3 +173,13 @@ PerformPostRequest
      ${resp}=  POST On Session  policy  ${url}  params=${params}  data=${postjson}  headers=${headers}  expected_status=${expectedstatus}
      Log  Received response from policy ${resp.text}
      [return]  ${resp}
+
+OnSet
+    [Arguments]    ${file}
+    ${data}=    Get File    ${file}
+    Create Session   session  http://${DMAAP_IP}   max_retries=1
+    ${headers}=  Create Dictionary  Content-Type=application/json
+    ${resp}=  POST On Session    session    /events/unauthenticated.DCAE_CL_OUTPUT    headers=${headers}    data=${data}
+    Log    Response from dmaap ${resp.text}
+    Status Should Be    OK
+    [Return]    ${resp.text}
