@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b3586da_bdc59b0d",
+        "filename": "helm/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2023-02-28T14:21:19Z",
+      "side": 0,
+      "message": "This file is not included?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 13
+      },
+      "revId": "8da79cd5f24a4f555e81e9fd725a0ddc2bfa50f4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
