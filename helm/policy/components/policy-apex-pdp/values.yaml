@@ -69,6 +69,12 @@ service:
   internalPort: 6969
   nodePort: 37
 
+jerseyServer:
+  enabled: true
+  portName: jersey-rest
+  externalPort: 23324
+  internalPort: 23324
+
 ingress:
   enabled: false
 

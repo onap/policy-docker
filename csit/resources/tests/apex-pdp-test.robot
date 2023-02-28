@@ -11,14 +11,14 @@ Resource    ${CURDIR}/common-library.robot
 
 Healthcheck
      [Documentation]    Runs Apex PDP Health check
-     ${hcauth}=  HealthCheckAuth
+     ${hcauth}=  PolicyAdminAuth
      ${resp}=  PerformGetRequest  ${APEX_IP}  /policy/apex-pdp/v1/healthcheck  200  null  ${hcauth}
      Should Be Equal As Strings    ${resp.json()['code']}    200
      Set Suite Variable    ${pdpName}    ${resp.json()['name']}
 
 ExecuteApexSampleDomainPolicy
+     # [Tags]    docker
      Set Test Variable    ${policyName}    onap.policies.native.apex.Sampledomain
-     Log  ${policyName}
      ${postjson}=  Get File  ${CURDIR}/data/${policyName}.json
      CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
      Wait Until Keyword Succeeds    3 min    5 sec    VerifyPdpStatistics    0    0    0    0
@@ -34,8 +34,7 @@ ExecuteApexTestPnfPolicy
      CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
      DeployPolicy
      Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
-     ${result}=     Run Process    ${CURDIR}/data/make_topic.sh     APEX-CL-MGT
-     Should Be Equal As Integers    ${result.rc}    0
+     GetTopic     APEX-CL-MGT
      Wait Until Keyword Succeeds    2 min    5 sec    TriggerAndVerifyTestPnfPolicy
 
 ExecuteApexTestVnfPolicy
@@ -44,8 +43,7 @@ ExecuteApexTestVnfPolicy
      CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
      DeployPolicy
      Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
-     ${result}=     Run Process    ${CURDIR}/data/make_topic.sh     APEX-CL-MGT
-     Should Be Equal As Integers    ${result.rc}    0
+     GetTopic     APEX-CL-MGT
      Wait Until Keyword Succeeds    2 min    5 sec    TriggerAndVerifyTestVnfPolicy
 
 ExecuteApexTestPnfPolicyWithMetadataSet
@@ -56,13 +54,12 @@ ExecuteApexTestPnfPolicyWithMetadataSet
       CreateNodeTemplate  /policy/api/v1/nodetemplates  200  ${postjson}  1
       DeployPolicy
       Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
-      ${result}=     Run Process    ${CURDIR}/data/make_topic.sh     APEX-CL-MGT2
-      Should Be Equal As Integers    ${result.rc}    0
+      GetTopic     APEX-CL-MGT2
       Wait Until Keyword Succeeds    2 min    5 sec    TriggerAndVerifyTestPnfPolicy
 
 Metrics
      [Documentation]  Verify policy-apex-pdp is exporting prometheus metrics
-     ${auth}=  HealthCheckAuth
+     ${auth}=  PolicyAdminAuth
      ${resp}=  PerformGetRequest  ${APEX_IP}  /metrics  200  null  ${auth}
      Should Contain  ${resp.text}  pdpa_policy_deployments_total{operation="deploy",status="TOTAL",} 4.0
      Should Contain  ${resp.text}  pdpa_policy_deployments_total{operation="deploy",status="SUCCESS",} 4.0
@@ -125,10 +122,8 @@ TriggerAndVerifyTestVnfPolicy
 CheckLogMessage
     [Documentation]    Read log messages received and check for expected content.
     [Arguments]    ${status}    ${expectedMsg}
-    ${result}=     Run Process    ${CURDIR}/data/wait_topic.sh     APEX-CL-MGT    ${status}
-    Log    Received log event on APEX-CL-MGT topic ${result.stdout}
-    Should Be Equal As Integers    ${result.rc}    0
-    Should Contain    ${result.stdout}    ${expectedMsg}
+    ${result}=     CheckTopic     APEX-CL-MGT    ${status}
+    Should Contain    ${result}    ${expectedMsg}
 
 VerifyPdpStatistics
      [Documentation]    Verify pdp statistics after policy execution

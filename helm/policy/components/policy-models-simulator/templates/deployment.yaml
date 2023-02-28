@@ -32,20 +32,20 @@ spec:
           command: ["/opt/app/policy/simulators/bin/simulators.sh"]
           args: ["/opt/app/policy/simulators/etc/mounted/simParameters.json"]
           ports:
-          - containerPort: {{ .Values.service.internalPort2 }}
-          - containerPort: {{ .Values.service.internalPort3 }}
-          - containerPort: {{ .Values.service.internalPort4 }}
-          - containerPort: {{ .Values.service.internalPort5 }}
-          - containerPort: {{ .Values.service.internalPort6 }}
-          - containerPort: {{ .Values.service.internalPort7 }}
+          - containerPort: {{ .Values.service.internalPort }}
+          - containerPort: {{ .Values.service.simulators.aai.internalPort }}
+          - containerPort: {{ .Values.service.simulators.grpc.internalPort }}
+          - containerPort: {{ .Values.service.simulators.sdnc.internalPort }}
+          - containerPort: {{ .Values.service.simulators.so.internalPort }}
+          - containerPort: {{ .Values.service.simulators.vfc.internalPort }}
           livenessProbe:
             tcpSocket:
-              port: 3904
+              port: {{ .Values.service.internalPort }}
             initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds }}
             periodSeconds: {{ .Values.liveness.periodSeconds }}
           readinessProbe:
             tcpSocket:
-              port: 3904
+              port: {{ .Values.service.internalPort }}
             initialDelaySeconds: {{ .Values.readiness.initialDelaySeconds }}
             periodSeconds: {{ .Values.readiness.periodSeconds }}
           volumeMounts:

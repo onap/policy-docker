@@ -22,20 +22,20 @@
 ROBOT_FILE=$1
 echo "Invoking the robot tests from: $1"
 
-export DEFAULT_PORT=6969
-export DATA=/opt/robotworkspace/models/models-examples/src/main/resources/policies
-export NODETEMPLATES=/opt/robotworkspace/models/models-examples/src/main/resources/nodetemplates
-export POLICY_RUNTIME_ACM_IP=policy-clamp-runtime-acm:${DEFAULT_PORT}
-export POLICY_API_IP=policy-api:${DEFAULT_PORT}
-export POLICY_PAP_IP=policy-pap:${DEFAULT_PORT}
-export APEX_IP=policy-apex-pdp:${DEFAULT_PORT}
-export DMAAP_IP=message-router:3904
-export SIMULATOR_IP=message-router
-export PROMETHEUS_IP=prometheus:9090
+DEFAULT_PORT=6969
+DATA=/opt/robotworkspace/models/models-examples/src/main/resources/policies
+NODETEMPLATES=/opt/robotworkspace/models/models-examples/src/main/resources/nodetemplates
+DMAAP_IP=message-router:3904
+POLICY_RUNTIME_ACM_IP=policy-clamp-runtime-acm:${DEFAULT_PORT}
+POLICY_API_IP=policy-api:${DEFAULT_PORT}
+POLICY_PAP_IP=policy-pap:${DEFAULT_PORT}
+APEX_IP=policy-apex-pdp:${DEFAULT_PORT}
+APEX_EVENTS_IP=policy-apex-pdp:23324
+PROMETHEUS_IP=prometheus:9090
 
 export ROBOT_VARIABLES=
 ROBOT_VARIABLES="-v DATA:$DATA -v NODETEMPLATES:$NODETEMPLATES -v POLICY_RUNTIME_ACM_IP:$POLICY_RUNTIME_ACM_IP -v POLICY_API_IP:$POLICY_API_IP
--v POLICY_PAP_IP:$POLICY_PAP_IP -v APEX_IP:$APEX_IP -v DMAAP_IP:$DMAAP_IP -v SIMULATOR_IP:$SIMULATOR_IP -v PROMETHEUS_IP:${PROMETHEUS_IP}"
+-v POLICY_PAP_IP:$POLICY_PAP_IP -v APEX_IP:$APEX_IP -v APEX_EVENTS_IP:$APEX_EVENTS_IP -v DMAAP_IP:$DMAAP_IP -v PROMETHEUS_IP:${PROMETHEUS_IP}"
 
 echo "Run Robot test"
 echo ROBOT_VARIABLES="${ROBOT_VARIABLES}"
