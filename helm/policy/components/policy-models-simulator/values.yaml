@@ -49,18 +49,29 @@ service:
   type: ClusterIP
   name: message-router
   portName: message-router
-  externalPort2: 6666
-  internalPort2: 6666
-  externalPort3: 6668
-  internalPort3: 6668
-  externalPort4: 6669
-  internalPort4: 6669
-  externalPort5: 6670
-  internalPort5: 6670
-  externalPort6: 6680
-  internalPort6: 6680
-  externalPort7: 3904
-  internalPort7: 3904
+  externalPort: 3904
+  internalPort: 3904
+  simulators:
+    aai:
+      name: aai-sim
+      externalPort: 6666
+      internalPort: 6666
+    sdnc:
+      name: sdnc-sim
+      externalPort: 6668
+      internalPort: 6668
+    so:
+      name: so-sim
+      externalPort: 6669
+      internalPort: 6669
+    vfc:
+      name: vfc-sim
+      externalPort: 6670
+      internalPort: 6670
+    grpc:
+      name: grpc-sim
+      externalPort: 6680
+      internalPort: 6680
 
 ingress:
   enabled: false

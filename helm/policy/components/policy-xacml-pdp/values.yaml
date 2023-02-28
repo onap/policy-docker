@@ -90,8 +90,12 @@ liveness:
   enabled: true
 
 readiness:
-  initialDelaySeconds: 20
-  periodSeconds: 10
+  initialDelaySeconds: 10
+  periodSeconds: 120
+  api: /policy/pdpx/v1/healthcheck
+  successThreshold: 1
+  failureThreshold: 3
+  timeout: 60
 
 service:
   type: ClusterIP
