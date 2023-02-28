@@ -25,7 +25,6 @@ source "${WORKSPACE}"/compose/start-compose.sh drools-apps
 sleep 10
 unset http_proxy https_proxy
 
-export DMAAP_IP="localhost:${DMAAP_PORT}"
 export SUITES="drools-applications-test.robot"
 
 # wait for the app to start up
@@ -36,4 +35,4 @@ sleep 15
 
 ROBOT_VARIABLES="-v DATA:${DATA} -v DROOLS_IP:localhost:${DROOLS_APPS_PORT}
 -v DROOLS_IP_2:localhost:${DROOLS_APPS_TELEMETRY_PORT} -v POLICY_API_IP:localhost:${API_PORT}
--v POLICY_PAP_IP:localhost:${PAP_PORT}"
+-v POLICY_PAP_IP:localhost:${PAP_PORT} -v DMAAP_IP:localhost:${DMAAP_PORT}"

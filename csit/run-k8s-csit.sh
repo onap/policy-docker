@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # ============LICENSE_START====================================================
-#  Copyright (C) 2022 Nordix Foundation.
+#  Copyright (C) 2022-2023 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,12 @@
 # This script spins up kubernetes cluster in Microk8s for deploying policy helm charts.
 # Runs CSITs in kubernetes.
 
-CSIT_SCRIPT="run-test.sh"
+if [ -z "${WORKSPACE}" ]; then
+    WORKSPACE=$(git rev-parse --show-toplevel)
+    export WORKSPACE
+fi
+
+CSIT_SCRIPT="scripts/run-test.sh"
 ROBOT_DOCKER_IMAGE="policy-csit-robot"
 POLICY_CLAMP_ROBOT="policy-clamp-test.robot"
 POLICY_API_ROBOT="api-test.robot"
@@ -36,7 +41,7 @@ POLICY_APEX_CONTAINER="policy-apex-pdp"
 
 export PROJECT=""
 export ROBOT_FILE=""
-export ROBOT_LOG_DIR=${PWD}/archives
+export ROBOT_LOG_DIR=${WORKSPACE}/csit/archives
 export READINESS_CONTAINERS=()
 
 function spin_microk8s_cluster () {
@@ -80,13 +85,16 @@ function teardown_cluster () {
 
 function build_robot_image () {
     echo "Build docker image for robot framework"
-    cd ../helm;
+    cd ${WORKSPACE}/csit/resources || exit;
     clone_models
     echo "Build robot framework docker image"
     docker login -u docker -p docker nexus3.onap.org:10001
-    docker build . --file Dockerfile --build-arg CSIT_SCRIPT="$CSIT_SCRIPT" --build-arg ROBOT_FILE="$ROBOT_FILE"  --tag "${ROBOT_DOCKER_IMAGE}" --no-cache
+    docker build . --file Dockerfile \
+        --build-arg CSIT_SCRIPT="$CSIT_SCRIPT" \
+        --build-arg ROBOT_FILE="$ROBOT_FILE"  \
+        --tag "${ROBOT_DOCKER_IMAGE}" --no-cache
     echo "---------------------------------------------"
-    echo "Importing robot image in to microk8s registry"
+    echo "Importing robot image into microk8s registry"
     docker save -o policy-csit-robot.tar ${ROBOT_DOCKER_IMAGE}:latest
     microk8s ctr image import policy-csit-robot.tar
     if [ "${?}" -eq 0 ]; then
@@ -94,27 +102,35 @@ function build_robot_image () {
         rm -rf tests/models/
         echo "---------------------------------------------"
         echo "Installing Robot framework pod for running CSIT"
-        microk8s helm install csit-robot robot --set robot=$ROBOT_FILE --set "readiness={${READINESS_CONTAINERS[*]}}" --set robotLogDir=$ROBOT_LOG_DIR;
+        cd ${WORKSPACE}/helm
+        mkdir -p ${ROBOT_LOG_DIR}
+        microk8s helm install csit-robot robot --set robot="$ROBOT_FILE" --set "readiness={${READINESS_CONTAINERS[*]}}" --set robotLogDir=$ROBOT_LOG_DIR;
         print_robot_log
     fi
 }
 
+
 function print_robot_log () {
+    count_pods=0
+    while [[ ${count_pods} -eq 0 ]]; do
+        echo "Waiting for pods to come up..."
+        sleep 5
+        count_pods=$(microk8s kubectl get pods --output name | wc -l)
+    done
     robotpod=$(microk8s kubectl get po | grep policy-csit)
-    podName=$(echo $robotpod | awk '{print $1}')
+    podName=$(echo "$robotpod" | awk '{print $1}')
     echo "The robot tests will begin once the policy components {${READINESS_CONTAINERS[*]}} are up and running..."
-    microk8s kubectl wait --for=condition=ready --timeout=180s pod/$podName
-    microk8s kubectl logs -f $podName
+    microk8s kubectl wait --for=jsonpath='{.status.phase}'=Running --timeout=700s pod/"$podName"
+    microk8s kubectl logs -f "$podName"
     echo "Please check the logs of policy-csit-robot pod for the test execution results"
 }
 
+
 function clone_models () {
-    GIT_TOP=$(git rev-parse --show-toplevel)
-    GERRIT_BRANCH=$(awk -F= '$1 == "defaultbranch" { print $2 }' \
-                    "${GIT_TOP}"/.gitreview)
+    GERRIT_BRANCH=$(awk -F= '$1 == "defaultbranch" { print $2 }' "${WORKSPACE}"/.gitreview)
     echo GERRIT_BRANCH="${GERRIT_BRANCH}"
     # download models examples
-    git clone -b "${GERRIT_BRANCH}" --single-branch https://github.com/onap/policy-models.git tests/models
+    git clone -b "${GERRIT_BRANCH}" --single-branch https://github.com/onap/policy-models.git "${WORKSPACE}"/csit/resources/tests/models
 
     # create a couple of variations of the policy definitions
     sed -e 's!Measurement_vGMUX!ADifferentValue!' \
@@ -143,7 +159,7 @@ function get_robot_file () {
 
   pap | policy-pap)
     export ROBOT_FILE=$POLICY_PAP_ROBOT
-    export READINESS_CONTAINERS=($POLICY_PAP_CONTAINER,$POLICY_API_CONTAINER)
+    export READINESS_CONTAINERS=($POLICY_APEX_CONTAINER,$POLICY_PAP_CONTAINER,$POLICY_API_CONTAINER)
     ;;
 
   apex-pdp | policy-apex-pdp)
@@ -171,13 +187,14 @@ if [ $1 == "install" ];  then
     spin_microk8s_cluster
     if [ "${?}" -eq 0 ];  then
         echo "Installing policy helm charts in the default namespace"
-        cd ../helm/;microk8s helm dependency build policy;microk8s helm install csit-policy policy;
+        cd ${WORKSPACE}/helm/ || exit;microk8s helm dependency build policy;microk8s helm install csit-policy policy;
         echo "Policy chart installation completed"
-	      echo "-------------------------------------------"
+	    echo "-------------------------------------------"
     fi
 
     if [ "$2" ]; then
         export PROJECT=$2
+        export ROBOT_LOG_DIR=${WORKSPACE}/csit/archives/${PROJECT}
         get_robot_file
         echo "CSIT will be invoked from $ROBOT_FILE"
         echo "Readiness containers: ${READINESS_CONTAINERS[*]}"

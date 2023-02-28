@@ -40,6 +40,11 @@ spec:
       targetPort: {{ .Values.service.internalPort }}
       name: {{ .Values.service.portName }}
     {{- end}}
+    {{if .Values.jerseyServer.enabled}}
+    - port: {{ .Values.jerseyServer.externalPort }}
+      targetPort: {{ .Values.jerseyServer.internalPort }}
+      name: {{ .Values.jerseyServer.portName }}
+    {{end}}
   selector:
     app: {{ .Chart.Name }}
     release: RELEASE

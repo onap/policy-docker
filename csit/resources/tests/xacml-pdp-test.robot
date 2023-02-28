@@ -24,8 +24,7 @@ Metrics
 
 MakeTopics
     [Documentation]    Creates the Policy topics
-    ${result}=     Run Process     ${CURDIR}/data/make_topic.sh   POLICY-PDP-PAP
-    Should Be Equal As Integers        ${result.rc}    0
+    GetTopic   POLICY-PDP-PAP
 
 ExecuteXacmlPolicy
     CreateMonitorPolicy
@@ -65,9 +64,10 @@ DeployPolicies
     ${postjson}=  Get file  ${CURDIR}/data/vCPE.policy.input.tosca.deploy.json
     ${policyadmin}=  PolicyAdminAuth
     PerformPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/policies  202  ${postjson}  null  ${policyadmin}
-    ${result}=     Run Process    ${CURDIR}/data/wait_topic.sh    POLICY-PDP-PAP
-    ...            responseTo    xacml    ACTIVE    onap.restart.tca
-    Should Be Equal As Integers        ${result.rc}    0
+    ${result}=     CheckTopic    POLICY-PDP-PAP    ACTIVE
+    Should Contain    ${result}    responseTo
+    Should Contain    ${result}    xacml    
+    Should Contain    ${result}    onap.restart.tca
 
 GetStatisticsAfterDeployed
     [Documentation]  Verify policy xacml-pdp statistics after policy is deployed
@@ -139,12 +139,12 @@ GetStatisticsAfterUndeploy
 
 PdpxGetReq
     [Arguments]  ${url}
-    ${hcauth}=  HealthCheckAuth
+    ${hcauth}=  PolicyAdminAuth
     ${resp}=  PerformGetRequest  ${POLICY_PDPX_IP}  ${url}  200  null  ${hcauth}
     [return]  ${resp}
 
 DecisionPostReq
     [Arguments]  ${postjson}  ${abbr}
-    ${hcauth}=  HealthCheckAuth
+    ${hcauth}=  PolicyAdminAuth
     ${resp}=  PerformPostRequest  ${POLICY_PDPX_IP}  /policy/pdpx/v1/decision  200  ${postjson}  ${abbr}  ${hcauth}
     [return]  ${resp}
