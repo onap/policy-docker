@@ -22,6 +22,30 @@
       "revId": "8da79cd5f24a4f555e81e9fd725a0ddc2bfa50f4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44463d60_f867070d",
+        "filename": "helm/Dockerfile",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2023-02-28T14:32:49Z",
+      "side": 0,
+      "message": "has been moved with all the test resources on the previous commit",
+      "parentUuid": "5b3586da_bdc59b0d",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 13
+      },
+      "revId": "8da79cd5f24a4f555e81e9fd725a0ddc2bfa50f4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
