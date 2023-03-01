@@ -18,19 +18,19 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END======================================================
 
-echo "Shut down started!"
 if [ -z "${WORKSPACE}" ]; then
     WORKSPACE=$(git rev-parse --show-toplevel)
     export WORKSPACE
 fi
 COMPOSE_FOLDER="${WORKSPACE}"/compose
 
-source "${COMPOSE_FOLDER}"/export-ports.sh > /dev/null 2>&1
-source "${COMPOSE_FOLDER}"/get-versions.sh > /dev/null 2>&1
+cd ${COMPOSE_FOLDER}
 
-echo "Collecting logs from docker compose containers..."
-docker-compose -f "${COMPOSE_FOLDER}"/docker-compose.yml logs > docker_compose.log
-cat docker_compose.log
+echo "Configuring docker compose..."
+source export-ports.sh > /dev/null 2>&1
+source get-versions.sh > /dev/null 2>&1
 
-echo "Tearing down containers..."
-docker-compose -f "${COMPOSE_FOLDER}"/docker-compose.yml down -v --remove-orphans
+export REPLICAS=${1}
+docker-compose -f docker-compose.yml -f docker-compose.pdp.scale.yml up -d apexpdp nginx grafana
+
+cd ${WORKSPACE}

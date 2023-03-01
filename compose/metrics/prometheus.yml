@@ -24,78 +24,74 @@ global:
 # Alertmanager configuration
 alerting:
   alertmanagers:
-    - static_configs:
-        - targets:
-          # - alertmanager:9093
+  - static_configs:
+    - targets:
+      # - alertmanager:9093
 
 # scrape config
 scrape_configs:
 
-  - job_name: "api-metrics"
-    metrics_path: /policy/api/v1/metrics
-    static_configs:
-      - targets: ["policy-api:6969"]
-    basic_auth:
-      username: "policyadmin"
-      password: "zb!XztG34"
+- job_name: "api-metrics"
+  metrics_path: /policy/api/v1/metrics
+  static_configs:
+  - targets: ["policy-api:6969"]
+  basic_auth:
+    username: "policyadmin"
+    password: "zb!XztG34"
 
-  - job_name: "pap-metrics"
-    metrics_path: /policy/pap/v1/metrics
-    static_configs:
-      - targets: ["policy-pap:6969"]
-    basic_auth:
-      username: "policyadmin"
-      password: "zb!XztG34"
+- job_name: "pap-metrics"
+  metrics_path: /policy/pap/v1/metrics
+  static_configs:
+  - targets: ["policy-pap:6969"]
+  basic_auth:
+    username: "policyadmin"
+    password: "zb!XztG34"
 
-  - job_name: "apex-pdp-metrics"
-    static_configs:
-      - targets:
-          - "policy-apex-pdp:6969"
-    basic_auth:
-      username: "policyadmin"
-      password: "zb!XztG34"
+- job_name: "apex-pdp-metrics"
+  static_configs:
+  - targets:
+    - "policy-apex-pdp:6969"
+  basic_auth:
+    username: "policyadmin"
+    password: "zb!XztG34"
 
-  - job_name: "drools-apps-metrics"
-    static_configs:
-      - targets:
-          - "drools-apps:9696"
-    basic_auth:
-      username: "demo@people.osaaf.org"
-      password: "demo123456!"
+- job_name: "drools-apps-metrics"
+  static_configs:
+  - targets:
+    - "drools-apps:9696"
+  basic_auth:
+    username: "demo@people.osaaf.org"
+    password: "demo123456!"
 
-  - job_name: "drools-pdp-metrics"
-    static_configs:
-      - targets:
-          - "drools:9696"
-    basic_auth:
-      username: "demo@people.osaaf.org"
-      password: "demo123456!"
+- job_name: "drools-pdp-metrics"
+  static_configs:
+  - targets:
+    - "drools:9696"
+  basic_auth:
+    username: "demo@people.osaaf.org"
+    password: "demo123456!"
 
-  - job_name: "distribution-metrics"
-    static_configs:
-      - targets:
-          - "policy-distribution:6969"
-    basic_auth:
-      username: "policyadmin"
-      password: "zb!XztG34"
+- job_name: "distribution-metrics"
+  static_configs:
+  - targets:
+    - "policy-distribution:6969"
+  basic_auth:
+    username: "policyadmin"
+    password: "zb!XztG34"
 
-  - job_name: "xacml-pdp-metrics"
-    static_configs:
-      - targets:
-          - "policy-xacml-pdp:6969"
-    basic_auth:
-      username: "policyadmin"
-      password: "zb!XztG34"
+- job_name: "xacml-pdp-metrics"
+  static_configs:
+  - targets:
+    - "policy-xacml-pdp:6969"
+  basic_auth:
+    username: "policyadmin"
+    password: "zb!XztG34"
 
-  - job_name: "acm-metrics"
-    metrics_path: "/onap/policy/clamp/acm/prometheus"
-    static_configs:
-      - targets:
-          - "policy-clamp-runtime-acm:6969"
-    basic_auth:
-      username: "runtimeUser"
-      password: "zb!XztG34"
-
-  - job_name: "node"
-    static_configs:
-    - targets: ["node-exporter:9100"]
+- job_name: "acm-metrics"
+  metrics_path: "/onap/policy/clamp/acm/prometheus"
+  static_configs:
+  - targets:
+    - "policy-clamp-runtime-acm:6969"
+  basic_auth:
+    username: "runtimeUser"
+    password: "zb!XztG34"
