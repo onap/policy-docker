@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 #
 # Copyright 2016-2017 Huawei Technologies Co., Ltd.
 # Modification Copyright 2019 © Samsung Electronics Co., Ltd.

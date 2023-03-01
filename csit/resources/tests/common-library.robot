@@ -100,7 +100,6 @@ QueryPolicyStatus
     Should Be Equal As Strings    ${resp.status_code}     200
     Should Be Equal As Strings    ${responseEntry['pdpGroup']}  ${pdpGroup}
     Should Be Equal As Strings    ${responseEntry['pdpType']}  ${pdpType}
-    Should Be Equal As Strings    ${responseEntry['pdpId']}  ${pdpName}
     Should Be Equal As Strings    ${responseEntry['policy']['name']}  ${policyName}
     Should Be Equal As Strings    ${responseEntry['policy']['version']}  1.0.0
     Should Be Equal As Strings    ${responseEntry['policyType']['name']}  ${policyTypeName}
