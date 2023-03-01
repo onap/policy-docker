@@ -30,14 +30,21 @@ export POLICY_PAP_IP=policy-pap
 export APEX_IP=policy-apex-pdp
 export DMAAP_IP=message-router
 export SIM_IP=message-router
+export POLICY_PDPX_IP=policy-xacml-pdp
+export POLICY_PDPX_PORT=6969
 
 export ROBOT_VARIABLES=
 ROBOT_VARIABLES="-v DATA:$DATA -v NODETEMPLATES:$NODETEMPLATES -v POLICY_RUNTIME_ACM_IP:$POLICY_RUNTIME_ACM_IP -v POLICY_API_IP:$POLICY_API_IP
--v POLICY_PAP_IP:$POLICY_PAP_IP -v APEX_IP:$APEX_IP -v DMAAP_IP:$DMAAP_IP -v SIM_IP:$SIM_IP"
+-v POLICY_PAP_IP:$POLICY_PAP_IP -v APEX_IP:$APEX_IP -v DMAAP_IP:$DMAAP_IP -v SIM_IP:$SIM_IP -v POLICY_PDPX_IP:$POLICY_PDPX_IP"
 
 echo "Run Robot test"
 echo ROBOT_VARIABLES="${ROBOT_VARIABLES}"
 echo "Starting Robot test suites ..."
+
+if [ $1 == "xacml-pdp-test.robot"  ]; then
+  echo "Waiting for Xacml application to start"
+  ./data/wait_for_rest.sh policy-xacml-pdp "${POLICY_PDPX_PORT}"
+fi
 python3 -m robot.run -d /tmp/ $ROBOT_VARIABLES $1
 RESULT=$?
 echo "RESULT: ${RESULT}"

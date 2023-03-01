@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # ============LICENSE_START====================================================
-#  Copyright (C) 2022 Nordix Foundation.
+#  Copyright (C) 2022-2023 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -33,6 +33,8 @@ POLICY_API_CONTAINER="policy-api"
 POLICY_PAP_CONTAINER="policy-pap"
 POLICY_CLAMP_CONTAINER="policy-clamp-runtime-acm"
 POLICY_APEX_CONTAINER="policy-apex-pdp"
+POLICY_DROOLS_CONTAINER="policy-drools-pdp"
+POLICY_XACML_CONTAINER="policy-xacml-pdp"
 
 export PROJECT=""
 export ROBOT_FILE=""
@@ -153,10 +155,12 @@ function get_robot_file () {
 
   xacml-pdp | policy-xacml-pdp)
     export ROBOT_FILE=($POLICY_XACML_PDP_ROBOT)
+    export READINESS_CONTAINERS=($POLICY_XACML_CONTAINER)
     ;;
 
   drools-pdp | policy-drools-pdp)
     export ROBOT_FILE=($POLICY_DROOLS_PDP_ROBOT)
+    export READINESS_CONTAINERS=($POLICY_DROOLS_CONTAINER)
     ;;
 
   *)
