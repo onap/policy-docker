@@ -27,7 +27,8 @@ source "${SCRIPTS}"/setup-pap.sh
 "${SCRIPTS}"/wait_for_rest.sh localhost "${APEX_PORT}"
 
 export DMAAP_IP="localhost:${DMAAP_PORT}"
-export SUITES="apex-pdp-test.robot"
+export SUITES="apex-pdp-test.robot
+apex-slas.robot"
 
 ROBOT_VARIABLES="${ROBOT_VARIABLES} -v APEX_IP:localhost:${APEX_PORT} -v DMAAP_IP:${DMAAP_IP}
 -v APEX_EVENTS_IP:localhost:${APEX_EVENTS_PORT}"
