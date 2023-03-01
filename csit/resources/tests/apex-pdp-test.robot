@@ -145,3 +145,8 @@ VerifyPdpStatistics
      Should Be Equal As Strings    ${resp.json()['defaultGroup']['apex'][0]['policyExecutedCount']}  ${executedCount}
      Should Be Equal As Strings    ${resp.json()['defaultGroup']['apex'][0]['policyExecutedSuccessCount']}  ${executedSuccessCount}
      Should Be Equal As Strings    ${resp.json()['defaultGroup']['apex'][0]['policyExecutedFailCount']}  0
+
+ValidateResponseTimeForApex
+    [Arguments]  ${url}  ${method}
+    [Documentation]  Check if url response is under required time for apex metrics
+    ValidateResponseTime  apex-metrics  ${url}  ${method}  500
