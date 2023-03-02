@@ -140,11 +140,6 @@ GetReq
      ${resp}=  PerformGetRequest  ${POLICY_API_IP}  ${url}  200  null  ${auth}
      [return]  ${resp}
 
-ValidateResponseTimeForApi
-    [Arguments]  ${url}  ${method}
-    [Documentation]  Check if url response is under required time for api metrics
-    ValidateResponseTime  api-metrics  ${url}  ${method}  500
-
 DeleteReq
      [Arguments]  ${url}  ${expectedstatus}
      ${auth}=  PolicyAdminAuth

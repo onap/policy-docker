@@ -28,9 +28,14 @@ ValidateResponseTimeQueryPolicies
     [Documentation]  Validate query policies response time
     ValidateResponseTimeForApi  /policies  GET
 
+ValidateResponseTimeQueryPolicyTypeListVersions
+    [Documentation]  Validate query policyType versions response time
+    ValidateResponseTime  api-metrics  /policytypes/{policyTypeId}  GET  400
+
+#Time increased from 200 to 250 due to slow ONAP machines
 ValidateResponseTimeQueryPolicyVersion
     [Documentation]  Validate query policy by version response time
-    ValidateResponseTimeForApi  /policies/{policyId}/versions/{policyVersion}  GET
+    ValidateResponseTime  api-metrics   /policies/{policyId}/versions/{policyVersion}  GET  250
 
 ValidateResponseTimeCreatePolicy
     [Documentation]  Validate response time for creating a policy
@@ -43,3 +48,7 @@ ValidateResponseTimeCreatePolicyType
 ValidateResponseTimeDeletePolicy
     [Documentation]  Validate response time for deletion of policies
     ValidateResponseTimeForApi  /policies/{policyId}/versions/{policyVersion}  DELETE
+
+ValidateResponseTimeDeletePolicyType
+    [Documentation]  Validate response time for deletion of policyTypes
+    ValidateResponseTimeForApi  /policytypes/{policyTypeId}/versions/{versionId}  DELETE
