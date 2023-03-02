@@ -31,12 +31,12 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.internalPort }}
+    - port: {{ .Values.service.externalPort }}
       targetPort: {{ .Values.service.internalPort }}
-      name: https-6969
-    - port: {{ .Values.service.internalPort2 }}
-      targetPort: {{ .Values.service.internalPort }}
-      name: https-9696
+      name: http-6969
+    - port: {{ .Values.service.externalPort2 }}
+      targetPort: {{ .Values.service.internalPort2 }}
+      name: http-9696
   selector:
     app: {{ .Chart.Name }}
     release: release
