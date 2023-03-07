@@ -21,7 +21,7 @@
 # Application configuration defaults.
 #################################################################
 # application image
-image: nexus3.onap.org:10001/onap/policy-clamp-runtime-acm:6.4-SNAPSHOT-latest
+image: nexus3.onap.org:10001/onap/policy-clamp-runtime-acm:6.4.1
 pullPolicy: Always
 
 # flag to enable debugging - application support required

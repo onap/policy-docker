@@ -28,7 +28,7 @@ global:
 # Application configuration defaults.
 #################################################################
 # application image
-image: nexus3.onap.org:10001/onap/policy-clamp-ac-http-ppnt:6.3.1
+image: nexus3.onap.org:10001/onap/policy-clamp-ac-http-ppnt:6.4.1
 pullPolicy: Always
 
 # application configuration
