@@ -34,12 +34,17 @@ POLICY_PAP_ROBOT="pap-test.robot"
 POLICY_APEX_PDP_ROBOT="apex-pdp-test.robot"
 POLICY_XACML_PDP_ROBOT="xacml-pdp-test.robot"
 POLICY_DROOLS_PDP_ROBOT="drools-pdp-test.robot"
+POLICY_DISTRIBUTION_ROBOT="distribution-test.robot"
 POLICY_API_CONTAINER="policy-api"
 POLICY_PAP_CONTAINER="policy-pap"
 POLICY_CLAMP_CONTAINER="policy-clamp-runtime-acm"
 POLICY_APEX_CONTAINER="policy-apex-pdp"
 POLICY_DROOLS_CONTAINER="policy-drools-pdp"
 POLICY_XACML_CONTAINER="policy-xacml-pdp"
+POLICY_DISTRIBUTION_CONTAINER="policy-distribution"
+
+DISTRIBUTION_CSAR=${WORKSPACE}/csit/resources/tests/data/csar
+DIST_TEMP_FOLDER=/tmp/distribution
 
 export PROJECT=""
 export ROBOT_FILE=""
@@ -89,6 +94,9 @@ function build_robot_image () {
     echo "Build docker image for robot framework"
     cd ${WORKSPACE}/csit/resources || exit;
     clone_models
+    if [ "${PROJECT}" == "distribution" ] || [ "${PROJECT}" == "policy-distribution" ]; then
+      copy_csar_file
+    fi
     echo "Build robot framework docker image"
     docker login -u docker -p docker nexus3.onap.org:10001
     docker build . --file Dockerfile \
@@ -145,6 +153,15 @@ function clone_models () {
         >tests/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.v2.json
 }
 
+function copy_csar_file () {
+  zip -F ${DISTRIBUTION_CSAR}/sample_csar_with_apex_policy.csar \
+    --out ${DISTRIBUTION_CSAR}/csar_temp.csar -q
+  # Remake temp directory
+  sudo rm -rf "${DIST_TEMP_FOLDER}"
+  sudo mkdir "${DIST_TEMP_FOLDER}"
+  sudo cp ${DISTRIBUTION_CSAR}/csar_temp.csar  ${DISTRIBUTION_CSAR}/temp.csar
+  sudo mv ${DISTRIBUTION_CSAR}/temp.csar  ${DIST_TEMP_FOLDER}/sample_csar_with_apex_policy.csar
+}
 
 function get_robot_file () {
   case $PROJECT in
@@ -177,6 +194,12 @@ function get_robot_file () {
   drools-pdp | policy-drools-pdp)
     export ROBOT_FILE=($POLICY_DROOLS_PDP_ROBOT)
     export READINESS_CONTAINERS=($POLICY_DROOLS_CONTAINER)
+    ;;
+
+  distribution | policy-distribution)
+    export ROBOT_FILE=($POLICY_DISTRIBUTION_ROBOT)
+    export READINESS_CONTAINERS=($POLICY_APEX_CONTAINER,$POLICY_API_CONTAINER,$POLICY_PAP_CONTAINER,
+    $POLICY_DISTRIBUTION_CONTAINER)
     ;;
 
   *)

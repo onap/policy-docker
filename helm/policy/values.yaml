@@ -49,7 +49,10 @@ policy-drools-pdp:
   enabled: true
 policy-xacml-pdp:
   enabled: true
-
+policy-distribution:
+  enabled: true
+policy-clamp-ac-http-ppnt:
+  enabled: true
 
 #################################################################
 # DB configuration defaults.

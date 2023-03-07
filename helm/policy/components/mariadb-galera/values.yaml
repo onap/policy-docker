@@ -323,7 +323,7 @@ mariadbConfiguration: |-
 
 ## Desired number of cluster nodes
 ##
-replicaCount: 3
+replicaCount: 1
 
 ## updateStrategy for MariaDB Master StatefulSet
 ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies

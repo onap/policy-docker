@@ -1,0 +1,130 @@
+{{/*
+#  ============LICENSE_START=======================================================
+#   Copyright (C) 2023 Nordix Foundation.
+#  ================================================================================
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+#  SPDX-License-Identifier: Apache-2.0
+#  ============LICENSE_END=========================================================
+*/}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: default
+  labels:
+    app.kubernetes.io/name: {{ .Chart.Name }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    app.kubernetes.io/instance: release
+    app.kubernetes.io/managed-by: Helm
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Chart.Name }}
+      app.kubernetes.io/instance: release
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Chart.Name }}
+        helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+        app.kubernetes.io/instance: release
+        app.kubernetes.io/managed-by: Helm
+        name: {{ .Chart.Name }}
+    spec:
+      initContainers:
+      - command:
+        - sh
+        args:
+        - -c
+        - "cd /config-input && for PFILE in `ls -1`; do envsubst <${PFILE} >/config/${PFILE}; done"
+        env:
+        - name: RESTSERVER_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Chart.Name }}-restserver-secret
+              key: login
+        - name: RESTSERVER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Chart.Name }}-restserver-secret
+              key: password
+{{- if .Values.config.useStrimziKafka }}
+        - name: JAASLOGIN
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Chart.Name }}-policy-kafka-user
+              key: sasl.jaas.config
+{{- end }}
+        volumeMounts:
+        - mountPath: /config-input
+          name: ac-http-ppnt-config
+        - mountPath: /config
+          name: ac-http-ppnt-config-processed
+        image: docker.io/dibi/envsubst:1
+        imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
+        name: {{ .Chart.Name }}-update-config
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image }}
+          imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
+          command: ["/opt/app/policy/clamp/bin/http-participant.sh"]
+          args: ["/opt/app/policy/clamp/etc/mounted/HttpParticipantParameters.yaml"]
+          ports:
+            - containerPort: 8084
+              name: http-api
+          # disable liveness probe when breakpoints set in debugger
+          # so K8s doesn't restart unresponsive container
+          {{- if eq .Values.liveness.enabled true }}
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.liveness.port }}
+            initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.liveness.periodSeconds }}
+          {{ end -}}
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.readiness.port }}
+            initialDelaySeconds: {{ .Values.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readiness.periodSeconds }}
+          volumeMounts:
+          - mountPath: /etc/localtime
+            name: localtime
+            readOnly: true
+          - mountPath: /opt/app/policy/clamp/etc/mounted
+            name: ac-http-ppnt-config-processed
+          resources:
+{{ toYaml .Values.resources.small | indent 12 }}
+        {{- if .Values.nodeSelector }}
+        nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 10 }}
+        {{- end -}}
+        {{- if .Values.affinity }}
+        affinity:
+{{ toYaml .Values.affinity | indent 10 }}
+        {{- end }}
+      serviceAccountName: {{ .Chart.Name }}-read
+      volumes:
+        - name: localtime
+          hostPath:
+             path: /etc/localtime
+        - name: ac-http-ppnt-config
+          configMap:
+            name: {{ .Chart.Name }}-configmap
+            defaultMode: 0755
+        - name: ac-http-ppnt-config-processed
+          emptyDir:
+            medium: Memory
+      imagePullSecrets:
+      - name: "default-docker-registry-key"
