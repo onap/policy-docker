@@ -325,6 +325,23 @@ services:
         '-c', './a1pms-participant.sh',
         'message-router', '3904'
         ]
+   policy-clamp-ac-kserve-ppnt:
+      image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-kserve-ppnt:${POLICY_CLAMP_VERSION}
+      container_name: policy-clamp-ac-kserve-ppnt
+      depends_on:
+       - simulator
+      hostname: policy-clamp-ac-kserve-ppnt
+      ports:
+       - 30297:6969
+      volumes:
+       - ./config/clamp/KserveParticipantParameters.yaml:/opt/app/policy/clamp/etc/KserveParticipantParameters.yaml:ro
+       - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
+       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
+      entrypoint: /opt/app/policy/bin/wait_for_port.sh
+      command: [
+        '-c', './kserve-participant.sh',
+        'message-router', '3904'
+        ]
    prometheus:
       image: prom/prometheus:v2.32.1
       container_name: prometheus
