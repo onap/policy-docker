@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85bac751_2122fbe8",
+        "filename": "helm/policy/components/policy-clamp-ac-http-ppnt/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2023-03-08T15:24:49Z",
+      "side": 1,
+      "message": "Should we use snapshot images ?",
+      "range": {
+        "startLine": 31,
+        "startChar": 60,
+        "endLine": 31,
+        "endChar": 65
+      },
+      "revId": "aa0a21da4332f3b8fe5ba694fa03a533d3516ba4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
