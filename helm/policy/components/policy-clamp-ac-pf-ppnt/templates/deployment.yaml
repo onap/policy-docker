@@ -69,7 +69,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: {{ .Chart.Name }}-pap-secret
-              key: login
+              key: password
         - name: RESTSERVER_USER
           valueFrom:
             secretKeyRef:
@@ -79,7 +79,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: {{ .Chart.Name }}-restserver-secret
-              key: login
+              key: password
 {{- if .Values.config.useStrimziKafka }}
         - name: JAASLOGIN
           valueFrom:
