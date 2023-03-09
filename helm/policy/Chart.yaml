@@ -65,3 +65,7 @@ dependencies:
     version: ~11.x-0
     repository: 'file://components/policy-clamp-ac-http-ppnt'
     condition: policy-clamp-ac-http-ppnt.enabled
+  - name: policy-clamp-ac-kserve-ppnt
+    version: ~11.x-0
+    repository: 'file://components/policy-clamp-ac-kserve-ppnt'
+    condition: policy-clamp-ac-kserve-ppnt.enabled

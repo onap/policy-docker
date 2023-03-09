@@ -53,6 +53,8 @@ policy-distribution:
   enabled: true
 policy-clamp-ac-http-ppnt:
   enabled: true
+policy-clamp-ac-kserve-ppnt:
+  enabled: true
 
 #################################################################
 # DB configuration defaults.
