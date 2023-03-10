@@ -69,3 +69,7 @@ dependencies:
     version: ~11.x-0
     repository: 'file://components/policy-clamp-ac-kserve-ppnt'
     condition: policy-clamp-ac-kserve-ppnt.enabled
+  - name: policy-clamp-ac-a1pms-ppnt
+    version: ~11.x-0
+    repository: 'file://components/policy-clamp-ac-a1pms-ppnt'
+    condition: policy-clamp-ac-a1pms-ppnt.enabled
