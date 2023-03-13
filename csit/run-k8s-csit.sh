@@ -30,7 +30,7 @@ CSIT_SCRIPT="scripts/run-test.sh"
 ROBOT_DOCKER_IMAGE="policy-csit-robot"
 POLICY_CLAMP_ROBOT="policy-clamp-test.robot"
 POLICY_API_ROBOT="api-test.robot"
-POLICY_PAP_ROBOT="pap-test.robot"
+POLICY_PAP_ROBOT="pap-test.robot pap-slas.robot"
 POLICY_APEX_PDP_ROBOT="apex-pdp-test.robot"
 POLICY_XACML_PDP_ROBOT="xacml-pdp-test.robot"
 POLICY_DROOLS_PDP_ROBOT="drools-pdp-test.robot"
@@ -87,6 +87,8 @@ function teardown_cluster () {
     sudo snap remove microk8s;rm -rf $HOME/.kube/config
     sudo rm -rf /dockerdata-nfs/mariadb-galera/
     echo "K8s Cluster removed"
+    echo "Clean up docker"
+    docker system prune -af
 }
 
 
@@ -107,16 +109,21 @@ function build_robot_image () {
     echo "Importing robot image into microk8s registry"
     docker save -o policy-csit-robot.tar ${ROBOT_DOCKER_IMAGE}:latest
     microk8s ctr image import policy-csit-robot.tar
+}
+
+
+function start_csit () {
+    build_robot_image
     if [ "${?}" -eq 0 ]; then
-        rm -rf policy-csit-robot.tar
-        rm -rf tests/models/
+        rm -rf ${WORKSPACE}/csit/resources/policy-csit-robot.tar
+        rm -rf ${WORKSPACE}/csit/resources/tests/models/
         echo "---------------------------------------------"
         echo "Installing Robot framework pod for running CSIT"
         cd ${WORKSPACE}/helm
         mkdir -p ${ROBOT_LOG_DIR}
         microk8s helm install csit-robot robot --set robot="$ROBOT_FILE" --set "readiness={${READINESS_CONTAINERS[*]}}" --set robotLogDir=$ROBOT_LOG_DIR;
         print_robot_log
-    fi
+  fi
 }
 
 
@@ -218,6 +225,7 @@ if [ $1 == "install" ];  then
         cd ${WORKSPACE}/helm || exit;
         microk8s helm dependency build policy
         microk8s helm install csit-policy policy
+        microk8s helm install prometheus prometheus
         echo "Policy chart installation completed"
 	    echo "-------------------------------------------"
     fi
@@ -229,7 +237,7 @@ if [ $1 == "install" ];  then
         echo "CSIT will be invoked from $ROBOT_FILE"
         echo "Readiness containers: ${READINESS_CONTAINERS[*]}"
         echo "-------------------------------------------"
-        build_robot_image
+        start_csit
     else
         echo "No project supplied for running CSIT"
     fi

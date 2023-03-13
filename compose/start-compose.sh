@@ -63,7 +63,7 @@ source "${COMPOSE_FOLDER}"/get-versions.sh > /dev/null 2>&1
 
 # in case of csit running for PAP (groups should be for pap) but starts apex-pdp for dependencies.
 if [ -z "$PROJECT" ]; then
-  PROJECT=$component
+  export PROJECT=$component
 fi
 
 if [ -n "$component" ]; then
@@ -82,7 +82,7 @@ if [ -n "$component" ]; then
     docker-compose -f "${COMPOSE_FOLDER}"/docker-compose.yml up -d "${component}"
   fi
 else
-  PROJECT=pap
+  export PROJECT=api # api has groups.json complete with all 3 pdps
   if [ "$gui" = true ]; then
     echo "Starting application with gui..."
     docker-compose -f "${COMPOSE_FOLDER}"/docker-compose.yml \
