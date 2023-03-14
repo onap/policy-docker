@@ -51,4 +51,7 @@ python3 -m pip install -U -qq docker
 
 python3 -m pip -qq freeze
 
-sudo apt-get -y -qq install libxml2-utils
+if (uname | grep -q 'Linux')
+then
+    sudo apt-get -y -qq install libxml2-utils
+fi
