@@ -1,14 +1,11 @@
-FROM python:3
+FROM nexus3.onap.org:10001/library/python:3.10-slim-bullseye
 ARG CSIT_SCRIPT=${CSIT_SCRIPT}
 ARG ROBOT_FILE=${ROBOT_FILE}
-ENV ROBOT_WORKSPACE /opt/robotworkspace
-ENV ROBOT_FILE $ROBOT_FILE
-RUN python3 -m pip install --upgrade pip
-RUN python3 -m pip install --upgrade --extra-index-url="https://nexus3.onap.org/repository/PyPi.staging/simple" 'robotframework-onap==0.5.1.*' --pre
-RUN python3 -m pip freeze
+ENV ROBOT_WORKSPACE=/opt/robotworkspace ROBOT_FILE=$ROBOT_FILE
+RUN python3 -m pip install --upgrade pip && \
+    python3 -m pip install --upgrade --extra-index-url="https://nexus3.onap.org/repository/PyPi.staging/simple" 'robotframework-onap==0.6.0.*' --pre && \
+    python3 -m pip freeze
 RUN mkdir -p ${ROBOT_WORKSPACE}
-COPY ${CSIT_SCRIPT} ${ROBOT_WORKSPACE}/
-COPY tests/ ${ROBOT_WORKSPACE}/
+COPY ${CSIT_SCRIPT} tests/ ${ROBOT_WORKSPACE}/
 WORKDIR ${ROBOT_WORKSPACE}
-RUN chmod +x run-test.sh
 CMD ["sh", "-c", "./run-test.sh" , "${ROBOT_FILE}"]
