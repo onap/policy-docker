@@ -38,7 +38,7 @@ spec:
         prometheus.io/port: "9090"
     spec:
       containers:
-        - image: prom/prometheus:v2.32.1
+        - image: nexus3.onap.org:10001/prom/prometheus:latest
           name: prometheus
           args:
           - '--config.file=/etc/prometheus/prometheus.yml'
