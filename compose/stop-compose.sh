@@ -25,12 +25,16 @@ if [ -z "${WORKSPACE}" ]; then
 fi
 COMPOSE_FOLDER="${WORKSPACE}"/compose
 
-source "${COMPOSE_FOLDER}"/export-ports.sh > /dev/null 2>&1
-source "${COMPOSE_FOLDER}"/get-versions.sh > /dev/null 2>&1
+cd ${COMPOSE_FOLDER}
+
+source export-ports.sh > /dev/null 2>&1
+source get-versions.sh > /dev/null 2>&1
 
 echo "Collecting logs from docker compose containers..."
-docker-compose -f "${COMPOSE_FOLDER}"/docker-compose.yml logs > docker_compose.log
+docker-compose logs > docker_compose.log
 cat docker_compose.log
 
 echo "Tearing down containers..."
-docker-compose -f "${COMPOSE_FOLDER}"/docker-compose.yml down -v
+docker-compose down -v --remove-orphans
+
+cd ${WORKSPACE}

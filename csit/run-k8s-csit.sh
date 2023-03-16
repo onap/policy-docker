@@ -86,11 +86,12 @@ function spin_microk8s_cluster () {
 
 function teardown_cluster () {
     echo "Removing k8s cluster and k8s configuration file"
+    rm -rf ${WORKSPACE}/helm/policy/Chart.lock
     sudo snap remove microk8s;rm -rf $HOME/.kube/config
     sudo rm -rf /dockerdata-nfs/mariadb-galera/
     echo "K8s Cluster removed"
     echo "Clean up docker"
-    docker system prune -af
+    docker image prune -f
 }
 
 
@@ -139,7 +140,7 @@ function print_robot_log () {
     robotpod=$(sudo microk8s kubectl get po | grep policy-csit)
     podName=$(echo "$robotpod" | awk '{print $1}')
     echo "The robot tests will begin once the policy components {${READINESS_CONTAINERS[*]}} are up and running..."
-    sudo microk8s kubectl wait --for=jsonpath='{.status.phase}'=Running --timeout=700s pod/"$podName"
+    sudo microk8s kubectl wait --for=jsonpath='{.status.phase}'=Running --timeout=-1s pod/"$podName"
     sudo microk8s kubectl logs -f "$podName"
     echo "Please check the logs of policy-csit-robot pod for the test execution results"
 }
