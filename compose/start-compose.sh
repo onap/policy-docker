@@ -57,9 +57,11 @@ do
   esac
 done
 
+cd ${COMPOSE_FOLDER}
+
 echo "Configuring docker compose..."
-source "${COMPOSE_FOLDER}"/export-ports.sh > /dev/null 2>&1
-source "${COMPOSE_FOLDER}"/get-versions.sh > /dev/null 2>&1
+source export-ports.sh > /dev/null 2>&1
+source get-versions.sh > /dev/null 2>&1
 
 # in case of csit running for PAP (groups should be for pap) but starts apex-pdp for dependencies.
 if [ -z "$PROJECT" ]; then
@@ -67,29 +69,32 @@ if [ -z "$PROJECT" ]; then
 fi
 
 if [ -n "$component" ]; then
-  if [ "$grafana" = true ]; then
+  if [ "$component" == "logs" ]; then
+  echo "Collecting logs..."
+    docker-compose logs > docker-compose.log
+  elif [ "$grafana" = true ]; then
     echo "Starting ${component} application with Grafana"
-    docker-compose -f "${COMPOSE_FOLDER}"/docker-compose.yml up -d "${component}" grafana
+    docker-compose up -d "${component}" grafana
     echo "Prometheus server: http://localhost:${PROMETHEUS_PORT}"
     echo "Grafana server: http://localhost:${GRAFANA_PORT}"
   elif [ "$gui" = true ]; then
     echo "Starting application with gui..."
-    docker-compose -f "${COMPOSE_FOLDER}"/docker-compose.yml \
-                   -f "${COMPOSE_FOLDER}"/docker-compose.gui.yml up -d "${component}" policy-gui
+    docker-compose -f docker-compose.yml -f docker-compose.gui.yml up -d "${component}" policy-gui
     echo "Clamp GUI: https://localhost:2445/clamp"
   else
     echo "Starting ${component} application"
-    docker-compose -f "${COMPOSE_FOLDER}"/docker-compose.yml up -d "${component}"
+    docker-compose up -d "${component}"
   fi
 else
   export PROJECT=api # api has groups.json complete with all 3 pdps
   if [ "$gui" = true ]; then
     echo "Starting application with gui..."
-    docker-compose -f "${COMPOSE_FOLDER}"/docker-compose.yml \
-                   -f "${COMPOSE_FOLDER}"/docker-compose.gui.yml up -d
+    docker-compose -f docker-compose.yml -f docker-compose.gui.yml up -d
     echo "Clamp GUI: https://localhost:2445/clamp"
   else
     echo "Starting all components..."
-    docker-compose -f "${COMPOSE_FOLDER}"/docker-compose.yml up -d
+    docker-compose up -d
   fi
 fi
+
+cd ${WORKSPACE}
