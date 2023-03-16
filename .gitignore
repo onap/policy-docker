@@ -14,3 +14,4 @@ models
 **/*.log
 **/*/Chart.lock
 **/*/charts/
+**/*/policy-csit-robot.tar

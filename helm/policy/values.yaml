@@ -34,29 +34,29 @@ global:
 policy-models-simulator:
   enabled: true
 policy-clamp-ac-k8s-ppnt:
-  enabled: true
+  enabled: false
 policy-clamp-runtime-acm:
-  enabled: true
+  enabled: false
 policy-api:
-  enabled: true
+  enabled: false
 policy-pap:
-  enabled: true
+  enabled: false
 policy-apex-pdp:
-  enabled: true
+  enabled: false
 policy-clamp-ac-pf-ppnt:
-  enabled: true
+  enabled: false
 policy-drools-pdp:
-  enabled: true
+  enabled: false
 policy-xacml-pdp:
-  enabled: true
+  enabled: false
 policy-distribution:
-  enabled: true
+  enabled: false
 policy-clamp-ac-http-ppnt:
-  enabled: true
+  enabled: false
 policy-clamp-ac-kserve-ppnt:
-  enabled: true
+  enabled: false
 policy-clamp-ac-a1pms-ppnt:
-  enabled: true
+  enabled: false
 
 #################################################################
 # DB configuration defaults.
@@ -167,4 +167,4 @@ resources:
 serviceAccount:
   nameOverride: policy
   roles:
-    - read
+  - read
