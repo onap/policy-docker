@@ -36,7 +36,7 @@ services:
      working_dir: /opt/app/policy/gui/bin
      command: ./policy-gui.sh
    policy-clamp-backend:
-     image: ${CONTAINER_LOCATION}onap/policy-clamp-backend:${POLICY_CLAMP_VERSION}
+     image: ${CONTAINER_LOCATION}onap/policy-clamp-backend:latest
      container_name: policy-clamp-backend
      depends_on:
       - policy-clamp-runtime-acm
