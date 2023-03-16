@@ -67,10 +67,12 @@ function spin_microk8s_cluster () {
         echo "Microk8s cluster installed successfully"
         sudo usermod -a -G microk8s $USER
         echo "Enabling DNS and helm3 plugins"
-        microk8s.enable dns helm3 hostpath-storage
+        sudo microk8s.enable dns helm3 hostpath-storage
         echo "Creating configuration file for Microk8s"
-        microk8s kubectl config view --raw > $HOME/.kube/config
-        chmod 600 $HOME/.kube/config
+        sudo mkdir -p $HOME/.kube;
+        sudo chown -R $USER:$USER $HOME/.kube
+        sudo microk8s kubectl config view --raw > $HOME/.kube/config
+        sudo chmod 600 $HOME/.kube/config
         echo "K8s installation completed"
         echo "----------------------------------------"
     else
@@ -108,7 +110,7 @@ function build_robot_image () {
     echo "---------------------------------------------"
     echo "Importing robot image into microk8s registry"
     docker save -o policy-csit-robot.tar ${ROBOT_DOCKER_IMAGE}:latest
-    microk8s ctr image import policy-csit-robot.tar
+    sudo microk8s ctr image import policy-csit-robot.tar
 }
 
 
@@ -121,7 +123,7 @@ function start_csit () {
         echo "Installing Robot framework pod for running CSIT"
         cd ${WORKSPACE}/helm
         mkdir -p ${ROBOT_LOG_DIR}
-        microk8s helm install csit-robot robot --set robot="$ROBOT_FILE" --set "readiness={${READINESS_CONTAINERS[*]}}" --set robotLogDir=$ROBOT_LOG_DIR;
+        sudo microk8s helm install csit-robot robot --set robot="$ROBOT_FILE" --set "readiness={${READINESS_CONTAINERS[*]}}" --set robotLogDir=$ROBOT_LOG_DIR;
         print_robot_log
   fi
 }
@@ -132,13 +134,13 @@ function print_robot_log () {
     while [[ ${count_pods} -eq 0 ]]; do
         echo "Waiting for pods to come up..."
         sleep 5
-        count_pods=$(microk8s kubectl get pods --output name | wc -l)
+        count_pods=$(sudo microk8s kubectl get pods --output name | wc -l)
     done
-    robotpod=$(microk8s kubectl get po | grep policy-csit)
+    robotpod=$(sudo microk8s kubectl get po | grep policy-csit)
     podName=$(echo "$robotpod" | awk '{print $1}')
     echo "The robot tests will begin once the policy components {${READINESS_CONTAINERS[*]}} are up and running..."
-    microk8s kubectl wait --for=jsonpath='{.status.phase}'=Running --timeout=700s pod/"$podName"
-    microk8s kubectl logs -f "$podName"
+    sudo microk8s kubectl wait --for=jsonpath='{.status.phase}'=Running --timeout=700s pod/"$podName"
+    sudo microk8s kubectl logs -f "$podName"
     echo "Please check the logs of policy-csit-robot pod for the test execution results"
 }
 
@@ -223,9 +225,9 @@ if [ $1 == "install" ];  then
     if [ "${?}" -eq 0 ];  then
         echo "Installing policy helm charts in the default namespace"
         cd ${WORKSPACE}/helm || exit;
-        microk8s helm dependency build policy
-        microk8s helm install csit-policy policy
-        microk8s helm install prometheus prometheus
+        sudo microk8s helm dependency build policy
+        sudo microk8s helm install csit-policy policy
+        sudo microk8s helm install prometheus prometheus
         echo "Policy chart installation completed"
 	    echo "-------------------------------------------"
     fi
