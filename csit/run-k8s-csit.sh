@@ -84,11 +84,12 @@ function spin_microk8s_cluster () {
 
 function teardown_cluster () {
     echo "Removing k8s cluster and k8s configuration file"
+    rm -rf ${WORKSPACE}/helm/policy/Chart.lock
     sudo snap remove microk8s;rm -rf $HOME/.kube/config
     sudo rm -rf /dockerdata-nfs/mariadb-galera/
     echo "K8s Cluster removed"
     echo "Clean up docker"
-    docker system prune -af
+    docker image prune -f
 }
 
 
