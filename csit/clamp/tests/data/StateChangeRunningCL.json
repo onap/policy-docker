@@ -1,9 +1,0 @@
-{
-    "orderedState": "RUNNING",
-    "controlLoopIdentifierList": [
-        {
-            "name": "PMSHInstance0",
-            "version": "1.0.1"
-        }
-    ]
-}
