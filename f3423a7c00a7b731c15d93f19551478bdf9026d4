@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19dfd75a_bab73e1d",
+        "filename": "csit/clamp/tests/policy-clamp-test.robot",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 2787
+      },
+      "writtenOn": "2023-03-23T14:07:36Z",
+      "side": 1,
+      "message": "Please remove the letter \u0027i\u0027 at the beginning of the line",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 1
+      },
+      "revId": "f3423a7c00a7b731c15d93f19551478bdf9026d4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
