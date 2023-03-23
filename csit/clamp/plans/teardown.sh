@@ -17,4 +17,3 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
-docker-compose -f ${SCRIPTS}/docker-compose-all.yml down -v
