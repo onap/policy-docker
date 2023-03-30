@@ -1,4 +1,4 @@
-FROM python:3
+FROM nexus3.onap.org:10001/library/python:3.10-slim-bullseye
 ARG CSIT_SCRIPT=${CSIT_SCRIPT}
 ARG ROBOT_FILE=${ROBOT_FILE}
 ENV ROBOT_WORKSPACE /opt/robotworkspace
