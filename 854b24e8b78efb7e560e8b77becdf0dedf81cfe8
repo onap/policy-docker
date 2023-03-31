@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca7ae8c4_58720d4f",
+        "filename": "csit/resources/scripts/setup-apex-pdp-large.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2023-03-31T08:15:28Z",
+      "side": 1,
+      "message": "Copyrights should be Nordix only as it\u0027s a new file",
+      "range": {
+        "startLine": 3,
+        "startChar": 3,
+        "endLine": 7,
+        "endChar": 69
+      },
+      "revId": "854b24e8b78efb7e560e8b77becdf0dedf81cfe8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ac6595_64a03f0a",
+        "filename": "csit/resources/scripts/setup-apex-pdp-medium.sh",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2023-03-31T08:15:28Z",
+      "side": 1,
+      "message": "Copyrights should be Nordix only as it\u0027s a new file",
+      "range": {
+        "startLine": 3,
+        "startChar": 3,
+        "endLine": 7,
+        "endChar": 69
+      },
+      "revId": "854b24e8b78efb7e560e8b77becdf0dedf81cfe8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
