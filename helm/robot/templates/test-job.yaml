@@ -35,6 +35,8 @@ spec:
           - --container-name
           - {{ $container}}
           {{- end }}
+          - --timeout
+          - "15"
           env:
             - name: NAMESPACE
               valueFrom:
@@ -52,7 +54,7 @@ spec:
           volumeMounts:
             - name: robot-csit-pv
               mountPath: /tmp
-      restartPolicy: Never
+      restartPolicy: OnFailure
       volumes:
         - name: robot-csit-pv
           hostPath:
