@@ -28,4 +28,6 @@ unset http_proxy https_proxy
 export SUITES="policy-clamp-test.robot"
 
 ROBOT_VARIABLES="-v POLICY_RUNTIME_ACM_IP:localhost:${ACM_PORT}
--v POLICY_API_IP:localhost:${POLICY_API_PORT}"
+-v POLICY_API_IP:localhost:${API_PORT} -v POLICY_PAP_IP:localhost:${PAP_PORT}"
+
+

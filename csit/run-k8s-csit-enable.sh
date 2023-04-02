@@ -26,6 +26,8 @@ if [ -z "${WORKSPACE}" ]; then
     export WORKSPACE
 fi
 
+export GERRIT_BRANCH=$(awk -F= '$1 == "defaultbranch" { print $2 }' "${WORKSPACE}"/.gitreview)
+
 CSIT_SCRIPT="scripts/run-test.sh"
 ROBOT_DOCKER_IMAGE="policy-csit-robot"
 POLICY_CLAMP_ROBOT="policy-clamp-test.robot"
@@ -35,6 +37,7 @@ POLICY_APEX_PDP_ROBOT="apex-pdp-test.robot apex-slas.robot"
 POLICY_XACML_PDP_ROBOT="xacml-pdp-test.robot"
 POLICY_DROOLS_PDP_ROBOT="drools-pdp-test.robot"
 POLICY_DISTRIBUTION_ROBOT="distribution-test.robot"
+
 POLICY_API_CONTAINER="policy-api"
 POLICY_PAP_CONTAINER="policy-pap"
 POLICY_CLAMP_CONTAINER="policy-clamp-runtime-acm"
@@ -42,6 +45,9 @@ POLICY_APEX_CONTAINER="policy-apex-pdp"
 POLICY_DROOLS_CONTAINER="policy-drools-pdp"
 POLICY_XACML_CONTAINER="policy-xacml-pdp"
 POLICY_DISTRIBUTION_CONTAINER="policy-distribution"
+POLICY_K8S_PPNT_CONTAINER="policy-clamp-ac-k8s-ppnt"
+POLICY_HTTP_PPNT_CONTAINER="policy-clamp-ac-http-ppnt"
+POLICY_PF_PPNT_CONTAINER="policy-clamp-ac-pf-ppnt"
 SET_VALUES=""
 
 DISTRIBUTION_CSAR=${WORKSPACE}/csit/resources/tests/data/csar
@@ -84,16 +90,22 @@ function spin_microk8s_cluster() {
 
 }
 
-function teardown_cluster() {
-    echo "Removing k8s cluster and k8s configuration file"
+function uninstall_policy() {
+    echo "Removing the policy helm deployment"
     sudo microk8s helm uninstall csit-policy
     sudo microk8s helm uninstall prometheus
     sudo microk8s helm uninstall csit-robot
     rm -rf ${WORKSPACE}/helm/policy/Chart.lock
     sudo rm -rf /dockerdata-nfs/mariadb-galera/
-    echo "K8s Cluster removed"
+    echo "Policy deployment deleted"
     echo "Clean up docker"
     docker image prune -f
+}
+
+function teardown_cluster() {
+    echo "Removing k8s cluster and k8s configuration file"
+    sudo snap remove microk8s;rm -rf $HOME/.kube/config
+    echo "MicroK8s Cluster removed"
 }
 
 function build_robot_image() {
@@ -121,6 +133,15 @@ function start_csit() {
         rm -rf ${WORKSPACE}/csit/resources/policy-csit-robot.tar
         rm -rf ${WORKSPACE}/csit/resources/tests/models/
         echo "---------------------------------------------"
+        if [ $PROJECT == "clamp" ] || [ $PROJECT == "policy-clamp" ]; then
+          POD_READY_STATUS="0/1"
+          while [[ ${POD_READY_STATUS} != "1/1" ]]; do
+            echo "Waiting for chartmuseum pod to come up..."
+            sleep 5
+            POD_READY_STATUS=$(microk8s kubectl get pods | grep -e "policy-chartmuseum" | awk '{print $2}')
+          done
+          push_acelement_chart
+        fi
         echo "Installing Robot framework pod for running CSIT"
         cd ${WORKSPACE}/helm
         mkdir -p ${ROBOT_LOG_DIR}
@@ -146,9 +167,8 @@ function print_robot_log() {
     echo "Please check the logs of policy-csit-robot pod for the test execution results"
 }
 
-function clone_models() {
-    GERRIT_BRANCH=$(awk -F= '$1 == "defaultbranch" { print $2 }' "${WORKSPACE}"/.gitreview)
-    echo GERRIT_BRANCH="${GERRIT_BRANCH}"
+
+function clone_models () {
     # download models examples
     git clone -b "${GERRIT_BRANCH}" --single-branch https://github.com/onap/policy-models.git "${WORKSPACE}"/csit/resources/tests/models
 
@@ -173,12 +193,17 @@ function copy_csar_file() {
     sudo mv ${DISTRIBUTION_CSAR}/temp.csar ${DIST_TEMP_FOLDER}/sample_csar_with_apex_policy.csar
 }
 
-function get_robot_file() {
+
+function set_project_config() {
+    echo "Setting project configuration for: $PROJECT"
     case $PROJECT in
 
     clamp | policy-clamp)
         export ROBOT_FILE=$POLICY_CLAMP_ROBOT
-        export READINESS_CONTAINERS=($POLICY_CLAMP_CONTAINER)
+        export READINESS_CONTAINERS=($POLICY_CLAMP_CONTAINER,$POLICY_APEX_CONTAINER,$POLICY_PF_PPNT_CONTAINER,$POLICY_K8S_PPNT_CONTAINER,
+            $POLICY_HTTP_PPNT_CONTAINER)
+        export SET_VALUES="--set $POLICY_CLAMP_CONTAINER.enabled=true --set $POLICY_APEX_CONTAINER.enabled=true
+            --set $POLICY_PF_PPNT_CONTAINER.enabled=true --set $POLICY_K8S_PPNT_CONTAINER.enabled=true --set $POLICY_HTTP_PPNT_CONTAINER.enabled=true"
         ;;
 
     api | policy-api)
@@ -190,83 +215,73 @@ function get_robot_file() {
         export ROBOT_FILE=$POLICY_PAP_ROBOT
         export READINESS_CONTAINERS=($POLICY_APEX_CONTAINER,$POLICY_PAP_CONTAINER,$POLICY_API_CONTAINER,$POLICY_DROOLS_CONTAINER,
             $POLICY_XACML_CONTAINER)
+        export SET_VALUES="--set $POLICY_APEX_CONTAINER.enabled=true --set $POLICY_DROOLS_CONTAINER.enabled=true --set $POLICY_XACML_CONTAINER.enabled=true"
         ;;
 
     apex-pdp | policy-apex-pdp)
         export ROBOT_FILE=$POLICY_APEX_PDP_ROBOT
         export READINESS_CONTAINERS=($POLICY_APEX_CONTAINER,$POLICY_API_CONTAINER,$POLICY_PAP_CONTAINER)
+        export SET_VALUES="--set $POLICY_APEX_CONTAINER.enabled=true"
         ;;
 
     xacml-pdp | policy-xacml-pdp)
         export ROBOT_FILE=($POLICY_XACML_PDP_ROBOT)
         export READINESS_CONTAINERS=($POLICY_API_CONTAINER,$POLICY_PAP_CONTAINER,$POLICY_XACML_CONTAINER)
+        export SET_VALUES="--set $POLICY_XACML_CONTAINER.enabled=true"
         ;;
 
     drools-pdp | policy-drools-pdp)
         export ROBOT_FILE=($POLICY_DROOLS_PDP_ROBOT)
         export READINESS_CONTAINERS=($POLICY_DROOLS_CONTAINER)
+        export SET_VALUES="--set $POLICY_DROOLS_CONTAINER.enabled=true"
         ;;
 
     distribution | policy-distribution)
         export ROBOT_FILE=($POLICY_DISTRIBUTION_ROBOT)
         export READINESS_CONTAINERS=($POLICY_APEX_CONTAINER,$POLICY_API_CONTAINER,$POLICY_PAP_CONTAINER,
             $POLICY_DISTRIBUTION_CONTAINER)
+        export SET_VALUES="--set $POLICY_APEX_CONTAINER.enabled=true --set $POLICY_DISTRIBUTION_CONTAINER.enabled=true"
         ;;
 
     *)
-        echo "unknown project supplied"
+        echo "Unknown project supplied. Enabling all policy charts for the deployment"
+        export SET_VALUES="--set $POLICY_APEX_CONTAINER.enabled=true --set $POLICY_XACML_CONTAINER.enabled=true
+            --set $POLICY_DISTRIBUTION_CONTAINER.enabled=true --set $POLICY_POLICY_DROOLS_CONTAINER.enabled=true
+            --set $POLICY_CLAMP_CONTAINER.enabled=true --set $POLICY_PF_PPNT_CONTAINER.enabled=true
+            --set $POLICY_K8S_PPNT_CONTAINER.enabled=true --set $POLICY_HTTP_PPNT_CONTAINER.enabled=true"
         ;;
     esac
 
 }
 
-function set_charts() {
-    case $PROJECT in
-
-    clamp | policy-clamp)
-        export SET_VALUES="--set $POLICY_CLAMP_CONTAINER.enabled=true"
-        ;;
-
-    api | policy-api)
-        export SET_VALUES="--set $POLICY_API_CONTAINER.enabled=true"
-        ;;
-
-    pap | policy-pap)
-        export SET_VALUES="--set $POLICY_APEX_CONTAINER.enabled=true --set $POLICY_PAP_CONTAINER.enabled=true --set $POLICY_API_CONTAINER.enabled=true 
-    --set $POLICY_DROOLS_CONTAINER.enabled=true --set $POLICY_XACML_CONTAINER.enabled=true"
-        ;;
-
-    apex-pdp | policy-apex-pdp)
-        export SET_VALUES="--set $POLICY_APEX_CONTAINER.enabled=true --set $POLICY_PAP_CONTAINER.enabled=true --set $POLICY_API_CONTAINER.enabled=true"
-        ;;
-
-    xacml-pdp | policy-xacml-pdp)
-        export SET_VALUES="--set $POLICY_PAP_CONTAINER.enabled=true --set $POLICY_API_CONTAINER.enabled=true --set $POLICY_XACML_CONTAINER.enabled=true"
-        ;;
-
-    drools-pdp | policy-drools-pdp)
-        export SET_VALUES="--set $POLICY_DROOLS_CONTAINER.enabled=true"
-        ;;
-
-    distribution | policy-distribution)
-        export SET_VALUES="--set $POLICY_APEX_CONTAINER.enabled=true --set $POLICY_PAP_CONTAINER.enabled=true --set $POLICY_API_CONTAINER.enabled=true 
-    --set $POLICY_DISTRIBUTION_CONTAINER.enabled=true"
-        ;;
-
-    *)
-        echo "all charts to be deployed"
-        ;;
-    esac
-
+function install_chartmuseum () {
+    echo "Installing Chartmuseum helm repository..."
+    sudo microk8s helm repo add chartmuseum-git https://chartmuseum.github.io/charts
+    sudo microk8s helm repo update
+    sudo microk8s helm install policy-chartmuseum chartmuseum-git/chartmuseum --set env.open.DISABLE_API=false --set service.type=NodePort --set service.nodePort=30208
+    sudo microk8s helm plugin install https://github.com/chartmuseum/helm-push
 }
+
+function push_acelement_chart() {
+    echo "Pushing acelement chart to the chartmuseum repo..."
+    sudo microk8s helm repo add policy-chartmuseum http://localhost:30208
+
+    # download clamp repo
+    git clone -b "${GERRIT_BRANCH}" --single-branch https://github.com/onap/policy-clamp.git "${WORKSPACE}"/csit/resources/tests/clamp
+    ACELEMENT_CHART=${WORKSPACE}/csit/resources/tests/clamp/examples/src/main/resources/clamp/acm/acelement-helm/acelement
+    sudo microk8s helm cm-push $ACELEMENT_CHART policy-chartmuseum
+    sudo microk8s helm repo update
+    echo "-------------------------------------------"
+}
+
 
 OPERATION="$1"
 PROJECT="$2"
 
-if [ $OPERATION == "install" ]; then
+if [ $OPERATION == "install" ];  then
     spin_microk8s_cluster
     if [ "${?}" -eq 0 ]; then
-        set_charts
+        set_project_config
         echo "Installing policy helm charts in the default namespace"
         cd ${WORKSPACE}/helm || exit
         sudo microk8s helm dependency build policy
@@ -289,7 +304,10 @@ if [ $OPERATION == "install" ]; then
     fi
 
 elif [ $OPERATION == "uninstall" ]; then
+    uninstall_policy
+
+elif [ $OPERATION == "clean" ]; then
     teardown_cluster
 else
-    echo "Invalid arguments provided. Usage: $0 [option..] {install {project} | uninstall}"
+    echo "Invalid arguments provided. Usage: $0 [option..] {install {project} | uninstall} | {clean}"
 fi

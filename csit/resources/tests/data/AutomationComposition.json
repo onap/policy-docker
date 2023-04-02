@@ -1,64 +1,25 @@
 {
-    "name": "PMSHInstance0",
+    "name": "DemoInstance0",
     "version": "1.0.1",
     "compositionId": "COMPOSITIONIDPLACEHOLDER",
-    "state": "UNINITIALISED",
-    "orderedState": "UNINITIALISED",
-    "description": "PMSH automation composition instance 0",
+    "description": "Demo automation composition instance 0",
     "elements": {
         "709c62b3-8918-41b9-a747-d21eb79c6c20": {
             "id": "709c62b3-8918-41b9-a747-d21eb79c6c20",
             "definition": {
-                "name": "org.onap.domain.database.PMSH_K8SMicroserviceAutomationCompositionElement",
+                "name": "onap.policy.clamp.ac.element.Policy_AutomationCompositionElement",
                 "version": "1.2.3"
             },
-            "participantId": {
-                "name": "K8sParticipant0",
-                "version": "1.0.0"
-            },
-            "participantType": {
-                "name": "org.onap.policy.clamp.acm.KubernetesParticipant",
-                "version": "2.3.4"
-            },
-            "state": "UNINITIALISED",
-            "orderedState": "UNINITIALISED",
-            "description": "Automation composition element for the K8S microservice for PMSH"
-        },
-        "709c62b3-8918-41b9-a747-d21eb79c6c21": {
-            "id": "709c62b3-8918-41b9-a747-d21eb79c6c21",
-            "definition": {
-                "name": "org.onap.domain.database.Http_PMSHMicroserviceAutomationCompositionElement",
-                "version": "1.2.3"
-            },
-            "participantId": {
-                "name": "HttpParticipant0",
-                "version": "1.0.0"
-            },
-            "participantType": {
-                "name": "org.onap.policy.clamp.acm.HttpParticipant",
-                "version": "2.3.4"
-            },
-            "state": "UNINITIALISED",
-            "orderedState": "UNINITIALISED",
-            "description": "Automation composition element for the http requests of PMSH microservice"
-        },
-        "709c62b3-8918-41b9-a747-d21eb79c6c22": {
-            "id": "709c62b3-8918-41b9-a747-d21eb79c6c22",
-            "definition": {
-                "name": "org.onap.domain.pmsh.PMSH_OperationalPolicyAutomationCompositionElement",
-                "version": "1.2.3"
-            },
-            "participantId": {
-                "name": "org.onap.PM_Policy",
-                "version": "1.0.0"
-            },
-            "participantType": {
-                "name": "org.onap.policy.clamp.acm.PolicyParticipant",
-                "version": "2.3.1"
-            },
-            "state": "UNINITIALISED",
-            "orderedState": "UNINITIALISED",
-            "description": "Automation composition element for the operational policy for Performance Management Subscription Handling"
+            "description": "Policy Automation Composition Element for the Demo",
+            "properties": {
+                "policy_type_id": {
+                    "name": "onap.policies.native.Apex",
+                    "version": "1.0.0"
+                },
+                "policy_id": {
+                    "get_input": "acm_element_policy"
+                }
+            }
         }
     }
 }

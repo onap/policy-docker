@@ -242,6 +242,10 @@ services:
       depends_on:
        - mariadb
        - simulator
+       - policy-clamp-ac-http-ppnt
+       - policy-clamp-ac-k8s-ppnt
+       - policy-clamp-ac-pf-ppnt
+       - apex-pdp
       hostname: policy-clamp-runtime-acm
       ports:
        - ${ACM_PORT}:6969
@@ -253,8 +257,13 @@ services:
       command: [
         '-c', './acm-runtime.sh',
         'mariadb', '3306',
-        'message-router', '3904'
+        'message-router', '3904',
+        'policy-clamp-ac-http-ppnt', '6969',
+        'policy-clamp-ac-k8s-ppnt', '6969',
+        'policy-clamp-ac-pf-ppnt', '6969',
+        'apex-pdp', '6969'
         ]
+
    policy-clamp-ac-http-ppnt:
       image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-http-ppnt:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-ac-http-ppnt

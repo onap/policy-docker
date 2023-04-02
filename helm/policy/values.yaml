@@ -31,15 +31,17 @@ global:
   policyKafkaUser: policy-kafka-user
 
 
+policy-mariadb-galera:
+  enabled: true
 policy-models-simulator:
+  enabled: true
+policy-api:
+  enabled: true
+policy-pap:
   enabled: true
 policy-clamp-ac-k8s-ppnt:
   enabled: false
 policy-clamp-runtime-acm:
-  enabled: false
-policy-api:
-  enabled: false
-policy-pap:
   enabled: false
 policy-apex-pdp:
   enabled: false
