@@ -30,6 +30,26 @@ global:
   kafkaBootstrap: strimzi-kafka-bootstrap
   policyKafkaUser: policy-kafka-user
 
+  repository: nexus3.onap.org:10001
+  pullPolicy: Always
+  dockerRepository: docker.io
+
+  image:
+    readiness: onap/oom/readiness:3.0.1
+    mariadb: bitnami/mariadb-galera:10.5.8
+    api: onap/policy-api:$tag
+    pap: onap/policy-pap:$tag
+    apex: onap/policy-apex-pdp:$tag
+    simulator: onap/policy-models-simulator:$tag
+    pdpdcl: onap/policy-pdpd-cl:$tag
+    xacml: onap/policy-xacml-pdp:$tag
+    distribution: onap/policy-distribution:$tag
+    runtimeacm: onap/policy-clamp-runtime-acm:$tag
+    kserveparticipant: onap/policy-clamp-ac-kserve-ppnt:$tag
+    k8sparticipant: onap/policy-clamp-ac-k8s-ppnt:$tag
+    pfparticipant: onap/policy-clamp-ac-pf-ppnt:$tag
+    httpparticipant: onap/policy-clamp-ac-http-ppnt:$tag
+    a1pmsparticipant: onap/policy-clamp-ac-a1pms-ppnt:$tag
 
 policy-mariadb-galera:
   enabled: true
@@ -64,10 +84,6 @@ policy-clamp-ac-a1pms-ppnt:
 # DB configuration defaults.
 #################################################################
 
-repository: nexus3.onap.org:10001
-pullPolicy: Always
-
-dockerRepository: docker.io
 
 mariadb:
   image: mariadb:10.5.8
@@ -90,46 +106,6 @@ nodeSelector: {}
 
 affinity: {}
 
-# probe configuration parameters
-liveness:
-  initialDelaySeconds: 10
-  periodSeconds: 10
-  # necessary to disable liveness probe when setting breakpoints
-  # in debugger so K8s doesn't restart unresponsive container
-  enabled: true
-
-readiness:
-  image: onap/oom/readiness:3.0.1
-  initialDelaySeconds: 10
-  periodSeconds: 10
-
-
-config:
-  policyAppUserName: runtimeUser
-  useStrimziKafka: true
-  acRuntimeTopic:
-    name: policy-acruntime-participant
-    partitions: 10
-    retentionMs: 7200000
-    segmentBytes: 1073741824
-    consumer:
-      groupId: policy-group
-  policyHeartbeatTopic:
-    name: policy-heartbeat
-    partitions: 10
-    retentionMs: 7200000
-    segmentBytes: 1073741824
-    consumer:
-      groupId: policy-group
-  policyNotificationTopic:
-    name: policy-notification
-    partitions: 10
-    retentionMs: 7200000
-    segmentBytes: 1073741824
-    consumer:
-      groupId: policy-group
-  someConfig: blah
-
 mariadb-galera:
   # mariadb-galera.config and global.mariadb.config must be equals
   db:
@@ -145,12 +121,6 @@ mariadb-galera:
     mountSubPath: policy/maria/data
   serviceAccount:
     nameOverride: *mariadb-galera
-
-restServer:
-  policyPapUserName: policyadmin
-  policyPapUserPassword: zb!XztG34
-  policyApiUserName: policyadmin
-  policyApiUserPassword: zb!XztG34
 
 # Resource Limit flavor -By Default using small
 # Segregation for Different environment (small, large, or unlimited)

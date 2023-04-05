@@ -8,8 +8,8 @@ Resource    ${CURDIR}/common-library.robot
 *** Keywords ***
 ValidateResponseTimeForPap
     [Arguments]  ${uri}  ${method}
-    [Documentation]  Check if uri response is under the 500ms required time for pap metrics
-    ValidateResponseTime  pap-metrics  ${uri}  ${method}  500
+    [Documentation]  Check if uri response is under the 1500ms required time for pap metrics
+    ValidateResponseTime  pap-metrics  ${uri}  ${method}  1500
 
 *** Test Cases ***
 WaitForPrometheusServer

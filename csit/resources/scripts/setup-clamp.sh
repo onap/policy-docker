@@ -25,9 +25,11 @@ unset http_proxy https_proxy
 # wait for the app to start up
 "${SCRIPTS}"/wait_for_rest.sh localhost "${ACM_PORT}"
 
+CLAMP_K8S_TEST=false
+
 export SUITES="policy-clamp-test.robot"
 
 ROBOT_VARIABLES="-v POLICY_RUNTIME_ACM_IP:localhost:${ACM_PORT}
--v POLICY_API_IP:localhost:${API_PORT} -v POLICY_PAP_IP:localhost:${PAP_PORT}"
+-v POLICY_API_IP:localhost:${API_PORT} -v POLICY_PAP_IP:localhost:${PAP_PORT} -v CLAMP_K8S_TEST:$CLAMP_K8S_TEST"
 
 
