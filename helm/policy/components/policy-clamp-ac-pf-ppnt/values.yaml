@@ -27,7 +27,6 @@ global:
 # Application configuration defaults.
 #################################################################
 # application image
-image: nexus3.onap.org:10001/onap/policy-clamp-ac-pf-ppnt:6.4-SNAPSHOT-latest
 pullPolicy: Always
 
 # flag to enable debugging - application support required

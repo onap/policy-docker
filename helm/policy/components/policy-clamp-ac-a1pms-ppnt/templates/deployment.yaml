@@ -81,7 +81,7 @@ spec:
         name: {{ .Chart.Name }}-update-config
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ .Values.image }}
+          image: {{ .Values.global.repository }}/{{ .Values.global.image.a1pmsparticipant }}
           imagePullPolicy: {{ .Values.pullPolicy }}
           command: ["/opt/app/policy/clamp/bin/a1pms-participant.sh"]
           args: ["/opt/app/policy/clamp/etc/mounted/A1pmsParticipantParameters.yaml"]
