@@ -52,14 +52,14 @@ spec:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: metadata.namespace
-          image: nexus3.onap.org:10001/onap/oom/readiness:3.0.1
+          image: {{ .Values.global.repository }}/{{ .Values.global.image.readiness }}
           imagePullPolicy: Always
           name: {{ .Chart.Name }}-db-readiness
 
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ .Values.image }}
-          imagePullPolicy: Always
+          image: {{ .Values.global.repository }}/{{ .Values.global.image.pdpdcl }}
+          imagePullPolicy: {{ .Values.pullPolicy }}
           command: ["sh","-c"]
           args: ["/opt/app/policy/bin/pdpd-cl-entrypoint.sh boot"]
           ports:

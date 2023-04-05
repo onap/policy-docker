@@ -51,7 +51,6 @@ secrets:
 # Application configuration defaults.
 #################################################################
 # application image
-image: nexus3.onap.org:10001/onap/policy-xacml-pdp:2.8-SNAPSHOT-latest
 pullPolicy: Always
 
 # flag to enable debugging - application support required
