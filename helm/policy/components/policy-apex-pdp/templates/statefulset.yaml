@@ -74,7 +74,7 @@ spec:
         name: {{ .Chart.Name }}-update-config
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ .Values.image }}
+          image: {{ .Values.global.repository }}/{{ .Values.global.image.apex }}
           imagePullPolicy: {{ .Values.pullPolicy }}
           command: ["sh","-c"]
           args: ["/opt/app/policy/apex-pdp/bin/apexOnapPf.sh -c /home/apexuser/config/OnapPfConfig.json"]

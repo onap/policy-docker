@@ -33,7 +33,7 @@ spec:
       - name: "default-docker-registry-key"
       initContainers:
       - name: policy-mariadb-readiness
-        image: {{ .Values.repository }}/{{ .Values.readiness.image }}
+        image: {{ .Values.global.repository }}/{{ .Values.global.image.readiness }}
         imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
         command:
         - /app/ready.py
@@ -47,7 +47,7 @@ spec:
               fieldPath: metadata.namespace
       containers:
       - name: policy-galera-config
-        image: {{ .Values.dockerRepository }}/{{ .Values.mariadb.image }}
+        image: {{ .Values.global.dockerRepository }}/{{ .Values.mariadb.image }}
         imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
         volumeMounts:
         - mountPath: /dbcmd-config/db.sh
@@ -113,7 +113,7 @@ spec:
       - name: "default-docker-registry-key"
       initContainers:
         - name: policy-init-readiness
-          image: {{ .Values.repository }}/{{ .Values.readiness.image }}
+          image: {{ .Values.global.repository }}/{{ .Values.global.image.readiness }}
           imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
           command:
           - /app/ready.py
@@ -128,7 +128,7 @@ spec:
                 fieldPath: metadata.namespace
       containers:
       - name: policy-galera-db-migrator
-        image: {{ .Values.repository }}/{{ .Values.dbmigrator.image }}
+        image: {{ .Values.global.repository }}/{{ .Values.dbmigrator.image }}
         imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
         volumeMounts:
         - mountPath: /dbcmd-config/db_migrator_policy_init.sh

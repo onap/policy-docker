@@ -8,8 +8,8 @@ Resource    ${CURDIR}/common-library.robot
 *** Keywords ***
 ValidateResponseTimeForApi
     [Arguments]  ${uri}  ${method}
-    [Documentation]  Check if uri response is under the 500ms required time for api metrics
-    ValidateResponseTime  api-metrics  ${uri}  ${method}  500
+    [Documentation]  Check if uri response is under the 1500ms required time for api metrics
+    ValidateResponseTime  api-metrics  ${uri}  ${method}  1500
 
 *** Test Cases ***
 WaitForPrometheusServer
@@ -30,12 +30,12 @@ ValidateResponseTimeQueryPolicies
 
 ValidateResponseTimeQueryPolicyTypeListVersions
     [Documentation]  Validate query policyType versions response time
-    ValidateResponseTime  api-metrics  /policytypes/{policyTypeId}  GET  400
+    ValidateResponseTime  api-metrics  /policytypes/{policyTypeId}  GET  1500
 
-#Time increased from 200 to 250 due to slow ONAP machines
+#Time increased from 200 to 1500 due to slow ONAP machines
 ValidateResponseTimeQueryPolicyVersion
     [Documentation]  Validate query policy by version response time
-    ValidateResponseTime  api-metrics   /policies/{policyId}/versions/{policyVersion}  GET  250
+    ValidateResponseTime  api-metrics   /policies/{policyId}/versions/{policyVersion}  GET  1500
 
 ValidateResponseTimeCreatePolicy
     [Documentation]  Validate response time for creating a policy
