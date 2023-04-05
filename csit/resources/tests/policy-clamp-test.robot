@@ -55,7 +55,11 @@ InstantiateAutomationComposition
      [Documentation]  Instantiate automation composition.
      ${auth}=    Create List    runtimeUser    zb!XztG34
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
-     ${postjson}=  Get file  ${CURDIR}/data/AutomationComposition.json
+     ${K8sEnabled}=    Convert To Boolean    ${CLAMP_K8S_TEST}
+     Run Keyword If    '${K8sEnabled}'=='True'    set Suite variable  ${instantiationfile}  AcK8s.json
+
+     ...    ELSE    set Suite variable  ${instantiationfile}  AcDocker.json
+     ${postjson}=  Get file  ${CURDIR}/data/${instantiationfile}
      ${updatedpostjson}=   Replace String     ${postjson}     COMPOSITIONIDPLACEHOLDER       ${compositionId}
      ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json

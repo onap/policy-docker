@@ -20,7 +20,6 @@
 # Application configuration defaults.
 #################################################################
 # application image
-image: nexus3.onap.org:10001/onap/policy-clamp-ac-k8s-ppnt:6.4-SNAPSHOT-latest
 pullPolicy: Always
 
 # flag to enable debugging - application support required
@@ -89,6 +88,10 @@ repoList:
       -
         repoName: bitnami
         address: https://charts.bitnami.com/bitnami
+
+      -
+        repoName: policy-chartmuseum
+        address: http://policy-chartmuseum:8080
 
     protocols:
       - http

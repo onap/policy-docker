@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # ============LICENSE_START====================================================
-#  Copyright (C) 2023 Nordix Foundation.
+#  Copyright (C) 2022-2023 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,425 +18,304 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END======================================================
 
-# This script generates dummy robot result files for jenkins.
+# This script spins up kubernetes cluster in Microk8s for deploying policy helm charts.
+# Runs CSITs in kubernetes.
 
 if [ -z "${WORKSPACE}" ]; then
     WORKSPACE=$(git rev-parse --show-toplevel)
     export WORKSPACE
 fi
 
-export ROBOT_LOG_DIR=${WORKSPACE}/csit/archives/$2
+export GERRIT_BRANCH=$(awk -F= '$1 == "defaultbranch" { print $2 }' "${WORKSPACE}"/.gitreview)
 
-mkdir -p $ROBOT_LOG_DIR
+CSIT_SCRIPT="scripts/run-test.sh"
+ROBOT_DOCKER_IMAGE="policy-csit-robot"
+POLICY_CLAMP_ROBOT="policy-clamp-test.robot"
+POLICY_API_ROBOT="api-test.robot api-slas.robot"
+POLICY_PAP_ROBOT="pap-test.robot pap-slas.robot"
+POLICY_APEX_PDP_ROBOT="apex-pdp-test.robot apex-slas.robot"
+POLICY_XACML_PDP_ROBOT="xacml-pdp-test.robot"
+POLICY_DROOLS_PDP_ROBOT="drools-pdp-test.robot"
+POLICY_DISTRIBUTION_ROBOT="distribution-test.robot"
 
-echo "CSIT in kubernetes is disabled. Generating dummy results..."
+POLICY_API_CONTAINER="policy-api"
+POLICY_PAP_CONTAINER="policy-pap"
+POLICY_CLAMP_CONTAINER="policy-clamp-runtime-acm"
+POLICY_APEX_CONTAINER="policy-apex-pdp"
+POLICY_DROOLS_CONTAINER="policy-drools-pdp"
+POLICY_XACML_CONTAINER="policy-xacml-pdp"
+POLICY_DISTRIBUTION_CONTAINER="policy-distribution"
+POLICY_K8S_PPNT_CONTAINER="policy-clamp-ac-k8s-ppnt"
+POLICY_HTTP_PPNT_CONTAINER="policy-clamp-ac-http-ppnt"
+POLICY_PF_PPNT_CONTAINER="policy-clamp-ac-pf-ppnt"
+SET_VALUES=""
 
-cat >${ROBOT_LOG_DIR}/output.xml <<EOF
-<robot generator="Robot 6.1a1 (Python 3.11.2 on linux)" rpa="false" schemaversion="4">
-<statistics>
-<total>
-<stat pass="1" fail="0" skip="0">All Tests</stat>
-</total>
-<tag>
-</tag>
-<suite>
-<stat pass="1" fail="0" skip="0" id="s1" name="Dummy-Test">Dummy-Test</stat>
-</suite>
-</statistics>
-<errors></errors>
-</robot>
-EOF
+DISTRIBUTION_CSAR=${WORKSPACE}/csit/resources/tests/data/csar
+DIST_TEMP_FOLDER=/tmp/distribution
 
-cat >${ROBOT_LOG_DIR}/log.html <<EOF
-<!DOCTYPE html>
-<head>
-    <style media="all" type="text/css">
-        /* Generic and misc styles */
-        body {
-            font-family: Helvetica, sans-serif;
-            font-size: 0.8em;
-            color: black;
-            padding: 6px;
-            background: white;
-        }
-        table {
-            table-layout: fixed;
-            word-wrap: break-word;
-            empty-cells: show;
-            font-size: 1em;
-        }
-        th, td {
-            vertical-align: top;
-        }
-        br {
-            mso-data-placement: same-cell; /* maintain line breaks in Excel */
-        }
-        hr {
-            background: #ccc;
-            height: 1px;
-            border: 0;
-        }
-        a, a:link, a:visited {
-            text-decoration: none;
-            color: #15c;
-        }
-        a > img {
-            border: 1px solid #15c !important;
-        }
-        a:hover, a:active {
-            text-decoration: underline;
-            color: #61c;
-        }
-        .parent-name {
-            font-size: 0.7em;
-            letter-spacing: -0.07em;
-        }
-        .message {
-            white-space: pre-wrap;
-        }
-        /* Headers */
-        #header {
-            width: 65em;
-            height: 3em;
-            margin: 6px 0;
-        }
-        h1 {
-            float: left;
-            margin: 0 0 0.5em 0;
-            width: 75%;
-        }
-        h2 {
-            clear: left;
-        }
-        #generated {
-            float: right;
-            text-align: right;
-            font-size: 0.9em;
-            white-space: nowrap;
-        }
-        /* Documentation headers */
-        .doc > h2 {
-            font-size: 1.2em;
-        }
-        .doc > h3 {
-            font-size: 1.1em;
-        }
-        .doc > h4 {
-            font-size: 1.0em;
-        }
-        /* Status text colors -- !important allows using them in links */
-        .fail {
-            color: #ce3e01 !important;
-            font-weight: bold;
-        }
-        .pass {
-            color: #098a09 !important;
-        }
-        .skip {
-            color: #927201 !important;
-            font-weight: bold;
-        }
-        .label {
-            padding: 2px 5px;
-            font-size: 0.75em;
-            letter-spacing: 1px;
-            white-space: nowrap;
-            color: black;
-            background-color: #ddd;
-            border-radius: 3px;
-        }
-        .label.debug, .label.trace, .label.error, .label.keyword {
-            letter-spacing: 0;
-        }
-        .label.pass, .label.fail, .label.error, .label.skip, .label.warn {
-            font-weight: bold;
-        }
-        .label.pass {
-            background-color: #97bd61;
-            color: #000 !important;
-        }
-        .label.fail, .label.error {
-            background-color: #ce3e01;
-            color: #fff !important;
-        }
-        .label.skip, .label.warn {
-            background-color: #fed84f;
-            color: #000 !important;
-        }
-        /* Top right header */
-        #top-right-header {
-            position: fixed;
-            top: 0;
-            right: 0;
-            z-index: 1000;
-            width: 12em;
-            text-align: center;
-        }
-        #report-or-log-link a {
-            display: block;
-            background: black;
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            letter-spacing: 0.1em;
-            padding: 0.3em 0;
-            border-bottom-left-radius: 4px;
-        }
-        #report-or-log-link a:hover {
-            color: #ddd;
-        }
-        #log-level-selector {
-            padding: 0.3em 0;
-            font-size: 0.9em;
-            border-bottom-left-radius: 4px;
-            background: #ddd;
-        }
-        /* Statistics table */
-        .statistics {
-            width: 65em;
-            border-collapse: collapse;
-            empty-cells: show;
-            margin-bottom: 1em;
-        }
-        .statistics tr:hover {
-            background: #f4f4f4;
-            cursor: pointer;
-        }
-        .statistics th, .statistics td {
-            border: 1px solid #ccc;
-            padding: 0.1em 0.3em;
-        }
-        .statistics th {
-            background-color: #ddd;
-            padding: 0.2em 0.3em;
-        }
-        .statistics td {
-            vertical-align: middle;
-        }
-        .stats-col-stat {
-            width: 4.5em;
-            text-align: center;
-        }
-        .stats-col-elapsed {
-            width: 5.5em;
-            text-align: center;
-        }
-        .stats-col-graph {
-            width: 9em;
-        }
-        th.stats-col-graph:hover {
-            cursor: default;
-        }
-        .stat-name {
-            float: left;
-        }
-        .stat-name a, .stat-name span {
-            font-weight: bold;
-        }
-        .tag-links {
-            font-size: 0.9em;
-            float: right;
-            margin-top: 0.05em;
-        }
-        .tag-links span {
-            margin-left: 0.2em;
-        }
-        /* Statistics graph */
-        .graph, .empty-graph {
-            border: 1px solid #ccc;
-            width: auto;
-            height: 7px;
-            padding: 0;
-            background: #aaa;
-        }
-        .empty-graph {
-            background: #eee;
-        }
-        .pass-bar, .fail-bar, .skip-bar {
-            float: left;
-            height: 100%;
-        }
-        .fail-bar {
-            background: #ce3e01;
-        }
-        .pass-bar {
-            background: #97bd61;
-        }
-        .skip-bar {
-            background: #fed84f;
-        }
-        /* Tablesorter - adapted from provided Blue Skin */
-        .tablesorter-header {
-            background-image: url(data:image/gif;base64,R0lGODlhCwAJAIAAAH9/fwAAACH5BAEAAAEALAAAAAALAAkAAAIRjAOnBr3cnIr0WUjTrC9e9BQAOw==);
-            background-repeat: no-repeat;
-            background-position: center right;
-            cursor: pointer;
-        }
-        .tablesorter-header:hover {
-            background-color: #ccc;
-        }
-        .tablesorter-headerAsc {
-            background-image: url(data:image/gif;base64,R0lGODlhCwAJAKEAAAAAAH9/fwAAAAAAACH5BAEAAAIALAAAAAALAAkAAAIUlBWnFr3cnIr0WQOyBmvzp13CpxQAOw==);
-            background-color: #ccc !important;
-        }
-        .tablesorter-headerDesc {
-            background-image: url(data:image/gif;base64,R0lGODlhCwAJAKEAAAAAAH9/fwAAAAAAACH5BAEAAAIALAAAAAALAAkAAAIUlAWnBr3cnIr0WROyDmvzp13CpxQAOw==);
-            background-color: #ccc !important;
-        }
-        .sorter-false {
-            background-image: none;
-            cursor: default;
-        }
-        .sorter-false:hover {
-            background-color: #ddd;
-        }
-        </style>
+export PROJECT=""
+export ROBOT_FILE=""
+export ROBOT_LOG_DIR=${WORKSPACE}/csit/archives
+export READINESS_CONTAINERS=()
+
+function spin_microk8s_cluster() {
+    echo "Verify if Microk8s cluster is running.."
+    microk8s version
+    exitcode="${?}"
+
+    if [ "$exitcode" -ne 0 ]; then
+        echo "Microk8s cluster not available, Spinning up the cluster.."
+        sudo snap install microk8s --classic --channel=1.26/stable
+
+        if [ "${?}" -ne 0 ]; then
+            echo "Failed to install kubernetes cluster. Aborting.."
+            return 1
+        fi
+        echo "Microk8s cluster installed successfully"
+        sudo usermod -a -G microk8s $USER
+        echo "Enabling DNS and helm3 plugins"
+        sudo microk8s.enable dns helm3 hostpath-storage
+        echo "Creating configuration file for Microk8s"
+        sudo mkdir -p $HOME/.kube
+        sudo chown -R $USER:$USER $HOME/.kube
+        sudo microk8s kubectl config view --raw >$HOME/.kube/config
+        sudo chmod 600 $HOME/.kube/config
+        echo "K8s installation completed"
+        echo "----------------------------------------"
+    else
+        echo "K8s cluster is already running"
+        echo "----------------------------------------"
+        return 0
+    fi
+
+}
+
+function uninstall_policy() {
+    echo "Removing the policy helm deployment"
+    sudo microk8s helm uninstall csit-policy
+    sudo microk8s helm uninstall prometheus
+    sudo microk8s helm uninstall csit-robot
+    rm -rf ${WORKSPACE}/helm/policy/Chart.lock
+    if [ "$PROJECT" == "clamp" ] || [ "$PROJECT" == "policy-clamp" ]; then
+      sudo microk8s helm uninstall policy-chartmuseum
+      sudo microk8s helm repo remove chartmuseum-git policy-chartmuseum
+    fi
+    sudo rm -rf /dockerdata-nfs/mariadb-galera/
+    sudo microk8s kubectl delete pvc --all
+    echo "Policy deployment deleted"
+    echo "Clean up docker"
+    docker image prune -f
+}
+
+function teardown_cluster() {
+    echo "Removing k8s cluster and k8s configuration file"
+    sudo snap remove microk8s;rm -rf $HOME/.kube/config
+    echo "MicroK8s Cluster removed"
+}
+
+function build_robot_image() {
+    echo "Build docker image for robot framework"
+    cd ${WORKSPACE}/csit/resources || exit
+    clone_models
+    if [ "${PROJECT}" == "distribution" ] || [ "${PROJECT}" == "policy-distribution" ]; then
+        copy_csar_file
+    fi
+    echo "Build robot framework docker image"
+    docker login -u docker -p docker nexus3.onap.org:10001
+    docker build . --file Dockerfile \
+        --build-arg CSIT_SCRIPT="$CSIT_SCRIPT" \
+        --build-arg ROBOT_FILE="$ROBOT_FILE" \
+        --tag "${ROBOT_DOCKER_IMAGE}" --no-cache
+    echo "---------------------------------------------"
+}
+
+function start_csit() {
+    build_robot_image
+    if [ "${?}" -eq 0 ]; then
+        echo "Importing robot image into microk8s registry"
+        docker save -o policy-csit-robot.tar ${ROBOT_DOCKER_IMAGE}:latest
+        sudo microk8s ctr image import policy-csit-robot.tar
+        rm -rf ${WORKSPACE}/csit/resources/policy-csit-robot.tar
+        rm -rf ${WORKSPACE}/csit/resources/tests/models/
+        echo "---------------------------------------------"
+        if [ "$PROJECT" == "clamp" ] || [ "$PROJECT" == "policy-clamp" ]; then
+          POD_READY_STATUS="0/1"
+          while [[ ${POD_READY_STATUS} != "1/1" ]]; do
+            echo "Waiting for chartmuseum pod to come up..."
+            sleep 5
+            POD_READY_STATUS=$(sudo microk8s kubectl get pods | grep -e "policy-chartmuseum" | awk '{print $2}')
+          done
+          push_acelement_chart
+        fi
+        echo "Installing Robot framework pod for running CSIT"
+        cd ${WORKSPACE}/helm
+        mkdir -p ${ROBOT_LOG_DIR}
+        sudo microk8s helm install csit-robot robot --set robot="$ROBOT_FILE" --set "readiness={${READINESS_CONTAINERS[*]}}" --set robotLogDir=$ROBOT_LOG_DIR
+        print_robot_log
+        uninstall_policy
+    fi
+}
+
+function print_robot_log() {
+    count_pods=0
+    while [[ ${count_pods} -eq 0 ]]; do
+        echo "Waiting for pods to come up..."
+        sleep 5
+        count_pods=$(sudo microk8s kubectl get pods --output name | wc -l)
+    done
+    robotpod=$(sudo microk8s kubectl get po | grep policy-csit)
+    podName=$(echo "$robotpod" | awk '{print $1}')
+    echo "The robot tests will begin once the policy components {${READINESS_CONTAINERS[*]}} are up and running..."
+    sudo microk8s kubectl wait --for=jsonpath='{.status.phase}'=Running --timeout=10m pod/"$podName"
+    echo "Policy deployment status:"
+    sudo microk8s kubectl get po
+    sudo microk8s kubectl get all -A
+    echo "Robot Test logs:"
+    sudo microk8s kubectl logs -f "$podName"
+}
+
+function clone_models() {
+
+    # download models examples
+    git clone -b "${GERRIT_BRANCH}" --single-branch https://github.com/onap/policy-models.git "${WORKSPACE}"/csit/resources/tests/models
+
+    # create a couple of variations of the policy definitions
+    sed -e 's!Measurement_vGMUX!ADifferentValue!' \
+        tests/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.json \
+        >tests/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.v1_2.json
+
+    sed -e 's!"version": "1.0.0"!"version": "2.0.0"!' \
+        -e 's!"policy-version": 1!"policy-version": 2!' \
+        tests/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.json \
+        >tests/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.v2.json
+}
+
+function copy_csar_file() {
+    zip -F ${DISTRIBUTION_CSAR}/sample_csar_with_apex_policy.csar \
+        --out ${DISTRIBUTION_CSAR}/csar_temp.csar -q
+    # Remake temp directory
+    sudo rm -rf "${DIST_TEMP_FOLDER}"
+    sudo mkdir "${DIST_TEMP_FOLDER}"
+    sudo cp ${DISTRIBUTION_CSAR}/csar_temp.csar ${DISTRIBUTION_CSAR}/temp.csar
+    sudo mv ${DISTRIBUTION_CSAR}/temp.csar ${DIST_TEMP_FOLDER}/sample_csar_with_apex_policy.csar
+}
+
+function set_project_config() {
+    echo "Setting project configuration for: $PROJECT"
+    case $PROJECT in
+
+    clamp | policy-clamp)
+        export ROBOT_FILE=$POLICY_CLAMP_ROBOT
+        export READINESS_CONTAINERS=($POLICY_CLAMP_CONTAINER,$POLICY_APEX_CONTAINER,$POLICY_PF_PPNT_CONTAINER,$POLICY_K8S_PPNT_CONTAINER,
+            $POLICY_HTTP_PPNT_CONTAINER)
+        export SET_VALUES="--set $POLICY_CLAMP_CONTAINER.enabled=true --set $POLICY_APEX_CONTAINER.enabled=true
+            --set $POLICY_PF_PPNT_CONTAINER.enabled=true --set $POLICY_K8S_PPNT_CONTAINER.enabled=true --set $POLICY_HTTP_PPNT_CONTAINER.enabled=true"
+        install_chartmuseum
+        ;;
+
+    api | policy-api)
+        export ROBOT_FILE=$POLICY_API_ROBOT
+        export READINESS_CONTAINERS=($POLICY_API_CONTAINER)
+        ;;
+
+    pap | policy-pap)
+        export ROBOT_FILE=$POLICY_PAP_ROBOT
+        export READINESS_CONTAINERS=($POLICY_APEX_CONTAINER,$POLICY_PAP_CONTAINER,$POLICY_API_CONTAINER,$POLICY_XACML_CONTAINER)
+        export SET_VALUES="--set $POLICY_APEX_CONTAINER.enabled=true --set $POLICY_XACML_CONTAINER.enabled=true"
+        ;;
+
+    apex-pdp | policy-apex-pdp)
+        export ROBOT_FILE=$POLICY_APEX_PDP_ROBOT
+        export READINESS_CONTAINERS=($POLICY_APEX_CONTAINER,$POLICY_API_CONTAINER,$POLICY_PAP_CONTAINER)
+        export SET_VALUES="--set $POLICY_APEX_CONTAINER.enabled=true"
+        ;;
+
+    xacml-pdp | policy-xacml-pdp)
+        export ROBOT_FILE=($POLICY_XACML_PDP_ROBOT)
+        export READINESS_CONTAINERS=($POLICY_API_CONTAINER,$POLICY_PAP_CONTAINER,$POLICY_XACML_CONTAINER)
+        export SET_VALUES="--set $POLICY_XACML_CONTAINER.enabled=true"
+        ;;
+
+    drools-pdp | policy-drools-pdp)
+        export ROBOT_FILE=($POLICY_DROOLS_PDP_ROBOT)
+        export READINESS_CONTAINERS=($POLICY_DROOLS_CONTAINER)
+        export SET_VALUES="--set $POLICY_DROOLS_CONTAINER.enabled=true"
+        ;;
+
+    distribution | policy-distribution)
+        export ROBOT_FILE=($POLICY_DISTRIBUTION_ROBOT)
+        export READINESS_CONTAINERS=($POLICY_APEX_CONTAINER,$POLICY_API_CONTAINER,$POLICY_PAP_CONTAINER,
+            $POLICY_DISTRIBUTION_CONTAINER)
+        export SET_VALUES="--set $POLICY_APEX_CONTAINER.enabled=true --set $POLICY_DISTRIBUTION_CONTAINER.enabled=true"
+        ;;
+
+    *)
+        echo "Unknown project supplied. Enabling all policy charts for the deployment"
+        export SET_VALUES="--set $POLICY_APEX_CONTAINER.enabled=true --set $POLICY_XACML_CONTAINER.enabled=true
+            --set $POLICY_DISTRIBUTION_CONTAINER.enabled=true --set $POLICY_POLICY_DROOLS_CONTAINER.enabled=true
+            --set $POLICY_CLAMP_CONTAINER.enabled=true --set $POLICY_PF_PPNT_CONTAINER.enabled=true
+            --set $POLICY_K8S_PPNT_CONTAINER.enabled=true --set $POLICY_HTTP_PPNT_CONTAINER.enabled=true"
+        ;;
+    esac
+
+}
+
+function install_chartmuseum () {
+    echo "Installing Chartmuseum helm repository..."
+    sudo microk8s helm repo add chartmuseum-git https://chartmuseum.github.io/charts
+    sudo microk8s helm repo update
+    sudo microk8s helm install policy-chartmuseum chartmuseum-git/chartmuseum --set env.open.DISABLE_API=false --set service.type=NodePort --set service.nodePort=30208
+    sudo microk8s helm plugin install https://github.com/chartmuseum/helm-push
+    echo "---------------------------------------------"
+}
+
+function push_acelement_chart() {
+    echo "Pushing acelement chart to the chartmuseum repo..."
+    sudo microk8s helm repo add policy-chartmuseum http://localhost:30208
+
+    # download clamp repo
+    git clone -b "${GERRIT_BRANCH}" --single-branch https://github.com/onap/policy-clamp.git "${WORKSPACE}"/csit/resources/tests/clamp
+    ACELEMENT_CHART=${WORKSPACE}/csit/resources/tests/clamp/examples/src/main/resources/clamp/acm/acelement-helm/acelement
+    sudo microk8s helm cm-push $ACELEMENT_CHART policy-chartmuseum
+    sudo microk8s helm repo update
+    rm -rf ${WORKSPACE}/csit/resources/tests/clamp/
+    echo "-------------------------------------------"
+}
 
 
-</head>
-<body>
-  <div id="statistics-container">
-    <h2>Test Statistics</h2>
-    <table class="statistics tablesorter tablesorter-default tablesorter2e2fe879cc465" id="total-stats" role="grid">
-      <thead>
-        <tr role="row" class="tablesorter-headerRow">
-          <th class="stats-col-name tablesorter-header tablesorter-headerUnSorted" data-column="0" tabindex="0" scope="col" role="columnheader" aria-disabled="false" aria-controls="total-stats" unselectable="on" aria-sort="none" aria-label="Total Statistics: No sort applied, activate to apply an ascending sort" style="user-select: none;">
-            <div class="tablesorter-header-inner">Total Statistics</div>
-          </th>
-          <th class="stats-col-stat tablesorter-header tablesorter-headerUnSorted" data-column="1" tabindex="0" scope="col" role="columnheader" aria-disabled="false" aria-controls="total-stats" unselectable="on" aria-sort="none" aria-label="Total: No sort applied, activate to apply a descending sort" style="user-select: none;">
-            <div class="tablesorter-header-inner">Total</div>
-          </th>
-          <th class="stats-col-stat tablesorter-header tablesorter-headerUnSorted" data-column="2" tabindex="0" scope="col" role="columnheader" aria-disabled="false" aria-controls="total-stats" unselectable="on" aria-sort="none" aria-label="Pass: No sort applied, activate to apply a descending sort" style="user-select: none;">
-            <div class="tablesorter-header-inner">Pass</div>
-          </th>
-          <th class="stats-col-stat tablesorter-header tablesorter-headerUnSorted" data-column="3" tabindex="0" scope="col" role="columnheader" aria-disabled="false" aria-controls="total-stats" unselectable="on" aria-sort="none" aria-label="Fail: No sort applied, activate to apply a descending sort" style="user-select: none;">
-            <div class="tablesorter-header-inner">Fail</div>
-          </th>
-          <th class="stats-col-stat tablesorter-header tablesorter-headerUnSorted" data-column="4" tabindex="0" scope="col" role="columnheader" aria-disabled="false" aria-controls="total-stats" unselectable="on" aria-sort="none" aria-label="Skip: No sort applied, activate to apply a descending sort" style="user-select: none;">
-            <div class="tablesorter-header-inner">Skip</div>
-          </th>
-          <th class="stats-col-elapsed tablesorter-header tablesorter-headerUnSorted" title="Total execution time of these tests. Excludes suite setups and teardowns." data-column="5" tabindex="0" scope="col" role="columnheader" aria-disabled="false" aria-controls="total-stats" unselectable="on" aria-sort="none" aria-label="Elapsed: No sort applied, activate to apply a descending sort" style="user-select: none;">
-            <div class="tablesorter-header-inner">Elapsed</div>
-          </th>
-          <th class="stats-col-graph tablesorter-header sorter-false tablesorter-headerUnSorted" data-column="6" scope="col" role="columnheader" aria-disabled="true" unselectable="on" aria-sort="none" aria-label="Pass / Fail / Skip: No sort applied, sorting is disabled" style="user-select: none;">
-            <div class="tablesorter-header-inner">Pass / Fail / Skip</div>
-          </th>
-        </tr>
-      </thead>
-      <tbody aria-live="polite" aria-relevant="all">
-        <tr class="row-0" role="row">
-          <td class="stats-col-name">
-            <div class="stat-name">
-              <span>All Tests</span>
-            </div>
-          </td>
-          <td class="stats-col-stat">1</td>
-          <td class="stats-col-stat">1</td>
-          <td class="stats-col-stat">0</td>
-          <td class="stats-col-stat">0</td>
-          <td class="stats-col-elapsed" title="Total execution time of these tests. Excludes suite setups and teardowns.">00:00:00</td>
-          <td class="stats-col-graph">
-            <div class="graph">
-              <div class="pass-bar" style="width: 100%" title="100%"></div>
-              <div class="fail-bar" style="width: 0%" title="0%"></div>
-              <div class="skip-bar" style="width: 0%" title="0%"></div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <table class="statistics tablesorter tablesorter-default tablesorter8e8ffd77a824a" id="tag-stats" role="grid">
-      <thead>
-        <tr role="row" class="tablesorter-headerRow">
-          <th class="stats-col-name tablesorter-header tablesorter-headerUnSorted" data-column="0" tabindex="0" scope="col" role="columnheader" aria-disabled="false" aria-controls="tag-stats" unselectable="on" aria-sort="none" aria-label="Statistics by Tag: No sort applied, activate to apply an ascending sort" style="user-select: none;">
-            <div class="tablesorter-header-inner">Statistics by Tag</div>
-          </th>
-          <th class="stats-col-stat tablesorter-header tablesorter-headerUnSorted" data-column="1" tabindex="0" scope="col" role="columnheader" aria-disabled="false" aria-controls="tag-stats" unselectable="on" aria-sort="none" aria-label="Total: No sort applied, activate to apply a descending sort" style="user-select: none;">
-            <div class="tablesorter-header-inner">Total</div>
-          </th>
-          <th class="stats-col-stat tablesorter-header tablesorter-headerUnSorted" data-column="2" tabindex="0" scope="col" role="columnheader" aria-disabled="false" aria-controls="tag-stats" unselectable="on" aria-sort="none" aria-label="Pass: No sort applied, activate to apply a descending sort" style="user-select: none;">
-            <div class="tablesorter-header-inner">Pass</div>
-          </th>
-          <th class="stats-col-stat tablesorter-header tablesorter-headerUnSorted" data-column="3" tabindex="0" scope="col" role="columnheader" aria-disabled="false" aria-controls="tag-stats" unselectable="on" aria-sort="none" aria-label="Fail: No sort applied, activate to apply a descending sort" style="user-select: none;">
-            <div class="tablesorter-header-inner">Fail</div>
-          </th>
-          <th class="stats-col-stat tablesorter-header tablesorter-headerUnSorted" data-column="4" tabindex="0" scope="col" role="columnheader" aria-disabled="false" aria-controls="tag-stats" unselectable="on" aria-sort="none" aria-label="Skip: No sort applied, activate to apply a descending sort" style="user-select: none;">
-            <div class="tablesorter-header-inner">Skip</div>
-          </th>
-          <th class="stats-col-elapsed tablesorter-header tablesorter-headerUnSorted" title="Total execution time of these tests. Excludes suite setups and teardowns." data-column="5" tabindex="0" scope="col" role="columnheader" aria-disabled="false" aria-controls="tag-stats" unselectable="on" aria-sort="none" aria-label="Elapsed: No sort applied, activate to apply a descending sort" style="user-select: none;">
-            <div class="tablesorter-header-inner">Elapsed</div>
-          </th>
-          <th class="stats-col-graph tablesorter-header sorter-false tablesorter-headerUnSorted" data-column="6" scope="col" role="columnheader" aria-disabled="true" unselectable="on" aria-sort="none" aria-label="Pass / Fail / Skip: No sort applied, sorting is disabled" style="user-select: none;">
-            <div class="tablesorter-header-inner">Pass / Fail / Skip</div>
-          </th>
-        </tr>
-      </thead>
-      <tbody aria-live="polite" aria-relevant="all">
-        <tr class="row-0" role="row">
-          <td class="stats-col-name">No Tags</td>
-          <td class="stats-col-stat"></td>
-          <td class="stats-col-stat"></td>
-          <td class="stats-col-stat"></td>
-          <td class="stats-col-stat"></td>
-          <td class="stats-col-elapsed" title="Total execution time of these tests. Excludes suite setups and teardowns."></td>
-          <td class="stats-col-graph">
-            <div class="empty-graph"></div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <table class="statistics tablesorter tablesorter-default tablesorter06030fd685e0f" id="suite-stats" role="grid">
-      <thead>
-        <tr role="row" class="tablesorter-headerRow">
-          <th class="stats-col-name tablesorter-header tablesorter-headerUnSorted" data-column="0" tabindex="0" scope="col" role="columnheader" aria-disabled="false" aria-controls="suite-stats" unselectable="on" aria-sort="none" aria-label="Statistics by Suite: No sort applied, activate to apply an ascending sort" style="user-select: none;">
-            <div class="tablesorter-header-inner">Statistics by Suite</div>
-          </th>
-          <th class="stats-col-stat tablesorter-header tablesorter-headerUnSorted" data-column="1" tabindex="0" scope="col" role="columnheader" aria-disabled="false" aria-controls="suite-stats" unselectable="on" aria-sort="none" aria-label="Total: No sort applied, activate to apply a descending sort" style="user-select: none;">
-            <div class="tablesorter-header-inner">Total</div>
-          </th>
-          <th class="stats-col-stat tablesorter-header tablesorter-headerUnSorted" data-column="2" tabindex="0" scope="col" role="columnheader" aria-disabled="false" aria-controls="suite-stats" unselectable="on" aria-sort="none" aria-label="Pass: No sort applied, activate to apply a descending sort" style="user-select: none;">
-            <div class="tablesorter-header-inner">Pass</div>
-          </th>
-          <th class="stats-col-stat tablesorter-header tablesorter-headerUnSorted" data-column="3" tabindex="0" scope="col" role="columnheader" aria-disabled="false" aria-controls="suite-stats" unselectable="on" aria-sort="none" aria-label="Fail: No sort applied, activate to apply a descending sort" style="user-select: none;">
-            <div class="tablesorter-header-inner">Fail</div>
-          </th>
-          <th class="stats-col-stat tablesorter-header tablesorter-headerUnSorted" data-column="4" tabindex="0" scope="col" role="columnheader" aria-disabled="false" aria-controls="suite-stats" unselectable="on" aria-sort="none" aria-label="Skip: No sort applied, activate to apply a descending sort" style="user-select: none;">
-            <div class="tablesorter-header-inner">Skip</div>
-          </th>
-          <th class="stats-col-elapsed tablesorter-header tablesorter-headerUnSorted" title="Total execution time of this suite." data-column="5" tabindex="0" scope="col" role="columnheader" aria-disabled="false" aria-controls="suite-stats" unselectable="on" aria-sort="none" aria-label="Elapsed: No sort applied, activate to apply a descending sort" style="user-select: none;">
-            <div class="tablesorter-header-inner">Elapsed</div>
-          </th>
-          <th class="stats-col-graph tablesorter-header sorter-false tablesorter-headerUnSorted" data-column="6" scope="col" role="columnheader" aria-disabled="true" unselectable="on" aria-sort="none" aria-label="Pass / Fail / Skip: No sort applied, sorting is disabled" style="user-select: none;">
-            <div class="tablesorter-header-inner">Pass / Fail / Skip</div>
-          </th>
-        </tr>
-      </thead>
-      <tbody aria-live="polite" aria-relevant="all">
-        <tr onclick="makeElementVisible('s1')" class="row-0" role="row">
-          <td class="stats-col-name" title="pap">
-            <div class="stat-name">
-              <span href="#s1">
-                <span class="parent-name"></span>Dummy Test</span>
-            </div>
-          </td>
-          <td class="stats-col-stat">1</td>
-          <td class="stats-col-stat">1</td>
-          <td class="stats-col-stat">0</td>
-          <td class="stats-col-stat">0</td>
-          <td class="stats-col-elapsed" title="Total execution time of this suite.">00:00:00</td>
-          <td class="stats-col-graph">
-            <div class="graph">
-              <div class="pass-bar" style="width: 100%" title="100%"></div>
-              <div class="fail-bar" style="width: 0%" title="0%"></div>
-              <div class="skip-bar" style="width: 0%" title="0%"></div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</body>
-</html>
-EOF
+OPERATION="$1"
+PROJECT="$2"
 
-cp ${ROBOT_LOG_DIR}/log.html ${ROBOT_LOG_DIR}/report.html
+if [ $OPERATION == "install" ]; then
+    spin_microk8s_cluster
+    if [ "${?}" -eq 0 ]; then
+        set_project_config
+        echo "Installing policy helm charts in the default namespace"
+        source ${WORKSPACE}/compose/get-k8s-versions.sh
+        cd ${WORKSPACE}/helm || exit
+        sudo microk8s helm dependency build policy
+        sudo microk8s helm install csit-policy policy ${SET_VALUES}
+        sudo microk8s helm install prometheus prometheus
+        echo "Policy chart installation completed"
+        echo "-------------------------------------------"
+    fi
+
+    if [ "$PROJECT" ]; then
+        export ROBOT_LOG_DIR=${WORKSPACE}/csit/archives/${PROJECT}
+        echo "CSIT will be invoked from $ROBOT_FILE"
+        echo "Readiness containers: ${READINESS_CONTAINERS[*]}"
+        echo "-------------------------------------------"
+        start_csit
+    else
+        echo "No project supplied for running CSIT"
+    fi
+
+elif [ $OPERATION == "uninstall" ]; then
+    uninstall_policy
+
+elif [ $OPERATION == "clean" ]; then
+    teardown_cluster
+
+else
+    echo "Invalid arguments provided. Usage: $0 [options..] {install {project_name} | uninstall | clean}"
+fi

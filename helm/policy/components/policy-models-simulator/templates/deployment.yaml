@@ -27,8 +27,8 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: {{ .Values.global.repository }}/{{ .Values.global.image.simulator }}
+          imagePullPolicy: {{ .Values.pullPolicy }}
           command: ["/opt/app/policy/simulators/bin/simulators.sh"]
           args: ["/opt/app/policy/simulators/etc/mounted/simParameters.json"]
           ports:

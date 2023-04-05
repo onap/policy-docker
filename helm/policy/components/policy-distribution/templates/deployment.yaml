@@ -96,7 +96,7 @@ spec:
         name: {{ .Chart.Name }}-update-config
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ .Values.image }}
+          image: {{ .Values.global.repository }}/{{ .Values.global.image.distribution }}
           imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
           command: ["/opt/app/policy/distribution/bin/policy-dist.sh"]
           args: ["/opt/app/policy/distribution/etc/mounted/config.json"]
