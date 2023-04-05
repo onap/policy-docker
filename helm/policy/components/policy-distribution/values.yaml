@@ -28,7 +28,6 @@ global:
 # Application configuration defaults.
 #################################################################
 # application image
-image: nexus3.onap.org:10001/onap/policy-distribution:2.9-SNAPSHOT-latest
 pullPolicy: Always
 
 # flag to enable debugging - application support required

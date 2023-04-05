@@ -49,7 +49,7 @@ spec:
               fieldRef:
                 apiVersion: v1
                 fieldPath: metadata.namespace
-          image: nexus3.onap.org:10001/onap/oom/readiness:3.0.1
+          image: {{ .Values.global.repository }}/{{ .Values.global.image.readiness }}
           imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
           name: {{ .Chart.Name }}-readiness
         - command:
@@ -88,7 +88,7 @@ spec:
           name: {{ .Chart.Name }}-update-config
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ .Values.image }}
+          image: {{ .Values.global.repository }}/{{ .Values.global.image.api }}
           imagePullPolicy: {{ .Values.pullPolicy }}
           command: ["/opt/app/policy/api/bin/policy-api.sh"]
           args: ["/opt/app/policy/api/etc/mounted/apiParameters.yaml"]
