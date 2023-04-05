@@ -90,7 +90,7 @@ spec:
             {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ .Values.image }}
+          image: {{ .Values.global.dockerRepository }}/{{ .Values.global.image.mariadb }}
           imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy | quote}}
           command:
             - bash
