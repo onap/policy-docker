@@ -30,16 +30,38 @@ global:
   kafkaBootstrap: strimzi-kafka-bootstrap
   policyKafkaUser: policy-kafka-user
 
+  repository: nexus3.onap.org:10001
+  pullPolicy: Always
+  dockerRepository: docker.io
 
+  image:
+    api: onap/policy-api:2.8-SNAPSHOT-latest
+    pap: onap/policy-pap:2.8-SNAPSHOT-latest
+    apex: onap/policy-apex-pdp:2.9-SNAPSHOT-latest
+    mariadb: bitnami/mariadb-galera:10.5.8
+    simulator: onap/policy-models-simulator:2.8-SNAPSHOT-latest
+    pdpdcl: onap/policy-pdpd-cl:1.12.1
+    xacml: onap/policy-xacml-pdp:2.8-SNAPSHOT-latest
+    distribution: onap/policy-distribution:2.9-SNAPSHOT-latest
+    runtimeacm: onap/policy-clamp-runtime-acm:6.4-SNAPSHOT-latest
+    kserveparticipant: onap/policy-clamp-ac-kserve-ppnt:6.4-SNAPSHOT-latest
+    k8sparticipant: onap/policy-clamp-ac-k8s-ppnt:6.4-SNAPSHOT-latest
+    pfparticipant: onap/policy-clamp-ac-pf-ppnt:6.4-SNAPSHOT-latest
+    httpparticipant: onap/policy-clamp-ac-http-ppnt:6.4-SNAPSHOT-latest
+    a1pmsparticipant: onap/policy-clamp-ac-a1pms-ppnt:6.4-SNAPSHOT-latest
+    readiness: onap/oom/readiness:3.0.1
+
+policy-mariadb-galera:
+  enabled: true
 policy-models-simulator:
+  enabled: true
+policy-api:
+  enabled: true
+policy-pap:
   enabled: true
 policy-clamp-ac-k8s-ppnt:
   enabled: false
 policy-clamp-runtime-acm:
-  enabled: false
-policy-api:
-  enabled: false
-policy-pap:
   enabled: false
 policy-apex-pdp:
   enabled: false
@@ -62,10 +84,6 @@ policy-clamp-ac-a1pms-ppnt:
 # DB configuration defaults.
 #################################################################
 
-repository: nexus3.onap.org:10001
-pullPolicy: Always
-
-dockerRepository: docker.io
 
 mariadb:
   image: mariadb:10.5.8
@@ -88,46 +106,6 @@ nodeSelector: {}
 
 affinity: {}
 
-# probe configuration parameters
-liveness:
-  initialDelaySeconds: 10
-  periodSeconds: 10
-  # necessary to disable liveness probe when setting breakpoints
-  # in debugger so K8s doesn't restart unresponsive container
-  enabled: true
-
-readiness:
-  image: onap/oom/readiness:3.0.1
-  initialDelaySeconds: 10
-  periodSeconds: 10
-
-
-config:
-  policyAppUserName: runtimeUser
-  useStrimziKafka: true
-  acRuntimeTopic:
-    name: policy-acruntime-participant
-    partitions: 10
-    retentionMs: 7200000
-    segmentBytes: 1073741824
-    consumer:
-      groupId: policy-group
-  policyHeartbeatTopic:
-    name: policy-heartbeat
-    partitions: 10
-    retentionMs: 7200000
-    segmentBytes: 1073741824
-    consumer:
-      groupId: policy-group
-  policyNotificationTopic:
-    name: policy-notification
-    partitions: 10
-    retentionMs: 7200000
-    segmentBytes: 1073741824
-    consumer:
-      groupId: policy-group
-  someConfig: blah
-
 mariadb-galera:
   # mariadb-galera.config and global.mariadb.config must be equals
   db:
@@ -143,12 +121,6 @@ mariadb-galera:
     mountSubPath: policy/maria/data
   serviceAccount:
     nameOverride: *mariadb-galera
-
-restServer:
-  policyPapUserName: policyadmin
-  policyPapUserPassword: zb!XztG34
-  policyApiUserName: policyadmin
-  policyApiUserPassword: zb!XztG34
 
 # Resource Limit flavor -By Default using small
 # Segregation for Different environment (small, large, or unlimited)

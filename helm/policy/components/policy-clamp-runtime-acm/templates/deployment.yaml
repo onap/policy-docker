@@ -49,7 +49,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        image: nexus3.onap.org:10001/onap/oom/readiness:3.0.1
+        image: {{ .Values.global.repository }}/{{ .Values.global.image.readiness }}
         imagePullPolicy: {{ .Values.pullPolicy }}
         name: {{ .Chart.Name }}-readiness
       - command:
@@ -100,7 +100,7 @@ spec:
         name: {{ .Chart.Name }}-update-config
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ .Values.image }}
+          image: {{ .Values.global.repository }}/{{ .Values.global.image.runtimeacm }}
           imagePullPolicy: {{ .Values.pullPolicy }}
           command: ["/opt/app/policy/clamp/bin/acm-runtime.sh"]
           args: ["/opt/app/policy/clamp/etc/mounted/acRuntimeParameters.yaml"]

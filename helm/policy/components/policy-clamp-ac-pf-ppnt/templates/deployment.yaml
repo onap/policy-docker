@@ -97,7 +97,7 @@ spec:
         name: {{ .Chart.Name }}-update-config
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ .Values.image }}
+          image: {{ .Values.global.repository }}/{{ .Values.global.image.pfparticipant }}
           imagePullPolicy: {{ .Values.pullPolicy }}
           command: ["/opt/app/policy/clamp/bin/policy-participant.sh"]
           args: ["/opt/app/policy/clamp/etc/mounted/PolicyParticipantParameters.yaml"]

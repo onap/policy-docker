@@ -77,7 +77,7 @@ spec:
         name: {{ .Chart.Name }}-update-config
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ .Values.image }}
+          image: {{ .Values.global.repository }}/{{ .Values.global.image.httpparticipant }}
           imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
           command: ["/opt/app/policy/clamp/bin/http-participant.sh"]
           args: ["/opt/app/policy/clamp/etc/mounted/HttpParticipantParameters.yaml"]

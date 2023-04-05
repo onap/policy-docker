@@ -81,7 +81,7 @@ spec:
         name: {{ .Chart.Name }}-update-config
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ .Values.image }}
+          image: {{ .Values.global.repository }}/{{ .Values.global.image.kserveparticipant }}
           imagePullPolicy: {{ .Values.pullPolicy }}
           command: ["/opt/app/policy/clamp/bin/kserve-participant.sh"]
           args: ["/opt/app/policy/clamp/etc/mounted/KserveParticipantParameters.yaml"]
