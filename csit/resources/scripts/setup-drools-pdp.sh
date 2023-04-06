@@ -18,7 +18,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
-source "${WORKSPACE}"/compose/start-compose.sh drools
+source "${WORKSPACE}"/compose/start-compose.sh drools-pdp
 
 sleep 10
 unset http_proxy https_proxy

@@ -138,7 +138,7 @@ services:
         'message-router', '3904',
         'pap', '6969'
         ]
-   drools:
+   drools-pdp:
       image: ${CONTAINER_LOCATION}onap/policy-drools:${POLICY_DROOLS_PDP_VERSION}
       container_name: drools
       depends_on:
@@ -160,7 +160,7 @@ services:
         'mariadb', '3306',
         'message-router', '3904'
         ]
-   drools-apps:
+   drools-applications:
       image: ${CONTAINER_LOCATION}onap/policy-pdpd-cl:${POLICY_DROOLS_APPS_VERSION}
       container_name: drools-apps
       depends_on:

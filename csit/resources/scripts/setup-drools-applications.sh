@@ -20,7 +20,7 @@
 
 source "${SCRIPTS}"/node-templates.sh
 
-source "${WORKSPACE}"/compose/start-compose.sh drools-apps
+source "${WORKSPACE}"/compose/start-compose.sh drools-applications
 
 sleep 10
 unset http_proxy https_proxy
