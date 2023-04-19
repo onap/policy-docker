@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE jpapolicyaudit RENAME COLUMN USER TO USERNAME;
+ALTER TABLE jpapolicyaudit RENAME COLUMN "USER" TO USERNAME;

@@ -17,5 +17,5 @@
  *  ============LICENSE_END=========================================================
  */
 
-DROP INDEX IDXTSIDX1 ON pdpstatistics;
+DROP INDEX IDXTSIDX1;
 CREATE INDEX IDX_TSIDX1 ON pdpstatistics(timeStamp, name, version);

@@ -18,7 +18,7 @@
  */
 
 INSERT INTO sequence(SEQ_NAME, SEQ_COUNT)
-VALUES('SEQ_GEN', (SELECT COALESCE(MAX(id), 0) FROM (
+VALUES('SEQGEN', (SELECT COALESCE(MAX(id), 0) FROM (
     SELECT MAX(id) as id FROM pdpstatistics
     UNION
     SELECT MAX(id) as id FROM jpapolicyaudit
