@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6593627e_de3a0d4d",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/postgres/1200/downgrade/0120-audit_sequence.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6722
+      },
+      "writtenOn": "2023-04-20T10:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d07f288d_50c8c150",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "302602d6d395966eae6b1327a8ec13751de9ba55",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a7842fb_9320554c",
         "filename": "policy-db-migrator/src/main/docker/config/policyadmin/postgres/1200/upgrade/0120-audit_sequence.sql",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "249d9326_f1deaa13",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/postgres/1200/upgrade/0120-audit_sequence.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6722
+      },
+      "writtenOn": "2023-04-20T10:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a7842fb_9320554c",
+      "range": {
+        "startLine": 20,
+        "startChar": 167,
+        "endLine": 20,
+        "endChar": 168
+      },
+      "revId": "302602d6d395966eae6b1327a8ec13751de9ba55",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92d97b5a_d95d07a6",
         "filename": "policy-db-migrator/src/main/docker/config/policyadmin/postgres/1200/upgrade/0130-statistics_sequence.sql",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "302602d6d395966eae6b1327a8ec13751de9ba55",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94267dc2_250326ef",
+        "filename": "policy-db-migrator/src/main/docker/config/policyadmin/postgres/1200/upgrade/0130-statistics_sequence.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6722
+      },
+      "writtenOn": "2023-04-20T10:12:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92d97b5a_d95d07a6",
+      "range": {
+        "startLine": 20,
+        "startChar": 172,
+        "endLine": 20,
+        "endChar": 173
+      },
+      "revId": "302602d6d395966eae6b1327a8ec13751de9ba55",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
