@@ -18,7 +18,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 #-------------------------------------------------------------------------------
-FROM onap/policy-jre-alpine:2.6.2-SNAPSHOT
+FROM onap/policy-jre-alpine:2.6.2
 
 LABEL maintainer="Policy Team"
 LABEL org.opencontainers.image.title="Policy db-migrator"
