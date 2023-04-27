@@ -22,6 +22,30 @@
       "revId": "26f6271f984e872a91a48d9179b7997cd7553f99",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d0dae3_fd3cc68a",
+        "filename": "compose/docker-compose.postgres.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 6722
+      },
+      "writtenOn": "2023-04-27T09:24:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c8abf5b_8fd24257",
+      "range": {
+        "startLine": 3,
+        "startChar": 2,
+        "endLine": 4,
+        "endChar": 69
+      },
+      "revId": "26f6271f984e872a91a48d9179b7997cd7553f99",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
