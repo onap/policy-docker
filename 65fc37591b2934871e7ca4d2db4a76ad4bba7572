@@ -70,6 +70,30 @@
       "revId": "65fc37591b2934871e7ca4d2db4a76ad4bba7572",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064c2015_2d435bf3",
+        "filename": "compose/get-k8s-versions.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2023-05-04T14:28:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0c205521_7e6fe360",
+      "range": {
+        "startLine": 4,
+        "startChar": 3,
+        "endLine": 4,
+        "endChar": 61
+      },
+      "revId": "65fc37591b2934871e7ca4d2db4a76ad4bba7572",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
