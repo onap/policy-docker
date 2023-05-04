@@ -22,6 +22,30 @@
       "revId": "65fc37591b2934871e7ca4d2db4a76ad4bba7572",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbdcbdd4_f8a30954",
+        "filename": "compose/get-k8s-versions.sh",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2023-05-04T13:16:43Z",
+      "side": 1,
+      "message": "Thanks Adheli. Is it okay if I address this in a separate review? The csits are frequently failing in pap causing build failures most of the times. Another patchset might not pass the build immediately. Please suggest your thoughts.",
+      "parentUuid": "502be1c2_64bb8c97",
+      "range": {
+        "startLine": 4,
+        "startChar": 3,
+        "endLine": 4,
+        "endChar": 61
+      },
+      "revId": "65fc37591b2934871e7ca4d2db4a76ad4bba7572",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
