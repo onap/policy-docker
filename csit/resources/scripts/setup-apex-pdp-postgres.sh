@@ -17,7 +17,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
-export PROJECT="apex-pdp"
 source "${SCRIPTS}"/node-templates.sh
 
 source "${WORKSPACE}"/compose/start-postgres-tests.sh

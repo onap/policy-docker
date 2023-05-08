@@ -152,7 +152,6 @@ function start_csit() {
         mkdir -p ${ROBOT_LOG_DIR}
         sudo microk8s helm install csit-robot robot --set robot="$ROBOT_FILE" --set "readiness={${READINESS_CONTAINERS[*]}}" --set robotLogDir=$ROBOT_LOG_DIR
         print_robot_log
-        uninstall_policy
     fi
 }
 
