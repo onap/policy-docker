@@ -1,4 +1,3 @@
-docker-py
 ipaddr
 netaddr
 netifaces
