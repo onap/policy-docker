@@ -22,6 +22,30 @@
       "revId": "65f50209e5123080ddc13c26d5bd5933ac889930",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b8436b_938cdbfb",
+        "filename": "csit/resources/scripts/setup-apex-pdp-postgres.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 6722
+      },
+      "writtenOn": "2023-05-09T09:10:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7a207316_3c422a89",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "65f50209e5123080ddc13c26d5bd5933ac889930",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
