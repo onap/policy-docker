@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a207316_3c422a89",
+        "filename": "csit/resources/scripts/setup-apex-pdp-postgres.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2023-05-09T09:01:28Z",
+      "side": 1,
+      "message": "this variable needs to be removed, as it\u0027s changing the folder for logs and tests results.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "65f50209e5123080ddc13c26d5bd5933ac889930",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
