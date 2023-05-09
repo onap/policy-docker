@@ -17,10 +17,9 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
-export PROJECT="apex-pdp"
 source "${SCRIPTS}"/node-templates.sh
 
-source "${WORKSPACE}"/compose/start-postgres-tests.sh
+source "${WORKSPACE}"/compose/start-postgres-tests.sh 1
 
 sleep 10
 unset http_proxy https_proxy
@@ -51,4 +50,4 @@ export SUITES="apex-pdp-test.robot"
 ROBOT_VARIABLES="-v POLICY_PAP_IP:localhost:${PAP_PORT} -v POLICY_API_IP:localhost:${API_PORT}
 -v PROMETHEUS_IP:localhost:${PROMETHEUS_PORT} -v DATA:${DATA} -v NODETEMPLATES:${NODETEMPLATES}
 -v APEX_IP:localhost:${APEX_PORT} -v DMAAP_IP:${DMAAP_IP}
--v APEX_EVENTS_IP:localhost:${APEX_PORT}"
+-v APEX_EVENTS_IP:localhost:${APEX_EVENTS_PORT}"

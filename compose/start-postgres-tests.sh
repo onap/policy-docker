@@ -31,6 +31,6 @@ source export-ports.sh > /dev/null 2>&1
 source get-versions.sh > /dev/null 2>&1
 
 export REPLICAS=${1}
-docker-compose -f docker-compose.postgres.yml up -d apex-pdp
+docker-compose -f docker-compose.postgres.yml up -d apex-pdp prometheus
 
 cd ${WORKSPACE}
