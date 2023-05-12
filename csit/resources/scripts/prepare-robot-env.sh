@@ -34,7 +34,7 @@ source "${ROBOT_VENV}/bin/activate" > /dev/null
 
 set -exu
 
-python3 -m pip install -qq --upgrade pip setuptools
+python3 -m pip install -qq --upgrade pip<=23.0 setuptools<=66.1.1
 echo "Installing Python Requirements"
 python3 -m pip install -qq -r "${SCRIPTS}"/pylibs.txt
 python3 -m pip -qq freeze
