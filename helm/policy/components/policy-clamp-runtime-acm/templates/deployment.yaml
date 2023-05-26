@@ -101,7 +101,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.global.repository }}/{{ .Values.global.image.runtimeacm }}
-          imagePullPolicy: {{ .Values.pullPolicy }}
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
           command: ["/opt/app/policy/clamp/bin/acm-runtime.sh"]
           args: ["/opt/app/policy/clamp/etc/mounted/acRuntimeParameters.yaml"]
           ports:

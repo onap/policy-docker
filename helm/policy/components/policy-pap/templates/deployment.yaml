@@ -122,7 +122,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.global.repository }}/{{ .Values.global.image.pap }}
-          imagePullPolicy: {{ .Values.pullPolicy }}
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
           command: ["/opt/app/policy/pap/bin/policy-pap.sh"]
           args: ["/opt/app/policy/pap/etc/mounted/papParameters.yaml"]
           ports:

@@ -31,7 +31,7 @@ global:
   policyKafkaUser: policy-kafka-user
 
   repository: nexus3.onap.org:10001
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   dockerRepository: docker.io
 
   image:

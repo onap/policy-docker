@@ -75,7 +75,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.global.repository }}/{{ .Values.global.image.apex }}
-          imagePullPolicy: {{ .Values.pullPolicy }}
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
           command: ["sh","-c"]
           args: ["/opt/app/policy/apex-pdp/bin/apexOnapPf.sh -c /home/apexuser/config/OnapPfConfig.json"]
           ports:

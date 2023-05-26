@@ -82,7 +82,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.global.repository }}/{{ .Values.global.image.a1pmsparticipant }}
-          imagePullPolicy: {{ .Values.pullPolicy }}
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
           command: ["/opt/app/policy/clamp/bin/a1pms-participant.sh"]
           args: ["/opt/app/policy/clamp/etc/mounted/A1pmsParticipantParameters.yaml"]
           ports:

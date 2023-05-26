@@ -89,7 +89,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.global.repository }}/{{ .Values.global.image.api }}
-          imagePullPolicy: {{ .Values.pullPolicy }}
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
           command: ["/opt/app/policy/api/bin/policy-api.sh"]
           args: ["/opt/app/policy/api/etc/mounted/apiParameters.yaml"]
           ports:
