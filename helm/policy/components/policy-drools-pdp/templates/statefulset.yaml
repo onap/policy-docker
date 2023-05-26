@@ -59,7 +59,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.global.repository }}/{{ .Values.global.image.pdpdcl }}
-          imagePullPolicy: {{ .Values.pullPolicy }}
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
           command: ["sh","-c"]
           args: ["/opt/app/policy/bin/pdpd-cl-entrypoint.sh boot"]
           ports:

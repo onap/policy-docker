@@ -98,7 +98,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.global.repository }}/{{ .Values.global.image.pfparticipant }}
-          imagePullPolicy: {{ .Values.pullPolicy }}
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
           command: ["/opt/app/policy/clamp/bin/policy-participant.sh"]
           args: ["/opt/app/policy/clamp/etc/mounted/PolicyParticipantParameters.yaml"]
           ports:

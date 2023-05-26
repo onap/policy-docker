@@ -82,7 +82,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.global.repository }}/{{ .Values.global.image.kserveparticipant }}
-          imagePullPolicy: {{ .Values.pullPolicy }}
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
           command: ["/opt/app/policy/clamp/bin/kserve-participant.sh"]
           args: ["/opt/app/policy/clamp/etc/mounted/KserveParticipantParameters.yaml"]
           ports:
