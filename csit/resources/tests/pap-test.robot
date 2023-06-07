@@ -60,11 +60,6 @@ Metrics
     Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findByKeyName",repository="PdpGroupRepository",state="SUCCESS",} 1.0
     Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findAll",repository="PolicyStatusRepository",state="SUCCESS",}
 
-Statistics
-    [Documentation]  Verify policy pap statistics
-    ${resp}=  GetReq  /policy/pap/v1/statistics
-    Should Be Equal As Strings  ${resp.json()['code']}  200
-
 AddPdpGroup
     [Documentation]  Add a new PdpGroup named 'testGroup' in the policy database
     ${postjson}=  Get file  ${CURDIR}/data/create.group.request.json

@@ -12,11 +12,6 @@ Healthcheck
     ${resp}=  PdpxGetReq  /policy/pdpx/v1/healthcheck
     Should Be Equal As Strings    ${resp.json()['code']}  200
 
-Statistics
-    [Documentation]  Verify policy xacml-pdp statistics
-    ${resp}=  PdpxGetReq  /policy/pdpx/v1/statistics
-    Should Be Equal As Strings    ${resp.json()['code']}  200
-
 Metrics
     [Documentation]  Verify policy-xacml-pdp is exporting prometheus metrics
     ${resp}=  PdpxGetReq  /metrics
@@ -31,14 +26,11 @@ ExecuteXacmlPolicy
     CreateOptimizationPolicy
     Wait Until Keyword Succeeds    1 min   15 sec  GetDefaultDecision
     DeployPolicies
-    Wait Until Keyword Succeeds    1 min   15 sec  GetStatisticsAfterDeployed
     Wait Until Keyword Succeeds    1 min   15 sec  GetAbbreviatedDecisionResult
     Wait Until Keyword Succeeds    1 min   15 sec  GetMonitoringDecision
     Wait Until Keyword Succeeds    1 min   15 sec  GetNamingDecision
     Wait Until Keyword Succeeds    1 min   15 sec  GetOptimizationDecision
-    Wait Until Keyword Succeeds    1 min   15 sec  GetStatisticsAfterDecision
     UndeployMonitorPolicy
-    Wait Until Keyword Succeeds    1 min   15 sec  GetStatisticsAfterUndeploy
 
 *** Keywords ***
 
@@ -70,12 +62,6 @@ DeployPolicies
     Should Contain    ${result}    responseTo
     Should Contain    ${result}    xacml    
     Should Contain    ${result}    onap.restart.tca
-
-GetStatisticsAfterDeployed
-    [Documentation]  Verify policy xacml-pdp statistics after policy is deployed
-    ${resp}=  PdpxGetReq  /policy/pdpx/v1/statistics
-    Should Be Equal As Strings  ${resp.json()['code']}  200
-    Should Be Equal As Strings  ${resp.json()['totalPoliciesCount']}  3
 
 GetAbbreviatedDecisionResult
     [Documentation]    Get Decision with abbreviated results from Policy Xacml PDP
@@ -121,23 +107,10 @@ GetOptimizationDecision
     Dictionary Should Contain Key    ${policy}    properties
     Dictionary Should Contain Key    ${policy}    name
 
-GetStatisticsAfterDecision
-    [Documentation]    Runs Policy Xacml PDP Statistics after Decision request
-    ${resp}=  PdpxGetReq  /policy/pdpx/v1/statistics
-    Should Be Equal As Strings    ${resp.json()['code']}  200
-    Should Be Equal As Strings    ${resp.json()['permitDecisionsCount']}     4
-    Should Be Equal As Strings    ${resp.json()['notApplicableDecisionsCount']}     1
-
 UndeployMonitorPolicy
     [Documentation]    Runs Policy PAP to undeploy a policy
     ${policyadmin}=  PolicyAdminAuth
     PerformDeleteRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/policies/onap.restart.tca  202  ${policyadmin}
-
-GetStatisticsAfterUndeploy
-    [Documentation]    Runs Policy Xacml PDP Statistics after policy is undeployed
-    ${resp}=  PdpxGetReq  /policy/pdpx/v1/statistics
-    Should Be Equal As Strings    ${resp.json()['code']}  200
-    Should Be Equal As Strings    ${resp.json()['totalPoliciesCount']}     2
 
 PdpxGetReq
     [Arguments]  ${url}

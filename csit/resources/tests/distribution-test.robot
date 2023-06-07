@@ -13,12 +13,6 @@ Healthcheck
     ${resp}=  PerformGetRequest  ${DISTRIBUTION_IP}  /healthcheck  200  null  ${hcauth}
     Should Be Equal As Strings  ${resp.json()['code']}  200
 
-Statistics
-    [Documentation]  Verify policy distribution statistics
-    ${hcauth}=  PolicyAdminAuth
-    ${resp}=  PerformGetRequest  ${DISTRIBUTION_IP}  /statistics  200  null  ${hcauth}
-    Should Be Equal As Strings  ${resp.json()['code']}  200
-
 Metrics
     [Documentation]  Verify policy-distribution is exporting prometheus metrics
     ${hcauth}=  PolicyAdminAuth
