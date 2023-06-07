@@ -1,5 +1,6 @@
 #  ============LICENSE_START=======================================================
 #   Copyright (C) 2023 Nordix Foundation. All rights reserved.
+#   Modifications Copyright (C) 2023 Bell Canada. All rights reserved.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -75,7 +76,6 @@ pap:
     stateChangeParameters:
       maxRetryCount: 1
       maxWaitMs: 30000
-  savePdpStatisticsInDb: true
   topicParameterGroup:
     topicSources:
     - topic: ${pap.topic.pdp-pap.name}

@@ -20,10 +20,6 @@ ValidateResponseTimeForHealthcheck
     [Documentation]  Validate component healthcheck response time
     ValidateResponseTimeForApi  /healthcheck  GET
 
-ValidateResponseTimeForStatistics
-    [Documentation]  Validate statistics response time
-    ValidateResponseTimeForApi  /statistics  GET
-
 ValidateResponseTimeQueryPolicies
     [Documentation]  Validate query policies response time
     ValidateResponseTimeForApi  /policies  GET
