@@ -20,10 +20,6 @@
 # $1 functionality
 # $2 robot options
 
-#
-# functions
-#
-
 function on_exit(){
     rc=$?
     if [[ ${WORKSPACE} ]]; then
