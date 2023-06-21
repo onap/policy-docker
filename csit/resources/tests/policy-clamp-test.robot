@@ -127,7 +127,7 @@ UnInstantiateAutomationComposition
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
      ${resp}=   DELETE On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}     headers=${headers}
      Log    Received response from runtime acm ${resp.text}
-     Should Be Equal As Strings    ${resp.status_code}     200
+     Should Be Equal As Strings    ${resp.status_code}     202
 
 
 DePrimeACDefinitions
