@@ -127,7 +127,8 @@ UnInstantiateAutomationComposition
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
      ${resp}=   DELETE On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}     headers=${headers}
      Log    Received response from runtime acm ${resp.text}
-     Should Be Equal As Strings    ${resp.status_code}     200
+     Should Be Equal As Strings    ${resp.status_code}     202
+     Wait Until Keyword Succeeds    1 min    5 sec    VerifyUninstantiated
 
 
 DePrimeACDefinitions
@@ -178,4 +179,15 @@ VerifyDeployStatus
      ${resp}=   GET On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}     headers=${headers}
      Should Be Equal As Strings    ${resp.status_code}     200
      Run Keyword If  ${resp.status_code}==200  Should Be Equal As Strings  ${resp.json()['deployState']}  ${deploystate}
+
+VerifyUninstantiated
+     [Documentation]  Verify the Uninstantiation of automation composition.
+     ${auth}=    Create List    runtimeUser    zb!XztG34
+     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   GET On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances     headers=${headers}
+     Should Be Equal As Strings    ${resp.status_code}     200
+     Run Keyword If  ${resp.status_code}==200  Length Should Be  ${resp.json()['automationCompositionList']}  0
+
 
