@@ -24,13 +24,13 @@ participant:
             - ${topicServer:message-router}
           topicCommInfrastructure: dmaap
           fetchTimeout: 15000
-          useHttps: ${useHttps:true}
+          useHttps: false
       topicSinks:
         - topic: POLICY-ACRUNTIME-PARTICIPANT
           servers:
             - ${topicServer:message-router}
           topicCommInfrastructure: dmaap
-          useHttps: ${useHttps:true}
+          useHttps: false
     participantSupportedElementTypes:
       -
         typeName: ${supportedElementTypeName:org.onap.policy.clamp.acm.SimAutomationCompositionElement}
@@ -44,5 +44,7 @@ management:
         include: health, metrics, prometheus
 server:
   port: 8087
+  ssl:
+    enabled: false
   servlet:
     context-path: /onap/policy/clamp/acm/simparticipant

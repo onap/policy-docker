@@ -262,7 +262,6 @@ services:
         'policy-clamp-ac-http-ppnt', '6969',
         'policy-clamp-ac-k8s-ppnt', '6969',
         'policy-clamp-ac-pf-ppnt', '6969',
-        'policy-clamp-ac-sim-ppnt', '6969',
         'apex-pdp', '6969'
         ]
 
