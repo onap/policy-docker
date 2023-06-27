@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1eaa400_0b819ec1",
+        "filename": "compose/docker-compose.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2023-06-27T08:44:36Z",
+      "side": 1,
+      "message": "as discussed before, these dependencies are on the wrong direction, as each of the ppnt should note they are dependent on policy-clamp-runtime-acm and the pptn-sim",
+      "range": {
+        "startLine": 245,
+        "startChar": 9,
+        "endLine": 248,
+        "endChar": 33
+      },
+      "revId": "b3d195d3d3a1db6cacb2a2e10e7d9331fa374b7f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
