@@ -284,6 +284,13 @@ function push_acelement_chart() {
 
 OPERATION="$1"
 PROJECT="$2"
+if [ -z "$3" ]
+then
+    LOCALIMAGE="false"
+else
+    LOCALIMAGE="$3"
+fi
+
 
 if [ $OPERATION == "install" ]; then
     spin_microk8s_cluster
@@ -291,6 +298,11 @@ if [ $OPERATION == "install" ]; then
         set_project_config
         echo "Installing policy helm charts in the default namespace"
         source ${WORKSPACE}/compose/get-k8s-versions.sh
+        if [ $LOCALIMAGE == "true" ]; then
+            echo "loading local image"
+            source ${WORKSPACE}/compose/get-versions.sh
+            ${WORKSPACE}/compose/loaddockerimage.sh
+        fi
         cd ${WORKSPACE}/helm || exit
         sudo microk8s helm dependency build policy
         sudo microk8s helm install csit-policy policy ${SET_VALUES}
@@ -316,5 +328,5 @@ elif [ $OPERATION == "clean" ]; then
     teardown_cluster
 
 else
-    echo "Invalid arguments provided. Usage: $0 [options..] {install {project_name} | uninstall | clean}"
+    echo "Invalid arguments provided. Usage: $0 [options..] {install {project_name} | uninstall | clean} {uselocalimage = true/false}"
 fi
