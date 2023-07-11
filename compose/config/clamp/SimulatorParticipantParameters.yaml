@@ -43,7 +43,7 @@ management:
       exposure:
         include: health, metrics, prometheus
 server:
-  port: 8087
+  port: 6969
   ssl:
     enabled: false
   servlet:
