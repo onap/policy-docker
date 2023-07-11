@@ -63,20 +63,21 @@ affinity: {}
 
 # probe configuration parameters
 liveness:
-  initialDelaySeconds: 60
+  initialDelaySeconds: 120
   periodSeconds: 10
+  failureThreshold: 10
   # necessary to disable liveness probe when setting breakpoints
   # in debugger so K8s doesn't restart unresponsive container
   enabled: true
   port: http-api
 
 readiness:
-  initialDelaySeconds: 10
-  periodSeconds: 120
+  initialDelaySeconds: 120
+  periodSeconds: 10
   port: http-api
   api: /policy/pap/v1/healthcheck
   successThreshold: 1
-  failureThreshold: 3
+  failureThreshold: 10
   timeout: 60
 
 service:
