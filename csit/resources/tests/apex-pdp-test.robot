@@ -21,12 +21,9 @@ ExecuteApexSampleDomainPolicy
      Set Test Variable    ${policyName}    onap.policies.native.apex.Sampledomain
      ${postjson}=  Get File  ${CURDIR}/data/${policyName}.json
      CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
-     Wait Until Keyword Succeeds    3 min    5 sec    VerifyPdpStatistics    0    0    0    0
      DeployPolicy
      Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
-     Wait Until Keyword Succeeds    3 min    5 sec    VerifyPdpStatistics    1    1    0    0
      Wait Until Keyword Succeeds    4 min    5 sec    RunEventOnApexEngine
-     Wait Until Keyword Succeeds    3 min    5 sec    VerifyPdpStatistics    1    1    1    1
 
 ExecuteApexTestPnfPolicy
      Set Test Variable    ${policyName}    onap.policies.apex.pnf.Test

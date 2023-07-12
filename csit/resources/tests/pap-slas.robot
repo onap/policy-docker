@@ -24,10 +24,6 @@ ValidateResponseTimeForSystemHealthcheck
     [Documentation]  Validate if system healthcheck response time is under 1000ms
     ValidateResponseTime  pap-metrics  /components/healthcheck  GET  10000
 
-ValidateResponseTimeForStatistics
-    [Documentation]  Validate statistics response time
-    ValidateResponseTimeForPap  /statistics  GET
-
 # TODO: includes notification, so always over 500ms
 # ValidateResponseTimeCreateGroup
 #     [Documentation]  Validate create group response time

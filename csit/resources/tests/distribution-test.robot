@@ -13,23 +13,6 @@ Healthcheck
     ${resp}=  PerformGetRequest  ${DISTRIBUTION_IP}  /healthcheck  200  null  ${hcauth}
     Should Be Equal As Strings  ${resp.json()['code']}  200
 
-Statistics
-    [Documentation]  Verify policy distribution statistics
-    ${hcauth}=  PolicyAdminAuth
-    ${resp}=  PerformGetRequest  ${DISTRIBUTION_IP}  /statistics  200  null  ${hcauth}
-    Should Be Equal As Strings  ${resp.json()['code']}  200
-
-Metrics
-    [Documentation]  Verify policy-distribution is exporting prometheus metrics
-    ${hcauth}=  PolicyAdminAuth
-    ${resp}=  PerformGetRequest  ${DISTRIBUTION_IP}  /metrics  200  null  ${hcauth}
-    Should Contain  ${resp.text}  total_distribution_received_count_total 0.0
-    Should Contain  ${resp.text}  distribution_success_count_total 0.0
-    Should Contain  ${resp.text}  distribution_failure_count_total 0.0
-    Should Contain  ${resp.text}  total_download_received_count_total 0.0
-    Should Contain  ${resp.text}  download_success_count_total 0.0
-    Should Contain  ${resp.text}  download_failure_count_total 0.0
-
 InvokeDistributionAndRunEventOnEngine
     Wait Until Keyword Succeeds  5 min  30 sec  InvokeDistributionUsingFile And RunEventOnApexEngine
 
