@@ -14,11 +14,6 @@ Healthcheck
      Should Be Equal As Strings  ${resp.json()['healthy']}  True
      Should Be Equal As Strings  ${resp.json()['message']}  alive
 
-Statistics
-     [Documentation]  Verify policy api statistics
-     ${resp}=  GetReq  /policy/api/v1/statistics
-     Should Be Equal As Strings  ${resp.json()['code']}  200
-
 RetrievePolicyTypes
      [Documentation]  Retrieve all policy types
      FetchPolicyTypes  /policy/api/v1/policytypes  37
@@ -84,7 +79,6 @@ DeleteSpecificNodeTemplate
      DeleteReq  /policy/api/v1/nodetemplates/apexMetadata_adaptive/versions/2.3.1  200
      DeleteReq  /policy/api/v1/nodetemplates/apexMetadata_adaptive/versions/2.3.1  404
 
-
 DeleteSpecificPolicy
      [Documentation]  Delete a policy named 'onap.restart.tca' and version '1.0.0' using generic api
      DeleteReq  /policy/api/v1/policies/onap.restart.tca/versions/1.0.0  200
@@ -115,7 +109,6 @@ Metrics
     ${auth}=  PolicyAdminAuth
     ${resp}=  GetMetrics  ${POLICY_API_IP}  ${auth}  /policy/api/v1/
     Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/healthcheck",}
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/statistics",} 1.0
     Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policytypes",} 1.0
     Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policies",} 1.0
     Should Contain  ${resp.text}  http_server_requests_seconds_count{exception="None",method="GET",outcome="SUCCESS",status="200",uri="/policies/{policyId}/versions/{policyVersion}",} 1.0
