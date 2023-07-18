@@ -18,11 +18,11 @@
 #   SPDX-License-Identifier: Apache-2.0
 #   ============LICENSE_END=========================================================
 
-FROM alpine:3.17
+FROM alpine:3.18.2
 
 LABEL maintainer="Policy Team"
 LABEL org.opencontainers.image.title="Policy JRE Alpine"
-LABEL org.opencontainers.image.description="Policy Java 11 JRE image based on Alpine"
+LABEL org.opencontainers.image.description="Policy Java 17 JRE image based on Alpine"
 LABEL org.opencontainers.image.url="https://github.com/onap/policy-docker"
 LABEL org.opencontainers.image.vendor="ONAP Policy Team"
 LABEL org.opencontainers.image.licenses="Apache-2.0"
@@ -47,7 +47,7 @@ RUN apk add --no-cache \
         libretls \
         musl-locales \
         musl-locales-lang \
-        openjdk11-jre \
+        openjdk17-jre \
         openssl \
         ca-certificates && \
     rm -rf /var/cache/apk/* && \

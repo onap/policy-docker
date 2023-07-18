@@ -18,7 +18,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 #-------------------------------------------------------------------------------
-FROM onap/policy-jre-alpine:2.6.3-SNAPSHOT
+FROM onap/policy-jre-alpine:3.0.0-SNAPSHOT
 
 LABEL maintainer="Policy Team"
 LABEL org.opencontainers.image.title="Policy db-migrator"
@@ -30,7 +30,7 @@ LABEL org.opencontainers.image.created="${git.build.time}"
 LABEL org.opencontainers.image.version="${git.build.version}"
 LABEL org.opencontainers.image.revision="${git.commit.id.abbrev}"
 
-ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk
+ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk
 ENV POLICY_ETC /opt/app/policy/etc
 ENV POLICY_PROFILE /opt/app/policy/etc/profile.d
 ENV POLICY_BIN /opt/app/policy/bin
