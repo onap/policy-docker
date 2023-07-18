@@ -41,40 +41,40 @@ database:
 
 policy-preload:
   policyTypes:
-    - policytypes/onap.policies.monitoring.tcagen2.yaml
-    - policytypes/onap.policies.monitoring.tcagen2.v2.yaml
-    - policytypes/onap.policies.monitoring.dcaegen2.collectors.datafile.datafile-app-server.yaml
-    - policytypes/onap.policies.monitoring.dcae-restconfcollector.yaml
-    - policytypes/onap.policies.monitoring.dcae-pm-subscription-handler.yaml
-    - policytypes/onap.policies.monitoring.dcae-pm-mapper.yaml
-    - policytypes/onap.policies.Optimization.yaml
-    - policytypes/onap.policies.optimization.Resource.yaml
-    - policytypes/onap.policies.optimization.Service.yaml
-    - policytypes/onap.policies.optimization.resource.AffinityPolicy.yaml
-    - policytypes/onap.policies.optimization.resource.DistancePolicy.yaml
-    - policytypes/onap.policies.optimization.resource.HpaPolicy.yaml
-    - policytypes/onap.policies.optimization.resource.OptimizationPolicy.yaml
-    - policytypes/onap.policies.optimization.resource.PciPolicy.yaml
-    - policytypes/onap.policies.optimization.service.QueryPolicy.yaml
-    - policytypes/onap.policies.optimization.service.SubscriberPolicy.yaml
-    - policytypes/onap.policies.optimization.resource.Vim_fit.yaml
-    - policytypes/onap.policies.optimization.resource.VnfPolicy.yaml
-    - policytypes/onap.policies.controlloop.guard.Common.yaml
-    - policytypes/onap.policies.controlloop.guard.common.Blacklist.yaml
-    - policytypes/onap.policies.controlloop.guard.common.FrequencyLimiter.yaml
-    - policytypes/onap.policies.controlloop.guard.common.MinMax.yaml
-    - policytypes/onap.policies.controlloop.guard.common.Filter.yaml
-    - policytypes/onap.policies.controlloop.guard.coordination.FirstBlocksSecond.yaml
-    - policytypes/onap.policies.Naming.yaml
-    - policytypes/onap.policies.Match.yaml
-    - policytypes/onap.policies.native.Drools.yaml
-    - policytypes/onap.policies.native.Xacml.yaml
-    - policytypes/onap.policies.native.Apex.yaml
-    - policytypes/onap.policies.controlloop.operational.Common.yaml
-    - policytypes/onap.policies.controlloop.operational.common.Apex.yaml
-    - policytypes/onap.policies.controlloop.operational.common.Drools.yaml
+  - policytypes/onap.policies.monitoring.tcagen2.yaml
+  - policytypes/onap.policies.monitoring.tcagen2.v2.yaml
+  - policytypes/onap.policies.monitoring.dcaegen2.collectors.datafile.datafile-app-server.yaml
+  - policytypes/onap.policies.monitoring.dcae-restconfcollector.yaml
+  - policytypes/onap.policies.monitoring.dcae-pm-subscription-handler.yaml
+  - policytypes/onap.policies.monitoring.dcae-pm-mapper.yaml
+  - policytypes/onap.policies.Optimization.yaml
+  - policytypes/onap.policies.optimization.Resource.yaml
+  - policytypes/onap.policies.optimization.Service.yaml
+  - policytypes/onap.policies.optimization.resource.AffinityPolicy.yaml
+  - policytypes/onap.policies.optimization.resource.DistancePolicy.yaml
+  - policytypes/onap.policies.optimization.resource.HpaPolicy.yaml
+  - policytypes/onap.policies.optimization.resource.OptimizationPolicy.yaml
+  - policytypes/onap.policies.optimization.resource.PciPolicy.yaml
+  - policytypes/onap.policies.optimization.service.QueryPolicy.yaml
+  - policytypes/onap.policies.optimization.service.SubscriberPolicy.yaml
+  - policytypes/onap.policies.optimization.resource.Vim_fit.yaml
+  - policytypes/onap.policies.optimization.resource.VnfPolicy.yaml
+  - policytypes/onap.policies.controlloop.guard.Common.yaml
+  - policytypes/onap.policies.controlloop.guard.common.Blacklist.yaml
+  - policytypes/onap.policies.controlloop.guard.common.FrequencyLimiter.yaml
+  - policytypes/onap.policies.controlloop.guard.common.MinMax.yaml
+  - policytypes/onap.policies.controlloop.guard.common.Filter.yaml
+  - policytypes/onap.policies.controlloop.guard.coordination.FirstBlocksSecond.yaml
+  - policytypes/onap.policies.Naming.yaml
+  - policytypes/onap.policies.Match.yaml
+  - policytypes/onap.policies.native.Drools.yaml
+  - policytypes/onap.policies.native.Xacml.yaml
+  - policytypes/onap.policies.native.Apex.yaml
+  - policytypes/onap.policies.controlloop.operational.Common.yaml
+  - policytypes/onap.policies.controlloop.operational.common.Apex.yaml
+  - policytypes/onap.policies.controlloop.operational.common.Drools.yaml
   policies:
-    - policies/sdnc.policy.naming.input.tosca.yaml
+  - policies/sdnc.policy.naming.input.tosca.yaml
 
 management:
   endpoints:
@@ -82,5 +82,6 @@ management:
       base-path: /
       exposure:
         include: health,metrics,prometheus
-      path-mapping.metrics: plain-metrics
-      path-mapping.prometheus: metrics
+      path-mapping:
+        -metrics: plain-metrics
+        -prometheus: metrics
