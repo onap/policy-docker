@@ -27,7 +27,7 @@ services:
        CLAMP_URL: http://policy-clamp-backend:8445
        CLAMP_DISABLE_SSL_VALIDATION: "true"
      ports:
-      - 2445:2445
+      - "2445:2445"
      volumes:
       - ./config/policy-gui/application.yaml:/opt/app/policy/gui/etc/application.yml
       - ./config/policy-gui/logback.xml:/opt/app/policy/gui/etc/logback.xml:ro
@@ -48,7 +48,7 @@ services:
         MARIADB_HOST: mariadb
         RUNTIME_HOST: policy-clamp-runtime-acm
      ports:
-      - 8445:8445
+      - "8445:8445"
      volumes:
       - ./config/clamp/ClampBackend.properties:/opt/policy/clamp/config/ClampBackend.properties:ro
       - ./config/clamp/logback-backend.xml:/opt/policy/clamp/config/logback.xml:ro

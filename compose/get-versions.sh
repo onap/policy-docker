@@ -2,7 +2,7 @@
 
 # ============LICENSE_START====================================================
 #  Copyright (C) 2020-2021 AT&T Intellectual Property. All rights reserved.
-#  Modification Copyright 2021-2022 Nordix Foundation.
+#  Modification Copyright 2021-2023 Nordix Foundation.
 #  Modifications Copyright (C) 2021 Bell Canada. All rights reserved.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -107,7 +107,7 @@ function getDockerVersion
 getDockerVersion docker
 export POLICY_DOCKER_VERSION="$docker_image_version"
 
-getDockerVersion models "'policy-models-simulator'" 2.6.4
+getDockerVersion models "'policy-models-simulator'" 3.0.1
 export POLICY_MODELS_VERSION="$docker_image_version"
 
 getDockerVersion api
