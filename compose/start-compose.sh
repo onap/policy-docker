@@ -61,7 +61,7 @@ cd ${COMPOSE_FOLDER}
 
 echo "Configuring docker compose..."
 source export-ports.sh > /dev/null 2>&1
-source get-versions.sh > /dev/null 2>&1
+source fixed-versions.sh > /dev/null 2>&1
 
 # in case of csit running for PAP (groups should be for pap) but starts apex-pdp for dependencies.
 if [ -z "$PROJECT" ]; then
