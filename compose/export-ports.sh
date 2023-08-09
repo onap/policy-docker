@@ -19,13 +19,12 @@
 
 if $(docker images | grep -q "onap\/policy-api")
 then
-    CONTAINER_LOCATION=$(
+    export CONTAINER_LOCATION=$(
         docker images |
         grep onap/policy-api |
         head -1 |
         sed 's/onap\/policy-api.*$//'
     )
-    export CONTAINER_LOCATION
 else
     export CONTAINER_LOCATION="nexus3.onap.org:10001/"
 fi
