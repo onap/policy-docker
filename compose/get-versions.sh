@@ -67,7 +67,8 @@ function getDockerVersion
         fi
     fi
 
-    docker_image_version=$(echo "$latest_snapshot_tag" | awk -F \. '{print $1"."$2"-SNAPSHOT-latest"}')
+    # docker_image_version=$(echo "$latest_snapshot_tag" | awk -F \. '{print $1"."$2"-SNAPSHOT-latest"}')
+    docker_image_version=$latest_snapshot_tag
     docker_image_name=$(echo "$docker_images" | sed -e "s/^.*://" -e "s/^.//" -e "s/.$//")
 
     if \
