@@ -59,6 +59,9 @@ runtime:
           - ${topicServer:message-router}
         topicCommInfrastructure: dmaap
         useHttps: false
+  acmParameters:
+    toscaElementName: org.onap.policy.clamp.acm.AutomationCompositionElement
+    toscaCompositionName: org.onap.policy.clamp.acm.AutomationComposition
 
 management:
   endpoints:

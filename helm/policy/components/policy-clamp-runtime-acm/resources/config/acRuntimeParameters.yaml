@@ -91,6 +91,9 @@ runtime:
           - ${topicServer:message-router}
         topicCommInfrastructure: dmaap
         useHttps: false
+  acmParameters:
+    toscaElementName: {{ .Values.customNaming.toscaElementName }}
+    toscaCompositionName: {{ .Values.customNaming.toscaCompositionName }}
 
 # If Strimzi Kafka to be used for communication, replace clampAutomationCompositionTopics configuration with below
 #  topicParameterGroup:

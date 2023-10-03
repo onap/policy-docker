@@ -114,3 +114,7 @@ serviceAccount:
   nameOverride: policy-clamp-runtime-acm
   roles:
     - read
+
+customNaming:
+  toscaElementName: org.onap.policy.clamp.acm.AutomationCompositionElement
+  toscaCompositionName: org.onap.policy.clamp.acm.AutomationComposition
