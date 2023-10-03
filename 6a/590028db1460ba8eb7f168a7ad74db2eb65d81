@@ -1,0 +1,9 @@
+Verified+1: ONAP Required GHA <releng+onap.required.gha@linuxfoundation.org>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Liam Fallon <liam.fallon@est.tech>
+Code-Review+2: Adheli Tavares <adheli.tavares@est.tech>
+Submitted-by: Adheli Tavares <adheli.tavares@est.tech>
+Submitted-at: Tue, 03 Oct 2023 15:25:28 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/policy/docker/+/136087
+Project: policy/docker
+Branch: refs/heads/master
