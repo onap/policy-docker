@@ -46,7 +46,7 @@ function update_image_tags() {
     do
         if [[ $1 == 'clamp' ]]
         then
-	    component=policy-clamp-ac-kserve-ppnt
+	    component=policy-clamp-ac-sim-ppnt
         elif [[ $1 == 'policy' ]]
 	then
             component=$sub_component
