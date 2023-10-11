@@ -22,7 +22,7 @@
 
 # Start Kubernetes
 function start_kubernetes() {
-  bash run-k8s-csit.sh install
+  bash run-k8s-csit.sh install $3
   bash get-cluster-info.sh
 }
 
