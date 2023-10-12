@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ce370a3_69777342",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2023-10-12T14:30:16Z",
+      "side": 1,
+      "message": "Overriding the verify job as the drools csit failure will be fixed as part of a separate review",
+      "revId": "f575f921ac75f48a9ab48bc64f48344dc84a15cd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
