@@ -21,10 +21,8 @@
 # This script spins up kubernetes cluster in Microk8s for deploying policy helm charts.
 # Runs CSITs in kubernetes.
 
-if [ -z "${WORKSPACE}" ]; then
-    WORKSPACE=$(git rev-parse --show-toplevel)
-    export WORKSPACE
-fi
+WORKSPACE=$(git rev-parse --show-toplevel)
+export WORKSPACE
 
 export GERRIT_BRANCH=$(awk -F= '$1 == "defaultbranch" { print $2 }' "${WORKSPACE}"/.gitreview)
 

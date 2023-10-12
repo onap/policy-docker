@@ -89,7 +89,7 @@ mariadb:
   image: mariadb:10.5.8
 
 dbmigrator:
-  image: onap/policy-db-migrator:2.6-SNAPSHOT-latest
+  image: onap/policy-db-migrator:3.0.1-SNAPSHOT
   schema: policyadmin
   policy_home: "/opt/app/policy"
 

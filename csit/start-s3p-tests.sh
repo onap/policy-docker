@@ -22,8 +22,8 @@
 
 # Start Kubernetes
 function start_kubernetes() {
-  bash run-k8s-csit.sh install $3
-  bash get-cluster-info.sh
+  bash run-k8s-csit.sh install
+  bash resources/scripts/get-cluster-info.sh
 }
 
 function install_jmeter() {
