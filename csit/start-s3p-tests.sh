@@ -40,14 +40,20 @@ function install_jmeter() {
   sudo apt install -y default-jdk
 
   # Install JMeter
-  curl -O https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.3.tgz
-  tar -xvf apache-jmeter-5.3.tgz
+  curl -O https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.2.tgz
+  tar -xvf apache-jmeter-5.6.2.tgz
+  mv apache-jmeter-5.6.2 apache-jmeter
+
+  # Define your desired heap size values
+  echo 'export JVM_ARGS="-Xms2g -Xmx4g"' > apache-jmeter/bin/setenv.sh
+  echo 'export HEAP="-Xms1G -Xmx2G -XX:MaxMetaspaceSize=512m"' >> apache-jmeter/bin/setenv.sh
+
 
   # Remove unnecessary files
-  rm -rf apache-jmeter-5.3/docs apache-jmeter-5.3/printable_docs
+  rm -rf apache-jmeter/docs apache-jmeter/printable_docs
 
   # Install CMD Runner
-  cd apache-jmeter-5.3/lib
+  cd apache-jmeter/lib
   curl -O https://repo1.maven.org/maven2/kg/apc/cmdrunner/2.2.1/cmdrunner-2.2.1.jar
 
   # Install Plugin Manager
@@ -59,13 +65,11 @@ function install_jmeter() {
   java  -jar cmdrunner-2.2.1.jar --tool org.jmeterplugins.repository.PluginManagerCMD install-all-except jpgc-hadoop,jpgc-oauth,ulp-jmeter-autocorrelator-plugin,ulp-jmeter-videostreaming-plugin,ulp-jmeter-gwt-plugin,tilln-iso8583
 
   # Move JMeter to /opt
-  sudo cp -r ../../apache-jmeter-5.3 /opt/
+  sudo cp -r ../../apache-jmeter /opt/
 
   # Add JMeter Path Variable
-  nano .profile
-  JMETER_HOME="/opt/apache-jmeter-5.3"
-  PATH="$JMETER_HOME/bin:$PATH"
-  source ~/.profile
+  export JMETER_HOME="/opt/apache-jmeter"
+  export PATH="$JMETER_HOME/bin:$PATH"
 }
 
 function on_exit() {
@@ -107,7 +111,7 @@ then
   echo "Executing tests"
   echo "==========================="
   cd ${TESTDIR}/automate-performance || exit
-  nohup apache-jmeter-5.3/bin/jmeter -n -t $2 -l s3pTestResults.jtl
+  nohup jmeter -n -t $2 -l s3pTestResults.jtl
 
   # TODO: Generate report on on_exit()
 
@@ -118,4 +122,3 @@ then
 else
   echo "Invalid arguments provided. Usage: $0 [option..] {run | uninstall}"
 fi
-
