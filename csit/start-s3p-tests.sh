@@ -40,14 +40,14 @@ function install_jmeter() {
   sudo apt install -y default-jdk
 
   # Install JMeter
-  curl -O https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.3.tgz
-  tar -xvf apache-jmeter-5.3.tgz
+  curl -O https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.6.2.tgz
+  tar -xvf apache-jmeter-5.6.2.tgz
 
   # Remove unnecessary files
-  rm -rf apache-jmeter-5.3/docs apache-jmeter-5.3/printable_docs
+  rm -rf apache-jmeter-5.6.2/docs apache-jmeter-5.6.2/printable_docs
 
   # Install CMD Runner
-  cd apache-jmeter-5.3/lib
+  cd apache-jmeter-5.6.2/lib
   curl -O https://repo1.maven.org/maven2/kg/apc/cmdrunner/2.2.1/cmdrunner-2.2.1.jar
 
   # Install Plugin Manager
@@ -59,12 +59,13 @@ function install_jmeter() {
   java  -jar cmdrunner-2.2.1.jar --tool org.jmeterplugins.repository.PluginManagerCMD install-all-except jpgc-hadoop,jpgc-oauth,ulp-jmeter-autocorrelator-plugin,ulp-jmeter-videostreaming-plugin,ulp-jmeter-gwt-plugin,tilln-iso8583
 
   # Move JMeter to /opt
-  sudo cp -r ../../apache-jmeter-5.3 /opt/
+  sudo cp -r ../../apache-jmeter-5.6.2 /opt/
 
   # Add JMeter Path Variable
-  nano .profile
-  JMETER_HOME="/opt/apache-jmeter-5.3"
+  JMETER_HOME="/opt/apache-jmeter-5.6.2"
   PATH="$JMETER_HOME/bin:$PATH"
+  echo "$JMETER_HOME" >> ~/.profile
+  echo "$PATH" >> ~/.profile
   source ~/.profile
 }
 
@@ -107,7 +108,7 @@ then
   echo "Executing tests"
   echo "==========================="
   cd ${TESTDIR}/automate-performance || exit
-  nohup apache-jmeter-5.3/bin/jmeter -n -t $2 -l s3pTestResults.jtl
+  nohup apache-jmeter-5.6.2/bin/jmeter -n -t $2 -l s3pTestResults.jtl
 
   # TODO: Generate report on on_exit()
 
@@ -118,4 +119,3 @@ then
 else
   echo "Invalid arguments provided. Usage: $0 [option..] {run | uninstall}"
 fi
-

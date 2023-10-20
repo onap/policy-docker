@@ -46,15 +46,15 @@ function get_pod_names() {
 
 # Retrieve service names
 function get_svc_names() {
-  export APEX_SVC=$(get_svc_name policy-apex)
+  export APEX_SVC=$(get_svc_name policy-apex-pdp)
   export PAP_SVC=$(get_svc_name policy-pap)
   export API_SVC=$(get_svc_name policy-api)
   export DMAAP_SVC=$(get_svc_name message-router)
   export DROOLS_SVC=$(get_svc_name drools-pdp)
-  export XACML_SVC=$(get_svc_name xacml)
-  export DIST_SVC=$(get_svc_name distribution)
-  export ACM_SVC=$(get_svc_name acm-runtime)
-  export POLICY_PPNT_SVC=$(get_svc_name policy-ppnt)
+  export XACML_SVC=$(get_svc_name policy-xacml-pdp)
+  export DIST_SVC=$(get_svc_name policy-distribution)
+  export ACM_SVC=$(get_svc_name policy-clamp-runtime-acm)
+  export POLICY_PPNT_SVC=$(get_svc_name policy-clamp-ac-pf-ppnt)
 }
 
 # Expose services in order to perform tests from JMeter
@@ -66,7 +66,7 @@ function expose_services() {
     expose_service $DROOLS_SVC
     expose_service $DIST_SVC
     expose_service $ACM_SVC
-    export_service $POLICY_PPNT_SVC
+    expose_service $POLICY_PPNT_SVC
 
     setup_message_router_svc
     sleep 2
