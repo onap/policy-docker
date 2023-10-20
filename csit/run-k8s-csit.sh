@@ -248,6 +248,10 @@ function set_project_config() {
 
     *)
         echo "Unknown project supplied. Enabling all policy charts for the deployment"
+        export READINESS_CONTAINERS=($POLICY_APEX_CONTAINER,$POLICY_API_CONTAINER,$POLICY_PAP_CONTAINER,
+                    $POLICY_DISTRIBUTION_CONTAINER,$POLICY_DROOLS_CONTAINER,$POLICY_XACML_CONTAINER,
+                    $POLICY_CLAMP_CONTAINER,$POLICY_PF_PPNT_CONTAINER,$POLICY_K8S_PPNT_CONTAINER,
+                    $POLICY_HTTP_PPNT_CONTAINER)
         export SET_VALUES="--set $POLICY_APEX_CONTAINER.enabled=true --set $POLICY_XACML_CONTAINER.enabled=true
             --set $POLICY_DISTRIBUTION_CONTAINER.enabled=true --set $POLICY_POLICY_DROOLS_CONTAINER.enabled=true
             --set $POLICY_CLAMP_CONTAINER.enabled=true --set $POLICY_PF_PPNT_CONTAINER.enabled=true
@@ -279,6 +283,58 @@ function push_acelement_chart() {
     echo "-------------------------------------------"
 }
 
+function get_pod_name() {
+  microk8s kubectl get pods --no-headers -o custom-columns=':metadata.name' | grep $1
+}
+
+wait_for_pods_running() {
+  local namespace="$1"
+  shift
+  local timeout_seconds="$1"
+  shift
+
+  IFS=',' read -ra pod_names <<< "$1"
+  shift
+
+  local pending_pods=("${pod_names[@]}")
+
+  local start_time
+  start_time=$(date +%s)
+
+  while [ ${#pending_pods[@]} -gt 0 ]; do
+    local current_time
+    current_time=$(date +%s)
+    local elapsed_time
+    elapsed_time=$((current_time - start_time))
+
+    if [ "$elapsed_time" -ge "$timeout_seconds" ]; then
+      echo "Timed out waiting for all pods to reach 'Running' state."
+      exit 1
+    fi
+
+    local newly_running_pods=()
+
+    for pod_name_prefix in "${pending_pods[@]}"; do
+      local pod_name=$(get_pod_name "$pod_name_prefix")
+      local pod_status
+      pod_status=$(kubectl get pod "$pod_name" -n "$namespace" --no-headers -o custom-columns=STATUS:.status.phase 2>/dev/null)
+
+      if [ "$pod_status" == "Running" ]; then
+        echo "Pod '$pod_name' in namespace '$namespace' is now in 'Running' state."
+      else
+        newly_running_pods+=("$pod_name")
+        echo "Waiting for pod '$pod_name' in namespace '$namespace' to reach 'Running' state..."
+      fi
+    done
+
+    pending_pods=("${newly_running_pods[@]}")
+
+    sleep 5
+  done
+
+  echo "All specified pods are in the 'Running' state. Exiting the function."
+}
+
 
 OPERATION="$1"
 PROJECT="$2"
@@ -305,6 +361,7 @@ if [ $OPERATION == "install" ]; then
         sudo microk8s helm dependency build policy
         sudo microk8s helm install csit-policy policy ${SET_VALUES}
         sudo microk8s helm install prometheus prometheus
+        wait_for_pods_running default 300 $READINESS_CONTAINERS
         echo "Policy chart installation completed"
         echo "-------------------------------------------"
     fi
