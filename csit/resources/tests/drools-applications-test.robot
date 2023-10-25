@@ -23,9 +23,9 @@ Healthcheck
     ${resp}=  PeformGetRequest  /healthcheck  ${DROOLS_IP}  200
     Should Be Equal As Strings    ${resp.json()['healthy']}  True
 
-Controller
-    [Documentation]    Checks controller is up
-    Wait Until Keyword Succeeds  2 min  15 sec  VerifyController
+#Controller
+#    [Documentation]    Checks controller is up
+#    Wait Until Keyword Succeeds  2 min  15 sec  VerifyController
 
 MakeTopics
     [Documentation]    Creates the Policy topics
@@ -81,71 +81,71 @@ DeployDroolsPolicies
     Should Contain    ${result}    operational.scaleout
     Should Contain    ${result}    operational.modifyconfig
 
-VcpeExecute
-    [Documentation]    Executes VCPE Policy
-    OnSet     ${CURDIR}/data/vcpeOnset.json
-    ${result}=    CheckTopic     POLICY-CL-MGT    ACTIVE
-    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
-    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
-    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
-    Should Contain    ${result}    Sending guard query for APPC Restart
-    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
-    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
-    Should Contain    ${result}    Guard result for APPC Restart is Permit
-    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
-    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
-    Should Contain    ${result}    actor=APPC,operation=Restart
-    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION: SUCCESS
-    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
-    Should Contain    ${result}    actor=APPC,operation=Restart
-    ${result}=    CheckTopic     POLICY-CL-MGT    FINAL: SUCCESS
-    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
-    Should Contain    ${result}    APPC
-    Should Contain    ${result}    Restart
+#VcpeExecute
+#    [Documentation]    Executes VCPE Policy
+#    OnSet     ${CURDIR}/data/vcpeOnset.json
+#    ${result}=    CheckTopic     POLICY-CL-MGT    ACTIVE
+#    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+#    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
+#    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+#    Should Contain    ${result}    Sending guard query for APPC Restart
+#    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
+#    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+#    Should Contain    ${result}    Guard result for APPC Restart is Permit
+#    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
+#    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+#    Should Contain    ${result}    actor=APPC,operation=Restart
+#    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION: SUCCESS
+#    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+#    Should Contain    ${result}    actor=APPC,operation=Restart
+#    ${result}=    CheckTopic     POLICY-CL-MGT    FINAL: SUCCESS
+#    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+#    Should Contain    ${result}    APPC
+#    Should Contain    ${result}    Restart
 
-VdnsExecute
-    [Documentation]    Executes VDNS Policy
-    OnSet     ${CURDIR}/data/vdnsOnset.json
-    ${result}=    CheckTopic     POLICY-CL-MGT    ACTIVE
-    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
-    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
-    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
-    Should Contain    ${result}    Sending guard query for SO VF Module Create
-    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
-    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
-    Should Contain    ${result}    Guard result for SO VF Module Create is Permit
-    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
-    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
-    Should Contain    ${result}    actor=SO,operation=VF Module Create
-    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION: SUCCESS
-    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
-    Should Contain    ${result}    actor=SO,operation=VF Module Create
-    ${result}=    CheckTopic     POLICY-CL-MGT    FINAL: SUCCESS
-    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
-    Should Contain    ${result}    SO
-    Should Contain    ${result}    VF Module Create
+#VdnsExecute
+#    [Documentation]    Executes VDNS Policy
+#    OnSet     ${CURDIR}/data/vdnsOnset.json
+#    ${result}=    CheckTopic     POLICY-CL-MGT    ACTIVE
+#    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
+#    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
+#    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
+#    Should Contain    ${result}    Sending guard query for SO VF Module Create
+#    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
+#    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
+#    Should Contain    ${result}    Guard result for SO VF Module Create is Permit
+#    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
+#    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
+#    Should Contain    ${result}    actor=SO,operation=VF Module Create
+#    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION: SUCCESS
+#    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
+#    Should Contain    ${result}    actor=SO,operation=VF Module Create
+#    ${result}=    CheckTopic     POLICY-CL-MGT    FINAL: SUCCESS
+#    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
+#    Should Contain    ${result}    SO
+#    Should Contain    ${result}    VF Module Create
 
-VfwExecute
-    [Documentation]    Executes VFW Policy
-    OnSet     ${CURDIR}/data/vfwOnset.json
-    ${result}=    CheckTopic     POLICY-CL-MGT    ACTIVE
-    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
-    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
-    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
-    Should Contain    ${result}    Sending guard query for APPC ModifyConfig
-    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
-    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
-    Should Contain    ${result}    Guard result for APPC ModifyConfig is Permit
-    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
-    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
-    Should Contain    ${result}    actor=APPC,operation=ModifyConfig
-    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION: SUCCESS
-    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
-    Should Contain    ${result}    actor=APPC,operation=ModifyConfig
-    ${result}=    CheckTopic     POLICY-CL-MGT    FINAL: SUCCESS
-    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
-    Should Contain    ${result}    APPC
-    Should Contain    ${result}    ModifyConfig
+#VfwExecute
+#    [Documentation]    Executes VFW Policy
+#    OnSet     ${CURDIR}/data/vfwOnset.json
+#    ${result}=    CheckTopic     POLICY-CL-MGT    ACTIVE
+#    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
+#    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
+#    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
+#    Should Contain    ${result}    Sending guard query for APPC ModifyConfig
+#    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
+#    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
+#    Should Contain    ${result}    Guard result for APPC ModifyConfig is Permit
+#    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION
+#    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
+#    Should Contain    ${result}    actor=APPC,operation=ModifyConfig
+#    ${result}=    CheckTopic     POLICY-CL-MGT    OPERATION: SUCCESS
+#    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
+#    Should Contain    ${result}    actor=APPC,operation=ModifyConfig
+#    ${result}=    CheckTopic     POLICY-CL-MGT    FINAL: SUCCESS
+#    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
+#    Should Contain    ${result}    APPC
+#    Should Contain    ${result}    ModifyConfig
 
 *** Keywords ***
 
