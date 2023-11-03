@@ -60,6 +60,10 @@ spring:
 security:
   enable-csrf: false
 
+metrics:
+  security:
+    disabled: false
+
 server:
   port: 6969
   servlet:
@@ -69,11 +73,9 @@ server:
   ssl:
     enabled: false
 
-
 runtime:
   participantParameters:
     heartBeatMs: 120000
-    maxMessageAgeMs: 600000
     maxStatusWaitMs: 200000
   topicParameterGroup:
     topicSources:
