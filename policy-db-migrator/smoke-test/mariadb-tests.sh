@@ -56,6 +56,11 @@ L_DOWNGRADE_COUNT=$(ls /home/policy/sql/1200/downgrade/*.sql | wc -l)
 TOTAL_SQLS_UPGRADE=$(($TOTAL_SQLS_UPGRADE+$L_UPGRADE_COUNT))
 TOTAL_SQLS_DOWNGRADE=$(($TOTAL_SQLS_DOWNGRADE+$L_DOWNGRADE_COUNT))
 
+M_UPGRADE_COUNT=$(ls /home/policy/sql/1300/upgrade/*.sql | wc -l)
+M_DOWNGRADE_COUNT=$(ls /home/policy/sql/1300/downgrade/*.sql | wc -l)
+TOTAL_SQLS_UPGRADE=$(($TOTAL_SQLS_UPGRADE+$M_UPGRADE_COUNT))
+TOTAL_SQLS_DOWNGRADE=$(($TOTAL_SQLS_DOWNGRADE+$M_DOWNGRADE_COUNT))
+
 NEW_SQL_EXECUTIONS=0
 START_VERSION=""
 PREVIOUS_SQL_EXECUTIONS=0
@@ -331,7 +336,7 @@ sleep 5
 # Test 13 - Full downgrade
 start_test
 /opt/app/policy/bin/prepare_downgrade.sh ${SQL_DB}
-/opt/app/policy/bin/db-migrator -s ${SQL_DB} -o downgrade -f 1200 -t 0
+/opt/app/policy/bin/db-migrator -s ${SQL_DB} -o downgrade -f 1300 -t 0
 end_test
 let NEW_SQL_EXECUTIONS=$RECENT_SQL_EXECUTIONS-$PREVIOUS_SQL_EXECUTIONS
 check_results $END_STATUS 'downgrade' "${START_VERSION}" "0" $NEW_SQL_EXECUTIONS $TOTAL_SQLS_DOWNGRADE
