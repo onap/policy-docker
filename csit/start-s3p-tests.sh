@@ -56,14 +56,6 @@ function install_jmeter() {
   cd apache-jmeter/lib
   curl -O https://repo1.maven.org/maven2/kg/apc/cmdrunner/2.2.1/cmdrunner-2.2.1.jar
 
-  # Install Plugin Manager
-  cd ext/
-  curl -O https://repo1.maven.org/maven2/kg/apc/jmeter-plugins-manager/1.6/jmeter-plugins-manager-1.6.jar
-
-  # Download Plugins
-  cd ..
-  java  -jar cmdrunner-2.2.1.jar --tool org.jmeterplugins.repository.PluginManagerCMD install-all-except jpgc-hadoop,jpgc-oauth,ulp-jmeter-autocorrelator-plugin,ulp-jmeter-videostreaming-plugin,ulp-jmeter-gwt-plugin,tilln-iso8583
-
   # Move JMeter to /opt
   sudo cp -r ../../apache-jmeter /opt/
 
