@@ -115,13 +115,13 @@ participant:
 management:
   endpoints:
     web:
+      base-path: /
       exposure:
         include: health, metrics, prometheus
 
 server:
-  port: 8085
+  port: 6969
   servlet:
     context-path: /onap/policyparticipant
   ssl:
     enabled: false
-

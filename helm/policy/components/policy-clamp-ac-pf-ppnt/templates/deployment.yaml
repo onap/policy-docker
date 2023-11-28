@@ -102,7 +102,7 @@ spec:
           command: ["/opt/app/policy/clamp/bin/policy-participant.sh"]
           args: ["/opt/app/policy/clamp/etc/mounted/PolicyParticipantParameters.yaml"]
           ports:
-            - containerPort: 8085
+            - containerPort: 6969
               name: http-api
           # disable liveness probe when breakpoints set in debugger
           # so K8s doesn't restart unresponsive container
