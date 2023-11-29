@@ -75,7 +75,7 @@ service:
   useNodePortExt: true
   ports:
     name: http-api
-    port: 8085
+    port: 6969
     nodePort: 42
 
 flavor: small

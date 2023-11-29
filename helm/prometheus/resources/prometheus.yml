@@ -94,3 +94,12 @@ scrape_configs:
     basic_auth:
       username: "runtimeUser"
       password: "zb!XztG34"
+
+  - job_name: "acm-participant-metrics"
+    metrics_path: "/onap/policyparticipant/prometheus"
+    static_configs:
+      - targets:
+          - "policy-clamp-ac-pf-ppnt:6969"
+    basic_auth:
+      username: "participantUser"
+      password: "zb!XztG34"
