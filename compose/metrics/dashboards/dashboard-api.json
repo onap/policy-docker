@@ -225,7 +225,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "{area=\"heap\", container=\"policy-api\", endpoint=\"policy-api\", id=\"Tenured Gen\", instance=\"10.42.7.19:6969\", job=\"policy-api\", namespace=\"onap\", pod=\"dev-policy-api-69f54f45cc-sb56v\", service=\"policy-api\"}"
+              "options": "{area=\"heap\",container=\"policy-api\",endpoint=\"policy-api\",id=\"Tenured Gen\",instance=\"10.42.7.19:6969\",job=\"policy-api\",namespace=\"onap\",pod=\"dev-policy-api-69f54f45cc-sb56v\",service=\"policy-api\"}"
             },
             "properties": [
               {
@@ -281,7 +281,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "100 * sum by(job)(jvm_memory_used_bytes{area=\"heap\", job=\"api-metrics\"}) / sum by(job)(jvm_memory_max_bytes{area=\"heap\", job=\"api-metrics\"})",
+          "expr": "100 * sum by(job)(jvm_memory_used_bytes{area=\"heap\",job=\"api-metrics\"}) / sum by(job)(jvm_memory_max_bytes{area=\"heap\",job=\"api-metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Heap : {{pod}}",
@@ -293,7 +293,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "100 * sum by(job)(jvm_memory_used_bytes{area=\"nonheap\", job=\"api-metrics\"}) / sum by(job)(jvm_memory_max_bytes{area=\"nonheap\", job=\"api-metrics\"})",
+          "expr": "100 * sum by(job)(jvm_memory_used_bytes{area=\"nonheap\",job=\"api-metrics\"}) / sum by(job)(jvm_memory_max_bytes{area=\"nonheap\",job=\"api-metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Non Heap : {{pod}}",
@@ -525,7 +525,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "{area=\"heap\", container=\"policy-api\", endpoint=\"policy-api\", id=\"Tenured Gen\", instance=\"10.42.7.19:6969\", job=\"policy-api\", namespace=\"onap\", pod=\"dev-policy-api-69f54f45cc-sb56v\", service=\"policy-api\"}"
+              "options": "{area=\"heap\",container=\"policy-api\",endpoint=\"policy-api\",id=\"Tenured Gen\",instance=\"10.42.7.19:6969\",job=\"policy-api\",namespace=\"onap\",pod=\"dev-policy-api-69f54f45cc-sb56v\",service=\"policy-api\"}"
             },
             "properties": [
               {
@@ -585,7 +585,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "100 * sum(jvm_memory_used_bytes{area=\"heap\", job=\"api-metrics\"}) / sum(jvm_memory_max_bytes{area=\"heap\", job=\"api-metrics\"})",
+          "expr": "100 * sum(jvm_memory_used_bytes{area=\"heap\",job=\"api-metrics\"}) / sum(jvm_memory_max_bytes{area=\"heap\",job=\"api-metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Heap",
@@ -597,7 +597,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "100 * sum(jvm_memory_used_bytes{area=\"nonheap\", job=\"api-metrics\"}) / sum(jvm_memory_max_bytes{area=\"nonheap\", job=\"api-metrics\"})",
+          "expr": "100 * sum(jvm_memory_used_bytes{area=\"nonheap\",job=\"api-metrics\"}) / sum(jvm_memory_max_bytes{area=\"nonheap\",job=\"api-metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Non Heap",
@@ -1012,7 +1012,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "avg by(method, uri) (rate(http_server_requests_seconds_count{job=\"api-metrics\"}[5m]))",
+          "expr": "avg by(method,uri) (rate(http_server_requests_seconds_count{job=\"api-metrics\"}[5m]))",
           "interval": "",
           "legendFormat": "{{ method }} - {{ uri }}",
           "refId": "A"
@@ -1107,7 +1107,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum by (method, uri)(http_server_requests_seconds_sum{job=\"api-metrics\"})/sum by(method, uri)(http_server_requests_seconds_count{job=\"api-metrics\"})",
+          "expr": "sum by (method,uri)(http_server_requests_seconds_sum{job=\"api-metrics\"})/sum by(method,uri)(http_server_requests_seconds_count{job=\"api-metrics\"})",
           "interval": "",
           "legendFormat": "{{ method }} - {{ uri }}",
           "refId": "A"
@@ -1170,7 +1170,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\", method=\"POST\", uri=~\"/metrics\"})",
+          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\",method=\"POST\",uri=~\"/metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Create Policy - Total",
@@ -1182,7 +1182,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\", method=\"POST\", outcome=\"SUCCESS\", uri=~\"/metrics\"})",
+          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\",method=\"POST\",outcome=\"SUCCESS\",uri=~\"/metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Create Policy - Successful",
@@ -1194,7 +1194,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\", method=\"POST\", outcome!=\"SUCCESS\", uri=~\"/metrics\"})",
+          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\",method=\"POST\",outcome!=\"SUCCESS\",uri=~\"/metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Create Policy - Failed",
@@ -1206,7 +1206,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\", method=\"DELETE\", uri=~\"/metrics\"})",
+          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\",method=\"DELETE\",uri=~\"/metrics\"})",
           "interval": "",
           "legendFormat": "Delete Policy - Total",
           "refId": "D"
@@ -1217,7 +1217,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\", method=\"DELETE\", outcome=\"SUCCESS\", uri=~\"/metrics\"})",
+          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\",method=\"DELETE\",outcome=\"SUCCESS\",uri=~\"/metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Delete Policy - Successful",
@@ -1229,7 +1229,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\", method=\"DELETE\", outcome!=\"SUCCESS\", uri=~\"/metrics\"})",
+          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\",method=\"DELETE\",outcome!=\"SUCCESS\",uri=~\"/metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Delete Policy - Failed",
@@ -1241,7 +1241,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\", method=\"GET\", uri=~\"/metrics\"})",
+          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\",method=\"GET\",uri=~\"/metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Get Policy - Total",
@@ -1253,7 +1253,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\", method=\"GET\", outcome=\"SUCCESS\", uri=~\"/metrics\"})",
+          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\",method=\"GET\",outcome=\"SUCCESS\",uri=~\"/metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Get Policy - Successful",
@@ -1265,7 +1265,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\", method=\"GET\", outcome!=\"SUCCESS\", uri=~\"/metrics\"})",
+          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\",method=\"GET\",outcome!=\"SUCCESS\",uri=~\"/metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Get Policy - Failed",
@@ -1330,7 +1330,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\", method=\"POST\", uri=~\"/metrics\"})",
+          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\",method=\"POST\",uri=~\"/metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Create Policy Type - Total",
@@ -1342,7 +1342,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\", method=\"POST\", outcome=\"SUCCESS\", uri=~\"/metrics\"})",
+          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\",method=\"POST\",outcome=\"SUCCESS\",uri=~\"/metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Create Policy Type - Successful",
@@ -1354,7 +1354,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\", method=\"POST\", outcome!=\"SUCCESS\", uri=~\"/metrics\"})",
+          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\",method=\"POST\",outcome!=\"SUCCESS\",uri=~\"/metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Create Policy Type - Failed",
@@ -1366,7 +1366,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\", method=\"DELETE\", uri=~\"/metrics\"})",
+          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\",method=\"DELETE\",uri=~\"/metrics\"})",
           "interval": "",
           "legendFormat": "Delete Policy Type - Total",
           "refId": "D"
@@ -1377,7 +1377,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\", method=\"DELETE\", outcome=\"SUCCESS\", uri=~\"/metrics\"})",
+          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\",method=\"DELETE\",outcome=\"SUCCESS\",uri=~\"/metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Delete Policy Type - Successful",
@@ -1389,7 +1389,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\", method=\"DELETE\", outcome!=\"SUCCESS\", uri=~\"/metrics\"})",
+          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\",method=\"DELETE\",outcome!=\"SUCCESS\",uri=~\"/metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Delete Policy Type - Failed",
@@ -1401,7 +1401,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\", method=\"GET\", uri=~\"/metrics\"})",
+          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\",method=\"GET\",uri=~\"/metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Get Policy Type - Total",
@@ -1413,7 +1413,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\", method=\"GET\", outcome=\"SUCCESS\", uri=~\"/metrics\"})",
+          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\",method=\"GET\",outcome=\"SUCCESS\",uri=~\"/metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Get Policy Type - Successful",
@@ -1425,7 +1425,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\", method=\"GET\", outcome!=\"SUCCESS\", uri=~\"/metrics\"})",
+          "expr": "sum(http_server_requests_seconds_count{job=\"api-metrics\",method=\"GET\",outcome!=\"SUCCESS\",uri=~\"/metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Get Policy Type - Failed",

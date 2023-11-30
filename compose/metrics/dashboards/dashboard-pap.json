@@ -226,7 +226,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "{area=\"heap\", container=\"policy-api\", endpoint=\"policy-api\", id=\"Tenured Gen\", instance=\"10.42.7.19:6969\", job=\"policy-api\", namespace=\"onap\", pod=\"dev-policy-api-69f54f45cc-sb56v\", service=\"policy-api\"}"
+              "options": "{area=\"heap\",container=\"policy-api\",endpoint=\"policy-api\",id=\"Tenured Gen\",instance=\"10.42.7.19:6969\",job=\"policy-api\",namespace=\"onap\",pod=\"dev-policy-api-69f54f45cc-sb56v\",service=\"policy-api\"}"
             },
             "properties": [
               {
@@ -282,7 +282,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "100 * sum by(pod)(jvm_memory_used_bytes{area=\"heap\", job=\"pap-metrics\"}) / sum by(pod)(jvm_memory_max_bytes{area=\"heap\", job=\"pap-metrics\"})",
+          "expr": "100 * sum by(pod)(jvm_memory_used_bytes{area=\"heap\",job=\"pap-metrics\"}) / sum by(pod)(jvm_memory_max_bytes{area=\"heap\",job=\"pap-metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Heap : {{ pod }}",
@@ -294,7 +294,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "100 * sum by(pod)(jvm_memory_used_bytes{area=\"nonheap\", job=\"pap-metrics\"}) / sum by(pod)(jvm_memory_max_bytes{area=\"nonheap\", job=\"pap-metrics\"})",
+          "expr": "100 * sum by(pod)(jvm_memory_used_bytes{area=\"nonheap\",job=\"pap-metrics\"}) / sum by(pod)(jvm_memory_max_bytes{area=\"nonheap\",job=\"pap-metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Non Heap : {{ pod }}",
@@ -526,7 +526,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "{area=\"heap\", container=\"policy-api\", endpoint=\"policy-api\", id=\"Tenured Gen\", instance=\"10.42.7.19:6969\", job=\"policy-api\", namespace=\"onap\", pod=\"dev-policy-api-69f54f45cc-sb56v\", service=\"policy-api\"}"
+              "options": "{area=\"heap\",container=\"policy-api\",endpoint=\"policy-api\",id=\"Tenured Gen\",instance=\"10.42.7.19:6969\",job=\"policy-api\",namespace=\"onap\",pod=\"dev-policy-api-69f54f45cc-sb56v\",service=\"policy-api\"}"
             },
             "properties": [
               {
@@ -586,7 +586,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "100 * sum(jvm_memory_used_bytes{area=\"heap\", job=\"pap-metrics\"}) / sum(jvm_memory_max_bytes{area=\"heap\", job=\"pap-metrics\"})",
+          "expr": "100 * sum(jvm_memory_used_bytes{area=\"heap\",job=\"pap-metrics\"}) / sum(jvm_memory_max_bytes{area=\"heap\",job=\"pap-metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Heap",
@@ -598,7 +598,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "100 * sum(jvm_memory_used_bytes{area=\"nonheap\", job=\"pap-metrics\"}) / sum(jvm_memory_max_bytes{area=\"nonheap\", job=\"pap-metrics\"})",
+          "expr": "100 * sum(jvm_memory_used_bytes{area=\"nonheap\",job=\"pap-metrics\"}) / sum(jvm_memory_max_bytes{area=\"nonheap\",job=\"pap-metrics\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "Non Heap",
@@ -1014,7 +1014,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "avg by(method, uri) (rate(http_server_requests_seconds_count{job=\"pap-metrics\"}[5m]))",
+          "expr": "avg by(method,uri) (rate(http_server_requests_seconds_count{job=\"pap-metrics\"}[5m]))",
           "interval": "",
           "legendFormat": "{{ method }} - {{ uri }}",
           "refId": "A"
@@ -1109,7 +1109,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum by (method, uri)(http_server_requests_seconds_sum{job=\"pap-metrics\"})/sum by(method, uri)(http_server_requests_seconds_count{job=\"pap-metrics\"})",
+          "expr": "sum by (method,uri)(http_server_requests_seconds_sum{job=\"pap-metrics\"})/sum by(method,uri)(http_server_requests_seconds_count{job=\"pap-metrics\"})",
           "interval": "",
           "legendFormat": "{{ method }} - {{ uri }}",
           "refId": "A"
@@ -1173,7 +1173,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "sum by (method, uri)(http_server_requests_seconds_count{job=\"pap-metrics\", outcome=\"SUCCESS\"})/sum by(method, uri)(http_server_requests_seconds_count{job=\"pap-metrics\"})*100",
+          "expr": "sum by (method,uri)(http_server_requests_seconds_count{job=\"pap-metrics\",outcome=\"SUCCESS\"})/sum by(method,uri)(http_server_requests_seconds_count{job=\"pap-metrics\"})*100",
           "interval": "",
           "legendFormat": "{{ method }} - {{ uri }}",
           "refId": "A"

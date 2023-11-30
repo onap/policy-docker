@@ -867,7 +867,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "irate(http_server_requests_seconds_sum{job=~\"api-metrics|acm-metrics|pap-metrics\", exception=\"None\", uri!~\".*metrics.*|.*prometheus.*\"}[5m]) / irate(http_server_requests_seconds_count{job=~\"api-metrics|acm-metrics|pap-metrics\", exception=\"None\", uri!~\".*metrics.*|.*prometheus.*\"}[5m])",
+          "expr": "irate(http_server_requests_seconds_sum{job=~\"api-metrics|acm-metrics|pap-metrics\",outcome=\"SUCCESS\",uri!~\".*metrics.*|.*prometheus.*\"}[5m]) / irate(http_server_requests_seconds_count{job=~\"api-metrics|acm-metrics|pap-metrics\",outcome=\"SUCCESS\",uri!~\".*metrics.*|.*prometheus.*\"}[5m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -960,7 +960,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "http_server_requests_seconds_max{job=~\"api-metrics|acm-metrics|pap-metrics\", uri!~\".*metrics.*|.*prometheus.*\"}",
+          "expr": "http_server_requests_seconds_max{job=~\"api-metrics|acm-metrics|pap-metrics\",uri!~\".*metrics.*|.*prometheus.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1034,7 +1034,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "pap_policy_deployments_total{operation=\"deploy\", status=\"SUCCESS\"}",
+          "expr": "pap_policy_deployments_total{operation=\"deploy\",status=\"SUCCESS\"}",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1093,7 +1093,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "pap_policy_deployments_total{operation=\"undeploy\", status=\"SUCCESS\"}",
+          "expr": "pap_policy_deployments_total{operation=\"undeploy\",status=\"SUCCESS\"}",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1152,7 +1152,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "pap_policy_deployments_total{operation=\"deploy\", status=\"FAILURE\"}",
+          "expr": "pap_policy_deployments_total{operation=\"deploy\",status=\"FAILURE\"}",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1211,7 +1211,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "pap_policy_deployments_total{operation=\"undeploy\", status=\"FAILURE\"}",
+          "expr": "pap_policy_deployments_total{operation=\"undeploy\",status=\"FAILURE\"}",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1271,7 +1271,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "pdpa_policy_executions_total{job=\"apex-pdp-metrics\", status=\"SUCCESS\"}",
+          "expr": "pdpa_policy_executions_total{job=\"apex-pdp-metrics\",status=\"SUCCESS\"}",
           "interval": "",
           "legendFormat": "Successful",
           "refId": "A"
@@ -1282,7 +1282,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "pdpa_policy_executions_total{job=\"apex-pdp-metrics\", status=\"FAIL\"}",
+          "expr": "pdpa_policy_executions_total{job=\"apex-pdp-metrics\",status=\"FAIL\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Failed",
@@ -1294,7 +1294,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "pdpa_policy_executions_total{job=\"apex-pdp-metrics\", status=\"TOTAL\"}",
+          "expr": "pdpa_policy_executions_total{job=\"apex-pdp-metrics\",status=\"TOTAL\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Total",

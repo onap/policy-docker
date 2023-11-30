@@ -106,7 +106,7 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "process_uptime_seconds{application=\"$application\", instance=\"$instance\"}",
+          "expr": "process_uptime_seconds{application=\"$application\",instance=\"$instance\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "",
@@ -182,7 +182,7 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "process_start_time_seconds{application=\"$application\", instance=\"$instance\"}*1000",
+          "expr": "process_start_time_seconds{application=\"$application\",instance=\"$instance\"}*1000",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "",
@@ -222,15 +222,15 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "rgba(50, 172, 45, 0.97)",
+                "color": "rgba(50,172,45,0.97)",
                 "value": null
               },
               {
-                "color": "rgba(237, 129, 40, 0.89)",
+                "color": "rgba(237,129,40,0.89)",
                 "value": 70
               },
               {
-                "color": "rgba(245, 54, 54, 0.9)",
+                "color": "rgba(245,54,54,0.9)",
                 "value": 90
               }
             ]
@@ -263,7 +263,7 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "sum(jvm_memory_used_bytes{application=\"$application\", instance=\"$instance\", area=\"heap\"})*100/sum(jvm_memory_max_bytes{application=\"$application\",instance=\"$instance\", area=\"heap\"})",
+          "expr": "sum(jvm_memory_used_bytes{application=\"$application\",instance=\"$instance\",area=\"heap\"})*100/sum(jvm_memory_max_bytes{application=\"$application\",instance=\"$instance\",area=\"heap\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -312,15 +312,15 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "rgba(50, 172, 45, 0.97)",
+                "color": "rgba(50,172,45,0.97)",
                 "value": null
               },
               {
-                "color": "rgba(237, 129, 40, 0.89)",
+                "color": "rgba(237,129,40,0.89)",
                 "value": 70
               },
               {
-                "color": "rgba(245, 54, 54, 0.9)",
+                "color": "rgba(245,54,54,0.9)",
                 "value": 90
               }
             ]
@@ -353,7 +353,7 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "sum(jvm_memory_used_bytes{application=\"$application\", instance=\"$instance\", area=\"nonheap\"})*100/sum(jvm_memory_max_bytes{application=\"$application\",instance=\"$instance\", area=\"nonheap\"})",
+          "expr": "sum(jvm_memory_used_bytes{application=\"$application\",instance=\"$instance\",area=\"nonheap\"})*100/sum(jvm_memory_max_bytes{application=\"$application\",instance=\"$instance\",area=\"nonheap\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "",
@@ -417,14 +417,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "system_cpu_usage{instance=\"$instance\", application=\"$application\"}",
+          "expr": "system_cpu_usage{instance=\"$instance\",application=\"$application\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "System CPU Usage",
           "refId": "A"
         },
         {
-          "expr": "process_cpu_usage{instance=\"$instance\", application=\"$application\"}",
+          "expr": "process_cpu_usage{instance=\"$instance\",application=\"$application\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Process CPU Usage",
@@ -514,14 +514,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "system_load_average_1m{instance=\"$instance\", application=\"$application\"}",
+          "expr": "system_load_average_1m{instance=\"$instance\",application=\"$application\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Load Average [1m]",
           "refId": "A"
         },
         {
-          "expr": "system_cpu_count{instance=\"$instance\", application=\"$application\"}",
+          "expr": "system_cpu_count{instance=\"$instance\",application=\"$application\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "CPU Core Size",
@@ -636,7 +636,7 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "http_server_requests_seconds_count{instance=\"$instance\", application=\"$application\"}",
+          "expr": "http_server_requests_seconds_count{instance=\"$instance\",application=\"$application\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -725,7 +725,7 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "http_server_requests_seconds_sum{instance=\"$instance\", application=\"$application\"}",
+          "expr": "http_server_requests_seconds_sum{instance=\"$instance\",application=\"$application\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -814,7 +814,7 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "http_server_requests_seconds_max{instance=\"$instance\", application=\"$application\"}",
+          "expr": "http_server_requests_seconds_max{instance=\"$instance\",application=\"$application\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -923,21 +923,21 @@
       "repeatDirection": "h",
       "targets": [
         {
-          "expr": "jvm_memory_used_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_heap\"}",
+          "expr": "jvm_memory_used_bytes{instance=\"$instance\",application=\"$application\",id=\"$memory_pool_heap\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Used",
           "refId": "C"
         },
         {
-          "expr": "jvm_memory_committed_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_heap\"}",
+          "expr": "jvm_memory_committed_bytes{instance=\"$instance\",application=\"$application\",id=\"$memory_pool_heap\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Commited",
           "refId": "A"
         },
         {
-          "expr": "jvm_memory_max_bytes{instance=\"$instance\", application=\"$application\", id=\"$memory_pool_heap\"}",
+          "expr": "jvm_memory_max_bytes{instance=\"$instance\",application=\"$application\",id=\"$memory_pool_heap\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Max",
@@ -1033,7 +1033,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "jvm_memory_used_bytes{instance=\"$instance\", id=\"CodeHeap 'non-nmethods'\"}",
+          "expr": "jvm_memory_used_bytes{instance=\"$instance\",id=\"CodeHeap 'non-nmethods'\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1046,7 +1046,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "jvm_memory_committed_bytes{instance=\"$instance\", id=\"CodeHeap 'non-nmethods'\"}",
+          "expr": "jvm_memory_committed_bytes{instance=\"$instance\",id=\"CodeHeap 'non-nmethods'\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1059,7 +1059,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "jvm_memory_max_bytes{instance=\"$instance\", id=\"CodeHeap 'non-nmethods'\"}",
+          "expr": "jvm_memory_max_bytes{instance=\"$instance\",id=\"CodeHeap 'non-nmethods'\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1242,7 +1242,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "jvm_buffer_memory_used_bytes{instance=\"$instance\", id=\"mapped\"}",
+          "expr": "jvm_buffer_memory_used_bytes{instance=\"$instance\",id=\"mapped\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1255,7 +1255,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "jvm_buffer_total_capacity_bytes{instance=\"$instance\", id=\"mapped\"}",
+          "expr": "jvm_buffer_total_capacity_bytes{instance=\"$instance\",id=\"mapped\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1543,14 +1543,14 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "jvm_buffer_memory_used_bytes{instance=\"$instance\", application=\"$application\", id=\"direct\"}",
+          "expr": "jvm_buffer_memory_used_bytes{instance=\"$instance\",application=\"$application\",id=\"direct\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Used Bytes",
           "refId": "A"
         },
         {
-          "expr": "jvm_buffer_total_capacity_bytes{instance=\"$instance\", application=\"$application\", id=\"direct\"}",
+          "expr": "jvm_buffer_total_capacity_bytes{instance=\"$instance\",application=\"$application\",id=\"direct\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Capacity Bytes",
@@ -1670,7 +1670,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "jvm_threads_peak_threads{instance=\"$instance\", application=\"$application\"}",
+          "expr": "jvm_threads_peak_threads{instance=\"$instance\",application=\"$application\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1872,7 +1872,7 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "irate(jvm_gc_pause_seconds_sum{instance=\"$instance\", application=\"$application\"}[5m])",
+          "expr": "irate(jvm_gc_pause_seconds_sum{instance=\"$instance\",application=\"$application\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{action}} [{{cause}}]",
@@ -1947,7 +1947,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^hikaricp_connections{app=\"orders\", app_kubernetes_io_instance=\"mushop\", app_kubernetes_io_name=\"orders\", instance=\"10.1.0.72:80\", job=\"kubernetes-pods\", kubernetes_namespace=\"mushop\", kubernetes_pod_name=\"mushop-orders-67bb8f45c8-5cr5p\", mockmode=\"false\", pod_template_hash=\"67bb8f45c8\", pool=\"HikariPool-1\", version=\"local\"}$/",
+          "fields": "/^hikaricp_connections{app=\"orders\",app_kubernetes_io_instance=\"mushop\",app_kubernetes_io_name=\"orders\",instance=\"10.1.0.72:80\",job=\"kubernetes-pods\",kubernetes_namespace=\"mushop\",kubernetes_pod_name=\"mushop-orders-67bb8f45c8-5cr5p\",mockmode=\"false\",pod_template_hash=\"67bb8f45c8\",pool=\"HikariPool-1\",version=\"local\"}$/",
           "values": false
         },
         "textMode": "auto"
@@ -1960,7 +1960,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "hikaricp_connections{instance=\"$instance\", application=\"$application\", pool=\"$hikaricp\"}",
+          "expr": "hikaricp_connections{instance=\"$instance\",application=\"$application\",pool=\"$hikaricp\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -2055,7 +2055,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "hikaricp_connections_active{instance=\"$instance\", application=\"$application\", pool=\"$hikaricp\"}",
+          "expr": "hikaricp_connections_active{instance=\"$instance\",application=\"$application\",pool=\"$hikaricp\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -2068,7 +2068,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "hikaricp_connections_idle{instance=\"$instance\", application=\"$application\", pool=\"$hikaricp\"}",
+          "expr": "hikaricp_connections_idle{instance=\"$instance\",application=\"$application\",pool=\"$hikaricp\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -2080,7 +2080,7 @@
             "type": "prometheus",
             "uid": "dkSf71fnz"
           },
-          "expr": "hikaricp_connections_pending{instance=\"$instance\", application=\"$application\", pool=\"$hikaricp\"}",
+          "expr": "hikaricp_connections_pending{instance=\"$instance\",application=\"$application\",pool=\"$hikaricp\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Pending",
@@ -2142,7 +2142,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^hikaricp_connections_timeout_total{app=\"orders\", app_kubernetes_io_instance=\"mushop\", app_kubernetes_io_name=\"orders\", instance=\"10.1.0.72:80\", job=\"kubernetes-pods\", kubernetes_namespace=\"mushop\", kubernetes_pod_name=\"mushop-orders-67bb8f45c8-5cr5p\", mockmode=\"false\", pod_template_hash=\"67bb8f45c8\", pool=\"HikariPool-1\", version=\"local\"}$/",
+          "fields": "/^hikaricp_connections_timeout_total{app=\"orders\",app_kubernetes_io_instance=\"mushop\",app_kubernetes_io_name=\"orders\",instance=\"10.1.0.72:80\",job=\"kubernetes-pods\",kubernetes_namespace=\"mushop\",kubernetes_pod_name=\"mushop-orders-67bb8f45c8-5cr5p\",mockmode=\"false\",pod_template_hash=\"67bb8f45c8\",pool=\"HikariPool-1\",version=\"local\"}$/",
           "values": false
         },
         "textMode": "auto"
@@ -2155,7 +2155,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "hikaricp_connections_timeout_total{instance=\"$instance\", application=\"$application\", pool=\"$hikaricp\"}",
+          "expr": "hikaricp_connections_timeout_total{instance=\"$instance\",application=\"$application\",pool=\"$hikaricp\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -2244,7 +2244,7 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "hikaricp_connections_creation_seconds_sum{instance=\"$instance\", application=\"$application\", pool=\"$hikaricp\"} / hikaricp_connections_creation_seconds_count{instance=\"$instance\", application=\"$application\", pool=\"$hikaricp\"}",
+          "expr": "hikaricp_connections_creation_seconds_sum{instance=\"$instance\",application=\"$application\",pool=\"$hikaricp\"} / hikaricp_connections_creation_seconds_count{instance=\"$instance\",application=\"$application\",pool=\"$hikaricp\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Creation Time",
@@ -2332,7 +2332,7 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "hikaricp_connections_usage_seconds_sum{instance=\"$instance\", application=\"$application\", pool=\"$hikaricp\"} / hikaricp_connections_usage_seconds_count{instance=\"$instance\", application=\"$application\", pool=\"$hikaricp\"}",
+          "expr": "hikaricp_connections_usage_seconds_sum{instance=\"$instance\",application=\"$application\",pool=\"$hikaricp\"} / hikaricp_connections_usage_seconds_count{instance=\"$instance\",application=\"$application\",pool=\"$hikaricp\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Usage Time",
@@ -2420,7 +2420,7 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "hikaricp_connections_acquire_seconds_sum{instance=\"$instance\", application=\"$application\", pool=\"$hikaricp\"} / hikaricp_connections_acquire_seconds_count{instance=\"$instance\", application=\"$application\", pool=\"$hikaricp\"}",
+          "expr": "hikaricp_connections_acquire_seconds_sum{instance=\"$instance\",application=\"$application\",pool=\"$hikaricp\"} / hikaricp_connections_acquire_seconds_count{instance=\"$instance\",application=\"$application\",pool=\"$hikaricp\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Acquire Time",
@@ -2888,7 +2888,7 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "irate(http_server_requests_seconds_count{instance=\"$instance\", application=\"$application\", uri!~\".*actuator.*\"}[5m])",
+          "expr": "irate(http_server_requests_seconds_count{instance=\"$instance\",application=\"$application\",uri!~\".*actuator.*\"}[5m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -2981,7 +2981,7 @@
       "pluginVersion": "8.3.4",
       "targets": [
         {
-          "expr": "irate(http_server_requests_seconds_sum{instance=\"$instance\", application=\"$application\", exception=\"None\", uri!~\".*actuator.*\"}[5m]) / irate(http_server_requests_seconds_count{instance=\"$instance\", application=\"$application\", exception=\"None\", uri!~\".*actuator.*\"}[5m])",
+          "expr": "irate(http_server_requests_seconds_sum{instance=\"$instance\",application=\"$application\",exception=\"None\",uri!~\".*actuator.*\"}[5m]) / irate(http_server_requests_seconds_count{instance=\"$instance\",application=\"$application\",exception=\"None\",uri!~\".*actuator.*\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{method}} [{{status}}] - {{uri}}",
@@ -3089,7 +3089,7 @@
       "targets": [
         {
           "alias": "",
-          "expr": "irate(logback_events_total{instance=\"$instance\", application=\"$application\", level=\"info\"}[5m])",
+          "expr": "irate(logback_events_total{instance=\"$instance\",application=\"$application\",level=\"info\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "info",
@@ -3185,7 +3185,7 @@
       "targets": [
         {
           "alias": "",
-          "expr": "irate(logback_events_total{instance=\"$instance\", application=\"$application\", level=\"error\"}[5m])",
+          "expr": "irate(logback_events_total{instance=\"$instance\",application=\"$application\",level=\"error\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "error",
@@ -3281,7 +3281,7 @@
       "targets": [
         {
           "alias": "",
-          "expr": "irate(logback_events_total{instance=\"$instance\", application=\"$application\", level=\"warn\"}[5m])",
+          "expr": "irate(logback_events_total{instance=\"$instance\",application=\"$application\",level=\"warn\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "warn",
@@ -3377,7 +3377,7 @@
       "targets": [
         {
           "alias": "",
-          "expr": "irate(logback_events_total{instance=\"$instance\", application=\"$application\", level=\"debug\"}[5m])",
+          "expr": "irate(logback_events_total{instance=\"$instance\",application=\"$application\",level=\"debug\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "debug",
@@ -3473,7 +3473,7 @@
       "targets": [
         {
           "alias": "",
-          "expr": "irate(logback_events_total{instance=\"$instance\", application=\"$application\", level=\"trace\"}[5m])",
+          "expr": "irate(logback_events_total{instance=\"$instance\",application=\"$application\",level=\"trace\"}[5m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "trace",
@@ -3501,7 +3501,7 @@
           "type": "prometheus",
           "uid": "dkSf71fnz"
         },
-        "definition": "label_values(jvm_classes_loaded_classes, instance)",
+        "definition": "label_values(jvm_classes_loaded_classes,instance)",
         "hide": 0,
         "includeAll": false,
         "label": "Instance",
@@ -3509,7 +3509,7 @@
         "name": "instance",
         "options": [],
         "query": {
-          "query": "label_values(jvm_classes_loaded_classes, instance)",
+          "query": "label_values(jvm_classes_loaded_classes,instance)",
           "refId": "Prometheus-instance-Variable-Query"
         },
         "refresh": 1,
@@ -3540,7 +3540,7 @@
         "name": "application",
         "options": [],
         "query": {
-          "query": "label_values(jvm_classes_loaded{instance=\"$instance\"}, application)",
+          "query": "label_values(jvm_classes_loaded{instance=\"$instance\"},application)",
           "refId": "Prometheus-application-Variable-Query"
         },
         "refresh": 1,
@@ -3571,7 +3571,7 @@
         "name": "hikaricp",
         "options": [],
         "query": {
-          "query": "label_values(hikaricp_connections{instance=\"$instance\", application=\"$application\"}, pool)",
+          "query": "label_values(hikaricp_connections{instance=\"$instance\",application=\"$application\"},pool)",
           "refId": "Prometheus-hikaricp-Variable-Query"
         },
         "refresh": 1,
@@ -3601,7 +3601,7 @@
         "name": "memory_pool_heap",
         "options": [],
         "query": {
-          "query": "label_values(jvm_memory_used_bytes{application=\"$application\", instance=\"$instance\", area=\"heap\"},id)",
+          "query": "label_values(jvm_memory_used_bytes{application=\"$application\",instance=\"$instance\",area=\"heap\"},id)",
           "refId": "Prometheus-memory_pool_heap-Variable-Query"
         },
         "refresh": 1,
@@ -3631,7 +3631,7 @@
         "name": "memory_pool_nonheap",
         "options": [],
         "query": {
-          "query": "label_values(jvm_memory_used_bytes{application=\"$application\", instance=\"$instance\", area=\"nonheap\"},id)",
+          "query": "label_values(jvm_memory_used_bytes{application=\"$application\",instance=\"$instance\",area=\"nonheap\"},id)",
           "refId": "Prometheus-memory_pool_nonheap-Variable-Query"
         },
         "refresh": 1,
