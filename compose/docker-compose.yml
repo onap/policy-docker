@@ -241,7 +241,7 @@ services:
       container_name: policy-clamp-runtime-acm
       depends_on:
        - mariadb
-       - simulator
+       - kafka
        - policy-clamp-ac-http-ppnt
        - policy-clamp-ac-k8s-ppnt
        - policy-clamp-ac-pf-ppnt
@@ -258,7 +258,7 @@ services:
       command: [
         '-c', './acm-runtime.sh',
         'mariadb', '3306',
-        'message-router', '3904',
+        'kafka', '9092',
         'policy-clamp-ac-http-ppnt', '6969',
         'policy-clamp-ac-k8s-ppnt', '6969',
         'policy-clamp-ac-pf-ppnt', '6969',
@@ -269,7 +269,7 @@ services:
       image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-http-ppnt:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-ac-http-ppnt
       depends_on:
-       - simulator
+       - kafka
       hostname: policy-clamp-ac-http-ppnt
       ports:
        - "30290:6969"
@@ -280,13 +280,13 @@ services:
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', './http-participant.sh',
-        'message-router', '3904'
+        'kafka', '9092'
         ]
    policy-clamp-ac-k8s-ppnt:
       image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-k8s-ppnt:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-ac-k8s-ppnt
       depends_on:
-       - simulator
+       - kafka
       hostname: policy-clamp-ac-k8s-ppnt
       ports:
        - "30295:6969"
@@ -297,13 +297,13 @@ services:
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', './kubernetes-participant.sh',
-        'message-router', '3904'
+        'kafka', '9092'
         ]
    policy-clamp-ac-pf-ppnt:
       image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-pf-ppnt:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-ac-pf-ppnt
       depends_on:
-       - simulator
+       - kafka
        - api
       hostname: policy-clamp-ac-pf-ppnt
       ports:
@@ -315,14 +315,14 @@ services:
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', './policy-participant.sh',
-        'message-router', '3904',
+        'kafka', '9092',
         'api', '6969'
         ]
    policy-clamp-ac-a1pms-ppnt:
       image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-a1pms-ppnt:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-ac-a1pms-ppnt
       depends_on:
-       - simulator
+       - kafka
       hostname: policy-clamp-ac-a1pms-ppnt
       ports:
        - "30296:6969"
@@ -333,13 +333,13 @@ services:
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', './a1pms-participant.sh',
-        'message-router', '3904'
+        'kafka', '9092'
         ]
    policy-clamp-ac-kserve-ppnt:
       image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-kserve-ppnt:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-ac-kserve-ppnt
       depends_on:
-       - simulator
+       - kafka
       hostname: policy-clamp-ac-kserve-ppnt
       ports:
        - "30297:6969"
@@ -350,13 +350,13 @@ services:
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', './kserve-participant.sh',
-        'message-router', '3904'
+        'kafka', '9092'
         ]
    policy-clamp-ac-sim-ppnt:
       image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-sim-ppnt:${POLICY_CLAMP_VERSION}
       container_name: policy-clamp-ac-sim-ppnt
       depends_on:
-        - simulator
+        - kafka
       hostname: policy-clamp-ac-sim-ppnt
       ports:
         - ${SIM_PARTICIPANT_PORT}:6969
@@ -367,7 +367,7 @@ services:
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', './sim-participant.sh',
-        'message-router', '3904'
+        'kafka', '9092'
       ]
    prometheus:
       image: nexus3.onap.org:10001/prom/prometheus:latest
@@ -389,3 +389,27 @@ services:
        - ./metrics/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
        - ./metrics/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
        - ./metrics/dashboards:/var/lib/grafana/dashboards
+
+   zookeeper:
+     image: confluentinc/cp-zookeeper:latest
+     environment:
+       ZOOKEEPER_CLIENT_PORT: 2181
+       ZOOKEEPER_TICK_TIME: 2000
+     ports:
+       - 2181:2181
+
+   kafka:
+     image: confluentinc/cp-kafka:latest
+     container_name: kafka
+     depends_on:
+       - zookeeper
+     ports:
+       - 29092:29092
+       - 9092:9092
+     environment:
+       KAFKA_BROKER_ID: 1
+       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
