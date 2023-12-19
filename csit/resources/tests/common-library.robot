@@ -147,3 +147,13 @@ CheckTopic
     Status Should Be    OK    ${resp}
     Should Contain    ${resp.text}    ${expected_status}
     [Return]    ${resp.text}
+
+CheckKafkaTopic
+    [Arguments]    ${topic}    ${expected_status}
+    ${resp}=    Run Process    ${CURDIR}/kafka_consumer.py    ${topic}    30    ${expected_status}
+    Log to console  Received response from kafka ${resp.stdout}
+    Should Contain    ${resp.text}    ${expected_status}
+
+GetKafkaTopic
+    [Arguments]    ${topic}
+    ${resp}=    Run Process    ${CURDIR}/make_topics.py    ${topic}

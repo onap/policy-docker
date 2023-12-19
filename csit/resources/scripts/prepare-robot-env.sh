@@ -44,6 +44,10 @@ mkdir -p "${ROBOT_VENV}"/src/onap
 rm -rf "${ROBOT_VENV}"/src/onap/testsuite
 python3 -m pip install -qq --upgrade --extra-index-url="https://nexus3.onap.org/repository/PyPi.staging/simple" 'robotframework-onap==0.6.0.*' --pre
 
+# install confluent-kafka
+echo "Installing python confluent-kafka library"
+python3 -m pip install -qq confluent-kafka
+
 echo "Uninstall docker-py and reinstall docker."
 python3 -m pip uninstall -y -qq docker
 python3 -m pip install -U -qq docker

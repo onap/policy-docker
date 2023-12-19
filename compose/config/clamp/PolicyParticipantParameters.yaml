@@ -34,18 +34,18 @@ participant:
     clampAutomationCompositionTopics:
       topicSources:
         -
-          topic: POLICY-ACRUNTIME-PARTICIPANT
+          topic: policy-acruntime-participant
           servers:
-            - ${topicServer:message-router}
-          topicCommInfrastructure: dmaap
+            - ${topicServer:kafka:9092}
+          topicCommInfrastructure: kafka
           fetchTimeout: 15000
           useHttps: false
       topicSinks:
         -
-          topic: POLICY-ACRUNTIME-PARTICIPANT
+          topic: policy-acruntime-participant
           servers:
-            - ${topicServer:message-router}
-          topicCommInfrastructure: dmaap
+            - ${topicServer:kafka:9092}
+          topicCommInfrastructure: kafka
           useHttps: false
     participantSupportedElementTypes:
       - typeName: org.onap.policy.clamp.acm.PolicyAutomationCompositionElement

@@ -46,18 +46,18 @@ runtime:
   topicParameterGroup:
     topicSources:
       -
-        topic: POLICY-ACRUNTIME-PARTICIPANT
+        topic: policy-acruntime-participant
         servers:
-          - ${topicServer:message-router}
-        topicCommInfrastructure: dmaap
+          - ${topicServer:kafka:9092}
+        topicCommInfrastructure: kafka
         fetchTimeout: 15000
         useHttps: false
     topicSinks:
       -
-        topic: POLICY-ACRUNTIME-PARTICIPANT
+        topic: policy-acruntime-participant
         servers:
-          - ${topicServer:message-router}
-        topicCommInfrastructure: dmaap
+          - ${topicServer:kafka:9092}
+        topicCommInfrastructure: kafka
         useHttps: false
   acmParameters:
     toscaElementName: org.onap.policy.clamp.acm.AutomationCompositionElement
