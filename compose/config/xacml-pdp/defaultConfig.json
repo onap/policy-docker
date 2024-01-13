@@ -24,15 +24,16 @@
     },
     "topicParameterGroup": {
         "topicSources" : [{
-            "topic" : "POLICY-PDP-PAP",
-            "servers" : [ "message-router" ],
-            "topicCommInfrastructure" : "dmaap",
-            "useHttps" : false
+            "topic" : "policy-pdp-pap",
+            "servers" : [ "kafka:9092" ],
+            "topicCommInfrastructure" : "kafka",
+            "useHttps" : false,
+            "fetchTimeout": 15000
         }],
         "topicSinks" : [{
-            "topic" : "POLICY-PDP-PAP",
-            "servers" : [ "message-router" ],
-            "topicCommInfrastructure" : "dmaap",
+            "topic" : "policy-pdp-pap",
+            "servers" : [ "kafka:9092" ],
+            "topicCommInfrastructure" : "kafka",
             "useHttps" : false
         }]
     }

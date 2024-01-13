@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # ============LICENSE_START====================================================
-#  Copyright (C) 2023 Nordix Foundation.
+#  Copyright (C) 2023-2024 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ POLICY_PDPX_IP=policy-xacml-pdp:${DEFAULT_PORT}
 POLICY_DROOLS_IP=policy-drools-pdp:9696
 DISTRIBUTION_IP=policy-distribution:6969
 DMAAP_IP=message-router:3904
+KAFKA_IP=kafka:9092
 APEX_EVENTS_IP=policy-apex-pdp:23324
 PROMETHEUS_IP=prometheus:9090
 CLAMP_K8S_TEST=true
@@ -43,7 +44,7 @@ DIST_TEMP_FOLDER=/tmp/distribution
 export ROBOT_VARIABLES=
 ROBOT_VARIABLES="-v DATA:$DATA -v NODETEMPLATES:$NODETEMPLATES -v POLICY_API_IP:$POLICY_API_IP
 -v POLICY_RUNTIME_ACM_IP:$POLICY_RUNTIME_ACM_IP -v POLICY_PAP_IP:$POLICY_PAP_IP -v APEX_IP:$APEX_IP
--v APEX_EVENTS_IP:$APEX_EVENTS_IP -v DMAAP_IP:$DMAAP_IP -v PROMETHEUS_IP:${PROMETHEUS_IP}
+-v APEX_EVENTS_IP:$APEX_EVENTS_IP -v DMAAP_IP:$DMAAP_IP  -v KAFKA_IP:$KAFKA_IP -v PROMETHEUS_IP:${PROMETHEUS_IP}
 -v POLICY_PDPX_IP:$POLICY_PDPX_IP -v POLICY_DROOLS_IP:$POLICY_DROOLS_IP -v TEMP_FOLDER:${DIST_TEMP_FOLDER}
 -v DISTRIBUTION_IP:$DISTRIBUTION_IP -v CLAMP_K8S_TEST:$CLAMP_K8S_TEST"
 

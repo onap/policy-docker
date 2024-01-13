@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # ============LICENSE_START====================================================
-#  Copyright (C) 2023 Nordix Foundation.
+#  Copyright (C) 2023-2024 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@
 from confluent_kafka import Consumer, KafkaException
 import sys
 import time
+
 
 def consume_kafka_topic(topic, expected_values, timeout):
     config = {
@@ -51,21 +52,15 @@ def consume_kafka_topic(topic, expected_values, timeout):
                 else:
                     # Message received
                     message = msg.value().decode('utf-8')
-                    if verify_msg(expected_values, message):
+                    if expected_values in message:
                         print(message)
                         sys.exit(200)
     finally:
         consumer.close()
 
-def verify_msg(expected_values, message):
-    for item in expected_values:
-        if item not in message:
-            return False
-    return True
-
 
 if __name__ == '__main__':
     topic_name = sys.argv[1]
-    timeout = sys.argv[2]  # timeout in seconds for verifying the kafka topic
-    expected_values = sys.argv[3:]
+    timeout = int(sys.argv[2])  # timeout in seconds for verifying the kafka topic
+    expected_values = sys.argv[3]
     consume_kafka_topic(topic_name, expected_values, timeout)

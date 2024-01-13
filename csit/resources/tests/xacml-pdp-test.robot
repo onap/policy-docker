@@ -19,7 +19,7 @@ Metrics
 
 MakeTopics
     [Documentation]    Creates the Policy topics
-    GetTopic   POLICY-PDP-PAP
+    GetKafkaTopic   policy-pdp-pap
 
 ExecuteXacmlPolicy
     CreateMonitorPolicy
@@ -56,12 +56,9 @@ DeployPolicies
     ${postjson}=  Get file  ${CURDIR}/data/vCPE.policy.input.tosca.deploy.json
     ${policyadmin}=  PolicyAdminAuth
     PerformPostRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps/policies  202  ${postjson}  null  ${policyadmin}
-    ${result}=     CheckTopic    POLICY-PDP-PAP    PDP_UPDATE
-    Sleep    5s
-    ${result}=     CheckTopic    POLICY-PDP-PAP    ACTIVE
-    Should Contain    ${result}    responseTo
-    Should Contain    ${result}    xacml
-    Should Contain    ${result}    onap.restart.tca
+    sleep  20s
+    ${result}=     CheckKafkaTopic    policy-notification     onap.restart.tca
+    Should Contain    ${result}    deployed-policies
 
 GetAbbreviatedDecisionResult
     [Documentation]    Get Decision with abbreviated results from Policy Xacml PDP
