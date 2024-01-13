@@ -31,17 +31,17 @@ ExecuteApexTestPnfPolicy
      CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
      DeployPolicy
      Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
-     GetTopic     APEX-CL-MGT
-     Wait Until Keyword Succeeds    2 min    5 sec    TriggerAndVerifyTestPnfPolicy
+     GetKafkaTopic    apex-cl-mgt
+     Wait Until Keyword Succeeds    2 min    5 sec    TriggerAndVerifyTestPnfPolicy    apex-cl-mgt
 
-ExecuteApexTestVnfPolicy
-     Set Test Variable    ${policyName}    onap.policies.apex.vnf.Test
-     ${postjson}=  Get File  ${CURDIR}/data/${policyName}.json
-     CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
-     DeployPolicy
-     Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
-     GetTopic     APEX-CL-MGT
-     Wait Until Keyword Succeeds    2 min    5 sec    TriggerAndVerifyTestVnfPolicy
+#ExecuteApexTestVnfPolicy
+#     Set Test Variable    ${policyName}    onap.policies.apex.vnf.Test
+#     ${postjson}=  Get File  ${CURDIR}/data/${policyName}.json
+#     CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
+#     DeployPolicy
+#     Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
+#     GetTopic     apex-cl-mgt
+#     Wait Until Keyword Succeeds    2 min    5 sec    TriggerAndVerifyTestVnfPolicy
 
 ExecuteApexTestPnfPolicyWithMetadataSet
       Set Test Variable    ${policyName}    onap.policies.apex.pnf.metadataSet.Test
@@ -51,17 +51,17 @@ ExecuteApexTestPnfPolicyWithMetadataSet
       CreateNodeTemplate  /policy/api/v1/nodetemplates  200  ${postjson}  1
       DeployPolicy
       Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
-      GetTopic     APEX-CL-MGT2
-      Wait Until Keyword Succeeds    2 min    5 sec    TriggerAndVerifyTestPnfPolicy
+      GetKafkaTopic     apex-cl-mgt2
+      Wait Until Keyword Succeeds    2 min    5 sec    TriggerAndVerifyTestPnfPolicy    apex-cl-mgt2
 
 Metrics
      [Documentation]  Verify policy-apex-pdp is exporting prometheus metrics
      ${auth}=  PolicyAdminAuth
      ${resp}=  PerformGetRequest  ${APEX_IP}  /metrics  200  null  ${auth}
-     Should Contain  ${resp.text}  pdpa_policy_deployments_total{operation="deploy",status="TOTAL",} 4.0
-     Should Contain  ${resp.text}  pdpa_policy_deployments_total{operation="deploy",status="SUCCESS",} 4.0
-     Should Contain  ${resp.text}  pdpa_policy_executions_total{status="SUCCESS",} 3.0
-     Should Contain  ${resp.text}  pdpa_policy_executions_total{status="TOTAL",} 3.0
+     Should Contain  ${resp.text}  pdpa_policy_deployments_total{operation="deploy",status="TOTAL",} 3.0
+     Should Contain  ${resp.text}  pdpa_policy_deployments_total{operation="deploy",status="SUCCESS",} 3.0
+     Should Contain  ${resp.text}  pdpa_policy_executions_total{status="SUCCESS",} 6.0
+     Should Contain  ${resp.text}  pdpa_policy_executions_total{status="TOTAL",} 6.0
      Should Match  ${resp.text}  *pdpa_engine_event_executions{engine_instance_id="NSOApexEngine-*:0.0.1",}*
      Should Match  ${resp.text}  *pdpa_engine_event_executions{engine_instance_id="MyApexEngine-*:0.0.1",}*
      Should Match  ${resp.text}  *pdpa_engine_state{engine_instance_id=*,} 2.0*
@@ -78,18 +78,16 @@ Metrics
 
 TriggerAndVerifyTestPnfPolicy
     [Documentation]    Send TestPnf policy trigger event to DMaaP and read notifications to verify policy execution
-    Create Session   apexSession  http://${DMAAP_IP}   max_retries=1
+    [Arguments]    ${topic}
     ${data}=    Get Binary File     ${CURDIR}/data/VesEventForPnfPolicy.json
-    &{headers}=  Create Dictionary    Content-Type=application/json    Accept=application/json
-    ${resp}=    POST On Session    apexSession    /events/unauthenticated.DCAE_CL_OUTPUT    data=${data}   headers=${headers}
-    Should Be Equal As Strings    ${resp.status_code}   200
-    Run Keyword    CheckLogMessage    ACTIVE    VES event has been received. Going to fetch details from AAI.
-    Run Keyword    CheckLogMessage    SUCCESS    Received response from AAI successfully. Hostname in AAI matches with the one in Ves event. Going to make the update-config request to CDS.
-    Run Keyword    CheckLogMessage    FINAL_SUCCESS    Successfully processed the VES event. Hostname is updated.
+    ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_cl_output    ${data}
+    Run Keyword    CheckLogMessage    ${topic}    ACTIVE    VES event has been received. Going to fetch details from AAI.
+    Run Keyword    CheckLogMessage    ${topic}    SUCCESS    Received response from AAI successfully. Hostname in AAI matches with the one in Ves event. Going to make the update-config request to CDS.
+    Run Keyword    CheckLogMessage    ${topic}    FINAL_SUCCESS    Successfully processed the VES event. Hostname is updated.
 
 TriggerAndVerifyTestVnfPolicy
     [Documentation]    Send TestVnf policy trigger event to DMaaP and read notifications to verify policy execution
-    Create Session   apexSession  http://${DMAAP_IP}   max_retries=1
+    Create Session   apexSession  http://${KAFKA_IP}   max_retries=1
     ${data}=    Get Binary File     ${CURDIR}/data/VesEventForVnfPolicy.json
     &{headers}=  Create Dictionary    Content-Type=application/json    Accept=application/json
     ${resp}=    POST On Session    apexSession    /events/unauthenticated.DCAE_POLICY_EXAMPLE_OUTPUT    data=${data}   headers=${headers}

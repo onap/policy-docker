@@ -2,7 +2,7 @@
 # ===========LICENSE_START====================================================
 #  Copyright (C) 2020-2021 AT&T Intellectual Property. All rights reserved.
 #  Modifications Copyright (C) 2021 Bell Canada. All rights reserved.
-#  Modification Copyright 2021-2023 Nordix Foundation.
+#  Modification Copyright 2021-2024 Nordix Foundation.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -58,7 +58,6 @@ services:
       networks:
           default:
               aliases:
-                  - message-router
                   - aai-sim
                   - grpc-sim
                   - sdnc-sim
@@ -72,7 +71,6 @@ services:
        - 6668
        - 6669
        - 6670
-       - 3904
        - 6680
       ports:
        - ${DMAAP_PORT}:3904
@@ -99,7 +97,7 @@ services:
       container_name: policy-pap
       depends_on:
        - mariadb
-       - simulator
+       - kafka
        - api
       hostname: policy-pap
       ports:
@@ -113,7 +111,7 @@ services:
       command: [
         '-c', './policy-pap.sh',
         'mariadb', '3306',
-        'message-router', '3904',
+        'kafka', '9092',
         'api', '6969'
         ]
    xacml-pdp:
@@ -121,7 +119,7 @@ services:
       container_name: policy-xacml-pdp
       depends_on:
        - mariadb
-       - simulator
+       - kafka
        - pap
       hostname: policy-xacml-pdp
       ports:
@@ -135,7 +133,7 @@ services:
       command: [
         '-c', './policy-pdpx.sh',
         'mariadb', '3306',
-        'message-router', '3904',
+        'kafka', '9092',
         'pap', '6969'
         ]
    drools-pdp:
@@ -143,7 +141,7 @@ services:
       container_name: drools
       depends_on:
        - mariadb
-       - simulator
+       - kafka
        - pap
       hostname: drools
       ports:
@@ -158,7 +156,7 @@ services:
       command: [
         '-c', '/opt/app/policy/bin/pdpd-entrypoint.sh boot',
         'mariadb', '3306',
-        'message-router', '3904'
+        'kafka', '9092'
         ]
    drools-applications:
       image: ${CONTAINER_LOCATION}onap/policy-pdpd-cl:${POLICY_DROOLS_APPS_VERSION}
@@ -166,6 +164,7 @@ services:
       depends_on:
        - mariadb
        - simulator
+       - kafka
        - pap
        - xacml-pdp
       hostname: drools-apps
@@ -183,7 +182,7 @@ services:
       command: [
         '-c', '/opt/app/policy/bin/pdpd-cl-entrypoint.sh boot',
         'mariadb', '3306',
-        'message-router', '3904',
+        'kafka', '9092',
         'pap', '6969',
         'aai-sim', '6666',
         'sdnc-sim', '6668',
@@ -196,6 +195,7 @@ services:
       depends_on:
        - mariadb
        - simulator
+       - kafka
        - pap
       hostname: policy-apex-pdp
       ports:
@@ -209,7 +209,7 @@ services:
       command: [
         '-c', '/opt/app/policy/apex-pdp/bin/apexOnapPf.sh -c /opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json',
         'mariadb', '3306',
-        'message-router', '3904',
+        'kafka', '9092',
         'pap', '6969'
         ]
    distribution:
@@ -232,7 +232,7 @@ services:
       command: [
         '-c', './policy-dist.sh',
         'mariadb', '3306',
-        'message-router', '3904',
+        'kafka', '9092',
         'pap', '6969',
         'apex-pdp', '6969'
         ]

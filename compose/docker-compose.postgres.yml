@@ -1,6 +1,6 @@
 #
 # ===========LICENSE_START====================================================
-#  Copyright (C) 2023 Nordix Foundation.
+#  Copyright (C) 2023-2024 Nordix Foundation.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -58,7 +58,6 @@ services:
     networks:
       default:
         aliases:
-          - message-router
           - aai-sim
           - grpc-sim
           - sdnc-sim
@@ -72,7 +71,6 @@ services:
       - 6668
       - 6669
       - 6670
-      - 3904
       - 6680
     ports:
       - ${DMAAP_PORT}:3904
@@ -99,7 +97,7 @@ services:
     container_name: policy-pap
     depends_on:
       - postgres
-      - simulator
+      - kafka
       - api
     hostname: policy-pap
     ports:
@@ -113,7 +111,7 @@ services:
     command: [
       '-c', './policy-pap.sh',
       'postgres', '5432',
-      'message-router', '3904',
+      'kafka', '9092',
       'api', '6969'
     ]
   apex-pdp:
@@ -122,6 +120,7 @@ services:
     depends_on:
       - postgres
       - simulator
+      - kafka
       - pap
     hostname: policy-apex-pdp
     ports:
@@ -135,7 +134,7 @@ services:
     command: [
       '-c', '/opt/app/policy/apex-pdp/bin/apexOnapPf.sh -c /opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json',
       'postgres', '5432',
-      'message-router', '3904',
+      'kafka', '9092',
       'pap', '6969'
     ]
   prometheus:
@@ -146,3 +145,27 @@ services:
       - ${PROMETHEUS_PORT}:9090
     volumes:
       - ./metrics/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 2181:2181
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - 29092:29092
+      - 9092:9092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1

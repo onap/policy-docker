@@ -44,10 +44,10 @@ do
     sleep 10s
 done
 
-export DMAAP_IP="localhost:${DMAAP_PORT}"
+export KAFKA_IP="localhost:${KAFKA_PORT}"
 export SUITES="apex-pdp-test.robot"
 
 ROBOT_VARIABLES="-v POLICY_PAP_IP:localhost:${PAP_PORT} -v POLICY_API_IP:localhost:${API_PORT}
 -v PROMETHEUS_IP:localhost:${PROMETHEUS_PORT} -v DATA:${DATA} -v NODETEMPLATES:${NODETEMPLATES}
--v APEX_IP:localhost:${APEX_PORT} -v DMAAP_IP:${DMAAP_IP}
+-v APEX_IP:localhost:${APEX_PORT} -v KAFKA_IP:${KAFKA_IP}
 -v APEX_EVENTS_IP:localhost:${APEX_EVENTS_PORT}"

@@ -1,6 +1,7 @@
 #!/bin/bash -x
 # ============LICENSE_START=======================================================
 # Copyright (C) 2020 AT&T Intellectual Property. All rights reserved.
+# Modification Copyright 2024 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +16,7 @@
 # limitations under the License.
 # ============LICENSE_END=========================================================
 
-sed -i "s/^dmaap/noop/g" \
+sed -i "s/^dmaap/kafka/g" \
     ${POLICY_HOME}/config/engine.properties \
     ${POLICY_HOME}/config/feature-lifecycle.properties
 

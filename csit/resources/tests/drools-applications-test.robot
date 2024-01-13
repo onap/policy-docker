@@ -29,8 +29,8 @@ Healthcheck
 
 MakeTopics
     [Documentation]    Creates the Policy topics
-    GetTopic     POLICY-PDP-PAP
-    GetTopic     POLICY-CL-MGT
+    GetKafkaTopic     policy-pdp-pap
+    GetKafkaTopic     policy-cl-mgt
 
 CreateVcpeXacmlPolicy
     [Documentation]    Create VCPE Policy for Xacml
@@ -59,27 +59,20 @@ CreateVfwDroolsPolicy
 DeployXacmlPolicies
     [Documentation]    Deploys the Policies to Xacml
     PerformPostRequest  /policy/pap/v1/pdps/deployments/batch  null  ${POLICY_PAP_IP}  deploy.xacml.policies.json  ${CURDIR}/data  json  202
-    ${result}=    CheckTopic     POLICY-PDP-PAP    PDP_UPDATE
-    Sleep    5s
-    ${result}=    CheckTopic     POLICY-PDP-PAP    ACTIVE
-    Should Contain    ${result}    responseTo
-    Should Contain    ${result}    xacml
-    Should Contain    ${result}    restart
-    Should Contain    ${result}    onap.restart.tca
+    Sleep  5s
+    ${result}=    CheckKafkaTopic     policy-notification    onap.vfirewall.tca
+    Should Contain    ${result}    deployed-policies
     Should Contain    ${result}    onap.scaleout.tca
-    Should Contain    ${result}    onap.vfirewall.tca
+    Should Contain    ${result}    onap.restart.tca
 
 DeployDroolsPolicies
     [Documentation]    Deploys the Policies to Drools
     PerformPostRequest  /policy/pap/v1/pdps/deployments/batch  null  ${POLICY_PAP_IP}  deploy.drools.policies.json  ${CURDIR}/data  json  202
-    ${result}=    CheckTopic     POLICY-PDP-PAP    PDP_UPDATE
-    Sleep    5s
-    ${result}=    CheckTopic     POLICY-PDP-PAP    ACTIVE
-    Should Contain    ${result}    responseTo
-    Should Contain    ${result}    drools
-    Should Contain    ${result}    operational.restart
+    Sleep  5s
+    ${result}=    CheckKafkaTopic    policy-notification    operational.modifyconfig
+    Should Contain    ${result}    deployed-policies
     Should Contain    ${result}    operational.scaleout
-    Should Contain    ${result}    operational.modifyconfig
+    Should Contain    ${result}    operational.restart
 
 #VcpeExecute
 #    [Documentation]    Executes VCPE Policy
@@ -179,7 +172,7 @@ OnSet
     ${data}=    Get File    ${file}
     Create Session   session  http://${DMAAP_IP}   max_retries=1
     ${headers}=  Create Dictionary  Content-Type=application/json
-    ${resp}=  POST On Session    session    /events/unauthenticated.DCAE_CL_OUTPUT    headers=${headers}    data=${data}
+    ${resp}=  POST On Session    session    /events/unauthenticateddcae_cl_output    headers=${headers}    data=${data}
     Log    Response from dmaap ${resp.text}
     Status Should Be    OK
     [Return]    ${resp.text}

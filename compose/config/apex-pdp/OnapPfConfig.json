@@ -10,7 +10,7 @@
   },
   "pdpStatusParameters": {
     "pdpGroup": "defaultGroup",
-    "timeIntervalMs": 120000,
+    "timeIntervalMs": 20000,
     "pdpType": "apex",
     "description": "Pdp Heartbeat",
     "supportedPolicyTypes": [
@@ -27,21 +27,22 @@
   "topicParameterGroup": {
     "topicSources": [
       {
-        "topic": "POLICY-PDP-PAP",
+        "topic": "policy-pdp-pap",
         "servers": [
-          "message-router"
+          "kafka:9092"
         ],
-        "topicCommInfrastructure": "dmaap",
-        "useHttps": false
+        "topicCommInfrastructure": "kafka",
+        "useHttps": false,
+        "fetchTimeout": 15000
       }
     ],
     "topicSinks": [
       {
-        "topic": "POLICY-PDP-PAP",
+        "topic": "policy-pdp-pap",
         "servers": [
-          "message-router"
+          "kafka:9092"
         ],
-        "topicCommInfrastructure": "dmaap",
+        "topicCommInfrastructure": "kafka",
         "useHttps": false
       }
     ]
