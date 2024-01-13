@@ -27,8 +27,8 @@ RunEventOnApexEngine
 
 CheckLogMessage
     [Documentation]    Read log messages received and check for expected content.
-    [Arguments]    ${status}    ${expectedMsg}
-    ${result}=     CheckTopic     APEX-CL-MGT    ${status}
+    [Arguments]    ${topic}    ${status}    ${expectedMsg}
+    ${result}=     CheckKafkaTopic     ${topic}    ${status}
     Should Contain    ${result}    ${expectedMsg}
 
 ValidatePolicyExecution

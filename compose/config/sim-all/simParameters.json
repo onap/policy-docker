@@ -47,7 +47,7 @@
     ],
     "topicSinks": [
         {
-            "topic": "APPC-CL",
+            "topic": "appc-cl",
             "servers": ["${HOST_NAME}"],
             "topicCommInfrastructure": "DMAAP",
             "useHttps": false,
@@ -55,7 +55,7 @@
             "apiSecret": "some-secret"
         },
         {
-            "topic": "APPC-LCM-WRITE",
+            "topic": "appc-lcm-write",
             "servers": ["${HOST_NAME}"],
             "topicCommInfrastructure": "DMAAP",
             "useHttps": false,
@@ -65,7 +65,7 @@
     ],
     "topicSources": [
         {
-            "topic": "APPC-CL",
+            "topic": "appc-cl",
             "servers": ["${HOST_NAME}"],
             "topicCommInfrastructure": "DMAAP",
             "useHttps": false,
@@ -73,7 +73,7 @@
             "apiSecret": "some-secret"
         },
         {
-            "topic": "APPC-LCM-READ",
+            "topic": "appc-lcm-read",
             "servers": ["${HOST_NAME}"],
             "topicCommInfrastructure": "DMAAP",
             "useHttps": false,
@@ -85,14 +85,14 @@
         {
             "name": "APPC Legacy simulator",
             "providerClass": "org.onap.policy.simulators.AppcLegacyTopicServer",
-            "sink": "APPC-CL",
-            "source": "APPC-CL"
+            "sink": "appc-cl",
+            "source": "appc-cl"
         },
         {
-            "name": "APPC-LCM simulator",
+            "name": "appc-lcm-simulator",
             "providerClass": "org.onap.policy.simulators.AppcLcmTopicServer",
-            "sink": "APPC-LCM-WRITE",
-            "source": "APPC-LCM-READ"
+            "sink": "appc-lcm-write",
+            "source": "appc-lcm-read"
         }
     ],
     "grpcServer": {

@@ -47,6 +47,7 @@ Healthcheck
 
 Consolidated Healthcheck
     [Documentation]  Verify policy consolidated health check
+    sleep  20
     ${resp}=  GetReq  /policy/pap/v1/components/healthcheck
     Should Be Equal As Strings  ${resp.json()['healthy']}  True
 

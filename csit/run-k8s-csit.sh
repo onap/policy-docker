@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # ============LICENSE_START====================================================
-#  Copyright (C) 2022-2023 Nordix Foundation.
+#  Copyright (C) 2022-2024 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -253,7 +253,7 @@ function set_project_config() {
                     $POLICY_CLAMP_CONTAINER,$POLICY_PF_PPNT_CONTAINER,$POLICY_K8S_PPNT_CONTAINER,
                     $POLICY_HTTP_PPNT_CONTAINER)
         export SET_VALUES="--set $POLICY_APEX_CONTAINER.enabled=true --set $POLICY_XACML_CONTAINER.enabled=true
-            --set $POLICY_DISTRIBUTION_CONTAINER.enabled=true --set $POLICY_POLICY_DROOLS_CONTAINER.enabled=true
+            --set $POLICY_DISTRIBUTION_CONTAINER.enabled=true --set $POLICY_DROOLS_CONTAINER.enabled=true
             --set $POLICY_CLAMP_CONTAINER.enabled=true --set $POLICY_PF_PPNT_CONTAINER.enabled=true
             --set $POLICY_K8S_PPNT_CONTAINER.enabled=true --set $POLICY_HTTP_PPNT_CONTAINER.enabled=true"
         ;;

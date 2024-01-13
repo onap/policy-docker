@@ -32,7 +32,7 @@
                 "taskParameters": [
                   {
                     "key": "logUrl",
-                    "value": "http://message-router:3904/events/APEX-CL-MGT"
+                    "value": "http://localhost:8082/topics/apex-cl-mgt"
                   }
                 ]
               },
@@ -2775,10 +2775,23 @@
             "eventInputParameters": {
               "SimpleCL_DCAEConsumer": {
                 "carrierTechnologyParameters": {
-                  "carrierTechnology": "RESTCLIENT",
-                  "parameterClassName": "org.onap.policy.apex.plugins.event.carrier.restclient.RestClientCarrierTechnologyParameters",
+                  "carrierTechnology": "KAFKA",
+                  "parameterClassName": "org.onap.policy.apex.plugins.event.carrier.kafka.KafkaCarrierTechnologyParameters",
                   "parameters": {
-                    "url": "http://message-router:3904/events/unauthenticated.DCAE_CL_OUTPUT/cl/apex?timeout=30000"
+                    "bootstrapServers": "kafka:9092",
+                    "groupId": "apex-grp",
+                    "enableAutoCommit": true,
+                    "autoCommitTime": 1000,
+                    "sessionTimeout": 30000,
+                    "consumerPollTime": 100,
+                    "consumerTopicList": [
+                      "unauthenticated.dcae_cl_output"
+                    ],
+                    "keyDeserializer": "org.apache.kafka.common.serialization.StringDeserializer",
+                    "valueDeserializer": "org.apache.kafka.common.serialization.StringDeserializer",
+                    "kafkaProperties": [
+
+                    ]
                   }
                 },
                 "eventProtocolParameters": {
@@ -2876,10 +2889,21 @@
               },
               "SimpleCL_logOutputter": {
                 "carrierTechnologyParameters": {
-                  "carrierTechnology": "RESTCLIENT",
-                  "parameterClassName": "org.onap.policy.apex.plugins.event.carrier.restclient.RestClientCarrierTechnologyParameters",
+                  "carrierTechnology": "KAFKA",
+                  "parameterClassName": "org.onap.policy.apex.plugins.event.carrier.kafka.KafkaCarrierTechnologyParameters",
                   "parameters": {
-                    "url": "http://message-router:3904/events/APEX-CL-MGT"
+                    "bootstrapServers": "kafka:9092",
+                    "acks": "all",
+                    "retries": 0,
+                    "batchSize": 16384,
+                    "lingerTime": 1,
+                    "bufferMemory": 33554432,
+                    "producerTopic": "apex-cl-mgt",
+                    "keySerializer": "org.apache.kafka.common.serialization.StringSerializer",
+                    "valueSerializer": "org.apache.kafka.common.serialization.StringSerializer",
+                    "kafkaProperties": [
+
+                    ]
                   }
                 },
                 "eventProtocolParameters": {
