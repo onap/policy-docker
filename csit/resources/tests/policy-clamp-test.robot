@@ -97,6 +97,7 @@ QueryPolicies
 QueryPolicyTypes
      [Documentation]    Verify the new policy types created
      ${auth}=    Create List    policyadmin    zb!XztG34
+     sleep  10
      Log    Creating session http://${POLICY_API_IP}}:6969
      ${session}=    Create Session      policy  http://${POLICY_API_IP}   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json

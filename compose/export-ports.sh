@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-# Copyright 2023 Nordix Foundation.
+# Copyright 2023-2024 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -44,5 +44,6 @@ export SIM_PARTICIPANT_PORT=30011
 export DROOLS_APPS_PORT=30009
 export DROOLS_APPS_TELEMETRY_PORT=30219
 export DMAAP_PORT=30904
+export KAFKA_PORT=9092
 export PROMETHEUS_PORT=30259
 export GRAFANA_PORT=30269

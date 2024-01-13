@@ -2,7 +2,7 @@
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2018 Ericsson. All rights reserved.
 #
-#  Modifications Copyright (c) 2019-2023 Nordix Foundation.
+#  Modifications Copyright (c) 2019-2024 Nordix Foundation.
 #  Modifications Copyright (C) 2020-2021 AT&T Intellectual Property.
 #  Modifications Copyright (C) 2021 Bell Canada. All rights reserved.
 # ================================================================================
@@ -26,9 +26,9 @@ source "${SCRIPTS}"/setup-pap.sh
 # wait for the app to start up
 bash "${SCRIPTS}"/wait_for_rest.sh localhost ${APEX_PORT}
 
-export DMAAP_IP="localhost:${DMAAP_PORT}"
+export KAFKA_IP="kafka:${KAFKA_PORT}"
 export SUITES="apex-pdp-test.robot
 apex-slas.robot"
 
-ROBOT_VARIABLES="${ROBOT_VARIABLES} -v APEX_IP:localhost:${APEX_PORT} -v DMAAP_IP:${DMAAP_IP}
+ROBOT_VARIABLES="${ROBOT_VARIABLES} -v APEX_IP:localhost:${APEX_PORT} -v KAFKA_IP:${KAFKA_IP}
 -v APEX_EVENTS_IP:localhost:${APEX_EVENTS_PORT}"
