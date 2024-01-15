@@ -41,6 +41,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba189b3a_b705a2e8",
+        "filename": "compose/config/drools-pdp/custom/noop.pre.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-01-15T14:24:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "78d8c877_077a2dfc",
+      "range": {
+        "startLine": 19,
+        "startChar": 11,
+        "endLine": 19,
+        "endChar": 16
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a21087c8_bad6f0b4",
@@ -54,6 +78,30 @@
       "writtenOn": "2024-01-15T13:45:40Z",
       "side": 1,
       "message": "Kafka?",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 13
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7bf7626d_2dd3d7ad",
+        "filename": "compose/config/drools-pdp/env/base.conf",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-01-15T14:24:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a21087c8_bad6f0b4",
       "range": {
         "startLine": 70,
         "startChar": 8,
@@ -111,6 +159,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "70911936_6c8b3560",
+        "filename": "compose/config/drools-pdp/env/base.conf",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-01-15T14:24:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dcd014f8_b6b2b178",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 16
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2208703d_98afa736",
@@ -124,6 +196,30 @@
       "writtenOn": "2024-01-15T13:45:40Z",
       "side": 1,
       "message": "shouldn\u0027t this be changed to kafka or noop? even if it\u0027s not using dmaap.",
+      "range": {
+        "startLine": 52,
+        "startChar": 40,
+        "endLine": 52,
+        "endChar": 45
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "baa23724_cae6d621",
+        "filename": "compose/config/sim-all/simParameters.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-01-15T14:24:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2208703d_98afa736",
       "range": {
         "startLine": 52,
         "startChar": 40,
@@ -157,6 +253,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ea544d4_dd473f64",
+        "filename": "compose/export-ports.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-01-15T14:24:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0aa396bb_269dd670",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 23
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "46033e9d_e3196c12",
@@ -170,6 +290,30 @@
       "writtenOn": "2024-01-15T13:45:40Z",
       "side": 1,
       "message": "if it\u0027s not being used, better remove",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 28
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8721ea62_26ecc369",
+        "filename": "csit/resources/scripts/run-test.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-01-15T14:24:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "46033e9d_e3196c12",
       "range": {
         "startLine": 36,
         "startChar": 0,
@@ -203,6 +347,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dcffedf7_49709f32",
+        "filename": "csit/resources/scripts/run-test.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-01-15T14:24:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f8840648_f079b4c7",
+      "range": {
+        "startLine": 47,
+        "startChar": 35,
+        "endLine": 47,
+        "endChar": 55
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "548f39a5_601bbe81",
@@ -226,6 +394,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f41225c_0eb4f707",
+        "filename": "csit/resources/tests/kafka_producer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-01-15T14:24:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "548f39a5_601bbe81",
+      "range": {
+        "startLine": 4,
+        "startChar": 22,
+        "endLine": 4,
+        "endChar": 26
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cae3bbab_7c559b57",
@@ -239,6 +431,30 @@
       "writtenOn": "2024-01-15T13:45:40Z",
       "side": 1,
       "message": "no need as there is no change in the file",
+      "range": {
+        "startLine": 4,
+        "startChar": 22,
+        "endLine": 4,
+        "endChar": 26
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c87b7061_5c911430",
+        "filename": "csit/resources/tests/make_topics.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-01-15T14:24:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cae3bbab_7c559b57",
       "range": {
         "startLine": 4,
         "startChar": 22,
