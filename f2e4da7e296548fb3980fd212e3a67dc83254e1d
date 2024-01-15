@@ -89,6 +89,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dcd014f8_b6b2b178",
+        "filename": "compose/config/drools-pdp/env/base.conf",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2024-01-15T13:53:26Z",
+      "side": 1,
+      "message": "Still K8s csits are using dmaap, hence the dmaap references in the scripts are not removed completely. Thought of removing them as part of a separate review once the k8s csits are done.",
+      "parentUuid": "712a263b_982da39d",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 16
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2208703d_98afa736",
         "filename": "compose/config/sim-all/simParameters.json",
         "patchSetId": 4
