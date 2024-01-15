@@ -16,6 +16,213 @@
       "message": "recheck",
       "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78d8c877_077a2dfc",
+        "filename": "compose/config/drools-pdp/custom/noop.pre.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-01-15T13:45:40Z",
+      "side": 1,
+      "message": "this dmaap reference is still needed?",
+      "range": {
+        "startLine": 19,
+        "startChar": 11,
+        "endLine": 19,
+        "endChar": 16
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a21087c8_bad6f0b4",
+        "filename": "compose/config/drools-pdp/env/base.conf",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-01-15T13:45:40Z",
+      "side": 1,
+      "message": "Kafka?",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 13
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "712a263b_982da39d",
+        "filename": "compose/config/drools-pdp/env/base.conf",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-01-15T13:45:40Z",
+      "side": 1,
+      "message": "maybe change to KAFKA references instead of DMAAP?",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 16
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2208703d_98afa736",
+        "filename": "compose/config/sim-all/simParameters.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-01-15T13:45:40Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be changed to kafka or noop? even if it\u0027s not using dmaap.",
+      "range": {
+        "startLine": 52,
+        "startChar": 40,
+        "endLine": 52,
+        "endChar": 45
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0aa396bb_269dd670",
+        "filename": "compose/export-ports.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-01-15T13:45:40Z",
+      "side": 1,
+      "message": "supposed to not be used, so can be removed.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 23
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46033e9d_e3196c12",
+        "filename": "csit/resources/scripts/run-test.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-01-15T13:45:40Z",
+      "side": 1,
+      "message": "if it\u0027s not being used, better remove",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 28
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8840648_f079b4c7",
+        "filename": "csit/resources/scripts/run-test.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-01-15T13:45:40Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 47,
+        "startChar": 35,
+        "endLine": 47,
+        "endChar": 55
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "548f39a5_601bbe81",
+        "filename": "csit/resources/tests/kafka_producer.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-01-15T13:45:40Z",
+      "side": 1,
+      "message": "no need as there is no change in the file",
+      "range": {
+        "startLine": 4,
+        "startChar": 22,
+        "endLine": 4,
+        "endChar": 26
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cae3bbab_7c559b57",
+        "filename": "csit/resources/tests/make_topics.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-01-15T13:45:40Z",
+      "side": 1,
+      "message": "no need as there is no change in the file",
+      "range": {
+        "startLine": 4,
+        "startChar": 22,
+        "endLine": 4,
+        "endChar": 26
+      },
+      "revId": "f2e4da7e296548fb3980fd212e3a67dc83254e1d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
