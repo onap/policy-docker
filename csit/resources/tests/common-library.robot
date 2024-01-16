@@ -131,23 +131,6 @@ ValidateResponseTime
     ${actualTime}=   Set Variable  ${rawNumber * ${1000}}
     Should Be True   ${actualTime} <= ${timeLimit}
 
-GetTopic
-    [Arguments]    ${topic}
-    Create Session   session  http://${DMAAP_IP}   max_retries=1
-    ${params}=  Create Dictionary    limit    1    timeout    0
-    ${resp}=    GET On Session    session    /events/${topic}/script/1    ${params}
-    Status Should Be    OK    ${resp}
-
-CheckTopic
-    [Arguments]    ${topic}    ${expected_status}
-    Create Session   session  http://${DMAAP_IP}   max_retries=1
-    ${params}=  Create Dictionary    limit    1
-    ${resp}=    GET On Session    session    /events/${topic}/script/1    ${params}
-    Log  Received response from dmaap ${resp.text}
-    Status Should Be    OK    ${resp}
-    Should Contain    ${resp.text}    ${expected_status}
-    [Return]    ${resp.text}
-
 CheckKafkaTopic
     [Arguments]    ${topic}    ${expected_status}
     ${resp}=    Run Process    ${CURDIR}/kafka_consumer.py    ${topic}    60    ${expected_status}

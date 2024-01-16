@@ -73,7 +73,7 @@ services:
        - 6670
        - 6680
       ports:
-       - ${DMAAP_PORT}:3904
+       - ${SIMULATOR_PORT}:6666
    api:
       image: ${CONTAINER_LOCATION}onap/policy-api:${POLICY_API_VERSION}
       container_name: policy-api
@@ -177,7 +177,7 @@ services:
       env_file:
         - ./config/drools-applications/env/base.conf
         - ./config/drools-applications/env/feature-healthcheck.conf
-        - ./config/drools-applications/env/feature-pooling-dmaap.conf
+        - ./config/drools-applications/env/feature-pooling-kafka.conf
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', '/opt/app/policy/bin/pdpd-cl-entrypoint.sh boot',

@@ -170,9 +170,6 @@ PerformPostRequest
 OnSet
     [Arguments]    ${file}
     ${data}=    Get File    ${file}
-    Create Session   session  http://${DMAAP_IP}   max_retries=1
-    ${headers}=  Create Dictionary  Content-Type=application/json
-    ${resp}=  POST On Session    session    /events/unauthenticateddcae_cl_output    headers=${headers}    data=${data}
-    Log    Response from dmaap ${resp.text}
-    Status Should Be    OK
-    [Return]    ${resp.text}
+    ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_cl_output    ${data}
+    Log    Response from kafka ${resp.stdout}
+    [Return]    ${resp.stdout}

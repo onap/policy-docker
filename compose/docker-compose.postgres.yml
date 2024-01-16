@@ -73,7 +73,7 @@ services:
       - 6670
       - 6680
     ports:
-      - ${DMAAP_PORT}:3904
+      - ${SIMULATOR_PORT}:3904
   api:
     image: ${CONTAINER_LOCATION}onap/policy-api:${POLICY_API_VERSION}
     container_name: policy-api

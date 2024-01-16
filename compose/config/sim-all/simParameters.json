@@ -1,16 +1,5 @@
 {
-    "dmaapProvider": {
-        "name": "DMaaP simulator",
-        "topicSweepSec": 300
-    },
     "restServers": [
-        {
-            "name": "DMaaP simulator",
-            "providerClass": "org.onap.policy.models.sim.dmaap.rest.DmaapSimRestControllerV1",
-            "host": "0.0.0.0",
-            "port": 3904,
-            "https": false
-        },
         {
             "name": "A&AI simulator",
             "providerClass": "org.onap.policy.simulators.AaiSimulatorJaxRs",
@@ -45,56 +34,7 @@
             "https": false
         }
     ],
-    "topicSinks": [
-        {
-            "topic": "appc-cl",
-            "servers": ["${HOST_NAME}"],
-            "topicCommInfrastructure": "DMAAP",
-            "useHttps": false,
-            "apiKey": "some-key",
-            "apiSecret": "some-secret"
-        },
-        {
-            "topic": "appc-lcm-write",
-            "servers": ["${HOST_NAME}"],
-            "topicCommInfrastructure": "DMAAP",
-            "useHttps": false,
-            "apiKey": "some-key",
-            "apiSecret": "some-secret"
-        }
-    ],
-    "topicSources": [
-        {
-            "topic": "appc-cl",
-            "servers": ["${HOST_NAME}"],
-            "topicCommInfrastructure": "DMAAP",
-            "useHttps": false,
-            "apiKey": "some-key",
-            "apiSecret": "some-secret"
-        },
-        {
-            "topic": "appc-lcm-read",
-            "servers": ["${HOST_NAME}"],
-            "topicCommInfrastructure": "DMAAP",
-            "useHttps": false,
-            "apiKey": "some-key",
-            "apiSecret": "some-secret"
-        }
-    ],
-    "topicServers": [
-        {
-            "name": "APPC Legacy simulator",
-            "providerClass": "org.onap.policy.simulators.AppcLegacyTopicServer",
-            "sink": "appc-cl",
-            "source": "appc-cl"
-        },
-        {
-            "name": "appc-lcm-simulator",
-            "providerClass": "org.onap.policy.simulators.AppcLcmTopicServer",
-            "sink": "appc-lcm-write",
-            "source": "appc-lcm-read"
-        }
-    ],
+
     "grpcServer": {
         "name": "CDS simulator",
         "providerClass": "org.onap.policy.simulators.CdsSimulator",

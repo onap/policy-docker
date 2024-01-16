@@ -25,14 +25,11 @@ ValidatePolicyExecutionAndEventRateLowComplexity
     CreateNodeTemplate  /policy/api/v1/nodetemplates  200  ${postjson}  1
     DeployPolicy
     Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
-    GetTopic     APEX-CL-MGT2
-    Create Session   apexSession  http://${DMAAP_IP}   max_retries=1
+    GetKafkaTopic     apex-cl-mgt2
     ${data}=    Get Binary File     ${CURDIR}/data/VesEventForVnfPolicy.json
-    &{headers}=  Create Dictionary    Content-Type=application/json    Accept=application/json
     ${eventStartTime}=  Get Current Date
-    ${resp}=    POST On Session    apexSession    /events/unauthenticated.DCAE_POLICY_EXAMPLE_OUTPUT    data=${data}   headers=${headers}
+    ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_policy_example_output    ${data}
     ${eventEndTime}=  Get Current Date
-    Should Be Equal As Strings    ${resp.status_code}   200
     ValidateEventExecution    ${eventStartTime}  ${eventEndTime}  100
 
 ValidatePolicyExecutionAndEventRateHighComplexity
@@ -58,14 +55,11 @@ ValidatePolicyExecutionAndEventRateModerateComplexity
     CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
     DeployPolicy
     Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
-    GetTopic     APEX-CL-MGT
-    Create Session   apexSession  http://${DMAAP_IP}   max_retries=1
+    GetKafkaTopic     apex-cl-mgt
     ${data}=    Get Binary File     ${CURDIR}/data/VesEventForPnfPolicy.json
-    &{headers}=  Create Dictionary    Content-Type=application/json    Accept=application/json
     ${eventStartTime}=  Get Current Date
-    ${resp}=    POST On Session    apexSession    /events/unauthenticated.DCAE_CL_OUTPUT    data=${data}   headers=${headers}
+    ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_cl_output    ${data}
     ${eventEndTime}=  Get Current Date
-    Should Be Equal As Strings    ${resp.status_code}   200
     ValidateEventExecution    ${eventStartTime}  ${eventEndTime}  10
 
 WaitForPrometheusServer

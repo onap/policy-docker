@@ -77,7 +77,7 @@ Metrics
 *** Keywords ***
 
 TriggerAndVerifyTestPnfPolicy
-    [Documentation]    Send TestPnf policy trigger event to DMaaP and read notifications to verify policy execution
+    [Documentation]    Send TestPnf policy trigger event to Kafka and read notifications to verify policy execution
     [Arguments]    ${topic}
     ${data}=    Get Binary File     ${CURDIR}/data/VesEventForPnfPolicy.json
     ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_cl_output    ${data}
@@ -86,13 +86,11 @@ TriggerAndVerifyTestPnfPolicy
     Run Keyword    CheckLogMessage    ${topic}    FINAL_SUCCESS    Successfully processed the VES event. Hostname is updated.
 
 TriggerAndVerifyTestVnfPolicy
-    [Documentation]    Send TestVnf policy trigger event to DMaaP and read notifications to verify policy execution
-    Create Session   apexSession  http://${KAFKA_IP}   max_retries=1
+    [Documentation]    Send TestVnf policy trigger event to Kafka and read notifications to verify policy execution
+    [Arguments]    ${topic}
     ${data}=    Get Binary File     ${CURDIR}/data/VesEventForVnfPolicy.json
-    &{headers}=  Create Dictionary    Content-Type=application/json    Accept=application/json
-    ${resp}=    POST On Session    apexSession    /events/unauthenticated.DCAE_POLICY_EXAMPLE_OUTPUT    data=${data}   headers=${headers}
-    Should Be Equal As Strings    ${resp.status_code}   200
-    Run Keyword    CheckLogMessage    ACTIVE    VES event has been received. Going to fetch VNF details from AAI.
-    Run Keyword    CheckLogMessage    SUCCESS    VNF details are received from AAI successfully. Sending ConfigModify request to CDS.
-    Run Keyword    CheckLogMessage    SUCCESS    ConfigModify request is successful. Sending restart request to CDS.
-    Run Keyword    CheckLogMessage    FINAL_SUCCESS    Successfully processed the VES Event. Restart is complete.
+    ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_policy_example_output    ${data}
+    Run Keyword    CheckLogMessage    ${topic}    ACTIVE    VES event has been received. Going to fetch VNF details from AAI.
+    Run Keyword    CheckLogMessage    ${topic}    SUCCESS    VNF details are received from AAI successfully. Sending ConfigModify request to CDS.
+    Run Keyword    CheckLogMessage    ${topic}    SUCCESS    ConfigModify request is successful. Sending restart request to CDS.
+    Run Keyword    CheckLogMessage    ${topic}    FINAL_SUCCESS    Successfully processed the VES Event. Restart is complete.

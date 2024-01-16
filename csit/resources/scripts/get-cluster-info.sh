@@ -31,7 +31,7 @@ export ACM_PORT=30007
 export POLICY_PF_PARTICIPANT_PORT=30008
 export POLICY_HTTP_PARTICIPANT_PORT=30009
 export POLICY_K8S_PARTICIPANT_PORT=30010
-export DMAAP_PORT=30904
+export SIMULATOR_PORT=30904
 
 # Retrieve pod names
 function get_pod_names() {
@@ -113,7 +113,7 @@ function patch_ports() {
 
 function setup_message_router_svc() {
   microk8s kubectl expose service message-router --name message-router-svc --type NodePort --protocol TCP --port 3904 --target-port 3904
-  microk8s kubectl patch service message-router-svc --namespace=default --type='json' --patch='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value":'"$DMAAP_PORT"'}]'
+  microk8s kubectl patch service message-router-svc --namespace=default --type='json' --patch='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value":'"$SIMULATOR_PORT"'}]'
 }
 
 ####MAIN###

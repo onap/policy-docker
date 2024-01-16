@@ -16,8 +16,5 @@
 # limitations under the License.
 # ============LICENSE_END=========================================================
 
-sed -i "s/^dmaap/kafka/g" \
-    ${POLICY_HOME}/config/engine.properties \
-    ${POLICY_HOME}/config/feature-lifecycle.properties
 
 chmod 644 ${POLICY_HOME}/config/engine.properties ${POLICY_HOME}/config/feature-lifecycle.properties
