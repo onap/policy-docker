@@ -1,5 +1,5 @@
 #  ============LICENSE_START=======================================================
-#   Copyright (C) 2023 Nordix Foundation. All rights reserved.
+#   Copyright (C) 2023-2024 Nordix Foundation. All rights reserved.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -40,18 +40,6 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.onap.policy.common.spring.utils.CustomImplicitNamingStrategy
-  kafka:
-    consumer:
-      group-id: {{ .Values.config.kafka.consumer.groupId }}
-{{- if .Values.config.useStrimziKafka }}
-    bootstrap-servers: {{ .Values.config.kafkaBootstrap }}:9092
-    security.protocol: SASL_PLAINTEXT
-    properties.sasl:
-      mechanism: SCRAM-SHA-512
-      jaas.config: ${JAASLOGIN}
-{{ else }}
-{{ toYaml .Values.config.eventConsumption | nindent 2 }}
-{{- end }}
 
 server:
   port: 6969
@@ -64,9 +52,9 @@ pap:
   name: PapGroup
   aaf: false
   topic:
-    pdp-pap.name: POLICY-PDP-PAP
-    notification.name: POLICY-NOTIFICATION
-    heartbeat.name: POLICY-HEARTBEAT
+    pdp-pap.name: policy-pdp-pap
+    notification.name: policy-notification
+    heartbeat.name: policy-heartbeat
   pdpParameters:
     heartBeatMs: 120000
     updateParameters:
@@ -80,28 +68,28 @@ pap:
     topicSources:
     - topic: ${pap.topic.pdp-pap.name}
       servers:
-      - message-router
-      topicCommInfrastructure: dmaap
+      - {{ .Values.global.kafkaServer }}:9092
+      topicCommInfrastructure: kafka
       useHttps: false
       fetchTimeout: 15000
     - topic: ${pap.topic.heartbeat.name}
       effectiveTopic: ${pap.topic.pdp-pap.name}
       consumerGroup: policy-pap
       servers:
-      - message-router
-      topicCommInfrastructure: dmaap
+      - {{ .Values.global.kafkaServer }}:9092
+      topicCommInfrastructure: kafka
       useHttps: false
       fetchTimeout: 15000
     topicSinks:
     - topic: ${pap.topic.pdp-pap.name}
       servers:
-      - message-router
-      topicCommInfrastructure: dmaap
+      - {{ .Values.global.kafkaServer }}:9092
+      topicCommInfrastructure: kafka
       useHttps: false
     - topic: ${pap.topic.notification.name}
       servers:
-      - message-router
-      topicCommInfrastructure: dmaap
+      - {{ .Values.global.kafkaServer }}:9092
+      topicCommInfrastructure: kafka
       useHttps: false
   healthCheckRestClientParameters:
   - clientName: api

@@ -24,8 +24,8 @@
 from confluent_kafka import Producer
 import sys
 
-def post_to_kafka(topic, message):
-    conf = {'bootstrap.servers': 'localhost:29092'}
+def post_to_kafka(topic, message, bootstrap_server):
+    conf = {'bootstrap.servers': bootstrap_server}
 
     producer = Producer(conf)
     try:
@@ -38,4 +38,4 @@ def post_to_kafka(topic, message):
         producer.flush()
 
 if __name__ == '__main__':
-    post_to_kafka(sys.argv[1], sys.argv[2])
+    post_to_kafka(sys.argv[1], sys.argv[2], sys.argv[3])

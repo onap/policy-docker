@@ -46,6 +46,9 @@ POLICY_DISTRIBUTION_CONTAINER="policy-distribution"
 POLICY_K8S_PPNT_CONTAINER="policy-clamp-ac-k8s-ppnt"
 POLICY_HTTP_PPNT_CONTAINER="policy-clamp-ac-http-ppnt"
 POLICY_PF_PPNT_CONTAINER="policy-clamp-ac-pf-ppnt"
+KAFKA_CONTAINER="kafka-deployment"
+ZK_CONTAINER="zookeeper-deployment"
+KAFKA_DIR=${WORKSPACE}/helm/cp-kafka
 SET_VALUES=""
 
 DISTRIBUTION_CSAR=${WORKSPACE}/csit/resources/tests/data/csar
@@ -55,6 +58,7 @@ export PROJECT=""
 export ROBOT_FILE=""
 export ROBOT_LOG_DIR=${WORKSPACE}/csit/archives
 export READINESS_CONTAINERS=()
+
 
 function spin_microk8s_cluster() {
     echo "Verify if Microk8s cluster is running.."
@@ -88,11 +92,19 @@ function spin_microk8s_cluster() {
 
 }
 
+function install_kafka() {
+  echo "Installing Confluent kafka"
+  kubectl apply -f $KAFKA_DIR/zookeeper.yaml
+  kubectl apply -f $KAFKA_DIR/kafka.yaml
+  echo "----------------------------------------"
+}
+
 function uninstall_policy() {
     echo "Removing the policy helm deployment"
     sudo microk8s helm uninstall csit-policy
     sudo microk8s helm uninstall prometheus
     sudo microk8s helm uninstall csit-robot
+    sudo kubectl delete deploy $ZK_CONTAINER $KAFKA_CONTAINER
     rm -rf ${WORKSPACE}/helm/policy/Chart.lock
     if [ "$PROJECT" == "clamp" ] || [ "$PROJECT" == "policy-clamp" ]; then
       sudo microk8s helm uninstall policy-chartmuseum
@@ -349,6 +361,9 @@ fi
 if [ $OPERATION == "install" ]; then
     spin_microk8s_cluster
     if [ "${?}" -eq 0 ]; then
+        export KAFKA_CONTAINERS=($KAFKA_CONTAINER,$ZK_CONTAINER)
+        install_kafka
+        wait_for_pods_running default 300 $KAFKA_CONTAINERS
         set_project_config
         echo "Installing policy helm charts in the default namespace"
         source ${WORKSPACE}/compose/get-k8s-versions.sh

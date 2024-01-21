@@ -85,6 +85,7 @@ DeployAutomationComposition
 QueryPolicies
      [Documentation]    Verify the new policies deployed
      ${auth}=    Create List    policyadmin    zb!XztG34
+     sleep 10
      Log    Creating session http://${POLICY_PAP_IP}
      ${session}=    Create Session      policy  http://${POLICY_PAP_IP}   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
