@@ -1,5 +1,5 @@
 #  ============LICENSE_START=======================================================
-#  Copyright (C) 2023 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2023-2024 Nordix Foundation. All rights reserved.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -45,16 +45,16 @@ participant:
     participantId: 101c62b3-8918-41b9-a747-d21eb79c6c00
     clampAutomationCompositionTopics:
       topicSources:
-        - topic: POLICY-ACRUNTIME-PARTICIPANT
+        - topic: policy-acruntime-participant
           servers:
-            - ${topicServer:message-router}
-          topicCommInfrastructure: dmaap
+            - {{ .Values.global.kafkaServer }}:9092
+          topicCommInfrastructure: kafka
           fetchTimeout: 15000
       topicSinks:
-        - topic: POLICY-ACRUNTIME-PARTICIPANT
+        - topic: policy-acruntime-participant
           servers:
-            - ${topicServer:message-router}
-          topicCommInfrastructure: dmaap
+            - {{ .Values.global.kafkaServer }}:9092
+          topicCommInfrastructure: kafka
     participantSupportedElementTypes:
       -
         typeName: org.onap.policy.clamp.acm.A1PMSAutomationCompositionElement

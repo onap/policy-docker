@@ -138,14 +138,6 @@ sdnc:
   user: admin
   password: Kp8bJ4SXszM0WXlhak3eHlcse2gAw84vaoGGmJvUy2U
 
-dmaap:
-  brmsgw:
-    key:
-    password:
-  pap:
-    key:
-    password:
-
 cds:
   grpc:
     user: ccsdkapps

@@ -27,9 +27,9 @@ import sys
 import time
 
 
-def consume_kafka_topic(topic, expected_values, timeout):
+def consume_kafka_topic(topic, expected_values, timeout, bootstrap_server):
     config = {
-            'bootstrap.servers': 'localhost:29092',
+            'bootstrap.servers': bootstrap_server,
             'group.id': 'testgrp',
             'auto.offset.reset': 'earliest'
     }
@@ -63,4 +63,5 @@ if __name__ == '__main__':
     topic_name = sys.argv[1]
     timeout = int(sys.argv[2])  # timeout in seconds for verifying the kafka topic
     expected_values = sys.argv[3]
-    consume_kafka_topic(topic_name, expected_values, timeout)
+    bootstrap_server = sys.argv[4]
+    consume_kafka_topic(topic_name, expected_values, timeout, bootstrap_server)

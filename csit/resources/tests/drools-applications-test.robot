@@ -170,6 +170,6 @@ PerformPostRequest
 OnSet
     [Arguments]    ${file}
     ${data}=    Get File    ${file}
-    ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_cl_output    ${data}
+    ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_cl_output    ${data}    ${KAFKA_IP}
     Log    Response from kafka ${resp.stdout}
     [Return]    ${resp.stdout}

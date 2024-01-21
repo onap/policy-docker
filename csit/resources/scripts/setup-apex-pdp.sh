@@ -26,7 +26,7 @@ source "${SCRIPTS}"/setup-pap.sh
 # wait for the app to start up
 bash "${SCRIPTS}"/wait_for_rest.sh localhost ${APEX_PORT}
 
-export KAFKA_IP="kafka:${KAFKA_PORT}"
+export KAFKA_IP="localhost:${KAFKA_PORT}"
 export SUITES="apex-pdp-test.robot
 apex-slas.robot"
 
