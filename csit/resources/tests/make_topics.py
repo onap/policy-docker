@@ -36,6 +36,6 @@ def create_topic(bootstrap_servers, topic_name, num_partitions=2, replication_fa
 
 if __name__ == '__main__':
     topic_name = sys.argv[1]
-    bootstrap_servers = 'localhost:29092'
+    bootstrap_servers = sys.argv[2]
 
     create_topic(bootstrap_servers, topic_name)

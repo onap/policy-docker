@@ -45,9 +45,9 @@ readiness:
 service:
   type: ClusterIP
   name: message-router
-  portName: message-router
-  externalPort: 3904
-  internalPort: 3904
+  portName: simulator
+  externalPort: 6666
+  internalPort: 6666
   simulators:
     aai:
       name: aai-sim

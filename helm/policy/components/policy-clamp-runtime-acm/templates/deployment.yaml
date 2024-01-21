@@ -82,14 +82,6 @@ spec:
               name: {{ .Chart.Name }}-runtime-secret
               key: password
 
-{{- if .Values.config.useStrimziKafka }}
-        - name: JAASLOGIN
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Chart.Name }}-policy-kafka-user
-              key: sasl.jaas.config
-
-{{- end }}
         volumeMounts:
         - mountPath: /config-input
           name: ac-runtime-config

@@ -18,6 +18,7 @@
 #
 
 export PROJECT="apex-pdp"
+export KAFKA_IP="localhost:${KAFKA_PORT}"
 source "${SCRIPTS}"/node-templates.sh
 
 source "${WORKSPACE}"/compose/start-multiple-pdp.sh 3
@@ -49,4 +50,4 @@ export SUITES="apex-slas-3.robot"
 
 ROBOT_VARIABLES="-v POLICY_PAP_IP:localhost:${PAP_PORT} -v POLICY_API_IP:localhost:${API_PORT}
 -v PROMETHEUS_IP:localhost:${PROMETHEUS_PORT} -v DATA:${DATA} -v NODETEMPLATES:${NODETEMPLATES}
--v APEX_IP:localhost:${APEX_PORT} -v APEX_EVENTS_IP:localhost:${APEX_PORT}"
+-v APEX_IP:localhost:${APEX_PORT} -v APEX_EVENTS_IP:localhost:${APEX_PORT} -v KAFKA_IP:${KAFKA_IP}"
