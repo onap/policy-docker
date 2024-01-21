@@ -26,7 +26,7 @@ ValidatePolicyExecutionAndEventRateLowComplexity
     GetKafkaTopic     apex-cl-mgt
     ${data}=    Get Binary File     ${CURDIR}/data/VesEventForPnfPolicy.json
     ${eventStartTime}=  Get Current Date
-    ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_cl_output    ${data}
+    ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_cl_output    ${data}    ${KAFKA_IP}
     ${eventEndTime}=  Get Current Date
     ValidateEventExecution    ${eventStartTime}  ${eventEndTime}  30
 
@@ -42,7 +42,7 @@ ValidatePolicyExecutionAndEventRateHighComplexity
     GetKafkaTopic     apex-cl-mgt2
     ${data}=    Get Binary File     ${CURDIR}/data/VesEventForVnfPolicy.json
     ${eventStartTime}=  Get Current Date
-    ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_policy_example_output    ${data}
+    ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_policy_example_output    ${data}    ${KAFKA_IP}
     ${eventEndTime}=  Get Current Date
     ValidateEventExecution    ${eventStartTime}  ${eventEndTime}  0.6
 

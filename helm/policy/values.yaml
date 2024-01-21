@@ -1,4 +1,4 @@
-# Copyright © 2022-2023 Nordix Foundation
+# Copyright © 2022-2024 Nordix Foundation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,9 +27,7 @@ global:
       name: &mariadb-galera mariadb-galera
       internalPort: 3306
   prometheusEnabled: false
-  kafkaBootstrap: strimzi-kafka-bootstrap
-  policyKafkaUser: policy-kafka-user
-
+  kafkaServer: kafka
   repository: nexus3.onap.org:10001
   pullPolicy: IfNotPresent
   dockerRepository: docker.io
@@ -37,19 +35,19 @@ global:
   image:
     readiness: onap/oom/readiness:3.0.1
     mariadb: bitnami/mariadb-galera:10.5.8
-    api: onap/policy-api:$tag
-    pap: onap/policy-pap:$tag
-    apex: onap/policy-apex-pdp:$tag
-    simulator: onap/policy-models-simulator:$tag
-    pdpdcl: onap/policy-pdpd-cl:$tag
-    xacml: onap/policy-xacml-pdp:$tag
-    distribution: onap/policy-distribution:$tag
-    runtimeacm: onap/policy-clamp-runtime-acm:$tag
-    kserveparticipant: onap/policy-clamp-ac-kserve-ppnt:$tag
-    k8sparticipant: onap/policy-clamp-ac-k8s-ppnt:$tag
-    pfparticipant: onap/policy-clamp-ac-pf-ppnt:$tag
-    httpparticipant: onap/policy-clamp-ac-http-ppnt:$tag
-    a1pmsparticipant: onap/policy-clamp-ac-a1pms-ppnt:$tag
+    api: onap/policy-api:3.1.1-SNAPSHOT
+    pap: onap/policy-pap:3.1.0
+    apex: onap/policy-apex-pdp:3.1.1-SNAPSHOT
+    simulator: onap/policy-models-simulator:3.1.1-SNAPSHOT
+    pdpdcl: onap/policy-pdpd-cl:2.1.1-SNAPSHOT
+    xacml: onap/policy-xacml-pdp:3.1.0
+    distribution: onap/policy-distribution:3.1.0
+    runtimeacm: onap/policy-clamp-runtime-acm:7.1.1-SNAPSHOT
+    kserveparticipant: onap/policy-clamp-ac-kserve-ppnt:7.1.1-SNAPSHOT
+    k8sparticipant: onap/policy-clamp-ac-k8s-ppnt:7.1.1-SNAPSHOT
+    pfparticipant: onap/policy-clamp-ac-pf-ppnt:7.1.1-SNAPSHOT
+    httpparticipant: onap/policy-clamp-ac-http-ppnt:7.1.1-SNAPSHOT
+    a1pmsparticipant: onap/policy-clamp-ac-a1pms-ppnt:7.1.1-SNAPSHOT
 
 policy-mariadb-galera:
   enabled: true
@@ -89,7 +87,7 @@ mariadb:
   image: mariadb:10.5.8
 
 dbmigrator:
-  image: onap/policy-db-migrator:3.0.1-SNAPSHOT
+  image: onap/policy-db-migrator:3.1.1-SNAPSHOT
   schema: policyadmin
   policy_home: "/opt/app/policy"
 

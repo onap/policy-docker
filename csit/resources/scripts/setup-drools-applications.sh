@@ -26,6 +26,7 @@ sleep 10
 unset http_proxy https_proxy
 
 export SUITES="drools-applications-test.robot"
+export KAFKA_IP="localhost:${KAFKA_PORT}"
 
 # wait for the app to start up
 "${SCRIPTS}"/wait_for_rest.sh localhost ${DROOLS_APPS_PORT}
@@ -35,4 +36,4 @@ sleep 15
 
 ROBOT_VARIABLES="-v DATA:${DATA} -v DROOLS_IP:localhost:${DROOLS_APPS_PORT}
 -v DROOLS_IP_2:localhost:${DROOLS_APPS_TELEMETRY_PORT} -v POLICY_API_IP:localhost:${API_PORT}
--v POLICY_PAP_IP:localhost:${PAP_PORT} -v KAFKA_IP:localhost:${KAFKA_PORT}"
+-v POLICY_PAP_IP:localhost:${PAP_PORT} -v KAFKA_IP:localhost:${KAFKA_IP}"

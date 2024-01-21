@@ -80,7 +80,7 @@ TriggerAndVerifyTestPnfPolicy
     [Documentation]    Send TestPnf policy trigger event to Kafka and read notifications to verify policy execution
     [Arguments]    ${topic}
     ${data}=    Get Binary File     ${CURDIR}/data/VesEventForPnfPolicy.json
-    ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_cl_output    ${data}
+    ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_cl_output    ${data}    ${KAFKA_IP}
     Run Keyword    CheckLogMessage    ${topic}    ACTIVE    VES event has been received. Going to fetch details from AAI.
     Run Keyword    CheckLogMessage    ${topic}    SUCCESS    Received response from AAI successfully. Hostname in AAI matches with the one in Ves event. Going to make the update-config request to CDS.
     Run Keyword    CheckLogMessage    ${topic}    FINAL_SUCCESS    Successfully processed the VES event. Hostname is updated.
@@ -89,7 +89,7 @@ TriggerAndVerifyTestVnfPolicy
     [Documentation]    Send TestVnf policy trigger event to Kafka and read notifications to verify policy execution
     [Arguments]    ${topic}
     ${data}=    Get Binary File     ${CURDIR}/data/VesEventForVnfPolicy.json
-    ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_policy_example_output    ${data}
+    ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_policy_example_output    ${data}    ${KAFKA_IP}
     Run Keyword    CheckLogMessage    ${topic}    ACTIVE    VES event has been received. Going to fetch VNF details from AAI.
     Run Keyword    CheckLogMessage    ${topic}    SUCCESS    VNF details are received from AAI successfully. Sending ConfigModify request to CDS.
     Run Keyword    CheckLogMessage    ${topic}    SUCCESS    ConfigModify request is successful. Sending restart request to CDS.
