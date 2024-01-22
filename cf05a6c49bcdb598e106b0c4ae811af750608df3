@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91b24c75_a08ae07c",
+        "filename": "helm/policy/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 7603
+      },
+      "writtenOn": "2024-01-22T10:00:47Z",
+      "side": 1,
+      "message": "Are we hard-coding these tags?",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 68
+      },
+      "revId": "cf05a6c49bcdb598e106b0c4ae811af750608df3",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
