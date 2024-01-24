@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e93b8b2_feceb93d",
+        "filename": "helm/cp-kafka/kafka.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2024-01-24T11:21:37Z",
+      "side": 1,
+      "message": "Any reason for changing this listener name? Also \u0027kafka:9092\u0027 is hardcoded in values.yaml and other setup scripts for k8s csits. The service name is still pointing to kafka:9092 but worth checking the k8s csits are not breaking after this change.",
+      "range": {
+        "startLine": 45,
+        "startChar": 57,
+        "endLine": 45,
+        "endChar": 88
+      },
+      "revId": "fbfc234895c48282e2e92b44c8c8b49745e81745",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
