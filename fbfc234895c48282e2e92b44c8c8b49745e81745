@@ -22,6 +22,30 @@
       },
       "revId": "fbfc234895c48282e2e92b44c8c8b49745e81745",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bea1ad5_6965baba",
+        "filename": "helm/cp-kafka/kafka.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 8109
+      },
+      "writtenOn": "2024-01-24T11:45:35Z",
+      "side": 1,
+      "message": "Kafka consumers from different namespace cannot access Kafka without the ADVERTISED_LISTENER configured as FQDN.\n\nYes, it\u0027s worth checking csit\u0027s. I have verified the container communication from default namespace with Kafka.",
+      "parentUuid": "5e93b8b2_feceb93d",
+      "range": {
+        "startLine": 45,
+        "startChar": 57,
+        "endLine": 45,
+        "endChar": 88
+      },
+      "revId": "fbfc234895c48282e2e92b44c8c8b49745e81745",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
