@@ -42,7 +42,7 @@ participant:
         -
           topic: policy-acruntime-participant
           servers:
-            - {{ .Values.global.kafkaServer }}:9092
+            - "{{ .Values.global.kafkaServer }}:9092"
           topicCommInfrastructure: kafka
           fetchTimeout: 15000
           useHttps: false
@@ -50,7 +50,7 @@ participant:
         -
           topic: policy-acruntime-participant
           servers:
-            - {{ .Values.global.kafkaServer }}:9092
+            - "{{ .Values.global.kafkaServer }}:9092"
           topicCommInfrastructure: kafka
           useHttps: false
     participantSupportedElementTypes:

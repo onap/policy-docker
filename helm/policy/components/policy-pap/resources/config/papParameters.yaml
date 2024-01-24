@@ -68,7 +68,7 @@ pap:
     topicSources:
     - topic: ${pap.topic.pdp-pap.name}
       servers:
-      - {{ .Values.global.kafkaServer }}:9092
+      - "{{ .Values.global.kafkaServer }}:9092"
       topicCommInfrastructure: kafka
       useHttps: false
       fetchTimeout: 15000
@@ -76,19 +76,19 @@ pap:
       effectiveTopic: ${pap.topic.pdp-pap.name}
       consumerGroup: policy-pap
       servers:
-      - {{ .Values.global.kafkaServer }}:9092
+      - "{{ .Values.global.kafkaServer }}:9092"
       topicCommInfrastructure: kafka
       useHttps: false
       fetchTimeout: 15000
     topicSinks:
     - topic: ${pap.topic.pdp-pap.name}
       servers:
-      - {{ .Values.global.kafkaServer }}:9092
+      - "{{ .Values.global.kafkaServer }}:9092"
       topicCommInfrastructure: kafka
       useHttps: false
     - topic: ${pap.topic.notification.name}
       servers:
-      - {{ .Values.global.kafkaServer }}:9092
+      - "{{ .Values.global.kafkaServer }}:9092"
       topicCommInfrastructure: kafka
       useHttps: false
   healthCheckRestClientParameters:
