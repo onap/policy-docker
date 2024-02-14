@@ -266,7 +266,7 @@ services:
         ]
 
    policy-clamp-ac-http-ppnt:
-      image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-http-ppnt:${POLICY_CLAMP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-http-ppnt:${POLICY_CLAMP_PPNT_VERSION}
       container_name: policy-clamp-ac-http-ppnt
       depends_on:
        - kafka
@@ -283,7 +283,7 @@ services:
         'kafka', '9092'
         ]
    policy-clamp-ac-k8s-ppnt:
-      image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-k8s-ppnt:${POLICY_CLAMP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-k8s-ppnt:${POLICY_CLAMP_PPNT_VERSION}
       container_name: policy-clamp-ac-k8s-ppnt
       depends_on:
        - kafka
@@ -300,7 +300,7 @@ services:
         'kafka', '9092'
         ]
    policy-clamp-ac-pf-ppnt:
-      image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-pf-ppnt:${POLICY_CLAMP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-pf-ppnt:${POLICY_CLAMP_PPNT_VERSION}
       container_name: policy-clamp-ac-pf-ppnt
       depends_on:
        - kafka
@@ -319,7 +319,7 @@ services:
         'api', '6969'
         ]
    policy-clamp-ac-a1pms-ppnt:
-      image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-a1pms-ppnt:${POLICY_CLAMP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-a1pms-ppnt:${POLICY_CLAMP_PPNT_VERSION}
       container_name: policy-clamp-ac-a1pms-ppnt
       depends_on:
        - kafka
@@ -336,7 +336,7 @@ services:
         'kafka', '9092'
         ]
    policy-clamp-ac-kserve-ppnt:
-      image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-kserve-ppnt:${POLICY_CLAMP_VERSION}
+      image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-kserve-ppnt:${POLICY_CLAMP_PPNT_VERSION}
       container_name: policy-clamp-ac-kserve-ppnt
       depends_on:
        - kafka

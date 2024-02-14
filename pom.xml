@@ -43,6 +43,7 @@
                 <module>policy-jre</module>
                 <module>policy-jdk</module>
                 <module>policy-db-migrator</module>
+                <module>policy-regression-tests</module>
             </modules>
         </profile>
         <profile>
@@ -51,6 +52,7 @@
                 <module>policy-jre</module>
                 <module>policy-jdk</module>
                 <module>policy-db-migrator</module>
+                <module>policy-regression-tests</module>
             </modules>
             <properties>
                 <docker.dbm.dockerFile>suse.Dockerfile</docker.dbm.dockerFile>
