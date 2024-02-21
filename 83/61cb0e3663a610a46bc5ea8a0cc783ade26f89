@@ -1,0 +1,9 @@
+Code-Review+2: Ramesh Murugan Iyer <ramesh.murugan.iyer@est.tech>
+Verified+1: ONAP Required GHA <releng+onap.required.gha@linuxfoundation.org>
+Code-Review+1: Liam Fallon <liam.fallon@est.tech>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Submitted-by: Adheli Tavares <adheli.tavares@est.tech>
+Submitted-at: Wed, 21 Feb 2024 16:09:36 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/policy/docker/+/137338
+Project: policy/docker
+Branch: refs/heads/master
