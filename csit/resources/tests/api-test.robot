@@ -131,13 +131,13 @@ GetReq
      [Arguments]  ${url}
      ${auth}=  PolicyAdminAuth
      ${resp}=  PerformGetRequest  ${POLICY_API_IP}  ${url}  200  null  ${auth}
-     [return]  ${resp}
+     RETURN  ${resp}
 
 DeleteReq
      [Arguments]  ${url}  ${expectedstatus}
      ${auth}=  PolicyAdminAuth
      ${resp}=  PerformDeleteRequest  ${POLICY_API_IP}  ${url}  ${expectedstatus}  ${auth}
-     [return]  ${resp}
+     RETURN  ${resp}
 
 CreatePolicyType
      [Arguments]  ${url}  ${expectedstatus}  ${jsonfile}  ${policytypename}  ${policytypeversion}

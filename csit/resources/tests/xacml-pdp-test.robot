@@ -113,10 +113,10 @@ PdpxGetReq
     [Arguments]  ${url}
     ${hcauth}=  PolicyAdminAuth
     ${resp}=  PerformGetRequest  ${POLICY_PDPX_IP}  ${url}  200  null  ${hcauth}
-    [return]  ${resp}
+    RETURN  ${resp}
 
 DecisionPostReq
     [Arguments]  ${postjson}  ${abbr}
     ${hcauth}=  PolicyAdminAuth
     ${resp}=  PerformPostRequest  ${POLICY_PDPX_IP}  /policy/pdpx/v1/decision  200  ${postjson}  ${abbr}  ${hcauth}
-    [return]  ${resp}
+    RETURN  ${resp}

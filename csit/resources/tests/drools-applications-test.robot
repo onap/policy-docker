@@ -154,7 +154,7 @@ PeformGetRequest
      ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
      ${resp}=  GET On Session  policy  ${url}  headers=${headers}  expected_status=${expectedstatus}
      Log  Received response from policy ${resp.text}
-     [return]  ${resp}
+     RETURN  ${resp}
 
 PerformPostRequest
      [Arguments]  ${url}  ${params}  ${domain}  ${jsonfile}  ${filepath}  ${contenttype}  ${expectedstatus}
@@ -165,11 +165,11 @@ PerformPostRequest
      ${headers}=  Create Dictionary  Accept=application/${contenttype}  Content-Type=application/${contenttype}
      ${resp}=  POST On Session  policy  ${url}  params=${params}  data=${postjson}  headers=${headers}  expected_status=${expectedstatus}
      Log  Received response from policy ${resp.text}
-     [return]  ${resp}
+     RETURN  ${resp}
 
 OnSet
     [Arguments]    ${file}
     ${data}=    Get File    ${file}
     ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_cl_output    ${data}    ${KAFKA_IP}
     Log    Response from kafka ${resp.stdout}
-    [Return]    ${resp.stdout}
+    RETURN    ${resp.stdout}

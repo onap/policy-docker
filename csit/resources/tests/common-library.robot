@@ -8,7 +8,7 @@ Library    json
 
 PolicyAdminAuth
     ${policyadmin}=   Create list   policyadmin    zb!XztG34
-    [return]  ${policyadmin}
+    RETURN  ${policyadmin}
 
 PerformPostRequest
     [Arguments]  ${domain}  ${url}  ${expectedstatus}  ${postjson}  ${params}  ${auth}
@@ -17,7 +17,7 @@ PerformPostRequest
     ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
     ${resp}=  POST On Session  policy  ${url}  data=${postjson}  params=${params}  headers=${headers}  expected_status=${expectedstatus}
     Log  Received response from policy ${resp.text}
-    [return]  ${resp}
+    RETURN  ${resp}
 
 PerformPutRequest
     [Arguments]  ${domain}  ${url}  ${expectedstatus}  ${params}  ${auth}
@@ -26,7 +26,7 @@ PerformPutRequest
     ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
     ${resp}=  PUT On Session  policy  ${url}  params=${params}  headers=${headers}  expected_status=${expectedstatus}
     Log  Received response from policy ${resp.text}
-    [return]  ${resp}
+    RETURN  ${resp}
 
 PerformGetRequest
     [Arguments]  ${domain}  ${url}  ${expectedstatus}  ${params}  ${auth}
@@ -35,7 +35,7 @@ PerformGetRequest
     ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
     ${resp}=  GET On Session  policy  ${url}  params=${params}  headers=${headers}  expected_status=${expectedstatus}
     Log  Received response from policy ${resp.text}
-    [return]  ${resp}
+    RETURN  ${resp}
 
 PerformDeleteRequest
     [Arguments]  ${domain}  ${url}  ${expectedstatus}  ${auth}
@@ -113,7 +113,7 @@ GetMetrics
     ${session}=  Create Session  policy  http://${domain}  auth=${auth}
     ${resp}=  GET On Session  policy  ${context_path}metrics  expected_status=200
     Log  Received response from policy ${resp.text}
-    [return]  ${resp}
+    RETURN  ${resp}
 
 QueryPrometheus
     [Arguments]  ${query}
@@ -121,7 +121,7 @@ QueryPrometheus
     ${resp}=  GET  http://${PROMETHEUS_IP}/api/v1/query  ${params}
     Status Should Be    OK
     Log  Received response from Prometheus ${resp.text}
-    [return]  ${resp.json()}
+    RETURN  ${resp.json()}
 
 ValidateResponseTime
     [Arguments]  ${job}  ${uri}  ${method}  ${timeLimit}
@@ -135,7 +135,7 @@ CheckKafkaTopic
     [Arguments]    ${topic}    ${expected_status}
     ${resp}=    Run Process    ${CURDIR}/kafka_consumer.py    ${topic}    60    ${expected_status}    ${KAFKA_IP}
     Should Contain    ${resp.stdout}    ${expected_status}
-    [Return]    ${resp.stdout}
+    RETURN    ${resp.stdout}
 
 GetKafkaTopic
     [Arguments]    ${topic}

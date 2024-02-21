@@ -10,7 +10,7 @@ GetReq
     [Arguments]  ${url}
     ${auth}=  PolicyAdminAuth
     ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  ${url}  200  null  ${auth}
-    [return]  ${resp}
+    RETURN  ${resp}
 
 ValidateResponseTimeForPap
     [Arguments]  ${uri}  ${method}
