@@ -1,9 +1,7 @@
 #! /bin/bash
 
 # ============LICENSE_START====================================================
-#  Copyright (C) 2020-2021 AT&T Intellectual Property. All rights reserved.
-#  Modification Copyright 2021-2024 Nordix Foundation.
-#  Modifications Copyright (C) 2021 Bell Canada. All rights reserved.
+#  Copyright (C) 2024 Nordix Foundation. All rights reserved.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,31 +18,17 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END======================================================
 
-if [ -z "${WORKSPACE}" ]; then
-    WORKSPACE=$(git rev-parse --show-toplevel)
-    export WORKSPACE
-fi
-
-GERRIT_BRANCH=$(awk -F= '$1 == "defaultbranch" { print $2 }' \
-                    "${WORKSPACE}"/.gitreview)
-
-echo GERRIT_BRANCH="${GERRIT_BRANCH}"
-
-export POLICY_MARIADB_VER=10.10.2
-echo POLICY_MARIADB_VER=${POLICY_MARIADB_VER}
-
-export POLICY_POSTGRES_VER=11.1
-echo POLICY_POSTGRES_VER=${POLICY_POSTGRES_VER}
 
 function getDockerVersion
 {
     REPO=${1}
-    DEFAULT_DOCKER_IMAGE_NAME=${2:-}
-    DEFAULT_DOCKER_IMAGE_VERSION=${3:-}
+    GERRIT_BRANCH=${2}
+    DEFAULT_DOCKER_IMAGE_NAME=${3:-}
+    DEFAULT_DOCKER_IMAGE_VERSION=${4:-}
 
     REPO_RELEASE_DATA=$(
         curl -qL --silent \
-            "https://github.com/onap/policy-parent/raw/$GERRIT_BRANCH/integration/src/main/resources/release/pf_release_data.csv" |
+            "https://github.com/onap/policy-parent/raw/${GERRIT_BRANCH}/integration/src/main/resources/release/pf_release_data.csv" |
         grep "^policy/$REPO"
     )
 
@@ -104,36 +88,62 @@ function getDockerVersion
     fi
 }
 
-getDockerVersion docker
-export POLICY_DOCKER_VERSION="$docker_image_version"
 
-getDockerVersion models "'policy-models-simulator'" 3.0.1
+if [ -z "${WORKSPACE}" ]; then
+    WORKSPACE=$(git rev-parse --show-toplevel)
+    export WORKSPACE
+fi
+
+if [ $# -eq 0 ]; then
+    echo "No release versions provided. Fetching the default version for ACM and participants"
+    echo "Usage: $0 <acm_release> <participant_release> ..."
+    ACM_RELEASE=$(awk -F= '$1 == "defaultbranch" { print $2 }' \
+                        "${WORKSPACE}"/.gitreview)
+    PPNT_RELEASE=$ACM_RELEASE
+fi
+if [ $1 ]; then
+    ACM_RELEASE=$1
+fi
+
+if [ $2 ]; then
+    PPNT_RELEASE=$2
+fi
+
+export POLICY_MARIADB_VER=10.10.2
+echo POLICY_MARIADB_VER=${POLICY_MARIADB_VER}
+
+export POLICY_POSTGRES_VER=11.1
+echo POLICY_POSTGRES_VER=${POLICY_POSTGRES_VER}
+
+getDockerVersion models $ACM_RELEASE "'policy-models-simulator'" 3.0.1
 export POLICY_MODELS_VERSION="$docker_image_version"
 
-getDockerVersion api
+getDockerVersion docker $ACM_RELEASE
+export POLICY_DOCKER_VERSION="$docker_image_version"
+
+getDockerVersion api $ACM_RELEASE
 export POLICY_API_VERSION="$docker_image_version"
 
-getDockerVersion pap
+getDockerVersion pap $ACM_RELEASE
 export POLICY_PAP_VERSION="$docker_image_version"
 
-getDockerVersion apex-pdp
+getDockerVersion apex-pdp $ACM_RELEASE
 export POLICY_APEX_PDP_VERSION="$docker_image_version"
 
-getDockerVersion drools-pdp
+getDockerVersion clamp $ACM_RELEASE
+export POLICY_CLAMP_VERSION="$docker_image_version"
+
+getDockerVersion clamp $PPNT_RELEASE
+export POLICY_CLAMP_PPNT_VERSION="$docker_image_version"
+
+getDockerVersion drools-pdp $ACM_RELEASE
 export POLICY_DROOLS_PDP_VERSION="$docker_image_version"
 
-getDockerVersion xacml-pdp
+getDockerVersion xacml-pdp $ACM_RELEASE
 export POLICY_XACML_PDP_VERSION="$docker_image_version"
 
-getDockerVersion distribution
+getDockerVersion distribution $ACM_RELEASE
 export POLICY_DISTRIBUTION_VERSION="$docker_image_version"
 
-getDockerVersion clamp
-export POLICY_CLAMP_VERSION="$docker_image_version"
-export POLICY_CLAMP_PPNT_VERSION=$POLICY_CLAMP_VERSION
-
-getDockerVersion gui
-export POLICY_GUI_VERSION="$docker_image_version"
-
-getDockerVersion drools-applications
+getDockerVersion drools-applications $ACM_RELEASE
 export POLICY_DROOLS_APPS_VERSION="$docker_image_version"
