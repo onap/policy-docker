@@ -61,6 +61,7 @@ participant:
 management:
   endpoints:
     web:
+      base-path: /
       exposure:
         include: health, metrics, prometheus
 
@@ -69,7 +70,7 @@ server:
   # See springboot documentation.
   port: 8083
   servlet:
-    context-path: /onap/policy/clamp/acm/k8sparticipant
+    context-path: /onap/k8sparticipant
   ssl:
     enabled: false
 

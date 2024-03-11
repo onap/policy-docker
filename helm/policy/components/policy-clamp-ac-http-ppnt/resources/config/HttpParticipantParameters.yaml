@@ -57,12 +57,13 @@ participant:
 management:
   endpoints:
     web:
+      base-path: /
       exposure:
         include: health, metrics, prometheus
 server:
   port: 8084
   servlet:
-    context-path: /onap/policy/clamp/acm/httpparticipant
+    context-path: /onap/httpparticipant
   ssl:
     enabled: false
 

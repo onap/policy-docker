@@ -95,11 +95,29 @@ scrape_configs:
       username: "runtimeUser"
       password: "zb!XztG34"
 
-  - job_name: "acm-participant-metrics"
+  - job_name: "acm-participant-policy-metrics"
     metrics_path: "/onap/policyparticipant/prometheus"
     static_configs:
       - targets:
           - "policy-clamp-ac-pf-ppnt:6969"
+    basic_auth:
+      username: "participantUser"
+      password: "zb!XztG34"
+
+  - job_name: "acm-participant-http-metrics"
+    metrics_path: "/onap/httpparticipant/prometheus"
+    static_configs:
+      - targets:
+          - "policy-clamp-ac-http-ppnt:8084"
+    basic_auth:
+      username: "participantUser"
+      password: "zb!XztG34"
+
+  - job_name: "acm-participant-k8s-metrics"
+    metrics_path: "/onap/k8sparticipant/prometheus"
+    static_configs:
+      - targets:
+          - "policy-clamp-ac-k8s-ppnt:8083"
     basic_auth:
       username: "participantUser"
       password: "zb!XztG34"
