@@ -65,4 +65,4 @@ docker-compose -f docker-compose.yml up -d "policy-clamp-runtime-acm"
 cd ${REGRESSION_FOLDER}
 
 # Invoke the regression test cases
-mvn clean test
+mvn clean test -Dtests.skip=false
