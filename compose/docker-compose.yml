@@ -177,7 +177,7 @@ services:
       env_file:
         - ./config/drools-applications/env/base.conf
         - ./config/drools-applications/env/feature-healthcheck.conf
-        - ./config/drools-applications/env/feature-pooling-kafka.conf
+        - ./config/drools-applications/env/feature-pooling-messages.conf
       entrypoint: /opt/app/policy/bin/wait_for_port.sh
       command: [
         '-c', '/opt/app/policy/bin/pdpd-cl-entrypoint.sh boot',
@@ -392,11 +392,12 @@ services:
 
    zookeeper:
      image: confluentinc/cp-zookeeper:latest
+     container_name: zookeeper
      environment:
        ZOOKEEPER_CLIENT_PORT: 2181
        ZOOKEEPER_TICK_TIME: 2000
      ports:
-       - 2181:2181
+       - "2181:2181"
 
    kafka:
      image: confluentinc/cp-kafka:latest
@@ -404,8 +405,8 @@ services:
      depends_on:
        - zookeeper
      ports:
-       - 29092:29092
-       - 9092:9092
+       - "29092:29092"
+       - "9092:9092"
      environment:
        KAFKA_BROKER_ID: 1
        KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181

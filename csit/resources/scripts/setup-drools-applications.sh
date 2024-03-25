@@ -29,7 +29,9 @@ export SUITES="drools-applications-test.robot"
 export KAFKA_IP="localhost:${KAFKA_PORT}"
 
 # wait for the app to start up
+"${SCRIPTS}"/wait_for_rest.sh localhost ${PAP_PORT}
 "${SCRIPTS}"/wait_for_rest.sh localhost ${DROOLS_APPS_PORT}
+"${SCRIPTS}"/wait_for_rest.sh localhost ${DROOLS_APPS_TELEMETRY_PORT}
 
 # give enough time for the controllers to come up
 sleep 15

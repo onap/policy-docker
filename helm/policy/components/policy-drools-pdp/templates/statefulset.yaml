@@ -104,9 +104,9 @@ spec:
             - mountPath: /tmp/policy-install/config/engine-system.properties
               name: drools-config
               subPath: engine-system.properties
-            - mountPath: /tmp/policy-install/config/feature-pooling-kafka.conf
+            - mountPath: /tmp/policy-install/config/feature-pooling-messages.conf
               name: drools-config
-              subPath: feature-pooling-kafka.conf
+              subPath: feature-pooling-messages.conf
             - mountPath: /tmp/policy-install/config/logback.xml
               name: drools-config
               subPath: logback.xml
@@ -133,8 +133,8 @@ spec:
               - key: engine-system.properties
                 path: engine-system.properties
                 mode: 0755
-              - key: feature-pooling-kafka.conf
-                path: feature-pooling-kafka.conf
+              - key: feature-pooling-messages.conf
+                path: feature-pooling-messages.conf
                 mode: 0755
               - key: logback.xml
                 path: logback.xml

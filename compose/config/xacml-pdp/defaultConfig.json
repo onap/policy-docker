@@ -8,7 +8,6 @@
         "userName": "policyadmin",
         "password": "zb!XztG34",
         "https": false,
-        "aaf": false,
         "prometheus": true
     },
     "policyApiParameters": {
@@ -16,8 +15,7 @@
         "port": 6969,
         "userName": "policyadmin",
         "password": "zb!XztG34",
-        "useHttps": false,
-        "aaf": false
+        "useHttps": false
     },
     "applicationParameters": {
         "applicationPath": "/opt/app/policy/pdpx/apps"

@@ -34,6 +34,7 @@ function on_exit(){
         docker_stats
 
         source_safely ${WORKSPACE}/compose/stop-compose.sh
+        rsync "${WORKSPACE}/compose/docker_compose.log" "${WORKSPACE}/csit/archives/${PROJECT}"
 
         if [[ ${WORKDIR} ]]; then
             rsync -av "${WORKDIR}/" "${WORKSPACE}/csit/archives/${PROJECT}"
