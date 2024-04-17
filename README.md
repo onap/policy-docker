@@ -26,6 +26,9 @@ Steps involved in running CSIT in kubernetes:
   4. Invokes the respective robot test file for the project supplied by the user. 
      The test execution results can be viewed from the logs of policy-csit-robot pod.
 
+Running Policy CSIT in docker:
+To run CSIT in docker, docker/csit/run-project-csit.sh script can be invoked with the argument {project_name}.
+
 Running Policy Regression Tests:
   ACM regression tests can be invoked using the script docker/csit/run-acm-regression.sh with the arguments {ACM-R release name} {participant release name}
   For example, if ACM-R and participants needs to be tested for backward compatbility between montreal and london versions, the script can be invoked 

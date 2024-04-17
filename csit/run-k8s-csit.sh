@@ -45,6 +45,7 @@ POLICY_XACML_CONTAINER="policy-xacml-pdp"
 POLICY_DISTRIBUTION_CONTAINER="policy-distribution"
 POLICY_K8S_PPNT_CONTAINER="policy-clamp-ac-k8s-ppnt"
 POLICY_HTTP_PPNT_CONTAINER="policy-clamp-ac-http-ppnt"
+POLICY_SIM_PPNT_CONTAINER="policy-clamp-ac-sim-ppnt"
 POLICY_PF_PPNT_CONTAINER="policy-clamp-ac-pf-ppnt"
 KAFKA_CONTAINER="kafka-deployment"
 ZK_CONTAINER="zookeeper-deployment"
@@ -87,9 +88,27 @@ function spin_microk8s_cluster() {
     else
         echo "K8s cluster is already running"
         echo "----------------------------------------"
-        return 0
     fi
 
+    echo "Verify if kubectl is running.."
+    kubectl version
+    exitcode="${?}"
+
+    if [ "$exitcode" -ne 0 ]; then
+        echo "Kubectl not available, Spinning up the cluster.."
+        sudo snap install kubectl --classic --channel=1.26/stable
+
+        if [ "${?}" -ne 0 ]; then
+            echo "Failed to install Kubectl. Aborting.."
+            return 1
+        fi
+        echo "Kubectl installation completed"
+        echo "----------------------------------------"
+    else
+        echo "Kubectl is already running"
+        echo "----------------------------------------"
+        return 0
+    fi
 }
 
 function install_kafka() {
@@ -216,9 +235,10 @@ function set_project_config() {
     clamp | policy-clamp)
         export ROBOT_FILE=$POLICY_CLAMP_ROBOT
         export READINESS_CONTAINERS=($POLICY_CLAMP_CONTAINER,$POLICY_APEX_CONTAINER,$POLICY_PF_PPNT_CONTAINER,$POLICY_K8S_PPNT_CONTAINER,
-            $POLICY_HTTP_PPNT_CONTAINER)
+            $POLICY_HTTP_PPNT_CONTAINER,$POLICY_SIM_PPNT_CONTAINER)
         export SET_VALUES="--set $POLICY_CLAMP_CONTAINER.enabled=true --set $POLICY_APEX_CONTAINER.enabled=true
-            --set $POLICY_PF_PPNT_CONTAINER.enabled=true --set $POLICY_K8S_PPNT_CONTAINER.enabled=true --set $POLICY_HTTP_PPNT_CONTAINER.enabled=true"
+            --set $POLICY_PF_PPNT_CONTAINER.enabled=true --set $POLICY_K8S_PPNT_CONTAINER.enabled=true
+            --set $POLICY_HTTP_PPNT_CONTAINER.enabled=true --set $POLICY_SIM_PPNT_CONTAINER.enabled=true"
         install_chartmuseum
         ;;
 
@@ -263,11 +283,12 @@ function set_project_config() {
         export READINESS_CONTAINERS=($POLICY_APEX_CONTAINER,$POLICY_API_CONTAINER,$POLICY_PAP_CONTAINER,
                     $POLICY_DISTRIBUTION_CONTAINER,$POLICY_DROOLS_CONTAINER,$POLICY_XACML_CONTAINER,
                     $POLICY_CLAMP_CONTAINER,$POLICY_PF_PPNT_CONTAINER,$POLICY_K8S_PPNT_CONTAINER,
-                    $POLICY_HTTP_PPNT_CONTAINER)
+                    $POLICY_HTTP_PPNT_CONTAINER,$POLICY_SIM_PPNT_CONTAINER)
         export SET_VALUES="--set $POLICY_APEX_CONTAINER.enabled=true --set $POLICY_XACML_CONTAINER.enabled=true
             --set $POLICY_DISTRIBUTION_CONTAINER.enabled=true --set $POLICY_DROOLS_CONTAINER.enabled=true
             --set $POLICY_CLAMP_CONTAINER.enabled=true --set $POLICY_PF_PPNT_CONTAINER.enabled=true
-            --set $POLICY_K8S_PPNT_CONTAINER.enabled=true --set $POLICY_HTTP_PPNT_CONTAINER.enabled=true"
+            --set $POLICY_K8S_PPNT_CONTAINER.enabled=true --set $POLICY_HTTP_PPNT_CONTAINER.enabled=true
+            --set $POLICY_SIM_PPNT_CONTAINER.enabled=true"
         ;;
     esac
 

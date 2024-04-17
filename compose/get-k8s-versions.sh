@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # ============LICENSE_START====================================================
-#  Copyright (C) 2023 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2023-2024 Nordix Foundation. All rights reserved.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,9 +27,9 @@ fi
 
 VALUES_YML=${WORKSPACE}/helm/policy/values.yaml
 
-policy_components=(policy-api policy-pap policy-apex-pdp policy-models-simulator policy-pdpd-cl policy-xacml-pdp policy-distribution)
+policy_components=(policy-api policy-pap policy-apex-pdp policy-models-simulator policy-pdpd-cl policy-xacml-pdp policy-distribution policy-db-migrator)
 
-clamp_components=(policy-clamp-runtime-acm policy-clamp-ac-kserve-ppnt policy-clamp-ac-k8s-ppnt policy-clamp-ac-pf-ppnt policy-clamp-ac-http-ppnt policy-clamp-ac-a1pms-ppnt)
+clamp_components=(policy-clamp-runtime-acm policy-clamp-ac-kserve-ppnt policy-clamp-ac-k8s-ppnt policy-clamp-ac-pf-ppnt policy-clamp-ac-http-ppnt policy-clamp-ac-sim-ppnt policy-clamp-ac-a1pms-ppnt)
 
 version_tags=$(source ${WORKSPACE}/compose/get-versions.sh)
 export version_tags

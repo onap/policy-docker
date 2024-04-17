@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2023 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2023-2024 Nordix Foundation. All rights reserved.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -28,9 +28,10 @@ export XACML_PORT=30004
 export DROOLS_PORT=30005
 export DIST_PORT=30006
 export ACM_PORT=30007
-export POLICY_PF_PARTICIPANT_PORT=30008
-export POLICY_HTTP_PARTICIPANT_PORT=30009
-export POLICY_K8S_PARTICIPANT_PORT=30010
+export PF_PARTICIPANT_PORT=30008
+export HTTP_PARTICIPANT_PORT=30009
+export K8S_PARTICIPANT_PORT=30010
+export SIM_PARTICIPANT_PORT=30011
 export SIMULATOR_PORT=30904
 
 # Retrieve pod names
@@ -44,8 +45,9 @@ function get_pod_names() {
   export DIST_POD=$(get_pod_name distribution)
   export ACM_POD=$(get_pod_name acm-runtime)
   export POLICY_PPNT_POD=$(get_pod_name policy-ppnt)
-  export POLICY_PPNT_POD=$(get_pod_name http-ppnt)
-  export POLICY_PPNT_POD=$(get_pod_name k8s-ppnt)
+  export POLICY_HTTP_POD=$(get_pod_name http-ppnt)
+  export POLICY_SIM_POD=$(get_pod_name sim-ppnt)
+  export POLICY_K8S_POD=$(get_pod_name k8s-ppnt)
 }
 
 # Retrieve service names
@@ -60,6 +62,7 @@ function get_svc_names() {
   export ACM_SVC=$(get_svc_name policy-clamp-runtime-acm)
   export POLICY_PPNT_SVC=$(get_svc_name policy-clamp-ac-pf-ppnt)
   export POLICY_HTTP_SVC=$(get_svc_name policy-clamp-ac-http-ppnt)
+  export POLICY_SIM_SVC=$(get_svc_name policy-clamp-ac-sim-ppnt)
   export POLICY_K8S_SVC=$(get_svc_name policy-clamp-ac-k8s-ppnt)
 }
 
@@ -74,6 +77,7 @@ function expose_services() {
     expose_service $ACM_SVC
     expose_service $POLICY_PPNT_SVC
     expose_service POLICY_HTTP_SVC
+    expose_service POLICY_SIM_SVC
     expose_service POLICY_K8S_SVC
 
     setup_message_router_svc
@@ -103,9 +107,10 @@ function patch_ports() {
   patch_port "$API_SVC" $API_PORT
   patch_port "$PAP_SVC" $PAP_PORT
   patch_port "$ACM_SVC" $ACM_PORT
-  patch_port "$POLICY_PPNT_SVC" $POLICY_PF_PARTICIPANT_PORT
-  patch_port "$HTTP_PPNT_SVC" $POLICY_HTTP_PARTICIPANT_PORT
-  patch_port "$K8S_PPNT_SVC" $POLICY_K8S_PARTICIPANT_PORT
+  patch_port "$POLICY_PPNT_SVC" $PF_PARTICIPANT_PORT
+  patch_port "$POLICY_HTTP_SVC" $HTTP_PARTICIPANT_PORT
+  patch_port "$POLICY_SIM_SVC" $SIM_PARTICIPANT_PORT
+  patch_port "$POLICY_K8S_SVC" $K8S_PARTICIPANT_PORT
   patch_port "$DIST_SVC" $DIST_PORT
   patch_port "$DROOLS_SVC" $DROOLS_PORT
   patch_port "$XACML_SVC" $XACML_PORT

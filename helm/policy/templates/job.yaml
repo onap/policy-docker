@@ -128,7 +128,7 @@ spec:
                 fieldPath: metadata.namespace
       containers:
       - name: policy-galera-db-migrator-policy
-        image: {{ .Values.global.dockerRepository }}/{{ .Values.dbmigrator.image }}
+        image: {{ .Values.global.repository }}/{{ .Values.dbmigrator.image }}
         imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
         volumeMounts:
           - mountPath: /dbcmd-config/db_migrator_policy_init.sh
@@ -212,7 +212,7 @@ spec:
                 fieldPath: metadata.namespace
       containers:
       - name: policy-galera-db-migrator-clamp
-        image: {{ .Values.global.dockerRepository }}/{{ .Values.dbmigrator.image }}
+        image: {{ .Values.global.repository }}/{{ .Values.dbmigrator.image }}
         imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
         volumeMounts:
         - mountPath: /dbcmd-config/db_migrator_policy_init.sh
