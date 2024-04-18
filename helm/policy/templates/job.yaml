@@ -127,12 +127,96 @@ spec:
                 apiVersion: v1
                 fieldPath: metadata.namespace
       containers:
-      - name: policy-galera-db-migrator
-        image: {{ .Values.global.repository }}/{{ .Values.dbmigrator.image }}
+      - name: policy-galera-db-migrator-policy
+        image: {{ .Values.global.dockerRepository }}/{{ .Values.dbmigrator.image }}
+        imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
+        volumeMounts:
+          - mountPath: /dbcmd-config/db_migrator_policy_init.sh
+            name: {{ .Chart.Name }}-policy-config
+            subPath: db_migrator_policy_init.sh
+        command:
+          - /bin/sh
+          - -cx
+          - |
+            /dbcmd-config/db_migrator_policy_init.sh
+        env:
+          - name: SQL_HOST
+            value: "{{ index .Values "mariadb-galera" "service" "name" }}"
+          - name: SQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: mariadb-galera-db-user-credentials
+                key: login
+                optional: false
+          - name: SQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mariadb-galera-db-user-credentials
+                key: password
+                optional: false
+          - name: SQL_DB
+            value: {{ .Values.dbmigrator.policyadmin.schema }}
+          - name: POLICY_HOME
+            value: {{ .Values.dbmigrator.policy_home }}
+          - name: SCRIPT_DIRECTORY
+            value: "sql"
+        resources:
+          limits:
+            cpu: 1
+            memory: 4Gi
+          requests:
+            cpu: 100m
+            memory: 1Gi
+      restartPolicy: Never
+      serviceAccountName: {{ .Chart.Name }}-read
+      volumes:
+        - name: {{ .Chart.Name }}-policy-config
+          configMap:
+            name: {{ .Chart.Name }}-db-configmap
+            defaultMode: 0755
+            items:
+              - key: db_migrator_policy_init.sh
+                path: db_migrator_policy_init.sh
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: policy-galera-config-clamp
+  namespace: default
+  labels:
+    app: policy-galera-config-clamp
+spec:
+  template:
+    metadata:
+      labels:
+        app: policy-galera-config-clamp
+      name: policy-galera-config-clamp
+    spec:
+      imagePullSecrets:
+      - name: "default-docker-registry-key"
+      initContainers:
+        - name: policy-init-readiness
+          image: {{ .Values.global.repository }}/{{ .Values.global.image.readiness }}
+          imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
+          command:
+          - /app/ready.py
+          args:
+          - --job-name
+          - policy-galera-config
+          env:
+          - name: NAMESPACE
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.namespace
+      containers:
+      - name: policy-galera-db-migrator-clamp
+        image: {{ .Values.global.dockerRepository }}/{{ .Values.dbmigrator.image }}
         imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
         volumeMounts:
         - mountPath: /dbcmd-config/db_migrator_policy_init.sh
-          name: {{ .Chart.Name }}-config
+          name: {{ .Chart.Name }}-clamp-config
           subPath: db_migrator_policy_init.sh
         command:
         - /bin/sh
@@ -155,7 +239,7 @@ spec:
               key: password
               optional: false
         - name: SQL_DB
-          value: {{ .Values.dbmigrator.schema }}
+          value: {{ .Values.dbmigrator.clampacm.schema }}
         - name: POLICY_HOME
           value: {{ .Values.dbmigrator.policy_home }}
         - name: SCRIPT_DIRECTORY
@@ -170,11 +254,10 @@ spec:
       restartPolicy: Never
       serviceAccountName: {{ .Chart.Name }}-read
       volumes:
-        - name: {{ .Chart.Name }}-config
+        - name: {{ .Chart.Name }}-clamp-config
           configMap:
             name: {{ .Chart.Name }}-db-configmap
             defaultMode: 0755
             items:
               - key: db_migrator_policy_init.sh
                 path: db_migrator_policy_init.sh
-

@@ -1,6 +1,7 @@
 #!/bin/sh
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2021-2022 Nordix Foundation.
+#  Modification Copyright 2024 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -33,7 +34,7 @@ mkdir -p $POLICY_HOME/etc/db/migration/${SCHEMA}/${SCRIPT_DIRECTORY}/
 # Remove any files from previous operations
 rm -rf $POLICY_HOME/etc/db/migration/${SCHEMA}/${SCRIPT_DIRECTORY}/* 2>/dev/null
 # Copy files to downgrade directories
-cd /home/policy/${SCRIPT_DIRECTORY} && find . -type f  -not -path '*/upgrade/*' -not -path '*/upgrade'  -print0  \
+cd /home/${SCHEMA}/${SCRIPT_DIRECTORY} && find . -type f  -not -path '*/upgrade/*' -not -path '*/upgrade'  -print0  \
    | cpio --null -pud $POLICY_HOME/etc/db/migration/${SCHEMA}/${SCRIPT_DIRECTORY}/
 
 releases=$(find $POLICY_HOME/etc/db/migration/${SCHEMA}/${SCRIPT_DIRECTORY}/*/downgrade -type d | sort -u | rev | cut -f2 -d/ | rev)
