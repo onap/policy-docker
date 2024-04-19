@@ -175,7 +175,7 @@ function print_robot_log() {
     robotpod=$(sudo microk8s kubectl get po | grep policy-csit)
     podName=$(echo "$robotpod" | awk '{print $1}')
     echo "The robot tests will begin once the policy components {${READINESS_CONTAINERS[*]}} are up and running..."
-    sudo microk8s kubectl wait --for=jsonpath='{.status.phase}'=Running --timeout=10m pod/"$podName"
+    sudo microk8s kubectl wait --for=jsonpath='{.status.phase}'=Running --timeout=18m pod/"$podName"
     echo "Policy deployment status:"
     sudo microk8s kubectl get po
     sudo microk8s kubectl get all -A

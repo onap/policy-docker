@@ -7,7 +7,7 @@ Library     json
 Library     yaml
 
 *** Test Cases ***
-Healthcheck
+HealthcheckAcm
      [Documentation]    Healthcheck on Clamp Acm
      ${auth}=    Create List    runtimeUser    zb!XztG34
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
@@ -16,6 +16,23 @@ Healthcheck
      ${resp}=   GET On Session     ACM  /onap/policy/clamp/acm/health     headers=${headers}
      Log    Received response from ACM healthcheck {resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
+
+HealthcheckApi
+     [Documentation]    Healthcheck on policy-api
+     Wait Until Keyword Succeeds    5 min    10 sec    VerifyHealthcheckApi
+
+HealthcheckPap
+     [Documentation]    Healthcheck on policy-pap
+     Wait Until Keyword Succeeds    5 min    10 sec    VerifyHealthcheckPap
+
+RegisterParticipants
+     [Documentation]  Register Participants.
+     ${auth}=    Create List    runtimeUser    zb!XztG34
+     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
+     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/participants
+     Log    Received response from runtime acm ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     202
 
 CommissionAutomationComposition
      [Documentation]  Commission automation composition.
@@ -29,15 +46,6 @@ CommissionAutomationComposition
      ${respyaml}=  yaml.Safe Load  ${resp.text}
      set Suite variable  ${compositionId}  ${respyaml["compositionId"]}
      Should Be Equal As Strings    ${resp.status_code}     201
-
-RegisterParticipants
-     [Documentation]  Register Participants.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/participants
-     Log    Received response from runtime acm ${resp.text}
-     Should Be Equal As Strings    ${resp.status_code}     202
 
 PrimeACDefinitions
      [Documentation]  Prime automation composition definition
@@ -99,7 +107,7 @@ QueryPolicyTypes
      [Documentation]    Verify the new policy types created
      ${auth}=    Create List    policyadmin    zb!XztG34
      Sleep  10s
-     Log    Creating session http://${POLICY_API_IP}}:6969
+     Log    Creating session http://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  http://${POLICY_API_IP}   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
      ${resp}=   GET On Session     policy  /policy/api/v1/policytypes     headers=${headers}
@@ -158,6 +166,26 @@ DeleteACDefinition
 
 
 *** Keywords ***
+
+VerifyHealthcheckApi
+     [Documentation]    Verify Healthcheck on policy-api
+     ${auth}=    Create List    policyadmin    zb!XztG34
+     Log    Creating session http://${POLICY_API_IP}
+     ${session}=    Create Session      policy  http://${POLICY_API_IP}   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   GET On Session     policy  /policy/api/v1/health     headers=${headers}
+     Log    Received response from policy-api healthcheck ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}   200
+
+VerifyHealthcheckPap
+     [Documentation]    Verify Healthcheck on policy-pap
+     ${auth}=    Create List    policyadmin    zb!XztG34
+     Log    Creating session http://${POLICY_PAP_IP}
+     ${session}=    Create Session      policy  http://${POLICY_PAP_IP}   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   GET On Session     policy  /policy/pap/v1/health     headers=${headers}
+     Log    Received response from policy-pap healthcheck ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     200
 
 VerifyPriming
     [Arguments]  ${primestate}
