@@ -47,4 +47,4 @@ server:
   ssl:
     enabled: false
   servlet:
-    context-path: /onap/policy/clamp/acm/simparticipant
+    context-path: /onap/policy/simparticipant
