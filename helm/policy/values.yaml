@@ -47,6 +47,7 @@ global:
     k8sparticipant: onap/policy-clamp-ac-k8s-ppnt:$tag
     pfparticipant: onap/policy-clamp-ac-pf-ppnt:$tag
     httpparticipant: onap/policy-clamp-ac-http-ppnt:$tag
+    simparticipant: onap/policy-clamp-ac-sim-ppnt:$tag
     a1pmsparticipant: onap/policy-clamp-ac-a1pms-ppnt:$tag
 
 policy-mariadb-galera:
@@ -72,6 +73,8 @@ policy-xacml-pdp:
 policy-distribution:
   enabled: false
 policy-clamp-ac-http-ppnt:
+  enabled: false
+policy-clamp-ac-sim-ppnt:
   enabled: false
 policy-clamp-ac-kserve-ppnt:
   enabled: false

@@ -1,4 +1,4 @@
-# Copyright © 2022-2023 Nordix Foundation
+# Copyright © 2022-2024 Nordix Foundation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -66,6 +66,10 @@ dependencies:
     version: ~11.x-0
     repository: 'file://components/policy-clamp-ac-http-ppnt'
     condition: policy-clamp-ac-http-ppnt.enabled
+  - name: policy-clamp-ac-sim-ppnt
+    version: ~11.x-0
+    repository: 'file://components/policy-clamp-ac-sim-ppnt'
+    condition: policy-clamp-ac-sim-ppnt.enabled
   - name: policy-clamp-ac-kserve-ppnt
     version: ~11.x-0
     repository: 'file://components/policy-clamp-ac-kserve-ppnt'
