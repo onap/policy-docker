@@ -1,7 +1,8 @@
 #-------------------------------------------------------------------------------
 # Dockerfile
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2021-2023 Nordix Foundation.
+#  Copyright (C) 2021 Nordix Foundation.
+#  Modification Copyright 2021-2024 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -53,8 +54,10 @@ COPY --chown=policy:policy ./db-migrator $POLICY_BIN/
 COPY --chown=policy:policy ./db-migrator-pg $POLICY_BIN/
 COPY --chown=policy:policy ./prepare_upgrade.sh $POLICY_BIN/
 COPY --chown=policy:policy ./prepare_downgrade.sh $POLICY_BIN/
-COPY --chown=policy:policy ./config/policyadmin/sql /home/policy/sql
-COPY --chown=policy:policy ./config/policyadmin/postgres /home/policy/postgres
+COPY --chown=policy:policy ./config/policyadmin/sql /home/policyadmin/sql
+COPY --chown=policy:policy ./config/policyadmin/postgres /home/policyadmin/postgres
+COPY --chown=policy:policy ./config/clampacm/sql /home/clampacm/sql
+COPY --chown=policy:policy ./config/clampacm/postgres /home/clampacm/postgres
 
 WORKDIR $POLICY_BIN
 USER policy:policy
