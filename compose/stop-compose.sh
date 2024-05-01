@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # ============LICENSE_START====================================================
-#  Copyright (C) 2023 Nordix Foundation.
+#  Copyright (C) 2023-2024 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,6 +23,14 @@ if [ -z "${WORKSPACE}" ]; then
     WORKSPACE=$(git rev-parse --show-toplevel)
     export WORKSPACE
 fi
+
+# docker compose fails when not running CSIT
+if [ -z "$ROBOT_LOG_DIR" ]; then
+  export ROBOT_LOG_DIR=/tmp/
+  export ROBOT_FILES=none
+  export PROJECT=api
+fi
+
 COMPOSE_FOLDER="${WORKSPACE}"/compose
 
 cd ${COMPOSE_FOLDER}
@@ -31,10 +39,24 @@ source export-ports.sh > /dev/null 2>&1
 source get-versions.sh > /dev/null 2>&1
 
 echo "Collecting logs from docker compose containers..."
-docker-compose logs > docker_compose.log
+rm -rf docker_compose.log
+
+# this will collect logs by service instead of mixing all together
+containers=$(docker compose ps --all --format '{{.Service}}')
+
+IFS=$'\n' read -d '' -r -a item_list <<< "$containers"
+for item in "${item_list[@]}"
+do
+    if [ -n "$item" ]; then
+        echo "======== Logs from ${item} ========" >> docker_compose.log
+        docker compose logs $item >> docker_compose.log
+        echo "===================================" >> docker_compose.log
+    fi
+done
+
 cat docker_compose.log
 
 echo "Tearing down containers..."
-docker-compose down -v --remove-orphans
+docker compose down -v --remove-orphans
 
 cd ${WORKSPACE}

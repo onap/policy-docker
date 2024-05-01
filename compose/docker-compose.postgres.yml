@@ -15,7 +15,7 @@
 # limitations under the License.
 # ============LICENSE_END=====================================================
 #
-version: '2'
+
 services:
   postgres:
     image: nexus3.onap.org:10001/library/postgres:${POLICY_POSTGRES_VER}

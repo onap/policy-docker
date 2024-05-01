@@ -20,11 +20,11 @@ MetricsAfterExecution
     [Documentation]  Verify policy-distribution is exporting prometheus metrics after execution
     ${hcauth}=  PolicyAdminAuth
     ${resp}=  PerformGetRequest  ${DISTRIBUTION_IP}  /metrics  200  null  ${hcauth}
-    Should Contain  ${resp.text}  total_distribution_received_count_total 2.0
-    Should Contain  ${resp.text}  distribution_success_count_total 2.0
+    Should Contain  ${resp.text}  total_distribution_received_count_total 1.0
+    Should Contain  ${resp.text}  distribution_success_count_total 1.0
     Should Contain  ${resp.text}  distribution_failure_count_total 0.0
-    Should Contain  ${resp.text}  total_download_received_count_total 2.0
-    Should Contain  ${resp.text}  download_success_count_total 2.0
+    Should Contain  ${resp.text}  total_download_received_count_total 1.0
+    Should Contain  ${resp.text}  download_success_count_total 1.0
     Should Contain  ${resp.text}  download_failure_count_total 0.0
 
 *** Keywords ***

@@ -134,15 +134,3 @@ DeletePdpGroups
 QueryPdpGroupsAfterDelete
     [Documentation]    Verify PdpGroups after delete
     QueryPdpGroups  1  defaultGroup  ACTIVE  0  null  null  null
-
-# ValidateSlaForPap
-#     [Documentation]  Run checks against Prometheus server to check response time
-#     Sleep    30s
-#     ValidateDeploymentTime
-#     ValidateResponseTime  pap-metrics  /components/healthcheck  GET  10000
-#     ValidateResponseTimeForPap  /healthcheck  GET
-#     ValidateResponseTimeForPap  /policies/audit  GET
-#     ValidateResponseTimeForPap  /pdps/groups/{name}  PUT
-#     ValidateResponseTimeForPap  /pdps/policies/{name}  DELETE
-#     ValidateResponseTimeForPap  /pdps/groups/{name}  DELETE
-#     ValidateResponseTimeForPap  /pdps/groups/batch  POST
