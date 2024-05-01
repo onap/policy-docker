@@ -3,7 +3,7 @@
 # Copyright 2016-2017 Huawei Technologies Co., Ltd.
 # Modification Copyright 2019 © Samsung Electronics Co., Ltd.
 # Modification Copyright 2021 © AT&T Intellectual Property.
-# Modification Copyright 2021-2023 Nordix Foundation.
+# Modification Copyright 2021-2024 Nordix Foundation.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,36 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# $1 functionality
-# $2 robot options
-
-#
-# functions
-#
-
-function on_exit(){
-    rc=$?
-    if [[ ${WORKSPACE} ]]; then
-        # Record list of active docker containers
-        docker ps --format "table {{ .Names }}\t{{ .Status }}"
-
-        # show memory consumption after all docker instances initialized
-        docker_stats
-
-        source_safely ${WORKSPACE}/compose/stop-compose.sh
-        rsync "${WORKSPACE}/compose/docker_compose.log" "${WORKSPACE}/csit/archives/${PROJECT}"
-
-        if [[ ${WORKDIR} ]]; then
-            rsync -av "${WORKDIR}/" "${WORKSPACE}/csit/archives/${PROJECT}"
-        fi
-        rm -rf ${WORKSPACE}/models
-    fi
-    # TODO: do something with the output
-     exit $rc
-}
-
-# ensure that teardown and other finalizing steps are always executed
-trap on_exit EXIT
 
 function docker_stats(){
     # General memory details
@@ -70,124 +40,235 @@ function docker_stats(){
     echo
 }
 
-# save current set options
-function save_set() {
-    RUN_CSIT_SAVE_SET="$-"
-    RUN_CSIT_SHELLOPTS="${SHELLOPTS}"
+function setup_clamp() {
+    export ROBOT_FILES="policy-clamp-test.robot"
+    source "${WORKSPACE}"/compose/start-compose.sh policy-clamp-runtime-acm
+    sleep 30
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost "${ACM_PORT}"
+    export CLAMP_K8S_TEST=false
 }
 
-# load the saved set options
-function load_set() {
-    _setopts="$-"
+function setup_api() {
+    export ROBOT_FILES="api-test.robot api-slas.robot"
+    source "${WORKSPACE}"/compose/start-compose.sh api --grafana
+    sleep 10
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${API_PORT}
+}
 
-    # bash shellopts
-    for i in $(echo "${SHELLOPTS}" | tr ':' ' ') ; do
-        set +o ${i}
+function setup_pap() {
+    export ROBOT_FILES="pap-test.robot pap-slas.robot"
+    source "${WORKSPACE}"/compose/start-compose.sh apex-pdp --grafana
+    sleep 10
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${PAP_PORT}
+}
+
+function setup_apex() {
+    export ROBOT_FILES="apex-pdp-test.robot apex-slas.robot"
+    source "${WORKSPACE}"/compose/start-compose.sh apex-pdp --grafana
+    sleep 10
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${PAP_PORT}
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${APEX_PORT}
+    apex_healthcheck
+}
+
+function setup_apex_postgres() {
+    export ROBOT_FILES="apex-pdp-test.robot"
+    source "${WORKSPACE}"/compose/start-postgres-tests.sh 1
+    sleep 10
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${PAP_PORT}
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${APEX_PORT}
+    apex_healthcheck
+}
+
+function setup_apex_medium() {
+    export SUITES="apex-slas-3.robot"
+    source "${WORKSPACE}"/compose/start-multiple-pdp.sh 3
+    sleep 10
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${PAP_PORT}
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${APEX_PORT}
+    apex_healthcheck
+}
+
+function setup_apex_large() {
+    export ROBOT_FILES="apex-slas-10.robot"
+    source "${WORKSPACE}"/compose/start-multiple-pdp.sh 10
+    sleep 10
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${PAP_PORT}
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${APEX_PORT}
+    apex_healthcheck
+}
+
+function apex_healthcheck() {
+    sleep 20
+
+    healthy=false
+
+    while [ $healthy = false ]
+    do
+        msg=`curl -s -k --user 'policyadmin:zb!XztG34' http://localhost:${APEX_PORT}/policy/apex-pdp/v1/healthcheck`
+        echo "${msg}" | grep -q true
+        if [ "${?}" -eq 0 ]
+        then
+            healthy=true
+            break
+        fi
+        sleep 10s
     done
-    for i in $(echo "${RUN_CSIT_SHELLOPTS}" | tr ':' ' ') ; do
-        set -o ${i}
-    done
-
-    # other options
-    for i in $(echo "$_setopts" | sed 's/./& /g') ; do
-        set +${i}
-    done
-    set -${RUN_CSIT_SAVE_SET}
 }
 
-# set options for quick bailout when error
-function harden_set() {
-    set -xeo pipefail
-    set +u # enabled it would probably fail too many often
+function setup_drools_apps() {
+    export ROBOT_FILES="drools-applications-test.robot"
+    source "${WORKSPACE}"/compose/start-compose.sh drools-applications
+    sleep 10
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${PAP_PORT}
+    sleep 10
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${DROOLS_APPS_PORT}
+    sleep 10
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${DROOLS_APPS_TELEMETRY_PORT}
 }
 
-# relax set options so the sourced file will not fail
-# the responsibility is shifted to the sourced file...
-function relax_set() {
-    set +e
-    set +o pipefail
+function setup_xacml_pdp() {
+    export ROBOT_FILES="xacml-pdp-test.robot"
+    source "${WORKSPACE}"/compose/start-compose.sh xacml-pdp
+    sleep 10
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost "${XACML_PORT}"
 }
 
-# wrapper for sourcing a file
-function source_safely() {
-    [ -z "$1" ] && return 1
-    relax_set
-    . "$1"
-    load_set
+function setup_drools_pdp() {
+    export ROBOT_FILES="drools-pdp-test.robot"
+    source "${WORKSPACE}"/compose/start-compose.sh drools-pdp
+    sleep 30
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${DROOLS_TELEMETRY_PORT}
 }
 
-#
-# main
-#
+function setup_distribution() {
+    zip -F ${WORKSPACE}/csit/resources/tests/data/csar/sample_csar_with_apex_policy.csar \
+        --out ${WORKSPACE}/csit/resources/tests/data/csar/csar_temp.csar -q
 
-# set and save options for quick failure
-harden_set && save_set
+    # Remake temp directory
+    sudo rm -rf /tmp/distribution
+    sudo mkdir /tmp/distribution
 
-if [ $# -eq 0 ]
-then
-    echo
-    echo "Usage: $0 <project> [<robot-options>]"
-    echo
-    echo "    <project> <robot-options>:  "
-    echo
-    exit 1
-fi
+    export ROBOT_FILES="distribution-test.robot"
+    source "${WORKSPACE}"/compose/start-compose.sh distribution
+    sleep 10
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost "${DIST_PORT}"
+}
 
+function build_robot_image() {
+    bash "${SCRIPTS}"/build-csit-docker-image.sh
+    cd ${WORKSPACE}
+}
+
+function run_robot() {
+    docker compose -f "${WORKSPACE}"/compose/docker-compose.yml up csit-tests
+    export RC=$?
+}
+
+function set_project_config() {
+    echo "Setting project configuration for: $PROJECT"
+    case $PROJECT in
+
+    clamp | policy-clamp)
+        setup_clamp
+        ;;
+
+    api | policy-api)
+        setup_api
+        ;;
+
+    pap | policy-pap)
+        setup_pap
+        ;;
+
+    apex-pdp | policy-apex-pdp)
+        setup_apex
+        ;;
+
+    apex-pdp-postgres | policy-apex-pdp-postgres)
+        setup_apex
+        ;;
+
+    apex-pdp-medium | policy-apex-pdp-medium)
+        setup_apex
+        ;;
+
+    apex-pdp-large | policy-apex-pdp-large)
+        setup_apex
+        ;;
+
+    xacml-pdp | policy-xacml-pdp)
+        setup_xacml_pdp
+        ;;
+
+    drools-pdp | policy-drools-pdp)
+        setup_drools_pdp
+        ;;
+
+    drools-applications | policy-drools-applications | drools-apps | policy-drools-apps)
+        setup_drools_apps
+        ;;
+
+    distribution | policy-distribution)
+        setup_distribution
+        ;;
+
+    *)
+        echo "Unknown project supplied. No test will run."
+        exit 1
+        ;;
+    esac
+}
+
+# even with forced finish, clean up docker containers
+function on_exit(){
+    rm -rf ${WORKSPACE}/csit/resources/tests/data/csar/csar_temp.csar
+    source ${WORKSPACE}/compose/stop-compose.sh
+    cp ${WORKSPACE}/compose/*.log ${WORKSPACE}/csit/archives/${PROJECT}
+    exit $RC
+}
+
+# ensure that teardown and other finalizing steps are always executed
+trap on_exit EXIT
+
+# setup all directories used for test resources
 if [ -z "${WORKSPACE}" ]; then
     WORKSPACE=$(git rev-parse --show-toplevel)
     export WORKSPACE
 fi
 
-# Add csit scripts to PATH
-export PATH="${PATH}:${WORKSPACE}/csit:${WORKSPACE}/scripts:${ROBOT_VENV}/bin"
-export SCRIPTS="${WORKSPACE}/csit/resources/scripts"
-export ROBOT_VARIABLES=
-
+export GERRIT_BRANCH=$(awk -F= '$1 == "defaultbranch" { print $2 }' "${WORKSPACE}"/.gitreview)
 export PROJECT="${1}"
+export ROBOT_LOG_DIR=${WORKSPACE}/csit/archives/${PROJECT}
+export SCRIPTS="${WORKSPACE}/csit/resources/scripts"
+export ROBOT_FILES=""
 
 cd "${WORKSPACE}"
 
-rm -rf "${WORKSPACE}/csit/archives/${PROJECT}"
-mkdir -p "${WORKSPACE}/csit/archives/${PROJECT}"
+# recreate the log folder with test results
+sudo rm -rf ${ROBOT_LOG_DIR}
+mkdir -p ${ROBOT_LOG_DIR}
 
-# Run installation of pre-required libraries
-source_safely "${SCRIPTS}/prepare-robot-env.sh"
-
-# Activate the virtualenv containing all the required libraries installed by prepare-robot-env.sh
-source_safely "${ROBOT_VENV}/bin/activate"
-
-export TEST_PLAN_DIR="${WORKSPACE}/csit/resources/tests"
-export TEST_OPTIONS="${2}"
-
-WORKDIR=$(mktemp -d)
-cd "${WORKDIR}"
-
-# Sign in to nexus3 docker repo
+# log into nexus docker
 docker login -u docker -p docker nexus3.onap.org:10001
 
-# Run setup script plan if it exists
-SETUP="${SCRIPTS}/setup-${PROJECT}.sh"
-if [ -f "${SETUP}" ]; then
-    echo "Running setup script ${SETUP}"
-    source_safely "${SETUP}"
+# based on $PROJECT var, setup robot test files and docker compose execution
+set_project_config
+
+unset http_proxy https_proxy
+
+export ROBOT_FILES
+
+# use a separate script to build a CSIT docker image, to containerize the test run
+if [ "${2}" == "--skip-build-csit" ]; then
+    echo "Skipping build csit robot image"
+else
+    build_robot_image
 fi
 
-# show memory consumption after all docker instances initialized
 docker_stats | tee "${WORKSPACE}/csit/archives/${PROJECT}/_sysinfo-1-after-setup.txt"
 
-# Run test plan
-cd "${WORKDIR}"
-echo "Reading the testplan:"
-echo "${SUITES}" | egrep -v '(^[[:space:]]*#|^[[:space:]]*$)' | sed "s|^|${TEST_PLAN_DIR}/|" > testplan.txt
-cat testplan.txt
-SUITES=$( xargs < testplan.txt )
+# start the CSIT container and run the tests
+run_robot
 
-echo ROBOT_VARIABLES="${ROBOT_VARIABLES}"
-echo "Starting Robot test suites ${SUITES} ..."
-relax_set
-python3 -m robot.run -N "${PROJECT}" -v WORKSPACE:/tmp ${ROBOT_VARIABLES} ${SUITES}
-RESULT=$?
-load_set
-echo "RESULT: ${RESULT}"
-# Note that the final steps are done in on_exit function after this exit!
-exit ${RESULT}
+docker ps --format "table {{ .Names }}\t{{ .Status }}"

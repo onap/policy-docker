@@ -1,6 +1,6 @@
 #
 # ===========LICENSE_START====================================================
-#  Copyright (C) 2023 Nordix Foundation.
+#  Copyright (C) 2023-2024 Nordix Foundation.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 # ============LICENSE_END=====================================================
 #
 
-version: '2'
 services:
   apexpdp:
     image: ${CONTAINER_LOCATION}onap/policy-apex-pdp:${POLICY_APEX_PDP_VERSION}
@@ -30,8 +29,8 @@ services:
       - 6969
       - 23324
     deploy:
-        mode: replicated
-        replicas: ${REPLICAS}
+      mode: replicated
+      replicas: ${REPLICAS}
     volumes:
       - ./config/apex-pdp/OnapPfConfig.json:/opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json:ro
       - ./config/apex-pdp/logback.xml:/opt/app/policy/apex-pdp/etc/logback.xml:ro
@@ -42,7 +41,7 @@ services:
       'mariadb', '3306',
       'kafka', '9092',
       'pap', '6969'
-      ]
+    ]
   nginx:
     image: ${CONTAINER_LOCATION}library/nginx:latest
     volumes:
@@ -50,8 +49,7 @@ services:
     depends_on:
       - apexpdp
     ports:
-       - ${APEX_PORT}:${APEX_PORT}
-
+      - ${APEX_PORT}:${APEX_PORT}
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     environment:
@@ -59,7 +57,6 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - 2181:2181
-
   kafka:
     image: confluentinc/cp-kafka:latest
     container_name: kafka

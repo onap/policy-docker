@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # ============LICENSE_START====================================================
-#  Copyright (C) 2022-2023 Nordix Foundation.
+#  Copyright (C) 2022-2024 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -50,7 +50,6 @@ do
       break;
       ;;
     *)
-      echo "$1"
       component="$1"
       shift
       ;;
@@ -68,32 +67,37 @@ if [ -z "$PROJECT" ]; then
   export PROJECT=$component
 fi
 
+# docker compose fails when not running CSIT
+if [ -z "$ROBOT_LOG_DIR" ]; then
+  export ROBOT_LOG_DIR=/tmp/
+fi
+
 if [ -n "$component" ]; then
   if [ "$component" == "logs" ]; then
   echo "Collecting logs..."
-    docker-compose logs > docker-compose.log
+    docker compose logs > docker-compose.log
   elif [ "$grafana" = true ]; then
     echo "Starting ${component} application with Grafana"
-    docker-compose up -d "${component}" grafana
+    docker compose up -d "${component}" grafana
     echo "Prometheus server: http://localhost:${PROMETHEUS_PORT}"
     echo "Grafana server: http://localhost:${GRAFANA_PORT}"
   elif [ "$gui" = true ]; then
     echo "Starting application with gui..."
-    docker-compose -f docker-compose.yml -f docker-compose.gui.yml up -d "${component}" policy-gui
+    docker compose -f docker-compose.yml -f docker-compose.gui.yml up -d "${component}" policy-gui
     echo "Clamp GUI: https://localhost:2445/clamp"
   else
     echo "Starting ${component} application"
-    docker-compose up -d "${component}"
+    docker compose up -d "${component}"
   fi
 else
   export PROJECT=api # api has groups.json complete with all 3 pdps
   if [ "$gui" = true ]; then
     echo "Starting application with gui..."
-    docker-compose -f docker-compose.yml -f docker-compose.gui.yml up -d
+    docker compose -f docker-compose.yml -f docker-compose.gui.yml up -d
     echo "Clamp GUI: https://localhost:2445/clamp"
   else
     echo "Starting all components..."
-    docker-compose up -d
+    docker compose up -d
   fi
 fi
 
