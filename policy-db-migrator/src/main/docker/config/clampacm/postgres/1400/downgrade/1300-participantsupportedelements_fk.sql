@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE clampacm.participantsupportedacelements DROP CONSTRAINT IF EXISTS supported_element_fk;
+ALTER TABLE participantsupportedacelements DROP CONSTRAINT IF EXISTS supported_element_fk;

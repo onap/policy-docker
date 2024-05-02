@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE INDEX dt_element_fk ON clampacm.nodetemplatestate(compositionId);
+CREATE INDEX dt_element_fk ON nodetemplatestate(compositionId);

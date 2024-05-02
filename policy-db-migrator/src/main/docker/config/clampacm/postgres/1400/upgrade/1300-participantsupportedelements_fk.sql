@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE clampacm.participantsupportedacelements ADD CONSTRAINT supported_element_fk FOREIGN KEY (participantId) REFERENCES clampacm.participant (participantId) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE participantsupportedacelements ADD CONSTRAINT supported_element_fk FOREIGN KEY (participantId) REFERENCES participant (participantId) ON UPDATE RESTRICT ON DELETE RESTRICT;

@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE TABLE clampacm.participant (participantId VARCHAR(255) NOT NULL, description VARCHAR(255), participantState SMALLINT DEFAULT NULL, CONSTRAINT PK_PARTICIPANT PRIMARY KEY (participantId));
+CREATE TABLE participant (participantId VARCHAR(255) NOT NULL, description VARCHAR(255), participantState SMALLINT DEFAULT NULL, CONSTRAINT PK_PARTICIPANT PRIMARY KEY (participantId));

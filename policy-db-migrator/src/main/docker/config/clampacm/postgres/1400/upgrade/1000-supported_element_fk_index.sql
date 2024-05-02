@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE INDEX supported_element_fk ON clampacm.participantsupportedacelements(participantId);
+CREATE INDEX supported_element_fk ON participantsupportedacelements(participantId);

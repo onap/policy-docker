@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE clampacm.nodetemplatestate ADD CONSTRAINT dt_element_fk FOREIGN KEY (compositionId) REFERENCES clampacm.automationcompositiondefinition (compositionId) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE nodetemplatestate ADD CONSTRAINT dt_element_fk FOREIGN KEY (compositionId) REFERENCES automationcompositiondefinition (compositionId) ON UPDATE RESTRICT ON DELETE RESTRICT;

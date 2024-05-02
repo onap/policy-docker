@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-DROP TABLE clampacm.automationcomposition;
+DROP TABLE automationcomposition;

@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-CREATE INDEX ac_element_fk ON clampacm.automationcompositionelement(instanceId);
+CREATE INDEX ac_element_fk ON automationcompositionelement(instanceId);

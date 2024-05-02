@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE clampacm.nodetemplatestate DROP CONSTRAINT IF EXISTS dt_element_fk;
+ALTER TABLE nodetemplatestate DROP CONSTRAINT IF EXISTS dt_element_fk;

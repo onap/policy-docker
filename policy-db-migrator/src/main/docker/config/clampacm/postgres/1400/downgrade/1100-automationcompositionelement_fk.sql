@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE clampacm.automationcompositionelement DROP CONSTRAINT IF EXISTS ac_element_fk;
+ALTER TABLE automationcompositionelement DROP CONSTRAINT IF EXISTS ac_element_fk;

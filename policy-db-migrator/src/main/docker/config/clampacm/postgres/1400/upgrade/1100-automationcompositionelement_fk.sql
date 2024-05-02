@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE clampacm.automationcompositionelement ADD CONSTRAINT ac_element_fk FOREIGN KEY (instanceId) REFERENCES clampacm.automationcomposition (instanceId) ON UPDATE RESTRICT ON DELETE RESTRICT;
+ALTER TABLE automationcompositionelement ADD CONSTRAINT ac_element_fk FOREIGN KEY (instanceId) REFERENCES automationcomposition (instanceId) ON UPDATE RESTRICT ON DELETE RESTRICT;

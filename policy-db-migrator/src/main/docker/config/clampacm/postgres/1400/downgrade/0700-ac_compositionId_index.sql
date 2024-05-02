@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-DROP INDEX IF EXISTS ac_element_fk;
+DROP INDEX IF EXISTS ac_compositionid;
