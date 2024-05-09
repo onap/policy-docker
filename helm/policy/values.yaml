@@ -49,6 +49,7 @@ global:
     httpparticipant: onap/policy-clamp-ac-http-ppnt:$tag
     simparticipant: onap/policy-clamp-ac-sim-ppnt:$tag
     a1pmsparticipant: onap/policy-clamp-ac-a1pms-ppnt:$tag
+    dbMigrator: onap/policy-db-migrator:$tag
 
 policy-mariadb-galera:
   enabled: true

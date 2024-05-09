@@ -350,13 +350,16 @@ wait_for_pods_running() {
     for pod_name_prefix in "${pending_pods[@]}"; do
       local pod_name=$(get_pod_name "$pod_name_prefix")
       local pod_status
-      pod_status=$(kubectl get pod "$pod_name" -n "$namespace" --no-headers -o custom-columns=STATUS:.status.phase 2>/dev/null)
+      local pod_ready
 
-      if [ "$pod_status" == "Running" ]; then
-        echo "Pod '$pod_name' in namespace '$namespace' is now in 'Running' state."
+      pod_status=$(kubectl get pod "$pod_name" -n "$namespace" --no-headers -o custom-columns=STATUS:.status.phase 2>/dev/null)
+      pod_ready=$(kubectl get pod "$pod_name" -o jsonpath='{.status.containerStatuses[*].ready}')
+
+      if [ "$pod_status" == "Running" ] && [ "$pod_ready" == "true" ]; then
+        echo "Pod '$pod_name' in namespace '$namespace' is now in 'Running' state and 'Readiness' is true"
       else
         newly_running_pods+=("$pod_name")
-        echo "Waiting for pod '$pod_name' in namespace '$namespace' to reach 'Running' state..."
+        echo "Waiting for pod '$pod_name' in namespace '$namespace' to reach 'Running' and 'Ready' state..."
       fi
     done
 
@@ -365,7 +368,7 @@ wait_for_pods_running() {
     sleep 5
   done
 
-  echo "All specified pods are in the 'Running' state. Exiting the function."
+  echo "All specified pods are in the 'Running and Ready' state. Exiting the function."
 }
 
 
@@ -397,7 +400,7 @@ if [ $OPERATION == "install" ]; then
         sudo microk8s helm dependency build policy
         sudo microk8s helm install csit-policy policy ${SET_VALUES}
         sudo microk8s helm install prometheus prometheus
-        wait_for_pods_running default 300 $READINESS_CONTAINERS
+        wait_for_pods_running default 480 $READINESS_CONTAINERS
         echo "Policy chart installation completed"
         echo "-------------------------------------------"
     fi
