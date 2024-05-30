@@ -12,17 +12,8 @@ GetReq
     ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  ${url}  200  null  ${auth}
     [return]  ${resp}
 
-ValidateResponseTimeForPap
-    [Arguments]  ${uri}  ${method}
-    [Documentation]  Check if uri response is under the required time for pap metrics
-    ValidateResponseTime  pap-metrics  ${uri}  ${method}  500
-
-ValidateDeploymentTime
-    [Documentation]  Check if deployment of policy is under 2000ms
-    ${resp}=  QueryPrometheus  pap_policy_deployments_seconds_sum{operation="deploy",status="SUCCESS"}/pap_policy_deployments_seconds_count{operation="deploy",status="SUCCESS"}
-    ${rawNumber}=  Evaluate  ${resp['data']['result'][0]['value'][1]}
-    ${actualTime}=   Set Variable  ${rawNumber * ${1000}}
-    Should Be True   ${actualTime} <= ${2000}
+CheckUndeploymentStatus
+    QueryPolicyAudit  /policy/pap/v1/policies/audit  200  testGroup  pdpTypeA  onap.restart.tca  UNDEPLOYMENT
 
 *** Test Cases ***
 LoadPolicy
@@ -113,8 +104,7 @@ QueryPdpGroupsAfterUndeploy
 
 QueryPolicyAuditAfterUnDeploy
     [Documentation]   Verify policy audit record after undeploy
-    Sleep             20 seconds
-    QueryPolicyAudit  /policy/pap/v1/policies/audit  200  testGroup  pdpTypeA  onap.restart.tca  UNDEPLOYMENT
+    Wait Until Keyword Succeeds    2 min    10 sec   CheckUndeploymentStatus
 
 QueryPolicyAuditWithMetadataSetAfterUnDeploy
     [Documentation]  Verify policy audit record after undeploy
