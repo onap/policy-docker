@@ -77,10 +77,10 @@ QueryPdpGroups
 QueryPolicyAudit
     [Arguments]  ${url}  ${expectedstatus}  ${pdpGroup}  ${pdpType}  ${policyName}  ${expectedAction}
     ${policyadmin}=  PolicyAdminAuth
-    ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  ${url}  ${expectedstatus}  recordCount=2   ${policyadmin}
+    ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  ${url}  ${expectedstatus}  recordCount=4   ${policyadmin}
     Log  Received response from queryPolicyAudit ${resp.text}
     FOR    ${responseEntry}    IN    @{resp.json()}
-    Exit For Loop IF      '${responseEntry['policy']['name']}'=='${policyName}'
+    Exit For Loop IF      '${responseEntry['policy']['name']}'=='${policyName}' and '${responseEntry['action']}'=='${expectedAction}'
     END
     Should Be Equal As Strings    ${responseEntry['pdpGroup']}  ${pdpGroup}
     Should Be Equal As Strings    ${responseEntry['pdpType']}  ${pdpType}
