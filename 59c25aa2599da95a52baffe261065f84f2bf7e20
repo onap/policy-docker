@@ -16,6 +16,24 @@
       "message": "is absolutely necessary for sqls to be renamed? that can cause inconsistency in a downgrade",
       "revId": "59c25aa2599da95a52baffe261065f84f2bf7e20",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6da695c2_b0891211",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7565
+      },
+      "writtenOn": "2024-06-05T13:13:18Z",
+      "side": 1,
+      "message": "rename and refactoring should be possible in snapshot (on files never released yet), also testing upgrade/downgrade should be from last release.",
+      "parentUuid": "d3068940_865aab19",
+      "revId": "59c25aa2599da95a52baffe261065f84f2bf7e20",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
