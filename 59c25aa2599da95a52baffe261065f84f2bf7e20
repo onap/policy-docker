@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3068940_865aab19",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-06-05T12:30:09Z",
+      "side": 1,
+      "message": "is absolutely necessary for sqls to be renamed? that can cause inconsistency in a downgrade",
+      "revId": "59c25aa2599da95a52baffe261065f84f2bf7e20",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
