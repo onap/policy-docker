@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-DROP INDEX ac_element_fk ON clampacm.automationcompositionelement;
+DROP INDEX ac_compositionId ON clampacm.automationcomposition;
