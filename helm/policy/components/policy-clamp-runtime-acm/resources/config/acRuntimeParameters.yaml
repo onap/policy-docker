@@ -62,6 +62,9 @@ server:
     enabled: false
 
 runtime:
+  topics:
+    operationTopic: policy-acruntime-participant
+    syncTopic: acm-ppnt-sync
   participantParameters:
     heartBeatMs: 120000
     maxStatusWaitMs: 200000
@@ -76,7 +79,13 @@ runtime:
         fetchTimeout: 15000
     topicSinks:
       -
-        topic: policy-acruntime-participant
+        topic: ${runtime.topics.operationTopic}
+        servers:
+          - {{ .Values.global.kafkaServer }}:9092
+        topicCommInfrastructure: kafka
+        useHttps: false
+      -
+        topic: ${runtime.topics.syncTopic}
         servers:
           - {{ .Values.global.kafkaServer }}:9092
         topicCommInfrastructure: kafka
