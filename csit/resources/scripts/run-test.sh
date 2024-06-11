@@ -18,6 +18,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END======================================================
 
+
+ROBOT_FILE=$1
 echo "Invoking the robot tests from: ${ROBOT_FILE}"
 
 DEFAULT_PORT=6969

@@ -49,8 +49,8 @@ spec:
           imagePullPolicy: Never
           env:
             - name: ROBOT_FILE
-              value: "$(ROBOT_FILE)"
-          command: [ "./run-test.sh" ]
+              value: {{ .Values.robot }}
+          command: [ "./run-test.sh", "$(ROBOT_FILE)" ]
           volumeMounts:
             - name: robot-csit-pv
               mountPath: /tmp
