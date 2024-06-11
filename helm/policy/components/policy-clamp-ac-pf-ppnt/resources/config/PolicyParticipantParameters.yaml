@@ -50,13 +50,23 @@ participant:
     useHttps: false
     allowSelfSignedCerts: true
   intermediaryParameters:
+    topics:
+      operationTopic: policy-acruntime-participant
+      syncTopic: acm-ppnt-sync
     reportingTimeIntervalMs: 120000
     description: Participant Description
     participantId: 101c62b3-8918-41b9-a747-d21eb79c6c03
     clampAutomationCompositionTopics:
       topicSources:
         -
-          topic: policy-acruntime-participant
+          topic: ${participant.intermediaryParameters.topics.operationTopic}
+          servers:
+            - "{{ .Values.global.kafkaServer }}:9092"
+          topicCommInfrastructure: kafka
+          fetchTimeout: 15000
+          useHttps: false
+        -
+          topic: ${participant.intermediaryParameters.topics.syncTopic}
           servers:
             - "{{ .Values.global.kafkaServer }}:9092"
           topicCommInfrastructure: kafka
@@ -64,7 +74,7 @@ participant:
           useHttps: false
       topicSinks:
         -
-          topic: policy-acruntime-participant
+          topic: ${participant.intermediaryParameters.topics.operationTopic}
           servers:
             - "{{ .Values.global.kafkaServer }}:9092"
           topicCommInfrastructure: kafka
