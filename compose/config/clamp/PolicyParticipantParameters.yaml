@@ -31,10 +31,20 @@ participant:
     reportingTimeIntervalMs: 120000
     description: Participant Description
     participantId: 101c62b3-8918-41b9-a747-d21eb79c6c03
+    topics:
+      operationTopic: policy-acruntime-participant
+      syncTopic: acm-ppnt-sync
     clampAutomationCompositionTopics:
       topicSources:
         -
-          topic: policy-acruntime-participant
+          topic: ${participant.intermediaryParameters.topics.operationTopic}
+          servers:
+            - ${topicServer:kafka:9092}
+          topicCommInfrastructure: kafka
+          fetchTimeout: 15000
+          useHttps: false
+        -
+          topic: ${participant.intermediaryParameters.topics.syncTopic}
           servers:
             - ${topicServer:kafka:9092}
           topicCommInfrastructure: kafka
@@ -42,7 +52,7 @@ participant:
           useHttps: false
       topicSinks:
         -
-          topic: policy-acruntime-participant
+          topic: ${participant.intermediaryParameters.topics.operationTopic}
           servers:
             - ${topicServer:kafka:9092}
           topicCommInfrastructure: kafka

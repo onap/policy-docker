@@ -39,13 +39,16 @@ server:
     path: /error
 
 runtime:
+  topics:
+    operationTopic: policy-acruntime-participant
+    syncTopic: acm-ppnt-sync
   participantParameters:
     heartBeatMs: 20000
     maxStatusWaitMs: 200000
   topicParameterGroup:
     topicSources:
       -
-        topic: policy-acruntime-participant
+        topic: ${runtime.topics.operationTopic}
         servers:
           - ${topicServer:kafka:9092}
         topicCommInfrastructure: kafka
@@ -53,7 +56,13 @@ runtime:
         useHttps: false
     topicSinks:
       -
-        topic: policy-acruntime-participant
+        topic: ${runtime.topics.operationTopic}
+        servers:
+          - ${topicServer:kafka:9092}
+        topicCommInfrastructure: kafka
+        useHttps: false
+      -
+        topic: ${runtime.topics.syncTopic}
         servers:
           - ${topicServer:kafka:9092}
         topicCommInfrastructure: kafka
