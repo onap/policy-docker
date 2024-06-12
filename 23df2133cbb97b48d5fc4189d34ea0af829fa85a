@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8e59f9a_087e72f5",
+        "filename": "helm/robot/templates/test-job.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7603
+      },
+      "writtenOn": "2024-06-12T12:11:00Z",
+      "side": 1,
+      "message": "update license",
+      "range": {
+        "startLine": 2,
+        "startChar": 16,
+        "endLine": 2,
+        "endChar": 20
+      },
+      "revId": "23df2133cbb97b48d5fc4189d34ea0af829fa85a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
