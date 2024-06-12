@@ -16,6 +16,69 @@
       "message": "recheck",
       "revId": "7b10c342c94bfc557c23aba4a0f46a6d1a982022",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c4c8c09_ca1b4986",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-06-12T10:57:55Z",
+      "side": 1,
+      "message": "can you try running the k8s with these changes?",
+      "revId": "7b10c342c94bfc557c23aba4a0f46a6d1a982022",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a419a3f4_770f7525",
+        "filename": "csit/resources/scripts/run-test.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-06-12T10:57:55Z",
+      "side": 1,
+      "message": "undo this required arg",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "7b10c342c94bfc557c23aba4a0f46a6d1a982022",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4318623_62736503",
+        "filename": "helm/robot/templates/test-job.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-06-12T10:57:55Z",
+      "side": 1,
+      "message": "remove just this bit",
+      "range": {
+        "startLine": 53,
+        "startChar": 36,
+        "endLine": 53,
+        "endChar": 53
+      },
+      "revId": "7b10c342c94bfc557c23aba4a0f46a6d1a982022",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
