@@ -444,4 +444,4 @@ services:
       - /tmp/distribution:/tmp/distribution
     environment:
       ROBOT_FILE: ${ROBOT_FILES}
-      CLAMP_K8S_TEST: false
+      TEST_ENV: ${TEST_ENV}

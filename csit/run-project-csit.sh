@@ -42,10 +42,10 @@ function docker_stats(){
 
 function setup_clamp() {
     export ROBOT_FILES="policy-clamp-test.robot"
+    export TEST_ENV="docker"
     source "${WORKSPACE}"/compose/start-compose.sh policy-clamp-runtime-acm
     sleep 30
     bash "${SCRIPTS}"/wait_for_rest.sh localhost "${ACM_PORT}"
-    export CLAMP_K8S_TEST=false
 }
 
 function setup_api() {

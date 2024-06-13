@@ -46,6 +46,8 @@ participant:
           topicCommInfrastructure: kafka
           fetchTimeout: 15000
           useHttps: false
+          additionalProps:
+            group.id: policy-clamp-ac-http-ppnt
         - topic: ${participant.intermediaryParameters.topics.syncTopic}
           servers:
             - "{{ .Values.global.kafkaServer }}:9092"

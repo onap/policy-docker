@@ -77,6 +77,8 @@ runtime:
         topicCommInfrastructure: kafka
         useHttps: false
         fetchTimeout: 15000
+        additionalProps:
+            group.id: policy-clamp-runtime-acm
     topicSinks:
       -
         topic: ${runtime.topics.operationTopic}

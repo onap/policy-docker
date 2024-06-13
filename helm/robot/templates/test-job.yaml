@@ -50,6 +50,8 @@ spec:
           env:
             - name: ROBOT_FILE
               value: {{ .Values.robot }}
+            - name: TEST_ENV
+              value: "k8s"
           command: [ "./run-test.sh" ]
           volumeMounts:
             - name: robot-csit-pv

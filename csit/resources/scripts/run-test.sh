@@ -23,7 +23,6 @@ echo "Invoking the robot tests from: ${ROBOT_FILE}"
 DEFAULT_PORT=6969
 DATA=/opt/robotworkspace/models/models-examples/src/main/resources/policies
 NODETEMPLATES=/opt/robotworkspace/models/models-examples/src/main/resources/nodetemplates
-CLAMP_K8S_TEST=${K8S_TEST}
 
 POLICY_API_IP=policy-api:${DEFAULT_PORT}
 
@@ -64,7 +63,7 @@ ROBOT_VARIABLES="-v DATA:${DATA}
 -v DROOLS_IP_2:${DROOLS_IP_2}
 -v TEMP_FOLDER:${DIST_TEMP_FOLDER}
 -v DISTRIBUTION_IP:${DISTRIBUTION_IP}
--v CLAMP_K8S_TEST:${CLAMP_K8S_TEST}"
+-v TEST_ENV:${TEST_ENV}"
 
 export ROBOT_VARIABLES
 

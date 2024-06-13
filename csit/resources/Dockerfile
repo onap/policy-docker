@@ -1,7 +1,7 @@
 FROM nexus3.onap.org:10001/library/python:3.10-slim-bullseye
 ARG CSIT_SCRIPT=${CSIT_SCRIPT}
 ARG ROBOT_FILE=${ROBOT_FILE}
-ENV ROBOT_WORKSPACE=/opt/robotworkspace ROBOT_FILE=$ROBOT_FILE CLAMP_K8S_TEST=$CLAMP_K8S_TEST
+ENV ROBOT_WORKSPACE=/opt/robotworkspace ROBOT_FILE=$ROBOT_FILE TEST_ENV=$TEST_ENV
 RUN python3 -m pip -qq install --upgrade pip && \
     python3 -m pip -qq install --upgrade --extra-index-url="https://nexus3.onap.org/repository/PyPi.staging/simple" 'robotframework-onap==0.6.0.*' --pre && \
     python3 -m pip -qq install --upgrade confluent-kafka && \

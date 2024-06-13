@@ -32,6 +32,8 @@ participant:
             - ${topicServer:kafka:9092}
           topicCommInfrastructure: kafka
           fetchTimeout: 15000
+          additionalProps:
+            group.id: policy-clamp-ac-kserve-ppnt
 
         - topic: ${participant.intermediaryParameters.topics.syncTopic}
           servers:
