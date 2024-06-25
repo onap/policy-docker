@@ -264,6 +264,7 @@ services:
     depends_on:
       - policy-db-migrator-clamp
       - kafka
+      - jaeger
       - policy-clamp-ac-http-ppnt
       - policy-clamp-ac-k8s-ppnt
       - policy-clamp-ac-pf-ppnt
@@ -271,9 +272,19 @@ services:
       - apex-pdp
     ports:
       - ${ACM_PORT}:6969
+    environment:
+      OTEL_SERVICE_NAME: acm-r
+      OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+      OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
+      # Tracing can be configured for grpc or http - default is http
+      #OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+      #OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: grpc
+      #OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4317
     volumes:
       - ./config/clamp/AcRuntimeParameters.yaml:/opt/app/policy/clamp/etc/AcRuntimeParameters.yaml
       - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
+      - ./config/clamp/acm-runtime.sh:/opt/app/policy/clamp/bin/acm-runtime.sh:rw
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     entrypoint: /opt/app/policy/bin/wait_for_port.sh
     command: [
@@ -292,10 +303,17 @@ services:
     hostname: policy-clamp-ac-http-ppnt
     depends_on:
       - kafka
+      - jaeger
     ports:
       - "30290:6969"
+    environment:
+      OTEL_SERVICE_NAME: http-ppnt
+      OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+      OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
     volumes:
       - ./config/clamp/HttpParticipantParameters.yaml:/opt/app/policy/clamp/etc/HttpParticipantParameters.yaml
+      - ./config/clamp/http-participant.sh:/opt/app/policy/clamp/bin/http-participant.sh:rw
       - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     entrypoint: /opt/app/policy/bin/wait_for_port.sh
@@ -309,10 +327,17 @@ services:
     hostname: policy-clamp-ac-k8s-ppnt
     depends_on:
       - kafka
+      - jaeger
+    environment:
+      OTEL_SERVICE_NAME: k8s-ppnt
+      OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+      OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
     ports:
       - "30295:6969"
     volumes:
       - ./config/clamp/KubernetesParticipantParameters.yaml:/opt/app/policy/clamp/etc/KubernetesParticipantParameters.yaml
+      - ./config/clamp/kubernetes-participant.sh:/opt/app/policy/clamp/bin/kubernetes-participant.sh:rw
       - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     entrypoint: /opt/app/policy/bin/wait_for_port.sh
@@ -327,10 +352,17 @@ services:
     depends_on:
       - kafka
       - api
+      - jaeger
     ports:
       - ${POLICY_PARTICIPANT_PORT}:6969
+    environment:
+      OTEL_SERVICE_NAME: policy-ppnt
+      OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+      OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
     volumes:
       - ./config/clamp/PolicyParticipantParameters.yaml:/opt/app/policy/clamp/etc/PolicyParticipantParameters.yaml:ro
+      - ./config/clamp/policy-participant.sh:/opt/app/policy/clamp/bin/policy-participant.sh:rw
       - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     entrypoint: /opt/app/policy/bin/wait_for_port.sh
@@ -345,10 +377,17 @@ services:
     hostname: policy-clamp-ac-a1pms-ppnt
     depends_on:
       - kafka
+      - jaeger
+    environment:
+      OTEL_SERVICE_NAME: a1pms-ppnt
+      OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+      OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
     ports:
       - "30296:6969"
     volumes:
       - ./config/clamp/A1pmsParticipantParameters.yaml:/opt/app/policy/clamp/etc/A1pmsParticipantParameters.yaml:ro
+      - ./config/clamp/a1pms-participant.sh:/opt/app/policy/clamp/bin/a1pms-participant.sh:rw
       - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     entrypoint: /opt/app/policy/bin/wait_for_port.sh
@@ -362,10 +401,17 @@ services:
     hostname: policy-clamp-ac-kserve-ppnt
     depends_on:
       - kafka
+      - jaeger
+    environment:
+      OTEL_SERVICE_NAME: kserve-ppnt
+      OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+      OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
     ports:
       - "30297:6969"
     volumes:
       - ./config/clamp/KserveParticipantParameters.yaml:/opt/app/policy/clamp/etc/KserveParticipantParameters.yaml:ro
+      - ./config/clamp/kserve-participant.sh:/opt/app/policy/clamp/bin/kserve-participant.sh:rw
       - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     entrypoint: /opt/app/policy/bin/wait_for_port.sh
@@ -379,10 +425,17 @@ services:
     hostname: policy-clamp-ac-sim-ppnt
     depends_on:
       - kafka
+      - jaeger
+    environment:
+      OTEL_SERVICE_NAME: sim-ppnt
+      OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+      OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
     ports:
       - ${SIM_PARTICIPANT_PORT}:6969
     volumes:
       - ./config/clamp/SimulatorParticipantParameters.yaml:/opt/app/policy/clamp/etc/SimulatorParticipantParameters.yaml:ro
+      - ./config/clamp/sim-participant.sh:/opt/app/policy/clamp/bin/sim-participant.sh:rw
       - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     entrypoint: /opt/app/policy/bin/wait_for_port.sh
@@ -445,3 +498,14 @@ services:
     environment:
       ROBOT_FILE: ${ROBOT_FILES}
       TEST_ENV: ${TEST_ENV}
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaeger
+    ports:
+      - 4318:4318
+      - 4317:4317
+      - 14250:14250
+      - 16686:16686
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
