@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: http-ppnt
   security:
     user:
       name: participantUser
@@ -26,6 +28,7 @@ participant:
           topicCommInfrastructure: kafka
           fetchTimeout: 15000
           useHttps: false
+          allowTracing: true
           additionalProps:
             group.id: policy-clamp-ac-http-ppnt
         - topic: ${participant.intermediaryParameters.topics.syncTopic}
@@ -34,16 +37,23 @@ participant:
           topicCommInfrastructure: kafka
           fetchTimeout: 15000
           useHttps: false
+          allowTracing: true
       topicSinks:
         - topic: ${participant.intermediaryParameters.topics.operationTopic}
           servers:
             - ${topicServer:kafka:9092}
           topicCommInfrastructure: kafka
           useHttps: false
+          allowTracing: true
     participantSupportedElementTypes:
       - typeName: org.onap.policy.clamp.acm.HttpAutomationCompositionElement
         typeVersion: 1.0.0
 management:
+  tracing:
+    propagation:
+      produce: B3
+    sampling:
+      probability: 1.0
   endpoints:
     web:
       exposure:
@@ -54,3 +64,12 @@ server:
     enabled: false
   servlet:
     context-path: /onap/policy/clamp/acm/httpparticipant
+
+tracing:
+  enabled: true
+  exporter:
+    endpoint: http://jaeger:4318/v1/traces
+    protocol: http
+  sampler:
+    jaeger-remote:
+      endpoint: http://jaeger:14250
