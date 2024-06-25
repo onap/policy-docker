@@ -5,6 +5,7 @@ Library     OperatingSystem
 Library     String
 Library     json
 Library     yaml
+Resource    common-library.robot
 
 *** Test Cases ***
 HealthcheckAcm
@@ -158,6 +159,39 @@ DeployAutomationComposition
      Log    Received response from runtime acm ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    10 min    5 sec    VerifyDeployStatus  ${compositionId}  ${instanceId}  DEPLOYED
+
+CheckTraces
+     [Documentation]    Verify that traces are being recorded in jaeger
+     Log    Verifying Jaeger traces
+     ${acmResp}=    VerifyTracingWorks    ${JAEGER_IP}    acm-r
+     ${httpResp}=    VerifyTracingWorks    ${JAEGER_IP}    http-ppnt
+     ${policyResp}=    VerifyTracingWorks    ${JAEGER_IP}    policy-ppnt
+     ${k8sResp}=    VerifyTracingWorks    ${JAEGER_IP}    k8s-ppnt
+     Should Not Be Empty    ${acmResp.json()["data"][0]["spans"][0]["spanID"]}
+     Log  Received spanID is ${acmResp.json()["data"][0]["spans"][0]["spanID"]}
+     Should Not Be Empty    ${httpResp.json()["data"][0]["spans"][0]["spanID"]}
+     Should Not Be Empty    ${policyResp.json()["data"][0]["spans"][0]["spanID"]}
+     Should Not Be Empty    ${k8sResp.json()["data"][0]["spans"][0]["spanID"]}
+
+CheckKafkaPresentInTraces
+     [Documentation]    Verify that kafka traces are being recorded in jaeger
+     Log    Verifying Kafka Jaeger traces
+     ${acmResp}=    VerifyKafkaInTraces    ${JAEGER_IP}    acm-r
+     ${httpResp}=    VerifyKafkaInTraces    ${JAEGER_IP}    http-ppnt
+     ${policyResp}=    VerifyKafkaInTraces    ${JAEGER_IP}    policy-ppnt
+     ${k8sResp}=    VerifyKafkaInTraces    ${JAEGER_IP}    k8s-ppnt
+     Should Not Be Empty    ${acmResp.json()["data"][0]["spans"][0]["spanID"]}
+     Log  Received spanID is ${acmResp.json()["data"][0]["spans"][0]["spanID"]}
+     Should Not Be Empty    ${httpResp.json()["data"][0]["spans"][0]["spanID"]}
+     Should Not Be Empty    ${policyResp.json()["data"][0]["spans"][0]["spanID"]}
+     Should Not Be Empty    ${k8sResp.json()["data"][0]["spans"][0]["spanID"]}
+
+CheckHttpPresentInAcmTraces
+     [Documentation]    Verify that kafka traces are being recorded in jaeger
+     Log    Verifying Http Jaeger traces
+     ${acmResp}=    VerifyHttpInTraces    ${JAEGER_IP}    acm-r
+     Should Not Be Empty    ${acmResp.json()["data"][0]["spans"][0]["spanID"]}
+     Log  Received spanID is ${acmResp.json()["data"][0]["spans"][0]["spanID"]}
 
 QueryPolicies
      [Documentation]    Verify the new policies deployed
