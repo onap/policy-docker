@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: kserve-ppnt
   cloud:
     kubernetes:
       enabled: false
@@ -32,6 +34,7 @@ participant:
             - ${topicServer:kafka:9092}
           topicCommInfrastructure: kafka
           fetchTimeout: 15000
+          allowTracing: true
           additionalProps:
             group.id: policy-clamp-ac-kserve-ppnt
 
@@ -41,11 +44,13 @@ participant:
           topicCommInfrastructure: kafka
           fetchTimeout: 15000
           useHttps: false
+          allowTracing: true
       topicSinks:
         - topic: ${participant.intermediaryParameters.topics.operationTopic}
           servers:
             - ${topicServer:kafka:9092}
           topicCommInfrastructure: kafka
+          allowTracing: true
     participantSupportedElementTypes:
       -
         typeName: org.onap.policy.clamp.acm.KserveAutomationCompositionElement
@@ -58,6 +63,11 @@ customresourcedefinition:
   grace-period: 10
 
 management:
+  tracing:
+    propagation:
+      produce: B3
+    sampling:
+      probability: 1.0
   endpoints:
     web:
       base-path: /
@@ -69,3 +79,12 @@ server:
     context-path: /onap/policy/clamp/acm/kserveparticipant
   ssl:
     enabled: false
+
+tracing:
+  enabled: true
+  exporter:
+    endpoint: http://jaeger:4318/v1/traces
+    protocol: http
+  sampler:
+    jaeger-remote:
+      endpoint: http://jaeger:14250

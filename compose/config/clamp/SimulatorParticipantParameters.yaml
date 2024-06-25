@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: sim-ppnt
   security:
     user:
       name: participantUser
@@ -28,6 +30,7 @@ participant:
           topicCommInfrastructure: kafka
           fetchTimeout: 15000
           useHttps: false
+          allowTracing: true
           additionalProps:
             group.id: policy-clamp-ac-sim-ppnt
         - topic: ${participant.intermediaryParameters.topics.syncTopic}
@@ -36,18 +39,25 @@ participant:
           topicCommInfrastructure: kafka
           fetchTimeout: 15000
           useHttps: false
+          allowTracing: true
       topicSinks:
         - topic: ${participant.intermediaryParameters.topics.operationTopic}
           servers:
             - ${topicServer:kafka:9092}
           topicCommInfrastructure: kafka
           useHttps: false
+          allowTracing: true
     participantSupportedElementTypes:
       -
         typeName: ${supportedElementTypeName:org.onap.policy.clamp.acm.SimAutomationCompositionElement}
         typeVersion: ${supportedElementTypeVersion:1.0.0}
 
 management:
+  tracing:
+    propagation:
+      produce: B3
+    sampling:
+      probability: 1.0
   endpoints:
     web:
       base-path: /
@@ -59,3 +69,12 @@ server:
     enabled: false
   servlet:
     context-path: /onap/policy/simparticipant
+
+tracing:
+  enabled: true
+  exporter:
+    endpoint: http://jaeger:4318/v1/traces
+    protocol: http
+  sampler:
+    jaeger-remote:
+      endpoint: http://jaeger:14250
