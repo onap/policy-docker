@@ -95,8 +95,21 @@ PrimeACDefinitions
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionId}  PRIMED
 
+FailPrimeACDefinitionFrom
+     [Documentation]  Prime automation composition definition Migration From.
+     SetParticipantSimFail
+     ${auth}=    Create List    runtimeUser    zb!XztG34
+     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${postjson}=  Get file  ${CURDIR}/data/ACPriming.json
+     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}   data=${postjson}  headers=${headers}
+     Should Be Equal As Strings    ${resp.status_code}     202
+     Wait Until Keyword Succeeds    2 min    5 sec    VerifyFailedPriming  ${compositionFromId}
+
 PrimeACDefinitionFrom
      [Documentation]  Prime automation composition definition Migration From.
+     SetParticipantSimSuccess
      ${auth}=    Create List    runtimeUser    zb!XztG34
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
      ${postjson}=  Get file  ${CURDIR}/data/ACPriming.json
@@ -217,8 +230,9 @@ QueryPolicyTypes
      Should Be Equal As Strings    ${resp.status_code}     200
      List Should Contain Value  ${resp.json()['policy_types']}  onap.policies.native.Apex
 
-DeployAutomationCompositionMigration
-     [Documentation]  Deploy automation composition.
+FailDeployAutomationCompositionMigration
+     [Documentation]  Fail Deploy automation composition.
+     SetParticipantSimFail
      ${auth}=    Create List    runtimeUser    zb!XztG34
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
      ${postjson}=  Get file  ${CURDIR}/data/DeployAC.json
@@ -227,7 +241,20 @@ DeployAutomationCompositionMigration
      ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}   data=${postjson}  headers=${headers}
      Log    Received response from runtime acm ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     202
-     Wait Until Keyword Succeeds    10 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
+     Wait Until Keyword Succeeds    2 min    5 sec    VerifyFailDeploy  ${compositionFromId}  ${instanceMigrationId}
+
+DeployAutomationCompositionMigration
+     [Documentation]  Deploy automation composition.
+     SetParticipantSimSuccess
+     ${auth}=    Create List    runtimeUser    zb!XztG34
+     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${postjson}=  Get file  ${CURDIR}/data/DeployAC.json
+     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}   data=${postjson}  headers=${headers}
+     Log    Received response from runtime acm ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     202
+     Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
 
 SendOutPropertiesToRuntime
      [Documentation]  Send Out Properties To Runtime
@@ -274,7 +301,7 @@ AutomationCompositionMigrationTo
      ${resp}=   POST On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances   data=${updatedpostyaml}  headers=${headers}
      Log    Received response from runtime acm ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     200
-     Wait Until Keyword Succeeds    10 min    5 sec    VerifyDeployStatus  ${compositionToId}  ${instanceMigrationId}  DEPLOYED
+     Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionToId}  ${instanceMigrationId}  DEPLOYED
      VerifyPropertiesUpdated  ${compositionToId}  ${instanceMigrationId}  TextForMigration
      VerifyParticipantSim  ${instanceMigrationId}  TextForMigration
 
@@ -290,8 +317,9 @@ UnDeployAutomationComposition
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    10 min    5 sec    VerifyDeployStatus  ${compositionId}  ${instanceId}  UNDEPLOYED
 
-UnDeployAutomationCompositionMigrationTo
-     [Documentation]  UnDeploy automation composition migrated.
+FailUnDeployAutomationCompositionMigrationTo
+     [Documentation]  Fail UnDeploy automation composition migrated.
+     SetParticipantSimFail
      ${auth}=    Create List    runtimeUser    zb!XztG34
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
      ${postjson}=  Get file  ${CURDIR}/data/UndeployAC.json
@@ -300,7 +328,20 @@ UnDeployAutomationCompositionMigrationTo
      ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionToId}/instances/${instanceMigrationId}   data=${postjson}   headers=${headers}
      Log    Received response from runtime acm ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     202
-     Wait Until Keyword Succeeds    10 min    5 sec    VerifyDeployStatus  ${compositionToId}  ${instanceMigrationId}  UNDEPLOYED
+     Wait Until Keyword Succeeds    2 min    5 sec    VerifyFailDeploy  ${compositionToId}  ${instanceMigrationId}
+
+UnDeployAutomationCompositionMigrationTo
+     [Documentation]  UnDeploy automation composition migrated.
+     SetParticipantSimSuccess
+     ${auth}=    Create List    runtimeUser    zb!XztG34
+     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${postjson}=  Get file  ${CURDIR}/data/UndeployAC.json
+     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionToId}/instances/${instanceMigrationId}   data=${postjson}   headers=${headers}
+     Log    Received response from runtime acm ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     202
+     Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionToId}  ${instanceMigrationId}  UNDEPLOYED
 
 UnInstantiateAutomationComposition
      [Documentation]  Delete automation composition instance.
@@ -313,8 +354,21 @@ UnInstantiateAutomationComposition
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    1 min    5 sec    VerifyUninstantiated  ${compositionId}
 
+FailUnInstantiateAutomationCompositionMigrationTo
+     [Documentation]  Fail Delete automation composition instance migrated.
+     SetParticipantSimFail
+     ${auth}=    Create List    runtimeUser    zb!XztG34
+     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   DELETE On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionToId}/instances/${instanceMigrationId}     headers=${headers}
+     Log    Received response from runtime acm ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     202
+     Wait Until Keyword Succeeds    2 min    5 sec    VerifyFailDeploy  ${compositionToId}  ${instanceMigrationId}
+
 UnInstantiateAutomationCompositionMigrationTo
      [Documentation]  Delete automation composition instance migrated.
+     SetParticipantSimSuccess
      ${auth}=    Create List    runtimeUser    zb!XztG34
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
      ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
@@ -335,8 +389,21 @@ DePrimeACDefinitions
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionId}  COMMISSIONED
 
+FailDePrimeACDefinitionsFrom
+     [Documentation]  Fail DePrime automation composition definition migration From.
+     SetParticipantSimFail
+     ${auth}=    Create List    runtimeUser    zb!XztG34
+     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
+     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}   data=${postjson}  headers=${headers}
+     Should Be Equal As Strings    ${resp.status_code}     202
+     Wait Until Keyword Succeeds    2 min    5 sec    VerifyFailedPriming  ${compositionFromId}
+
 DePrimeACDefinitionsFrom
      [Documentation]  DePrime automation composition definition migration From.
+     SetParticipantSimSuccess
      ${auth}=    Create List    runtimeUser    zb!XztG34
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
      ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
@@ -419,7 +486,19 @@ VerifyPriming
     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
     ${resp}=   GET On Session     policy  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}   headers=${headers}
     Should Be Equal As Strings    ${resp.status_code}   200
+    Should Be Equal As Strings  ${resp.json()['stateChangeResult']}  NO_ERROR
     Run Keyword If  ${resp.status_code}==200  Should Be Equal As Strings  ${resp.json()['state']}  ${primestate}
+
+VerifyFailedPriming
+    [Arguments]  ${theCompositionId}
+    [Documentation]    Verify the AC definitions are primed to the participants
+    ${auth}=    Create List    runtimeUser    zb!XztG34
+    Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+    ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
+    ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+    ${resp}=   GET On Session     policy  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}   headers=${headers}
+    Should Be Equal As Strings    ${resp.status_code}   200
+    Run Keyword If  ${resp.status_code}==200  Should Be Equal As Strings  ${resp.json()['stateChangeResult']}  FAILED
 
 VerifyDeployStatus
      [Arguments]  ${theCompositionId}  ${theInstanceId}  ${deploystate}
@@ -430,7 +509,19 @@ VerifyDeployStatus
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
      ${resp}=   GET On Session     policy  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}/instances/${theInstanceId}     headers=${headers}
      Should Be Equal As Strings    ${resp.status_code}     200
+     Should Be Equal As Strings  ${resp.json()['stateChangeResult']}  NO_ERROR
      Run Keyword If  ${resp.status_code}==200  Should Be Equal As Strings  ${resp.json()['deployState']}  ${deploystate}
+
+VerifyFailDeploy
+     [Arguments]  ${theCompositionId}  ${theInstanceId}
+     [Documentation]  Verify the Deploy status of automation composition.
+     ${auth}=    Create List    runtimeUser    zb!XztG34
+     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   GET On Session     policy  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}/instances/${theInstanceId}     headers=${headers}
+     Should Be Equal As Strings    ${resp.status_code}     200
+     Run Keyword If  ${resp.status_code}==200  Should Be Equal As Strings  ${resp.json()['stateChangeResult']}  FAILED
 
 VerifyPropertiesUpdated
      [Arguments]  ${theCompositionId}  ${theInstanceId}  ${textToFind}
@@ -468,4 +559,24 @@ VerifyUninstantiated
      Should Be Equal As Strings    ${resp.status_code}     200
      Run Keyword If  ${resp.status_code}==200  Length Should Be  ${resp.json()['automationCompositionList']}  0
 
+SetParticipantSimFail
+     [Documentation]  Set Participant Simulator Fail.
+     ${auth}=    Create List    participantUser    zb!XztG34
+     Log    Creating session http://${POLICY_PARTICIPANT_SIM_IP}
+     ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesFail.json
+     ${session}=    Create Session      policy  http://${POLICY_PARTICIPANT_SIM_IP}   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   PUT On Session     policy  /onap/policy/simparticipant/v2/parameters   data=${postjson}  headers=${headers}
+     Log    Received response from participant sim ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     200
 
+SetParticipantSimSuccess
+     [Documentation]  Set Participant Simulator Success.
+     ${auth}=    Create List    participantUser    zb!XztG34
+     Log    Creating session http://${POLICY_PARTICIPANT_SIM_IP}
+     ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesSuccess.json
+     ${session}=    Create Session      policy  http://${POLICY_PARTICIPANT_SIM_IP}   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   PUT On Session     policy  /onap/policy/simparticipant/v2/parameters   data=${postjson}  headers=${headers}
+     Log    Received response from participant sim ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     200
