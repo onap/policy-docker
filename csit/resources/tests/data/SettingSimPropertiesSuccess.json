@@ -1,0 +1,20 @@
+{
+  "deploySuccess": true,
+  "undeploySuccess": true,
+  "lockSuccess": true,
+  "unlockSuccess": true,
+  "deleteSuccess": true,
+  "updateSuccess": true,
+  "migrateSuccess": true,
+  "primeSuccess": true,
+  "deprimeSuccess": true,
+  "deployTimerMs": 100,
+  "undeployTimerMs": 100,
+  "lockTimerMs": 100,
+  "unlockTimerMs": 100,
+  "updateTimerMs": 100,
+  "migrateTimerMs": 100,
+  "deleteTimerMs": 100,
+  "primeTimerMs": 100,
+  "deprimeTimerMs": 100
+}
