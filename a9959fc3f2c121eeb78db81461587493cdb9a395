@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8dcd0bc6_c1eccfb6",
+        "filename": "csit/resources/tests/policy-clamp-test.robot",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2024-06-27T09:31:01Z",
+      "side": 1,
+      "message": "Is the current Ac definition used in the clamp test involves elements for the participant simulator?",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 25
+      },
+      "revId": "a9959fc3f2c121eeb78db81461587493cdb9a395",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
