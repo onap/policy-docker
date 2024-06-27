@@ -78,3 +78,20 @@ serviceAccount:
   nameOverride: policy-clamp-ac-a1pms-ppnt
   roles:
     - create
+
+jaeger:
+  service:
+    name: jaeger
+  enabled: true
+  sampling:
+    probability: "1.0"
+  producer:
+    type: B3,W3C,B3_MULTI
+  collector:
+    protocol: grpc
+    host: "http://jaeger"
+    portOtlpGrpc: 4317
+    portOtlpHttp: 4318
+    portJaegerGrpc: 14250
+
+applicationName: a1pms-ppnt
