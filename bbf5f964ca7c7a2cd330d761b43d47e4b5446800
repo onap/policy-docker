@@ -16,6 +16,24 @@
       "message": "same changes has to be done in Kubernetes components, and add a chart for Jaeger, or \"./run-k8s-csit.sh install clamp\" will not work",
       "revId": "bbf5f964ca7c7a2cd330d761b43d47e4b5446800",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eab30e5f_04c99c13",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7603
+      },
+      "writtenOn": "2024-06-27T11:04:53Z",
+      "side": 1,
+      "message": "There will be a separate review for this. Jira will be the same",
+      "parentUuid": "957f8f47_eb2d9d1f",
+      "revId": "bbf5f964ca7c7a2cd330d761b43d47e4b5446800",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
