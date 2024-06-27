@@ -57,6 +57,30 @@
       },
       "revId": "bbf5f964ca7c7a2cd330d761b43d47e4b5446800",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a5234e3_20729b57",
+        "filename": "compose/config/clamp/kserve-participant.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 7603
+      },
+      "writtenOn": "2024-06-27T12:33:37Z",
+      "side": 1,
+      "message": "I have tried this before and this is the only way it works.\n\nAlso, why avoid putting in those scripts? It is very useful for testing changes to the scripts",
+      "parentUuid": "a3be5c9f_52586173",
+      "range": {
+        "startLine": 58,
+        "startChar": 3,
+        "endLine": 58,
+        "endChar": 49
+      },
+      "revId": "bbf5f964ca7c7a2cd330d761b43d47e4b5446800",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
