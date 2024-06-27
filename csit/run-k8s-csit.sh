@@ -234,8 +234,7 @@ function set_project_config() {
 
     clamp | policy-clamp)
         export ROBOT_FILE=$POLICY_CLAMP_ROBOT
-        export READINESS_CONTAINERS=($POLICY_CLAMP_CONTAINER,$POLICY_APEX_CONTAINER,$POLICY_PF_PPNT_CONTAINER,$POLICY_K8S_PPNT_CONTAINER,
-            $POLICY_HTTP_PPNT_CONTAINER,$POLICY_SIM_PPNT_CONTAINER)
+        export READINESS_CONTAINERS=($POLICY_CLAMP_CONTAINER,$POLICY_APEX_CONTAINER,$POLICY_PF_PPNT_CONTAINER,$POLICY_K8S_PPNT_CONTAINER,$POLICY_HTTP_PPNT_CONTAINER,$POLICY_SIM_PPNT_CONTAINER)
         export SET_VALUES="--set $POLICY_CLAMP_CONTAINER.enabled=true --set $POLICY_APEX_CONTAINER.enabled=true
             --set $POLICY_PF_PPNT_CONTAINER.enabled=true --set $POLICY_K8S_PPNT_CONTAINER.enabled=true
             --set $POLICY_HTTP_PPNT_CONTAINER.enabled=true --set $POLICY_SIM_PPNT_CONTAINER.enabled=true"
@@ -273,8 +272,7 @@ function set_project_config() {
 
     distribution | policy-distribution)
         export ROBOT_FILE=($POLICY_DISTRIBUTION_ROBOT)
-        export READINESS_CONTAINERS=($POLICY_APEX_CONTAINER,$POLICY_API_CONTAINER,$POLICY_PAP_CONTAINER,
-            $POLICY_DISTRIBUTION_CONTAINER)
+        export READINESS_CONTAINERS=($POLICY_APEX_CONTAINER,$POLICY_API_CONTAINER,$POLICY_PAP_CONTAINER,$POLICY_DISTRIBUTION_CONTAINER)
         export SET_VALUES="--set $POLICY_APEX_CONTAINER.enabled=true --set $POLICY_DISTRIBUTION_CONTAINER.enabled=true"
         ;;
 
@@ -317,7 +315,9 @@ function push_acelement_chart() {
 }
 
 function get_pod_name() {
-  microk8s kubectl get pods --no-headers -o custom-columns=':metadata.name' | grep $1
+  pods=$(microk8s kubectl get pods --no-headers -o custom-columns=':metadata.name' | grep $1)
+  read -rd '' -a pod_array <<< "$pods"
+  echo "${pod_array[@]}"
 }
 
 wait_for_pods_running() {
@@ -326,11 +326,10 @@ wait_for_pods_running() {
   local timeout_seconds="$1"
   shift
 
-  IFS=',' read -ra pod_names <<< "$1"
+  IFS=',' read -ra pod_names <<< "$@"
   shift
 
   local pending_pods=("${pod_names[@]}")
-
   local start_time
   start_time=$(date +%s)
 
@@ -348,19 +347,26 @@ wait_for_pods_running() {
     local newly_running_pods=()
 
     for pod_name_prefix in "${pending_pods[@]}"; do
-      local pod_name=$(get_pod_name "$pod_name_prefix")
-      local pod_status
-      local pod_ready
-
-      pod_status=$(kubectl get pod "$pod_name" -n "$namespace" --no-headers -o custom-columns=STATUS:.status.phase 2>/dev/null)
-      pod_ready=$(kubectl get pod "$pod_name" -o jsonpath='{.status.containerStatuses[*].ready}')
-
-      if [ "$pod_status" == "Running" ] && [ "$pod_ready" == "true" ]; then
-        echo "Pod '$pod_name' in namespace '$namespace' is now in 'Running' state and 'Readiness' is true"
-      else
-        newly_running_pods+=("$pod_name")
-        echo "Waiting for pod '$pod_name' in namespace '$namespace' to reach 'Running' and 'Ready' state..."
+      local pod_names=$(get_pod_name "$pod_name_prefix")
+      IFS=' ' read -r -a pod_array <<< "$pod_names"
+      if [ "${#pod_array[@]}" -eq 0 ]; then
+             echo "*** Error: No pods found for the deployment $pod_name_prefix . Exiting ***"
+             return -1
       fi
+      for pod in "${pod_array[@]}"; do
+         local pod_status
+         local pod_ready
+         pod_status=$(kubectl get pod "$pod" -n "$namespace" --no-headers -o custom-columns=STATUS:.status.phase 2>/dev/null)
+         pod_ready=$(kubectl get pod "$pod" -o jsonpath='{.status.containerStatuses[*].ready}')
+
+         if [ "$pod_status" == "Running" ] && [ "$pod_ready" == "true" ]; then
+           echo "Pod '$pod' in namespace '$namespace' is now in 'Running' state and 'Readiness' is true"
+         else
+           newly_running_pods+=("$pod")
+           echo "Waiting for pod '$pod' in namespace '$namespace' to reach 'Running' and 'Ready' state..."
+         fi
+
+      done
     done
 
     pending_pods=("${newly_running_pods[@]}")
@@ -370,7 +376,6 @@ wait_for_pods_running() {
 
   echo "All specified pods are in the 'Running and Ready' state. Exiting the function."
 }
-
 
 OPERATION="$1"
 PROJECT="$2"
@@ -400,7 +405,7 @@ if [ $OPERATION == "install" ]; then
         sudo microk8s helm dependency build policy
         sudo microk8s helm install csit-policy policy ${SET_VALUES}
         sudo microk8s helm install prometheus prometheus
-        wait_for_pods_running default 480 $READINESS_CONTAINERS
+        wait_for_pods_running default 480 ${READINESS_CONTAINERS[@]}
         echo "Policy chart installation completed"
         echo "-------------------------------------------"
     fi
