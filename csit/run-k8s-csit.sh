@@ -47,6 +47,7 @@ POLICY_K8S_PPNT_CONTAINER="policy-clamp-ac-k8s-ppnt"
 POLICY_HTTP_PPNT_CONTAINER="policy-clamp-ac-http-ppnt"
 POLICY_SIM_PPNT_CONTAINER="policy-clamp-ac-sim-ppnt"
 POLICY_PF_PPNT_CONTAINER="policy-clamp-ac-pf-ppnt"
+JAEGER_CONTAINER="jaeger"
 KAFKA_CONTAINER="kafka-deployment"
 ZK_CONTAINER="zookeeper-deployment"
 KAFKA_DIR=${WORKSPACE}/helm/cp-kafka
@@ -234,10 +235,12 @@ function set_project_config() {
 
     clamp | policy-clamp)
         export ROBOT_FILE=$POLICY_CLAMP_ROBOT
-        export READINESS_CONTAINERS=($POLICY_CLAMP_CONTAINER,$POLICY_APEX_CONTAINER,$POLICY_PF_PPNT_CONTAINER,$POLICY_K8S_PPNT_CONTAINER,$POLICY_HTTP_PPNT_CONTAINER,$POLICY_SIM_PPNT_CONTAINER)
+        export READINESS_CONTAINERS=($POLICY_CLAMP_CONTAINER,$POLICY_APEX_CONTAINER,$POLICY_PF_PPNT_CONTAINER,$POLICY_K8S_PPNT_CONTAINER,
+            $POLICY_HTTP_PPNT_CONTAINER,$POLICY_SIM_PPNT_CONTAINER,$JAEGER_CONTAINER)
         export SET_VALUES="--set $POLICY_CLAMP_CONTAINER.enabled=true --set $POLICY_APEX_CONTAINER.enabled=true
             --set $POLICY_PF_PPNT_CONTAINER.enabled=true --set $POLICY_K8S_PPNT_CONTAINER.enabled=true
-            --set $POLICY_HTTP_PPNT_CONTAINER.enabled=true --set $POLICY_SIM_PPNT_CONTAINER.enabled=true"
+            --set $POLICY_HTTP_PPNT_CONTAINER.enabled=true --set $POLICY_SIM_PPNT_CONTAINER.enabled=true
+            --set $JAEGER_CONTAINER.enabled=true"
         install_chartmuseum
         ;;
 

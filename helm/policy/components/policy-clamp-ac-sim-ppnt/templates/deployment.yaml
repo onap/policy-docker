@@ -75,6 +75,18 @@ spec:
           imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
           command: ["/opt/app/policy/clamp/bin/sim-participant.sh"]
           args: ["/opt/app/policy/clamp/etc/mounted/SimulatorParticipantParameters.yaml"]
+          {{- $jaegerEnabled := tpl "policy-clamp-ac-sim-ppnt.jaeger-enabled" . | trimSuffix "\n" -}}
+          {{- if $jaegerEnabled }}
+          env:
+            - name: OTEL_SERVICE_NAME
+              value: {{ .Values.applicationName }}
+            - name: OTEL_EXPORTER_OTLP_PROTOCOL
+              value: {{ include "policy-clamp-ac-sim-ppnt.jaeger-protocol" . }}
+            - name: OTEL_EXPORTER_OTLP_TRACES_PROTOCOL
+              value: {{ include "policy-clamp-ac-sim-ppnt.jaeger-protocol" . }}
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ printf "%s:%s" (.Values.jaeger.collector.host) (include "policy-clamp-ac-sim-ppnt.exporter-port" .) }}
+          {{- end }}
           ports:
             - containerPort: 6969
               name: http-api
@@ -98,6 +110,9 @@ spec:
             readOnly: true
           - mountPath: /opt/app/policy/clamp/etc/mounted
             name: ac-sim-ppnt-config-processed
+          - mountPath: /opt/app/policy/clamp/bin/sim-participant.sh
+            name: ac-sim-ppnt-config
+            subPath: sim-participant.sh
           resources:
 {{ toYaml .Values.resources.small | indent 12 }}
         {{- if .Values.nodeSelector }}

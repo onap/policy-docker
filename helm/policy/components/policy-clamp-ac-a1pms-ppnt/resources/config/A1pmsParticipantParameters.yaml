@@ -16,6 +16,8 @@
 #  ============LICENSE_END=========================================================
 
 spring:
+  application:
+    name: {{ .Values.applicationName }}
   security:
     user:
       name: participantUser
@@ -53,6 +55,7 @@ participant:
             - "{{ .Values.global.kafkaServer }}:9092"
           topicCommInfrastructure: kafka
           fetchTimeout: 15000
+          allowTracing: {{ include "policy-clamp-ac-a1pms-ppnt.jaeger-enabled" . }}
           additionalProps:
             group.id: policy-clamp-ac-a1pms-ppnt
         - topic: ${participant.intermediaryParameters.topics.syncTopic}
@@ -60,17 +63,24 @@ participant:
             - "{{ .Values.global.kafkaServer }}:9092"
           topicCommInfrastructure: kafka
           fetchTimeout: 15000
+          allowTracing: {{ include "policy-clamp-ac-a1pms-ppnt.jaeger-enabled" . }}
       topicSinks:
         - topic: ${participant.intermediaryParameters.topics.operationTopic}
           servers:
             - "{{ .Values.global.kafkaServer }}:9092"
           topicCommInfrastructure: kafka
+          allowTracing: {{ include "policy-clamp-ac-a1pms-ppnt.jaeger-enabled" . }}
     participantSupportedElementTypes:
       -
         typeName: org.onap.policy.clamp.acm.A1PMSAutomationCompositionElement
         typeVersion: 1.0.1
 
 management:
+  tracing:
+    propagation:
+      produce: [{{ .Values.jaeger.producer.type }}]
+    sampling:
+      probability: {{ .Values.jaeger.sampling.probability }}
   endpoints:
     web:
       base-path: /
@@ -82,5 +92,14 @@ server:
     context-path: /onap/policy/clamp/acm/a1pmsparticipant
   ssl:
     enabled: false
+
+tracing:
+  enabled: {{ .Values.jaeger.enabled }}
+  exporter:
+    endpoint: {{ .Values.jaeger.collector.host }}:{{ include "policy-clamp-ac-a1pms-ppnt.exporter-port" . }}
+    protocol: {{ .Values.jaeger.collector.protocol }}
+  sampler:
+    jaeger-remote:
+      endpoint: {{ .Values.jaeger.collector.host }}:{{ .Values.jaeger.collector.portJaegerGrpc }}
 
 
