@@ -62,7 +62,7 @@ policy-pap:
 policy-clamp-ac-k8s-ppnt:
   enabled: false
 policy-clamp-runtime-acm:
-  enabled: false
+  enabled: true
 policy-apex-pdp:
   enabled: false
 policy-clamp-ac-pf-ppnt:
@@ -81,7 +81,10 @@ policy-clamp-ac-kserve-ppnt:
   enabled: false
 policy-clamp-ac-a1pms-ppnt:
   enabled: false
-
+jaeger:
+  enabled: false
+  fullnameOverride: jaeger
+  enableHttpOpenTelemetryCollector: true
 #################################################################
 # DB configuration defaults.
 #################################################################

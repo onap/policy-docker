@@ -78,3 +78,8 @@ dependencies:
     version: ~11.x-0
     repository: 'file://components/policy-clamp-ac-a1pms-ppnt'
     condition: policy-clamp-ac-a1pms-ppnt.enabled
+  - name: jaeger-all-in-one
+    version: 0.1.12
+    repository: https://raw.githubusercontent.com/hansehe/jaeger-all-in-one/master/helm/charts
+    alias: jaeger
+    condition: jaeger.enabled

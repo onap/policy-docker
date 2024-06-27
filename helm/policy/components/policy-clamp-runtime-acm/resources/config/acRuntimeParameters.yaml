@@ -17,6 +17,8 @@
 #  ============LICENSE_END=========================================================
 
 spring:
+  application:
+    name: {{ .Values.applicationName }}
   security:
     user:
       name: ${RUNTIME_USER}
@@ -77,6 +79,7 @@ runtime:
         topicCommInfrastructure: kafka
         useHttps: false
         fetchTimeout: 15000
+        allowTracing: {{ include "policy-clamp-runtime-acm.jaeger-enabled" . }}
         additionalProps:
             group.id: policy-clamp-runtime-acm
     topicSinks:
@@ -86,11 +89,13 @@ runtime:
           - {{ .Values.global.kafkaServer }}:9092
         topicCommInfrastructure: kafka
         useHttps: false
+        allowTracing: {{ include "policy-clamp-runtime-acm.jaeger-enabled" . }}
       -
         topic: ${runtime.topics.syncTopic}
         servers:
           - {{ .Values.global.kafkaServer }}:9092
         topicCommInfrastructure: kafka
+        allowTracing: {{ include "policy-clamp-runtime-acm.jaeger-enabled" . }}
         useHttps: false
   acmParameters:
     toscaElementName: {{ .Values.customNaming.toscaElementName }}
@@ -99,8 +104,22 @@ runtime:
 
 
 management:
+  tracing:
+    propagation:
+      produce: [{{ .Values.jaeger.producer.type }}]
+    sampling:
+      probability: {{ .Values.jaeger.sampling.probability }}
   endpoints:
     web:
       base-path: /
       exposure:
         include: health, metrics, prometheus
+
+tracing:
+  enabled: {{ .Values.jaeger.enabled }}
+  exporter:
+    endpoint: {{ .Values.jaeger.collector.host }}:{{ include "policy-clamp-runtime-acm.exporter-port" . }}
+    protocol: {{ .Values.jaeger.collector.protocol }}
+  sampler:
+    jaeger-remote:
+      endpoint: {{ .Values.jaeger.collector.host }}:{{ .Values.jaeger.collector.portJaegerGrpc }}

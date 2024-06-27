@@ -1,6 +1,6 @@
 {{/*
 #  ============LICENSE_START=======================================================
-#   Copyright (C) 2023 Nordix Foundation.
+#   Copyright (C) 2023-2024 Nordix Foundation.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -77,6 +77,18 @@ spec:
           imagePullPolicy: {{ .Values.global.pullPolicy }}
           command: ["/opt/app/policy/clamp/bin/a1pms-participant.sh"]
           args: ["/opt/app/policy/clamp/etc/mounted/A1pmsParticipantParameters.yaml"]
+          {{- $jaegerEnabled := tpl "policy-clamp-ac-a1pms-ppnt.jaeger-enabled" . | trimSuffix "\n" -}}
+          {{- if $jaegerEnabled }}
+          env:
+            - name: OTEL_SERVICE_NAME
+              value: {{ .Values.applicationName }}
+            - name: OTEL_EXPORTER_OTLP_PROTOCOL
+              value: {{ include "policy-clamp-ac-a1pms-ppnt.jaeger-protocol" . }}
+            - name: OTEL_EXPORTER_OTLP_TRACES_PROTOCOL
+              value: {{ include "policy-clamp-ac-a1pms-ppnt.jaeger-protocol" . }}
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ printf "%s:%s" (.Values.jaeger.collector.host) (include "policy-clamp-ac-a1pms-ppnt.exporter-port" .) }}
+          {{- end }}
           ports:
             - containerPort: 8086
               name: a1pms-api
@@ -100,6 +112,9 @@ spec:
             readOnly: true
           - mountPath: /opt/app/policy/clamp/etc/mounted
             name: ac-a1pms-ppnt-config-processed
+          - mountPath: /opt/app/policy/clamp/bin/a1pms-participant.sh
+            name: ac-a1pms-ppnt-config
+            subPath: a1pms-participant.sh
           resources:
 {{ toYaml .Values.resources.small | indent 12 }}
         {{- if .Values.nodeSelector }}

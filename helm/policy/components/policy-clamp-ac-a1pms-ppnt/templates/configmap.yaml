@@ -28,4 +28,4 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     heritage: Helm
 data:
-{{ tpl (.Files.Glob "resources/config/*.{xml,yaml}").AsConfig . | indent 2 }}
+{{ tpl (.Files.Glob "resources/config/*.{xml,yaml,sh}").AsConfig . | indent 2 }}

@@ -1,6 +1,6 @@
 {{/*
 #  ============LICENSE_START=======================================================
-#   Copyright (C) 2023 Nordix Foundation.
+#   Copyright (C) 2023-2024 Nordix Foundation.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -95,6 +95,18 @@ spec:
           imagePullPolicy: {{ .Values.global.pullPolicy }}
           command: ["/opt/app/policy/clamp/bin/policy-participant.sh"]
           args: ["/opt/app/policy/clamp/etc/mounted/PolicyParticipantParameters.yaml"]
+          {{- $jaegerEnabled := tpl "policy-clamp-ac-pf-ppnt.jaeger-enabled" . | trimSuffix "\n" -}}
+          {{- if $jaegerEnabled }}
+          env:
+            - name: OTEL_SERVICE_NAME
+              value: {{ .Values.applicationName }}
+            - name: OTEL_EXPORTER_OTLP_PROTOCOL
+              value: {{ include "policy-clamp-ac-pf-ppnt.jaeger-protocol" . }}
+            - name: OTEL_EXPORTER_OTLP_TRACES_PROTOCOL
+              value: {{ include "policy-clamp-ac-pf-ppnt.jaeger-protocol" . }}
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ printf "%s:%s" (.Values.jaeger.collector.host) (include "policy-clamp-ac-pf-ppnt.exporter-port" .) }}
+          {{- end }}
           ports:
             - containerPort: 6969
               name: http-api
@@ -118,6 +130,9 @@ spec:
             readOnly: true
           - mountPath: /opt/app/policy/clamp/etc/mounted
             name: ac-pf-ppnt-config-processed
+          - mountPath: /opt/app/policy/clamp/bin/policy-participant.sh
+            name: ac-pf-ppnt-config
+            subPath: policy-participant.sh
           resources:
 {{ toYaml .Values.resources.small | indent 12 }}
         {{- if .Values.nodeSelector }}
