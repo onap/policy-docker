@@ -69,7 +69,7 @@ function spin_microk8s_cluster() {
 
     if [ "$exitcode" -ne 0 ]; then
         echo "Microk8s cluster not available, Spinning up the cluster.."
-        sudo snap install microk8s --classic --channel=1.26/stable
+        sudo snap install microk8s --classic --channel=1.30/stable
 
         if [ "${?}" -ne 0 ]; then
             echo "Failed to install kubernetes cluster. Aborting.."
@@ -77,8 +77,8 @@ function spin_microk8s_cluster() {
         fi
         echo "Microk8s cluster installed successfully"
         sudo usermod -a -G microk8s $USER
-        echo "Enabling DNS and helm3 plugins"
-        sudo microk8s.enable dns helm3 hostpath-storage
+        echo "Enabling DNS and Storage plugins"
+        sudo microk8s.enable dns hostpath-storage
         echo "Creating configuration file for Microk8s"
         sudo mkdir -p $HOME/.kube
         sudo chown -R $USER:$USER $HOME/.kube
@@ -96,7 +96,7 @@ function spin_microk8s_cluster() {
     exitcode="${?}"
 
     if [ "$exitcode" -ne 0 ]; then
-        echo "Kubectl not available, Spinning up the cluster.."
+        echo "Kubectl not available, Installing.."
         sudo snap install kubectl --classic --channel=1.26/stable
 
         if [ "${?}" -ne 0 ]; then
@@ -107,6 +107,26 @@ function spin_microk8s_cluster() {
         echo "----------------------------------------"
     else
         echo "Kubectl is already running"
+        echo "----------------------------------------"
+        return 0
+    fi
+
+    echo "Verify if helm is running.."
+    helm version
+    exitcode="${?}"
+
+    if [ "$exitcode" -ne 0 ]; then
+        echo "Helm not available, Installing.."
+        sudo snap install helm --classic --channel=3.7
+
+        if [ "${?}" -ne 0 ]; then
+            echo "Failed to install Helm client. Aborting.."
+            return 1
+        fi
+        echo "Helm installation completed"
+        echo "----------------------------------------"
+    else
+        echo "Helm is already running"
         echo "----------------------------------------"
         return 0
     fi
@@ -121,17 +141,17 @@ function install_kafka() {
 
 function uninstall_policy() {
     echo "Removing the policy helm deployment"
-    sudo microk8s helm uninstall csit-policy
-    sudo microk8s helm uninstall prometheus
-    sudo microk8s helm uninstall csit-robot
+    sudo helm uninstall csit-policy
+    sudo helm uninstall prometheus
+    sudo helm uninstall csit-robot
     sudo kubectl delete deploy $ZK_CONTAINER $KAFKA_CONTAINER
     rm -rf ${WORKSPACE}/helm/policy/Chart.lock
     if [ "$PROJECT" == "clamp" ] || [ "$PROJECT" == "policy-clamp" ]; then
-      sudo microk8s helm uninstall policy-chartmuseum
-      sudo microk8s helm repo remove chartmuseum-git policy-chartmuseum
+      sudo helm uninstall policy-chartmuseum
+      sudo helm repo remove chartmuseum-git policy-chartmuseum
     fi
     sudo rm -rf /dockerdata-nfs/mariadb-galera/
-    sudo microk8s kubectl delete pvc --all
+    sudo kubectl delete pvc --all
     echo "Policy deployment deleted"
     echo "Clean up docker"
     docker image prune -f
@@ -140,6 +160,8 @@ function uninstall_policy() {
 function teardown_cluster() {
     echo "Removing k8s cluster and k8s configuration file"
     sudo snap remove microk8s;rm -rf $HOME/.kube/config
+    sudo snap remove helm;
+    sudo snap remove kubectl;
     echo "MicroK8s Cluster removed"
 }
 
@@ -173,14 +195,14 @@ function start_csit() {
           while [[ ${POD_READY_STATUS} != "1/1" ]]; do
             echo "Waiting for chartmuseum pod to come up..."
             sleep 5
-            POD_READY_STATUS=$(sudo microk8s kubectl get pods | grep -e "policy-chartmuseum" | awk '{print $2}')
+            POD_READY_STATUS=$(sudo kubectl get pods | grep -e "policy-chartmuseum" | awk '{print $2}')
           done
           push_acelement_chart
         fi
         echo "Installing Robot framework pod for running CSIT"
         cd ${WORKSPACE}/helm
         mkdir -p ${ROBOT_LOG_DIR}
-        sudo microk8s helm install csit-robot robot --set robot="$ROBOT_FILE" --set "readiness={${READINESS_CONTAINERS[*]}}" --set robotLogDir=$ROBOT_LOG_DIR
+        sudo helm install csit-robot robot --set robot="$ROBOT_FILE" --set "readiness={${READINESS_CONTAINERS[*]}}" --set robotLogDir=$ROBOT_LOG_DIR
         print_robot_log
     fi
 }
@@ -190,17 +212,17 @@ function print_robot_log() {
     while [[ ${count_pods} -eq 0 ]]; do
         echo "Waiting for pods to come up..."
         sleep 5
-        count_pods=$(sudo microk8s kubectl get pods --output name | wc -l)
+        count_pods=$(sudo kubectl get pods --output name | wc -l)
     done
-    robotpod=$(sudo microk8s kubectl get po | grep policy-csit)
+    robotpod=$(sudo kubectl get po | grep policy-csit)
     podName=$(echo "$robotpod" | awk '{print $1}')
     echo "The robot tests will begin once the policy components {${READINESS_CONTAINERS[*]}} are up and running..."
-    sudo microk8s kubectl wait --for=jsonpath='{.status.phase}'=Running --timeout=18m pod/"$podName"
+    sudo kubectl wait --for=jsonpath='{.status.phase}'=Running --timeout=18m pod/"$podName"
     echo "Policy deployment status:"
-    sudo microk8s kubectl get po
-    sudo microk8s kubectl get all -A
+    sudo kubectl get po
+    sudo kubectl get all -A
     echo "Robot Test logs:"
-    sudo microk8s kubectl logs -f "$podName"
+    sudo kubectl logs -f "$podName"
 }
 
 function clone_models() {
@@ -296,29 +318,30 @@ function set_project_config() {
 }
 
 function install_chartmuseum () {
+    echo "---------------------------------------------"
     echo "Installing Chartmuseum helm repository..."
-    sudo microk8s helm repo add chartmuseum-git https://chartmuseum.github.io/charts
-    sudo microk8s helm repo update
-    sudo microk8s helm install policy-chartmuseum chartmuseum-git/chartmuseum --set env.open.DISABLE_API=false --set service.type=NodePort --set service.nodePort=30208
-    sudo microk8s helm plugin install https://github.com/chartmuseum/helm-push
+    sudo helm repo add chartmuseum-git https://chartmuseum.github.io/charts
+    sudo helm repo update
+    sudo helm install policy-chartmuseum chartmuseum-git/chartmuseum --set env.open.DISABLE_API=false --set service.type=NodePort --set service.nodePort=30208
+    sudo helm plugin install https://github.com/chartmuseum/helm-push
     echo "---------------------------------------------"
 }
 
 function push_acelement_chart() {
     echo "Pushing acelement chart to the chartmuseum repo..."
-    sudo microk8s helm repo add policy-chartmuseum http://localhost:30208
+    sudo helm repo add policy-chartmuseum http://localhost:30208
 
     # download clamp repo
     git clone -b "${GERRIT_BRANCH}" --single-branch https://github.com/onap/policy-clamp.git "${WORKSPACE}"/csit/resources/tests/clamp
     ACELEMENT_CHART=${WORKSPACE}/csit/resources/tests/clamp/examples/src/main/resources/clamp/acm/acelement-helm/acelement
-    sudo microk8s helm cm-push $ACELEMENT_CHART policy-chartmuseum
-    sudo microk8s helm repo update
+    sudo helm cm-push $ACELEMENT_CHART policy-chartmuseum
+    sudo helm repo update
     rm -rf ${WORKSPACE}/csit/resources/tests/clamp/
     echo "-------------------------------------------"
 }
 
 function get_pod_name() {
-  pods=$(microk8s kubectl get pods --no-headers -o custom-columns=':metadata.name' | grep $1)
+  pods=$(kubectl get pods --no-headers -o custom-columns=':metadata.name' | grep $1)
   read -rd '' -a pod_array <<< "$pods"
   echo "${pod_array[@]}"
 }
@@ -405,10 +428,10 @@ if [ $OPERATION == "install" ]; then
             ${WORKSPACE}/compose/loaddockerimage.sh
         fi
         cd ${WORKSPACE}/helm || exit
-        sudo microk8s helm dependency build policy
-        sudo microk8s helm install csit-policy policy ${SET_VALUES}
-        sudo microk8s helm install prometheus prometheus
-        wait_for_pods_running default 480 ${READINESS_CONTAINERS[@]}
+        sudo helm dependency build policy
+        sudo helm install csit-policy policy ${SET_VALUES}
+        sudo helm install prometheus prometheus
+        wait_for_pods_running default 600 ${READINESS_CONTAINERS[@]}
         echo "Policy chart installation completed"
         echo "-------------------------------------------"
     fi
