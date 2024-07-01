@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "eb5b13c0_b9d10269",
+        "filename": "helm/policy/components/policy-clamp-ac-a1pms-ppnt/templates/configmap.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2024-07-01T12:35:08Z",
+      "side": 1,
+      "message": "license",
+      "range": {
+        "startLine": 3,
+        "startChar": 18,
+        "endLine": 3,
+        "endChar": 23
+      },
+      "revId": "064ee7dc9f57437056fd3564243c8b20060a39aa",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
