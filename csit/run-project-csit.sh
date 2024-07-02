@@ -48,6 +48,14 @@ function setup_clamp() {
     bash "${SCRIPTS}"/wait_for_rest.sh localhost "${ACM_PORT}"
 }
 
+function setup_clamp_replica() {
+    export ROBOT_FILES="policy-clamp-test.robot"
+    export TEST_ENV="docker"
+    source "${WORKSPACE}"/compose/start-acm-replica.sh 2
+    sleep 30
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost "${ACM_PORT}"
+}
+
 function setup_api() {
     export ROBOT_FILES="api-test.robot api-slas.robot"
     source "${WORKSPACE}"/compose/start-compose.sh api --grafana
@@ -173,6 +181,10 @@ function set_project_config() {
         setup_clamp
         ;;
 
+    clamp-replica | policy-clamp-replica)
+        setup_clamp_replica
+	;;
+
     api | policy-api)
         setup_api
         ;;
@@ -190,11 +202,11 @@ function set_project_config() {
         ;;
 
     apex-pdp-medium | policy-apex-pdp-medium)
-        setup_apex
+        setup_apex_medium
         ;;
 
     apex-pdp-large | policy-apex-pdp-large)
-        setup_apex
+        setup_apex_large
         ;;
 
     xacml-pdp | policy-xacml-pdp)

@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # ============LICENSE_START====================================================
-#  Copyright (C) 2023 Nordix Foundation.
+#  Copyright (C) 2024 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,11 +22,12 @@ if [ -z "${WORKSPACE}" ]; then
     WORKSPACE=$(git rev-parse --show-toplevel)
     export WORKSPACE
 fi
-COMPOSE_FOLDER="${WORKSPACE}"/compose
 
 if [ -z "$ROBOT_LOG_DIR" ]; then
   export ROBOT_LOG_DIR=/tmp/
 fi
+
+COMPOSE_FOLDER="${WORKSPACE}"/compose
 
 cd ${COMPOSE_FOLDER}
 
@@ -35,6 +36,5 @@ source export-ports.sh > /dev/null 2>&1
 source get-versions.sh > /dev/null 2>&1
 
 export REPLICAS=${1}
-docker compose -f docker-compose.yml -f docker-compose.pdp.scale.yml up -d apexpdp nginx grafana
-
+docker compose -f docker-compose.yml -f docker-compose.acm.scale.yml up -d nginx
 cd ${WORKSPACE}
