@@ -19,17 +19,17 @@ CheckUndeploymentStatus
 LoadPolicy
     [Documentation]  Create a policy named 'onap.restart.tca' and version '1.0.0' using specific api
     ${postjson}=  Get file  ${DATA}/vCPE.policy.monitoring.input.tosca.json
-    CreatePolicy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies  200  ${postjson}  onap.restart.tca  1.0.0
+    CreatePolicy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies  201  ${postjson}  onap.restart.tca  1.0.0
 
 LoadPolicyWithMetadataSet
     [Documentation]  Create a policy named 'operational.apex.decisionMaker' and version '1.0.0' using specific api
     ${postjson}=  Get file  ${CURDIR}/data/apex.policy.decisionmaker.input.tosca.json
-    CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  operational.apex.decisionMaker  1.0.0
+    CreatePolicySuccessfully  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  ${postjson}  operational.apex.decisionMaker  1.0.0
 
 LoadNodeTemplates
    [Documentation]  Create node templates in database using specific api
    ${postjson}=  Get file  ${NODETEMPLATES}/nodetemplates.metadatasets.input.tosca.json
-   CreateNodeTemplate  /policy/api/v1/nodetemplates  200  ${postjson}  3
+   CreateNodeTemplate  /policy/api/v1/nodetemplates  201  ${postjson}  3
 
 Healthcheck
     [Documentation]  Verify policy pap health check

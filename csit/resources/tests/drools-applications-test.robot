@@ -34,41 +34,41 @@ MakeTopics
 
 CreateVcpeXacmlPolicy
     [Documentation]    Create VCPE Policy for Xacml
-    PerformPostRequest  /policy/api/v1/policies  null  ${POLICY_API_IP}  vCPE.policy.monitoring.input.tosca.yaml  ${DATA}  yaml  200
+    CreatePolicy  vCPE.policy.monitoring.input.tosca.yaml  yaml
 
 CreateVcpeDroolsPolicy
     [Documentation]    Create VCPE Policy for Drools
-    PerformPostRequest  /policy/api/v1/policies  null  ${POLICY_API_IP}  vCPE.policy.operational.input.tosca.yaml  ${DATA}  yaml  200
+    CreatePolicy  vCPE.policy.operational.input.tosca.yaml  yaml
 
 CreateVdnsXacmlPolicy
     [Documentation]    Create VDNS Policy for Xacml
-    PerformPostRequest  /policy/api/v1/policies  null  ${POLICY_API_IP}  vDNS.policy.monitoring.input.tosca.yaml  ${DATA}  yaml  200
+    CreatePolicy    vDNS.policy.monitoring.input.tosca.yaml  yaml
 
 CreateVdnsDroolsPolicy
     [Documentation]    Create VDNS Policy for Drools
-    PerformPostRequest  /policy/api/v1/policies  null  ${POLICY_API_IP}  vDNS.policy.operational.input.tosca.json  ${DATA}  json  200
+    CreatePolicy  vDNS.policy.operational.input.tosca.json  json
 
 CreateVfwXacmlPolicy
     [Documentation]    Create VFW Policy for Xacml
-    PerformPostRequest  /policy/api/v1/policies  null  ${POLICY_API_IP}  vFirewall.policy.monitoring.input.tosca.yaml  ${DATA}  yaml  200
+    CreatePolicy  vFirewall.policy.monitoring.input.tosca.yaml  yaml
 
 CreateVfwDroolsPolicy
     [Documentation]    Create VFW Policy for Drools
-    PerformPostRequest  /policy/api/v1/policies  null  ${POLICY_API_IP}  vFirewall.policy.operational.input.tosca.json  ${DATA}  json  200
+    CreatePolicy  vFirewall.policy.operational.input.tosca.json  json
 
 DeployXacmlPolicies
     [Documentation]    Deploys the Policies to Xacml
-    PerformPostRequest  /policy/pap/v1/pdps/deployments/batch  null  ${POLICY_PAP_IP}  deploy.xacml.policies.json  ${CURDIR}/data  json  202
+    DeployPolicy  deploy.xacml.policies.json
     Sleep  5s
     ${result}=    CheckKafkaTopic     policy-notification    onap.vfirewall.tca
     Should Contain    ${result}    deployed-policies
     Should Contain    ${result}    onap.scaleout.tca
     Should Contain    ${result}    onap.restart.tca
 
-# Uncomment the drools policy deployment once the drools pdp code is fixed
+## Uncomment the drools policy deployment once the drools pdp code is fixed
 #DeployDroolsPolicies
 #    [Documentation]    Deploys the Policies to Drools
-#    PerformPostRequest  /policy/pap/v1/pdps/deployments/batch  null  ${POLICY_PAP_IP}  deploy.drools.policies.json  ${CURDIR}/data  json  202
+#    DeployPolicy   deploy.drools.policies.json
 #    Sleep  5s
 #    ${result}=    CheckKafkaTopic    policy-notification    operational.modifyconfig
 #    Should Contain    ${result}    deployed-policies
@@ -158,13 +158,13 @@ PeformGetRequest
      RETURN  ${resp}
 
 PerformPostRequest
-     [Arguments]  ${url}  ${params}  ${domain}  ${jsonfile}  ${filepath}  ${contenttype}  ${expectedstatus}
+     [Arguments]  ${url}  ${domain}  ${file}  ${folder}  ${contenttype}  ${expectedstatus}
      ${auth}=  Create List  policyadmin  zb!XztG34
-     ${postjson}=  Get file  ${filepath}/${jsonfile}
+     ${body}=  Get file  ${folder}/${file}
      Log  Creating session http://${domain}
      ${session}=  Create Session  policy  http://${domain}  auth=${auth}
      ${headers}=  Create Dictionary  Accept=application/${contenttype}  Content-Type=application/${contenttype}
-     ${resp}=  POST On Session  policy  ${url}  params=${params}  data=${postjson}  headers=${headers}  expected_status=${expectedstatus}
+     ${resp}=  POST On Session  policy  ${url}  data=${body}  headers=${headers}  expected_status=${expectedstatus}
      Log  Received response from policy ${resp.text}
      RETURN  ${resp}
 
@@ -174,3 +174,11 @@ OnSet
     ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_cl_output    ${data}    ${KAFKA_IP}
     Log    Response from kafka ${resp.stdout}
     RETURN    ${resp.stdout}
+
+CreatePolicy
+    [Arguments]     ${policyFile}   ${contenttype}
+    PerformPostRequest  /policy/api/v1/policies  ${POLICY_API_IP}  ${policyFile}  ${DATA}  ${contenttype}  201
+
+DeployPolicy
+    [Arguments]     ${policyName}
+    PerformPostRequest  /policy/pap/v1/pdps/deployments/batch  ${POLICY_PAP_IP}  ${policyName}  ${CURDIR}/data  json  202

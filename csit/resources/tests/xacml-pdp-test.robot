@@ -37,12 +37,12 @@ ExecuteXacmlPolicy
 CreateMonitorPolicy
     [Documentation]  Create a Monitoring policy
     ${postjson}=  Get file  ${DATA}/vCPE.policy.monitoring.input.tosca.json
-    CreatePolicy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies  200  ${postjson}  onap.restart.tca  1.0.0
+    CreatePolicy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies  201  ${postjson}  onap.restart.tca  1.0.0
 
 CreateOptimizationPolicy
     [Documentation]  Create an Optimization policy
     ${postjson}=  Get file  ${DATA}/vCPE.policies.optimization.input.tosca.json
-    CreatePolicy  /policy/api/v1/policytypes/onap.policies.optimization.resource.AffinityPolicy/versions/1.0.0/policies  200  ${postjson}  OSDF_CASABLANCA.Affinity_Default  1.0.0
+    CreatePolicy  /policy/api/v1/policytypes/onap.policies.optimization.resource.AffinityPolicy/versions/1.0.0/policies  201  ${postjson}  OSDF_CASABLANCA.Affinity_Default  1.0.0
 
 GetDefaultDecision
     [Documentation]  Get Default Decision with no policies in Xacml PDP

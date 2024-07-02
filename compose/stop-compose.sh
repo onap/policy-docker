@@ -24,6 +24,9 @@ if [ -z "${WORKSPACE}" ]; then
     export WORKSPACE
 fi
 
+# always 'docker' if running docker compose
+export TEST_ENV="docker"
+
 # docker compose fails when not running CSIT
 if [ -z "$ROBOT_LOG_DIR" ]; then
   export ROBOT_LOG_DIR=/tmp/
@@ -51,10 +54,9 @@ do
         echo "======== Logs from ${item} ========" >> docker_compose.log
         docker compose logs $item >> docker_compose.log
         echo "===================================" >> docker_compose.log
+        echo "" >> docker_compose.log
     fi
 done
-
-cat docker_compose.log
 
 echo "Tearing down containers..."
 docker compose down -v --remove-orphans

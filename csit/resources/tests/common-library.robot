@@ -50,15 +50,21 @@ CreatePolicy
     [Documentation]  Create the specific policy
     ${policyadmin}=  PolicyAdminAuth
     ${resp}=  PerformPostRequest  ${POLICY_API_IP}  ${url}  ${expectedstatus}  ${postjson}  null  ${policyadmin}
-    Run Keyword If  ${expectedstatus}==200  Dictionary Should Contain Key  ${resp.json()['topology_template']['policies'][0]}  ${policyname}
-    Run Keyword If  ${expectedstatus}==200  Should Be Equal As Strings  ${resp.json()['topology_template']['policies'][0]['${policyname}']['version']}  ${policyversion}
+
+CreatePolicySuccessfully
+    [Arguments]  ${url}  ${postjson}  ${policyname}  ${policyversion}
+    [Documentation]  Create the specific policy
+    ${policyadmin}=  PolicyAdminAuth
+    ${resp}=  PerformPostRequest  ${POLICY_API_IP}  ${url}  201  ${postjson}  null  ${policyadmin}
+    Dictionary Should Contain Key  ${resp.json()['topology_template']['policies'][0]}  ${policyname}
+    Should Be Equal As Strings  ${resp.json()['topology_template']['policies'][0]['${policyname}']['version']}  ${policyversion}
 
 CreateNodeTemplate
     [Arguments]  ${url}  ${expectedstatus}  ${postjson}  ${nodeTemplateListLength}
     [Documentation]  Create the node templates
     ${policyadmin}=  PolicyAdminAuth
     ${resp}=  PerformPostRequest  ${POLICY_API_IP}  ${url}  ${expectedstatus}  ${postjson}  \  ${policyadmin}
-    Run Keyword If  ${expectedstatus}==200  Length Should Be  ${resp.json()['topology_template']['node_templates']}  ${nodeTemplateListLength}
+    Run Keyword If  ${expectedstatus}==201  Length Should Be  ${resp.json()['topology_template']['node_templates']}  ${nodeTemplateListLength}
 
 
 QueryPdpGroups

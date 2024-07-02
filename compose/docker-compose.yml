@@ -500,7 +500,7 @@ services:
       TEST_ENV: ${TEST_ENV}
 
   jaeger:
-    image: jaegertracing/all-in-one:latest
+    image: jaegertracing/all-in-one:1.58
     container_name: jaeger
     ports:
       - 4318:4318

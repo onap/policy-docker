@@ -20,9 +20,9 @@ ValidatePolicyExecutionAndEventRateLowComplexity
     [Documentation]  Validate that a moderate complexity policity can be executed in less than 100ms and minimum 100 events triggered per second
     Set Test Variable    ${policyName}    onap.policies.apex.pnf.metadataSet.Test
     ${postjson}=  Get File  ${CURDIR}/data/${policyName}.json
-    CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
+    CreatePolicySuccessfully    /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  ${postjson}  ${policyName}  1.0.0
     ${postjson}=  Get File  ${CURDIR}/data/onap.pnf.metadataSet.Test.json
-    CreateNodeTemplate  /policy/api/v1/nodetemplates  200  ${postjson}  1
+    CreateNodeTemplate  /policy/api/v1/nodetemplates  201  ${postjson}  1
     DeployPolicy
     Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
     GetKafkaTopic     apex-cl-mgt2
@@ -36,7 +36,7 @@ ValidatePolicyExecutionAndEventRateHighComplexity
     [Documentation]  Validate that a high complexity policity can be executed in less than 5000ms and minimum 2 events triggered per second
     Set Test Variable    ${policyName}    onap.policies.native.apex.Sampledomain
     ${postjson}=  Get File  ${CURDIR}/data/${policyName}.json
-    CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
+    CreatePolicySuccessfully  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  ${postjson}  ${policyName}  1.0.0
     DeployPolicy
     Create Session   apexSession  http://${APEX_EVENTS_IP}   max_retries=1
     ${data}=    Get Binary File     ${CURDIR}/data/event.json
@@ -52,7 +52,7 @@ ValidatePolicyExecutionAndEventRateModerateComplexity
     [Documentation]  Validate that a low complexity policity can be executed in less than 1000ms and minimum 10 events triggered per second
     Set Test Variable    ${policyName}    onap.policies.apex.pnf.Test
     ${postjson}=  Get File  ${CURDIR}/data/${policyName}.json
-    CreatePolicy  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  200  ${postjson}  ${policyName}  1.0.0
+    CreatePolicySuccessfully   /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  ${postjson}  ${policyName}  1.0.0
     DeployPolicy
     Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
     GetKafkaTopic     apex-cl-mgt
