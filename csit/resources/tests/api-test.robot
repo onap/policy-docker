@@ -28,7 +28,7 @@ CreateTCAPolicyTypeV2
 
 CreateTCAPolicyTypeV3
      [Documentation]  Create a policy type named 'onap.policies.monitoring.tcagen2' and version '3.0.0'
-     CreatePolicyType  /policy/api/v1/policytypes  200  onap.policy.monitoring.tcagen2.v3.json  onap.policies.monitoring.tcagen2  3.0.0
+     CreatePolicyType  /policy/api/v1/policytypes  201  onap.policy.monitoring.tcagen2.v3.json  onap.policies.monitoring.tcagen2  3.0.0
 
 RetrieveMonitoringPolicyTypes
      [Documentation]  Retrieve all monitoring related policy types
@@ -37,7 +37,7 @@ RetrieveMonitoringPolicyTypes
 CreateNewMonitoringPolicyV1
      [Documentation]  Create a policy named 'onap.restart.tca' and version '1.0.0' using specific api
      ${postjson}=  Get file  ${DATA}/vCPE.policy.monitoring.input.tosca.json
-     CreatePolicy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies  200  ${postjson}  onap.restart.tca  1.0.0
+     CreatePolicy  /policy/api/v1/policytypes/onap.policies.monitoring.tcagen2/versions/1.0.0/policies  201  ${postjson}  onap.restart.tca  1.0.0
 
 CreateNewMonitoringPolicyV1Again
      [Documentation]  Create an existing policy with modification and keeping the same version should result in error.
@@ -47,12 +47,12 @@ CreateNewMonitoringPolicyV1Again
 CreateNewMonitoringPolicyV2
      [Documentation]  Create a policy named 'onap.restart.tca' and version '2.0.0' using generic api
      ${postjson}=  Get file  ${DATA}/vCPE.policy.monitoring.input.tosca.v2.json
-     CreatePolicy  /policy/api/v1/policies  200  ${postjson}  onap.restart.tca  2.0.0
+     CreatePolicy  /policy/api/v1/policies  201  ${postjson}  onap.restart.tca  2.0.0
 
 CreateNodeTemplates
    [Documentation]  Create node templates in database using specific api
    ${postjson}=  Get file  ${NODETEMPLATES}/nodetemplates.metadatasets.input.tosca.json
-   CreateNodeTemplate  /policy/api/v1/nodetemplates  200  ${postjson}  3
+   CreateNodeTemplate  /policy/api/v1/nodetemplates  201  ${postjson}  3
 
 RetrievePoliciesOfType
      [Documentation]  Retrieve all policies belonging to a specific Policy Type
@@ -113,8 +113,8 @@ Metrics
     Should Contain  ${resp.text}  http_server_requests_seconds_count{error="none",exception="none",method="GET",outcome="SUCCESS",status="200",uri="/policies",} 1.0
     Should Contain  ${resp.text}  http_server_requests_seconds_count{error="none",exception="none",method="GET",outcome="SUCCESS",status="200",uri="/policies/{policyId}/versions/{policyVersion}",} 1.0
     Should Contain  ${resp.text}  http_server_requests_seconds_count{error="none",exception="none",method="GET",outcome="SUCCESS",status="200",uri="/policytypes/{policyTypeId}/versions/{policyTypeVersion}/policies",} 1.0
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{error="none",exception="none",method="POST",outcome="SUCCESS",status="200",uri="/policytypes/{policyTypeId}/versions/{policyTypeVersion}/policies",} 1.0
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{error="none",exception="none",method="POST",outcome="SUCCESS",status="200",uri="/policytypes",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{error="none",exception="none",method="POST",outcome="SUCCESS",status="201",uri="/policytypes/{policyTypeId}/versions/{policyTypeVersion}/policies",} 1.0
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{error="none",exception="none",method="POST",outcome="SUCCESS",status="201",uri="/policytypes",} 1.0
     Should Contain  ${resp.text}  http_server_requests_seconds_count{error="none",exception="none",method="DELETE",outcome="SUCCESS",status="200",uri="/policies/{policyId}/versions/{policyVersion}",} 1.0
     Should Contain  ${resp.text}  http_server_requests_seconds_count{error="none",exception="none",method="DELETE",outcome="SUCCESS",status="200",uri="/policytypes/{policyTypeId}/versions/{versionId}",} 3.0
     Should Contain  ${resp.text}  http_server_requests_seconds_count{error="none",exception="none",method="DELETE",outcome="SUCCESS",status="200",uri="/policytypes/{policyTypeId}/versions/{policyTypeVersion}/policies/{policyId}/versions/{policyVersion}",} 1.0

@@ -72,6 +72,9 @@ if [ -z "$ROBOT_LOG_DIR" ]; then
   export ROBOT_LOG_DIR=/tmp/
 fi
 
+# always 'docker' if running docker compose
+export TEST_ENV="docker"
+
 if [ -n "$component" ]; then
   if [ "$component" == "logs" ]; then
   echo "Collecting logs..."

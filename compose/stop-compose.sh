@@ -24,6 +24,9 @@ if [ -z "${WORKSPACE}" ]; then
     export WORKSPACE
 fi
 
+# always 'docker' if running docker compose
+export TEST_ENV="docker"
+
 # docker compose fails when not running CSIT
 if [ -z "$ROBOT_LOG_DIR" ]; then
   export ROBOT_LOG_DIR=/tmp/

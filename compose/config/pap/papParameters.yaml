@@ -27,7 +27,6 @@ server:
 
 pap:
   name: PapGroup
-  aaf: false
   topic:
     pdp-pap.name: policy-pdp-pap
     notification.name: policy-notification
