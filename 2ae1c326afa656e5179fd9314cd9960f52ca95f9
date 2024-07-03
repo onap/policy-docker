@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "74bea55f_f2953420",
+        "filename": "csit/run-k8s-csit.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 7565
+      },
+      "writtenOn": "2024-07-03T10:12:11Z",
+      "side": 1,
+      "message": "maybe 30",
+      "range": {
+        "startLine": 100,
+        "startChar": 56,
+        "endLine": 100,
+        "endChar": 58
+      },
+      "revId": "2ae1c326afa656e5179fd9314cd9960f52ca95f9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
