@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "558b0aaf_3f71dad5",
+        "filename": "compose/docker-compose.yml",
+        "patchSetId": 2
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 7603
+      },
+      "writtenOn": "2024-07-04T10:31:29Z",
+      "side": 1,
+      "message": "This change is in another review. Do you want me to abandon it?",
+      "range": {
+        "startLine": 503,
+        "startChar": 11,
+        "endLine": 503,
+        "endChar": 40
+      },
+      "revId": "36127476ae049d82b843ef34577a330a34c82c61",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
