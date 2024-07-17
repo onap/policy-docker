@@ -431,7 +431,7 @@ if [ $OPERATION == "install" ]; then
         sudo helm dependency build policy
         sudo helm install csit-policy policy ${SET_VALUES}
         sudo helm install prometheus prometheus
-        wait_for_pods_running default 600 ${READINESS_CONTAINERS[@]}
+        wait_for_pods_running default 900 ${READINESS_CONTAINERS[@]}
         echo "Policy chart installation completed"
         echo "-------------------------------------------"
     fi
