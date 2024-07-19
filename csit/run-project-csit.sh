@@ -80,7 +80,7 @@ function setup_apex() {
 
 function setup_apex_postgres() {
     export ROBOT_FILES="apex-pdp-test.robot"
-    source "${WORKSPACE}"/compose/start-postgres-tests.sh 1
+    source "${WORKSPACE}"/compose/start-postgres-tests.sh apex-pdp 1
     sleep 10
     bash "${SCRIPTS}"/wait_for_rest.sh localhost ${PAP_PORT}
     bash "${SCRIPTS}"/wait_for_rest.sh localhost ${APEX_PORT}
@@ -141,6 +141,13 @@ function setup_xacml_pdp() {
     bash "${SCRIPTS}"/wait_for_rest.sh localhost "${XACML_PORT}"
 }
 
+function setup_xacml_pdp_postgres() {
+    export ROBOT_FILES="xacml-pdp-test.robot"
+    source "${WORKSPACE}"/compose/start-postgres-tests.sh xacml-pdp 1
+    sleep 10
+    bash "${SCRIPTS}"/wait_for_rest.sh localhost "${XACML_PORT}"
+}
+
 function setup_drools_pdp() {
     export ROBOT_FILES="drools-pdp-test.robot"
     source "${WORKSPACE}"/compose/start-compose.sh drools-pdp
@@ -197,7 +204,7 @@ function set_project_config() {
         ;;
 
     apex-pdp-postgres | policy-apex-pdp-postgres)
-        setup_apex
+        setup_apex_postgres
         ;;
 
     apex-pdp-medium | policy-apex-pdp-medium)
@@ -210,6 +217,10 @@ function set_project_config() {
 
     xacml-pdp | policy-xacml-pdp)
         setup_xacml_pdp
+        ;;
+
+    xacml-pdp-postgres | policy-xacml-pdp-postgres)
+        setup_xacml_pdp_postgres
         ;;
 
     drools-pdp | policy-drools-pdp)
@@ -253,6 +264,8 @@ export PROJECT="${1}"
 export ROBOT_LOG_DIR=${WORKSPACE}/csit/archives/${PROJECT}
 export SCRIPTS="${WORKSPACE}/csit/resources/scripts"
 export ROBOT_FILES=""
+# always 'docker' if running docker compose
+export TEST_ENV="docker"
 
 cd "${WORKSPACE}"
 

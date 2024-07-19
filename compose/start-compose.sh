@@ -32,7 +32,6 @@ COMPOSE_FOLDER="${WORKSPACE}"/compose
 
 # Set default values for the options
 grafana=false
-gui=false
 
 # Parse the command-line arguments
 while [[ $# -gt 0 ]]
@@ -43,11 +42,6 @@ do
     --grafana)
       grafana=true
       shift
-      ;;
-    --gui)
-      gui=true
-      shift 2
-      break;
       ;;
     *)
       component="$1"
@@ -84,24 +78,14 @@ if [ -n "$component" ]; then
     docker compose up -d "${component}" grafana
     echo "Prometheus server: http://localhost:${PROMETHEUS_PORT}"
     echo "Grafana server: http://localhost:${GRAFANA_PORT}"
-  elif [ "$gui" = true ]; then
-    echo "Starting application with gui..."
-    docker compose -f docker-compose.yml -f docker-compose.gui.yml up -d "${component}" policy-gui
-    echo "Clamp GUI: https://localhost:2445/clamp"
   else
     echo "Starting ${component} application"
     docker compose up -d "${component}"
   fi
 else
   export PROJECT=api # api has groups.json complete with all 3 pdps
-  if [ "$gui" = true ]; then
-    echo "Starting application with gui..."
-    docker compose -f docker-compose.yml -f docker-compose.gui.yml up -d
-    echo "Clamp GUI: https://localhost:2445/clamp"
-  else
-    echo "Starting all components..."
-    docker compose up -d
-  fi
+  echo "Starting all components..."
+  docker compose up -d
 fi
 
 cd ${WORKSPACE}
