@@ -16,23 +16,50 @@
 #
 
 # Script to run the ACM regression test suite in cucumber.
-# Deploys ACM-R and participants in two different release versions for testing backward compatibility.
+# Deploys ACM-R and participants in two different release branch/versions for testing backward compatibility.
 
-if [ $# -eq 0 ]
-then
-    echo "No release versions provided. Testing ACM-R and participants with the default version"
-    echo "Usage: $0 <acm_release> <compatibility_test_release>"
-    ACM_RELEASE=$(awk -F= '$1 == "defaultbranch" { print $2 }' \
-                            "${WORKSPACE}"/.gitreview)
-    PPNT_RELEASE=$ACM_RELEASE
-fi
+function usage() {
+  echo "Usage: $0 --release <acmr-release_branch> <ppnt-release_branch> | --version <acmr-version> <ppnt-version>"
+  exit 1
+}
 
-if [ $1 ]; then
-    ACM_RELEASE=$1
-fi
+# Legacy config files for releases up to 'newdelhi'
+function release_config_path() {
+  if [ $1 == 'master' ] || [[ "$(echo "$1" | cut -c1 )" > 'n' ]]; then
+    echo "config/clamp"
+  else
+    echo "config/clamp/legacy"
+  fi
+}
 
-if [ $2 ]; then
-    PPNT_RELEASE=$2
+# Legacy config files for versions before 8.0.0
+function version_config_path() {
+  if [[ "$(printf '%s\n' "$1" "8.0.0" | sort -V | head -n 1)" == "8.0.0" ]]; then
+    echo "config/clamp"
+  else
+    echo "config/clamp/legacy"
+  fi
+}
+
+function validate_version() {
+    local version=$1
+    if [[ ! $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+        echo "Invalid version format: $version. Expected format: x.y.z where x, y, and z are numbers."
+        usage
+    fi
+}
+
+function validate_release() {
+    local release=$1
+    if [[ ! $release =~ ^[a-zA-Z._-]+$ ]]; then
+        echo "Invalid release format: $release. Expected a string release name"
+        usage
+    fi
+}
+
+# Invalid input
+if [ "$#" -ne 0 ] && [ "$#" -ne 3 ]; then
+  usage
 fi
 
 if [ -z "${WORKSPACE}" ]; then
@@ -40,24 +67,68 @@ if [ -z "${WORKSPACE}" ]; then
     export WORKSPACE
 fi
 
+if [ -z "$ROBOT_LOG_DIR" ]; then
+  export ROBOT_LOG_DIR=/tmp/
+fi
 
 export SCRIPTS="${WORKSPACE}/csit/resources/scripts"
-
 COMPOSE_FOLDER="${WORKSPACE}"/compose
 REGRESSION_FOLDER="${WORKSPACE}"/policy-regression-tests/policy-clamp-regression/
 export PROJECT='clamp'
+DEFAULT_BRANCH=$(awk -F= '$1 == "defaultbranch" { print $2 }' \
+                            "${WORKSPACE}"/.gitreview)
 
-# Sign in to nexus3 docker repo
-docker login -u docker -p docker nexus3.onap.org:10001
+# Run from default branch
+if [ $# -eq 0 ]
+then
+  echo "Usage: $0 --release <acmr-release_branch> <ppnt-release_branch> | --version <acmr-version> <ppnt-version>"
+  echo "*** No release_branch/versions provided. Default branch will be used."
+  echo "Fetching image versions for all components..."
+  source ${COMPOSE_FOLDER}/get-versions-regression.sh $DEFAULT_BRANCH $DEFAULT_BRANCH > /dev/null 2>&1
+  echo "Starting Regression with ACM-R and PPNT from the default release branch $DEFAULT_BRANCH ***"
+  export CLAMP_CONFIG_PATH=$(release_config_path "$DEFAULT_BRANCH")
+  export PPNT_CONFIG_PATH="$CLAMP_CONFIG_PATH"
+  echo "Using configuration file located at $CLAMP_CONFIG_PATH for ACM-R and $PPNT_CONFIG_PATH for PPNTS."
 
+# Run with specific release/version
+elif [ "$#" -gt 0 ]
+then
+  case $1 in
+    --release)
+      validate_release $2
+      validate_release $3
+      echo "Fetching image versions for all components..."
+      source ${COMPOSE_FOLDER}/get-versions-regression.sh $2 $3 > /dev/null 2>&1
+      echo "*** Starting Regression with ACM-R from branch $2 and PPNT from branch $3 ***"
+      export CLAMP_CONFIG_PATH=$(release_config_path $2)
+      export PPNT_CONFIG_PATH=$(release_config_path $3)
+      echo "Using configuration file located at $CLAMP_CONFIG_PATH for ACM-R and $PPNT_CONFIG_PATH for PPNTS." 
+      ;;
+    --version)
+      validate_version $2
+      validate_version $3
+      echo "Fetching image versions for all components..."
+      source ${COMPOSE_FOLDER}/get-versions-regression.sh $DEFAULT_BRANCH $DEFAULT_BRANCH > /dev/null 2>&1
+      export POLICY_CLAMP_VERSION=$2
+      export POLICY_CLAMP_PPNT_VERSION=$3
+      echo "*** Starting Regression with ACM-R version $2 and PPNT version $3 ***"
+      export CLAMP_CONFIG_PATH=$(version_config_path "$2")
+      export PPNT_CONFIG_PATH=$(version_config_path "$3")
+      echo "Using configuration file located at $CLAMP_CONFIG_PATH for ACM-R and $PPNT_CONFIG_PATH for PPNTS."
+      ;;
+    *)
+      echo "Unknown parameter: $1"
+      usage
+      ;;
+  esac
+fi
+
+echo "*** Configure docker compose and trigger deployment***"
 cd ${COMPOSE_FOLDER}
-
-echo "Configuring docker compose..."
-
+docker login -u docker -p docker nexus3.onap.org:10001 > /dev/null 2>&1
 source export-ports.sh > /dev/null 2>&1
-source get-versions-regression.sh $ACM_RELEASE $PPNT_RELEASE > /dev/null 2>&1
 
-docker-compose -f docker-compose.yml up -d "policy-clamp-runtime-acm"
+docker compose -f docker-compose.yml up -d "policy-clamp-runtime-acm"
 
 # wait for the app to start up
 "${SCRIPTS}"/wait_for_rest.sh localhost "${ACM_PORT}"
@@ -66,3 +137,4 @@ cd ${REGRESSION_FOLDER}
 
 # Invoke the regression test cases
 mvn clean test -Dtests.skip=false
+
