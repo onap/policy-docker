@@ -25,6 +25,7 @@ then
         head -1 |
         sed 's/onap\/policy-api.*$//'
     )
+    export LOCAL_IMAGES="true"
 else
     export CONTAINER_LOCATION="nexus3.onap.org:10001/"
 fi

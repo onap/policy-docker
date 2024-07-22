@@ -104,7 +104,7 @@ services:
       - ${PAP_PORT}:6969
     volumes:
       - ./config/pap/papParametersPostgres.yaml:/opt/app/policy/pap/etc/papParameters.yaml:ro
-      - ./config/${PROJECT}/groups.json:/opt/app/policy/pap/etc/mounted/groups.json:ro
+      - ./config/${component}/groups.json:/opt/app/policy/pap/etc/mounted/groups.json:ro
       - ./config/pap/logback.xml:/opt/app/policy/pap/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/pap/bin/wait_for_port.sh:ro
     entrypoint: ./wait_for_port.sh
@@ -137,6 +137,28 @@ services:
       'kafka', '9092',
       'pap', '6969'
     ]
+  xacml-pdp:
+    image: ${CONTAINER_LOCATION}onap/policy-xacml-pdp:${POLICY_XACML_PDP_VERSION}
+    container_name: policy-xacml-pdp
+    hostname: policy-xacml-pdp
+    depends_on:
+      - postgres
+      - kafka
+      - pap
+    ports:
+      - ${XACML_PORT}:6969
+      - "30999:3904"
+    volumes:
+      - ./config/xacml-pdp/defaultConfig.json:/opt/app/policy/pdpx/etc/defaultConfig.json:ro
+      - ./config/xacml-pdp/logback.xml:/opt/app/policy/pdpx/etc/logback.xml:ro
+      - ./wait_for_port.sh:/opt/app/policy/pdpx/bin/wait_for_port.sh:ro
+    entrypoint: ./wait_for_port.sh
+    command: [
+      '-c', './policy-pdpx-pg.sh',
+      'postgres', '5432',
+      'kafka', '9092',
+      'pap', '6969'
+    ]
   prometheus:
     image: nexus3.onap.org:10001/prom/prometheus:latest
     container_name: prometheus
@@ -148,6 +170,7 @@ services:
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
