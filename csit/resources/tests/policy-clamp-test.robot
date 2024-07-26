@@ -161,6 +161,18 @@ InstantiateAutomationCompositionMigrationFrom
      set Suite variable  ${instanceMigrationId}    ${respyaml["instanceId"]}
      Should Be Equal As Strings    ${resp.status_code}     201
 
+PrepareAutomationComposition
+     [Documentation]  Prepare automation composition.
+     ${auth}=    Create List    runtimeUser    zb!XztG34
+     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${postjson}=  Get file  ${CURDIR}/data/PrepareAC.json
+     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}   data=${postjson}  headers=${headers}
+     Log    Received response from runtime acm ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     202
+     Wait Until Keyword Succeeds    10 min    5 sec    VerifyDeployStatus  ${compositionId}  ${instanceId}  UNDEPLOYED
+
 DeployAutomationComposition
      [Documentation]  Deploy automation composition.
      ${auth}=    Create List    runtimeUser    zb!XztG34
@@ -230,6 +242,18 @@ QueryPolicyTypes
      Should Be Equal As Strings    ${resp.status_code}     200
      List Should Contain Value  ${resp.json()['policy_types']}  onap.policies.native.Apex
 
+ReviewAutomationComposition
+     [Documentation]  Review automation composition.
+     ${auth}=    Create List    runtimeUser    zb!XztG34
+     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${postjson}=  Get file  ${CURDIR}/data/ReviewAC.json
+     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}   data=${postjson}  headers=${headers}
+     Log    Received response from runtime acm ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     202
+     Wait Until Keyword Succeeds    10 min    5 sec    VerifyDeployStatus  ${compositionId}  ${instanceId}  DEPLOYED
+
 FailDeployAutomationCompositionMigration
      [Documentation]  Fail Deploy automation composition.
      SetParticipantSimFail
@@ -286,6 +310,22 @@ AutomationCompositionUpdate
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
      VerifyPropertiesUpdated  ${compositionFromId}  ${instanceMigrationId}  MyTextUpdated
      VerifyParticipantSim  ${instanceMigrationId}  MyTextUpdated
+
+PrecheckAutomationCompositionMigration
+     [Documentation]  Precheck Migration of an automation composition.
+     ${auth}=    Create List    runtimeUser    zb!XztG34
+     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-precheck-migration.yaml
+     ${updatedpostyaml}=   Replace String     ${postyaml}     COMPOSITIONIDPLACEHOLDER       ${compositionFromId}
+     ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     COMPOSITIONTARGETIDPLACEHOLDER       ${compositionToId}
+     ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
+     ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     TEXTPLACEHOLDER       TextForMigration
+     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/yaml    Content-Type=application/yaml
+     ${resp}=   POST On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances   data=${updatedpostyaml}  headers=${headers}
+     Log    Received response from runtime acm ${resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     200
+     Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
 
 AutomationCompositionMigrationTo
      [Documentation]  Migration of an automation composition.
