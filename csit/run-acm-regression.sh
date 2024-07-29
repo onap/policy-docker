@@ -24,20 +24,20 @@ function usage() {
 }
 
 # Legacy config files for releases up to 'newdelhi'
-function release_config_path() {
+function find_release_profile() {
   if [ $1 == 'master' ] || [[ "$(echo "$1" | cut -c1 )" > 'n' ]]; then
-    echo "config/clamp"
+    echo "default"
   else
-    echo "config/clamp/legacy"
+    echo "default,legacy"
   fi
 }
 
 # Legacy config files for versions before 8.0.0
-function version_config_path() {
+function find_version_profile() {
   if [[ "$(printf '%s\n' "$1" "8.0.0" | sort -V | head -n 1)" == "8.0.0" ]]; then
-    echo "config/clamp"
+    echo "default"
   else
-    echo "config/clamp/legacy"
+    echo "default,legacy"
   fi
 }
 
@@ -86,9 +86,9 @@ then
   echo "Fetching image versions for all components..."
   source ${COMPOSE_FOLDER}/get-versions-regression.sh $DEFAULT_BRANCH $DEFAULT_BRANCH > /dev/null 2>&1
   echo "Starting Regression with ACM-R and PPNT from the default release branch $DEFAULT_BRANCH ***"
-  export CLAMP_CONFIG_PATH=$(release_config_path "$DEFAULT_BRANCH")
-  export PPNT_CONFIG_PATH="$CLAMP_CONFIG_PATH"
-  echo "Using configuration file located at $CLAMP_CONFIG_PATH for ACM-R and $PPNT_CONFIG_PATH for PPNTS."
+  export CLAMP_PROFILE=$(find_release_profile "$DEFAULT_BRANCH")
+  export PPNT_PROFILE="$CLAMP_PROFILE"
+  echo "Using $CLAMP_PROFILE profile for ACM-R and $PPNT_PROFILE profile for PPNTS."
 
 # Run with specific release/version
 elif [ "$#" -gt 0 ]
@@ -100,9 +100,9 @@ then
       echo "Fetching image versions for all components..."
       source ${COMPOSE_FOLDER}/get-versions-regression.sh $2 $3 > /dev/null 2>&1
       echo "*** Starting Regression with ACM-R from branch $2 and PPNT from branch $3 ***"
-      export CLAMP_CONFIG_PATH=$(release_config_path $2)
-      export PPNT_CONFIG_PATH=$(release_config_path $3)
-      echo "Using configuration file located at $CLAMP_CONFIG_PATH for ACM-R and $PPNT_CONFIG_PATH for PPNTS." 
+      export CLAMP_PROFILE=$(find_release_profile $2)
+      export PPNT_PROFILE=$(find_release_profile $3)
+      echo "Using $CLAMP_PROFILE profile for ACM-R and $PPNT_PROFILE profile for PPNTS." 
       ;;
     --version)
       validate_version $2
@@ -112,9 +112,9 @@ then
       export POLICY_CLAMP_VERSION=$2
       export POLICY_CLAMP_PPNT_VERSION=$3
       echo "*** Starting Regression with ACM-R version $2 and PPNT version $3 ***"
-      export CLAMP_CONFIG_PATH=$(version_config_path "$2")
-      export PPNT_CONFIG_PATH=$(version_config_path "$3")
-      echo "Using configuration file located at $CLAMP_CONFIG_PATH for ACM-R and $PPNT_CONFIG_PATH for PPNTS."
+      export CLAMP_PROFILE=$(find_version_profile "$2")
+      export PPNT_PROFILE=$(find_version_profile "$3")
+      echo "Using $CLAMP_PROFILE profile for ACM-R and $PPNT_PROFILE profile for PPNTS."
       ;;
     *)
       echo "Unknown parameter: $1"

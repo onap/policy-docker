@@ -277,12 +277,13 @@ services:
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
+      SPRING_PROFILES_ACTIVE: ${CLAMP_PROFILE:-default}
       # Tracing can be configured for grpc or http - default is http
       #OTEL_EXPORTER_OTLP_PROTOCOL: grpc
       #OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: grpc
       #OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4317
     volumes:
-      - ./${CLAMP_CONFIG_PATH:-config/clamp}/AcRuntimeParameters.yaml:/opt/app/policy/clamp/etc/AcRuntimeParameters.yaml
+      - ./config/clamp/AcRuntimeParameters.yaml:/opt/app/policy/clamp/etc/AcRuntimeParameters.yaml
       - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./config/clamp/acm-runtime.sh:/opt/app/policy/clamp/bin/acm-runtime.sh:rw
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
@@ -311,8 +312,9 @@ services:
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
+      SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
     volumes:
-      - ./${PPNT_CONFIG_PATH:-config/clamp}/HttpParticipantParameters.yaml:/opt/app/policy/clamp/etc/HttpParticipantParameters.yaml
+      - ./config/clamp/HttpParticipantParameters.yaml:/opt/app/policy/clamp/etc/HttpParticipantParameters.yaml
       - ./config/clamp/http-participant.sh:/opt/app/policy/clamp/bin/http-participant.sh:rw
       - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
@@ -333,10 +335,11 @@ services:
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
+      SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
     ports:
       - "30295:6969"
     volumes:
-      - ./${PPNT_CONFIG_PATH:-config/clamp}/KubernetesParticipantParameters.yaml:/opt/app/policy/clamp/etc/KubernetesParticipantParameters.yaml
+      - ./config/clamp/KubernetesParticipantParameters.yaml:/opt/app/policy/clamp/etc/KubernetesParticipantParameters.yaml
       - ./config/clamp/kubernetes-participant.sh:/opt/app/policy/clamp/bin/kubernetes-participant.sh:rw
       - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
@@ -360,8 +363,9 @@ services:
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
+      SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
     volumes:
-      - ./${PPNT_CONFIG_PATH:-config/clamp}/PolicyParticipantParameters.yaml:/opt/app/policy/clamp/etc/PolicyParticipantParameters.yaml:ro
+      - ./config/clamp/PolicyParticipantParameters.yaml:/opt/app/policy/clamp/etc/PolicyParticipantParameters.yaml:ro
       - ./config/clamp/policy-participant.sh:/opt/app/policy/clamp/bin/policy-participant.sh:rw
       - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
@@ -431,10 +435,11 @@ services:
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
+      SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
     ports:
       - ${SIM_PARTICIPANT_PORT}:6969
     volumes:
-      - ./${PPNT_CONFIG_PATH:-config/clamp}/SimulatorParticipantParameters.yaml:/opt/app/policy/clamp/etc/SimulatorParticipantParameters.yaml:ro
+      - ./config/clamp/SimulatorParticipantParameters.yaml:/opt/app/policy/clamp/etc/SimulatorParticipantParameters.yaml:ro
       - ./config/clamp/sim-participant.sh:/opt/app/policy/clamp/bin/sim-participant.sh:rw
       - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro

@@ -73,3 +73,29 @@ tracing:
   sampler:
     jaeger-remote:
       endpoint: http://jaeger:14250
+
+# legacy config
+---
+
+spring:
+  config:
+    activate:
+      on-profile: legacy
+participant:
+  intermediaryParameters:
+    reportingTimeIntervalMs: 120000
+    participantId: 101c62b3-8918-41b9-a747-d21eb79c6c01
+    clampAutomationCompositionTopics:
+      topicSources:
+        - topic: policy-acruntime-participant
+          servers:
+            - ${topicServer:kafka:9092}
+          topicCommInfrastructure: kafka
+          fetchTimeout: 15000
+          useHttps: false
+      topicSinks:
+        - topic: policy-acruntime-participant
+          servers:
+            - ${topicServer:kafka:9092}
+          topicCommInfrastructure: kafka
+          useHttps: false

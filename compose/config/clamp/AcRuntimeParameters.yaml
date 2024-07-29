@@ -113,3 +113,34 @@ tracing:
   sampler:
     jaeger-remote:
       endpoint: http://jaeger:14250
+
+# legacy config
+---
+
+spring:
+  config:
+    activate:
+      on-profile: legacy
+runtime:
+  participantParameters:
+    heartBeatMs: 20000
+    maxStatusWaitMs: 200000
+  topicParameterGroup:
+    topicSources:
+      -
+        topic: policy-acruntime-participant
+        servers:
+          - ${topicServer:kafka:9092}
+        topicCommInfrastructure: kafka
+        fetchTimeout: 15000
+        useHttps: false
+    topicSinks:
+      -
+        topic: policy-acruntime-participant
+        servers:
+          - ${topicServer:kafka:9092}
+        topicCommInfrastructure: kafka
+        useHttps: false
+  acmParameters:
+    toscaElementName: org.onap.policy.clamp.acm.AutomationCompositionElement
+    toscaCompositionName: org.onap.policy.clamp.acm.AutomationComposition
