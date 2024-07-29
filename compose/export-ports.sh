@@ -17,11 +17,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
-if $(docker images | grep -q "onap\/policy-api")
+if $(docker images | grep -q "^onap\/policy-api")
 then
     export CONTAINER_LOCATION=$(
         docker images |
-        grep onap/policy-api |
+        grep "^onap/policy-api" |
         head -1 |
         sed 's/onap\/policy-api.*$//'
     )

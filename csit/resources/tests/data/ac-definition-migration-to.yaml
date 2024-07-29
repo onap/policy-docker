@@ -128,7 +128,7 @@ topology_template:
         provider: ONAP
         startPhase: 0
 
-    onap.policy.clamp.ac.element.Sim_SinkAutomationCompositionElement:
+    onap.policy.clamp.ac.element.Sim_NewAutomationCompositionElement:
       version: 1.2.4
       type: org.onap.policy.clamp.acm.SimAutomationCompositionElement
       type_version: 1.0.0
@@ -149,5 +149,5 @@ topology_template:
             version: 1.2.4
           - name: onap.policy.clamp.ac.element.Sim_BridgeAutomationCompositionElement
             version: 1.2.4
-          - name: onap.policy.clamp.ac.element.Sim_SinkAutomationCompositionElement
+          - name: onap.policy.clamp.ac.element.Sim_NewAutomationCompositionElement
             version: 1.2.4

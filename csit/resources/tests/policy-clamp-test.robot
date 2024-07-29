@@ -304,6 +304,8 @@ AutomationCompositionMigrationTo
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionToId}  ${instanceMigrationId}  DEPLOYED
      VerifyPropertiesUpdated  ${compositionToId}  ${instanceMigrationId}  TextForMigration
      VerifyParticipantSim  ${instanceMigrationId}  TextForMigration
+     VerifyMigratedElementsRuntime  ${compositionToId}  ${instanceMigrationId}
+     VerifyMigratedElementsSim  ${instanceMigrationId}
 
 UnDeployAutomationComposition
      [Documentation]  UnDeploy automation composition.
@@ -534,6 +536,33 @@ VerifyPropertiesUpdated
      Should Be Equal As Strings    ${resp.status_code}     200
      ${respstring}   Convert To String   ${resp.json()}
      Run Keyword If  ${resp.status_code}==200  Should Match Regexp  ${respstring}  ${textToFind}
+
+VerifyMigratedElementsRuntime
+     [Arguments]  ${compositionToId}  ${theInstanceId}
+     [Documentation]  Verify the Instance elements after Migration
+     ${auth}=    Create List    runtimeUser    zb!XztG34
+     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   GET On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionToId}/instances/${theInstanceId}     headers=${headers}
+     Should Be Equal As Strings    ${resp.status_code}     200
+     ${respstring}   Convert To String   ${resp.json()}
+     Should Match Regexp  ${respstring}  Sim_NewAutomationCompositionElement
+     Should Not Match Regexp  ${respstring}  Sim_SinkAutomationCompositionElement
+
+VerifyMigratedElementsSim
+     [Arguments]  ${theInstanceId}
+     [Documentation]  Query on Participant Simulator
+     ${auth}=    Create List    participantUser    zb!XztG34
+     Log    Creating session http://${POLICY_PARTICIPANT_SIM_IP}
+     ${session}=    Create Session      ACM  http://${POLICY_PARTICIPANT_SIM_IP}   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   GET On Session     ACM  /onap/policy/simparticipant/v2/instances/${theInstanceId}     headers=${headers}
+     Log    Received response from participant {resp.text}
+     Should Be Equal As Strings    ${resp.status_code}     200
+     ${respstring}   Convert To String   ${resp.json()}
+     Should Match Regexp  ${respstring}  Sim_NewAutomationCompositionElement
+     Should Not Match Regexp  ${respstring}  Sim_SinkAutomationCompositionElement
 
 VerifyParticipantSim
      [Arguments]  ${theInstanceId}  ${textToFind}
