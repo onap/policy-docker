@@ -294,7 +294,7 @@ unset http_proxy https_proxy
 
 export ROBOT_FILES
 
-# use a separate script to build a CSIT docker image, to containerize the test run
+# use a separate script to build a CSIT docker image, to isolate the test run
 if [ "${2}" == "--skip-build-csit" ]; then
     echo "Skipping build csit robot image"
 else

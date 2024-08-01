@@ -42,7 +42,7 @@ source export-ports.sh > /dev/null 2>&1
 source get-versions.sh > /dev/null 2>&1
 
 echo "Collecting logs from docker compose containers..."
-rm -rf docker_compose.log
+rm -rf *.log
 
 # this will collect logs by service instead of mixing all together
 containers=$(docker compose ps --all --format '{{.Service}}')
@@ -51,10 +51,7 @@ IFS=$'\n' read -d '' -r -a item_list <<< "$containers"
 for item in "${item_list[@]}"
 do
     if [ -n "$item" ]; then
-        echo "======== Logs from ${item} ========" >> docker_compose.log
-        docker compose logs $item >> docker_compose.log
-        echo "===================================" >> docker_compose.log
-        echo "" >> docker_compose.log
+        docker compose logs $item >> $item.log
     fi
 done
 

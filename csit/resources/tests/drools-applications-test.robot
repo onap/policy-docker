@@ -23,9 +23,9 @@ Healthcheck
     ${resp}=  PeformGetRequest  /healthcheck  ${DROOLS_IP}  200
     Should Be Equal As Strings    ${resp.json()['healthy']}  True
 
-#Controller
-#    [Documentation]    Checks controller is up
-#    Wait Until Keyword Succeeds  2 min  15 sec  VerifyController
+Controller
+    [Documentation]    Checks controller is up
+    Wait Until Keyword Succeeds  2 min  15 sec  VerifyController
 
 MakeTopics
     [Documentation]    Creates the Policy topics
@@ -65,81 +65,82 @@ DeployXacmlPolicies
     Should Contain    ${result}    onap.scaleout.tca
     Should Contain    ${result}    onap.restart.tca
 
-## Uncomment the drools policy deployment once the drools pdp code is fixed
-#DeployDroolsPolicies
-#    [Documentation]    Deploys the Policies to Drools
-#    DeployPolicy   deploy.drools.policies.json
-#    Sleep  5s
-#    ${result}=    CheckKafkaTopic    policy-notification    operational.modifyconfig
-#    Should Contain    ${result}    deployed-policies
-#    Should Contain    ${result}    operational.scaleout
-#    Should Contain    ${result}    operational.restart
-#
+DeployDroolsPolicies
+    [Documentation]    Deploys the Policies to Drools
+    DeployPolicy   deploy.drools.policies.json
+    Sleep  5s
+    ${result}=    CheckKafkaTopic    policy-notification    operational.modifyconfig
+    Should Contain    ${result}    deployed-policies
+    Should Contain    ${result}    operational.scaleout
+    Should Contain    ${result}    operational.restart
+
 #VcpeExecute
 #    [Documentation]    Executes VCPE Policy
 #    OnSet     ${CURDIR}/data/vcpeOnset.json
-#    ${result}=    CheckKafkaTopic     policy-cl-mgt    ACTIVE
-#    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
-#    ${result}=    CheckKafkaTopic     policy-cl-mgt    OPERATION
-#    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
-#    Should Contain    ${result}    Sending guard query for APPC Restart
-#    ${result}=    CheckKafkaTopic     policy-cl-mgt    OPERATION
-#    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
-#    Should Contain    ${result}    Guard result for APPC Restart is Permit
-#    ${result}=    CheckKafkaTopic     policy-cl-mgt    OPERATION
-#    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
-#    Should Contain    ${result}    actor=APPC,operation=Restart
-#    ${result}=    CheckKafkaTopic     policy-cl-mgt    OPERATION: SUCCESS
-#    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
-#    Should Contain    ${result}    actor=APPC,operation=Restart
-#    ${result}=    CheckKafkaTopic     policy-cl-mgt    FINAL: SUCCESS
-#    Should Contain    ${result}    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
-#    Should Contain    ${result}    APPC
-#    Should Contain    ${result}    Restart
+#    ${policyExecuted}=  Set Variable    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
+#    @{otherMessages}=   Create List    ACTIVE
+#    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
 #
-#VdnsExecute
-#    [Documentation]    Executes VDNS Policy
-#    OnSet     ${CURDIR}/data/vdnsOnset.json
-#    ${result}=    CheckKafkaTopic     policy-cl-mgt    ACTIVE
-#    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
-#    ${result}=    CheckKafkaTopic     policy-cl-mgt    OPERATION
-#    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
-#    Should Contain    ${result}    Sending guard query for SO VF Module Create
-#    ${result}=    CheckKafkaTopic     policy-cl-mgt    OPERATION
-#    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
-#    Should Contain    ${result}    Guard result for SO VF Module Create is Permit
-#    ${result}=    CheckKafkaTopic     policy-cl-mgt    OPERATION
-#    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
-#    Should Contain    ${result}    actor=SO,operation=VF Module Create
-#    ${result}=    CheckKafkaTopic     policy-cl-mgt    OPERATION: SUCCESS
-#    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
-#    Should Contain    ${result}    actor=SO,operation=VF Module Create
-#    ${result}=    CheckKafkaTopic     policy-cl-mgt    FINAL: SUCCESS
-#    Should Contain    ${result}    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
-#    Should Contain    ${result}    SO
-#    Should Contain    ${result}    VF Module Create
+#    @{otherMessages}=   Create List    OPERATION    Sending guard query for APPC Restart
+#    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
 #
+#    @{otherMessages}=   Create List    OPERATION    Guard result for APPC Restart is Permit
+#    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+#
+#    @{otherMessages}=   Create List    OPERATION    actor=APPC,operation=Restart
+#    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+#
+#    @{otherMessages}=   Create List    OPERATION: SUCCESS   actor=APPC,operation=Restart
+#    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+#
+#    @{otherMessages}=   Create List    FINAL: SUCCESS   APPC    Restart
+#    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+
+VdnsExecute
+    [Documentation]    Executes VDNS Policy
+    OnSet     ${CURDIR}/data/vdnsOnset.json
+    ${policyExecuted}=  Set Variable    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
+    @{otherMessages}=   Create List    ACTIVE
+    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+
+    @{otherMessages}=   Create List    OPERATION    Sending guard query for SO VF Module Create
+    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+
+    @{otherMessages}=   Create List    OPERATION    Guard result for SO VF Module Create is Permit
+    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+
+    @{otherMessages}=   Create List    OPERATION    actor=SO,operation=VF Module Create
+    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+
+    @{otherMessages}=   Create List    OPERATION: SUCCESS   actor=SO,operation=VF Module Create
+    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+
+    @{otherMessages}=   Create List    FINAL: SUCCESS   SO  VF Module Create
+    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+
 #VfwExecute
 #    [Documentation]    Executes VFW Policy
 #    OnSet     ${CURDIR}/data/vfwOnset.json
-#    ${result}=    CheckKafkaTopic     policy-cl-mgt    ACTIVE
-#    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
-#    ${result}=    CheckKafkaTopic     policy-cl-mgt    OPERATION
-#    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
-#    Should Contain    ${result}    Sending guard query for APPC ModifyConfig
-#    ${result}=    CheckKafkaTopic     policy-cl-mgt    OPERATION
-#    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
-#    Should Contain    ${result}    Guard result for APPC ModifyConfig is Permit
-#    ${result}=    CheckKafkaTopic     policy-cl-mgt    OPERATION
-#    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
-#    Should Contain    ${result}    actor=APPC,operation=ModifyConfig
-#    ${result}=    CheckKafkaTopic     policy-cl-mgt    OPERATION: SUCCESS
-#    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
-#    Should Contain    ${result}    actor=APPC,operation=ModifyConfig
-#    ${result}=    CheckKafkaTopic     policy-cl-mgt    FINAL: SUCCESS
-#    Should Contain    ${result}    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
-#    Should Contain    ${result}    APPC
-#    Should Contain    ${result}    ModifyConfig
+#    ${policyExecuted}=  Set Variable    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
+#    @{otherMessages}=   Create List    ACTIVE
+#    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+#
+#    @{otherMessages}=   Create List    OPERATION    Sending guard query for APPC ModifyConfig
+#    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+#
+#    @{otherMessages}=   Create List    OPERATION    Guard result for APPC ModifyConfig is Permit
+#    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+#
+#    @{otherMessages}=   Create List    OPERATION    actor=APPC,operation=ModifyConfig
+#    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+#
+#    @{otherMessages}=   Create List    OPERATION: SUCCESS    actor=APPC,operation=ModifyConfig
+#    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+#
+#    Log    "Checking if policy execution status is FINAL: SUCCESS"
+#    @{otherMessages}=   Create List    FINAL: SUCCESS    APPC   ModifyConfig
+#    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+
 
 *** Keywords ***
 
@@ -182,3 +183,10 @@ CreatePolicy
 DeployPolicy
     [Arguments]     ${policyName}
     PerformPostRequest  /policy/pap/v1/pdps/deployments/batch  ${POLICY_PAP_IP}  ${policyName}  ${CURDIR}/data  json  202
+
+AssertMessageFromTopic
+    [Arguments]     ${topic}    ${topicMessage}     ${otherMessages}
+    ${response}=    Wait Until Keyword Succeeds    4 x    10 sec    CheckKafkaTopic    ${topic}    ${topicMessage}
+    FOR    ${msg}    IN    @{otherMessages}
+        Should Contain    ${response}    ${msg}
+    END
