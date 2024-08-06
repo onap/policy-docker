@@ -368,6 +368,7 @@ wait_for_pods_running() {
     if [ "$elapsed_time" -ge "$timeout_seconds" ]; then
       echo "Timed out waiting for the pods to reach 'Running' state."
       echo "Printing the current status of the deployment before exiting.."
+      kubectl get po;
       kubectl describe pods;
       echo "------------------------------------------------------------"
       for pod in "${pending_pods[@]}"; do
