@@ -34,7 +34,7 @@ global:
 
   image:
     readiness: onap/oom/readiness:3.0.1
-    mariadb: bitnami/mariadb-galera:10.5.8
+    mariadb: bitnami/mariadb-galera:10.10.2
     api: onap/policy-api:$tag
     pap: onap/policy-pap:$tag
     apex: onap/policy-apex-pdp:$tag
