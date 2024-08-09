@@ -36,5 +36,5 @@ source export-ports.sh > /dev/null 2>&1
 source get-versions.sh > /dev/null 2>&1
 
 export REPLICAS=${1}
-docker compose -f docker-compose.yml -f docker-compose.acm.scale.yml up -d nginx
+docker compose -f docker-compose.postgres.yml -f docker-compose.acm.scale.yml up -d nginx
 cd ${WORKSPACE}

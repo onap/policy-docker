@@ -71,10 +71,10 @@ Note: if latest Policy-API docker image is 2.8-SNAPSHOT-latest, but on nexus it 
 2 days ago and in local environment it's 3 months old - it will use the 3 months old image,
 so it's recommended to keep an eye on it.
 
-If needed, the version can be edited on docker-compose.yml and docker-compose.gui.yml
+If needed, the version can be edited on docker-compose.postgres.yml
 
 i.e: need to change db-migrator version
-from docker-compose.yml:
+from docker-compose.postgres.yml:
 ``image: ${CONTAINER_LOCATION}onap/policy-db-migrator:${POLICY_DOCKER_VERSION}``
 
 replace the ${POLICY_DOCKER_VERSION} for the specific version needed

@@ -128,7 +128,7 @@ cd ${COMPOSE_FOLDER}
 docker login -u docker -p docker nexus3.onap.org:10001 > /dev/null 2>&1
 source export-ports.sh > /dev/null 2>&1
 
-docker compose -f docker-compose.yml up -d "policy-clamp-runtime-acm"
+docker compose -f docker-compose.postgres.yml up -d "policy-clamp-runtime-acm"
 
 # wait for the app to start up
 "${SCRIPTS}"/wait_for_rest.sh localhost "${ACM_PORT}"
