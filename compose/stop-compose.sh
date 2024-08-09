@@ -51,11 +51,11 @@ IFS=$'\n' read -d '' -r -a item_list <<< "$containers"
 for item in "${item_list[@]}"
 do
     if [ -n "$item" ]; then
-        docker compose logs $item >> $item.log
+        docker compose -f docker-compose.postgres.yml logs $item >> $item.log
     fi
 done
 
 echo "Tearing down containers..."
-docker compose down -v --remove-orphans
+docker compose -f docker-compose.postgres.yml down -v --remove-orphans
 
 cd ${WORKSPACE}

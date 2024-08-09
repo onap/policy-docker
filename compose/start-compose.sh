@@ -72,20 +72,20 @@ export TEST_ENV="docker"
 if [ -n "$component" ]; then
   if [ "$component" == "logs" ]; then
   echo "Collecting logs..."
-    docker compose logs > docker-compose.log
+    docker compose -f docker-compose.postgres.yml logs > docker-compose.log
   elif [ "$grafana" = true ]; then
     echo "Starting ${component} application with Grafana"
-    docker compose up -d "${component}" grafana
+    docker compose -f docker-compose.postgres.yml up -d "${component}" grafana
     echo "Prometheus server: http://localhost:${PROMETHEUS_PORT}"
     echo "Grafana server: http://localhost:${GRAFANA_PORT}"
   else
     echo "Starting ${component} application"
-    docker compose up -d "${component}"
+    docker compose -f docker-compose.postgres.yml up -d "${component}"
   fi
 else
   export PROJECT=api # api has groups.json complete with all 3 pdps
   echo "Starting all components..."
-  docker compose up -d
+  docker compose -f docker-compose.postgres.yml up -d
 fi
 
 cd ${WORKSPACE}
