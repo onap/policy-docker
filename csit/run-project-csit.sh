@@ -78,15 +78,6 @@ function setup_apex() {
     apex_healthcheck
 }
 
-function setup_apex_postgres() {
-    export ROBOT_FILES="apex-pdp-test.robot"
-    source "${WORKSPACE}"/compose/start-postgres-tests.sh apex-pdp 1
-    sleep 10
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${PAP_PORT}
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${APEX_PORT}
-    apex_healthcheck
-}
-
 function setup_apex_medium() {
     export SUITES="apex-slas-3.robot"
     source "${WORKSPACE}"/compose/start-multiple-pdp.sh 3
@@ -141,13 +132,6 @@ function setup_xacml_pdp() {
     bash "${SCRIPTS}"/wait_for_rest.sh localhost "${XACML_PORT}"
 }
 
-function setup_xacml_pdp_postgres() {
-    export ROBOT_FILES="xacml-pdp-test.robot"
-    source "${WORKSPACE}"/compose/start-postgres-tests.sh xacml-pdp 1
-    sleep 10
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost "${XACML_PORT}"
-}
-
 function setup_drools_pdp() {
     export ROBOT_FILES="drools-pdp-test.robot"
     source "${WORKSPACE}"/compose/start-compose.sh drools-pdp
@@ -175,7 +159,7 @@ function build_robot_image() {
 }
 
 function run_robot() {
-    docker compose -f "${WORKSPACE}"/compose/docker-compose.yml up csit-tests
+    docker compose -f "${WORKSPACE}"/compose/docker-compose.postgres.yml up csit-tests
     export RC=$?
 }
 
@@ -202,9 +186,9 @@ function set_project_config() {
     apex-pdp | policy-apex-pdp)
         setup_apex
         ;;
-
+ 
     apex-pdp-postgres | policy-apex-pdp-postgres)
-        setup_apex_postgres
+        setup_apex
         ;;
 
     apex-pdp-medium | policy-apex-pdp-medium)
@@ -217,10 +201,6 @@ function set_project_config() {
 
     xacml-pdp | policy-xacml-pdp)
         setup_xacml_pdp
-        ;;
-
-    xacml-pdp-postgres | policy-xacml-pdp-postgres)
-        setup_xacml_pdp_postgres
         ;;
 
     drools-pdp | policy-drools-pdp)
