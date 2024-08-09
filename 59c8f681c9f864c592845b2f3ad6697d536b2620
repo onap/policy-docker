@@ -16,6 +16,29 @@
       "message": "acruntime postgres/mariadb could be profiles.\nsame for api/pap",
       "revId": "59c8f681c9f864c592845b2f3ad6697d536b2620",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20c76d57_ac2f15b4",
+        "filename": "compose/docker-compose.postgres.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-08-09T11:45:20Z",
+      "side": 1,
+      "message": "on start_compose script, it sets to ${PROJECT}, so need to change here",
+      "range": {
+        "startLine": 129,
+        "startChar": 17,
+        "endLine": 129,
+        "endChar": 29
+      },
+      "revId": "59c8f681c9f864c592845b2f3ad6697d536b2620",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
