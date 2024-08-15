@@ -33,7 +33,7 @@ function docker_stats(){
     fi
 
     # Memory details per Docker
-    docker ps --format "table {{ .Names }}\t{{ .Status }}"
+    docker ps --format "table {{ .Image }}\t{{ .Names }}\t{{ .Status }}"
     echo
 
     docker stats --no-stream
@@ -42,66 +42,63 @@ function docker_stats(){
 
 function setup_clamp() {
     export ROBOT_FILES="policy-clamp-test.robot clamp-slas.robot"
-    source "${WORKSPACE}"/compose/start-compose.sh policy-clamp-runtime-acm --grafana
+    source ${DOCKER_COMPOSE_DIR}/start-compose.sh policy-clamp-runtime-acm --grafana
     sleep 30
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost "${ACM_PORT}"
+    bash ${SCRIPTS}/wait_for_rest.sh localhost "${ACM_PORT}"
 }
 
 function setup_clamp_replica() {
+    export ACM_REPLICA_TEARDOWN=true
     export ROBOT_FILES="policy-clamp-test.robot"
     export TEST_ENV="docker"
-    source "${WORKSPACE}"/compose/start-acm-replica.sh 2
-    sleep 30
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost "${ACM_PORT}"
+    export PROJECT=clamp
+    source ${DOCKER_COMPOSE_DIR}/start-acm-replica.sh --start --replicas=2
+    echo "Waiting a minute for the replicas to be started..."
+    sleep 60
+    # checking on apex-pdp status because acm-r replicas only start after apex-pdp is running
+    bash ${SCRIPTS}/wait_for_rest.sh localhost ${APEX_PORT}
+    apex_healthcheck
+    bash ${SCRIPTS}/wait_for_rest.sh localhost ${ACM_PORT}
 }
 
 function setup_api() {
     export ROBOT_FILES="api-test.robot api-slas.robot"
-    source "${WORKSPACE}"/compose/start-compose.sh api --grafana
+    source ${DOCKER_COMPOSE_DIR}/start-compose.sh api --grafana
     sleep 10
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${API_PORT}
+    bash ${SCRIPTS}/wait_for_rest.sh localhost ${API_PORT}
 }
 
 function setup_pap() {
     export ROBOT_FILES="pap-test.robot pap-slas.robot"
-    source "${WORKSPACE}"/compose/start-compose.sh apex-pdp --grafana
+    source ${DOCKER_COMPOSE_DIR}/start-compose.sh apex-pdp --grafana
     sleep 10
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${PAP_PORT}
+    bash ${SCRIPTS}/wait_for_rest.sh localhost ${PAP_PORT}
 }
 
 function setup_apex() {
     export ROBOT_FILES="apex-pdp-test.robot apex-slas.robot"
-    source "${WORKSPACE}"/compose/start-compose.sh apex-pdp --grafana
+    source ${DOCKER_COMPOSE_DIR}/start-compose.sh apex-pdp --grafana
     sleep 10
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${PAP_PORT}
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${APEX_PORT}
-    apex_healthcheck
-}
-
-function setup_apex_postgres() {
-    export ROBOT_FILES="apex-pdp-test.robot"
-    source "${WORKSPACE}"/compose/start-postgres-tests.sh apex-pdp 1
-    sleep 10
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${PAP_PORT}
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${APEX_PORT}
+    bash ${SCRIPTS}/wait_for_rest.sh localhost ${PAP_PORT}
+    bash ${SCRIPTS}/wait_for_rest.sh localhost ${APEX_PORT}
     apex_healthcheck
 }
 
 function setup_apex_medium() {
     export SUITES="apex-slas-3.robot"
-    source "${WORKSPACE}"/compose/start-multiple-pdp.sh 3
+    source ${DOCKER_COMPOSE_DIR}/start-multiple-pdp.sh 3
     sleep 10
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${PAP_PORT}
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${APEX_PORT}
+    bash ${SCRIPTS}/wait_for_rest.sh localhost ${PAP_PORT}
+    bash ${SCRIPTS}/wait_for_rest.sh localhost ${APEX_PORT}
     apex_healthcheck
 }
 
 function setup_apex_large() {
     export ROBOT_FILES="apex-slas-10.robot"
-    source "${WORKSPACE}"/compose/start-multiple-pdp.sh 10
+    source ${DOCKER_COMPOSE_DIR}/start-multiple-pdp.sh 10
     sleep 10
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${PAP_PORT}
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${APEX_PORT}
+    bash ${SCRIPTS}/wait_for_rest.sh localhost ${PAP_PORT}
+    bash ${SCRIPTS}/wait_for_rest.sh localhost ${APEX_PORT}
     apex_healthcheck
 }
 
@@ -125,57 +122,49 @@ function apex_healthcheck() {
 
 function setup_drools_apps() {
     export ROBOT_FILES="drools-applications-test.robot"
-    source "${WORKSPACE}"/compose/start-compose.sh drools-applications
+    source ${DOCKER_COMPOSE_DIR}/start-compose.sh drools-applications
     sleep 10
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${PAP_PORT}
+    bash ${SCRIPTS}/wait_for_rest.sh localhost ${PAP_PORT}
     sleep 10
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${DROOLS_APPS_PORT}
+    bash ${SCRIPTS}/wait_for_rest.sh localhost ${DROOLS_APPS_PORT}
     sleep 10
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${DROOLS_APPS_TELEMETRY_PORT}
+    bash ${SCRIPTS}/wait_for_rest.sh localhost ${DROOLS_APPS_TELEMETRY_PORT}
 }
 
 function setup_xacml_pdp() {
     export ROBOT_FILES="xacml-pdp-test.robot"
-    source "${WORKSPACE}"/compose/start-compose.sh xacml-pdp
+    source ${DOCKER_COMPOSE_DIR}/start-compose.sh xacml-pdp
     sleep 10
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost "${XACML_PORT}"
-}
-
-function setup_xacml_pdp_postgres() {
-    export ROBOT_FILES="xacml-pdp-test.robot"
-    source "${WORKSPACE}"/compose/start-postgres-tests.sh xacml-pdp 1
-    sleep 10
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost "${XACML_PORT}"
+    bash ${SCRIPTS}/wait_for_rest.sh localhost "${XACML_PORT}"
 }
 
 function setup_drools_pdp() {
     export ROBOT_FILES="drools-pdp-test.robot"
-    source "${WORKSPACE}"/compose/start-compose.sh drools-pdp
+    source ${DOCKER_COMPOSE_DIR}/start-compose.sh drools-pdp
     sleep 30
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost ${DROOLS_TELEMETRY_PORT}
+    bash ${SCRIPTS}/wait_for_rest.sh localhost ${DROOLS_TELEMETRY_PORT}
 }
 
 function setup_distribution() {
-    zip -F ${WORKSPACE}/csit/resources/tests/data/csar/sample_csar_with_apex_policy.csar \
-        --out ${WORKSPACE}/csit/resources/tests/data/csar/csar_temp.csar -q
+    zip -F ${CSAR_DIR}/sample_csar_with_apex_policy.csar --out ${CSAR_DIR}/csar_temp.csar -q
 
     # Remake temp directory
     sudo rm -rf /tmp/distribution
     sudo mkdir /tmp/distribution
 
     export ROBOT_FILES="distribution-test.robot"
-    source "${WORKSPACE}"/compose/start-compose.sh distribution
+    source ${DOCKER_COMPOSE_DIR}/start-compose.sh distribution
     sleep 10
-    bash "${SCRIPTS}"/wait_for_rest.sh localhost "${DIST_PORT}"
+    bash ${SCRIPTS}/wait_for_rest.sh localhost "${DIST_PORT}"
 }
 
 function build_robot_image() {
-    bash "${SCRIPTS}"/build-csit-docker-image.sh
+    bash ${SCRIPTS}/build-csit-docker-image.sh
     cd ${WORKSPACE}
 }
 
 function run_robot() {
-    docker compose -f "${WORKSPACE}"/compose/docker-compose.yml up csit-tests
+    docker compose -f ${DOCKER_COMPOSE_DIR}/compose.yaml up csit-tests
     export RC=$?
 }
 
@@ -204,7 +193,7 @@ function set_project_config() {
         ;;
 
     apex-pdp-postgres | policy-apex-pdp-postgres)
-        setup_apex_postgres
+        setup_apex
         ;;
 
     apex-pdp-medium | policy-apex-pdp-medium)
@@ -217,10 +206,6 @@ function set_project_config() {
 
     xacml-pdp | policy-xacml-pdp)
         setup_xacml_pdp
-        ;;
-
-    xacml-pdp-postgres | policy-xacml-pdp-postgres)
-        setup_xacml_pdp_postgres
         ;;
 
     drools-pdp | policy-drools-pdp)
@@ -244,9 +229,16 @@ function set_project_config() {
 
 # even with forced finish, clean up docker containers
 function on_exit(){
-    rm -rf ${WORKSPACE}/csit/resources/tests/data/csar/csar_temp.csar
-    source ${WORKSPACE}/compose/stop-compose.sh
-    cp ${WORKSPACE}/compose/*.log ${WORKSPACE}/csit/archives/${PROJECT}
+    rm -rf ${CSAR_DIR}/csar_temp.csar
+
+    # teardown of compose containers for acm-replicas doesn't work with normal stop-compose script
+    if [ "${ACM_REPLICA_TEARDOWN}" = true ]; then
+        source ${DOCKER_COMPOSE_DIR}/start-acm-replica.sh --stop --replicas=2
+    else
+        source ${DOCKER_COMPOSE_DIR}/stop-compose.sh ${PROJECT}
+    fi
+
+    mv ${DOCKER_COMPOSE_DIR}/*.log ${ROBOT_LOG_DIR}
     exit $RC
 }
 
@@ -261,11 +253,12 @@ fi
 
 export GERRIT_BRANCH=$(awk -F= '$1 == "defaultbranch" { print $2 }' "${WORKSPACE}"/.gitreview)
 export PROJECT="${1}"
-export ROBOT_LOG_DIR=${WORKSPACE}/csit/archives/${PROJECT}
+export ROBOT_LOG_DIR="${WORKSPACE}/csit/archives/${PROJECT}"
 export SCRIPTS="${WORKSPACE}/csit/resources/scripts"
+export CSAR_DIR="${WORKSPACE}/csit/resources/tests/data/csar"
+export DOCKER_COMPOSE_DIR="${WORKSPACE}/compose"
 export ROBOT_FILES=""
-# always 'docker' if running docker compose
-export TEST_ENV="docker"
+export ACM_REPLICA_TEARDOWN=false
 
 cd "${WORKSPACE}"
 
@@ -284,7 +277,7 @@ if [[ $compose_version == *"Docker Compose version"* ]]; then
 else
     echo "Docker Compose Plugin not installed. Installing now..."
     sudo mkdir -p /usr/local/lib/docker/cli-plugins
-    sudo curl -SL https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose
+    sudo curl -SL https://github.com/docker/compose/releases/download/v2.29.1/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose
     sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 fi
 
@@ -301,9 +294,9 @@ else
     build_robot_image
 fi
 
-docker_stats | tee "${WORKSPACE}/csit/archives/${PROJECT}/_sysinfo-1-after-setup.txt"
+docker_stats | tee "${ROBOT_LOG_DIR}/_sysinfo-1-after-setup.txt"
 
 # start the CSIT container and run the tests
 run_robot
 
-docker ps --format "table {{ .Names }}\t{{ .Status }}"
+docker ps --format "table {{ .Image }}\t{{ .Names }}\t{{ .Status }}"

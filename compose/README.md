@@ -4,7 +4,7 @@ The PF docker compose starts a small instance of docker containers for PF compon
 
 ## Features
 
-- Starts all components, including Prometheus/Grafana dashboard and GUI (ACM and Apex)
+- Starts all components, including Prometheus/Grafana dashboard
 - Can start specific components
 - Expose fixed ports so all the REST endpoints can be called with localhost:component_port
 
@@ -21,15 +21,9 @@ Things to be installed beforehand:
 
 Assuming the docker repository has been cloned and workdir is ../docker/compose
 
-- Install all PF components (excluding GUI)
+- Install all PF components
 ```sh
 ./start-compose.sh
-```
-
-- Install all PF components + GUI
-
-```sh
-./start-compose.sh --gui
 ```
 
 - Install an specific PF component
@@ -56,11 +50,13 @@ policy-clamp-runtime-acm)
 ./start-compose.sh apex-pdp --grafana
 ```
 
-## Docker image localization
+## Docker image download localization
 
 The docker images are always downloaded from nexus repository, but if needed to build a local
-image, edit the ``export-ports.sh`` script and change the variable ``CONTAINER_LOCATION``
-to be empty.
+image, edit the ``get-versions.sh`` script and change the variable ``LOCAL_IMAGES``
+to `true` or edit the image tag in the docker compose file.
+Changing the variable to `true` will ensure that the newly built images locally are being used
+by not requesting a download from nexus and using the image tagged as latest.
 
 
 ## Docker image versions
@@ -71,10 +67,10 @@ Note: if latest Policy-API docker image is 2.8-SNAPSHOT-latest, but on nexus it 
 2 days ago and in local environment it's 3 months old - it will use the 3 months old image,
 so it's recommended to keep an eye on it.
 
-If needed, the version can be edited on docker-compose.yml and docker-compose.gui.yml
+If needed, the version can be edited on any docker compose yml file.
 
 i.e: need to change db-migrator version
-from docker-compose.yml:
+from compose.{database}.yml:
 ``image: ${CONTAINER_LOCATION}onap/policy-db-migrator:${POLICY_DOCKER_VERSION}``
 
 replace the ${POLICY_DOCKER_VERSION} for the specific version needed
@@ -82,19 +78,42 @@ replace the ${POLICY_DOCKER_VERSION} for the specific version needed
 
 ## Logs
 
-To collect the docker-compose logs, simply run the following:
-
-```sh
-./start-compose.sh logs
-```
-Note: these are logs for installation only, not actual application usage
-
-It will generate a ``docker-compose.log`` file with the result.
+Use ``docker compose logs`` or `docker logs ${container_name}` instructions on how to collect logs.
 
 ## Uninstall
 
-Simply run the ``stop-compose.sh`` script.
+Simply run the ``stop-compose.sh`` script. This will also generate logs from the services started with compose.
 
 ```sh
 ./stop-compose.sh
 ```
+
+## Database support
+
+From Oslo version onwards, this docker compose setup uses Postgres database as default; MariaDB is still available,
+but support might be limited.
+
+To start docker compose with MariaDB, add a flag to use it:
+
+```sh
+# that will start apex-pdp and its dependencies (pap, api, mariadb, simulator)
+./start-compose.sh apex-pdp --mariadb
+# that will start apex-pdp and its dependencies (pap, api, postgres, simulator)
+./start-compose.sh apex-pdp
+```
+
+### Docker compose files
+
+To make it easier and clear how the docker compose system works, there are three files describing the services
+- compose.common.yml
+  - Has policy services that don't connect directly to database: apex-pdp and distribution
+  - Simulator service
+  - ACM-R Participants that don't connect directly to database.
+  - Messaging services (kafka, zookeeper)
+  - Metrics services (prometheus, grafana, jaeger)
+- compose.postgres.yml
+  - All policy services that connect directly to database with Postgres configurations
+  - Postgres database and policy-db-migrator working towards it
+- compose.mariadb.yml
+  - All policy services that connect directly to database with MariaDB configurations
+  - MariaDB database and policy-db-migrator working towards it

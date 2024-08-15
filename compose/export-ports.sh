@@ -17,19 +17,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
-if $(docker images | grep -q "^onap\/policy-api")
-then
-    export CONTAINER_LOCATION=$(
-        docker images |
-        grep "^onap/policy-api" |
-        head -1 |
-        sed 's/onap\/policy-api.*$//'
-    )
-    export LOCAL_IMAGES="true"
-else
-    export CONTAINER_LOCATION="nexus3.onap.org:10001/"
-fi
-
 # EXPLICITLY ASSIGN PORTS FOR TESTING PURPOSES
 export APEX_PORT=30001
 export APEX_EVENTS_PORT=23324

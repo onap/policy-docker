@@ -25,11 +25,13 @@ if [ -z "${WORKSPACE}" ]; then
     export WORKSPACE
 fi
 
+LOCAL_IMAGES=false
+
 #default values
 export POLICY_MARIADB_VER=10.10.2
 echo POLICY_MARIADB_VER=${POLICY_MARIADB_VER}
 
-export POLICY_POSTGRES_VER=11.1
+export POLICY_POSTGRES_VER=16.4
 echo POLICY_POSTGRES_VER=${POLICY_POSTGRES_VER}
 
 if [ -n "$LOCAL_IMAGES" ] && [ "$LOCAL_IMAGES" = "true" ]; then
@@ -45,8 +47,10 @@ if [ -n "$LOCAL_IMAGES" ] && [ "$LOCAL_IMAGES" = "true" ]; then
     export POLICY_CLAMP_VERSION="latest"
     export POLICY_CLAMP_PPNT_VERSION=$POLICY_CLAMP_VERSION
     export POLICY_DROOLS_APPS_VERSION="latest"
+    export CONTAINER_LOCATION=""
 
 else
+    export CONTAINER_LOCATION="nexus3.onap.org:10001/"
     GERRIT_BRANCH=$(awk -F= '$1 == "defaultbranch" { print $2 }' \
                         "${WORKSPACE}"/.gitreview)
 
@@ -123,7 +127,7 @@ else
     getDockerVersion docker
     export POLICY_DOCKER_VERSION="$docker_image_version"
 
-    getDockerVersion models "'policy-models-simulator'" 3.0.1
+    getDockerVersion models
     export POLICY_MODELS_VERSION="$docker_image_version"
 
     getDockerVersion api

@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # ============LICENSE_START====================================================
-#  Copyright (C) 2023 Nordix Foundation.
+#  Copyright (C) 2023-2024 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,6 +35,8 @@ source export-ports.sh > /dev/null 2>&1
 source get-versions.sh > /dev/null 2>&1
 
 export REPLICAS=${1}
-docker compose -f docker-compose.yml -f docker-compose.pdp.scale.yml up -d apexpdp nginx grafana
+export database=postgres
+
+docker compose -f compose.yaml -f compose.pdp.scale.yml up -d apexpdp nginx grafana postgres
 
 cd ${WORKSPACE}

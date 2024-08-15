@@ -10,10 +10,9 @@ spring:
     name: policyadmin
     password: zb!XztG34
   mvc.converters.preferred-json-mapper: gson
-
   datasource:
-    url: jdbc:mariadb://mariadb:3306/policyadmin
-    driverClassName: org.mariadb.jdbc.Driver
+    url: jdbc:postgresql://postgres:5432/policyadmin
+    driverClassName: org.postgresql.Driver
     username: policy_user
     password: policy_user
   jpa:
@@ -30,8 +29,8 @@ policy-api:
 database:
   name: PolicyProviderParameterGroup
   implementation: org.onap.policy.models.provider.impl.DatabasePolicyModelsProviderImpl
-  driver: org.mariadb.jdbc.Driver
-  url: jdbc:mariadb://mariadb:3306/policyadmin
+  driver: org.postgresql.Driver
+  url: jdbc:postgresql://postgres:5432/policyadmin
   user: policy_user
   password: policy_user
   persistenceUnit: PolicyDb
@@ -82,3 +81,24 @@ management:
       path-mapping:
         -metrics: plain-metrics
         -prometheus: metrics
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: mariadb
+  datasource:
+    url: jdbc:mariadb://mariadb:3306/policyadmin
+    driverClassName: org.mariadb.jdbc.Driver
+    username: policy_user
+    password: policy_user
+
+database:
+  name: PolicyProviderParameterGroup
+  implementation: org.onap.policy.models.provider.impl.DatabasePolicyModelsProviderImpl
+  driver: org.mariadb.jdbc.Driver
+  url: jdbc:mariadb://mariadb:3306/policyadmin
+  user: policy_user
+  password: policy_user
+  persistenceUnit: PolicyDb

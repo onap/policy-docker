@@ -54,7 +54,7 @@ do
     do
         if command -v docker > /dev/null 2>&1
         then
-            docker ps --format "table {{ .Names }}\t{{ .Status }}"
+            docker ps --format "table {{ .Image }}\t{{ .Names }}\t{{ .Status }}"
         fi
         curl "http://$host:$port" > /dev/null 2>&1
         rc=$?

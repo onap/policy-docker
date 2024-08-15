@@ -20,8 +20,9 @@
 
 #Usage: $0 [policy-component] [OPTIONS]"
 #"  OPTIONS:"
-#"  --grafana        start the docker compose with grafana"
-#"  --gui            start the docker compose with gui"
+#"  --grafana              start the docker compose with grafana"
+#"  --mariadb              start the docker compose using mariadb"
+#"  --postgres [default]   start the docker compose using postgres db"
 #"  no policy-component will start all components"
 
 if [ -z "${WORKSPACE}" ]; then
@@ -32,6 +33,7 @@ COMPOSE_FOLDER="${WORKSPACE}"/compose
 
 # Set default values for the options
 grafana=false
+database=postgres
 
 # Parse the command-line arguments
 while [[ $# -gt 0 ]]
@@ -41,6 +43,14 @@ do
   case $key in
     --grafana)
       grafana=true
+      shift
+      ;;
+    --mariadb)
+      database=mariadb
+      shift
+      ;;
+    --postgres)
+      database=postgres
       shift
       ;;
     *)
@@ -61,30 +71,23 @@ if [ -z "$PROJECT" ]; then
   export PROJECT=$component
 fi
 
-# docker compose fails when not running CSIT
-if [ -z "$ROBOT_LOG_DIR" ]; then
-  export ROBOT_LOG_DIR=/tmp/
-fi
-
-# always 'docker' if running docker compose
-export TEST_ENV="docker"
+export database
 
 if [ -n "$component" ]; then
-  if [ "$component" == "logs" ]; then
-  echo "Collecting logs..."
-    docker compose logs > docker-compose.log
-  elif [ "$grafana" = true ]; then
-    echo "Starting ${component} application with Grafana"
-    docker compose up -d "${component}" grafana
+  if [ "$grafana" = true ]; then
+    echo "Starting ${component} using ${database} + Grafana/Prometheus"
+    docker compose up -d ${component} ${database} grafana
+
     echo "Prometheus server: http://localhost:${PROMETHEUS_PORT}"
     echo "Grafana server: http://localhost:${GRAFANA_PORT}"
+
   else
-    echo "Starting ${component} application"
-    docker compose up -d "${component}"
+    echo "Starting ${component} using ${database}"
+    docker compose up -d ${component} ${database}
   fi
 else
   export PROJECT=api # api has groups.json complete with all 3 pdps
-  echo "Starting all components..."
+  echo "Starting all components using ${database}"
   docker compose up -d
 fi
 

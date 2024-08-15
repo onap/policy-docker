@@ -1,6 +1,6 @@
 #!/bin/sh
 # ============LICENSE_START====================================================
-#  Copyright (C) 2021 Nordix Foundation.
+#  Copyright (C) 2021, 2024 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,14 +22,21 @@ export SQL_USER=${MYSQL_USER}
 export SQL_PASSWORD=${MYSQL_PASSWORD}
 export SCRIPT_DIRECTORY=sql
 
-/opt/app/policy/bin/prepare_upgrade.sh ${SQL_DB}
+for schema in ${SQL_DB}; do
+    echo "Initializing $schema..."
+    /opt/app/policy/bin/prepare_upgrade.sh ${schema}
 
-/opt/app/policy/bin/db-migrator -s ${SQL_DB} -o report
+    /opt/app/policy/bin/db-migrator -s ${schema} -o report
 
-/opt/app/policy/bin/db-migrator -s ${SQL_DB} -o upgrade
-rc=$?
+    /opt/app/policy/bin/db-migrator -s ${schema} -o upgrade
+    rc=$?
 
-/opt/app/policy/bin/db-migrator -s ${SQL_DB} -o report
+    /opt/app/policy/bin/db-migrator -s ${schema} -o report
+
+    if [ "$rc" != 0 ]; then
+        break
+    fi
+done
 
 nc -l -p 6824
 
