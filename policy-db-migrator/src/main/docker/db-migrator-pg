@@ -41,7 +41,7 @@
 # to be upgraded/downgraded.
 #
 # The repository of upgrade/downgrade scripts is located in the
-# /home/${SQL_DB}/sql directory.
+# /home/${SCHEMA}/sql directory.
 # Two additional scripts have been provided to prepare the directories/files
 # needed to perform the upgrade/downgrade.
 #
@@ -111,7 +111,7 @@ function current_schema() {
     local rc
     local query="SELECT count(table_name) from information_schema.tables where table_schema='${SCHEMA}'"
 
-    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${SQL_DB}"
+    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${SCHEMA}"
     TABLES_IN_SCHEMA=$(${PSQL} -X -A --tuples-only --quiet --command "${query}")
     if [ ${TABLES_IN_SCHEMA} -gt 0 ] && [ "${BASE_VERSION}" \> "${CURRENT_RELEASE}" ]; then
         set_current_release "${BASE_VERSION}"
@@ -274,7 +274,7 @@ function current_release() {
     fi
 
     local rc
-    local query="SELECT version FROM schema_versions WHERE name='${SQL_DB}'"
+    local query="SELECT version FROM schema_versions WHERE name='${SCHEMA}'"
 
     PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${METADATA_DB}"
     CURRENT_RELEASE=$(${PSQL} -X -A -t --command "${query}")
@@ -387,7 +387,7 @@ function run_script() {
     echo
     echo "> ${operation} ${script}"
 
-    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${SQL_DB}"
+    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${SCHEMA}"
     ${PSQL} <"${scriptPath}"
     local rc=$?
     if [ ${rc} -ne 0 ]; then
@@ -633,7 +633,7 @@ if [ -z "${SQL_HOST}" ] || [ -z "${SQL_USER}" ] || [ -z "${SQL_PASSWORD}" ]; the
     exit 4
 fi
 
-PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${SQL_DB}"
+PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${SCHEMA}"
 if ! ${PSQL} --command '\l'; then
     echo "error: No DB connectivity to ${SQL_HOST} for ${SQL_USER}"
     exit 5
@@ -703,7 +703,7 @@ for dbPath in ${SCHEMA_S}; do
         fi
     fi
 
-    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${SQL_DB};"
+    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${SCHEMA};"
     # Check if the schema has already been installed
     current_schema
     RETRY=0

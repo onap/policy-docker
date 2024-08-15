@@ -41,7 +41,7 @@
 # to be upgraded/downgraded.
 #
 # The repository of upgrade/downgrade scripts is located in the
-# /home/${SQL_DB}/sql directory.
+# /home/${SCHEMA}/sql directory.
 # Two additional scripts have been provided to prepare the directories/files
 # needed to perform the upgrade/downgrade.
 #

@@ -54,10 +54,7 @@ COPY --chown=policy:policy ./db-migrator $POLICY_BIN/
 COPY --chown=policy:policy ./db-migrator-pg $POLICY_BIN/
 COPY --chown=policy:policy ./prepare_upgrade.sh $POLICY_BIN/
 COPY --chown=policy:policy ./prepare_downgrade.sh $POLICY_BIN/
-COPY --chown=policy:policy ./config/policyadmin/sql /home/policyadmin/sql
-COPY --chown=policy:policy ./config/policyadmin/postgres /home/policyadmin/postgres
-COPY --chown=policy:policy ./config/clampacm/sql /home/clampacm/sql
-COPY --chown=policy:policy ./config/clampacm/postgres /home/clampacm/postgres
+COPY --chown=policy:policy ./config /home
 
 WORKDIR $POLICY_BIN
 USER policy:policy
