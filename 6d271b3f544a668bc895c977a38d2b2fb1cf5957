@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef239a7e_1032278f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2024-08-15T08:27:59Z",
+      "side": 1,
+      "message": "Any test would be needed to validate that the migration happened in stages?",
+      "revId": "6d271b3f544a668bc895c977a38d2b2fb1cf5957",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
