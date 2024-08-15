@@ -9,8 +9,8 @@ spring:
     converters:
       preferred-json-mapper: gson
   datasource:
-    url: jdbc:mariadb://${mariadb.host:mariadb}:${mariadb.port:3306}/clampacm
-    driverClassName: org.mariadb.jdbc.Driver
+    url: jdbc:postgresql://postgres:5432/policyadmin
+    driverClassName: org.postgresql.Driver
     username: policy_user
     password: policy_user
     hikari:
@@ -20,7 +20,7 @@ spring:
       maximumPoolSize: 10
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.onap.policy.common.spring.utils.CustomImplicitNamingStrategy
@@ -96,26 +96,19 @@ metrics:
 
 
 # Tracing can be configured for grpc or http - default is http
-#tracing:
-#  enabled: true
-#  exporter:
-#    endpoint: http://jaeger:4317
-#    protocol: grpc
-#  sampler:
-#    jaeger-remote:
-#      endpoint: http://jaeger:14250
 
 tracing:
   enabled: true
   exporter:
     endpoint: http://jaeger:4318/v1/traces
     protocol: http
+#    protocol: grpc
   sampler:
     jaeger-remote:
       endpoint: http://jaeger:14250
 
-# legacy config
 ---
+# legacy config
 
 spring:
   config:
@@ -144,3 +137,13 @@ runtime:
   acmParameters:
     toscaElementName: org.onap.policy.clamp.acm.AutomationCompositionElement
     toscaCompositionName: org.onap.policy.clamp.acm.AutomationComposition
+
+---
+# mariadb config
+spring:
+  config:
+    activate:
+      on-profile: mariadb
+  datasource:
+    url: jdbc:mariadb://${mariadb.host:mariadb}:${mariadb.port:3306}/clampacm
+    driverClassName: org.mariadb.jdbc.Driver

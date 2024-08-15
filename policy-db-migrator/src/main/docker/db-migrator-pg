@@ -3,8 +3,7 @@
 # ============LICENSE_START=======================================================
 # ONAP
 # ================================================================================
-# Copyright (C) 2022 Nordix Foundation.
-# Modification Copyright 2024 Nordix Foundation.
+# Copyright (C) 2022, 2024 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -111,7 +110,7 @@ function current_schema() {
     local rc
     local query="SELECT count(table_name) from information_schema.tables where table_schema='${SCHEMA}'"
 
-    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${SCHEMA}"
+    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -w -d ${SCHEMA}"
     TABLES_IN_SCHEMA=$(${PSQL} -X -A --tuples-only --quiet --command "${query}")
     if [ ${TABLES_IN_SCHEMA} -gt 0 ] && [ "${BASE_VERSION}" \> "${CURRENT_RELEASE}" ]; then
         set_current_release "${BASE_VERSION}"
@@ -133,13 +132,7 @@ function ensure_metadata() {
 
     local sql rc
 
-    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${METADATA_DB}"
-    sql="SELECT 'CREATE DATABASE migration' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'migration');"
-    ${PSQL} --command "${sql}"
-    rc=$?
-    if [ ${rc} -ne 0 ]; then
-        return ${rc}
-    fi
+    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -w -d ${METADATA_DB}"
 
     sql="CREATE TABLE IF NOT EXISTS ${METADATA_TABLE} "
     sql=${sql}"(name VARCHAR(60) NOT NULL, version VARCHAR(20), "
@@ -160,7 +153,7 @@ function ensure_metadata_schema() {
 
     local sql rc
 
-    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${METADATA_DB}"
+    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -w -d ${METADATA_DB}"
     sql="CREATE TABLE IF NOT EXISTS ${METADATA_HISTORY} "
     sql=${sql}"(ID bigserial, script VARCHAR(80) NOT NULL, "
     sql=${sql}"operation VARCHAR(10), from_version VARCHAR(20), to_version VARCHAR(20), tag VARCHAR(20), "
@@ -170,10 +163,6 @@ function ensure_metadata_schema() {
     if [ ${rc} -ne 0 ]; then
         return ${rc}
     fi
-
-    sql="SELECT 'CREATE DATABASE migration' WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'policyadmin');"
-    ${PSQL} --command "${sql}"
-    return $?
 }
 
 #####################################################
@@ -258,7 +247,7 @@ function set_current_release() {
     sql=${sql}"VALUES('${SCHEMA}', '${CURRENT_RELEASE}') "
     sql=${sql}"ON CONFLICT (name) DO UPDATE SET version='${CURRENT_RELEASE}';"
 
-    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${METADATA_DB}"
+    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -w -d ${METADATA_DB}"
     ${PSQL} --command "${sql}"
     return $?
 }
@@ -276,7 +265,7 @@ function current_release() {
     local rc
     local query="SELECT version FROM schema_versions WHERE name='${SCHEMA}'"
 
-    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${METADATA_DB}"
+    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -w -d ${METADATA_DB}"
     CURRENT_RELEASE=$(${PSQL} -X -A -t --command "${query}")
 
     if [ -z "${CURRENT_RELEASE}" ]; then
@@ -332,7 +321,7 @@ function last_operation_status() {
     query=${query}"(SELECT MAX(id) from ${METADATA_HISTORY}) "
     query=${query}"AND success::integer=0"
 
-    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${METADATA_DB}"
+    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -w -d ${METADATA_DB}"
     row=$(${PSQL} --tuples-only --quiet --command "${query}")
 
     if [ "${row}" != "" ]; then
@@ -367,7 +356,7 @@ function track_script() {
     local sql="INSERT INTO ${METADATA_HISTORY}(script,operation,from_version,to_version,tag,success,atTime) "
     sql=${sql}"VALUES ('${script}','${operation}','${from_version}','${to_version}','${tag}','${success}',now()) "
 
-    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${METADATA_DB}"
+    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -w -d ${METADATA_DB}"
     ${PSQL} --command "${sql}"
     return $?
 }
@@ -387,7 +376,7 @@ function run_script() {
     echo
     echo "> ${operation} ${script}"
 
-    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${SCHEMA}"
+    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -w -d ${SCHEMA}"
     ${PSQL} <"${scriptPath}"
     local rc=$?
     if [ ${rc} -ne 0 ]; then
@@ -510,7 +499,7 @@ function erase() {
         set -x
     fi
 
-    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${METADATA_DB}"
+    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -w -d ${METADATA_DB}"
     local updateMetadata="UPDATE ${METADATA_TABLE} SET version='${ZERO_VERSION}';"
     ${PSQL} --command "${updateMetadata}"
 
@@ -531,7 +520,7 @@ function report() {
         set -x
     fi
 
-    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${METADATA_DB}"
+    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -w -d ${METADATA_DB}"
     local versionSql="SELECT * FROM ${METADATA_TABLE} WHERE name='${SCHEMA}';"
     ${PSQL} --command "${versionSql}"
 
@@ -633,7 +622,7 @@ if [ -z "${SQL_HOST}" ] || [ -z "${SQL_USER}" ] || [ -z "${SQL_PASSWORD}" ]; the
     exit 4
 fi
 
-PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${SCHEMA}"
+PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -w -d ${SCHEMA}"
 if ! ${PSQL} --command '\l'; then
     echo "error: No DB connectivity to ${SQL_HOST} for ${SQL_USER}"
     exit 5
@@ -703,7 +692,7 @@ for dbPath in ${SCHEMA_S}; do
         fi
     fi
 
-    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -d ${SCHEMA};"
+    PSQL="psql -h ${SQL_HOST} -U ${SQL_USER} -w -d ${SCHEMA};"
     # Check if the schema has already been installed
     current_schema
     RETRY=0

@@ -67,10 +67,6 @@ if [ -z "${WORKSPACE}" ]; then
     export WORKSPACE
 fi
 
-if [ -z "$ROBOT_LOG_DIR" ]; then
-  export ROBOT_LOG_DIR=/tmp/
-fi
-
 export SCRIPTS="${WORKSPACE}/csit/resources/scripts"
 COMPOSE_FOLDER="${WORKSPACE}"/compose
 REGRESSION_FOLDER="${WORKSPACE}"/policy-regression-tests/policy-clamp-regression/
@@ -128,7 +124,9 @@ cd ${COMPOSE_FOLDER}
 docker login -u docker -p docker nexus3.onap.org:10001 > /dev/null 2>&1
 source export-ports.sh > /dev/null 2>&1
 
-docker compose -f docker-compose.yml up -d "policy-clamp-runtime-acm"
+export CONTAINER_LOCATION="nexus3.onap.org:10001/"
+
+docker compose up -d "policy-clamp-runtime-acm"
 
 # wait for the app to start up
 "${SCRIPTS}"/wait_for_rest.sh localhost "${ACM_PORT}"
@@ -138,3 +136,8 @@ cd ${REGRESSION_FOLDER}
 # Invoke the regression test cases
 mvn clean test -Dtests.skip=false
 
+cd ${COMPOSE_FOLDER}
+source stop-compose.sh clamp
+mv ${COMPOSE_FOLDER}/*.log ${REGRESSION_FOLDER}
+
+cd ${REGRESSION_FOLDER}

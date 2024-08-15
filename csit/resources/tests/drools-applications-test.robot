@@ -69,10 +69,9 @@ DeployDroolsPolicies
     [Documentation]    Deploys the Policies to Drools
     DeployPolicy   deploy.drools.policies.json
     Sleep  5s
-    ${result}=    CheckKafkaTopic    policy-notification    operational.modifyconfig
-    Should Contain    ${result}    deployed-policies
-    Should Contain    ${result}    operational.scaleout
-    Should Contain    ${result}    operational.restart
+    @{otherMessages}=   Create List     deployed-policies   operational.scaleout    operational.restart
+    AssertMessageFromTopic    policy-notification    operational.modifyconfig    ${otherMessages}
+
 
 #VcpeExecute
 #    [Documentation]    Executes VCPE Policy

@@ -24,14 +24,30 @@ if [ -z "${WORKSPACE}" ]; then
     export WORKSPACE
 fi
 
-# always 'docker' if running docker compose
-export TEST_ENV="docker"
+database=postgres
 
-# docker compose fails when not running CSIT
-if [ -z "$ROBOT_LOG_DIR" ]; then
-  export ROBOT_LOG_DIR=/tmp/
-  export ROBOT_FILES=none
-  export PROJECT=api
+while [[ $# -gt 0 ]]
+do
+  key="$1"
+
+  case $key in
+    --mariadb)
+      database=mariadb
+      shift
+      ;;
+    --postgres)
+      database=postgres
+      shift
+      ;;
+    *)
+      component="$1"
+      shift
+      ;;
+  esac
+done
+
+if [ -z "$component" ]; then
+  export component=api
 fi
 
 COMPOSE_FOLDER="${WORKSPACE}"/compose
@@ -43,6 +59,8 @@ source get-versions.sh > /dev/null 2>&1
 
 echo "Collecting logs from docker compose containers..."
 rm -rf *.log
+
+#COMPOSE_FILES="-f compose.${database}.yml -f compose.pdp.scale.yml -f compose.acm.scale.yml"
 
 # this will collect logs by service instead of mixing all together
 containers=$(docker compose ps --all --format '{{.Service}}')

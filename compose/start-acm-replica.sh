@@ -18,13 +18,39 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END======================================================
 
+# Usage: --start to run the docker compose with acm replicas
+#        --stop to stop the docker compose containers
+#        --replicas number of replicas (defaults to 2)
+
+# Initialize variables
+START=false
+REPLICAS=2
+
+# Parse arguments
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --start)
+            START=true
+            shift
+            ;;
+        --stop)
+            START=false
+            shift
+            ;;
+        --replicas=*)
+            REPLICAS="${1#*=}"
+            shift
+            ;;
+        *)
+            echo "Unknown option: $1"
+            exit 1
+            ;;
+    esac
+done
+
 if [ -z "${WORKSPACE}" ]; then
     WORKSPACE=$(git rev-parse --show-toplevel)
     export WORKSPACE
-fi
-
-if [ -z "$ROBOT_LOG_DIR" ]; then
-  export ROBOT_LOG_DIR=/tmp/
 fi
 
 COMPOSE_FOLDER="${WORKSPACE}"/compose
@@ -35,6 +61,28 @@ echo "Configuring docker compose..."
 source export-ports.sh > /dev/null 2>&1
 source get-versions.sh > /dev/null 2>&1
 
-export REPLICAS=${1}
-docker compose -f docker-compose.yml -f docker-compose.acm.scale.yml up -d nginx
+export REPLICAS
+
+if [ -z "$PROJECT" ]; then
+  export PROJECT=clamp
+fi
+
+export database=postgres
+
+if [ "$START" = true ]; then
+    docker compose -f compose.acm.scale.yml up -d nginx
+else
+    containers=$(docker compose -f compose.acm.scale.yml ps --all --format '{{.Service}}')
+
+    IFS=$'\n' read -d '' -r -a item_list <<< "$containers"
+    for item in "${item_list[@]}"
+    do
+        if [ -n "$item" ]; then
+            docker compose -f compose.acm.scale.yml logs $item >> $item.log
+        fi
+    done
+
+    docker compose -f compose.acm.scale.yml down -v --remove-orphans
+fi
+
 cd ${WORKSPACE}
