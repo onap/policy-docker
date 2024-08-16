@@ -57,6 +57,11 @@ node_types:
           first start phase is zero. Automation Composition Elements are started in their start_phase order and stopped
           in reverse start phase order. Automation Composition Elements with the same start phase are started and
           stopped simultaneously
+      stage:
+        type: list
+        description: A list indicating the stages in which this automation composition element will be started, the
+          first stage is zero. Automation Composition Elements are started in their stage order.
+          Automation Composition Elements with the same stage are started simultaneously.
 
   org.onap.policy.clamp.acm.AutomationComposition:
     version: 1.0.1
@@ -118,6 +123,7 @@ topology_template:
       properties:
         provider: ONAP
         startPhase: 0
+        stage: [1,2]
 
     onap.policy.clamp.ac.element.Sim_BridgeAutomationCompositionElement:
       version: 1.2.3
@@ -127,6 +133,7 @@ topology_template:
       properties:
         provider: ONAP
         startPhase: 0
+        stage: [0,1]
 
     onap.policy.clamp.ac.element.Sim_SinkAutomationCompositionElement:
       version: 1.2.3
@@ -136,6 +143,7 @@ topology_template:
       properties:
         provider: ONAP
         startPhase: 0
+        stage: [0,2]
 
     onap.policy.clamp.ac.element.AutomationCompositionDefinition:
       version: 1.2.3

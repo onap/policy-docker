@@ -10,22 +10,14 @@ Resource    common-library.robot
 *** Test Cases ***
 HealthcheckAcm
      [Documentation]    Healthcheck on Clamp Acm
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
-     ${session}=    Create Session      ACM  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   GET On Session     ACM  /onap/policy/clamp/acm/health     headers=${headers}
-     Log    Received response from ACM healthcheck {resp.text}
+     ${auth}=    ClampAuth
+     ${resp}=    MakeGetRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  onap/policy/clamp/acm/health  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
 
 HealthcheckParticipantSim
      [Documentation]    Healthcheck on Participant Simulator
-     ${auth}=    Create List    participantUser    zb!XztG34
-     Log    Creating session http://${POLICY_PARTICIPANT_SIM_IP}
-     ${session}=    Create Session      participant  http://${POLICY_PARTICIPANT_SIM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   GET On Session     participant  /onap/policy/simparticipant/health     headers=${headers}
-     Log    Received response from participant healthcheck {resp.text}
+     ${auth}=    ParticipantAuth
+     ${resp}=    MakeGetRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/health  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
 
 HealthcheckApi
@@ -38,7 +30,7 @@ HealthcheckPap
 
 RegisterParticipants
      [Documentation]  Register Participants.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
+     ${auth}=    ClampAuth
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
      ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
      ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/participants
@@ -47,141 +39,101 @@ RegisterParticipants
 
 CommissionAutomationComposition
      [Documentation]  Commission automation composition definition.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postyaml}=  Get file  ${CURDIR}/data/acelement-usecase.yaml
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/yaml    Content-Type=application/yaml
-     ${resp}=   POST On Session     policy  /onap/policy/clamp/acm/v2/compositions   data=${postyaml}  headers=${headers}
-     Log    Received response from runtime acm ${resp.text}
+     ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions  ${postyaml}  ${auth}
      ${respyaml}=  yaml.Safe Load  ${resp.text}
      set Suite variable  ${compositionId}  ${respyaml["compositionId"]}
      Should Be Equal As Strings    ${resp.status_code}     201
 
 CommissionAcDefinitionMigrationFrom
      [Documentation]  Commission automation composition definition From.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postyaml}=  Get file  ${CURDIR}/data/ac-definition-migration-from.yaml
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/yaml    Content-Type=application/yaml
-     ${resp}=   POST On Session     policy  /onap/policy/clamp/acm/v2/compositions   data=${postyaml}  headers=${headers}
-     Log    Received response from runtime acm ${resp.text}
+     ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions  ${postyaml}  ${auth}
      ${respyaml}=  yaml.Safe Load  ${resp.text}
      set Suite variable  ${compositionFromId}  ${respyaml["compositionId"]}
      Should Be Equal As Strings    ${resp.status_code}     201
 
 CommissionAcDefinitionMigrationTo
      [Documentation]  Commission automation composition definition To.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postyaml}=  Get file  ${CURDIR}/data/ac-definition-migration-to.yaml
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/yaml    Content-Type=application/yaml
-     ${resp}=   POST On Session     policy  /onap/policy/clamp/acm/v2/compositions   data=${postyaml}  headers=${headers}
-     Log    Received response from runtime acm ${resp.text}
+     ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions  ${postyaml}  ${auth}
      ${respyaml}=  yaml.Safe Load  ${resp.text}
      set Suite variable  ${compositionToId}  ${respyaml["compositionId"]}
      Should Be Equal As Strings    ${resp.status_code}     201
 
 PrimeACDefinitions
      [Documentation]  Prime automation composition definition
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postjson}=  Get file  ${CURDIR}/data/ACPriming.json
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}   data=${postjson}  headers=${headers}
+     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionId}  PRIMED
 
 FailPrimeACDefinitionFrom
      [Documentation]  Prime automation composition definition Migration From.
      SetParticipantSimFail
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postjson}=  Get file  ${CURDIR}/data/ACPriming.json
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}   data=${postjson}  headers=${headers}
+     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyFailedPriming  ${compositionFromId}
 
 PrimeACDefinitionFrom
      [Documentation]  Prime automation composition definition Migration From.
      SetParticipantSimSuccess
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postjson}=  Get file  ${CURDIR}/data/ACPriming.json
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}   data=${postjson}  headers=${headers}
+     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionFromId}  PRIMED
 
 PrimeACDefinitionTo
      [Documentation]  Prime automation composition definition Migration To.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postjson}=  Get file  ${CURDIR}/data/ACPriming.json
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionToId}   data=${postjson}  headers=${headers}
+     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionToId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionToId}  PRIMED
 
 InstantiateAutomationComposition
      [Documentation]  Instantiate automation composition.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      Run Keyword If    '${TEST_ENV}'=='k8s'    set Suite variable  ${instantiationfile}  AcK8s.json
 
      ...    ELSE    set Suite variable  ${instantiationfile}  AcDocker.json
      ${postjson}=  Get file  ${CURDIR}/data/${instantiationfile}
      ${updatedpostjson}=   Replace String     ${postjson}     COMPOSITIONIDPLACEHOLDER       ${compositionId}
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   POST On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances   data=${updatedpostjson}  headers=${headers}
-     Log    Received response from runtime acm ${resp.text}
+     ${resp}=   MakeJsonPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances  ${updatedpostjson}  ${auth}
      ${respyaml}=  yaml.Safe Load  ${resp.text}
      set Suite variable  ${instanceId}    ${respyaml["instanceId"]}
      Should Be Equal As Strings    ${resp.status_code}     201
 
 InstantiateAutomationCompositionMigrationFrom
      [Documentation]  Instantiate automation composition migration.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-from.yaml
      ${updatedpostyaml}=   Replace String     ${postyaml}     COMPOSITIONIDPLACEHOLDER       ${compositionFromId}
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/yaml    Content-Type=application/yaml
-     ${resp}=   POST On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances   data=${updatedpostyaml}  headers=${headers}
-     Log    Received response from runtime acm ${resp.text}
+     ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances  ${updatedpostyaml}  ${auth}
      ${respyaml}=  yaml.Safe Load  ${resp.text}
      set Suite variable  ${instanceMigrationId}    ${respyaml["instanceId"]}
      Should Be Equal As Strings    ${resp.status_code}     201
 
 PrepareAutomationComposition
      [Documentation]  Prepare automation composition.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postjson}=  Get file  ${CURDIR}/data/PrepareAC.json
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}   data=${postjson}  headers=${headers}
-     Log    Received response from runtime acm ${resp.text}
+     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    10 min    5 sec    VerifyDeployStatus  ${compositionId}  ${instanceId}  UNDEPLOYED
 
 DeployAutomationComposition
      [Documentation]  Deploy automation composition.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postjson}=  Get file  ${CURDIR}/data/DeployAC.json
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}   data=${postjson}  headers=${headers}
-     Log    Received response from runtime acm ${resp.text}
+     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    10 min    5 sec    VerifyDeployStatus  ${compositionId}  ${instanceId}  DEPLOYED
 
@@ -220,7 +172,7 @@ CheckHttpPresentInAcmTraces
 
 QueryPolicies
      [Documentation]    Verify the new policies deployed
-     ${auth}=    Create List    policyadmin    zb!XztG34
+     ${auth}=    PolicyAdminAuth
      Sleep  10s
      Log    Creating session http://${POLICY_PAP_IP}
      ${session}=    Create Session      policy  http://${POLICY_PAP_IP}   auth=${auth}
@@ -232,7 +184,7 @@ QueryPolicies
 
 QueryPolicyTypes
      [Documentation]    Verify the new policy types created
-     ${auth}=    Create List    policyadmin    zb!XztG34
+     ${auth}=    PolicyAdminAuth
      Sleep  10s
      Log    Creating session http://${POLICY_API_IP}:6969
      ${session}=    Create Session      policy  http://${POLICY_API_IP}   auth=${auth}
@@ -244,68 +196,48 @@ QueryPolicyTypes
 
 ReviewAutomationComposition
      [Documentation]  Review automation composition.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postjson}=  Get file  ${CURDIR}/data/ReviewAC.json
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}   data=${postjson}  headers=${headers}
-     Log    Received response from runtime acm ${resp.text}
+     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    10 min    5 sec    VerifyDeployStatus  ${compositionId}  ${instanceId}  DEPLOYED
 
 FailDeployAutomationCompositionMigration
      [Documentation]  Fail Deploy automation composition.
      SetParticipantSimFail
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postjson}=  Get file  ${CURDIR}/data/DeployAC.json
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}   data=${postjson}  headers=${headers}
-     Log    Received response from runtime acm ${resp.text}
+     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyFailDeploy  ${compositionFromId}  ${instanceMigrationId}
 
 DeployAutomationCompositionMigration
      [Documentation]  Deploy automation composition.
      SetParticipantSimSuccess
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postjson}=  Get file  ${CURDIR}/data/DeployAC.json
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}   data=${postjson}  headers=${headers}
-     Log    Received response from runtime acm ${resp.text}
+     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
 
 SendOutPropertiesToRuntime
      [Documentation]  Send Out Properties To Runtime
-     ${auth}=    Create List    participantUser    zb!XztG34
-     Log    Creating session http://${POLICY_PARTICIPANT_SIM_IP}
+     ${auth}=    ParticipantAuth
      ${postjson}=  Get file  ${CURDIR}/data/OutProperties.json
      ${updatedpostjson}=   Replace String     ${postjson}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
      ${updatedpostjson}=   Replace String     ${updatedpostjson}     TEXTPLACEHOLDER       MyTextToSend
-     ${session}=    Create Session      policy  http://${POLICY_PARTICIPANT_SIM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/simparticipant/v2/datas   data=${updatedpostjson}  headers=${headers}
-     Log    Received response from participant sim ${resp.text}
+     ${resp}=   MakeJsonPutRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/datas  ${updatedpostjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyPropertiesUpdated  ${compositionFromId}  ${instanceMigrationId}  MyTextToSend
 
 AutomationCompositionUpdate
      [Documentation]  Update of an automation composition.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-update.yaml
      ${updatedpostyaml}=   Replace String     ${postyaml}     COMPOSITIONIDPLACEHOLDER       ${compositionFromId}
      ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
      ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     TEXTPLACEHOLDER       MyTextUpdated
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/yaml    Content-Type=application/yaml
-     ${resp}=   POST On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances   data=${updatedpostyaml}  headers=${headers}
-     Log    Received response from runtime acm ${resp.text}
+     ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances  ${updatedpostyaml}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
      VerifyPropertiesUpdated  ${compositionFromId}  ${instanceMigrationId}  MyTextUpdated
@@ -313,33 +245,25 @@ AutomationCompositionUpdate
 
 PrecheckAutomationCompositionMigration
      [Documentation]  Precheck Migration of an automation composition.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-precheck-migration.yaml
      ${updatedpostyaml}=   Replace String     ${postyaml}     COMPOSITIONIDPLACEHOLDER       ${compositionFromId}
      ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     COMPOSITIONTARGETIDPLACEHOLDER       ${compositionToId}
      ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
      ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     TEXTPLACEHOLDER       TextForMigration
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/yaml    Content-Type=application/yaml
-     ${resp}=   POST On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances   data=${updatedpostyaml}  headers=${headers}
-     Log    Received response from runtime acm ${resp.text}
+     ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances  ${updatedpostyaml}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
 
 AutomationCompositionMigrationTo
      [Documentation]  Migration of an automation composition.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-to.yaml
      ${updatedpostyaml}=   Replace String     ${postyaml}     COMPOSITIONIDPLACEHOLDER       ${compositionFromId}
      ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     COMPOSITIONTARGETIDPLACEHOLDER       ${compositionToId}
      ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
      ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     TEXTPLACEHOLDER       TextForMigration
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/yaml    Content-Type=application/yaml
-     ${resp}=   POST On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances   data=${updatedpostyaml}  headers=${headers}
-     Log    Received response from runtime acm ${resp.text}
+     ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances  ${updatedpostyaml}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionToId}  ${instanceMigrationId}  DEPLOYED
      VerifyPropertiesUpdated  ${compositionToId}  ${instanceMigrationId}  TextForMigration
@@ -349,45 +273,33 @@ AutomationCompositionMigrationTo
 
 UnDeployAutomationComposition
      [Documentation]  UnDeploy automation composition.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postjson}=  Get file  ${CURDIR}/data/UndeployAC.json
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}   data=${postjson}   headers=${headers}
-     Log    Received response from runtime acm ${resp.text}
+     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    10 min    5 sec    VerifyDeployStatus  ${compositionId}  ${instanceId}  UNDEPLOYED
 
 FailUnDeployAutomationCompositionMigrationTo
      [Documentation]  Fail UnDeploy automation composition migrated.
      SetParticipantSimFail
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postjson}=  Get file  ${CURDIR}/data/UndeployAC.json
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionToId}/instances/${instanceMigrationId}   data=${postjson}   headers=${headers}
-     Log    Received response from runtime acm ${resp.text}
+     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionToId}/instances/${instanceMigrationId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyFailDeploy  ${compositionToId}  ${instanceMigrationId}
 
 UnDeployAutomationCompositionMigrationTo
      [Documentation]  UnDeploy automation composition migrated.
      SetParticipantSimSuccess
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postjson}=  Get file  ${CURDIR}/data/UndeployAC.json
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionToId}/instances/${instanceMigrationId}   data=${postjson}   headers=${headers}
-     Log    Received response from runtime acm ${resp.text}
+     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionToId}/instances/${instanceMigrationId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionToId}  ${instanceMigrationId}  UNDEPLOYED
 
 UnInstantiateAutomationComposition
      [Documentation]  Delete automation composition instance.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
+     ${auth}=    ClampAuth
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
      ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -399,7 +311,7 @@ UnInstantiateAutomationComposition
 FailUnInstantiateAutomationCompositionMigrationTo
      [Documentation]  Fail Delete automation composition instance migrated.
      SetParticipantSimFail
-     ${auth}=    Create List    runtimeUser    zb!XztG34
+     ${auth}=    ClampAuth
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
      ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -411,7 +323,7 @@ FailUnInstantiateAutomationCompositionMigrationTo
 UnInstantiateAutomationCompositionMigrationTo
      [Documentation]  Delete automation composition instance migrated.
      SetParticipantSimSuccess
-     ${auth}=    Create List    runtimeUser    zb!XztG34
+     ${auth}=    ClampAuth
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
      ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
@@ -422,53 +334,41 @@ UnInstantiateAutomationCompositionMigrationTo
 
 DePrimeACDefinitions
      [Documentation]  DePrime automation composition definition
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}   data=${postjson}  headers=${headers}
+     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionId}  COMMISSIONED
 
 FailDePrimeACDefinitionsFrom
      [Documentation]  Fail DePrime automation composition definition migration From.
      SetParticipantSimFail
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}   data=${postjson}  headers=${headers}
+     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyFailedPriming  ${compositionFromId}
 
 DePrimeACDefinitionsFrom
      [Documentation]  DePrime automation composition definition migration From.
      SetParticipantSimSuccess
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}   data=${postjson}  headers=${headers}
+     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionFromId}  COMMISSIONED
 
 DePrimeACDefinitionsTo
      [Documentation]  DePrime automation composition definition migration To.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+     ${auth}=    ClampAuth
      ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionToId}   data=${postjson}  headers=${headers}
+     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionToId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
      Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionToId}  COMMISSIONED
 
 DeleteACDefinition
      [Documentation]  Delete automation composition definition.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
+     ${auth}=    ClampAuth
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
      ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/yaml    Content-Type=application/yaml
@@ -478,7 +378,7 @@ DeleteACDefinition
 
 DeleteACDefinitionFrom
      [Documentation]  Delete automation composition definition migration From.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
+     ${auth}=    ClampAuth
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
      ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/yaml    Content-Type=application/yaml
@@ -488,7 +388,7 @@ DeleteACDefinitionFrom
 
 DeleteACDefinitionTo
      [Documentation]  Delete automation composition definition migration To.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
+     ${auth}=    ClampAuth
      Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
      ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
      ${headers}=  Create Dictionary     Accept=application/yaml    Content-Type=application/yaml
@@ -501,32 +401,21 @@ DeleteACDefinitionTo
 
 VerifyHealthcheckApi
      [Documentation]    Verify Healthcheck on policy-api
-     ${auth}=    Create List    policyadmin    zb!XztG34
-     Log    Creating session http://${POLICY_API_IP}
-     ${session}=    Create Session      policy  http://${POLICY_API_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   GET On Session     policy  /policy/api/v1/health     headers=${headers}
-     Log    Received response from policy-api healthcheck ${resp.text}
+     ${auth}=    PolicyAdminAuth
+     ${resp}=    MakeGetRequest  policy  ${POLICY_API_IP}  /policy/api/v1/health  ${auth}
      Should Be Equal As Strings    ${resp.status_code}   200
 
 VerifyHealthcheckPap
      [Documentation]    Verify Healthcheck on policy-pap
-     ${auth}=    Create List    policyadmin    zb!XztG34
-     Log    Creating session http://${POLICY_PAP_IP}
-     ${session}=    Create Session      policy  http://${POLICY_PAP_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   GET On Session     policy  /policy/pap/v1/health     headers=${headers}
-     Log    Received response from policy-pap healthcheck ${resp.text}
+     ${auth}=    PolicyAdminAuth
+     ${resp}=    MakeGetRequest  policy  ${POLICY_PAP_IP}  /policy/pap/v1/health  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
 
 VerifyPriming
     [Arguments]  ${theCompositionId}  ${primestate}
     [Documentation]    Verify the AC definitions are primed to the participants
-    ${auth}=    Create List    runtimeUser    zb!XztG34
-    Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
-    ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-    ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-    ${resp}=   GET On Session     policy  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}   headers=${headers}
+    ${auth}=    ClampAuth
+    ${resp}=    MakeGetRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}   200
     Should Be Equal As Strings  ${resp.json()['stateChangeResult']}  NO_ERROR
     Run Keyword If  ${resp.status_code}==200  Should Be Equal As Strings  ${resp.json()['state']}  ${primestate}
@@ -534,22 +423,16 @@ VerifyPriming
 VerifyFailedPriming
     [Arguments]  ${theCompositionId}
     [Documentation]    Verify the AC definitions are primed to the participants
-    ${auth}=    Create List    runtimeUser    zb!XztG34
-    Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
-    ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-    ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-    ${resp}=   GET On Session     policy  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}   headers=${headers}
+    ${auth}=    ClampAuth
+    ${resp}=    MakeGetRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}   200
     Run Keyword If  ${resp.status_code}==200  Should Be Equal As Strings  ${resp.json()['stateChangeResult']}  FAILED
 
 VerifyDeployStatus
      [Arguments]  ${theCompositionId}  ${theInstanceId}  ${deploystate}
      [Documentation]  Verify the Deploy status of automation composition.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   GET On Session     policy  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}/instances/${theInstanceId}     headers=${headers}
+     ${auth}=    ClampAuth
+     ${resp}=    MakeGetRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}/instances/${theInstanceId}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
      Should Be Equal As Strings  ${resp.json()['stateChangeResult']}  NO_ERROR
      Run Keyword If  ${resp.status_code}==200  Should Be Equal As Strings  ${resp.json()['deployState']}  ${deploystate}
@@ -557,48 +440,41 @@ VerifyDeployStatus
 VerifyFailDeploy
      [Arguments]  ${theCompositionId}  ${theInstanceId}
      [Documentation]  Verify the Deploy status of automation composition.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   GET On Session     policy  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}/instances/${theInstanceId}     headers=${headers}
+     ${auth}=    ClampAuth
+     ${resp}=    MakeGetRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}/instances/${theInstanceId}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
      Run Keyword If  ${resp.status_code}==200  Should Be Equal As Strings  ${resp.json()['stateChangeResult']}  FAILED
 
 VerifyPropertiesUpdated
      [Arguments]  ${theCompositionId}  ${theInstanceId}  ${textToFind}
      [Documentation]  Verify the Deploy status of automation composition.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   GET On Session     policy  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}/instances/${theInstanceId}     headers=${headers}
+     ${auth}=    ClampAuth
+     ${resp}=    MakeGetRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}/instances/${theInstanceId}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
      ${respstring}   Convert To String   ${resp.json()}
      Run Keyword If  ${resp.status_code}==200  Should Match Regexp  ${respstring}  ${textToFind}
 
 VerifyMigratedElementsRuntime
-     [Arguments]  ${compositionToId}  ${theInstanceId}
+     [Arguments]  ${theCompositionId}  ${theInstanceId}
      [Documentation]  Verify the Instance elements after Migration
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   GET On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionToId}/instances/${theInstanceId}     headers=${headers}
+     ${auth}=    ClampAuth
+     ${resp}=    MakeGetRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}/instances/${theInstanceId}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
      ${respstring}   Convert To String   ${resp.json()}
      Should Match Regexp  ${respstring}  Sim_NewAutomationCompositionElement
      Should Not Match Regexp  ${respstring}  Sim_SinkAutomationCompositionElement
+     ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb79c6c34']['outProperties']['stage']}
+     Should Be Equal As Strings  ${respstring}  [1, 2]
+     ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb79c6c35']['outProperties']['stage']}
+     Should Be Equal As Strings  ${respstring}  [0, 1]
+     ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb79c6c37']['outProperties']['stage']}
+     Should Be Equal As Strings  ${respstring}  [0, 2]
 
 VerifyMigratedElementsSim
      [Arguments]  ${theInstanceId}
      [Documentation]  Query on Participant Simulator
-     ${auth}=    Create List    participantUser    zb!XztG34
-     Log    Creating session http://${POLICY_PARTICIPANT_SIM_IP}
-     ${session}=    Create Session      ACM  http://${POLICY_PARTICIPANT_SIM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   GET On Session     ACM  /onap/policy/simparticipant/v2/instances/${theInstanceId}     headers=${headers}
-     Log    Received response from participant {resp.text}
+     ${auth}=    ParticipantAuth
+     ${resp}=    MakeGetRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/instances/${theInstanceId}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
      ${respstring}   Convert To String   ${resp.json()}
      Should Match Regexp  ${respstring}  Sim_NewAutomationCompositionElement
@@ -607,12 +483,8 @@ VerifyMigratedElementsSim
 VerifyParticipantSim
      [Arguments]  ${theInstanceId}  ${textToFind}
      [Documentation]  Query on Participant Simulator
-     ${auth}=    Create List    participantUser    zb!XztG34
-     Log    Creating session http://${POLICY_PARTICIPANT_SIM_IP}
-     ${session}=    Create Session      ACM  http://${POLICY_PARTICIPANT_SIM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   GET On Session     ACM  /onap/policy/simparticipant/v2/instances/${theInstanceId}     headers=${headers}
-     Log    Received response from participant {resp.text}
+     ${auth}=    ParticipantAuth
+     ${resp}=    MakeGetRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/instances/${theInstanceId}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
      ${respstring}   Convert To String   ${resp.json()}
      Should Match Regexp  ${respstring}  ${textToFind}
@@ -620,32 +492,65 @@ VerifyParticipantSim
 VerifyUninstantiated
      [Arguments]  ${theCompositionId}
      [Documentation]  Verify the Uninstantiation of automation composition.
-     ${auth}=    Create List    runtimeUser    zb!XztG34
-     Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
-     ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   GET On Session     policy  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}/instances     headers=${headers}
+     ${auth}=    ClampAuth
+     ${resp}=    MakeGetRequest  ACM  ${POLICY_RUNTIME_ACM_IP}   /onap/policy/clamp/acm/v2/compositions/${theCompositionId}/instances  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
      Run Keyword If  ${resp.status_code}==200  Length Should Be  ${resp.json()['automationCompositionList']}  0
 
 SetParticipantSimFail
      [Documentation]  Set Participant Simulator Fail.
-     ${auth}=    Create List    participantUser    zb!XztG34
-     Log    Creating session http://${POLICY_PARTICIPANT_SIM_IP}
+     ${auth}=    ParticipantAuth
      ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesFail.json
-     ${session}=    Create Session      policy  http://${POLICY_PARTICIPANT_SIM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/simparticipant/v2/parameters   data=${postjson}  headers=${headers}
-     Log    Received response from participant sim ${resp.text}
+     ${resp}=   MakeJsonPutRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
 
 SetParticipantSimSuccess
      [Documentation]  Set Participant Simulator Success.
-     ${auth}=    Create List    participantUser    zb!XztG34
-     Log    Creating session http://${POLICY_PARTICIPANT_SIM_IP}
+     ${auth}=    ParticipantAuth
      ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesSuccess.json
-     ${session}=    Create Session      policy  http://${POLICY_PARTICIPANT_SIM_IP}   auth=${auth}
-     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-     ${resp}=   PUT On Session     policy  /onap/policy/simparticipant/v2/parameters   data=${postjson}  headers=${headers}
-     Log    Received response from participant sim ${resp.text}
+     ${resp}=   MakeJsonPutRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
+
+ClampAuth
+    ${auth}=    Create List    runtimeUser    zb!XztG34
+    RETURN  ${auth}
+
+ParticipantAuth
+     ${auth}=    Create List    participantUser    zb!XztG34
+    RETURN  ${auth}
+
+MakeYamlPostRequest
+    [Arguments]  ${name}  ${domain}  ${url}  ${postyaml}  ${auth}
+    Log  Creating session http://${domain}
+    ${session}=  Create Session  ${name}  http://${domain}  auth=${auth}
+    ${headers}  Create Dictionary     Accept=application/yaml    Content-Type=application/yaml
+    ${resp}=  POST On Session  ${name}  ${url}  data=${postyaml}  headers=${headers}
+    Log  Received response from ${name} ${resp.text}
+    RETURN  ${resp}
+
+MakeJsonPostRequest
+    [Arguments]  ${name}  ${domain}  ${url}  ${postjson}  ${auth}
+    Log  Creating session http://${domain}
+    ${session}=  Create Session  ${name}  http://${domain}  auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+    ${resp}=  POST On Session  ${name}  ${url}  data=${postjson}  headers=${headers}
+    Log  Received response from ${name} ${resp.text}
+    RETURN  ${resp}
+
+MakeJsonPutRequest
+    [Arguments]  ${name}  ${domain}  ${url}  ${postjson}  ${auth}
+    Log  Creating session http://${domain}
+    ${session}=  Create Session  ${name}  http://${domain}  auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+    ${resp}=  PUT On Session  ${name}  ${url}  data=${postjson}  headers=${headers}
+    Log  Received response from ${name} ${resp.text}
+    RETURN  ${resp}
+
+MakeGetRequest
+    [Arguments]  ${name}  ${domain}  ${url}  ${auth}
+     Log    Creating session http://${domain}
+     ${session}=    Create Session      ${name}  http://${domain}   auth=${auth}
+     ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+     ${resp}=   GET On Session     ${name}  ${url}     headers=${headers}
+     Log    Received response from ${name} {resp.text}
+     RETURN  ${resp}
