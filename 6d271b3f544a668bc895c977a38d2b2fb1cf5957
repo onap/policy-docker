@@ -16,6 +16,24 @@
       "message": "Any test would be needed to validate that the migration happened in stages?",
       "revId": "6d271b3f544a668bc895c977a38d2b2fb1cf5957",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e26cd89_b8c5e837",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7565
+      },
+      "writtenOn": "2024-08-16T08:17:10Z",
+      "side": 1,
+      "message": "simulator send in outProperties the execute stage, so to test all stags executed, just check the outProperties. Example:\n ${respstring}   Convert To String   ${resp.json()[\u0027elements\u0027][\u0027709c62b3-8918-41b9-a747-d21eb79c6c34\u0027][\u0027outProperties\u0027][\u0027stage\u0027]}\n     Should Be Equal As Strings  ${respstring}  [1, 2]",
+      "parentUuid": "ef239a7e_1032278f",
+      "revId": "6d271b3f544a668bc895c977a38d2b2fb1cf5957",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
