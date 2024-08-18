@@ -28,7 +28,7 @@ export GERRIT_BRANCH=$(awk -F= '$1 == "defaultbranch" { print $2 }' "${WORKSPACE
 
 CSIT_SCRIPT="scripts/run-test.sh"
 ROBOT_DOCKER_IMAGE="policy-csit-robot"
-POLICY_CLAMP_ROBOT="policy-clamp-test.robot"
+POLICY_CLAMP_ROBOT="policy-clamp-test.robot clamp-slas.robot"
 POLICY_API_ROBOT="api-test.robot api-slas.robot"
 POLICY_PAP_ROBOT="pap-test.robot pap-slas.robot"
 POLICY_APEX_PDP_ROBOT="apex-pdp-test.robot apex-slas.robot"
