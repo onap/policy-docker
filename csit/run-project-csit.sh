@@ -41,8 +41,8 @@ function docker_stats(){
 }
 
 function setup_clamp() {
-    export ROBOT_FILES="policy-clamp-test.robot"
-    source "${WORKSPACE}"/compose/start-compose.sh policy-clamp-runtime-acm
+    export ROBOT_FILES="policy-clamp-test.robot clamp-slas.robot"
+    source "${WORKSPACE}"/compose/start-compose.sh policy-clamp-runtime-acm --grafana
     sleep 30
     bash "${SCRIPTS}"/wait_for_rest.sh localhost "${ACM_PORT}"
 }
