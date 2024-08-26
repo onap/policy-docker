@@ -46,6 +46,30 @@
       },
       "revId": "f43ef52bc7af9ea80616b7a75a6f614d3680ae26",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cc19368_14c0730d",
+        "filename": "compose/config/drools-applications/env/base-postgres.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-08-26T08:24:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45e2c32c_7db7706e",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 22
+      },
+      "revId": "f43ef52bc7af9ea80616b7a75a6f614d3680ae26",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
