@@ -46,11 +46,11 @@ Metrics
     [Documentation]  Verify policy pap is exporting prometheus metrics
     ${auth}=  PolicyAdminAuth
     ${resp}=  GetMetrics  ${POLICY_PAP_IP}  ${auth}  /policy/pap/v1/
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{error="none",exception="none",method="GET",outcome="SUCCESS",status="200",uri="/healthcheck",}
-    Should Contain  ${resp.text}  http_server_requests_seconds_count{error="none",exception="none",method="GET",outcome="SUCCESS",status="200",uri="/components/healthcheck",} 1.0
-    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="save",repository="PdpGroupRepository",state="SUCCESS",} 1.0
-    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findByKeyName",repository="PdpGroupRepository",state="SUCCESS",} 1.0
-    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findAll",repository="PolicyStatusRepository",state="SUCCESS",}
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{error="none",exception="none",method="GET",outcome="SUCCESS",status="200",uri="/healthcheck"}
+    Should Contain  ${resp.text}  http_server_requests_seconds_count{error="none",exception="none",method="GET",outcome="SUCCESS",status="200",uri="/components/healthcheck"} 1
+    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="save",repository="PdpGroupRepository",state="SUCCESS"} 1
+    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findByKeyName",repository="PdpGroupRepository",state="SUCCESS"} 1
+    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findAll",repository="PolicyStatusRepository",state="SUCCESS"}
 
 AddPdpGroup
     [Documentation]  Add a new PdpGroup named 'testGroup' in the policy database
