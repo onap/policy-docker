@@ -3,6 +3,7 @@ Library    Collections
 Library    RequestsLibrary
 Library    OperatingSystem
 Library    json
+Library    Process
 
 *** Keywords ***
 
@@ -148,9 +149,11 @@ ValidateResponseTime
 CheckKafkaTopic
     [Arguments]    ${topic}    ${expected_status}
     ${resp}=    Run Process    ${CURDIR}/kafka_consumer.py    ${topic}    60    ${expected_status}    ${KAFKA_IP}
+    Log    ${resp.stdout}
     Should Contain    ${resp.stdout}    ${expected_status}
     RETURN    ${resp.stdout}
 
 GetKafkaTopic
     [Arguments]    ${topic}
     ${resp}=    Run Process    ${CURDIR}/make_topics.py    ${topic}    ${KAFKA_IP}
+    Log    ${resp.stdout}

@@ -3,7 +3,7 @@ Library    Collections
 Library    RequestsLibrary
 Library    OperatingSystem
 Library    json
-Resource    ${CURDIR}/common-library.robot
+Resource    common-library.robot
 
 *** Keywords ***
 ValidateResponseTimeForClamp
