@@ -24,18 +24,19 @@
 from confluent_kafka.admin import AdminClient, NewTopic
 import sys
 
+
 def create_topic(bootstrap_servers, topic_name, num_partitions=2, replication_factor=2):
     admin_client = AdminClient({'bootstrap.servers': bootstrap_servers})
 
     # Define the topic configuration
-    topic = NewTopic(topic_name, num_partitions=num_partitions, replication_factor=replication_factor)
+    new_topic = NewTopic(topic_name, num_partitions=num_partitions, replication_factor=replication_factor)
 
     # Create the topic
-    admin_client.create_topics([topic])
+    admin_client.create_topics([new_topic])
 
 
 if __name__ == '__main__':
-    topic_name = sys.argv[1]
-    bootstrap_servers = sys.argv[2]
+    topic = sys.argv[1]
+    servers = sys.argv[2]
 
-    create_topic(bootstrap_servers, topic_name)
+    create_topic(servers, topic)

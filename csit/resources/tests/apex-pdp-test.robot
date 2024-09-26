@@ -4,8 +4,8 @@ Library     RequestsLibrary
 Library     OperatingSystem
 Library     json
 Library     Process
-Resource    ${CURDIR}/common-library.robot
-Resource    ${CURDIR}/apex-pdp-common.robot
+Resource    common-library.robot
+Resource    apex-pdp-common.robot
 
 *** Test Cases ***
 

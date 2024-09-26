@@ -5,8 +5,8 @@ Library    OperatingSystem
 Library    DateTime
 Library    Process
 Library    json
-Resource    ${CURDIR}/common-library.robot
-Resource    ${CURDIR}/apex-pdp-common.robot
+Resource    common-library.robot
+Resource    apex-pdp-common.robot
 
 *** Test Cases ***
 Healthcheck

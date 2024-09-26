@@ -4,7 +4,7 @@ Library     RequestsLibrary
 Library     OperatingSystem
 Library     Process
 Library     json
-Resource    ${CURDIR}/common-library.robot
+Resource    common-library.robot
 
 *** Test Cases ***
 Healthcheck

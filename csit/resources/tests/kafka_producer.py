@@ -24,6 +24,7 @@
 from confluent_kafka import Producer
 import sys
 
+
 def post_to_kafka(topic, message, bootstrap_server):
     conf = {'bootstrap.servers': bootstrap_server}
 
@@ -36,6 +37,7 @@ def post_to_kafka(topic, message, bootstrap_server):
         print('Failed to post message: {}'.format(str(e)))
     finally:
         producer.flush()
+
 
 if __name__ == '__main__':
     post_to_kafka(sys.argv[1], sys.argv[2], sys.argv[3])
