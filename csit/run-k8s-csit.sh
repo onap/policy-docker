@@ -141,17 +141,17 @@ function install_kafka() {
 
 function uninstall_policy() {
     echo "Removing the policy helm deployment"
-    sudo helm uninstall csit-policy
-    sudo helm uninstall prometheus
-    sudo helm uninstall csit-robot
-    sudo kubectl delete deploy $ZK_CONTAINER $KAFKA_CONTAINER
+    helm uninstall csit-policy
+    helm uninstall prometheus
+    helm uninstall csit-robot
+    kubectl delete deploy $ZK_CONTAINER $KAFKA_CONTAINER
     rm -rf ${WORKSPACE}/helm/policy/Chart.lock
     if [ "$PROJECT" == "clamp" ] || [ "$PROJECT" == "policy-clamp" ]; then
-      sudo helm uninstall policy-chartmuseum
-      sudo helm repo remove chartmuseum-git policy-chartmuseum
+      helm uninstall policy-chartmuseum
+      helm repo remove chartmuseum-git policy-chartmuseum
     fi
     sudo rm -rf /dockerdata-nfs/mariadb-galera/
-    sudo kubectl delete pvc --all
+    kubectl delete pvc --all
     echo "Policy deployment deleted"
     echo "Clean up docker"
     docker image prune -f
@@ -195,14 +195,14 @@ function start_csit() {
           while [[ ${POD_READY_STATUS} != "1/1" ]]; do
             echo "Waiting for chartmuseum pod to come up..."
             sleep 5
-            POD_READY_STATUS=$(sudo kubectl get pods | grep -e "policy-chartmuseum" | awk '{print $2}')
+            POD_READY_STATUS=$(kubectl get pods | grep -e "policy-chartmuseum" | awk '{print $2}')
           done
           push_acelement_chart
         fi
         echo "Installing Robot framework pod for running CSIT"
         cd ${WORKSPACE}/helm
         mkdir -p ${ROBOT_LOG_DIR}
-        sudo helm install csit-robot robot --set robot="$ROBOT_FILE" --set "readiness={${READINESS_CONTAINERS[*]}}" --set robotLogDir=$ROBOT_LOG_DIR
+        helm install csit-robot robot --set robot="$ROBOT_FILE" --set "readiness={${READINESS_CONTAINERS[*]}}" --set robotLogDir=$ROBOT_LOG_DIR
         print_robot_log
     fi
 }
@@ -212,17 +212,17 @@ function print_robot_log() {
     while [[ ${count_pods} -eq 0 ]]; do
         echo "Waiting for pods to come up..."
         sleep 5
-        count_pods=$(sudo kubectl get pods --output name | wc -l)
+        count_pods=$(kubectl get pods --output name | wc -l)
     done
-    robotpod=$(sudo kubectl get po | grep policy-csit)
+    robotpod=$(kubectl get po | grep policy-csit)
     podName=$(echo "$robotpod" | awk '{print $1}')
     echo "The robot tests will begin once the policy components {${READINESS_CONTAINERS[*]}} are up and running..."
-    sudo kubectl wait --for=jsonpath='{.status.phase}'=Running --timeout=18m pod/"$podName"
+    kubectl wait --for=jsonpath='{.status.phase}'=Running --timeout=18m pod/"$podName"
     echo "Policy deployment status:"
-    sudo kubectl get po
-    sudo kubectl get all -A
+    kubectl get po
+    kubectl get all -A
     echo "Robot Test logs:"
-    sudo kubectl logs -f "$podName"
+    kubectl logs -f "$podName"
 }
 
 function clone_models() {
@@ -320,22 +320,22 @@ function set_project_config() {
 function install_chartmuseum () {
     echo "---------------------------------------------"
     echo "Installing Chartmuseum helm repository..."
-    sudo helm repo add chartmuseum-git https://chartmuseum.github.io/charts
-    sudo helm repo update
-    sudo helm install policy-chartmuseum chartmuseum-git/chartmuseum --set env.open.DISABLE_API=false --set service.type=NodePort --set service.nodePort=30208
-    sudo helm plugin install https://github.com/chartmuseum/helm-push
+    helm repo add chartmuseum-git https://chartmuseum.github.io/charts
+    helm repo update
+    helm install policy-chartmuseum chartmuseum-git/chartmuseum --set env.open.DISABLE_API=false --set service.type=NodePort --set service.nodePort=30208
+    helm plugin install https://github.com/chartmuseum/helm-push
     echo "---------------------------------------------"
 }
 
 function push_acelement_chart() {
     echo "Pushing acelement chart to the chartmuseum repo..."
-    sudo helm repo add policy-chartmuseum http://localhost:30208
+    helm repo add policy-chartmuseum http://localhost:30208
 
     # download clamp repo
     git clone -b "${GERRIT_BRANCH}" --single-branch https://github.com/onap/policy-clamp.git "${WORKSPACE}"/csit/resources/tests/clamp
     ACELEMENT_CHART=${WORKSPACE}/csit/resources/tests/clamp/examples/src/main/resources/clamp/acm/acelement-helm/acelement
-    sudo helm cm-push $ACELEMENT_CHART policy-chartmuseum
-    sudo helm repo update
+    helm cm-push $ACELEMENT_CHART policy-chartmuseum
+    helm repo update
     rm -rf ${WORKSPACE}/csit/resources/tests/clamp/
     echo "-------------------------------------------"
 }
@@ -437,9 +437,9 @@ if [ $OPERATION == "install" ]; then
             ${WORKSPACE}/compose/loaddockerimage.sh
         fi
         cd ${WORKSPACE}/helm || exit
-        sudo helm dependency build policy
-        sudo helm install csit-policy policy ${SET_VALUES}
-        sudo helm install prometheus prometheus
+        helm dependency build policy
+        helm install csit-policy policy ${SET_VALUES}
+        helm install prometheus prometheus
         wait_for_pods_running default 900 ${READINESS_CONTAINERS[@]}
         echo "Policy chart installation completed"
         echo "-------------------------------------------"
