@@ -31,14 +31,6 @@ CheckLogMessage
     ${result}=     CheckKafkaTopic     ${topic}    ${status}
     Should Contain    ${result}    ${expectedMsg}
 
-ValidatePolicyExecution
-    [Arguments]  ${url}  ${executionTime}
-    [Documentation]  Check that policy execution under X milliseconds
-    ${resp}=  QueryPrometheus  ${url}
-    ${rawNumber}=  Evaluate  ${resp['data']['result'][0]['value'][1]}
-    ${actualTime}=   Set Variable  ${rawNumber * ${1000}}
-    Should Be True   ${actualTime} <= ${executionTime}
-
 ValidateEventExecution
     [Arguments]  ${eventStartTime}  ${eventEndTime}  ${eventsNo}
     [Documentation]    Check that X amount of events were exeuted per second
