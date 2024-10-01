@@ -18,7 +18,7 @@
 #   SPDX-License-Identifier: Apache-2.0
 #   ============LICENSE_END=========================================================
 
-FROM alpine:3.18.2
+FROM alpine:3.20.3
 
 LABEL maintainer="Policy Team"
 LABEL org.opencontainers.image.title="Policy JRE Alpine"
@@ -75,16 +75,15 @@ RUN apk update && \
     adduser -S  --shell /bin/sh -G policy policy && \
     mkdir -p ${POLICY_HOME}/ && \
     chown policy:policy ${POLICY_HOME} && \
-    mkdir -p /usr/lib/jvm/ && \
-    ln -s /opt/java/openjdk /usr/lib/jvm/default-jvm && \
-    python3 -m ensurepip && \
-    pip3 install --no-cache --upgrade pip setuptools
+    mkdir -p /usr/lib/jvm/ && ln -s /opt/java/openjdk /usr/lib/jvm/default-jvm
 
 # Install python/pip
-RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
-RUN python3 -m ensurepip
-RUN pip3 install --no-cache --upgrade pip setuptools
-
+RUN apk add --no-cache python3 && \
+    rm /usr/lib/python3.*/EXTERNALLY-MANAGED && \
+    if [ ! -e /usr/bin/python ]; then ln -sf python3 /usr/bin/python ; fi && \
+    python -m ensurepip && \
+    if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
+    pip install --no-cache --upgrade pip setuptools
 
 # Tell docker that all future commands should be run as the onap user
 USER $user

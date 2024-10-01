@@ -18,7 +18,7 @@
 #   SPDX-License-Identifier: Apache-2.0
 #   ============LICENSE_END=========================================================
 
-FROM alpine:3.18.2
+FROM alpine:3.20.3
 
 LABEL maintainer="Policy Team"
 LABEL org.opencontainers.image.title="Policy JRE Alpine"
