@@ -17,7 +17,7 @@ Healthcheck
      Set Suite Variable    ${pdpName}    ${resp.json()['name']}
 
 ValidatePolicyExecutionAndEventRateLowComplexity
-    [Documentation]  Validate that a moderate complexity policity can be executed in less than 100ms and minimum 10 events triggered per second
+    [Documentation]  Validate that a moderate complexity policy can be executed in less than 100ms and minimum 10 events triggered per second
     Set Test Variable    ${policyName}    onap.policies.apex.pnf.Test
     ${postjson}=  Get File  ${CURDIR}/data/${policyName}.json
     CreatePolicySuccessfully  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  ${postjson}  ${policyName}  1.0.0
@@ -31,7 +31,7 @@ ValidatePolicyExecutionAndEventRateLowComplexity
     ValidateEventExecution    ${eventStartTime}  ${eventEndTime}  10
 
 ValidatePolicyExecutionAndEventRateModerateComplexity
-    [Documentation]  Validate that a low complexity policity can be executed in less than 1000ms and minimum 1 events triggered per second
+    [Documentation]  Validate that a low complexity policy can be executed in less than 1000ms and minimum 1 events triggered per second
     Set Test Variable    ${policyName}    onap.policies.native.apex.Sampledomain
     ${postjson}=  Get File  ${CURDIR}/data/${policyName}.json
     CreatePolicySuccessfully  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  ${postjson}  ${policyName}  1.0.0
@@ -42,7 +42,7 @@ ValidatePolicyExecutionAndEventRateModerateComplexity
     ValidateEventExecution    ${eventStartTime}  ${eventEndTime}  1
 
 ValidatePolicyExecutionAndEventRateHighComplexity
-    [Documentation]  Validate that a high complexity policity can be executed in less than 5000ms and minimum 0.2 events triggered per second
+    [Documentation]  Validate that a high complexity policy can be executed in less than 5000ms and minimum 0.2 events triggered per second
     Set Test Variable    ${policyName}    onap.policies.apex.pnf.metadataSet.Test
     ${postjson}=  Get File  ${CURDIR}/data/${policyName}.json
     CreatePolicySuccessfully  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  ${postjson}  ${policyName}  1.0.0

@@ -123,8 +123,8 @@ function apex_healthcheck() {
 }
 
 function setup_drools_apps() {
-    export ROBOT_FILES="drools-applications-test.robot"
-    source ${DOCKER_COMPOSE_DIR}/start-compose.sh drools-applications
+    export ROBOT_FILES="drools-applications-test.robot drools-applications-slas.robot"
+    source ${DOCKER_COMPOSE_DIR}/start-compose.sh drools-applications --grafana
     sleep 10
     bash ${SCRIPTS}/wait_for_rest.sh localhost ${PAP_PORT}
     sleep 10
@@ -134,8 +134,8 @@ function setup_drools_apps() {
 }
 
 function setup_xacml_pdp() {
-    export ROBOT_FILES="xacml-pdp-test.robot"
-    source ${DOCKER_COMPOSE_DIR}/start-compose.sh xacml-pdp
+    export ROBOT_FILES="xacml-pdp-test.robot xacml-pdp-slas.robot"
+    source ${DOCKER_COMPOSE_DIR}/start-compose.sh xacml-pdp --grafana
     sleep 10
     bash ${SCRIPTS}/wait_for_rest.sh localhost "${XACML_PORT}"
 }
