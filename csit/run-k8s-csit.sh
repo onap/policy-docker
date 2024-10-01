@@ -32,7 +32,7 @@ POLICY_CLAMP_ROBOT="policy-clamp-test.robot clamp-slas.robot"
 POLICY_API_ROBOT="api-test.robot api-slas.robot"
 POLICY_PAP_ROBOT="pap-test.robot pap-slas.robot"
 POLICY_APEX_PDP_ROBOT="apex-pdp-test.robot apex-slas.robot"
-POLICY_XACML_PDP_ROBOT="xacml-pdp-test.robot"
+POLICY_XACML_PDP_ROBOT="xacml-pdp-test.robot xacml-pdp-slas.robot"
 POLICY_DROOLS_PDP_ROBOT="drools-pdp-test.robot"
 POLICY_DISTRIBUTION_ROBOT="distribution-test.robot"
 
