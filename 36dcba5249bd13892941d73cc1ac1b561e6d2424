@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe5070bc_9d0394fd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2024-10-01T10:47:49Z",
+      "side": 1,
+      "message": "sudo was added as it was expected by the jenkins during the k8s test execution. We can check the behavior after merging this and we may need an alternative solution",
+      "revId": "36dcba5249bd13892941d73cc1ac1b561e6d2424",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
