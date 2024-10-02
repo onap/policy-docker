@@ -24,6 +24,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b240287d_3f5cb9b5",
+        "filename": "policy-jdk/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-10-02T13:52:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa00a300_27db540d",
+      "range": {
+        "startLine": 4,
+        "startChar": 44,
+        "endLine": 4,
+        "endChar": 49
+      },
+      "revId": "87e75942927d4158bbc8e729782b657a80013fb8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a65e1f6b_2ab15d96",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-10-02T13:29:30Z",
       "side": 1,
       "message": "license",
+      "range": {
+        "startLine": 4,
+        "startChar": 44,
+        "endLine": 4,
+        "endChar": 49
+      },
+      "revId": "87e75942927d4158bbc8e729782b657a80013fb8",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c00709b8_cf860c0e",
+        "filename": "policy-jre/alpine/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-10-02T13:52:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a65e1f6b_2ab15d96",
       "range": {
         "startLine": 4,
         "startChar": 44,
