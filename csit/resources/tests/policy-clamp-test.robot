@@ -121,13 +121,30 @@ InstantiateAutomationCompositionMigrationFrom
      set Suite variable  ${instanceMigrationId}    ${respyaml["instanceId"]}
      Should Be Equal As Strings    ${resp.status_code}     201
 
+FailDeployAutomationCompositionMigration
+     [Documentation]  Fail Deploy automation composition.
+     SetParticipantSimFail
+     ${auth}=    ClampAuth
+     ${postjson}=  Get file  ${CURDIR}/data/DeployAC.json
+     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}  ${postjson}  ${auth}
+     Should Be Equal As Strings    ${resp.status_code}     202
+     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
+
+TimeoutDeployAutomationCompositionMigration
+     [Documentation]  Timeout Deploy automation composition.
+     SetParticipantSimTimeout
+     ${auth}=    ClampAuth
+     ${postjson}=  Get file  ${CURDIR}/data/DeployAC.json
+     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}  ${postjson}  ${auth}
+     Should Be Equal As Strings    ${resp.status_code}     202
+
 PrepareAutomationComposition
      [Documentation]  Prepare automation composition.
      ${auth}=    ClampAuth
      ${postjson}=  Get file  ${CURDIR}/data/PrepareAC.json
      ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
-     Wait Until Keyword Succeeds    10 min    5 sec    VerifyDeployStatus  ${compositionId}  ${instanceId}  UNDEPLOYED
+     Wait Until Keyword Succeeds    10 min    5 sec    VerifySubStatus  ${compositionId}  ${instanceId}
 
 DeployAutomationComposition
      [Documentation]  Deploy automation composition.
@@ -200,16 +217,11 @@ ReviewAutomationComposition
      ${postjson}=  Get file  ${CURDIR}/data/ReviewAC.json
      ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
-     Wait Until Keyword Succeeds    10 min    5 sec    VerifyDeployStatus  ${compositionId}  ${instanceId}  DEPLOYED
+     Wait Until Keyword Succeeds    10 min    5 sec    VerifySubStatus  ${compositionId}  ${instanceId}
 
-FailDeployAutomationCompositionMigration
-     [Documentation]  Fail Deploy automation composition.
-     SetParticipantSimFail
-     ${auth}=    ClampAuth
-     ${postjson}=  Get file  ${CURDIR}/data/DeployAC.json
-     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}  ${postjson}  ${auth}
-     Should Be Equal As Strings    ${resp.status_code}     202
-     Wait Until Keyword Succeeds    2 min    5 sec    VerifyFailDeploy  ${compositionFromId}  ${instanceMigrationId}
+CheckTimeoutAutomationComposition
+     [Documentation]  Timeout Deploy automation composition.
+     Wait Until Keyword Succeeds    5 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  TIMEOUT
 
 DeployAutomationCompositionMigration
      [Documentation]  Deploy automation composition.
@@ -253,7 +265,7 @@ PrecheckAutomationCompositionMigration
      ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     TEXTPLACEHOLDER       TextForMigration
      ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances  ${updatedpostyaml}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
-     Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
+     Wait Until Keyword Succeeds    2 min    5 sec    VerifySubStatus  ${compositionFromId}  ${instanceMigrationId}
 
 AutomationCompositionMigrationTo
      [Documentation]  Migration of an automation composition.
@@ -286,7 +298,7 @@ FailUnDeployAutomationCompositionMigrationTo
      ${postjson}=  Get file  ${CURDIR}/data/UndeployAC.json
      ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionToId}/instances/${instanceMigrationId}  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     202
-     Wait Until Keyword Succeeds    2 min    5 sec    VerifyFailDeploy  ${compositionToId}  ${instanceMigrationId}
+     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionToId}  ${instanceMigrationId}  FAILED
 
 UnDeployAutomationCompositionMigrationTo
      [Documentation]  UnDeploy automation composition migrated.
@@ -318,7 +330,7 @@ FailUnInstantiateAutomationCompositionMigrationTo
      ${resp}=   DELETE On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionToId}/instances/${instanceMigrationId}     headers=${headers}
      Log    Received response from runtime acm ${resp.text}
      Should Be Equal As Strings    ${resp.status_code}     202
-     Wait Until Keyword Succeeds    2 min    5 sec    VerifyFailDeploy  ${compositionToId}  ${instanceMigrationId}
+     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionToId}  ${instanceMigrationId}  FAILED
 
 UnInstantiateAutomationCompositionMigrationTo
      [Documentation]  Delete automation composition instance migrated.
@@ -437,13 +449,22 @@ VerifyDeployStatus
      Should Be Equal As Strings  ${resp.json()['stateChangeResult']}  NO_ERROR
      Run Keyword If  ${resp.status_code}==200  Should Be Equal As Strings  ${resp.json()['deployState']}  ${deploystate}
 
-VerifyFailDeploy
+VerifySubStatus
      [Arguments]  ${theCompositionId}  ${theInstanceId}
+     [Documentation]  Verify the Sub status of automation composition.
+     ${auth}=    ClampAuth
+     ${resp}=    MakeGetRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}/instances/${theInstanceId}  ${auth}
+     Should Be Equal As Strings    ${resp.status_code}     200
+     Should Be Equal As Strings  ${resp.json()['stateChangeResult']}  NO_ERROR
+     Run Keyword If  ${resp.status_code}==200  Should Be Equal As Strings  ${resp.json()['subState']}  NONE
+
+VerifyStateChangeResult
+     [Arguments]  ${theCompositionId}  ${theInstanceId}  ${stateChangeResult}
      [Documentation]  Verify the Deploy status of automation composition.
      ${auth}=    ClampAuth
      ${resp}=    MakeGetRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}/instances/${theInstanceId}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
-     Run Keyword If  ${resp.status_code}==200  Should Be Equal As Strings  ${resp.json()['stateChangeResult']}  FAILED
+     Run Keyword If  ${resp.status_code}==200  Should Be Equal As Strings  ${resp.json()['stateChangeResult']}  ${stateChangeResult}
 
 VerifyPropertiesUpdated
      [Arguments]  ${theCompositionId}  ${theInstanceId}  ${textToFind}
@@ -508,6 +529,13 @@ SetParticipantSimSuccess
      [Documentation]  Set Participant Simulator Success.
      ${auth}=    ParticipantAuth
      ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesSuccess.json
+     ${resp}=   MakeJsonPutRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
+     Should Be Equal As Strings    ${resp.status_code}     200
+
+SetParticipantSimTimeout
+     [Documentation]  Set Participant Simulator Timeout.
+     ${auth}=    ParticipantAuth
+     ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesTimeout.json
      ${resp}=   MakeJsonPutRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
      Should Be Equal As Strings    ${resp.status_code}     200
 
