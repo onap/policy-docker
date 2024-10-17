@@ -9,7 +9,7 @@ spring:
     converters:
       preferred-json-mapper: gson
   datasource:
-    url: jdbc:postgresql://postgres:5432/policyadmin
+    url: jdbc:postgresql://postgres:5432/clampacm
     driverClassName: org.postgresql.Driver
     username: policy_user
     password: policy_user
@@ -20,7 +20,7 @@ spring:
       maximumPoolSize: 10
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.onap.policy.common.spring.utils.CustomImplicitNamingStrategy
@@ -117,7 +117,7 @@ spring:
 runtime:
   participantParameters:
     heartBeatMs: 20000
-    maxStatusWaitMs: 200000
+    maxStatusWaitMs: 150000
   topicParameterGroup:
     topicSources:
       -
