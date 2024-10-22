@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE automationcompositiondefinition ADD lastMsg datetime(6);
+ALTER TABLE automationcompositiondefinition ADD lastMsg datetime(6) DEFAULT Now();
