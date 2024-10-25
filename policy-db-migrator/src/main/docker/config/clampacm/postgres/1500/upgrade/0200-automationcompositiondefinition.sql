@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE automationcompositiondefinition ADD lastMsg timestamp without time zone;
+ALTER TABLE automationcompositiondefinition ADD lastMsg timestamp without time zone DEFAULT Now();
