@@ -40,70 +40,6 @@ function docker_stats(){
     echo
 }
 
-function setup_clamp() {
-    export ROBOT_FILES="policy-clamp-test.robot clamp-slas.robot"
-    source ${DOCKER_COMPOSE_DIR}/start-compose.sh policy-clamp-runtime-acm --grafana
-    sleep 30
-    bash ${SCRIPTS}/wait_for_rest.sh localhost "${ACM_PORT}"
-}
-
-function setup_clamp_replica() {
-    export ACM_REPLICA_TEARDOWN=true
-    export ROBOT_FILES="policy-clamp-test.robot"
-    export TEST_ENV="docker"
-    export PROJECT=clamp
-    source ${DOCKER_COMPOSE_DIR}/start-acm-replica.sh --start --replicas=2
-    echo "Waiting a minute for the replicas to be started..."
-    sleep 60
-    # checking on apex-pdp status because acm-r replicas only start after apex-pdp is running
-    bash ${SCRIPTS}/wait_for_rest.sh localhost ${APEX_PORT}
-    apex_healthcheck
-    bash ${SCRIPTS}/wait_for_rest.sh localhost ${ACM_PORT}
-}
-
-function setup_api() {
-    export ROBOT_FILES="api-test.robot api-slas.robot"
-    source ${DOCKER_COMPOSE_DIR}/start-compose.sh api --grafana
-    sleep 10
-    bash ${SCRIPTS}/wait_for_rest.sh localhost ${API_PORT}
-}
-
-function setup_pap() {
-    export ROBOT_FILES="pap-test.robot pap-slas.robot"
-    source ${DOCKER_COMPOSE_DIR}/start-compose.sh apex-pdp --grafana
-    sleep 10
-    bash ${SCRIPTS}/wait_for_rest.sh localhost ${PAP_PORT}
-}
-
-function setup_apex() {
-    export ROBOT_FILES="apex-pdp-test.robot apex-slas.robot"
-    source ${DOCKER_COMPOSE_DIR}/start-compose.sh apex-pdp --grafana
-    sleep 10
-    bash ${SCRIPTS}/wait_for_rest.sh localhost ${PAP_PORT}
-    bash ${SCRIPTS}/wait_for_rest.sh localhost ${APEX_PORT}
-    apex_healthcheck
-}
-
-function setup_apex_medium() {
-    export SUITES="apex-slas-3.robot"
-    export APEX_REPLICA_TEARDOWN=true
-    source ${DOCKER_COMPOSE_DIR}/start-multiple-pdp.sh --start --replicas=3
-    sleep 10
-    bash ${SCRIPTS}/wait_for_rest.sh localhost ${PAP_PORT}
-    bash ${SCRIPTS}/wait_for_rest.sh localhost ${APEX_PORT}
-    apex_healthcheck
-}
-
-function setup_apex_large() {
-    export ROBOT_FILES="apex-slas-10.robot"
-    export APEX_REPLICA_TEARDOWN=true
-    source ${DOCKER_COMPOSE_DIR}/start-multiple-pdp.sh --start --replicas=10
-    sleep 10
-    bash ${SCRIPTS}/wait_for_rest.sh localhost ${PAP_PORT}
-    bash ${SCRIPTS}/wait_for_rest.sh localhost ${APEX_PORT}
-    apex_healthcheck
-}
-
 function apex_healthcheck() {
     sleep 20
 
@@ -120,31 +56,108 @@ function apex_healthcheck() {
         fi
         sleep 10s
     done
+
+    if  [ $healthy = false ]; then
+        exit 2
+    fi
+}
+
+function check_rest_endpoint() {
+    bash ${SCRIPTS}/wait_for_rest.sh localhost "${1}"
+    rc=$?
+    if [ $rc -ne 0 ]; then
+        on_exit
+    fi
+}
+
+function setup_clamp() {
+    export ROBOT_FILES="policy-clamp-test.robot clamp-slas.robot"
+    source ${DOCKER_COMPOSE_DIR}/start-compose.sh policy-clamp-runtime-acm --grafana
+    sleep 30
+    check_rest_endpoint "${ACM_PORT}"
+}
+
+function setup_clamp_replica() {
+    export ACM_REPLICA_TEARDOWN=true
+    export ROBOT_FILES="policy-clamp-test.robot"
+    export TEST_ENV="docker"
+    export PROJECT=clamp
+    source ${DOCKER_COMPOSE_DIR}/start-acm-replica.sh --start --replicas=2
+    echo "Waiting a minute for the replicas to be started..."
+    sleep 60
+    # checking on apex-pdp status because acm-r replicas only start after apex-pdp is running
+    check_rest_endpoint ${PAP_PORT}
+    check_rest_endpoint ${APEX_PORT}
+    apex_healthcheck
+    check_rest_endpoint ${ACM_PORT}
+}
+
+function setup_api() {
+    export ROBOT_FILES="api-test.robot api-slas.robot"
+    source ${DOCKER_COMPOSE_DIR}/start-compose.sh api --grafana
+    sleep 10
+    check_rest_endpoint ${API_PORT}
+}
+
+function setup_pap() {
+    export ROBOT_FILES="pap-test.robot pap-slas.robot"
+    source ${DOCKER_COMPOSE_DIR}/start-compose.sh apex-pdp --grafana
+    sleep 10
+    check_rest_endpoint ${PAP_PORT}
+}
+
+function setup_apex() {
+    export ROBOT_FILES="apex-pdp-test.robot apex-slas.robot"
+    source ${DOCKER_COMPOSE_DIR}/start-compose.sh apex-pdp --grafana
+    sleep 10
+    check_rest_endpoint ${PAP_PORT}
+    check_rest_endpoint ${APEX_PORT}
+    apex_healthcheck
+}
+
+function setup_apex_medium() {
+    export SUITES="apex-slas-3.robot"
+    export APEX_REPLICA_TEARDOWN=true
+    source ${DOCKER_COMPOSE_DIR}/start-multiple-pdp.sh --start --replicas=3
+    sleep 10
+    check_rest_endpoint ${PAP_PORT}
+    check_rest_endpoint ${APEX_PORT}
+    apex_healthcheck
+}
+
+function setup_apex_large() {
+    export ROBOT_FILES="apex-slas-10.robot"
+    export APEX_REPLICA_TEARDOWN=true
+    source ${DOCKER_COMPOSE_DIR}/start-multiple-pdp.sh --start --replicas=10
+    sleep 10
+    check_rest_endpoint ${PAP_PORT}
+    check_rest_endpoint ${APEX_PORT}
+    apex_healthcheck
 }
 
 function setup_drools_apps() {
     export ROBOT_FILES="drools-applications-test.robot drools-applications-slas.robot"
     source ${DOCKER_COMPOSE_DIR}/start-compose.sh drools-applications --grafana
     sleep 10
-    bash ${SCRIPTS}/wait_for_rest.sh localhost ${PAP_PORT}
+    check_rest_endpoint ${PAP_PORT}
     sleep 10
-    bash ${SCRIPTS}/wait_for_rest.sh localhost ${DROOLS_APPS_PORT}
+    check_rest_endpoint ${DROOLS_APPS_PORT}
     sleep 10
-    bash ${SCRIPTS}/wait_for_rest.sh localhost ${DROOLS_APPS_TELEMETRY_PORT}
+    check_rest_endpoint ${DROOLS_APPS_TELEMETRY_PORT}
 }
 
 function setup_xacml_pdp() {
     export ROBOT_FILES="xacml-pdp-test.robot xacml-pdp-slas.robot"
     source ${DOCKER_COMPOSE_DIR}/start-compose.sh xacml-pdp --grafana
     sleep 10
-    bash ${SCRIPTS}/wait_for_rest.sh localhost "${XACML_PORT}"
+    check_rest_endpoint "${XACML_PORT}"
 }
 
 function setup_drools_pdp() {
     export ROBOT_FILES="drools-pdp-test.robot"
-    source ${DOCKER_COMPOSE_DIR}/start-compose.sh drools-pdp
+    source ${DOCKER_COMPOSE_DIR}/start-compose.sh drools-pdp --grafana
     sleep 30
-    bash ${SCRIPTS}/wait_for_rest.sh localhost ${DROOLS_TELEMETRY_PORT}
+    check_rest_endpoint ${DROOLS_TELEMETRY_PORT}
 }
 
 function setup_distribution() {
@@ -155,9 +168,9 @@ function setup_distribution() {
     sudo mkdir /tmp/distribution
 
     export ROBOT_FILES="distribution-test.robot"
-    source ${DOCKER_COMPOSE_DIR}/start-compose.sh distribution
+    source ${DOCKER_COMPOSE_DIR}/start-compose.sh distribution --grafana
     sleep 10
-    bash ${SCRIPTS}/wait_for_rest.sh localhost "${DIST_PORT}"
+    check_rest_endpoint "${DIST_PORT}"
 }
 
 function build_robot_image() {

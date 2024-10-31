@@ -66,8 +66,7 @@ do
             sleep 5
         fi
     done
-    if [ $rc -ne 0 ]
-    then
+    if [ $rc -ne 0 ]; then
         echo "$host port $port REST cannot be detected"
         exit $rc
     fi
