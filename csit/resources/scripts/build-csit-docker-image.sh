@@ -46,7 +46,7 @@ docker image rm -f ${ROBOT_DOCKER_IMAGE}
 clone_models
 
 echo "Build robot framework docker image"
-docker build . --file Dockerfile  --tag "${ROBOT_DOCKER_IMAGE}" --quiet
+docker build . --file Dockerfile  --tag "onap/${ROBOT_DOCKER_IMAGE}" --quiet
 docker save -o policy-csit-robot.tar ${ROBOT_DOCKER_IMAGE}:latest
 
 rm -rf ${WORKSPACE}/csit/resources/policy-csit-robot.tar

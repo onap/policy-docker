@@ -132,7 +132,7 @@ services:
 
 # integration tests:
   csit-tests:
-    image: policy-csit-robot:latest
+    image: onap/policy-csit-robot:latest
     container_name: policy-csit
     hostname: policy-csit
     volumes:

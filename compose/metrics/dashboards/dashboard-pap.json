@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -22,12 +25,16 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 4,
+  "id": 6,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dkSf71fnz"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -36,10 +43,23 @@
       },
       "id": 19,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Quick Info",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dkSf71fnz"
+      },
       "description": "Uptime per pod for Policy PAP application calculated in days",
       "fieldConfig": {
         "defaults": {
@@ -60,7 +80,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "s"
         },
         "overrides": []
       },
@@ -76,23 +97,27 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [],
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "value_and_name"
+        "textMode": "value_and_name",
+        "wideLayout": true
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "dkSf71fnz"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "process_uptime_seconds{job=\"pap-metrics\"} / 86400",
+          "expr": "process_uptime_seconds{job=\"pap-metrics\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -101,11 +126,14 @@
         }
       ],
       "title": "Process Uptime (days)",
-      "transformations": [],
       "transparent": true,
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dkSf71fnz"
+      },
       "description": "Policy PAP CPU Usage Monitoring",
       "fieldConfig": {
         "defaults": {
@@ -168,6 +196,8 @@
       },
       "id": 26,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -178,9 +208,10 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": false,
+        "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
@@ -198,6 +229,10 @@
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dkSf71fnz"
+      },
       "description": "Policy PAP Memory Usage Monitoring",
       "fieldConfig": {
         "defaults": {
@@ -258,11 +293,13 @@
       "gridPos": {
         "h": 6,
         "w": 8,
-        "x": 15,
+        "x": 14,
         "y": 1
       },
       "id": 27,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -272,9 +309,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": false
+        "showThresholdMarkers": false,
+        "sizing": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
@@ -306,6 +344,10 @@
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dkSf71fnz"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -314,10 +356,23 @@
       },
       "id": 17,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "System",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dkSf71fnz"
+      },
       "description": "Policy PAP CPU Usage Monitoring",
       "fieldConfig": {
         "defaults": {
@@ -325,6 +380,9 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -336,6 +394,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineStyle": {
               "fill": "solid"
@@ -405,8 +464,8 @@
         ]
       },
       "gridPos": {
-        "h": 14,
-        "w": 12,
+        "h": 9,
+        "w": 8,
         "x": 0,
         "y": 8
       },
@@ -420,6 +479,7 @@
           ],
           "displayMode": "table",
           "placement": "bottom",
+          "showLegend": true,
           "sortBy": "Max",
           "sortDesc": true
         },
@@ -458,7 +518,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "avg_over_time(process_cpu_usage{job=\"pap-metrics\"}[1h]) * 100",
+          "expr": "avg_over_time(process_cpu_usage{job=\"pap-metrics\"}[$__range]) * 100",
           "hide": false,
           "interval": "",
           "legendFormat": "process_1h: {{pod}}",
@@ -469,6 +529,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dkSf71fnz"
+      },
       "description": "Policy PAP Memory Usage Monitoring",
       "fieldConfig": {
         "defaults": {
@@ -476,6 +540,9 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -487,6 +554,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineStyle": {
               "fill": "solid"
@@ -556,9 +624,9 @@
         ]
       },
       "gridPos": {
-        "h": 11,
-        "w": 12,
-        "x": 12,
+        "h": 9,
+        "w": 7,
+        "x": 8,
         "y": 8
       },
       "id": 13,
@@ -571,6 +639,7 @@
           ],
           "displayMode": "table",
           "placement": "bottom",
+          "showLegend": true,
           "sortBy": "Last",
           "sortDesc": false
         },
@@ -609,6 +678,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dkSf71fnz"
+      },
       "description": "Policy PAP JVM Threads",
       "fieldConfig": {
         "defaults": {
@@ -616,6 +689,9 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -627,6 +703,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -662,10 +739,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 13,
-        "w": 12,
-        "x": 12,
-        "y": 19
+        "h": 9,
+        "w": 7,
+        "x": 15,
+        "y": 8
       },
       "id": 8,
       "options": {
@@ -675,7 +752,8 @@
             "last"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "multi",
@@ -725,18 +803,35 @@
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dkSf71fnz"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 32
+        "y": 17
       },
       "id": 15,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Garbage Collection",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dkSf71fnz"
+      },
       "description": "GC operations per second",
       "fieldConfig": {
         "defaults": {
@@ -744,6 +839,9 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -755,6 +853,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 1,
@@ -793,7 +892,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 33
+        "y": 18
       },
       "id": 10,
       "options": {
@@ -804,7 +903,8 @@
             "last"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "single",
@@ -818,7 +918,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "rate(jvm_gc_pause_seconds_count{job=\"pap-metrics\"}[1h])",
+          "expr": "rate(jvm_gc_pause_seconds_count{job=\"pap-metrics\"}[$__range])",
           "interval": "",
           "legendFormat": "{{action}} ({{cause}}) : {{ pod }}",
           "refId": "A"
@@ -828,6 +928,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dkSf71fnz"
+      },
       "description": "Average GC Time",
       "fieldConfig": {
         "defaults": {
@@ -835,6 +939,9 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -846,6 +953,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 1,
@@ -883,7 +991,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 33
+        "y": 18
       },
       "id": 22,
       "options": {
@@ -892,7 +1000,8 @@
             "last"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "single",
@@ -906,7 +1015,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "rate(jvm_gc_pause_seconds_sum{job=\"pap-metrics\"}[1h])/rate(jvm_gc_pause_seconds_count{job=\"pap-metrics\"}[1h])",
+          "expr": "rate(jvm_gc_pause_seconds_sum{job=\"pap-metrics\"}[$__range])/rate(jvm_gc_pause_seconds_count{job=\"pap-metrics\"}[$__range])",
           "interval": "",
           "legendFormat": "avg {{action}} ({{cause}}) : {{ pod }}",
           "refId": "A"
@@ -917,18 +1026,35 @@
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dkSf71fnz"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 41
+        "y": 26
       },
       "id": 21,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Requests",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dkSf71fnz"
+      },
       "description": "Total number of PAP requests per second filtered by URI and REST method",
       "fieldConfig": {
         "defaults": {
@@ -936,6 +1062,9 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -947,6 +1076,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineStyle": {
               "fill": "solid"
@@ -971,8 +1101,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -988,7 +1117,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 42
+        "y": 27
       },
       "id": 12,
       "options": {
@@ -998,6 +1127,7 @@
           ],
           "displayMode": "table",
           "placement": "bottom",
+          "showLegend": true,
           "sortBy": "Last",
           "sortDesc": true
         },
@@ -1014,7 +1144,7 @@
             "uid": "dkSf71fnz"
           },
           "exemplar": true,
-          "expr": "avg by(method,uri) (rate(http_server_requests_seconds_count{job=\"pap-metrics\"}[5m]))",
+          "expr": "avg by(method,uri) (rate(http_server_requests_seconds_count{job=\"pap-metrics\"}[$__range]))",
           "interval": "",
           "legendFormat": "{{ method }} - {{ uri }}",
           "refId": "A"
@@ -1024,6 +1154,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dkSf71fnz"
+      },
       "description": "Time taken for PAP request filtered by REST method and URI",
       "fieldConfig": {
         "defaults": {
@@ -1031,6 +1165,9 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1042,6 +1179,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineStyle": {
               "fill": "solid"
@@ -1066,8 +1204,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1083,7 +1220,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 42
+        "y": 27
       },
       "id": 23,
       "options": {
@@ -1094,6 +1231,7 @@
           ],
           "displayMode": "table",
           "placement": "bottom",
+          "showLegend": true,
           "sortBy": "Max",
           "sortDesc": true
         },
@@ -1119,6 +1257,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dkSf71fnz"
+      },
       "description": "Percentage of PAP calls that passed filtered by method and URI",
       "fieldConfig": {
         "defaults": {
@@ -1130,8 +1272,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1147,10 +1288,12 @@
         "h": 11,
         "w": 12,
         "x": 0,
-        "y": 50
+        "y": 35
       },
       "id": 29,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -1161,11 +1304,12 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
+        "sizing": "auto",
         "text": {
           "titleSize": 12
         }
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
@@ -1183,6 +1327,10 @@
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dkSf71fnz"
+      },
       "description": "Stats for Policy PAP Deployment/Undeployment Operations",
       "fieldConfig": {
         "defaults": {
@@ -1194,8 +1342,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1210,11 +1357,15 @@
         "h": 11,
         "w": 12,
         "x": 12,
-        "y": 50
+        "y": 35
       },
       "id": 24,
       "options": {
         "displayMode": "gradient",
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "auto",
         "orientation": "vertical",
         "reduceOptions": {
           "calcs": [
@@ -1224,11 +1375,13 @@
           "values": false
         },
         "showUnfilled": false,
+        "sizing": "auto",
         "text": {
           "titleSize": 12
-        }
+        },
+        "valueMode": "color"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "11.1.0",
       "targets": [
         {
           "datasource": {
@@ -1309,20 +1462,19 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 34,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Policy PAP Jakarta",
+  "title": "Policy PAP",
   "uid": "DM56uKldd",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }
