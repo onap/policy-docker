@@ -1,6 +1,6 @@
 #!/bin/sh
 # ============LICENSE_START====================================================
-# Copyright (C) 2023 Nordix Foundation.
+# Copyright (C) 2023-2024 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -66,8 +66,7 @@ do
             sleep 5
         fi
     done
-    if [ $rc -ne 0 ]
-    then
+    if [ $rc -ne 0 ]; then
         echo "$host port $port REST cannot be detected"
         exit $rc
     fi
