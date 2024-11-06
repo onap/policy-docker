@@ -29,7 +29,7 @@ function start_kubernetes() {
 function install_jmeter() {
 
   #NOTE: $TESTDIR is set by the component triggering this script
-  cd ${TESTDIR}/automate-performance
+  cd ${TESTDIR}/automate-s3p-test
 
   sudo apt-get update
 
@@ -72,7 +72,7 @@ function on_exit() {
 function teardown() {
   echo "Removing temp directories.."
 
-  rm -r ${TESTDIR}/automate-performance
+  rm -r ${TESTDIR}/automate-s3p-test
 
   echo "Removed directories"
 
@@ -102,7 +102,7 @@ then
   echo "==========================="
   echo "Executing tests"
   echo "==========================="
-  cd ${TESTDIR}/automate-performance || exit
+  cd ${TESTDIR}/automate-s3p-test || exit
   nohup jmeter -n -t $2 -l s3pTestResults.jtl
 
   # TODO: Generate report on on_exit()
