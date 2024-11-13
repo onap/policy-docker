@@ -33,6 +33,29 @@
       "message": "recheck",
       "revId": "7180e271afa7229eebeab6d072b495cdbd9106ad",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa441d6d_d6355a4b",
+        "filename": "csit/resources/scripts/wait_for_rest.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7603
+      },
+      "writtenOn": "2024-11-13T09:00:51Z",
+      "side": 1,
+      "message": "Date",
+      "range": {
+        "startLine": 3,
+        "startChar": 16,
+        "endLine": 3,
+        "endChar": 20
+      },
+      "revId": "7180e271afa7229eebeab6d072b495cdbd9106ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
