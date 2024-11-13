@@ -56,6 +56,30 @@
       },
       "revId": "7180e271afa7229eebeab6d072b495cdbd9106ad",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b406e7b_2fdd4382",
+        "filename": "csit/resources/scripts/wait_for_rest.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-11-13T10:37:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa441d6d_d6355a4b",
+      "range": {
+        "startLine": 3,
+        "startChar": 16,
+        "endLine": 3,
+        "endChar": 20
+      },
+      "revId": "7180e271afa7229eebeab6d072b495cdbd9106ad",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
