@@ -1,0 +1,50 @@
+{
+  "name": "OnapPfParameterGroup",
+  "restServerParameters": {
+    "host": "0.0.0.0",
+    "port": 6969,
+    "userName": "${RESTSERVER_USER}",
+    "password": "${RESTSERVER_PASSWORD}",
+    "https": false,
+    "prometheus": true
+  },
+  "pdpStatusParameters": {
+    "pdpGroup": "sampleGroup",
+    "timeIntervalMs": 20000,
+    "pdpType": "apex",
+    "description": "Pdp Heartbeat",
+    "supportedPolicyTypes": [
+      {
+        "name": "onap.policies.native.Apex",
+        "version": "1.0.0"
+      },
+      {
+        "name": "onap.policies.controlloop.operational.common.Apex",
+        "version": "1.0.0"
+      }
+    ]
+  },
+  "topicParameterGroup": {
+    "topicSources": [
+      {
+        "topic": "policy-pdp-pap",
+        "servers": [
+          "{{ .Values.global.kafkaServer }}:9092"
+        ],
+        "useHttps": false,
+        "topicCommInfrastructure": "kafka",
+        "fetchTimeout": 15000
+      }
+    ],
+    "topicSinks": [
+      {
+        "topic": "policy-pdp-pap",
+        "servers": [
+          "{{ .Values.global.kafkaServer }}:9092"
+        ],
+        "useHttps": false,
+        "topicCommInfrastructure": "kafka"
+      }
+    ]
+  }
+}

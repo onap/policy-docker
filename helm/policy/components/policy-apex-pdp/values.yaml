@@ -65,6 +65,7 @@ service:
   name: policy-apex-pdp
   portName: http
   externalPort: 6969
+  externalPortSvc2: 6970
   internalPort: 6969
   nodePort: 37
 
