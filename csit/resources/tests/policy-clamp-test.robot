@@ -283,6 +283,37 @@ AutomationCompositionMigrationTo
     VerifyMigratedElementsRuntime  ${compositionToId}  ${instanceMigrationId}
     VerifyMigratedElementsSim  ${instanceMigrationId}
 
+FailAutomationCompositionMigration
+    [Documentation]  Fail Migration of an automation composition.
+    SetParticipantSimFail
+    ${auth}=    ClampAuth
+    ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-fail.yaml
+    ${updatedpostyaml}=   Replace String     ${postyaml}     COMPOSITIONIDPLACEHOLDER       ${compositionToId}
+    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     COMPOSITIONTARGETIDPLACEHOLDER       ${compositionFromId}
+    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
+    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     TEXTPLACEHOLDER       TextForMigration
+    ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionToId}/instances  ${updatedpostyaml}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionToId}  ${instanceMigrationId}  FAILED
+
+FailDePrimeACDefinitionsFrom
+    [Documentation]  Fail DePrime automation composition definition migration From.
+    SetParticipantSimFail
+    ${auth}=    ClampAuth
+    ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
+    ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}  ${postjson}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     202
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyFailedPriming  ${compositionFromId}
+
+DePrimeACDefinitionsFrom
+    [Documentation]  DePrime automation composition definition migration From.
+    SetParticipantSimSuccess
+    ${auth}=    ClampAuth
+    ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
+    ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}  ${postjson}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     202
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionFromId}  COMMISSIONED
+
 UnDeployAutomationComposition
     [Documentation]  UnDeploy automation composition.
     ${auth}=    ClampAuth
@@ -351,24 +382,6 @@ DePrimeACDefinitions
     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionId}  ${postjson}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     202
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionId}  COMMISSIONED
-
-FailDePrimeACDefinitionsFrom
-    [Documentation]  Fail DePrime automation composition definition migration From.
-    SetParticipantSimFail
-    ${auth}=    ClampAuth
-    ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
-    ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}  ${postjson}  ${auth}
-    Should Be Equal As Strings    ${resp.status_code}     202
-    Wait Until Keyword Succeeds    2 min    5 sec    VerifyFailedPriming  ${compositionFromId}
-
-DePrimeACDefinitionsFrom
-    [Documentation]  DePrime automation composition definition migration From.
-    SetParticipantSimSuccess
-    ${auth}=    ClampAuth
-    ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
-    ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}  ${postjson}  ${auth}
-    Should Be Equal As Strings    ${resp.status_code}     202
-    Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionFromId}  COMMISSIONED
 
 DePrimeACDefinitionsTo
     [Documentation]  DePrime automation composition definition migration To.
