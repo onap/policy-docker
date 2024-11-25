@@ -107,6 +107,46 @@ spec:
         affinity:
 {{ toYaml .Values.affinity | indent 10 }}
         {{- end }}
+        - name: {{ .Chart.Name }}-sg
+          image: {{ .Values.global.repository }}/{{ .Values.global.image.apex }}
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
+          command: ["sh","-c"]
+          args: ["/opt/app/policy/apex-pdp/bin/apexOnapPf.sh -c /home/apexuser/config/OnapPfConfigSampleGroup.json"]
+          ports:
+          - containerPort: {{ .Values.service.externalPortSvc2 }}
+          {{- if eq .Values.liveness.enabled true }}
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.service.externalPort }}
+            initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.liveness.periodSeconds }}
+          {{- end }}
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.service.externalPort }}
+            initialDelaySeconds: {{ .Values.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readiness.periodSeconds }}
+          env:
+          - name: REPLICAS
+            value: "{{ .Values.replicaCount }}"
+          volumeMounts:
+          - mountPath: /etc/localtime
+            name: localtime
+            readOnly: true
+          - mountPath: /var/log/onap
+            name: policy-logs
+          - mountPath: /home/apexuser/config
+            name: apexconfig
+          resources:
+{{ toYaml .Values.resources.small | indent 12 }}
+        {{- if .Values.nodeSelector }}
+        nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 10 }}
+        {{- end -}}
+        {{- if .Values.affinity }}
+        affinity:
+{{ toYaml .Values.affinity | indent 10 }}
+        {{- end }}
       serviceAccountName: {{ .Chart.Name }}-read
       volumes:
         - name: localtime
