@@ -76,9 +76,9 @@ function expose_services() {
     expose_service $DIST_SVC
     expose_service $ACM_SVC
     expose_service $POLICY_PPNT_SVC
-    expose_service POLICY_HTTP_SVC
-    expose_service POLICY_SIM_SVC
-    expose_service POLICY_K8S_SVC
+    expose_service $POLICY_HTTP_SVC
+    expose_service $POLICY_SIM_SVC
+    expose_service $POLICY_K8S_SVC
 
     setup_message_router_svc
     sleep 2

@@ -394,7 +394,7 @@ wait_for_pods_running() {
          pod_status=$(kubectl get pod "$pod" -n "$namespace" --no-headers -o custom-columns=STATUS:.status.phase 2>/dev/null)
          pod_ready=$(kubectl get pod "$pod" -o jsonpath='{.status.containerStatuses[*].ready}')
 
-         if [ "$pod_status" == "Running" ] && [ "$pod_ready" == "true" ]; then
+         if [ "$pod_status" == "Running" ] && { [ "$pod_ready" == "true" ] || [ "$pod_ready" == "true true" ]; }; then
            echo "Pod '$pod' in namespace '$namespace' is now in 'Running' state and 'Readiness' is true"
          else
            newly_running_pods+=("$pod")
