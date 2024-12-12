@@ -18,3 +18,4 @@
  */
 
 ALTER TABLE automationcompositiondefinition ADD lastMsg datetime(6) DEFAULT Now();
+UPDATE automationcompositiondefinition SET restarting = NULL;

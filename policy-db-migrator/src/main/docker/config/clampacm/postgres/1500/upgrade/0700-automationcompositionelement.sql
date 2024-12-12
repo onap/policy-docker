@@ -17,5 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE automationcompositiondefinition ADD lastMsg timestamp without time zone DEFAULT Now();
-UPDATE automationcompositiondefinition SET restarting = NULL;
+UPDATE automationcompositionelement SET restarting = NULL;

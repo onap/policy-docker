@@ -17,4 +17,5 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE automationcomposition ADD lastMsg datetime(6) DEFAULT Now(), ADD phase TINYINT;
+ALTER TABLE automationcomposition ADD lastMsg datetime(6) DEFAULT Now(), ADD phase TINYINT DEFAULT 0;
+UPDATE automationcomposition SET restarting = NULL;
