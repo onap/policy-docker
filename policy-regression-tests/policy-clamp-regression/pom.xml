@@ -15,9 +15,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.cucumber>7.15.0</version.cucumber>
+        <version.cucumber>7.20.1</version.cucumber>
         <version.rest-assured>5.4.0</version.rest-assured>
-        <version.junit-platform>1.10.2</version.junit-platform>
+        <version.junit-platform>1.11.4</version.junit-platform>
         <tests.skip>true</tests.skip>
     </properties>
 

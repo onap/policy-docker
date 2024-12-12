@@ -1,6 +1,6 @@
 /*-
  * ============LICENSE_START=======================================================
- *  Copyright (C) 2024 Nordix Foundation. All rights reserved.
+ *  Copyright (C) 2024-2025 Nordix Foundation. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,15 +20,12 @@
 
 package org.onap.policy.clamp.regression;
 
-import static io.restassured.config.EncoderConfig.encoderConfig;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import java.io.IOException;
@@ -37,12 +34,9 @@ import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import org.onap.policy.clamp.regression.util.RestUtils;
 
 public class StepDefinitions {
-    private static final String acmUrl = "http://localhost:30007/";
-    private static final String username = "runtimeUser";
-    private static final String password = "zb!XztG34";
     private static String compositionId;
     private static String instanceId;
     private static String targetCompositionId;
@@ -54,10 +48,7 @@ public class StepDefinitions {
      */
     @When("the acm health check endpoint is invoked {string}")
     public void isAcmEndpointRunning(String endpoint) {
-        response = RestAssured.given()
-                .auth().basic(username, password)
-                .baseUri(acmUrl)
-                .get(endpoint);
+        response = RestUtils.getRequestSpecification().get(endpoint);
     }
 
     /**
@@ -66,14 +57,7 @@ public class StepDefinitions {
     @When("the ACM commissioning endpoint {string} is invoked with {string} {string}")
     public void commissioningIsAccepted(String endpoint, String filePath, String isMigration) throws IOException {
         var jsonContent = new String(Files.readAllBytes(Path.of(filePath)));
-        response = RestAssured.given()
-                .config(RestAssured.config().encoderConfig(encoderConfig()
-                        .encodeContentTypeAs("", ContentType.JSON)))
-                .auth().basic(username, password)
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .baseUri(acmUrl)
-                .body(jsonContent)
+        response = RestUtils.getRsJson(jsonContent)
                 .post(endpoint);
         var jsonPath = new JsonPath(response.getBody().asString());
         if (Boolean.parseBoolean(isMigration)) {
@@ -88,10 +72,7 @@ public class StepDefinitions {
      */
     @When("the register participants endpoint is invoked {string}")
     public void registerParticipants(String endpoint) {
-        response = RestAssured.given()
-                .auth().basic(username, password)
-                .baseUri(acmUrl)
-                .put(endpoint);
+        response = RestUtils.getRequestSpecification().put(endpoint);
     }
 
     /**
@@ -100,14 +81,7 @@ public class StepDefinitions {
     @When("the ACM participants are primed {string} {string}")
     public void primeTheParticipants(String endpoint, String isMigration) throws JSONException {
         var jsonBody = new JSONObject().put("primeOrder", "PRIME");
-        response = RestAssured.given()
-                .config(RestAssured.config().encoderConfig(encoderConfig()
-                        .encodeContentTypeAs("", ContentType.JSON)))
-                .auth().basic(username, password)
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .baseUri(acmUrl)
-                .body(jsonBody.toString())
+        response = RestUtils.getRsJson(jsonBody.toString())
                 .put(endpoint.replace("{compositionId}",
                         Boolean.parseBoolean(isMigration) ? targetCompositionId : compositionId));
     }
@@ -117,9 +91,7 @@ public class StepDefinitions {
      */
     @When("the ACM composition is fetched {string}")
     public void fetchCompositionById(String endpoint) {
-        response = RestAssured.given()
-                .auth().basic(username, password)
-                .baseUri(acmUrl)
+        response = RestUtils.getRequestSpecification()
                 .get(endpoint.replace("{compositionId}", compositionId));
     }
 
@@ -145,8 +117,7 @@ public class StepDefinitions {
                     conditionMet = keyword.equals(jsonPath.getString("deployState"));
                     if (!conditionMet) {
                         Thread.sleep(10000); // Wait for 10 second before retrying
-                        fetchAcInstanceById(endpoint,
-                                Boolean.parseBoolean(isMigration) ? targetCompositionId : compositionId);
+                        fetchAcInstanceById(endpoint, isMigration);
                     }
                 }
                 default -> {
@@ -157,21 +128,14 @@ public class StepDefinitions {
         assertTrue(conditionMet);
     }
 
-
     /**
      * Verify AC instantiation.
      */
     @When("the ACM instance is created {string} with {string}")
     public void instantiate(String endpoint, String filePath) throws IOException {
         var jsonContent = new String(Files.readAllBytes(Path.of(filePath)));
-        response = RestAssured.given()
-                .config(RestAssured.config().encoderConfig(encoderConfig()
-                        .encodeContentTypeAs("", ContentType.JSON)))
-                .auth().basic(username, password)
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .baseUri(acmUrl)
-                .body(jsonContent.replace("COMPOSITIONIDPLACEHOLDER", compositionId))
+        response = RestUtils
+                .getRsJson(jsonContent.replace("COMPOSITIONIDPLACEHOLDER", compositionId))
                 .post(endpoint.replace("{compositionId}", compositionId));
         var jsonPath = new JsonPath(response.getBody().asString());
         instanceId = jsonPath.getString("instanceId");
@@ -183,14 +147,8 @@ public class StepDefinitions {
     @When("the AC instance property is updated {string} {string}")
     public void updateInstanceProperty(String endpoint, String filePath) throws IOException {
         var jsonContent = new String(Files.readAllBytes(Path.of(filePath)));
-        response = RestAssured.given()
-                .config(RestAssured.config().encoderConfig(encoderConfig()
-                        .encodeContentTypeAs("", ContentType.JSON)))
-                .auth().basic(username, password)
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .baseUri(acmUrl)
-                .body(jsonContent.replace("COMPOSITIONIDPLACEHOLDER", compositionId)
+        response = RestUtils
+                .getRsJson(jsonContent.replace("COMPOSITIONIDPLACEHOLDER", compositionId)
                         .replace("INSTANCEIDPLACEHOLDER", instanceId))
                 .post(endpoint.replace("{compositionId}", compositionId));
         var jsonPath = new JsonPath(response.getBody().asString());
@@ -203,14 +161,7 @@ public class StepDefinitions {
     @When("the AC instance is deployed {string}")
     public void deployAcInstance(String endpoint) throws JSONException {
         var jsonBody = new JSONObject().put("deployOrder", "DEPLOY");
-        response = RestAssured.given()
-                .config(RestAssured.config().encoderConfig(encoderConfig()
-                        .encodeContentTypeAs("", ContentType.JSON)))
-                .auth().basic(username, password)
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .baseUri(acmUrl)
-                .body(jsonBody.toString())
+        response = RestUtils.getRsJson(jsonBody.toString())
                 .put(endpoint.replace("{compositionId}", compositionId)
                         .replace("{instanceId}", instanceId));
     }
@@ -220,9 +171,7 @@ public class StepDefinitions {
      */
     @When("the AC instance is fetched {string} {string}")
     public void fetchAcInstanceById(String endpoint, String isMigration) {
-        response = RestAssured.given()
-                .auth().basic(username, password)
-                .baseUri(acmUrl)
+        response = RestUtils.getRequestSpecification()
                 .get(endpoint.replace("{compositionId}",
                                 Boolean.parseBoolean(isMigration) ? targetCompositionId : compositionId)
                         .replace("{instanceId}", instanceId));
@@ -234,14 +183,7 @@ public class StepDefinitions {
     @When("the AC instance is undeployed {string}")
     public void unDeployAcInstance(String endpoint) throws JSONException {
         var jsonBody = new JSONObject().put("deployOrder", "UNDEPLOY");
-        response = RestAssured.given()
-                .config(RestAssured.config().encoderConfig(encoderConfig()
-                        .encodeContentTypeAs("", ContentType.JSON)))
-                .auth().basic(username, password)
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .baseUri(acmUrl)
-                .body(jsonBody.toString())
+        response = RestUtils.getRsJson(jsonBody.toString())
                 .put(endpoint.replace("{compositionId}", compositionId)
                         .replace("{instanceId}", instanceId));
     }
@@ -251,9 +193,7 @@ public class StepDefinitions {
      */
     @When("the ACM instance is uninstantiated {string}")
     public void unInstantiate(String endpoint) {
-        response = RestAssured.given()
-                .auth().basic(username, password)
-                .baseUri(acmUrl)
+        response = RestUtils.getRequestSpecification()
                 .delete(endpoint.replace("{compositionId}", compositionId).replace("{instanceId}", instanceId));
     }
 
@@ -262,9 +202,7 @@ public class StepDefinitions {
      */
     @When("all the AC instances are fetched {string}")
     public void fetchAllAcInstances(String endpoint) {
-        response = RestAssured.given()
-                .auth().basic(username, password)
-                .baseUri(acmUrl)
+        response = RestUtils.getRequestSpecification()
                 .get(endpoint.replace("{compositionId}", compositionId));
     }
 
@@ -292,14 +230,7 @@ public class StepDefinitions {
     @When("the ACM participants are deprimed {string}")
     public void deprimeTheParticipants(String endpoint) throws JSONException {
         var jsonBody = new JSONObject().put("primeOrder", "DEPRIME");
-        response = RestAssured.given()
-                .config(RestAssured.config().encoderConfig(encoderConfig()
-                        .encodeContentTypeAs("", ContentType.JSON)))
-                .auth().basic(username, password)
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .baseUri(acmUrl)
-                .body(jsonBody.toString())
+        response = RestUtils.getRsJson(jsonBody.toString())
                 .put(endpoint.replace("{compositionId}", compositionId));
     }
 
@@ -307,10 +238,8 @@ public class StepDefinitions {
      * Verify deletion of composition defintion.
      */
     @When("the AC definition is deleted {string}")
-    public void deleteAcDefinition(String endpoint) throws IOException {
-        response = RestAssured.given()
-                .auth().basic(username, password)
-                .baseUri(acmUrl)
+    public void deleteAcDefinition(String endpoint) {
+        response = RestUtils.getRequestSpecification()
                 .delete(endpoint.replace("{compositionId}", compositionId));
     }
 
@@ -320,14 +249,8 @@ public class StepDefinitions {
     @When("the ACM instance is migrated {string} with {string}")
     public void migrate(String endpoint, String filePath) throws IOException {
         var jsonContent = new String(Files.readAllBytes(Path.of(filePath)));
-        response = RestAssured.given()
-                .config(RestAssured.config().encoderConfig(encoderConfig()
-                        .encodeContentTypeAs("", ContentType.JSON)))
-                .auth().basic(username, password)
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .baseUri(acmUrl)
-                .body(jsonContent
+        response = RestUtils
+                .getRsJson(jsonContent
                         .replace("COMPOSITIONIDPLACEHOLDER", compositionId)
                         .replace("INSTANCEIDPLACEHOLDER", instanceId)
                         .replace("COMPOSITIONTARGETIDPLACEHOLDER", targetCompositionId))
@@ -339,7 +262,8 @@ public class StepDefinitions {
      */
     @Then("the response status code should be {int}")
     public void theUserEndpointIsUpAndRunning(int expectedStatus) {
-        assertEquals(expectedStatus, response.getStatusCode());
+        var status = response.getStatusCode();
+        assertEquals(expectedStatus, status);
     }
 
     /**
@@ -347,8 +271,8 @@ public class StepDefinitions {
      */
     @Then("the response should contain the updated properties {string} {string}")
     public void theUserEndpointIsUpAndRunning(String value1, String value2) {
-        assertThat(value1, response.getBody().asString().contains(value1));
-        assertThat(value1, response.getBody().asString().contains(value2));
+        var body = response.getBody().asString();
+        assertThat(body).contains(value1);
+        assertThat(body).contains(value2);
     }
-
 }

@@ -9,18 +9,39 @@
     "709c62b3-8918-41b9-a747-d21eb79c6c20": {
       "id": "709c62b3-8918-41b9-a747-d21eb79c6c20",
       "definition": {
-        "name": "onap.policy.clamp.ac.element.Policy_AutomationCompositionElement",
+        "name": "onap.policy.clamp.ac.element.Http_AutomationCompositionElement",
         "version": "1.2.3"
       },
-      "description": "Policy Automation Composition Element for the Demo",
+      "description": "Automation composition element for the http requests of AC Element Starter microservice",
       "properties": {
-        "policy_type_id": {
-          "name": "onap.policies.native.Apex",
-          "version": "1.0.0"
+        "uninitializedToPassiveTimeout": 180,
+        "baseUrl": "https://api.restful-api.dev",
+        "httpHeaders": {
+          "Content-Type": "application/json",
+          "Authorization": "Basic YWNtVXNlcjp6YiFYenRHMzQ="
         },
         "policy_id": {
           "get_input": "acm_element_policy"
-        }
+        },
+        "configurationEntities": [
+          {
+            "configurationEntityId": {
+              "name": "onap.policy.clamp.ac.starter",
+              "version": "1.0.0"
+            },
+            "restSequence": [
+              {
+                "restRequestId": {
+                  "name": "request1",
+                  "version": "1.0.1"
+                },
+                "httpMethod": "GET",
+                "path": "/objects",
+                "expectedResponse": 200
+              }
+            ]
+          }
+        ]
       }
     }
   }
