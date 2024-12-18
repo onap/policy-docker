@@ -130,6 +130,34 @@ services:
       'kafka', '9092'
     ]
 
+
+  opa-pdp:
+      image: ${CONTAINER_LOCATION}onap/policy-opa-pdp:${POLICY_OPA_PDP_VERSION}
+      container_name:  policy-opa-pdp
+      depends_on:
+       - kafka
+       - pap
+      hostname:  policy-opa-pdp
+      volumes:
+       - ./config/opa-pdp/config.json:/app/config/config.json:ro
+       - ./config/opa-pdp/policy-opa-pdp.sh:/app/policy-opa-pdp.sh:ro
+       - ./wait_for_port.sh:/app/wait_for_port.sh
+       - type: bind
+         source: ./config/opa-pdp/policies
+         target: /opt/policies
+       - type: bind
+         source: ./config/opa-pdp/data
+         target: /opt/data
+      env_file: "./config/opa-pdp/opa-pdp.env"
+      entrypoint: sh wait_for_port.sh
+      command: [
+        '-c', './policy-opa-pdp.sh',
+        'kafka', '9092',
+        'pap', '6969'
+        ]
+      ports:
+        - ${OPA_PDP_PORT}:8282
+
   drools-pdp:
     image: ${CONTAINER_LOCATION}onap/policy-drools:${POLICY_DROOLS_PDP_VERSION}
     container_name: policy-drools-pdp

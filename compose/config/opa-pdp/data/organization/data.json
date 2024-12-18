@@ -1,0 +1,32 @@
+{
+    "acls": [
+        {
+            "user": "alice",
+            "actions": [
+                "edit",
+                "read"
+            ],
+            "component": "component_A",
+            "project": "project_A",
+            "organization": "org_A"
+        },
+        {
+            "user": "bob",
+            "actions": ["read"],
+            "organization": "org_A"
+        },
+        {
+            "user": "bob",
+            "action": ["edit"],
+            "component": "component_A",
+            "project": "project_B",
+            "organization": "org_A"
+        },
+        {
+            "user": "charlie",
+            "action": ["read"],
+            "project": "project_B",
+            "organization": "org_A"
+        }
+    ]
+}
