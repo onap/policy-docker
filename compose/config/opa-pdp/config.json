@@ -1,0 +1,24 @@
+{
+  "logging": {
+    "level": "debug"
+  },
+  "services": [
+    {
+      "name": "opa-bundle-server",
+      "url": "http://localhost:8282/opa/bundles"
+    }
+  ],
+  "bundles": {
+    "opabundle": {
+      "service": "opa-bundle-server",
+      "resource": "bundle.tar.gz",
+      "polling": {
+        "min_delay_seconds": 60,
+        "max_delay_seconds": 120
+      }
+    }
+  },
+  "decision_logs": {
+    "console": true
+  }
+}

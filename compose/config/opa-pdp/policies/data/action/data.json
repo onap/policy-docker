@@ -1,0 +1,43 @@
+{
+    "user_roles": {
+        "alice": [
+            "admin"
+        ],
+        "bob": [
+            "editor"
+        ],
+        "charlie": [
+            "viewer"
+        ]
+    },
+    "role_permissions": {
+        "admin": {
+            "actions": [
+                "read",
+                "write",
+                "delete"
+            ],
+            "resources": [
+                "server",
+                "database"
+            ]
+        },
+        "editor": {
+            "actions": [
+                "read",
+                "write"
+            ],
+            "resources": [
+                "server"
+            ]
+        },
+        "viewer": {
+            "actions": [
+                "read"
+            ],
+            "resources": [
+                "server"
+            ]
+        }
+    }
+}

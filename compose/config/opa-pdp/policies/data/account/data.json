@@ -1,0 +1,16 @@
+{
+  "account_attributes":{
+    "11111":{
+      "owner":"alice",
+      "amount":10000
+    },
+    "22222":{
+      "owner":"bob",
+      "amount":10000
+    },
+    "33333":{
+      "owner":"cam",
+      "amount":10000
+    }
+  }
+}

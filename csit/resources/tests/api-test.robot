@@ -16,7 +16,7 @@ Healthcheck
 
 RetrievePolicyTypes
     [Documentation]  Retrieve all policy types
-    FetchPolicyTypes  /policy/api/v1/policytypes  37
+    FetchPolicyTypes  /policy/api/v1/policytypes  38
 
 CreateTCAPolicyTypeV1
     [Documentation]  Create an existing policy type with modification and keeping the same version should result in error.
