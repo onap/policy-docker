@@ -43,6 +43,7 @@ if [ -n "$LOCAL_IMAGES" ] && [ "$LOCAL_IMAGES" = "true" ]; then
     export POLICY_APEX_PDP_VERSION="latest"
     export POLICY_DROOLS_PDP_VERSION="latest"
     export POLICY_XACML_PDP_VERSION="latest"
+    export POLICY_OPA_PDP_VERSION="latest"
     export POLICY_DISTRIBUTION_VERSION="latest"
     export POLICY_CLAMP_VERSION="latest"
     export POLICY_CLAMP_PPNT_VERSION=$POLICY_CLAMP_VERSION
@@ -144,6 +145,9 @@ else
 
     getDockerVersion xacml-pdp
     export POLICY_XACML_PDP_VERSION="$docker_image_version"
+
+    getDockerVersion opa-pdp
+    export POLICY_OPA_PDP_VERSION="$docker_image_version"
 
     getDockerVersion distribution
     export POLICY_DISTRIBUTION_VERSION="$docker_image_version"

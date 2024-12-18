@@ -170,6 +170,14 @@ function setup_xacml_pdp() {
     check_rest_endpoint "${XACML_PORT}"
 }
 
+function setup_opa_pdp() {
+    export ROBOT_FILES="opa-pdp-test.robot"
+    export PROJECT="opa-pdp"
+    source ${DOCKER_COMPOSE_DIR}/start-compose.sh opa-pdp --grafana
+    sleep 180
+    bash ${SCRIPTS}/wait_for_rest.sh localhost "${OPA_PDP_PORT}"
+}
+
 function setup_drools_pdp() {
     export ROBOT_FILES="drools-pdp-test.robot"
     source ${DOCKER_COMPOSE_DIR}/start-compose.sh drools-pdp --grafana
@@ -238,6 +246,10 @@ function set_project_config() {
 
     xacml-pdp | policy-xacml-pdp)
         setup_xacml_pdp
+        ;;
+
+    opa-pdp | policy-opa-pdp)
+        setup_opa_pdp
         ;;
 
     drools-pdp | policy-drools-pdp)
