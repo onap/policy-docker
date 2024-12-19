@@ -1,10 +1,9 @@
 #!/bin/bash
 #
 # ============LICENSE_START====================================================
-#  Copyright (C) 2022-2024 Nordix Foundation.
+#  Copyright (C) 2022-2025 Nordix Foundation.
 #  Modifications Copyright © 2024 Deutsche Telekom
 # =============================================================================
-# 
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -170,6 +169,32 @@ function teardown_cluster() {
     echo "MicroK8s Cluster removed"
 }
 
+function clone_models() {
+
+    # download models examples
+    git clone -b "${GERRIT_BRANCH}" --single-branch https://github.com/onap/policy-models.git "${WORKSPACE}"/csit/resources/tests/models
+
+    # create a couple of variations of the policy definitions
+    sed -e 's!Measurement_vGMUX!ADifferentValue!' \
+        tests/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.json \
+        >tests/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.v1_2.json
+
+    sed -e 's!"version": "1.0.0"!"version": "2.0.0"!' \
+        -e 's!"policy-version": 1!"policy-version": 2!' \
+        tests/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.json \
+        >tests/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.v2.json
+}
+
+function copy_csar_file() {
+    zip -F ${DISTRIBUTION_CSAR}/sample_csar_with_apex_policy.csar \
+        --out ${DISTRIBUTION_CSAR}/csar_temp.csar -q
+    # Remake temp directory
+    sudo rm -rf "${DIST_TEMP_FOLDER}"
+    sudo mkdir "${DIST_TEMP_FOLDER}"
+    sudo cp ${DISTRIBUTION_CSAR}/csar_temp.csar ${DISTRIBUTION_CSAR}/temp.csar
+    sudo mv ${DISTRIBUTION_CSAR}/temp.csar ${DIST_TEMP_FOLDER}/sample_csar_with_apex_policy.csar
+}
+
 function build_robot_image() {
     echo "Build docker image for robot framework"
     cd ${WORKSPACE}/csit/resources || exit
@@ -184,6 +209,37 @@ function build_robot_image() {
         --build-arg ROBOT_FILE="$ROBOT_FILE" \
         --tag "${ROBOT_DOCKER_IMAGE}" --no-cache
     echo "---------------------------------------------"
+}
+
+function push_acelement_chart() {
+    echo "Pushing acelement chart to the chartmuseum repo..."
+    helm repo add policy-chartmuseum http://localhost:30208
+
+    # download clamp repo
+    git clone -b "${GERRIT_BRANCH}" --single-branch https://github.com/onap/policy-clamp.git "${WORKSPACE}"/csit/resources/tests/clamp
+    ACELEMENT_CHART=${WORKSPACE}/csit/resources/tests/clamp/examples/src/main/resources/clamp/acm/acelement-helm/acelement
+    helm cm-push $ACELEMENT_CHART policy-chartmuseum
+    helm repo update
+    rm -rf ${WORKSPACE}/csit/resources/tests/clamp/
+    echo "-------------------------------------------"
+}
+
+function print_robot_log() {
+    count_pods=0
+    while [[ ${count_pods} -eq 0 ]]; do
+        echo "Waiting for pods to come up..."
+        sleep 5
+        count_pods=$(kubectl get pods --output name | wc -l)
+    done
+    robotpod=$(kubectl get po | grep policy-csit)
+    podName=$(echo "$robotpod" | awk '{print $1}')
+    echo "The robot tests will begin once the policy components {${READINESS_CONTAINERS[*]}} are up and running..."
+    kubectl wait --for=jsonpath='{.status.phase}'=Running --timeout=18m pod/"$podName"
+    echo "Policy deployment status:"
+    kubectl get po
+    kubectl get all -A
+    echo "Robot Test logs:"
+    kubectl logs -f "$podName"
 }
 
 function start_csit() {
@@ -212,48 +268,14 @@ function start_csit() {
     fi
 }
 
-function print_robot_log() {
-    count_pods=0
-    while [[ ${count_pods} -eq 0 ]]; do
-        echo "Waiting for pods to come up..."
-        sleep 5
-        count_pods=$(kubectl get pods --output name | wc -l)
-    done
-    robotpod=$(kubectl get po | grep policy-csit)
-    podName=$(echo "$robotpod" | awk '{print $1}')
-    echo "The robot tests will begin once the policy components {${READINESS_CONTAINERS[*]}} are up and running..."
-    kubectl wait --for=jsonpath='{.status.phase}'=Running --timeout=18m pod/"$podName"
-    echo "Policy deployment status:"
-    kubectl get po
-    kubectl get all -A
-    echo "Robot Test logs:"
-    kubectl logs -f "$podName"
-}
-
-function clone_models() {
-
-    # download models examples
-    git clone -b "${GERRIT_BRANCH}" --single-branch https://github.com/onap/policy-models.git "${WORKSPACE}"/csit/resources/tests/models
-
-    # create a couple of variations of the policy definitions
-    sed -e 's!Measurement_vGMUX!ADifferentValue!' \
-        tests/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.json \
-        >tests/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.v1_2.json
-
-    sed -e 's!"version": "1.0.0"!"version": "2.0.0"!' \
-        -e 's!"policy-version": 1!"policy-version": 2!' \
-        tests/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.json \
-        >tests/models/models-examples/src/main/resources/policies/vCPE.policy.monitoring.input.tosca.v2.json
-}
-
-function copy_csar_file() {
-    zip -F ${DISTRIBUTION_CSAR}/sample_csar_with_apex_policy.csar \
-        --out ${DISTRIBUTION_CSAR}/csar_temp.csar -q
-    # Remake temp directory
-    sudo rm -rf "${DIST_TEMP_FOLDER}"
-    sudo mkdir "${DIST_TEMP_FOLDER}"
-    sudo cp ${DISTRIBUTION_CSAR}/csar_temp.csar ${DISTRIBUTION_CSAR}/temp.csar
-    sudo mv ${DISTRIBUTION_CSAR}/temp.csar ${DIST_TEMP_FOLDER}/sample_csar_with_apex_policy.csar
+function install_chartmuseum () {
+    echo "---------------------------------------------"
+    echo "Installing Chartmuseum helm repository..."
+    helm repo add chartmuseum-git https://chartmuseum.github.io/charts
+    helm repo update
+    helm install policy-chartmuseum chartmuseum-git/chartmuseum --set env.open.DISABLE_API=false --set service.type=NodePort --set service.nodePort=30208
+    helm plugin install https://github.com/chartmuseum/helm-push
+    echo "---------------------------------------------"
 }
 
 function set_project_config() {
@@ -328,36 +350,13 @@ function set_project_config() {
 
 }
 
-function install_chartmuseum () {
-    echo "---------------------------------------------"
-    echo "Installing Chartmuseum helm repository..."
-    helm repo add chartmuseum-git https://chartmuseum.github.io/charts
-    helm repo update
-    helm install policy-chartmuseum chartmuseum-git/chartmuseum --set env.open.DISABLE_API=false --set service.type=NodePort --set service.nodePort=30208
-    helm plugin install https://github.com/chartmuseum/helm-push
-    echo "---------------------------------------------"
-}
-
-function push_acelement_chart() {
-    echo "Pushing acelement chart to the chartmuseum repo..."
-    helm repo add policy-chartmuseum http://localhost:30208
-
-    # download clamp repo
-    git clone -b "${GERRIT_BRANCH}" --single-branch https://github.com/onap/policy-clamp.git "${WORKSPACE}"/csit/resources/tests/clamp
-    ACELEMENT_CHART=${WORKSPACE}/csit/resources/tests/clamp/examples/src/main/resources/clamp/acm/acelement-helm/acelement
-    helm cm-push $ACELEMENT_CHART policy-chartmuseum
-    helm repo update
-    rm -rf ${WORKSPACE}/csit/resources/tests/clamp/
-    echo "-------------------------------------------"
-}
-
 function get_pod_name() {
   pods=$(kubectl get pods --no-headers -o custom-columns=':metadata.name' | grep $1)
   read -rd '' -a pod_array <<< "$pods"
   echo "${pod_array[@]}"
 }
 
-wait_for_pods_running() {
+function wait_for_pods_running() {
   local namespace="$1"
   shift
   local timeout_seconds="$1"

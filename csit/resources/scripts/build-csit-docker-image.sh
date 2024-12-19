@@ -1,6 +1,6 @@
 #!/bin/bash -x
 #
-# Copyright 2024 Nordix Foundation.
+# Copyright 2024-2025 Nordix Foundation.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -37,7 +37,6 @@ fi
 GERRIT_BRANCH=$(awk -F= '$1 == "defaultbranch" { print $2 }' "${WORKSPACE}"/.gitreview)
 export ROBOT_DOCKER_IMAGE="policy-csit-robot"
 
-echo "Build docker image for robot framework"
 cd ${WORKSPACE}/csit/resources || exit
 
 docker image rm -f ${ROBOT_DOCKER_IMAGE}

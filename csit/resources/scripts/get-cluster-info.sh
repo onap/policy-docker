@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2023-2024 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2023-2025 Nordix Foundation. All rights reserved.
 #  Modifications Copyright © 2024 Deutsche Telekom
 # ================================================================================
 #
@@ -39,6 +39,10 @@ export OPA_PORT=30012
 export SIMULATOR_PORT=30904
 
 # Retrieve pod names
+function get_pod_name() {
+  microk8s kubectl get pods --no-headers -o custom-columns=':metadata.name' | grep $1
+}
+
 function get_pod_names() {
   export APEX_POD=$(get_pod_name apex)
   export PAP_POD=$(get_pod_name pap)
@@ -56,6 +60,10 @@ function get_pod_names() {
 }
 
 # Retrieve service names
+function get_svc_name() {
+  microk8s kubectl get svc --no-headers -o custom-columns=':metadata.name' | grep $1
+}
+
 function get_svc_names() {
   export APEX_SVC=$(get_svc_name policy-apex-pdp)
   export PAP_SVC=$(get_svc_name policy-pap)
@@ -72,47 +80,11 @@ function get_svc_names() {
   export POLICY_K8S_SVC=$(get_svc_name policy-clamp-ac-k8s-ppnt)
 }
 
-# Expose services in order to perform tests from JMeter
-function expose_services() {
-    expose_service $APEX_SVC
-    expose_service $PAP_SVC
-    expose_service $API_SVC
-    expose_service $XACML_SVC
-    expose_service_opa_pdp $OPA_SVC
-    expose_service $DROOLS_SVC
-    expose_service $DIST_SVC
-    expose_service $ACM_SVC
-    expose_service $POLICY_PPNT_SVC
-    expose_service $POLICY_HTTP_SVC
-    expose_service $POLICY_SIM_SVC
-    expose_service $POLICY_K8S_SVC
-
-    setup_message_router_svc
-    sleep 2
-    patch_ports
-}
-
-function get_pod_name() {
-  microk8s kubectl get pods --no-headers -o custom-columns=':metadata.name' | grep $1
-}
-
-function get_svc_name() {
-  microk8s kubectl get svc --no-headers -o custom-columns=':metadata.name' | grep $1
-}
-
-function expose_service_opa_pdp() {
-  microk8s kubectl expose service $1 --name $1"-svc" --type NodePort --protocol TCP --port 8282 --target-port 8282
-}
-
-function expose_service() {
-  microk8s kubectl expose service $1 --name $1"-svc" --type NodePort --protocol TCP --port 6969 --target-port 6969
-}
-
+# Assign set port values
 function patch_port() {
   microk8s kubectl patch service "$1-svc" --namespace=default --type='json' --patch='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value":'"$2"'}]'
 }
 
-# Assign set port values
 function patch_ports() {
   patch_port "$APEX_SVC" $APEX_PORT
   patch_port "$API_SVC" $API_PORT
@@ -131,6 +103,34 @@ function patch_ports() {
 function setup_message_router_svc() {
   microk8s kubectl expose service message-router --name message-router-svc --type NodePort --protocol TCP --port 3904 --target-port 3904
   microk8s kubectl patch service message-router-svc --namespace=default --type='json' --patch='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value":'"$SIMULATOR_PORT"'}]'
+}
+
+# Expose services in order to perform tests from JMeter
+function expose_service() {
+  microk8s kubectl expose service $1 --name $1"-svc" --type NodePort --protocol TCP --port 6969 --target-port 6969
+}
+
+function expose_service_opa_pdp() {
+  microk8s kubectl expose service $1 --name $1"-svc" --type NodePort --protocol TCP --port 8282 --target-port 8282
+}
+
+function expose_services() {
+    expose_service $APEX_SVC
+    expose_service $PAP_SVC
+    expose_service $API_SVC
+    expose_service $XACML_SVC
+    expose_service $DROOLS_SVC
+    expose_service $DIST_SVC
+    expose_service $ACM_SVC
+    expose_service $POLICY_PPNT_SVC
+    expose_service $POLICY_HTTP_SVC
+    expose_service $POLICY_SIM_SVC
+    expose_service $POLICY_K8S_SVC
+    expose_service_opa_pdp $OPA_SVC
+
+    setup_message_router_svc
+    sleep 2
+    patch_ports
 }
 
 ####MAIN###

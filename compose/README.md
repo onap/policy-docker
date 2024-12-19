@@ -53,10 +53,12 @@ policy-clamp-runtime-acm)
 ## Docker image download localization
 
 The docker images are always downloaded from nexus repository, but if needed to build a local
-image, edit the ``get-versions.sh`` script and change the variable ``LOCAL_IMAGES``
-to `true` or edit the image tag in the docker compose file.
-Changing the variable to `true` will ensure that the newly built images locally are being used
-by not requesting a download from nexus and using the image tagged as latest.
+image, do an export ``export USE_LOCAL_IMAGES=true`` or edit the image tag in the docker compose
+file. That will ensure that the newly built images locally are being used by not requesting a
+download from nexus and using the image tagged as latest.
+
+> When using the export command way, keep in mind that all policy images will need to be available
+> locally.
 
 
 ## Docker image versions
@@ -82,7 +84,8 @@ Use ``docker compose logs`` or `docker logs ${container_name}` instructions on h
 
 ## Uninstall
 
-Simply run the ``stop-compose.sh`` script. This will also generate logs from the services started with compose.
+Simply run the ``stop-compose.sh`` script. This will also generate logs from the services started
+with compose.
 
 ```sh
 ./stop-compose.sh
@@ -90,8 +93,8 @@ Simply run the ``stop-compose.sh`` script. This will also generate logs from the
 
 ## Database support
 
-From Oslo version onwards, this docker compose setup uses Postgres database as default; MariaDB is still available,
-but support might be limited.
+From Oslo version onwards, this docker compose setup uses Postgres database as default; MariaDB is
+still available, but support might be limited.
 
 To start docker compose with MariaDB, add a flag to use it:
 
@@ -104,16 +107,16 @@ To start docker compose with MariaDB, add a flag to use it:
 
 ### Docker compose files
 
-To make it easier and clear how the docker compose system works, there are three files describing the services
+To make it easier and clear how the docker compose system works, there are three files describing
+the services:
 - compose.common.yml
-  - Has policy services that don't connect directly to database: apex-pdp and distribution
   - Simulator service
-  - ACM-R Participants that don't connect directly to database.
+  - ACM-R Participants that don't connect directly to database
   - Messaging services (kafka, zookeeper)
   - Metrics services (prometheus, grafana, jaeger)
 - compose.postgres.yml
-  - All policy services that connect directly to database with Postgres configurations
   - Postgres database and policy-db-migrator working towards it
 - compose.mariadb.yml
-  - All policy services that connect directly to database with MariaDB configurations
   - MariaDB database and policy-db-migrator working towards it
+- compose.yml
+  - All the policy components.
