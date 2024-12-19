@@ -39,6 +39,30 @@
       },
       "revId": "6c3f1db65c5a214ba677478fb787a5026e4dafa4",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "08ccb02d_560183d9",
+        "filename": "compose/compose.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2024-12-19T11:52:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "16b3a446_16f449de",
+      "range": {
+        "startLine": 135,
+        "startChar": 7,
+        "endLine": 135,
+        "endChar": 80
+      },
+      "revId": "6c3f1db65c5a214ba677478fb787a5026e4dafa4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
