@@ -3,7 +3,7 @@
 # Copyright 2016-2017 Huawei Technologies Co., Ltd.
 # Modification Copyright 2019 © Samsung Electronics Co., Ltd.
 # Modification Copyright 2021 © AT&T Intellectual Property.
-# Modification Copyright 2021-2024 Nordix Foundation.
+# Modification Copyright 2021-2025 Nordix Foundation.
 # Modifications Copyright 2024 Deutsche Telekom
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,20 +19,26 @@
 # limitations under the License.
 #
 
+SKIP_BUILDING_ROBOT_IMG=false
+DO_NOT_TEARDOWN=false
+
 # even with forced finish, clean up docker containers
 function on_exit(){
     rm -rf ${CSAR_DIR}/csar_temp.csar
 
-    # teardown of compose containers for acm-replicas doesn't work with normal stop-compose script
-    if [ "${ACM_REPLICA_TEARDOWN}" = true ]; then
-        source ${DOCKER_COMPOSE_DIR}/start-acm-replica.sh --stop --replicas=2
-    elif [ "${APEX_REPLICA_TEARDOWN}" = true ]; then
-        source ${DOCKER_COMPOSE_DIR}/start-multiple-pdp.sh --stop --replicas=2
-    else
-        source ${DOCKER_COMPOSE_DIR}/stop-compose.sh ${PROJECT}
+    if [ "${DO_NOT_TEARDOWN}" = false ]; then
+        # teardown of compose containers for acm-replicas doesn't work with normal stop-compose script
+        if [ "${ACM_REPLICA_TEARDOWN}" = true ]; then
+            source ${DOCKER_COMPOSE_DIR}/start-acm-replica.sh --stop --replicas=2
+        elif [ "${APEX_REPLICA_TEARDOWN}" = true ]; then
+            source ${DOCKER_COMPOSE_DIR}/start-multiple-pdp.sh --stop --replicas=2
+        else
+            source ${DOCKER_COMPOSE_DIR}/stop-compose.sh ${PROJECT}
+        fi
+
+        mv ${DOCKER_COMPOSE_DIR}/*.log ${ROBOT_LOG_DIR}
     fi
 
-    mv ${DOCKER_COMPOSE_DIR}/*.log ${ROBOT_LOG_DIR}
     exit $RC
 }
 
@@ -91,7 +97,8 @@ function check_rest_endpoint() {
 function setup_clamp() {
     export ROBOT_FILES="policy-clamp-test.robot clamp-slas.robot"
     source ${DOCKER_COMPOSE_DIR}/start-compose.sh policy-clamp-runtime-acm --grafana
-    sleep 30
+    echo "Waiting 2 minutes acm-runtime and participants to start..."
+    sleep 120
     check_rest_endpoint "${ACM_PORT}"
 }
 
@@ -101,8 +108,8 @@ function setup_clamp_replica() {
     export TEST_ENV="docker"
     export PROJECT=clamp
     source ${DOCKER_COMPOSE_DIR}/start-acm-replica.sh --start --replicas=2
-    echo "Waiting a minute for the replicas to be started..."
-    sleep 60
+    echo "Waiting 2 minutes for the replicas to be started..."
+    sleep 120
     # checking on apex-pdp status because acm-r replicas only start after apex-pdp is running
     check_rest_endpoint ${PAP_PORT}
     check_rest_endpoint ${APEX_PORT}
@@ -113,31 +120,35 @@ function setup_clamp_replica() {
 function setup_api() {
     export ROBOT_FILES="api-test.robot api-slas.robot"
     source ${DOCKER_COMPOSE_DIR}/start-compose.sh api --grafana
-    sleep 10
+    echo "Waiting 1 minute for policy-api to start..."
+    sleep 60
     check_rest_endpoint ${API_PORT}
 }
 
 function setup_pap() {
     export ROBOT_FILES="pap-test.robot pap-slas.robot"
     source ${DOCKER_COMPOSE_DIR}/start-compose.sh apex-pdp --grafana
-    sleep 10
+    echo "Waiting 1 minute for policy-pap to start..."
+    sleep 60
     check_rest_endpoint ${PAP_PORT}
 }
 
 function setup_apex() {
     export ROBOT_FILES="apex-pdp-test.robot apex-slas.robot"
     source ${DOCKER_COMPOSE_DIR}/start-compose.sh apex-pdp --grafana
-    sleep 10
+    echo "Waiting 1 minute for apex-pdp to start..."
+    sleep 60
     check_rest_endpoint ${PAP_PORT}
     check_rest_endpoint ${APEX_PORT}
     apex_healthcheck
 }
 
 function setup_apex_medium() {
-    export SUITES="apex-slas-3.robot"
+    export ROBOT_FILES="apex-slas-3.robot"
     export APEX_REPLICA_TEARDOWN=true
     source ${DOCKER_COMPOSE_DIR}/start-multiple-pdp.sh --start --replicas=3
-    sleep 10
+    echo "Waiting 1 minute for apex-pdp to start..."
+    sleep 60
     check_rest_endpoint ${PAP_PORT}
     check_rest_endpoint ${APEX_PORT}
     apex_healthcheck
@@ -147,7 +158,8 @@ function setup_apex_large() {
     export ROBOT_FILES="apex-slas-10.robot"
     export APEX_REPLICA_TEARDOWN=true
     source ${DOCKER_COMPOSE_DIR}/start-multiple-pdp.sh --start --replicas=10
-    sleep 10
+    echo "Waiting 1 minute for apex-pdp to start..."
+    sleep 60
     check_rest_endpoint ${PAP_PORT}
     check_rest_endpoint ${APEX_PORT}
     apex_healthcheck
@@ -156,33 +168,35 @@ function setup_apex_large() {
 function setup_drools_apps() {
     export ROBOT_FILES="drools-applications-test.robot drools-applications-slas.robot"
     source ${DOCKER_COMPOSE_DIR}/start-compose.sh drools-applications --grafana
-    sleep 10
+    echo "Waiting 1 minute for drools-pdp and drools-applications to start..."
+    sleep 60
     check_rest_endpoint ${PAP_PORT}
-    sleep 10
     check_rest_endpoint ${DROOLS_APPS_PORT}
-    sleep 10
     check_rest_endpoint ${DROOLS_APPS_TELEMETRY_PORT}
 }
 
 function setup_xacml_pdp() {
     export ROBOT_FILES="xacml-pdp-test.robot xacml-pdp-slas.robot"
     source ${DOCKER_COMPOSE_DIR}/start-compose.sh xacml-pdp --grafana
-    sleep 10
+    echo "Waiting 1 minute for xacml-pdp to start..."
+    sleep 60
     check_rest_endpoint "${XACML_PORT}"
 }
 
 function setup_opa_pdp() {
     export ROBOT_FILES="opa-pdp-test.robot"
     export PROJECT="opa-pdp"
-    source ${DOCKER_COMPOSE_DIR}/start-compose.sh opa-pdp --grafana
+    source ${DOCKER_COMPOSE_DIR}/start-compose.sh opa-pdp
+    echo "Waiting 3 minutes for OPA-PDP to start..."
     sleep 180
-    bash ${SCRIPTS}/wait_for_rest.sh localhost "${OPA_PDP_PORT}"
+    check_rest_endpoint "${OPA_PDP_PORT}"
 }
 
 function setup_drools_pdp() {
     export ROBOT_FILES="drools-pdp-test.robot"
     source ${DOCKER_COMPOSE_DIR}/start-compose.sh drools-pdp --grafana
-    sleep 30
+    echo "Waiting 1 minute for drools-pdp to start..."
+    sleep 60
     check_rest_endpoint ${DROOLS_TELEMETRY_PORT}
 }
 
@@ -195,7 +209,8 @@ function setup_distribution() {
 
     export ROBOT_FILES="distribution-test.robot"
     source ${DOCKER_COMPOSE_DIR}/start-compose.sh distribution --grafana
-    sleep 10
+    echo "Waiting 1 minute for distribution to start..."
+    sleep 60
     check_rest_endpoint "${DIST_PORT}"
 }
 
@@ -230,10 +245,6 @@ function set_project_config() {
         ;;
 
     apex-pdp | policy-apex-pdp)
-        setup_apex
-        ;;
-
-    apex-pdp-postgres | policy-apex-pdp-postgres)
         setup_apex
         ;;
 
@@ -275,6 +286,33 @@ function set_project_config() {
 # ensure that teardown and other finalizing steps are always executed
 trap on_exit EXIT
 
+# start the script
+
+# Parse the command-line arguments
+while [[ $# -gt 0 ]]
+do
+  key="$1"
+
+  case $key in
+    --skip-build-csit)
+      export SKIP_BUILDING_ROBOT_IMG=true
+      shift
+      ;;
+    --local)
+      export USE_LOCAL_IMAGES=true
+      shift
+      ;;
+    --no-exit)
+      export DO_NOT_TEARDOWN=true
+      shift
+      ;;
+    *)
+      export PROJECT="${1}"
+      shift
+      ;;
+  esac
+done
+
 # setup all directories used for test resources
 if [ -z "${WORKSPACE}" ]; then
     WORKSPACE=$(git rev-parse --show-toplevel)
@@ -282,7 +320,6 @@ if [ -z "${WORKSPACE}" ]; then
 fi
 
 export GERRIT_BRANCH=$(awk -F= '$1 == "defaultbranch" { print $2 }' "${WORKSPACE}"/.gitreview)
-export PROJECT="${1}"
 export ROBOT_LOG_DIR="${WORKSPACE}/csit/archives/${PROJECT}"
 export SCRIPTS="${WORKSPACE}/csit/resources/scripts"
 export CSAR_DIR="${WORKSPACE}/csit/resources/tests/data/csar"
@@ -319,7 +356,7 @@ unset http_proxy https_proxy
 export ROBOT_FILES
 
 # use a separate script to build a CSIT docker image, to isolate the test run
-if [ "${2}" == "--skip-build-csit" ]; then
+if [ "${SKIP_BUILDING_ROBOT_IMG}" == "true" ]; then
     echo "Skipping build csit robot image"
 else
     build_robot_image

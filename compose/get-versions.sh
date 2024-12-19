@@ -1,7 +1,7 @@
 #! /bin/bash
 # ============LICENSE_START====================================================
 #  Copyright (C) 2020-2021 AT&T Intellectual Property. All rights reserved.
-#  Modification Copyright 2021-2024 Nordix Foundation.
+#  Modification Copyright 2021-2025 Nordix Foundation.
 #  Modifications Copyright (C) 2021 Bell Canada. All rights reserved.
 #  Modifications Copyright 2024-2025 Deutsche Telekom
 # =============================================================================
@@ -25,8 +25,6 @@ if [ -z "${WORKSPACE}" ]; then
     export WORKSPACE
 fi
 
-LOCAL_IMAGES=false
-
 #default values
 export POLICY_MARIADB_VER=10.10.2
 echo POLICY_MARIADB_VER=${POLICY_MARIADB_VER}
@@ -34,7 +32,7 @@ echo POLICY_MARIADB_VER=${POLICY_MARIADB_VER}
 export POLICY_POSTGRES_VER=16.4
 echo POLICY_POSTGRES_VER=${POLICY_POSTGRES_VER}
 
-if [ -n "$LOCAL_IMAGES" ] && [ "$LOCAL_IMAGES" = "true" ]; then
+if [ -n "${USE_LOCAL_IMAGES}" ] && [ "${USE_LOCAL_IMAGES}" = "true" ]; then
     echo "Running with local images."
     export POLICY_DOCKER_VERSION="latest"
     export POLICY_MODELS_VERSION="latest"
@@ -51,6 +49,7 @@ if [ -n "$LOCAL_IMAGES" ] && [ "$LOCAL_IMAGES" = "true" ]; then
     export CONTAINER_LOCATION=""
 
 else
+    echo "Downloading latest released images..."
     export CONTAINER_LOCATION="nexus3.onap.org:10001/"
     GERRIT_BRANCH=$(awk -F= '$1 == "defaultbranch" { print $2 }' \
                         "${WORKSPACE}"/.gitreview)
