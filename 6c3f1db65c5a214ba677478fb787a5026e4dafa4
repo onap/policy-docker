@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb167188_5f7e9a69",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-12-19T10:27:19Z",
+      "side": 1,
+      "message": "these comments should fix the issues for opa-pdp.",
+      "revId": "6c3f1db65c5a214ba677478fb787a5026e4dafa4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16b3a446_16f449de",
+        "filename": "compose/compose.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-12-19T10:27:19Z",
+      "side": 1,
+      "message": "use this line and remove the line below",
+      "range": {
+        "startLine": 135,
+        "startChar": 7,
+        "endLine": 135,
+        "endChar": 80
+      },
+      "revId": "6c3f1db65c5a214ba677478fb787a5026e4dafa4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
