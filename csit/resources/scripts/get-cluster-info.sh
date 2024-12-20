@@ -32,6 +32,7 @@ export PF_PARTICIPANT_PORT=30008
 export HTTP_PARTICIPANT_PORT=30009
 export K8S_PARTICIPANT_PORT=30010
 export SIM_PARTICIPANT_PORT=30011
+export OPA_PDP_PORT=30012
 export SIMULATOR_PORT=30904
 
 # Retrieve pod names
@@ -41,6 +42,7 @@ function get_pod_names() {
   export API_POD=$(get_pod_name api)
   export DMAAP_POD=$(get_pod_name message-router)
   export XACML_POD=$(get_pod_name xacml)
+  export OPA_PDP_POD=$(get_pod_name opa-pdp)
   export DROOLS_POD=$(get_pod_name drools-pdp)
   export DIST_POD=$(get_pod_name distribution)
   export ACM_POD=$(get_pod_name acm-runtime)
@@ -58,6 +60,7 @@ function get_svc_names() {
   export DMAAP_SVC=$(get_svc_name message-router)
   export DROOLS_SVC=$(get_svc_name drools-pdp)
   export XACML_SVC=$(get_svc_name policy-xacml-pdp)
+  export OPA_PDP_SVC=$(get_svc_name policy-opa-pdp)
   export DIST_SVC=$(get_svc_name policy-distribution)
   export ACM_SVC=$(get_svc_name policy-clamp-runtime-acm)
   export POLICY_PPNT_SVC=$(get_svc_name policy-clamp-ac-pf-ppnt)
@@ -72,6 +75,7 @@ function expose_services() {
     expose_service $PAP_SVC
     expose_service $API_SVC
     expose_service $XACML_SVC
+    expose_service_opa_pdp $OPA_PDP_SVC
     expose_service $DROOLS_SVC
     expose_service $DIST_SVC
     expose_service $ACM_SVC
@@ -97,6 +101,10 @@ function expose_service() {
   microk8s kubectl expose service $1 --name $1"-svc" --type NodePort --protocol TCP --port 6969 --target-port 6969
 }
 
+function expose_service_opa_pdp() {
+  microk8s kubectl expose service $1 --name $1"-svc" --type NodePort --protocol TCP --port 8282 --target-port 8282
+}
+
 function patch_port() {
   microk8s kubectl patch service "$1-svc" --namespace=default --type='json' --patch='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value":'"$2"'}]'
 }
@@ -114,6 +122,7 @@ function patch_ports() {
   patch_port "$DIST_SVC" $DIST_PORT
   patch_port "$DROOLS_SVC" $DROOLS_PORT
   patch_port "$XACML_SVC" $XACML_PORT
+  patch_port "$OPA_PDP_SVC" $OPA_PDP_PORT
 }
 
 function setup_message_router_svc() {

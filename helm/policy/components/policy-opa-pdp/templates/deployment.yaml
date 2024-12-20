@@ -1,0 +1,153 @@
+{{/*
+#  ============LICENSE_START=======================================================
+#   Copyright (C) 2023 Nordix Foundation.
+#  ================================================================================
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+#  SPDX-License-Identifier: Apache-2.0
+#  ============LICENSE_END=========================================================
+*/}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  namespace: default
+  labels:
+    app: {{ .Chart.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: release
+    heritage: Helm
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+        release: release
+    spec:
+      initContainers:
+      - command:
+        - /bin/sh
+        args:
+          - -c
+          - |
+            echo "*** set right permissions to the different folders"
+            chown -R {{ .Values.permissions.uid }}:{{ .Values.permissions.gid }} /var/log;
+            chmod -R 755 /var/log
+            chown -R {{ .Values.permissions.uid }}:{{ .Values.permissions.gid }} /opt/;
+            chmod -R 755 /opt/*
+            tar -xvf /tmp/policies/policy-data.tar.gz -C /opt/
+        image: busybox:latest
+        imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+        name: {{ .Chart.Name }}-readiness
+        volumeMounts:
+        - name: logs
+          mountPath: /var/log
+        - name: tmp-policies-data
+          mountPath: /tmp/policies
+        - name : opa-policies-data
+          mountPath: /opt/
+
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.global.image.opapdp }}
+          imagePullPolicy: {{ .Values.global.pullPolicy }}         
+          ports:
+          - containerPort: {{ .Values.service.internalPort }}
+          # disable liveness probe when breakpoints set in debugger
+          # so K8s doesn't restart unresponsive container
+          {{- if eq .Values.liveness.enabled true }}
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.service.internalPort }}
+            initialDelaySeconds: {{ .Values.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.liveness.periodSeconds }}
+          {{ end -}}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.readiness.api }}
+              port: {{ .Values.service.internalPort }}
+              httpHeaders:
+                - name: Authorization
+                  value: Basic {{ printf "%s:%s" .Values.restServer.user .Values.restServer.password | b64enc }}
+              scheme: HTTP
+            successThreshold: {{ .Values.readiness.successThreshold }}
+            failureThreshold: {{ .Values.readiness.failureThreshold }}
+            initialDelaySeconds: {{ .Values.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readiness.periodSeconds }}
+            timeoutSeconds: {{ .Values.readiness.timeout }}
+          env:
+            - name: UseSASLForKAFKA
+              value: "{{ .Values.kafka.useSASL }}" 
+            - name: BOOSTSTRAP_SERVER
+              value: "{{ .Values.kafka.brokers }}"
+            - name: KAFKA_USERNAME
+              value: "{{ .Values.kafka.username }}"
+            - name: KAFKA_PASSWORD
+              value: "{{ .Values.kafka.password }}"              
+            - name: LOG_LEVEL
+              value: "{{ .Values.log.loglevel }}"
+            - name: GROUPID
+              value: "{{ .Values.kafka.groupid }}"
+            - name: TOPIC
+              value: "{{ .Values.kafka.topic }}"
+          volumeMounts:
+          - name: opa-policies-data
+            mountPath: /opt
+          - name: opa-config
+            mountPath: /app/config
+          - name: opa-bundles
+            mountPath: /app/bundles
+          - name: logs
+            mountPath: /var/log
+          resources:
+{{ toYaml .Values.resources.small | indent 12 }}
+        {{- if .Values.nodeSelector }}
+        nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 10 }}
+        {{- end -}}
+        {{- if .Values.affinity }}
+        affinity:
+{{ toYaml .Values.affinity | indent 10 }}
+        {{- end }}
+      serviceAccountName: {{ .Chart.Name }}-read
+      volumes:
+        - name: tmp-policies-data
+          configMap:
+            name: {{ .Chart.Name }}-configmap-policies-data
+            defaultMode: 0755
+        - name: opa-policies-data
+          persistentVolumeClaim:
+             claimName: {{ .Chart.Name }}-policies-data
+        - name: opa-config
+          configMap:
+            name: {{ .Chart.Name }}-configmap-config
+            defaultMode: 0755
+        - name: opa-bundles
+          emptyDir:
+            sizeLimit: {{ .Values.dirSizes.bundleDir.sizeLimit }}
+        - name: logs
+          emptyDir:
+            sizeLimit: {{ .Values.dirSizes.bundleDir.sizeLimit }}
+
+      imagePullSecrets:
+      - name: "default-docker-registry-key"

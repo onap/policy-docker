@@ -33,6 +33,7 @@ POLICY_API_ROBOT="api-test.robot api-slas.robot"
 POLICY_PAP_ROBOT="pap-test.robot pap-slas.robot"
 POLICY_APEX_PDP_ROBOT="apex-pdp-test.robot apex-slas.robot"
 POLICY_XACML_PDP_ROBOT="xacml-pdp-test.robot xacml-pdp-slas.robot"
+POLICY_OPA_PDP_ROBOT="opa-pdp-test.robot"
 POLICY_DROOLS_PDP_ROBOT="drools-pdp-test.robot"
 POLICY_DISTRIBUTION_ROBOT="distribution-test.robot"
 
@@ -42,6 +43,7 @@ POLICY_CLAMP_CONTAINER="policy-clamp-runtime-acm"
 POLICY_APEX_CONTAINER="policy-apex-pdp"
 POLICY_DROOLS_CONTAINER="policy-drools-pdp"
 POLICY_XACML_CONTAINER="policy-xacml-pdp"
+POLICY_OPA_CONTAINER="policy-opa-pdp"
 POLICY_DISTRIBUTION_CONTAINER="policy-distribution"
 POLICY_K8S_PPNT_CONTAINER="policy-clamp-ac-k8s-ppnt"
 POLICY_HTTP_PPNT_CONTAINER="policy-clamp-ac-http-ppnt"
@@ -289,6 +291,13 @@ function set_project_config() {
         export SET_VALUES="--set $POLICY_XACML_CONTAINER.enabled=true"
         ;;
 
+    opa-pdp | policy-opa-pdp)
+        export ROBOT_FILE=($POLICY_OPA_PDP_ROBOT)
+        export READINESS_CONTAINERS=($POLICY_API_CONTAINER,$POLICY_PAP_CONTAINER,$POLICY_OPA_CONTAINER)
+        export SET_VALUES="--set $POLICY_OPA_CONTAINER.enabled=true"
+        ;;
+
+
     drools-pdp | policy-drools-pdp)
         export ROBOT_FILE=($POLICY_DROOLS_PDP_ROBOT)
         export READINESS_CONTAINERS=($POLICY_DROOLS_CONTAINER)
@@ -304,11 +313,11 @@ function set_project_config() {
     *)
         echo "Unknown project supplied. Enabling all policy charts for the deployment"
         export READINESS_CONTAINERS=($POLICY_APEX_CONTAINER,$POLICY_API_CONTAINER,$POLICY_PAP_CONTAINER,
-                    $POLICY_DISTRIBUTION_CONTAINER,$POLICY_DROOLS_CONTAINER,$POLICY_XACML_CONTAINER,
+                    $POLICY_DISTRIBUTION_CONTAINER,$POLICY_DROOLS_CONTAINER,$POLICY_XACML_CONTAINER,$POLICY_OPA_CONTAINER
                     $POLICY_CLAMP_CONTAINER,$POLICY_PF_PPNT_CONTAINER,$POLICY_K8S_PPNT_CONTAINER,
                     $POLICY_HTTP_PPNT_CONTAINER,$POLICY_SIM_PPNT_CONTAINER)
         export SET_VALUES="--set $POLICY_APEX_CONTAINER.enabled=true --set $POLICY_XACML_CONTAINER.enabled=true
-            --set $POLICY_DISTRIBUTION_CONTAINER.enabled=true --set $POLICY_DROOLS_CONTAINER.enabled=true
+            --set $POLICY_OPA_CONTAINER.enabled=true --set $POLICY_DISTRIBUTION_CONTAINER.enabled=true --set $POLICY_DROOLS_CONTAINER.enabled=true
             --set $POLICY_CLAMP_CONTAINER.enabled=true --set $POLICY_PF_PPNT_CONTAINER.enabled=true
             --set $POLICY_K8S_PPNT_CONTAINER.enabled=true --set $POLICY_HTTP_PPNT_CONTAINER.enabled=true
             --set $POLICY_SIM_PPNT_CONTAINER.enabled=true"

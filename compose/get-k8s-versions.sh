@@ -27,7 +27,7 @@ fi
 
 VALUES_YML=${WORKSPACE}/helm/policy/values.yaml
 
-policy_components=(policy-api policy-pap policy-apex-pdp policy-models-simulator policy-pdpd-cl policy-xacml-pdp policy-distribution policy-db-migrator)
+policy_components=(policy-api policy-pap policy-apex-pdp policy-models-simulator policy-pdpd-cl policy-opa-pdp policy-xacml-pdp policy-distribution policy-db-migrator)
 
 clamp_components=(policy-clamp-runtime-acm policy-clamp-ac-kserve-ppnt policy-clamp-ac-k8s-ppnt policy-clamp-ac-pf-ppnt policy-clamp-ac-http-ppnt policy-clamp-ac-sim-ppnt policy-clamp-ac-a1pms-ppnt)
 
