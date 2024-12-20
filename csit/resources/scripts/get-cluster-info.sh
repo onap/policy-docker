@@ -2,6 +2,9 @@
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2023-2024 Nordix Foundation. All rights reserved.
 # ================================================================================
+#
+# Modifications Copyright © 2024 Deutsche Telekom
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -32,6 +35,7 @@ export PF_PARTICIPANT_PORT=30008
 export HTTP_PARTICIPANT_PORT=30009
 export K8S_PARTICIPANT_PORT=30010
 export SIM_PARTICIPANT_PORT=30011
+export OPA_PORT=30012
 export SIMULATOR_PORT=30904
 
 # Retrieve pod names
@@ -41,6 +45,7 @@ function get_pod_names() {
   export API_POD=$(get_pod_name api)
   export DMAAP_POD=$(get_pod_name message-router)
   export XACML_POD=$(get_pod_name xacml)
+  export OPA_POD=$(get_pod_name opa-pdp)
   export DROOLS_POD=$(get_pod_name drools-pdp)
   export DIST_POD=$(get_pod_name distribution)
   export ACM_POD=$(get_pod_name acm-runtime)
@@ -58,6 +63,7 @@ function get_svc_names() {
   export DMAAP_SVC=$(get_svc_name message-router)
   export DROOLS_SVC=$(get_svc_name drools-pdp)
   export XACML_SVC=$(get_svc_name policy-xacml-pdp)
+  export OPA_SVC=$(get_svc_name policy-opa-pdp)
   export DIST_SVC=$(get_svc_name policy-distribution)
   export ACM_SVC=$(get_svc_name policy-clamp-runtime-acm)
   export POLICY_PPNT_SVC=$(get_svc_name policy-clamp-ac-pf-ppnt)
@@ -72,6 +78,7 @@ function expose_services() {
     expose_service $PAP_SVC
     expose_service $API_SVC
     expose_service $XACML_SVC
+    expose_service_opa_pdp $OPA_SVC
     expose_service $DROOLS_SVC
     expose_service $DIST_SVC
     expose_service $ACM_SVC
@@ -91,6 +98,10 @@ function get_pod_name() {
 
 function get_svc_name() {
   microk8s kubectl get svc --no-headers -o custom-columns=':metadata.name' | grep $1
+}
+
+function expose_service_opa_pdp() {
+  microk8s kubectl expose service $1 --name $1"-svc" --type NodePort --protocol TCP --port 8282 --target-port 8282
 }
 
 function expose_service() {
@@ -114,6 +125,7 @@ function patch_ports() {
   patch_port "$DIST_SVC" $DIST_PORT
   patch_port "$DROOLS_SVC" $DROOLS_PORT
   patch_port "$XACML_SVC" $XACML_PORT
+  patch_port "$OPA_SVC" $OPA_PORT
 }
 
 function setup_message_router_svc() {
