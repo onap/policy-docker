@@ -2,9 +2,9 @@
 #
 # ============LICENSE_START====================================================
 #  Copyright (C) 2022-2024 Nordix Foundation.
+#  Modifications Copyright © 2024 Deutsche Telekom
 # =============================================================================
 # 
-# Modifications Copyright © 2024 Deutsche Telekom
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

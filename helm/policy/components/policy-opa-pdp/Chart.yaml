@@ -20,3 +20,4 @@ apiVersion: v2
 description: ONAP Policy OPA PDP
 name: policy-opa-pdp
 version: 11.0.0
+

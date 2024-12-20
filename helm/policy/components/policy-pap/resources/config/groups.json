@@ -3,7 +3,7 @@
     {
       "name": "opaGroup",
       "version": "1.0.0",
-      "description": "The default group that registers all supported policy types and pdps.",
+      "description": "The group that registers policy types for opa.",
       "pdpGroupState": "ACTIVE",
       "pdpSubgroups": [
         {

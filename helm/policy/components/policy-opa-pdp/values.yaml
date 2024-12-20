@@ -22,7 +22,7 @@
 global:
   persistence: {}
   image:
-    opapdp: artifactory.devops.telekom.de/tnap-docker/policy-opa-pdp:1.0.5-SNAPSHOT
+    opapdp: nexus3.onap.org:10001/onap/policy-opa-pdp:1.0.5-SNAPSHOT
 log:
   loglevel: "debug"
 
