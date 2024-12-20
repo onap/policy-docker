@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e78ddbb7_c8e389dc",
+        "filename": "csit/resources/scripts/get-cluster-info.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-12-20T14:40:49Z",
+      "side": 1,
+      "message": "this goes right under Nordix copyright.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 49
+      },
+      "revId": "c2ed8bc2f029faf52654310fefd28d004e3879cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "82d5c4bb_aef2f120",
+        "filename": "csit/run-k8s-csit.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-12-20T14:40:49Z",
+      "side": 1,
+      "message": "this goes right under Nordix copyright.",
+      "range": {
+        "startLine": 7,
+        "startChar": 2,
+        "endLine": 7,
+        "endChar": 49
+      },
+      "revId": "c2ed8bc2f029faf52654310fefd28d004e3879cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e6937d9_1d73597a",
+        "filename": "helm/policy/components/policy-apex-pdp/resources/config/OnapPfConfigSampleGroup.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-12-20T14:40:49Z",
+      "side": 1,
+      "message": "any reason to rename this?",
+      "range": {
+        "startLine": 12,
+        "startChar": 17,
+        "endLine": 12,
+        "endChar": 29
+      },
+      "revId": "c2ed8bc2f029faf52654310fefd28d004e3879cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b90b93d5_e4a56139",
+        "filename": "helm/policy/components/policy-opa-pdp/Chart.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-12-20T14:40:49Z",
+      "side": 1,
+      "message": "missing new line at the end of file.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "c2ed8bc2f029faf52654310fefd28d004e3879cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fce75d21_e9eeec43",
+        "filename": "helm/policy/components/policy-opa-pdp/templates/role-binding.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-12-20T14:40:49Z",
+      "side": 1,
+      "message": "missing new line at the end of file.",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 37
+      },
+      "revId": "c2ed8bc2f029faf52654310fefd28d004e3879cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64dadf9b_215394a2",
+        "filename": "helm/policy/components/policy-opa-pdp/templates/service.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-12-20T14:40:49Z",
+      "side": 1,
+      "message": "missing new line at end of file",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 20
+      },
+      "revId": "c2ed8bc2f029faf52654310fefd28d004e3879cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3c346b13_9292bad6",
+        "filename": "helm/policy/components/policy-opa-pdp/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-12-20T14:40:49Z",
+      "side": 1,
+      "message": "image should be from nexus",
+      "range": {
+        "startLine": 25,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 83
+      },
+      "revId": "c2ed8bc2f029faf52654310fefd28d004e3879cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9db13f71_72833f40",
+        "filename": "helm/policy/components/policy-pap/resources/config/groups.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-12-20T14:40:49Z",
+      "side": 1,
+      "message": "description should be related to OPA-PDP",
+      "range": {
+        "startLine": 6,
+        "startChar": 22,
+        "endLine": 6,
+        "endChar": 91
+      },
+      "revId": "c2ed8bc2f029faf52654310fefd28d004e3879cc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
