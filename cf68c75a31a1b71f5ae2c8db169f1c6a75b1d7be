@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7facba56_d2ba7d60",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2024-12-20T15:51:19Z",
+      "side": 1,
+      "message": "can you please push this as a patch in your previous review instead of creating review chains, thanks",
+      "revId": "cf68c75a31a1b71f5ae2c8db169f1c6a75b1d7be",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
