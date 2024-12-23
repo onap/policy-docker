@@ -4,6 +4,7 @@
 # Modification Copyright 2019 © Samsung Electronics Co., Ltd.
 # Modification Copyright 2021 © AT&T Intellectual Property.
 # Modification Copyright 2021-2024 Nordix Foundation.
+# Modifications Copyright 2024 Deutsche Telekom
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
