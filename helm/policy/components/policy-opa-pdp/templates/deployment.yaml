@@ -69,7 +69,7 @@ spec:
 
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ .Values.global.image.opapdp }}
+          image: {{ .Values.global.repository }}/{{ .Values.global.image.opa }}
           imagePullPolicy: {{ .Values.global.pullPolicy }}         
           ports:
           - containerPort: {{ .Values.service.internalPort }}
