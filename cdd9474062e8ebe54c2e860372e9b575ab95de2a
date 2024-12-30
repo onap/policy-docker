@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f561e1c_e0631b18",
+        "filename": "helm/policy/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 8479
+      },
+      "writtenOn": "2024-12-30T12:16:39Z",
+      "side": 1,
+      "message": "it should be 1.0.0-SNAPSHOT",
+      "range": {
+        "startLine": 44,
+        "startChar": 29,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "cdd9474062e8ebe54c2e860372e9b575ab95de2a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
