@@ -39,6 +39,30 @@
       },
       "revId": "d631b12cd3c8f4ab190b998303e6245ae7c8571e",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bccde36_83ee5221",
+        "filename": "helm/policy/components/policy-opa-pdp/templates/deployment.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2024-12-30T09:43:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "88a1f64a_da92418b",
+      "range": {
+        "startLine": 73,
+        "startChar": 58,
+        "endLine": 73,
+        "endChar": 67
+      },
+      "revId": "d631b12cd3c8f4ab190b998303e6245ae7c8571e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
