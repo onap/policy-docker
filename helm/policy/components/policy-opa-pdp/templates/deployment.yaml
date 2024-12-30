@@ -69,8 +69,8 @@ spec:
 
       containers:
         - name: {{ .Chart.Name }}
-          image: {{ .Values.global.image.opapdp }}
-          imagePullPolicy: {{ .Values.global.pullPolicy }}         
+          image: {{ .Values.global.repository }}/{{ .Values.global.image.opa }}
+          imagePullPolicy: {{ .Values.global.pullPolicy }}
           ports:
           - containerPort: {{ .Values.service.internalPort }}
           # disable liveness probe when breakpoints set in debugger
