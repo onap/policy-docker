@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c6d80f9_d7b3a88f",
+        "filename": "compose/get-versions.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-01-06T13:30:58Z",
+      "side": 1,
+      "message": "2024-2025",
+      "range": {
+        "startLine": 6,
+        "startChar": 31,
+        "endLine": 6,
+        "endChar": 32
+      },
+      "revId": "76602abcd52d962cf8642e13d1e61409fc57bf9e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "400600b7_3bde9751",
+        "filename": "helm/policy/components/policy-opa-pdp/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-01-06T13:30:58Z",
+      "side": 1,
+      "message": "2024-2025",
+      "range": {
+        "startLine": 2,
+        "startChar": 18,
+        "endLine": 2,
+        "endChar": 22
+      },
+      "revId": "76602abcd52d962cf8642e13d1e61409fc57bf9e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
