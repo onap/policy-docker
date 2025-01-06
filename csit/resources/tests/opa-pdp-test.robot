@@ -7,8 +7,8 @@ Library     json
 Resource   common-library.robot
 
 *** Variables ***
-${OPA_PDP_HOST}    /policy/pdpx/v1/healthcheck
-${url}    /policy/pdpx/v1/decision
+${OPA_PDP_HOST}    /policy/pdpo/v1/healthcheck
+${url}    /policy/pdpo/v1/decision
 
 *** Test Cases ***
 Healthcheck
