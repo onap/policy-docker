@@ -2,7 +2,7 @@
 # Dockerfile
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2021 Nordix Foundation.
-#  Modification Copyright 2021-2024 Nordix Foundation.
+#  Modification Copyright 2021-2025 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 #-------------------------------------------------------------------------------
-FROM onap/policy-jre-alpine:4.0.2-SNAPSHOT
+FROM onap/policy-jre-alpine:4.1.0-SNAPSHOT
 
 LABEL maintainer="Policy Team"
 LABEL org.opencontainers.image.title="Policy db-migrator"
