@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3c4a3cb_6654878e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-01-07T13:54:21Z",
+      "side": 1,
+      "message": "opa-pdp is failing not due to this change. need this merged to fix docker-merge job",
+      "revId": "6d8d3cef86b84f8935d7823f1c78fa82f6b2a3ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
