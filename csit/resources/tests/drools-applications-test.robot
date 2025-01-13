@@ -1,10 +1,10 @@
 *** Settings ***
-Library     Collections
-Library     String
-Library     RequestsLibrary
-Library     OperatingSystem
-Library     Process
-Library     json
+Library    Collections
+Library    String
+Library    RequestsLibrary
+Library    OperatingSystem
+Library    Process
+Library    json
 Resource    common-library.robot
 
 *** Test Cases ***
@@ -29,18 +29,18 @@ Controller
 
 AssertTopicsOnKafkaClient
     [Documentation]    Verify that the Policy topics policy-pdp-pap and policy-cl-mgt are available on kafka
-    GetKafkaTopic     policy-pdp-pap
-    GetKafkaTopic     policy-cl-mgt
+    GetKafkaTopic    policy-pdp-pap
+    GetKafkaTopic    policy-cl-mgt
 
 CheckTopics
-    [Documentation]     List the topics registered with TopicManager
+    [Documentation]    List the topics registered with TopicManager
     ${resp}=  PerformGetRequestOnDrools  /policy/pdp/engine/topics  ${DROOLS_IP_2}  200
     Should Contain    ${resp.text}    policy-cl-mgt
     Should Contain    ${resp.text}    policy-pdp-pap
     Should Contain    ${resp.text}    dcae_topic
 
 CheckEngineFeatures
-    [Documentation]     List the features available in the drools engine
+    [Documentation]    List the features available in the drools engine
     ${resp}=  PerformGetRequestOnDrools  /policy/pdp/engine/features  ${DROOLS_IP_2}  200
     Should Contain    ${resp.text}    "org.onap.policy.drools.lifecycle.LifecycleFeature"
     Should Contain    ${resp.text}    "org.onap.policy.drools.apps.controlloop.feature.usecases.UsecasesFeature"
@@ -98,7 +98,7 @@ DeployXacmlPolicies
     [Documentation]    Deploys the Policies to Xacml
     DeployPolicy  deploy.xacml.policies.json
     Sleep  5s
-    @{otherMessages}=   Create List     deployed-policies   onap.scaleout.tca    onap.restart.tca
+    @{otherMessages}=   Create List    deployed-policies   onap.scaleout.tca    onap.restart.tca
     AssertMessageFromTopic    policy-notification    onap.vfirewall.tca    ${otherMessages}
 
 VerifyDeployedXacmlPolicies
@@ -106,14 +106,14 @@ VerifyDeployedXacmlPolicies
     ${resp}=    GetDeployedPolicies
     @{policies}=   Create List    onap.vfirewall.tca    onap.scaleout.tca    onap.restart.tca
     FOR    ${policy}    IN    @{policies}
-        Should Contain    ${resp.text}    ${policy}
+       Should Contain    ${resp.text}    ${policy}
     END
 
 DeployDroolsPolicies
     [Documentation]    Deploys the Policies to Drools
     DeployPolicy   deploy.drools.policies.json
     Sleep  5s
-    @{otherMessages}=   Create List     deployed-policies   operational.scaleout    operational.restart
+    @{otherMessages}=   Create List    deployed-policies   operational.scaleout    operational.restart
     AssertMessageFromTopic    policy-notification    operational.modifyconfig    ${otherMessages}
 
 VerifyDeployedDroolsPolicies
@@ -121,68 +121,68 @@ VerifyDeployedDroolsPolicies
     ${resp}=    GetDeployedPolicies
     @{policies}=   Create List    operational.modifyconfig    operational.scaleout    operational.restart
     FOR    ${policy}    IN    @{policies}
-        Should Contain    ${resp.text}    ${policy}
+       Should Contain    ${resp.text}    ${policy}
     END
 
 VcpeExecute
     [Documentation]    Executes VCPE Policy
-    OnSet     ${CURDIR}/data/drools/vcpeOnset.json
+    OnSet    ${CURDIR}/data/drools/vcpeOnset.json
     ${policyExecuted}=  Set Variable    ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e
     @{otherMessages}=   Create List    ACTIVE
-    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+    AssertMessageFromTopic    policy-cl-mgt   ${policyExecuted}   ${otherMessages}
 
     @{otherMessages}=   Create List    ${policyExecuted}    OPERATION
-    AssertMessageFromTopic     policy-cl-mgt   Sending guard query for APPC Restart   ${otherMessages}
+    AssertMessageFromTopic    policy-cl-mgt   Sending guard query for APPC Restart   ${otherMessages}
 
-    AssertMessageFromTopic     policy-cl-mgt   Guard result for APPC Restart is Permit   ${otherMessages}
+    AssertMessageFromTopic    policy-cl-mgt   Guard result for APPC Restart is Permit   ${otherMessages}
 
-    AssertMessageFromTopic     policy-cl-mgt   actor=APPC,operation=Restart   ${otherMessages}
+    AssertMessageFromTopic    policy-cl-mgt   actor=APPC,operation=Restart   ${otherMessages}
 
 #    @{otherMessages}=   Create List    OPERATION: SUCCESS   actor=APPC,operation=Restart
-#    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+#    AssertMessageFromTopic    policy-cl-mgt   ${policyExecuted}   ${otherMessages}
 #
 #    @{otherMessages}=   Create List    FINAL: SUCCESS   APPC    Restart
-#    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+#    AssertMessageFromTopic    policy-cl-mgt   ${policyExecuted}   ${otherMessages}
 
 VdnsExecute
     [Documentation]    Executes VDNS Policy
-    OnSet     ${CURDIR}/data/drools/vdnsOnset.json
+    OnSet    ${CURDIR}/data/drools/vdnsOnset.json
     ${policyExecuted}=  Set Variable    ControlLoop-vDNS-6f37f56d-a87d-4b85-b6a9-cc953cf779b3
     @{otherMessages}=   Create List    ACTIVE
-    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+    AssertMessageFromTopic    policy-cl-mgt   ${policyExecuted}   ${otherMessages}
 
     @{otherMessages}=   Create List    ${policyExecuted}    OPERATION
-    AssertMessageFromTopic     policy-cl-mgt   Sending guard query for SO VF Module Create   ${otherMessages}
+    AssertMessageFromTopic    policy-cl-mgt   Sending guard query for SO VF Module Create   ${otherMessages}
 
-    AssertMessageFromTopic     policy-cl-mgt   Guard result for SO VF Module Create is Permit   ${otherMessages}
+    AssertMessageFromTopic    policy-cl-mgt   Guard result for SO VF Module Create is Permit   ${otherMessages}
 
-    AssertMessageFromTopic     policy-cl-mgt   actor=SO,operation=VF Module Create   ${otherMessages}
+    AssertMessageFromTopic    policy-cl-mgt   actor=SO,operation=VF Module Create   ${otherMessages}
 
     @{otherMessages}=   Create List    ${policyExecuted}    OPERATION: SUCCESS
-    AssertMessageFromTopic     policy-cl-mgt   actor=SO,operation=VF Module Create   ${otherMessages}
+    AssertMessageFromTopic    policy-cl-mgt   actor=SO,operation=VF Module Create   ${otherMessages}
 
     @{otherMessages}=   Create List    ${policyExecuted}    FINAL: SUCCESS   SO
-    AssertMessageFromTopic     policy-cl-mgt   VF Module Create   ${otherMessages}
+    AssertMessageFromTopic    policy-cl-mgt   VF Module Create   ${otherMessages}
 
 VfwExecute
     [Documentation]    Executes VFW Policy
-    OnSet     ${CURDIR}/data/drools/vfwOnset.json
+    OnSet    ${CURDIR}/data/drools/vfwOnset.json
     ${policyExecuted}=  Set Variable    ControlLoop-vFirewall-d0a1dfc6-94f5-4fd4-a5b5-4630b438850a
     @{otherMessages}=   Create List    ACTIVE
-    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+    AssertMessageFromTopic    policy-cl-mgt   ${policyExecuted}   ${otherMessages}
 
     @{otherMessages}=   Create List    ${policyExecuted}    OPERATION
-    AssertMessageFromTopic     policy-cl-mgt   Sending guard query for APPC ModifyConfig   ${otherMessages}
+    AssertMessageFromTopic    policy-cl-mgt   Sending guard query for APPC ModifyConfig   ${otherMessages}
 
-    AssertMessageFromTopic     policy-cl-mgt   Guard result for APPC ModifyConfig is Permit   ${otherMessages}
+    AssertMessageFromTopic    policy-cl-mgt   Guard result for APPC ModifyConfig is Permit   ${otherMessages}
 
-    AssertMessageFromTopic     policy-cl-mgt   actor=APPC,operation=ModifyConfig   ${otherMessages}
+    AssertMessageFromTopic    policy-cl-mgt   actor=APPC,operation=ModifyConfig   ${otherMessages}
 
 #    @{otherMessages}=   Create List    OPERATION: SUCCESS    actor=APPC,operation=ModifyConfig
-#    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+#    AssertMessageFromTopic    policy-cl-mgt   ${policyExecuted}   ${otherMessages}
 #
 #    @{otherMessages}=   Create List    FINAL: SUCCESS    APPC   ModifyConfig
-#    AssertMessageFromTopic     policy-cl-mgt   ${policyExecuted}   ${otherMessages}
+#    AssertMessageFromTopic    policy-cl-mgt   ${policyExecuted}   ${otherMessages}
 
 
 *** Keywords ***
@@ -192,25 +192,25 @@ VerifyController
     Should Be Equal As Strings  ${resp.json()['usecases']}  1
 
 PerformGetRequestOnDrools
-     [Arguments]  ${url}  ${domain}  ${expectedstatus}
-     ${auth}=  Create List  demo@people.osaaf.org  demo123456!
-     Log  Creating session http://${domain}
-     ${session}=  Create Session  policy  http://${domain}  auth=${auth}
-     ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
-     ${resp}=  GET On Session  policy  ${url}  headers=${headers}  expected_status=${expectedstatus}
-     Log  Received response from policy ${resp.text}
-     RETURN  ${resp}
+    [Arguments]  ${url}  ${domain}  ${expectedstatus}
+    ${auth}=  Create List  demo@people.osaaf.org  demo123456!
+    Log  Creating session http://${domain}
+    ${session}=  Create Session  policy  http://${domain}  auth=${auth}
+    ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
+    ${resp}=  GET On Session  policy  ${url}  headers=${headers}  expected_status=${expectedstatus}
+    Log  Received response from policy ${resp.text}
+    RETURN  ${resp}
 
 PerformPostRequest
-     [Arguments]  ${url}  ${domain}  ${file}  ${folder}  ${contenttype}  ${expectedstatus}
-     ${auth}=  Create List  policyadmin  zb!XztG34
-     ${body}=  Get file  ${folder}/${file}
-     Log  Creating session http://${domain}
-     ${session}=  Create Session  policy  http://${domain}  auth=${auth}
-     ${headers}=  Create Dictionary  Accept=application/${contenttype}  Content-Type=application/${contenttype}
-     ${resp}=  POST On Session  policy  ${url}  data=${body}  headers=${headers}  expected_status=${expectedstatus}
-     Log  Received response from policy ${resp.text}
-     RETURN  ${resp}
+    [Arguments]  ${url}  ${domain}  ${file}  ${folder}  ${contenttype}  ${expectedstatus}
+    ${auth}=  Create List  policyadmin  zb!XztG34
+    ${body}=  Get file  ${folder}/${file}
+    Log  Creating session http://${domain}
+    ${session}=  Create Session  policy  http://${domain}  auth=${auth}
+    ${headers}=  Create Dictionary  Accept=application/${contenttype}  Content-Type=application/${contenttype}
+    ${resp}=  POST On Session  policy  ${url}  data=${body}  headers=${headers}  expected_status=${expectedstatus}
+    Log  Received response from policy ${resp.text}
+    RETURN  ${resp}
 
 OnSet
     [Arguments]    ${file}
@@ -220,18 +220,18 @@ OnSet
     RETURN    ${resp.stdout}
 
 CreatePolicy
-    [Arguments]     ${policyFile}   ${contenttype}
+    [Arguments]    ${policyFile}   ${contenttype}
     PerformPostRequest  /policy/api/v1/policies  ${POLICY_API_IP}  ${policyFile}  ${DATA}  ${contenttype}  201
 
 DeployPolicy
-    [Arguments]     ${policyName}
+    [Arguments]    ${policyName}
     PerformPostRequest  /policy/pap/v1/pdps/deployments/batch  ${POLICY_PAP_IP}  ${policyName}  ${CURDIR}/data/drools  json  202
 
 AssertMessageFromTopic
-    [Arguments]     ${topic}    ${topicMessage}     ${otherMessages}
+    [Arguments]    ${topic}    ${topicMessage}    ${otherMessages}
     ${response}=    Wait Until Keyword Succeeds    4 x    10 sec    CheckKafkaTopic    ${topic}    ${topicMessage}
     FOR    ${msg}    IN    @{otherMessages}
-        Should Contain    ${response}    ${msg}
+       Should Contain    ${response}    ${msg}
     END
 
 GetDeployedPolicies

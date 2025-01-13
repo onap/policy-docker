@@ -10,11 +10,11 @@ Resource    apex-pdp-common.robot
 
 *** Test Cases ***
 Healthcheck
-     [Documentation]    Runs Apex PDP Health check
-     ${hcauth}=  PolicyAdminAuth
-     ${resp}=  PerformGetRequest  ${APEX_IP}  /policy/apex-pdp/v1/healthcheck  200  null  ${hcauth}
-     Should Be Equal As Strings    ${resp.json()['code']}    200
-     Set Suite Variable    ${pdpName}    ${resp.json()['name']}
+    [Documentation]    Runs Apex PDP Health check
+    ${hcauth}=  PolicyAdminAuth
+    ${resp}=  PerformGetRequest  ${APEX_IP}  /policy/apex-pdp/v1/healthcheck  200  null  ${hcauth}
+    Should Be Equal As Strings    ${resp.json()['code']}    200
+    Set Suite Variable    ${pdpName}    ${resp.json()['name']}
 
 ValidatePolicyExecutionAndEventRateLowComplexity
     [Documentation]  Validate that a moderate complexity policy can be executed in less than 100ms and minimum 10 events triggered per second
@@ -23,8 +23,8 @@ ValidatePolicyExecutionAndEventRateLowComplexity
     CreatePolicySuccessfully  /policy/api/v1/policytypes/onap.policies.native.Apex/versions/1.0.0/policies  ${postjson}  ${policyName}  1.0.0
     DeployPolicy
     Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
-    GetKafkaTopic     apex-cl-mgt
-    ${data}=    Get Binary File     ${CURDIR}/data/VesEventForPnfPolicy.json
+    GetKafkaTopic    apex-cl-mgt
+    ${data}=    Get Binary File    ${CURDIR}/data/VesEventForPnfPolicy.json
     ${eventStartTime}=  Get Current Date
     ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_cl_output    ${data}    ${KAFKA_IP}
     ${eventEndTime}=  Get Current Date
@@ -50,8 +50,8 @@ ValidatePolicyExecutionAndEventRateHighComplexity
     CreateNodeTemplate  /policy/api/v1/nodetemplates  201  ${postjson}  1
     DeployPolicy
     Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
-    GetKafkaTopic     apex-cl-mgt2
-    ${data}=    Get Binary File     ${CURDIR}/data/VesEventForVnfPolicy.json
+    GetKafkaTopic    apex-cl-mgt2
+    ${data}=    Get Binary File    ${CURDIR}/data/VesEventForVnfPolicy.json
     ${eventStartTime}=  Get Current Date
     ${resp}=    Run Process    ${CURDIR}/kafka_producer.py    unauthenticated.dcae_policy_example_output    ${data}    ${KAFKA_IP}
     ${eventEndTime}=  Get Current Date
