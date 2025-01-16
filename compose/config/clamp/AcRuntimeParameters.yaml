@@ -137,13 +137,3 @@ runtime:
   acmParameters:
     toscaElementName: org.onap.policy.clamp.acm.AutomationCompositionElement
     toscaCompositionName: org.onap.policy.clamp.acm.AutomationComposition
-
----
-# mariadb config
-spring:
-  config:
-    activate:
-      on-profile: mariadb
-  datasource:
-    url: jdbc:mariadb://${mariadb.host:mariadb}:${mariadb.port:3306}/clampacm
-    driverClassName: org.mariadb.jdbc.Driver

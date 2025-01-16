@@ -93,17 +93,9 @@ with compose.
 
 ## Database support
 
-From Oslo version onwards, this docker compose setup uses Postgres database as default; MariaDB is
-still available, but support might be limited.
+From Paris version onwards, this docker compose setup uses Postgres database; MariaDB support has
+been removed.
 
-To start docker compose with MariaDB, add a flag to use it:
-
-```sh
-# that will start apex-pdp and its dependencies (pap, api, mariadb, simulator)
-./start-compose.sh apex-pdp --mariadb
-# that will start apex-pdp and its dependencies (pap, api, postgres, simulator)
-./start-compose.sh apex-pdp
-```
 
 ### Docker compose files
 
@@ -116,7 +108,5 @@ the services:
   - Metrics services (prometheus, grafana, jaeger)
 - compose.postgres.yml
   - Postgres database and policy-db-migrator working towards it
-- compose.mariadb.yml
-  - MariaDB database and policy-db-migrator working towards it
 - compose.yml
   - All the policy components.
