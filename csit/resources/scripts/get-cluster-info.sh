@@ -133,7 +133,38 @@ function expose_services() {
     patch_ports
 }
 
+# Port forward Kafka to handle traffic to/from JMeter
+function setup_kafka_connection() {
+  # Get the Kafka pod name
+  KAFKA_POD=$(kubectl get pods -l app=kafka -o jsonpath="{.items[0].metadata.name}")
+
+  # Set up port forwarding
+  kubectl port-forward pod/$KAFKA_POD 29092:29092 &
+  PF_PID=$!
+
+  # Wait for port forwarding to be established
+  sleep 5
+
+  KAFKA_POD_IP=$(kubectl get pod $KAFKA_POD -o jsonpath='{.status.podIP}')
+
+  # Update hosts file
+  echo "127.0.0.1 $KAFKA_POD" | sudo tee -a /etc/hosts
+
+  export KAFKA_HOST="127.0.0.1"
+  export KAFKA_PORT="29092"
+}
+
+function teardown_kafka_connection() {
+  kill $PF_PID
+  sudo sed -i "/$KAFKA_POD/d" /etc/hosts
+}
+
 ####MAIN###
-get_pod_names
-get_svc_names
-expose_services
+if [ "$1" = "teardown" ]; then
+  teardown_kafka_connection
+else
+  get_pod_names
+  get_svc_names
+  expose_services
+  setup_kafka_connection
+fi
