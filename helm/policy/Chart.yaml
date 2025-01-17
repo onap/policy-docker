@@ -1,4 +1,4 @@
-# Copyright © 2022-2024 Nordix Foundation
+# Copyright © 2022-2025 Nordix Foundation
 #
 # Modifications Copyright © 2024 Deutsche Telekom
 #
@@ -20,10 +20,10 @@ name: policy
 version: 11.0.1
 
 dependencies:
-  - name: mariadb-galera
+  - name: postgres
     version: ~11.x-0
-    repository: 'file://components/mariadb-galera'
-    condition: mariadb-galera.enabled
+    repository: 'file://components/postgres'
+    condition: postgres.enabled
   - name: policy-clamp-ac-k8s-ppnt
     version: ~11.x-0
     repository: 'file://components/policy-clamp-ac-k8s-ppnt'
