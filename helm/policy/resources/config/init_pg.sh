@@ -1,8 +1,6 @@
-#!/bin/bash
-{{/*
-#
+#!/bin/sh
 # ============LICENSE_START====================================================
-#  Copyright (C) 2022 Nordix Foundation.
+#  Copyright (C) 2025 Nordix Foundation.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,13 +16,22 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END======================================================
-*/}}
-mysql() { /usr/bin/mysql  -h ${MYSQL_HOST} -P ${MYSQL_USER} "$@"; };
 
-for db in migration pooling policyadmin policyclamp operationshistory clampacm
-do
-    mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" --execute "CREATE DATABASE IF NOT EXISTS ${db};"
-    mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" --execute "GRANT ALL PRIVILEGES ON \`${db}\`.* TO '${MYSQL_USER}'@'%' ;"
+
+for schema in ${SQL_DB}; do
+    echo "Initializing $schema..."
+    /opt/app/policy/bin/prepare_upgrade.sh ${schema}
+
+    /opt/app/policy/bin/db-migrator-pg -s ${schema} -o report
+
+    /opt/app/policy/bin/db-migrator-pg -s ${schema} -o upgrade
+    rc=$?
+
+    /opt/app/policy/bin/db-migrator-pg -s ${schema} -o report
+
+    if [ "$rc" != 0 ]; then
+        break
+    fi
 done
 
-mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" --execute "FLUSH PRIVILEGES;"
+exit $rc

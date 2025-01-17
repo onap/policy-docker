@@ -1,5 +1,5 @@
 #  ============LICENSE_START=======================================================
-#   Copyright (C) 2022,2024 Nordix Foundation.
+#   Copyright (C) 2022,2024-2025 Nordix Foundation.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -35,8 +35,8 @@ db:
   user: policy-user
   password: policy-user
   service:
-    name: mariadb-galera
-    internalPort: 3306
+    name: postgres-service
+    internalPort: 5432
 
 # default number of instances
 replicaCount: 1

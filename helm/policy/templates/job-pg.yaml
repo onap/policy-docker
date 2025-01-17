@@ -1,5 +1,5 @@
 {{/*
-# Copyright (C) 2022 Nordix Foundation.
+# Copyright (C) 2025 Nordix Foundation.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -7,6 +7,7 @@
 #
 #       http://www.apache.org/licenses/LICENSE-2.0
 #
+#       SPDX-License-Identifier: Apache-2.0
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,27 +19,25 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: policy-galera-init
+  name: policy-pg-init
   namespace: default
   labels:
-    app: policy-galera-init
+    app: policy-pg-init
 spec:
   template:
     metadata:
       labels:
-        app: policy-galera-init
-      name: policy-galera-init
+        app: policy-pg-init
+      name: policy-pg-init
     spec:
-      imagePullSecrets:
-      - name: "default-docker-registry-key"
       initContainers:
-      - name: policy-mariadb-readiness
+      - name: policy-pg-readiness
         image: {{ .Values.global.repository }}/{{ .Values.global.image.readiness }}
         imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
         command:
         - /app/ready.py
         - --container-name
-        - {{ index .Values "mariadb-galera" "service" "name" }}
+        - postgres
         env:
         - name: NAMESPACE
           valueFrom:
@@ -46,39 +45,31 @@ spec:
               apiVersion: v1
               fieldPath: metadata.namespace
       containers:
-      - name: policy-galera-config
-        image: {{ .Values.global.dockerRepository }}/{{ .Values.mariadb.image }}
+      - name: policy-pg-config
+        image: {{ .Values.global.repository }}/{{ .Values.global.image.postgres}}
         imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
         volumeMounts:
-        - mountPath: /dbcmd-config/db.sh
+        - mountPath: /dbcmd-config/db-pg.sh
           name: {{ .Chart.Name }}-config
-          subPath: db.sh
+          subPath: db-pg.sh
         command:
         - /bin/sh
         - -cx
         - |
-           /dbcmd-config/db.sh
+           /dbcmd-config/db-pg.sh
         env:
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mariadb-galera-db-root-password
-              key: password
-              optional: false
-        - name: MYSQL_HOST
-          value: "{{ index .Values "mariadb-galera" "service" "name" }}"
-        - name: MYSQL_USER
-          valueFrom:
-            secretKeyRef:
-              name: mariadb-galera-db-user-credentials
-              key: login
-              optional: false
-        - name: MYSQL_PORT
-          value: "{{ index .Values "mariadb-galera" "service" "internalPort" }}"
+        - name: PG_PASSWORD
+          value: {{ .Values.dbConfig.postgres.password }} 
+        - name: PG_HOST
+          value: {{ .Values.dbConfig.postgres.service }}
+        - name: PG_USER
+          value: {{ .Values.dbConfig.postgres.user }}
+        - name: PG_PORT
+          value: "{{ .Values.dbConfig.postgres.port }}"
         resources:
           limits:
             cpu: 1
-            memory: 4Gi
+            memory: 2Gi
           requests:
             cpu: 100m
             memory: 1Gi
@@ -91,26 +82,24 @@ spec:
             name: {{ .Chart.Name }}-db-configmap
             defaultMode: 0755
             items:
-              - key: db.sh
-                path: db.sh
+              - key: db-pg.sh
+                path: db-pg.sh
 
 ---
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: policy-galera-config
+  name: policy-pg-config
   namespace: default
   labels:
-    app: policy-galera-config
+    app: policy-pg-config
 spec:
   template:
     metadata:
       labels:
-        app: policy-galera-config
-      name: policy-galera-config
+        app: policy-pg-config
+      name: policy-pg-config
     spec:
-      imagePullSecrets:
-      - name: "default-docker-registry-key"
       initContainers:
         - name: policy-init-readiness
           image: {{ .Values.global.repository }}/{{ .Values.global.image.readiness }}
@@ -119,7 +108,7 @@ spec:
           - /app/ready.py
           args:
           - --job-name
-          - policy-galera-init
+          - policy-pg-init
           env:
           - name: NAMESPACE
             valueFrom:
@@ -127,39 +116,33 @@ spec:
                 apiVersion: v1
                 fieldPath: metadata.namespace
       containers:
-      - name: policy-galera-db-migrator-policy
+      - name: policy-pg-db-migrator-policy
         image: {{ .Values.global.repository }}/{{ .Values.dbmigrator.image }}
         imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
         volumeMounts:
-          - mountPath: /dbcmd-config/db_migrator_policy_init.sh
+          - mountPath: /dbcmd-config/init_pg.sh
             name: {{ .Chart.Name }}-policy-config
-            subPath: db_migrator_policy_init.sh
+            subPath: init_pg.sh
         command:
           - /bin/sh
           - -cx
           - |
-            /dbcmd-config/db_migrator_policy_init.sh
+            /dbcmd-config/init_pg.sh
         env:
           - name: SQL_HOST
-            value: "{{ index .Values "mariadb-galera" "service" "name" }}"
+            value: {{ .Values.dbConfig.postgres.service }}
           - name: SQL_USER
-            valueFrom:
-              secretKeyRef:
-                name: mariadb-galera-db-user-credentials
-                key: login
-                optional: false
+            value: {{ .Values.dbConfig.postgres.user }}
           - name: SQL_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: mariadb-galera-db-user-credentials
-                key: password
-                optional: false
+            value: {{ .Values.dbConfig.postgres.password }}
           - name: SQL_DB
             value: {{ .Values.dbmigrator.policyadmin.schema }}
           - name: POLICY_HOME
             value: {{ .Values.dbmigrator.policy_home }}
           - name: SCRIPT_DIRECTORY
-            value: "sql"
+            value: "postgres"
+          - name: PGPASSWORD
+            value: {{ .Values.dbConfig.postgres.password }}
         resources:
           limits:
             cpu: 1
@@ -175,26 +158,24 @@ spec:
             name: {{ .Chart.Name }}-db-configmap
             defaultMode: 0755
             items:
-              - key: db_migrator_policy_init.sh
-                path: db_migrator_policy_init.sh
+              - key: init_pg.sh
+                path: init_pg.sh
 
 ---
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: policy-galera-config-clamp
+  name: policy-pg-config-clamp
   namespace: default
   labels:
-    app: policy-galera-config-clamp
+    app: policy-pg-config-clamp
 spec:
   template:
     metadata:
       labels:
-        app: policy-galera-config-clamp
-      name: policy-galera-config-clamp
+        app: policy-pg-config-clamp
+      name: policy-pg-config-clamp
     spec:
-      imagePullSecrets:
-      - name: "default-docker-registry-key"
       initContainers:
         - name: policy-init-readiness
           image: {{ .Values.global.repository }}/{{ .Values.global.image.readiness }}
@@ -203,7 +184,7 @@ spec:
           - /app/ready.py
           args:
           - --job-name
-          - policy-galera-config
+          - policy-pg-config
           env:
           - name: NAMESPACE
             valueFrom:
@@ -211,39 +192,33 @@ spec:
                 apiVersion: v1
                 fieldPath: metadata.namespace
       containers:
-      - name: policy-galera-db-migrator-clamp
+      - name: policy-pg-db-migrator-clamp
         image: {{ .Values.global.repository }}/{{ .Values.global.image.dbMigrator }}
         imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
         volumeMounts:
-        - mountPath: /dbcmd-config/db_migrator_policy_init.sh
+        - mountPath: /dbcmd-config/init_pg.sh
           name: {{ .Chart.Name }}-clamp-config
-          subPath: db_migrator_policy_init.sh
+          subPath: init_pg.sh
         command:
         - /bin/sh
         - -cx
         - |
-           /dbcmd-config/db_migrator_policy_init.sh
+           /dbcmd-config/init_pg.sh
         env:
         - name: SQL_HOST
-          value: "{{ index .Values "mariadb-galera" "service" "name" }}"
+          value: {{ .Values.dbConfig.postgres.service }}
         - name: SQL_USER
-          valueFrom:
-            secretKeyRef:
-              name: mariadb-galera-db-user-credentials
-              key: login
-              optional: false
+          value: {{ .Values.dbConfig.postgres.user }}
         - name: SQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mariadb-galera-db-user-credentials
-              key: password
-              optional: false
+          value: {{ .Values.dbConfig.postgres.password }}
         - name: SQL_DB
           value: {{ .Values.dbmigrator.clampacm.schema }}
         - name: POLICY_HOME
           value: {{ .Values.dbmigrator.policy_home }}
         - name: SCRIPT_DIRECTORY
-          value: "sql"
+          value: "postgres"
+        - name: PGPASSWORD
+          value: {{ .Values.dbConfig.postgres.password }}
         resources:
           limits:
             cpu: 1
@@ -259,5 +234,5 @@ spec:
             name: {{ .Chart.Name }}-db-configmap
             defaultMode: 0755
             items:
-              - key: db_migrator_policy_init.sh
-                path: db_migrator_policy_init.sh
+              - key: init_pg.sh
+                path: init_pg.sh

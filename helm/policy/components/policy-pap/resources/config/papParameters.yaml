@@ -1,5 +1,5 @@
 #  ============LICENSE_START=======================================================
-#   Copyright (C) 2023-2024 Nordix Foundation. All rights reserved.
+#   Copyright (C) 2023-2025 Nordix Foundation. All rights reserved.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -25,8 +25,8 @@ spring:
     converters:
       preferred-json-mapper: gson
   datasource:
-    url: jdbc:mariadb://{{ .Values.db.service.name }}:{{ .Values.db.service.internalPort}}/policyadmin
-    driverClassName: org.mariadb.jdbc.Driver
+    url: jdbc:postgresql://{{ .Values.db.service.name }}:{{ .Values.db.service.internalPort}}/policyadmin
+    driverClassName: org.postgresql.Driver
     username: "${SQL_USER}"
     password: "${SQL_PASSWORD}"
     hikari:

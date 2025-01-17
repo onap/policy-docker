@@ -1,11 +1,12 @@
-# Copyright © 2022-2024 Nordix Foundation
+# Copyright © 2022-2025 Nordix Foundation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
 #       http://www.apache.org/licenses/LICENSE-2.0
-#
+# 
+#       SPDX-License-Identifier: Apache-2.0
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,14 +19,6 @@
 
 global:
   aafEnabled: false
-  mariadb:
-    # '&mariadbConfig' means we "store" the values for  later use in the file
-    # with '*mariadbConfig' pointer.
-    config: &mariadbConfig
-      mysqlDatabase: policyadmin
-    service: &mariadbService
-      name: &mariadb-galera mariadb-galera
-      internalPort: 3306
   prometheusEnabled: false
   kafkaServer: kafka
   repository: nexus3.onap.org:10001
@@ -34,7 +27,7 @@ global:
 
   image:
     readiness: onap/oom/readiness:3.0.1
-    mariadb: bitnami/mariadb-galera:10.5.8
+    postgres: library/postgres:16.4
     api: onap/policy-api:$tag
     pap: onap/policy-pap:$tag
     apex: onap/policy-apex-pdp:$tag
@@ -52,7 +45,7 @@ global:
     a1pmsparticipant: onap/policy-clamp-ac-a1pms-ppnt:$tag
     dbMigrator: onap/policy-db-migrator:$tag
 
-policy-mariadb-galera:
+postgres:
   enabled: true
 policy-models-simulator:
   enabled: true
@@ -92,9 +85,12 @@ jaeger:
 # DB configuration defaults.
 #################################################################
 
-
-mariadb:
-  image: mariadb:10.5.8
+dbConfig:
+  postgres:
+    user: "policy-user"
+    service: "postgres-service"
+    port: "5432"
+    password: "policy-user"
 
 dbmigrator:
   image: onap/policy-db-migrator:$tag
@@ -117,21 +113,6 @@ nodeSelector: {}
 
 affinity: {}
 
-mariadb-galera:
-  # mariadb-galera.config and global.mariadb.config must be equals
-  db:
-    user: policy-user
-    # password:
-    name: &mysqlDbName policyadmin
-  nameOverride: *mariadb-galera
-  # mariadb-galera.service and global.mariadb.service must be equals
-  service: *mariadbService
-  #replicaCount: 1
-  persistence:
-    enabled: true
-    mountSubPath: policy/maria/data
-  serviceAccount:
-    nameOverride: *mariadb-galera
 
 # Resource Limit flavor -By Default using small
 # Segregation for Different environment (small, large, or unlimited)
