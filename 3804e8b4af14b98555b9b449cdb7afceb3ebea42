@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb6155e0_598fe4b9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-01-20T09:12:50Z",
+      "side": 1,
+      "message": "was this the only fix needed for the opa-pdp use cases to work with helm charts?",
+      "revId": "3804e8b4af14b98555b9b449cdb7afceb3ebea42",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
