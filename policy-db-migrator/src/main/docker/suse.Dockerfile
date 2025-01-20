@@ -1,8 +1,7 @@
 #-------------------------------------------------------------------------------
 # Dockerfile
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2022 Nordix Foundation.
-#  Modification Copyright 2022-2024 Nordix Foundation.
+#  Copyright (C) 2022-2025 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -36,7 +35,7 @@ ENV POLICY_ETC /opt/app/policy/etc
 ENV POLICY_PROFILE /opt/app/policy/etc/profile.d
 ENV POLICY_BIN /opt/app/policy/bin
 
-RUN zypper -n -q install --no-recommends cpio findutils mariadb-client netcat-openbsd postgresql util-linux && \
+RUN zypper -n -q install --no-recommends cpio findutils netcat-openbsd postgresql util-linux && \
     zypper -n -q update && \
     zypper -n -q clean --all && \
     groupadd --system policy && \
@@ -45,14 +44,10 @@ RUN zypper -n -q install --no-recommends cpio findutils mariadb-client netcat-op
     chown -R policy:policy $POLICY_ETC $POLICY_BIN
 
 COPY --chown=policy:policy ./env.sh $POLICY_PROFILE/
-COPY --chown=policy:policy ./db-migrator $POLICY_BIN/
 COPY --chown=policy:policy ./db-migrator-pg $POLICY_BIN/
 COPY --chown=policy:policy ./prepare_upgrade.sh $POLICY_BIN/
 COPY --chown=policy:policy ./prepare_downgrade.sh $POLICY_BIN/
-COPY --chown=policy:policy ./config/policyadmin/sql /home/policyadmin/sql
-COPY --chown=policy:policy ./config/policyadmin/postgres /home/policyadmin/postgres
-COPY --chown=policy:policy ./config/clampacm/sql /home/clampacm/sql
-COPY --chown=policy:policy ./config/clampacm/postgres /home/clampacm/postgres
+COPY --chown=policy:policy ./config /home
 
 WORKDIR $POLICY_BIN
 USER policy:policy

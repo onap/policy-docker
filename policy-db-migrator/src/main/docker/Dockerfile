@@ -1,8 +1,7 @@
 #-------------------------------------------------------------------------------
 # Dockerfile
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2021 Nordix Foundation.
-#  Modification Copyright 2021-2025 Nordix Foundation.
+#  Copyright (C) 2021-2025 Nordix Foundation.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -39,7 +38,6 @@ ENV POLICY_BIN /opt/app/policy/bin
 USER root
 RUN apk update && \
     apk add --no-cache \
-        mariadb-client \
         postgresql-client \
         net-tools \
         netcat-openbsd \
@@ -50,7 +48,6 @@ RUN apk update && \
     chown -R policy:policy $POLICY_ETC $POLICY_BIN
 
 COPY --chown=policy:policy ./env.sh $POLICY_PROFILE/
-COPY --chown=policy:policy ./db-migrator $POLICY_BIN/
 COPY --chown=policy:policy ./db-migrator-pg $POLICY_BIN/
 COPY --chown=policy:policy ./prepare_upgrade.sh $POLICY_BIN/
 COPY --chown=policy:policy ./prepare_downgrade.sh $POLICY_BIN/
