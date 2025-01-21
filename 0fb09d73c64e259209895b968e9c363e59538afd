@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d7124c4_4c5d4f84",
+        "filename": "helm/policy/components/policy-drools-pdp/resources/configmaps/base.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-01-21T11:20:18Z",
+      "side": 1,
+      "message": "5432",
+      "range": {
+        "startLine": 42,
+        "startChar": 9,
+        "endLine": 42,
+        "endChar": 13
+      },
+      "revId": "0fb09d73c64e259209895b968e9c363e59538afd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "247664f9_d1681a5c",
+        "filename": "helm/policy/components/policy-xacml-pdp/resources/config/xacml.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-01-21T11:20:18Z",
+      "side": 1,
+      "message": "we don\u0027t use eclipselink anymore",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 36
+      },
+      "revId": "0fb09d73c64e259209895b968e9c363e59538afd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dd2ca8c3_3d9e9f01",
+        "filename": "helm/policy/components/policy-xacml-pdp/resources/config/xacml.properties",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-01-21T11:20:18Z",
+      "side": 1,
+      "message": "these should be jakarta. check the configuration from docker compose",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 5
+      },
+      "revId": "0fb09d73c64e259209895b968e9c363e59538afd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a75211bc_2ae47fc1",
+        "filename": "helm/policy/components/postgres/templates/configmap.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-01-21T11:20:18Z",
+      "side": 1,
+      "message": "missing new line",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 56
+      },
+      "revId": "0fb09d73c64e259209895b968e9c363e59538afd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c92531b3_69ca139d",
+        "filename": "helm/policy/components/postgres/templates/deployment.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-01-21T11:20:18Z",
+      "side": 1,
+      "message": "missing newline",
+      "range": {
+        "startLine": 46,
+        "startChar": 39,
+        "endLine": 46,
+        "endChar": 44
+      },
+      "revId": "0fb09d73c64e259209895b968e9c363e59538afd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb9f4dcb_09aebb6c",
+        "filename": "helm/policy/components/postgres/templates/pv.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-01-21T11:20:18Z",
+      "side": 1,
+      "message": "missing newline",
+      "range": {
+        "startLine": 31,
+        "startChar": 42,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "0fb09d73c64e259209895b968e9c363e59538afd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c41e2e4_d6bf735f",
+        "filename": "helm/policy/components/postgres/templates/pvc.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-01-21T11:20:18Z",
+      "side": 1,
+      "message": "missing newline",
+      "range": {
+        "startLine": 29,
+        "startChar": 44,
+        "endLine": 29,
+        "endChar": 45
+      },
+      "revId": "0fb09d73c64e259209895b968e9c363e59538afd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65092add_ce12c4ec",
+        "filename": "helm/policy/components/postgres/templates/service.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-01-21T11:20:18Z",
+      "side": 1,
+      "message": "missing newline",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "0fb09d73c64e259209895b968e9c363e59538afd",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
