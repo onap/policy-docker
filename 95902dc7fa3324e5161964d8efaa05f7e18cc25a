@@ -24,6 +24,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "37176dca_de25fa0e",
+        "filename": "helm/policy/Chart.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 8491
+      },
+      "writtenOn": "2025-02-10T10:53:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03b2911b_69d349ac",
+      "range": {
+        "startLine": 61,
+        "startChar": 13,
+        "endLine": 61,
+        "endChar": 19
+      },
+      "revId": "95902dc7fa3324e5161964d8efaa05f7e18cc25a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dfd5db60_632ad680",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-02-10T10:46:48Z",
       "side": 1,
       "message": "2024-2025",
+      "range": {
+        "startLine": 2,
+        "startChar": 18,
+        "endLine": 2,
+        "endChar": 22
+      },
+      "revId": "95902dc7fa3324e5161964d8efaa05f7e18cc25a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2a0612c_1430b7a2",
+        "filename": "helm/policy/components/policy-opa-pdp/Chart.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 8491
+      },
+      "writtenOn": "2025-02-10T10:53:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfd5db60_632ad680",
       "range": {
         "startLine": 2,
         "startChar": 18,
