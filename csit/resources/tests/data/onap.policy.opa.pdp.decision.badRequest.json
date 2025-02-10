@@ -1,2 +1,0 @@
-{"onapName":"CDS","onapComponent":"CDS","onapInstance":"CDS","currentDate": "2024-11-22", "currentTime": "2024-11-22T11:34:56Z", "timeZone": "UTC",  "timeOffset": "+05:30", "currentDateTime": "2024-11-22T12:08:00Z" "policyName":"role/allow","input":{"user":"carol","action":"write","object":"id123","type":"dog"}}
-
