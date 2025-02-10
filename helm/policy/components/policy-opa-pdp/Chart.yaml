@@ -1,5 +1,5 @@
 #  ============LICENSE_START=======================================================
-#   Copyright (C) 2024 Deutsche Telekom Intellectual Property. All rights reserved.
+#   Copyright (C) 2024-2025 Deutsche Telekom Intellectual Property. All rights reserved.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -19,5 +19,5 @@
 apiVersion: v2
 description: ONAP Policy OPA PDP
 name: policy-opa-pdp
-version: 11.0.0
+version: 11.0.1
 

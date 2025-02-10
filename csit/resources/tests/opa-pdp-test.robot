@@ -15,22 +15,18 @@ Healthcheck
     [Documentation]    Verify OPA PDP health check
     PdpxGetReq  ${OPA_PDP_HOST}  <Response [200]>
 
-RetrieveSuccessfulRequest
-    [Documentation]  Get Decision Request Successful for Opa Pdp
-    DecisionRequest  onap.policy.opa.pdp.decision.request.json  PERMIT  200
+ValidatingPolicyWithoutPolicyFilter
+   [Documentation]    Validating the policy without giving policy filter
+   ValidatePolicyResponseWithoutFilter  onap.policy.opa.pdp.decision.request.json  400  onap.policy.opa.pdp.decision.request.output.json
 
-RetrieveDenyRequest
-    [Documentation]  Get Decision Request DENY for Opa Pdp
-    DecisionRequest  onap.policy.opa.pdp.decision.requestfailure.json  DENY  200
+ValidatingPolicyWithPolicyFilter
+   [Documentation]    Validating the policy with policy filter
+   ValidatePolicyResponse  onap.policy.opa.pdp.decision.request_filter.json  200  onap.policy.opa.pdp.decision.filter_response.json
 
-*** comments ***
-| RetrieveFailureRequest
-| |[Documentation] | Get Decision Request INDETERMINATE for Opa Pdp ***
-| | |DecisionRequest  onap.policy.opa.pdp.decision.requestIndeterminate.json  INDETERMINATE  200 ***
+ValidatingPolicyWithEmptyPolicyFilter
+   [Documentation]    Validating the policy with empty policy filter
+   ValidatePolicyResponse  onap.policy.opa.pdp.decision.request_filter_empty.json  200  onap.policy.opa.pdp.decision.empty_filter_response.json
 
-RetrieveFailureBadRequest
-    [Documentation]  Get Decision Request Failure Bad Request for Opa Pdp
-    DecisionRequest  onap.policy.opa.pdp.decision.badRequest.json  BAD_REQUEST  400
 *** Keywords ***
 PdpxGetReq
     [Documentation]     Verify the response of Health Check is Successful
@@ -39,15 +35,30 @@ PdpxGetReq
     ${resp}=    PerformGetRequest  ${POLICY_OPA_IP}  ${url}  200  null  ${hcauth}
     Should Be Equal As Strings    ${resp}   ${status}
 
-DecisionRequest
-    [Arguments]  ${jsonfile}  ${keyword}  ${status}
-    ${postjson}=  Get file  ${CURDIR}/data/${jsonfile}
-    ${resp}=  DecisionPostReq  ${postjson}  ${status}  abbrev=true
-    Should Contain  ${resp.text}  ${keyword}
-
-DecisionPostReq
-    [Arguments]  ${postjson}  ${status}  ${abbr}
+ValidatePolicyResponse
+    [Documentation]    Validating the output for the policy
+    [Arguments]  ${jsonfile}  ${status}  ${jsonfile1}
     ${expectedStatus}=    Set Variable    ${status}
+    ${postjson}=  Get file  ${CURDIR}/data/${jsonfile}
+    ${expected_data}=  Get file  ${CURDIR}/data/${jsonfile1}
     ${hcauth}=  PolicyAdminAuth
-    ${resp}=    PerformPostRequest   ${POLICY_OPA_IP}  ${url}  ${expectedStatus}  ${postjson}  ${abbr}  ${hcauth}
-    RETURN  ${resp}
+    ${resp}=    PerformPostRequest   ${POLICY_OPA_IP}  ${url}  ${expectedStatus}  ${postjson}  abbrev=true  ${hcauth}
+    ${response_data}=    Get From Dictionary    ${resp.json()}    output
+    ${expected_value}=    Evaluate    json.loads('''${expected_data}''')    json
+    ${expected_output}=    Get From Dictionary    ${expected_value}    output
+    Dictionaries Should Be Equal    ${response_data}  ${expected_output}
+
+ValidatePolicyResponseWithoutFilter
+    [Documentation]    Validating the output for the policy
+    [Arguments]  ${jsonfile}  ${status}  ${jsonfile1}
+    ${expectedStatus}=    Set Variable    ${status}
+    ${postjson}=  Get file  ${CURDIR}/data/${jsonfile}
+    ${expected_data}=  Get file  ${CURDIR}/data/${jsonfile1}
+    ${hcauth}=  PolicyAdminAuth
+    ${resp}=    PerformPostRequest   ${POLICY_OPA_IP}  ${url}  ${expectedStatus}  ${postjson}  abbrev=true  ${hcauth}
+    ${response_data}=    Get From Dictionary    ${resp.json()}    responseCode
+    ${expected_value}=    Evaluate    json.loads('''${expected_data}''')    json
+    ${expected_output}=    Get From Dictionary    ${expected_value}    responseCode
+    Should Be Equal As Strings   ${response_data}  ${expected_output}
+
+
