@@ -58,20 +58,20 @@ Metrics
     [Documentation]  Verify policy-apex-pdp is exporting prometheus metrics
     ${auth}=  PolicyAdminAuth
     ${resp}=  PerformGetRequest  ${APEX_IP}  /metrics  200  null  ${auth}
-    Should Contain  ${resp.text}  pdpa_policy_deployments_total{operation="deploy",status="TOTAL",} 3.0
-    Should Contain  ${resp.text}  pdpa_policy_deployments_total{operation="deploy",status="SUCCESS",} 3.0
-    Should Contain  ${resp.text}  pdpa_policy_executions_total{status="SUCCESS",} 3.0
-    Should Contain  ${resp.text}  pdpa_policy_executions_total{status="TOTAL",} 3.0
-    Should Match  ${resp.text}  *pdpa_engine_event_executions{engine_instance_id="NSOApexEngine-*:0.0.1",}*
-    Should Match  ${resp.text}  *pdpa_engine_event_executions{engine_instance_id="MyApexEngine-*:0.0.1",}*
-    Should Match  ${resp.text}  *pdpa_engine_state{engine_instance_id=*,} 2.0*
+    Should Contain  ${resp.text}  pdpa_policy_deployments_total{operation="deploy",status="TOTAL"} 3.0
+    Should Contain  ${resp.text}  pdpa_policy_deployments_total{operation="deploy",status="SUCCESS"} 3.0
+    Should Contain  ${resp.text}  pdpa_policy_executions_total{status="SUCCESS"} 3.0
+    Should Contain  ${resp.text}  pdpa_policy_executions_total{status="TOTAL"} 3.0
+    Should Match  ${resp.text}  *pdpa_engine_event_executions{engine_instance_id="NSOApexEngine-*:0.0.1"}*
+    Should Match  ${resp.text}  *pdpa_engine_event_executions{engine_instance_id="MyApexEngine-*:0.0.1"}*
+    Should Match  ${resp.text}  *pdpa_engine_state{engine_instance_id=*} 2.0*
     Should Contain  ${resp.text}  pdpa_engine_event_executions
     Should Contain  ${resp.text}  pdpa_engine_average_execution_time_seconds
     Should Contain  ${resp.text}  pdpa_engine_last_execution_time_bucket
     Should Contain  ${resp.text}  pdpa_engine_last_execution_time_count
     Should Contain  ${resp.text}  pdpa_engine_last_execution_time_sum
-    Should Match  ${resp.text}  *pdpa_engine_last_start_timestamp_epoch{engine_instance_id="NSOApexEngine-*:0.0.1",}*E12*
-    Should Match  ${resp.text}  *pdpa_engine_last_start_timestamp_epoch{engine_instance_id="MyApexEngine-*:0.0.1",}*E12*
+    Should Match  ${resp.text}  *pdpa_engine_last_start_timestamp_epoch{engine_instance_id="NSOApexEngine-*:0.0.1"}*E12*
+    Should Match  ${resp.text}  *pdpa_engine_last_start_timestamp_epoch{engine_instance_id="MyApexEngine-*:0.0.1"}*E12*
     Should Contain  ${resp.text}  jvm_threads_current
 
 *** Keywords ***
