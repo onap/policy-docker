@@ -1,0 +1,16 @@
+{
+    "onapName": "CDS",
+    "onapComponent": "CDS",
+    "onapInstance": "CDS",
+    "currentDate": "2024-11-22",
+    "policyName": "abac",
+    "policyFilter": ["viewable_sensor_data"],
+    "input": {
+        "actions": ["read"],
+        "datatypes": ["location", "temperature", "precipitation", "windspeed"],
+        "time_period": {
+            "from": "2024-02-27",
+            "to": "2024-02-29"
+        }
+    }
+}

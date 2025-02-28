@@ -1,0 +1,96 @@
+{
+  "data": {
+    "sensor_data": [
+      {
+        "humidity": "40%",
+        "id": "0001",
+        "location": "Sri Lanka",
+        "particle_density": "1.3 g/l",
+        "precipitation": "1000 mm",
+        "temperature": "28 C",
+        "timestamp": "2024-02-26",
+        "windspeed": "5.5 m/s"
+      },
+      {
+        "humidity": "45%",
+        "id": "0002",
+        "location": "Colombo",
+        "particle_density": "1.5 g/l",
+        "precipitation": "1200 mm",
+        "temperature": "30 C",
+        "timestamp": "2024-02-26",
+        "windspeed": "6.0 m/s"
+      },
+      {
+        "humidity": "60%",
+        "id": "0003",
+        "location": "Kandy",
+        "particle_density": "1.1 g/l",
+        "precipitation": "800 mm",
+        "temperature": "25 C",
+        "timestamp": "2024-02-26",
+        "windspeed": "4.5 m/s"
+      },
+      {
+        "humidity": "30%",
+        "id": "0004",
+        "location": "Galle",
+        "particle_density": "1.8 g/l",
+        "precipitation": "500 mm",
+        "temperature": "35 C",
+        "timestamp": "2024-02-27",
+        "windspeed": "7.2 m/s"
+      },
+      {
+        "humidity": "20%",
+        "id": "0005",
+        "location": "Jaffna",
+        "particle_density": "0.9 g/l",
+        "precipitation": "300 mm",
+        "temperature": "-5 C",
+        "timestamp": "2024-02-27",
+        "windspeed": "3.8 m/s"
+      },
+      {
+        "humidity": "55%",
+        "id": "0006",
+        "location": "Trincomalee",
+        "particle_density": "1.2 g/l",
+        "precipitation": "1000 mm",
+        "temperature": "20 C",
+        "timestamp": "2024-02-28",
+        "windspeed": "5.0 m/s"
+      },
+      {
+        "humidity": "50%",
+        "id": "0007",
+        "location": "Nuwara Eliya",
+        "particle_density": "1.3 g/l",
+        "precipitation": "600 mm",
+        "temperature": "25 C",
+        "timestamp": "2024-02-28",
+        "windspeed": "4.0 m/s"
+      },
+      {
+        "humidity": "40%",
+        "id": "0008",
+        "location": "Anuradhapura",
+        "particle_density": "1.4 g/l",
+        "precipitation": "700 mm",
+        "temperature": "28 C",
+        "timestamp": "2024-02-29",
+        "windspeed": "5.8 m/s"
+      },
+      {
+        "humidity": "65%",
+        "id": "0009",
+        "location": "Matara",
+        "particle_density": "1.6 g/l",
+        "precipitation": "900 mm",
+        "temperature": "32 C",
+        "timestamp": "2024-02-29",
+        "windspeed": "6.5 m/s"
+      }
+    ]
+  }
+}

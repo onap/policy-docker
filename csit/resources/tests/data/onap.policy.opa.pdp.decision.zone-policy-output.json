@@ -1,0 +1,13 @@
+{
+  "decision": "PERMIT",
+  "output": {
+    "has_zone_access": [
+      {
+        "access": "granted",
+        "user": "user1"
+      }
+    ]
+  },
+  "policyName": "zoneB",
+  "statusMessage": "OPA Allowed"
+}
