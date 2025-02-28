@@ -60,7 +60,7 @@ AddPdpGroup
 
 QueryPdpGroupsBeforeActivation
     [Documentation]  Verify PdpGroups before activation
-    QueryPdpGroups  2  defaultGroup  ACTIVE  0  testGroup  PASSIVE  0
+    QueryPdpGroups  3  defaultGroup  ACTIVE  0  testGroup  PASSIVE  0
 
 ActivatePdpGroup
     [Documentation]  Change the state of PdpGroup named 'testGroup' to ACTIVE
@@ -69,7 +69,7 @@ ActivatePdpGroup
 
 QueryPdpGroupsAfterActivation
     [Documentation]  Verify PdpGroups after activation
-    QueryPdpGroups  2  defaultGroup  ACTIVE  0  testGroup  ACTIVE  0
+    QueryPdpGroups  3  defaultGroup  ACTIVE  0  testGroup  ACTIVE  0
 
 DeployPdpGroups
     [Documentation]  Deploy policies in PdpGroups
@@ -79,7 +79,7 @@ DeployPdpGroups
 
 QueryPdpGroupsAfterDeploy
     [Documentation]  Verify PdpGroups after undeploy
-    QueryPdpGroups  2  defaultGroup  ACTIVE  0  testGroup  ACTIVE  1
+    QueryPdpGroups  3  defaultGroup  ACTIVE  0  testGroup  ACTIVE  1
 
 QueryPolicyAuditAfterDeploy
     [Documentation]  Verify policy audit record after deploy
@@ -101,7 +101,7 @@ UndeployPolicyWithMetadataSet
 
 QueryPdpGroupsAfterUndeploy
     [Documentation]  Verify PdpGroups after undeploy
-    QueryPdpGroups  2  defaultGroup  ACTIVE  0  testGroup  ACTIVE  0
+    QueryPdpGroups  3  defaultGroup  ACTIVE  0  testGroup  ACTIVE  0
 
 QueryPolicyAuditAfterUnDeploy
     [Documentation]   Verify policy audit record after undeploy
@@ -123,4 +123,4 @@ DeletePdpGroups
 
 QueryPdpGroupsAfterDelete
     [Documentation]    Verify PdpGroups after delete
-    QueryPdpGroups  1  defaultGroup  ACTIVE  0  null  null  null
+    QueryPdpGroups  2  defaultGroup  ACTIVE  0  null  null  null

@@ -1,0 +1,18 @@
+{
+   "data":{
+      "system":{
+         "bundles":{
+            "opabundle":{
+               "etag":"",
+               "manifest":{
+                  "rego_version":1,
+                  "revision":"",
+                  "roots":[
+                     ""
+                  ]
+               }
+            }
+         }
+      }
+   }
+}

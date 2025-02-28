@@ -1,0 +1,33 @@
+{
+  "decision": "PERMIT",
+  "output": {
+    "viewable_sensor_data": [
+      {
+        "location": "Galle",
+        "precipitation": "500 mm",
+        "temperature": "35 C",
+        "windspeed": "7.2 m/s"
+      },
+      {
+        "location": "Jaffna",
+        "precipitation": "300 mm",
+        "temperature": "-5 C",
+        "windspeed": "3.8 m/s"
+      },
+      {
+        "location": "Nuwara Eliya",
+        "precipitation": "600 mm",
+        "temperature": "25 C",
+        "windspeed": "4.0 m/s"
+      },
+      {
+        "location": "Trincomalee",
+        "precipitation": "1000 mm",
+        "temperature": "20 C",
+        "windspeed": "5.0 m/s"
+      }
+    ]
+  },
+  "policyName": "abac",
+  "statusMessage": "OPA Allowed"
+}

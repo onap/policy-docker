@@ -60,7 +60,7 @@ RetrievePoliciesOfType
 
 RetrieveAllPolicies
     [Documentation]  Retrieve all policies
-    FetchPolicies  /policy/api/v1/policies  3
+    FetchPolicies  /policy/api/v1/policies  4
 
 RetrieveSpecificPolicy
     [Documentation]    Retrieve a policy named 'onap.restart.tca' and version '1.0.0' using generic api
