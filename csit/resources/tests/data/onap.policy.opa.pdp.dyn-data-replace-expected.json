@@ -1,0 +1,19 @@
+{
+  "data": {
+    "round": 578,
+    "vehicles": [
+      {
+        "owner": "user1",
+        "status": "available",
+        "type": "car",
+        "vehicle_id": "v1"
+      },
+      {
+        "owner": "user2",
+        "status": "in use",
+        "type": "bike",
+        "vehicle_id": "v2"
+      }
+    ]
+  }
+}

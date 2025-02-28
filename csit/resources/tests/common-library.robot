@@ -11,11 +11,29 @@ PolicyAdminAuth
     ${policyadmin}=   Create list   policyadmin    zb!XztG34
     RETURN  ${policyadmin}
 
+PerformPatchRequest
+    [Arguments]  ${domain}  ${url}  ${expectedstatus}  ${patchjson}  ${params}  ${auth}
+    Log  Creating session http://${domain}
+    ${session}=  Create Session  policy  http://${domain}  auth=${auth}
+    ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
+    ${resp}=  PATCH On Session  policy  ${url}  data=${patchjson}  params=${params}  headers=${headers}  expected_status=${expectedstatus}
+    Log  Received response from policy ${resp.text}
+    RETURN  ${resp}
+
 PerformPostRequest
     [Arguments]  ${domain}  ${url}  ${expectedstatus}  ${postjson}  ${params}  ${auth}
     Log  Creating session http://${domain}
     ${session}=  Create Session  policy  http://${domain}  auth=${auth}
     ${headers}=  Create Dictionary  Accept=application/json  Content-Type=application/json
+    ${resp}=  POST On Session  policy  ${url}  data=${postjson}  params=${params}  headers=${headers}  expected_status=${expectedstatus}
+    Log  Received response from policy ${resp.text}
+    RETURN  ${resp}
+
+PerformPostRequestWithYaml
+    [Arguments]  ${domain}  ${url}  ${expectedstatus}  ${postjson}  ${params}  ${auth}
+    Log  Creating session http://${domain}
+    ${session}=  Create Session  policy  http://${domain}  auth=${auth}
+    ${headers}=  Create Dictionary  Accept=application/yaml  Content-Type=application/yaml
     ${resp}=  POST On Session  policy  ${url}  data=${postjson}  params=${params}  headers=${headers}  expected_status=${expectedstatus}
     Log  Received response from policy ${resp.text}
     RETURN  ${resp}
@@ -51,6 +69,20 @@ CreatePolicy
     [Documentation]  Create the specific policy
     ${policyadmin}=  PolicyAdminAuth
     ${resp}=  PerformPostRequest  ${POLICY_API_IP}  ${url}  ${expectedstatus}  ${postjson}  null  ${policyadmin}
+
+CreatePolicyWithYaml
+    [Arguments]  ${url}  ${expectedstatus}  ${postjson}
+    [Documentation]  Create the specific policy
+    ${policyadmin}=  PolicyAdminAuth
+    ${resp}=  PerformPostRequestWithYaml  ${POLICY_API_IP}  ${url}  ${expectedstatus}  ${postjson}  null  ${policyadmin}
+
+CreateFailurePolicyWithYaml
+    [Arguments]  ${url}  ${expectedstatus}  ${postjson}  ${keyword}
+    [Documentation]  Trying to create policy with Invalid Data
+    ${policyadmin}=  PolicyAdminAuth
+    ${resp}=  PerformPostRequestWithYaml  ${POLICY_API_IP}  ${url}  ${expectedstatus}  ${postjson}  null  ${policyadmin}
+    Should Contain    ${resp.text}    ${keyword}
+
 
 CreatePolicySuccessfully
     [Arguments]  ${url}  ${postjson}  ${policyname}  ${policyversion}

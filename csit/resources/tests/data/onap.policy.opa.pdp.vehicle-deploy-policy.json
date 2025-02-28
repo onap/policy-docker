@@ -1,0 +1,9 @@
+{
+   "policies": [
+           {
+                   "policy-id": "vehicle",
+                   "policy-version": "1.0.6"
+           }
+   ]
+}
+
