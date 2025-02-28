@@ -1,0 +1,27 @@
+{
+   "data":{
+      "zone_access_logs":[
+         {
+            "access":"granted",
+            "log_id":"log1",
+            "timestamp":"2024-11-01T09:00:00Z",
+            "user":"user1",
+            "zone_id":"zoneA"
+         },
+         {
+            "access":"denied",
+            "log_id":"log2",
+            "timestamp":"2024-11-01T10:30:00Z",
+            "user":"user2",
+            "zone_id":"zoneA"
+         },
+         {
+            "access":"granted",
+            "log_id":"log3",
+            "timestamp":"2024-11-01T11:00:00Z",
+            "user":"user3",
+            "zone_id":"zoneB"
+         }
+      ]
+   }
+}

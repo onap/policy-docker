@@ -1,0 +1,17 @@
+tosca_definitions_version: tosca_simple_yaml_1_1_0
+topology_template:
+  policies:
+    - vehicle:
+        type: onap.policies.native.opa
+        type_version: 1.0.0
+        properties:
+          data:
+            node.vehicle: ewogICJ2ZWhpY2xlcyI6IFsKICAgIHsgInZlaGljbGVfaWQiOiAidjEiLCAib3duZXIiOiAidXNlcjEiLCAidHlwZSI6ICJjYXIiLCAic3RhdHVzIjogImF2YWlsYWJsZSIgfSwKICAgIHsgInZlaGljbGVfaWQiOiAidjIiLCAib3duZXIiOiAidXNlcjIiLCAidHlwZSI6ICJiaWtlIiwgInN0YXR1cyI6ICJpbiB1c2UiIH0KICBdCn0K
+          policy:
+            vehicle: cGFja2FnZSB2ZWhpY2xlCgppbXBvcnQgIHJlZ28udjEKCmRlZmF1bHQgYWxsb3cgOj0gZmFsc2UKCmFsbG93IGlmIHsKICAgIHVzZXJfaGFzX3ZlaGljbGVfYWNjZXNzCiAgICBhY3Rpb25faXNfZ3JhbnRlZAp9CgphY3Rpb25faXNfZ3JhbnRlZCBpZiB7CiAgICAidXNlIiBpbiBpbnB1dC5hY3Rpb25zCn0KCnVzZXJfaGFzX3ZlaGljbGVfYWNjZXNzIGNvbnRhaW5zIHZlaGljbGVfZGF0YSBpZiB7CiAgICBzb21lIHZlaGljbGUgaW4gZGF0YS5ub2RlLnZlaGljbGUudmVoaWNsZXMKICAgIHZlaGljbGUudmVoaWNsZV9pZCA9PSBpbnB1dC52ZWhpY2xlX2lkCiAgICB2ZWhpY2xlLm93bmVyID09IGlucHV0LnVzZXIKICAgIHZlaGljbGVfZGF0YSA6PSB7aW5mbzogdmVoaWNsZVtpbmZvXSB8IGluZm8gaW4gaW5wdXQuYXR0cmlidXRlc30KfQo=
+        name: vehicle
+        version: 1.0.6
+        metadata:
+          policy-id: vehicle
+          policy-version: 1.0.6
+
