@@ -190,7 +190,7 @@ function setup_opa_pdp() {
     export PROJECT="opa-pdp"
     source ${DOCKER_COMPOSE_DIR}/start-compose.sh opa-pdp
     echo "Waiting 3 minutes for OPA-PDP to start..."
-    sleep 180
+    sleep 145
     check_rest_endpoint "${OPA_PDP_PORT}"
 }
 

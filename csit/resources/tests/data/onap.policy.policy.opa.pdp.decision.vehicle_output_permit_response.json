@@ -1,0 +1,13 @@
+{
+  "decision": "PERMIT",
+  "output": {
+    "user_has_vehicle_access": [
+        {
+          "status": "available",
+          "type": "car"
+        }
+    ]
+  },
+  "policyName": "vehicle",
+  "statusMessage": "OPA Allowed"
+}
