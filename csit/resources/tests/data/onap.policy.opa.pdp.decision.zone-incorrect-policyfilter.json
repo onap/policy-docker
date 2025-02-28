@@ -1,0 +1,19 @@
+{
+  "onapName": "CDS",
+  "onapComponent": "CDS",
+  "onapInstance": "CDS",
+  "currentDate": "2024-11-22",
+  "policyName": "zoneB",
+  "policyFilter": ["has_ze_access"],
+  "input": {
+    "actions": ["view"],
+    "log_id": "log1",
+    "datatypes": ["access", "user"],
+    "time_period": {
+      "from": "2024-11-01T09:00:00Z",
+      "to": "2024-11-01T10:00:00Z"
+    },
+    "zone_id": "zoneA"
+  }
+}
+
