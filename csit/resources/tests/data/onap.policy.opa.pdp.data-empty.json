@@ -1,0 +1,12 @@
+{
+  "data": {
+    "system": {
+      "version": {
+        "build_commit": "",
+        "build_hostname": "",
+        "build_timestamp": "",
+        "version": "1.1.0"
+      }
+    }
+  }
+}

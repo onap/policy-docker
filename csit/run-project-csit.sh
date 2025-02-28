@@ -4,7 +4,7 @@
 # Modification Copyright 2019 © Samsung Electronics Co., Ltd.
 # Modification Copyright 2021 © AT&T Intellectual Property.
 # Modification Copyright 2021-2025 Nordix Foundation.
-# Modifications Copyright 2024 Deutsche Telekom
+# Modifications Copyright 2024-2025 Deutsche Telekom
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -190,7 +190,7 @@ function setup_opa_pdp() {
     export PROJECT="opa-pdp"
     source ${DOCKER_COMPOSE_DIR}/start-compose.sh opa-pdp
     echo "Waiting 3 minutes for OPA-PDP to start..."
-    sleep 180
+    sleep 145
     check_rest_endpoint "${OPA_PDP_PORT}"
 }
 
