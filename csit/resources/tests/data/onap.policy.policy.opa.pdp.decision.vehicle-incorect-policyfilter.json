@@ -1,0 +1,15 @@
+{
+  "onapName": "CDS",
+  "onapComponent": "CDS",
+  "onapInstance": "CDS",
+  "currentDate": "2024-11-22",
+  "policyName": "vehicle",
+  "policyFilter": ["user_has_vecle_access"],
+  "input": {
+    "actions": ["use"],
+    "user": "user1",
+    "vehicle_id": "v1",
+    "attributes": ["type", "status"]
+  }
+}
+

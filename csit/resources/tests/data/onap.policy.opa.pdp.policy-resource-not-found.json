@@ -1,0 +1,5 @@
+{
+  "errorMessage": "Error in getting data - storage_not_found_error: /node/vehicle: document does not exist",
+  "policyName": "",
+  "responseCode": "resource_not_found"
+}

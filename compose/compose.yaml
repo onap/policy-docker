@@ -143,12 +143,6 @@ services:
        - ./config/opa-pdp/config.json:/app/config/config.json:ro
        - ./config/opa-pdp/policy-opa-pdp.sh:/app/policy-opa-pdp.sh:ro
        - ./wait_for_port.sh:/app/wait_for_port.sh
-       - type: bind
-         source: ./config/opa-pdp/policies
-         target: /opt/policies
-       - type: bind
-         source: ./config/opa-pdp/data
-         target: /opt/data
       env_file: "./config/opa-pdp/opa-pdp.env"
       entrypoint: sh wait_for_port.sh
       command: [
