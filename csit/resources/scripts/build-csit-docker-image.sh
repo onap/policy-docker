@@ -13,6 +13,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
 
 function clone_models() {
     # download models examples
@@ -37,16 +39,21 @@ fi
 GERRIT_BRANCH=$(awk -F= '$1 == "defaultbranch" { print $2 }' "${WORKSPACE}"/.gitreview)
 export ROBOT_DOCKER_IMAGE="policy-csit-robot"
 
-cd ${WORKSPACE}/csit/resources || exit
+cd "${WORKSPACE}"/csit/resources || exit
 
-docker image rm -f ${ROBOT_DOCKER_IMAGE}
+IMAGE_ID=$(docker images -q "onap/${ROBOT_DOCKER_IMAGE}")
+
+if [ -n "$IMAGE_ID" ]; then
+    echo "Image onap/${ROBOT_DOCKER_IMAGE} exists. Removing..."
+    docker rmi "onap/${ROBOT_DOCKER_IMAGE}"
+fi
 
 # get models
 clone_models
 
-echo "Build robot framework docker image"
+echo "Building robot framework docker image"
 docker build . --file Dockerfile  --tag "onap/${ROBOT_DOCKER_IMAGE}" --quiet
-docker save -o policy-csit-robot.tar ${ROBOT_DOCKER_IMAGE}:latest
+docker save -o policy-csit-robot.tar "onap/${ROBOT_DOCKER_IMAGE}":latest
 
-rm -rf ${WORKSPACE}/csit/resources/policy-csit-robot.tar
-rm -rf ${WORKSPACE}/csit/resources/tests/models/
+rm -rf "${WORKSPACE}"/csit/resources/policy-csit-robot.tar
+rm -rf "${WORKSPACE}"/csit/resources/tests/models/

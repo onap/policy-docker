@@ -1,6 +1,6 @@
 #
 # ===========LICENSE_START====================================================
-#  Copyright (C) 2024 Nordix Foundation.
+#  Copyright (C) 2024-2025 Nordix Foundation.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -93,7 +93,7 @@ services:
 
 # messaging services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:latest
+    image: nexus3.onap.org:10001/confluentinc/cp-zookeeper:latest
     container_name: zookeeper
     hostname: zookeeper
     ports:
@@ -102,7 +102,7 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
 
   kafka:
-    image: confluentinc/cp-kafka:latest
+    image: nexus3.onap.org:10001/confluentinc/cp-kafka:latest
     container_name: kafka
     hostname: kafka
     depends_on:
@@ -120,7 +120,7 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: kafka
 
   jaeger:
-    image: jaegertracing/all-in-one:1.58
+    image: nexus3.onap.org:10001/jaegertracing/all-in-one:1.58
     container_name: jaeger
     ports:
       - "4318:4318"
