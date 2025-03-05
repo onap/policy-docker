@@ -24,6 +24,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "efb5b48a_0e5f9d81",
+        "filename": "compose/compose.yaml",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-05T10:19:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c69cc04_5bdc0c80",
+      "range": {
+        "startLine": 6,
+        "startChar": 27,
+        "endLine": 6,
+        "endChar": 31
+      },
+      "revId": "7c816fb70c5b62b49c4b5e67e7e3620dfa8998f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "33c80df5_493670cb",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-03-05T09:47:44Z",
       "side": 1,
       "message": "postyaml",
+      "range": {
+        "startLine": 33,
+        "startChar": 62,
+        "endLine": 33,
+        "endChar": 63
+      },
+      "revId": "7c816fb70c5b62b49c4b5e67e7e3620dfa8998f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2f2f6e3e_fa288df7",
+        "filename": "csit/resources/tests/common-library.robot",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-05T10:19:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33c80df5_493670cb",
       "range": {
         "startLine": 33,
         "startChar": 62,
@@ -70,6 +118,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d1fba830_96e96122",
+        "filename": "csit/resources/tests/common-library.robot",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-05T10:19:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68efaec1_9812dcf2",
+      "range": {
+        "startLine": 37,
+        "startChar": 54,
+        "endLine": 37,
+        "endChar": 62
+      },
+      "revId": "7c816fb70c5b62b49c4b5e67e7e3620dfa8998f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a3ea3551_1634a079",
@@ -83,6 +155,30 @@
       "writtenOn": "2025-03-05T09:47:44Z",
       "side": 1,
       "message": "postyaml",
+      "range": {
+        "startLine": 74,
+        "startChar": 46,
+        "endLine": 74,
+        "endChar": 54
+      },
+      "revId": "7c816fb70c5b62b49c4b5e67e7e3620dfa8998f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7fbe92a_4b141f7a",
+        "filename": "csit/resources/tests/common-library.robot",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-05T10:19:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3ea3551_1634a079",
       "range": {
         "startLine": 74,
         "startChar": 46,
@@ -116,6 +212,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "67729dfc_4e93a148",
+        "filename": "csit/resources/tests/common-library.robot",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-05T10:19:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "510611b6_508cd54a",
+      "range": {
+        "startLine": 77,
+        "startChar": 89,
+        "endLine": 77,
+        "endChar": 97
+      },
+      "revId": "7c816fb70c5b62b49c4b5e67e7e3620dfa8998f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3959e43a_79c949ad",
@@ -129,6 +249,30 @@
       "writtenOn": "2025-03-05T09:47:44Z",
       "side": 1,
       "message": "postyaml",
+      "range": {
+        "startLine": 80,
+        "startChar": 46,
+        "endLine": 80,
+        "endChar": 54
+      },
+      "revId": "7c816fb70c5b62b49c4b5e67e7e3620dfa8998f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb7b4e9e_0faa2fd2",
+        "filename": "csit/resources/tests/common-library.robot",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-05T10:19:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3959e43a_79c949ad",
       "range": {
         "startLine": 80,
         "startChar": 46,
@@ -162,6 +306,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fea36a26_dc4358b6",
+        "filename": "csit/resources/tests/common-library.robot",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-05T10:19:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8a2812a_f5234c5d",
+      "range": {
+        "startLine": 83,
+        "startChar": 89,
+        "endLine": 83,
+        "endChar": 97
+      },
+      "revId": "7c816fb70c5b62b49c4b5e67e7e3620dfa8998f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f17a2350_fc0fec1c",
@@ -175,6 +343,30 @@
       "writtenOn": "2025-03-05T09:47:44Z",
       "side": 1,
       "message": "2024-2025",
+      "range": {
+        "startLine": 7,
+        "startChar": 26,
+        "endLine": 7,
+        "endChar": 30
+      },
+      "revId": "7c816fb70c5b62b49c4b5e67e7e3620dfa8998f6",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a181f48_de33757c",
+        "filename": "csit/run-project-csit.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-05T10:19:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f17a2350_fc0fec1c",
       "range": {
         "startLine": 7,
         "startChar": 26,
