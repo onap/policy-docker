@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dfa68cdf_875302df",
+        "filename": "compose/compose.acm.scale.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-06T10:40:56Z",
+      "side": 1,
+      "message": "add the license bit",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 1
+      },
+      "revId": "d032eea74f5703304b3f43a1de4c8fdaed4a4416",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43261036_9eec2c72",
+        "filename": "compose/compose.common.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-06T10:40:56Z",
+      "side": 1,
+      "message": "add the license bit",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "d032eea74f5703304b3f43a1de4c8fdaed4a4416",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92908a25_2448a5d5",
+        "filename": "compose/compose.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-06T10:40:56Z",
+      "side": 1,
+      "message": "add the license bit",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 24
+      },
+      "revId": "d032eea74f5703304b3f43a1de4c8fdaed4a4416",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae1a3ccc_e88090d0",
+        "filename": "compose/config/clamp/logback.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-06T10:40:56Z",
+      "side": 1,
+      "message": "add the license bit.",
+      "range": {
+        "startLine": 17,
+        "startChar": 18,
+        "endLine": 18,
+        "endChar": 29
+      },
+      "revId": "d032eea74f5703304b3f43a1de4c8fdaed4a4416",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
