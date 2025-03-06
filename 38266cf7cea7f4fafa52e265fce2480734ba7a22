@@ -24,6 +24,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f76d32e_2d0a8520",
+        "filename": "compose/compose.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-06T11:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a18f1956_b0e81003",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 48
+      },
+      "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "311d9130_0bf47dec",
@@ -37,6 +61,24 @@
       "writtenOn": "2025-03-06T10:18:13Z",
       "side": 1,
       "message": "rename this file to dyn-data-add-output.json",
+      "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70f33bac_c8375126",
+        "filename": "csit/resources/tests/data/onap.policy.opa.pdp.dyn-data-add-expected.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-06T11:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "311d9130_0bf47dec",
       "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
@@ -58,6 +100,24 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "42847063_ebf4bc93",
+        "filename": "csit/resources/tests/data/onap.policy.opa.pdp.dyn-data-replace-expected.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-06T11:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85ca25d9_5fd6016d",
+      "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f59095e9_6ad8d6ba",
@@ -71,6 +131,24 @@
       "writtenOn": "2025-03-06T10:18:13Z",
       "side": 1,
       "message": "rename to createpolicyzone.yaml\n\nsimilarly remove new from all the files",
+      "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9c046491_e44bb99d",
+        "filename": "csit/resources/tests/data/onap.policy.opa.pdp.new-zone.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-06T11:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f59095e9_6ad8d6ba",
       "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
@@ -92,6 +170,24 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a3f4e486_862a10e0",
+        "filename": "csit/resources/tests/data/onap.policy.opa.pdp.opa-deploy.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-06T11:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a469ea9_721ae05f",
+      "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3b75136b_6ec58919",
@@ -105,6 +201,24 @@
       "writtenOn": "2025-03-06T10:18:13Z",
       "side": 1,
       "message": "rename the file to indicate the policy name",
+      "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fdb242e6_8c8e30eb",
+        "filename": "csit/resources/tests/data/onap.policy.opa.pdp.opa-policy.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-06T11:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b75136b_6ec58919",
       "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
@@ -126,6 +240,24 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e727155f_23f3867b",
+        "filename": "csit/resources/tests/data/onap.policy.opa.pdp.policy-abac-expected.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-06T11:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9c9de58_3a084374",
+      "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d001129_0ee2f268",
@@ -139,6 +271,24 @@
       "writtenOn": "2025-03-06T10:18:13Z",
       "side": 1,
       "message": "rename to output",
+      "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35ff40a4_0e267d04",
+        "filename": "csit/resources/tests/data/onap.policy.opa.pdp.policy-vehicle-expected.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-06T11:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d001129_0ee2f268",
       "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
@@ -166,6 +316,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c90510a3_b6a9c5d3",
+        "filename": "csit/resources/tests/data/onap.policy.opa.pdp.vehicle-policy.yaml",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-06T11:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19df52a2_dc904e34",
+      "range": {
+        "startLine": 11,
+        "startChar": 118,
+        "endLine": 11,
+        "endChar": 119
+      },
+      "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f966b3cc_281488d9",
@@ -183,6 +357,24 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8fd843b5_dd321135",
+        "filename": "csit/resources/tests/data/onap.policy.policy.opa.pdp.decision.vehicle_input_permit.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-06T11:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f966b3cc_281488d9",
+      "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "98dd0705_7125f20f",
@@ -196,6 +388,24 @@
       "writtenOn": "2025-03-06T10:18:13Z",
       "side": 1,
       "message": "the output is not correct as we don\u0027t support PERMIT/DENY",
+      "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e66cddd_b7a7dd82",
+        "filename": "csit/resources/tests/data/onap.policy.policy.opa.pdp.decision.vehicle_output_permit_response.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-06T11:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98dd0705_7125f20f",
       "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
@@ -223,6 +433,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "692d217a_524ae9e5",
+        "filename": "csit/resources/tests/opa-pdp-test.robot",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-06T11:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eecd81f9_cf7e13ac",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 25
+      },
+      "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ee6da789_72417b08",
@@ -236,6 +470,24 @@
       "writtenOn": "2025-03-06T10:18:13Z",
       "side": 1,
       "message": "can we move a opa specific library function.",
+      "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1615c0cd_007cdbbb",
+        "filename": "csit/resources/tests/opa-pdp-test.robot",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 8487
+      },
+      "writtenOn": "2025-03-06T11:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee6da789_72417b08",
       "revId": "38266cf7cea7f4fafa52e265fce2480734ba7a22",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
