@@ -1,6 +1,6 @@
 #
 # ===========LICENSE_START====================================================
-#  Copyright (C) 2024 Nordix Foundation.
+#  Copyright (C) 2024-2025 Nordix Foundation.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=====================================================
 #
 
@@ -142,7 +143,7 @@ services:
     volumes:
       - ./config/clamp/HttpParticipantParameters.yaml:/opt/app/policy/clamp/etc/HttpParticipantParameters.yaml
       - ./config/clamp/http-participant.sh:/opt/app/policy/clamp/bin/http-participant.sh:rw
-      - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
+      - ./config/clamp/logback-ppnt.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     entrypoint: /opt/app/policy/bin/wait_for_port.sh
     command: [
@@ -168,7 +169,7 @@ services:
     volumes:
       - ./config/clamp/KubernetesParticipantParameters.yaml:/opt/app/policy/clamp/etc/KubernetesParticipantParameters.yaml
       - ./config/clamp/kubernetes-participant.sh:/opt/app/policy/clamp/bin/kubernetes-participant.sh:rw
-      - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
+      - ./config/clamp/logback-ppnt.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     entrypoint: /opt/app/policy/bin/wait_for_port.sh
     command: [
@@ -194,7 +195,7 @@ services:
     volumes:
       - ./config/clamp/PolicyParticipantParameters.yaml:/opt/app/policy/clamp/etc/PolicyParticipantParameters.yaml:ro
       - ./config/clamp/policy-participant.sh:/opt/app/policy/clamp/bin/policy-participant.sh:rw
-      - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
+      - ./config/clamp/logback-ppnt.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     entrypoint: /opt/app/policy/bin/wait_for_port.sh
     command: [
