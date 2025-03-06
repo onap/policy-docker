@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "276b7d21_927d284f",
+        "filename": "policy-db-migrator/src/main/docker/config/clampacm/postgres/1601/upgrade/0200-automationcompositionelement.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-06T10:41:34Z",
+      "side": 1,
+      "message": "remove extra space",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 1
+      },
+      "revId": "f84153953e3c92d414d8247610a88768ad7bc503",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
