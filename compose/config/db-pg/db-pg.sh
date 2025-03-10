@@ -1,5 +1,5 @@
 #!/bin/bash -xv
-# Copyright (C) 2022, 2024 Nordix Foundation. All rights reserved
+# Copyright (C) 2022, 2024-2025 Nordix Foundation. All rights reserved
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,12 +12,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
 
-psql -U postgres -d postgres --command "CREATE USER ${PGSQL_USER} WITH PASSWORD '${PGSQL_PASSWORD}';"
+psql -U postgres -d postgres --command "CREATE USER ${PGSQL_USER} WITH
+    PASSWORD '${PGSQL_PASSWORD}' CREATEDB;"
 
 for db in migration pooling policyadmin policyclamp operationshistory clampacm
 do
-    psql -U postgres -d postgres --command "CREATE DATABASE ${db};"
-    psql -U postgres -d postgres --command "ALTER DATABASE ${db} OWNER TO ${PGSQL_USER} ;"
-    psql -U postgres -d postgres --command "GRANT ALL PRIVILEGES ON DATABASE ${db} TO ${PGSQL_USER} ;"
+    psql -U ${PGSQL_USER} -d postgres --command "CREATE DATABASE ${db};"
 done
