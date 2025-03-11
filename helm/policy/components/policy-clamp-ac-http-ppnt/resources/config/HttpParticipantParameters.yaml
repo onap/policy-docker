@@ -92,8 +92,8 @@ server:
 tracing:
   enabled: {{ .Values.jaeger.enabled }}
   exporter:
-    endpoint: {{ .Values.jaeger.collector.host }}:{{ include "policy-clamp-ac-http-ppnt.exporter-port" . }}
+    endpoint: "{{ .Values.jaeger.collector.host }}:{{ include "policy-clamp-ac-http-ppnt.exporter-port" . }}"
     protocol: {{ .Values.jaeger.collector.protocol }}
   sampler:
     jaeger-remote:
-      endpoint: {{ .Values.jaeger.collector.host }}:{{ .Values.jaeger.collector.portJaegerGrpc }}
+      endpoint: "{{ .Values.jaeger.collector.host }}:{{ .Values.jaeger.collector.portJaegerGrpc }}"
