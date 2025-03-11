@@ -118,8 +118,8 @@ management:
 tracing:
   enabled: {{ .Values.jaeger.enabled }}
   exporter:
-    endpoint: {{ .Values.jaeger.collector.host }}:{{ include "policy-clamp-runtime-acm.exporter-port" . }}
+    endpoint: "{{ .Values.jaeger.collector.host }}:{{ include "policy-clamp-runtime-acm.exporter-port" . }}"
     protocol: {{ .Values.jaeger.collector.protocol }}
   sampler:
     jaeger-remote:
-      endpoint: {{ .Values.jaeger.collector.host }}:{{ .Values.jaeger.collector.portJaegerGrpc }}
+      endpoint: "{{ .Values.jaeger.collector.host }}:{{ .Values.jaeger.collector.portJaegerGrpc }}"
