@@ -39,6 +39,30 @@
       },
       "revId": "8ad483d18be486caf96f36d363ba4db84283c8f0",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e7d2394c_77fb4351",
+        "filename": "policy-regression-tests/pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6722
+      },
+      "writtenOn": "2025-03-12T08:42:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6a915d7_f875367d",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "8ad483d18be486caf96f36d363ba4db84283c8f0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
