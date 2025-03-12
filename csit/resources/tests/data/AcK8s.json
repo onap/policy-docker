@@ -1201,7 +1201,8 @@
                 "body": "{ \"receiverId\": { \"name\": \"onap.policy.clamp.ac.startertobridge\", \"version\": \"1.0.0\" }, \"timerMs\": 20000, \"elementType\": \"STARTER\", \"topicParameterGroup\": { \"server\": \"kafka:9092\", \"listenerTopic\": \"policy_update_msg\", \"publisherTopic\": \"ac_element_msg\", \"fetchTimeout\": 15000, \"topicCommInfrastructure\": \"kafka\" } }",
                 "expectedResponse": 201
               }
-            ]
+            ],
+            "password": "dummyPasswordStringForEncryption"
           }
         ]
       }
@@ -1236,7 +1237,8 @@
                 "body": "{ \"receiverId\": { \"name\": \"onap.policy.clamp.ac.bridgetosink\", \"version\": \"1.0.0\" }, \"timerMs\": 20000, \"elementType\": \"BRIDGE\", \"topicParameterGroup\": { \"server\": \"kafka:9092\", \"listenerTopic\": \"policy_update_msg\", \"publisherTopic\": \"ac_element_msg\", \"fetchTimeout\": 15000, \"topicCommInfrastructure\": \"kafka\" } }",
                 "expectedResponse": 201
               }
-            ]
+            ],
+            "password": "dummyPasswordStringForEncryption"
           }
         ]
       }
@@ -1271,7 +1273,8 @@
                 "body": "{ \"receiverId\": { \"name\": \"onap.policy.clamp.ac.sink\", \"version\": \"1.0.0\" }, \"timerMs\": 20000, \"elementType\": \"SINK\", \"topicParameterGroup\": { \"server\": \"kafka:9092\", \"listenerTopic\": \"policy_update_msg\", \"publisherTopic\": \"ac_element_msg\", \"fetchTimeout\": 15000, \"topicCommInfrastructure\": \"kafka\" } }",
                 "expectedResponse": 201
               }
-            ]
+            ],
+            "password": "dummyPasswordStringForEncryption"
           }
         ]
       }

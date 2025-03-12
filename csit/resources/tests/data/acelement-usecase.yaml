@@ -73,6 +73,10 @@ data_types:
           type: org.onap.datatypes.policy.clamp.acm.httpAutomationCompositionElement.RestRequest
           type_version: 1.0.0
         description: A sequence of REST commands to send to the REST endpoint
+      password:
+        type: string
+        metadata:
+          sensitive: true
 
 node_types:
   org.onap.policy.clamp.acm.Participant:
@@ -195,6 +199,8 @@ node_types:
         type: string
         required: true
         description: The base URL to be prepended to each path, identifies the host for the REST endpoints.
+        metadata:
+          sensitive: true
       httpHeaders:
         type: map
         required: false

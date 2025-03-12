@@ -90,6 +90,8 @@ node_types:
         type: string
         required: true
         description: The base URL to be prepended to each path, identifies the host for the REST endpoints.
+        metadata:
+          sensitive: true
       httpHeaders:
         type: map
         required: false
