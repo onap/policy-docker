@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0136b753_9919af9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 5519
+      },
+      "writtenOn": "2025-03-13T15:38:09Z",
+      "side": 1,
+      "message": "The copyright notices should be :  \n* Copyright (C) 2023 Nordix Foundation. All rights reserved.\n* Copyright (C) 2023-2025 OpenInfra Foundation Europe. All rights reserved.\n\n... But otherwise +1 for me.",
+      "revId": "fac44259ec8f653f6304a618a1a77554db483001",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
