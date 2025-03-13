@@ -125,6 +125,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "04a7098c_9a5ed14c",
+        "filename": "helm/policy/components/policy-clamp-ac-a1pms-ppnt/resources/config/A1pmsParticipantParameters.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 8109
+      },
+      "writtenOn": "2025-03-13T16:31:43Z",
+      "side": 1,
+      "message": "Actually, I am from EST as well. For the copyright headers, you can refer to the instructions here: https://openinfra-nordix.atlassian.net/wiki/spaces/DEV/pages/24019065/Copyright+and+Licences+for+ONAP",
+      "parentUuid": "1c79096d_35dcc4ec",
+      "range": {
+        "startLine": 2,
+        "startChar": 22,
+        "endLine": 2,
+        "endChar": 26
+      },
+      "revId": "2ef19e998ec7989fc4b4c519d1315ae3b41a2922",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b7d68efe_b43c4f60",
         "filename": "helm/policy/components/policy-clamp-ac-http-ppnt/resources/config/HttpParticipantParameters.yaml",
         "patchSetId": 1
