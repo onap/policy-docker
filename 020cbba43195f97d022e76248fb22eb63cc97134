@@ -1,0 +1,320 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "85d77d58_6ec767ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-13T16:18:31Z",
+      "side": 1,
+      "message": "You just have to add the Modifications Copyrights and do not edit the Nordix ones.",
+      "revId": "020cbba43195f97d022e76248fb22eb63cc97134",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c67b5c43_a07ce398",
+        "filename": "helm/policy/components/policy-clamp-ac-a1pms-ppnt/resources/config/A1pmsParticipantParameters.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-13T16:18:31Z",
+      "side": 1,
+      "message": "Modifications Copyright (C) 2025",
+      "range": {
+        "startLine": 3,
+        "startChar": 3,
+        "endLine": 3,
+        "endChar": 26
+      },
+      "revId": "020cbba43195f97d022e76248fb22eb63cc97134",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64d9c021_3ed77be0",
+        "filename": "helm/policy/components/policy-clamp-ac-http-ppnt/resources/config/HttpParticipantParameters.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-13T16:18:31Z",
+      "side": 1,
+      "message": "undo this line and leave 2023-2024",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 22
+      },
+      "revId": "020cbba43195f97d022e76248fb22eb63cc97134",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e43380e3_84e7da57",
+        "filename": "helm/policy/components/policy-clamp-ac-http-ppnt/resources/config/HttpParticipantParameters.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-13T16:18:31Z",
+      "side": 1,
+      "message": "Modifications Copyright (C) 2025",
+      "range": {
+        "startLine": 3,
+        "startChar": 4,
+        "endLine": 3,
+        "endChar": 27
+      },
+      "revId": "020cbba43195f97d022e76248fb22eb63cc97134",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42797e37_63f40de6",
+        "filename": "helm/policy/components/policy-clamp-ac-k8s-ppnt/resources/config/KubernetesParticipantParameters.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-13T16:18:31Z",
+      "side": 1,
+      "message": "undo this line and leave as before",
+      "range": {
+        "startLine": 2,
+        "startChar": 18,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "020cbba43195f97d022e76248fb22eb63cc97134",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78cb79a7_22cb0ff4",
+        "filename": "helm/policy/components/policy-clamp-ac-k8s-ppnt/resources/config/KubernetesParticipantParameters.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-13T16:18:31Z",
+      "side": 1,
+      "message": "Modifications Copyright (C) 2025",
+      "range": {
+        "startLine": 3,
+        "startChar": 4,
+        "endLine": 3,
+        "endChar": 27
+      },
+      "revId": "020cbba43195f97d022e76248fb22eb63cc97134",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "281b9127_a100c926",
+        "filename": "helm/policy/components/policy-clamp-ac-kserve-ppnt/resources/config/KserveParticipantParameters.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-13T16:18:31Z",
+      "side": 1,
+      "message": "leave as it was",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 21
+      },
+      "revId": "020cbba43195f97d022e76248fb22eb63cc97134",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3059390f_51ed0f8a",
+        "filename": "helm/policy/components/policy-clamp-ac-kserve-ppnt/resources/config/KserveParticipantParameters.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-13T16:18:31Z",
+      "side": 1,
+      "message": "Modifications Copyright (C) 2025",
+      "range": {
+        "startLine": 3,
+        "startChar": 3,
+        "endLine": 3,
+        "endChar": 26
+      },
+      "revId": "020cbba43195f97d022e76248fb22eb63cc97134",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f5c101a_1b2f8c56",
+        "filename": "helm/policy/components/policy-clamp-ac-pf-ppnt/resources/config/PolicyParticipantParameters.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-13T16:18:31Z",
+      "side": 1,
+      "message": "leave as it was",
+      "range": {
+        "startLine": 2,
+        "startChar": 18,
+        "endLine": 2,
+        "endChar": 22
+      },
+      "revId": "020cbba43195f97d022e76248fb22eb63cc97134",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58688ee2_9c7ad7d5",
+        "filename": "helm/policy/components/policy-clamp-ac-pf-ppnt/resources/config/PolicyParticipantParameters.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-13T16:18:31Z",
+      "side": 1,
+      "message": "Modifications Copyright (C) 2025",
+      "range": {
+        "startLine": 3,
+        "startChar": 4,
+        "endLine": 3,
+        "endChar": 27
+      },
+      "revId": "020cbba43195f97d022e76248fb22eb63cc97134",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "71eefb9d_6fbb559d",
+        "filename": "helm/policy/components/policy-clamp-ac-sim-ppnt/resources/config/SimulatorParticipantParameters.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-13T16:18:31Z",
+      "side": 1,
+      "message": "leave as it was",
+      "range": {
+        "startLine": 2,
+        "startChar": 18,
+        "endLine": 2,
+        "endChar": 22
+      },
+      "revId": "020cbba43195f97d022e76248fb22eb63cc97134",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7aac5f36_938fde19",
+        "filename": "helm/policy/components/policy-clamp-ac-sim-ppnt/resources/config/SimulatorParticipantParameters.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-13T16:18:31Z",
+      "side": 1,
+      "message": "Modifications Copyright (C) 2025",
+      "range": {
+        "startLine": 3,
+        "startChar": 4,
+        "endLine": 3,
+        "endChar": 27
+      },
+      "revId": "020cbba43195f97d022e76248fb22eb63cc97134",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4675c8b4_61ad1a77",
+        "filename": "helm/policy/components/policy-clamp-runtime-acm/resources/config/acRuntimeParameters.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-13T16:18:31Z",
+      "side": 1,
+      "message": "leave as it was",
+      "range": {
+        "startLine": 2,
+        "startChar": 18,
+        "endLine": 2,
+        "endChar": 24
+      },
+      "revId": "020cbba43195f97d022e76248fb22eb63cc97134",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9b353125_2ec682bd",
+        "filename": "helm/policy/components/policy-clamp-runtime-acm/resources/config/acRuntimeParameters.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-13T16:18:31Z",
+      "side": 1,
+      "message": "Modifications Copyright (C) 2025",
+      "range": {
+        "startLine": 3,
+        "startChar": 4,
+        "endLine": 3,
+        "endChar": 27
+      },
+      "revId": "020cbba43195f97d022e76248fb22eb63cc97134",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
