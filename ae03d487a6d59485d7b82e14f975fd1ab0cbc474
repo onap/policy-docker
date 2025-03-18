@@ -50,6 +50,24 @@
       "message": "Can you rebase, please - from the gui here should be fine. If I rebase, I\u0027ll become author",
       "revId": "ae03d487a6d59485d7b82e14f975fd1ab0cbc474",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88317a0c_8dc1b7bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 8109
+      },
+      "writtenOn": "2025-03-18T13:08:44Z",
+      "side": 1,
+      "message": "Rebased now.",
+      "parentUuid": "5d70395c_5812d47c",
+      "revId": "ae03d487a6d59485d7b82e14f975fd1ab0cbc474",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
