@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7ad93b4_85066543",
+        "filename": "compose/compose.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-03-25T16:37:25Z",
+      "side": 1,
+      "message": "why is apex now depending on opa-pdp? apex doesn\u0027t have any interaction with opa-pdp",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 15
+      },
+      "revId": "0d804ff31a3649105c632500b634927a65683d80",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
