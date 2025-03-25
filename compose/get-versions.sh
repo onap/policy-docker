@@ -142,7 +142,8 @@ else
     getDockerVersion xacml-pdp
     export POLICY_XACML_PDP_VERSION="$docker_image_version"
 
-    export POLICY_OPA_PDP_VERSION="1.0.2-SNAPSHOT"
+    getDockerVersion opa-pdp
+    export POLICY_OPA_PDP_VERSION="$docker_image_version"
 
     getDockerVersion distribution
     export POLICY_DISTRIBUTION_VERSION="$docker_image_version"

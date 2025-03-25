@@ -2,13 +2,24 @@
   "onapName": "CDS",
   "onapComponent": "CDS",
   "onapInstance": "CDS",
-  "currentDate": "2024-11-22",
+  "currentDate": "2025-01-17",
+  "currentTime": "08:26:41.857Z",
+  "timeZone": "UTC",
+  "timeOffset": "+05:30",
+  "currentDateTime": "2025-01-17T08:26:41.857Z",
   "policyName": "vehicle",
-  "policyFilter": ["user_has_vehicle_access"],
+  "policyFilter": [
+    "user_has_vehicle_access"
+  ],
   "input": {
-    "actions": ["use"],
+    "actions": [
+      "use"
+    ],
     "user": "user1",
     "vehicle_id": "v1",
-    "attributes": ["type", "status"]
+    "attributes": [
+      "type",
+      "status"
+    ]
   }
 }

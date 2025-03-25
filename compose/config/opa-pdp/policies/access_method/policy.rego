@@ -1,4 +1,4 @@
-package example
+package access_method
 
 import rego.v1
 

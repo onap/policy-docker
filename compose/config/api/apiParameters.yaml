@@ -71,6 +71,7 @@ policy-preload:
   - policytypes/onap.policies.controlloop.operational.common.Drools.yaml
   - policytypes/onap.policies.native.opa.yaml
   policies:
+  - policies/opa.policy.slice.capacity.check.tosca.yaml
   - policies/sdnc.policy.naming.input.tosca.yaml
 
 management:

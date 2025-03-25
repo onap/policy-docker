@@ -1,5 +1,14 @@
 {
   "data": {
+    "node": {
+      "slice": {
+        "capacity": {
+          "check": {
+            "threshold": 70
+          }
+        }
+      }
+    },
     "system": {
       "version": {
         "build_commit": "",

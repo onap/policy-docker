@@ -77,6 +77,7 @@ services:
       - simulator
       - kafka
       - pap
+      - opa-pdp
     ports:
       - ${APEX_PORT}:6969
       - ${APEX_EVENTS_PORT}:23324

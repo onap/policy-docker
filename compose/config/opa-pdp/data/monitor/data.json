@@ -1,0 +1,13 @@
+{ "domain": "measurementsForVfScaling",
+  "metricsPerEventName": [{
+          "eventName": "Measurement_vGMUX",
+          "controlLoopSchemaType": "VNF",
+          "policyScope": "DCAE",
+          "policyName": "DCAE.Config_tca-hi-lo",
+           "policyVersion": "v0.0.1",
+           "thresholds" : [{"version": "1.0.2",
+            "closedLoopControlName": "ControlLoop-vCPE-48f0c2c3-a172-4192-9ae3-052274181b6e",
+            "thresholdValue": 0
+             }]
+}]
+}

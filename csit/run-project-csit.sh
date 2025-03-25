@@ -128,11 +128,13 @@ function setup_api() {
 
 function setup_pap() {
     export ROBOT_FILES="pap-test.robot pap-slas.robot"
+    export PROJECT="pap"
     source "${DOCKER_COMPOSE_DIR}"/start-compose.sh apex-pdp --grafana
     echo "Waiting 1 minute for policy-pap to start..."
     sleep 60
     check_rest_endpoint "${PAP_PORT}"
     check_rest_endpoint "${APEX_PORT}"
+    check_rest_endpoint "${OPA_PDP_PORT}"
     apex_healthcheck
 }
 
