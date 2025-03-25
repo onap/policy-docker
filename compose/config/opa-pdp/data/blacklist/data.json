@@ -1,0 +1,6 @@
+{
+    "blacklist" : [
+    "the-vfmodule-where-root-is-true",
+     "another-vfmodule-where-root-is-true"
+]
+}

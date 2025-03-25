@@ -2,13 +2,24 @@
   "onapName": "CDS",
   "onapComponent": "CDS",
   "onapInstance": "CDS",
-  "currentDate": "2024-11-22",
+  "currentDate": "2025-01-17",
+  "currentTime": "08:26:41.857Z",
+  "timeZone": "UTC",
+  "timeOffset": "+05:30",
+  "currentDateTime": "2025-01-17T08:26:41.857Z",
   "policyName": "zoneB",
-  "policyFilter": ["has_ze_access"],
+  "policyFilter": [
+    "has_ze_access"
+  ],
   "input": {
-    "actions": ["view"],
+    "actions": [
+      "view"
+    ],
     "log_id": "log1",
-    "datatypes": ["access", "user"],
+    "datatypes": [
+      "access",
+      "user"
+    ],
     "time_period": {
       "from": "2024-11-01T09:00:00Z",
       "to": "2024-11-01T10:00:00Z"
@@ -16,4 +27,3 @@
     "zone_id": "zoneA"
   }
 }
-
