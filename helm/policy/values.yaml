@@ -26,15 +26,15 @@ global:
   dockerRepository: docker.io
 
   image:
-    readiness: onap/oom/readiness:3.0.1
-    postgres: library/postgres:16.4
+    readiness: onap/oom/readiness:$tag
+    postgres: library/postgres:$tag
     api: onap/policy-api:$tag
     pap: onap/policy-pap:$tag
     apex: onap/policy-apex-pdp:$tag
     simulator: onap/policy-models-simulator:$tag
     pdpdcl: onap/policy-pdpd-cl:$tag
     xacml: onap/policy-xacml-pdp:$tag
-    opa: onap/policy-opa-pdp:1.0.2-SNAPSHOT
+    opa: onap/policy-opa-pdp:1.0.4
     distribution: onap/policy-distribution:$tag
     runtimeacm: onap/policy-clamp-runtime-acm:$tag
     kserveparticipant: onap/policy-clamp-ac-kserve-ppnt:$tag
