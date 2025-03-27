@@ -102,7 +102,7 @@ CreateNodeTemplate
 
 QueryPdpGroups
     [Documentation]    Verify pdp group query - suphosts upto 2 groups
-    [Arguments]  ${groupsLength}  ${group1Name}  ${group1State}  ${policiesLengthInGroup1}  ${group2Name}  ${group2State}  ${policiesLengthInGroup2}  ${group3Name}  ${group3State}  ${policiesLengthInGroup3}
+    [Arguments]  ${groupsLength}  ${group1Name}  ${group1State}  ${policiesLengthInGroup1}  ${group2Name}  ${group2State}  ${policiesLengthInGroup2}
     ${policyadmin}=  PolicyAdminAuth
     ${resp}=  PerformGetRequest  ${POLICY_PAP_IP}  /policy/pap/v1/pdps  200  null  ${policyadmin}
     Length Should Be  ${resp.json()['groups']}  ${groupsLength}
@@ -112,9 +112,6 @@ QueryPdpGroups
     Run Keyword If  ${groupsLength}>1  Should Be Equal As Strings  ${resp.json()['groups'][1]['name']}  ${group2Name}
     Run Keyword If  ${groupsLength}>1  Should Be Equal As Strings  ${resp.json()['groups'][1]['pdpGroupState']}  ${group2State}
     Run Keyword If  ${groupsLength}>1  Length Should Be  ${resp.json()['groups'][1]['pdpSubgroups'][0]['policies']}  ${policiesLengthInGroup2}
-    Run Keyword If  ${groupsLength}>2  Should Be Equal As Strings  ${resp.json()['groups'][2]['name']}  ${group3Name}
-    Run Keyword If  ${groupsLength}>2  Should Be Equal As Strings  ${resp.json()['groups'][2]['pdpGroupState']}  ${group3State}
-    Run Keyword If  ${groupsLength}>2  Length Should Be  ${resp.json()['groups'][2]['pdpSubgroups'][0]['policies']}  ${policiesLengthInGroup3}
 
 QueryPolicyAudit
     [Arguments]  ${url}  ${expectedstatus}  ${pdpGroup}  ${pdpType}  ${policyName}  ${expectedAction}

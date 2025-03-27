@@ -1,0 +1,28 @@
+{
+  "groups": [
+    {
+      "name": "opaGroup",
+      "pdpGroupState": "ACTIVE",
+      "properties": {},
+      "pdpSubgroups": [
+        {
+          "pdpType": "opa",
+          "desiredInstanceCount": 1,
+          "properties": {},
+          "supportedPolicyTypes": [
+            {
+              "name": "onap.policies.native.opa",
+              "version": "1.0.0"
+            }
+          ],
+          "policies": [
+            {
+              "name": "slice.capacity.check",
+              "version": "1.0.0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -38,7 +38,7 @@ Healthcheck
 
 Consolidated Healthcheck
     [Documentation]  Verify policy consolidated health check
-    sleep  60
+    sleep  20
     ${resp}=  GetReq  /policy/pap/v1/components/healthcheck
     Should Be Equal As Strings  ${resp.json()['healthy']}  True
 
@@ -48,7 +48,7 @@ Metrics
     ${resp}=  GetMetrics  ${POLICY_PAP_IP}  ${auth}  /policy/pap/v1/
     Should Contain  ${resp.text}  http_server_requests_seconds_count{error="none",exception="none",method="GET",outcome="SUCCESS",status="200",uri="/healthcheck"}
     Should Contain  ${resp.text}  http_server_requests_seconds_count{error="none",exception="none",method="GET",outcome="SUCCESS",status="200",uri="/components/healthcheck"} 1
-    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="save",repository="PdpGroupRepository",state="SUCCESS"} 2
+    Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="save",repository="PdpGroupRepository",state="SUCCESS"} 1
     Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findByKeyName",repository="PdpGroupRepository",state="SUCCESS"} 1
     Should Contain  ${resp.text}  spring_data_repository_invocations_seconds_count{exception="None",method="findAll",repository="PolicyStatusRepository",state="SUCCESS"}
 
@@ -60,7 +60,7 @@ AddPdpGroup
 
 QueryPdpGroupsBeforeActivation
     [Documentation]  Verify PdpGroups before activation
-    QueryPdpGroups  3  defaultGroup  ACTIVE  0  opaGroup   ACTIVE   1   testGroup  PASSIVE  0
+    QueryPdpGroups  2  defaultGroup  ACTIVE  0  testGroup  PASSIVE  0
 
 ActivatePdpGroup
     [Documentation]  Change the state of PdpGroup named 'testGroup' to ACTIVE
@@ -69,7 +69,7 @@ ActivatePdpGroup
 
 QueryPdpGroupsAfterActivation
     [Documentation]  Verify PdpGroups after activation
-    QueryPdpGroups  3  defaultGroup  ACTIVE  0  opaGroup   ACTIVE   1   testGroup  ACTIVE  0
+    QueryPdpGroups  2  defaultGroup  ACTIVE  0  testGroup  ACTIVE  0
 
 DeployPdpGroups
     [Documentation]  Deploy policies in PdpGroups
@@ -79,7 +79,7 @@ DeployPdpGroups
 
 QueryPdpGroupsAfterDeploy
     [Documentation]  Verify PdpGroups after undeploy
-    QueryPdpGroups  3  defaultGroup  ACTIVE  0  opaGroup   ACTIVE   1   testGroup  ACTIVE  1
+    QueryPdpGroups  2  defaultGroup  ACTIVE  0  testGroup  ACTIVE  1
 
 QueryPolicyAuditAfterDeploy
     [Documentation]  Verify policy audit record after deploy
@@ -101,7 +101,7 @@ UndeployPolicyWithMetadataSet
 
 QueryPdpGroupsAfterUndeploy
     [Documentation]  Verify PdpGroups after undeploy
-    QueryPdpGroups  3  defaultGroup  ACTIVE  0  opaGroup   ACTIVE   1   testGroup  ACTIVE  0
+    QueryPdpGroups  2  defaultGroup  ACTIVE  0  testGroup  ACTIVE  0
 
 QueryPolicyAuditAfterUnDeploy
     [Documentation]   Verify policy audit record after undeploy
@@ -123,4 +123,4 @@ DeletePdpGroups
 
 QueryPdpGroupsAfterDelete
     [Documentation]    Verify PdpGroups after delete
-    QueryPdpGroups  2  defaultGroup  ACTIVE  0  opaGroup   ACTIVE   1   null   null   null
+    QueryPdpGroups  1  defaultGroup  ACTIVE  0  null  null  null

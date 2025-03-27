@@ -134,7 +134,6 @@ function setup_pap() {
     sleep 60
     check_rest_endpoint "${PAP_PORT}"
     check_rest_endpoint "${APEX_PORT}"
-    check_rest_endpoint "${OPA_PDP_PORT}"
     apex_healthcheck
 }
 
@@ -194,7 +193,8 @@ function setup_opa_pdp() {
     export PROJECT="opa-pdp"
     source "${DOCKER_COMPOSE_DIR}"/start-compose.sh opa-pdp
     echo "Waiting 3 minutes for OPA-PDP to start..."
-    sleep 145
+    sleep 180
+    check_rest_endpoint "${PAP_PORT}"
     check_rest_endpoint "${OPA_PDP_PORT}"
 }
 
@@ -314,6 +314,10 @@ do
       export DO_NOT_TEARDOWN=true
       shift
       ;;
+    --stop)
+      export TEARDOWN=true
+      shift
+      ;;
     *)
       export PROJECT="${1}"
       shift
@@ -341,6 +345,10 @@ cd "${WORKSPACE}" || exit
 # recreate the log folder with test results
 sudo rm -rf "${ROBOT_LOG_DIR}"
 mkdir -p "${ROBOT_LOG_DIR}"
+
+if [ "${TEARDOWN}" == "true" ]; then
+    on_exit
+fi
 
 # log into nexus docker
 docker login -u docker -p docker nexus3.onap.org:10001
