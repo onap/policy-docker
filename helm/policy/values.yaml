@@ -28,22 +28,22 @@ global:
   image:
     readiness: onap/oom/readiness:3.0.1
     postgres: library/postgres:16.4
-    api: onap/policy-api:$tag
-    pap: onap/policy-pap:$tag
-    apex: onap/policy-apex-pdp:$tag
-    simulator: onap/policy-models-simulator:$tag
-    pdpdcl: onap/policy-pdpd-cl:$tag
-    xacml: onap/policy-xacml-pdp:$tag
-    opa: onap/policy-opa-pdp:1.0.2-SNAPSHOT
-    distribution: onap/policy-distribution:$tag
-    runtimeacm: onap/policy-clamp-runtime-acm:$tag
-    kserveparticipant: onap/policy-clamp-ac-kserve-ppnt:$tag
-    k8sparticipant: onap/policy-clamp-ac-k8s-ppnt:$tag
-    pfparticipant: onap/policy-clamp-ac-pf-ppnt:$tag
-    httpparticipant: onap/policy-clamp-ac-http-ppnt:$tag
-    simparticipant: onap/policy-clamp-ac-sim-ppnt:$tag
-    a1pmsparticipant: onap/policy-clamp-ac-a1pms-ppnt:$tag
-    dbMigrator: onap/policy-db-migrator:$tag
+    api: onap/policy-api:4.1.2-SNAPSHOT
+    pap: onap/policy-pap:4.1.2-SNAPSHOT
+    apex: onap/policy-apex-pdp:4.1.2-SNAPSHOT
+    simulator: onap/policy-models-simulator:4.1.2-SNAPSHOT
+    pdpdcl: onap/policy-pdpd-cl:3.1.2-SNAPSHOT
+    xacml: onap/policy-xacml-pdp:4.1.2-SNAPSHOT
+    opa: onap/policy-opa-pdp:1.0.4
+    distribution: onap/policy-distribution:4.1.2-SNAPSHOT
+    runtimeacm: onap/policy-clamp-runtime-acm:8.1.2-SNAPSHOT
+    kserveparticipant: onap/policy-clamp-ac-kserve-ppnt:8.1.2-SNAPSHOT
+    k8sparticipant: onap/policy-clamp-ac-k8s-ppnt:8.1.2-SNAPSHOT
+    pfparticipant: onap/policy-clamp-ac-pf-ppnt:8.1.2-SNAPSHOT
+    httpparticipant: onap/policy-clamp-ac-http-ppnt:8.1.2-SNAPSHOT
+    simparticipant: onap/policy-clamp-ac-sim-ppnt:8.1.2-SNAPSHOT
+    a1pmsparticipant: onap/policy-clamp-ac-a1pms-ppnt:8.1.2-SNAPSHOT
+    dbMigrator: onap/policy-db-migrator:4.1.2-SNAPSHOT
 
 postgres:
   enabled: true
@@ -93,7 +93,7 @@ dbConfig:
     password: "policy-user"
 
 dbmigrator:
-  image: onap/policy-db-migrator:$tag
+  image: onap/policy-db-migrator:4.1.2-SNAPSHOT
   policy_home: "/opt/app/policy"
   policyadmin:
     schema: policyadmin

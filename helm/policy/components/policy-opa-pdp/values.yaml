@@ -22,7 +22,7 @@
 global:
   persistence: {}
   image:
-    opapdp: nexus3.onap.org:10001/onap/policy-opa-pdp:1.0.2-SNAPSHOT
+    opapdp: nexus3.onap.org:10001/onap/policy-opa-pdp:1.0.4
 log:
   loglevel: "debug"
 
