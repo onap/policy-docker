@@ -1,4 +1,7 @@
+#
+# ===========LICENSE_START====================================================
 # Copyright © 2022-2025 Nordix Foundation
+# Modifications Copyright 2024-2025 Deutsche Telekom
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,6 +15,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# ============LICENSE_END=====================================================
+#
 
 #################################################################
 # Global configuration defaults.
@@ -34,7 +39,7 @@ global:
     simulator: onap/policy-models-simulator:$tag
     pdpdcl: onap/policy-pdpd-cl:$tag
     xacml: onap/policy-xacml-pdp:$tag
-    opa: onap/policy-opa-pdp:1.0.2-SNAPSHOT
+    opa: onap/policy-opa-pdp:$tag
     distribution: onap/policy-distribution:$tag
     runtimeacm: onap/policy-clamp-runtime-acm:$tag
     kserveparticipant: onap/policy-clamp-ac-kserve-ppnt:$tag
