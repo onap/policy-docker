@@ -41,6 +41,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d17d1118_874682ed",
+        "filename": "compose/get-k8s-versions.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 8491
+      },
+      "writtenOn": "2025-03-27T15:19:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05960a10_95a11dd5",
+      "range": {
+        "startLine": 4,
+        "startChar": 57,
+        "endLine": 4,
+        "endChar": 65
+      },
+      "revId": "09172e1357c43d7fd6c9498a41f14fc64c0bcfc4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9bcb529f_5ff1f71c",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-03-27T14:56:48Z",
       "side": 1,
       "message": "missing license",
+      "range": {
+        "startLine": 1,
+        "startChar": 31,
+        "endLine": 1,
+        "endChar": 41
+      },
+      "revId": "09172e1357c43d7fd6c9498a41f14fc64c0bcfc4",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "440432e4_86cd1c47",
+        "filename": "helm/policy/values.yaml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 8491
+      },
+      "writtenOn": "2025-03-27T15:19:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bcb529f_5ff1f71c",
       "range": {
         "startLine": 1,
         "startChar": 31,
