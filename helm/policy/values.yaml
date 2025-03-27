@@ -34,7 +34,7 @@ global:
     simulator: onap/policy-models-simulator:$tag
     pdpdcl: onap/policy-pdpd-cl:$tag
     xacml: onap/policy-xacml-pdp:$tag
-    opa: onap/policy-opa-pdp:1.0.2-SNAPSHOT
+    opa: onap/policy-opa-pdp:1.0.4
     distribution: onap/policy-distribution:$tag
     runtimeacm: onap/policy-clamp-runtime-acm:$tag
     kserveparticipant: onap/policy-clamp-ac-kserve-ppnt:$tag
