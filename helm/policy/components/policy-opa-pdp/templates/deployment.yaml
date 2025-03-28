@@ -1,6 +1,6 @@
 {{/*
 #  ============LICENSE_START=======================================================
-#   Copyright (C) 2024 Deutsche Telekom Intellectual Property. All rights reserved.
+#   Copyright (C) 2024-2025 Deutsche Telekom Intellectual Property. All rights reserved.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -40,33 +40,9 @@ spec:
         release: release
     spec:
       initContainers:
-      - command:
-        - /bin/sh
-        args:
-          - -c
-          - |
-            echo "*** set right permissions to the different folders"
-            chown -R {{ .Values.permissions.uid }}:{{ .Values.permissions.gid }} /var/log;
-            chmod -R 755 /var/log
-            chown -R {{ .Values.permissions.uid }}:{{ .Values.permissions.gid }} /opt/;
-            chmod -R 755 /opt/*
-            tar -xvf /tmp/policies/policy-data.tar.gz -C /opt/
-        image: busybox:latest
-        imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
-        securityContext:
-          runAsUser: 1000
-          runAsGroup: 1000
-          allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: true
-        name: {{ .Chart.Name }}-readiness
-        volumeMounts:
-        - name: logs
-          mountPath: /var/log
-        - name: tmp-policies-data
-          mountPath: /tmp/policies
-        - name : opa-policies-data
-          mountPath: /opt/
-
+        - name: {{ .Chart.Name }}-readiness
+          image: busybox
+          command: ["sh", "-c", "echo Init container started; sleep 10; echo Init container completed"]
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.global.repository }}/{{ .Values.global.image.opa }}
@@ -97,13 +73,13 @@ spec:
             timeoutSeconds: {{ .Values.readiness.timeout }}
           env:
             - name: UseSASLForKAFKA
-              value: "{{ .Values.kafka.useSASL }}" 
+              value: "{{ .Values.kafka.useSASL }}"
             - name: BOOSTSTRAP_SERVER
               value: "{{ .Values.kafka.brokers }}"
             - name: KAFKA_USERNAME
               value: "{{ .Values.kafka.username }}"
             - name: KAFKA_PASSWORD
-              value: "{{ .Values.kafka.password }}"              
+              value: "{{ .Values.kafka.password }}"
             - name: LOG_LEVEL
               value: "{{ .Values.log.loglevel }}"
             - name: GROUPID
@@ -111,14 +87,12 @@ spec:
             - name: TOPIC
               value: "{{ .Values.kafka.topic }}"
           volumeMounts:
-          - name: opa-policies-data
-            mountPath: /opt
           - name: opa-config
             mountPath: /app/config
           - name: opa-bundles
             mountPath: /app/bundles
           - name: logs
-            mountPath: /var/log
+            mountPath: /var/logs
           resources:
 {{ toYaml .Values.resources.small | indent 12 }}
         {{- if .Values.nodeSelector }}
@@ -131,13 +105,6 @@ spec:
         {{- end }}
       serviceAccountName: {{ .Chart.Name }}-read
       volumes:
-        - name: tmp-policies-data
-          configMap:
-            name: {{ .Chart.Name }}-configmap-policies-data
-            defaultMode: 0755
-        - name: opa-policies-data
-          persistentVolumeClaim:
-             claimName: {{ .Chart.Name }}-policies-data
         - name: opa-config
           configMap:
             name: {{ .Chart.Name }}-configmap-config
