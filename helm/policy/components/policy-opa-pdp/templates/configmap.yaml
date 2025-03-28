@@ -1,6 +1,6 @@
 {{/*
 #  ============LICENSE_START=======================================================
-#   Copyright (C) 2024 Deutsche Telekom Intellectual Property. All rights reserved.
+#   Copyright (C) 2024-2025 Deutsche Telekom Intellectual Property. All rights reserved.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -18,23 +18,6 @@
 #  ============LICENSE_END=========================================================
 */}}
 
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Chart.Name }}-configmap-policies-data
-  namespace: default
-  labels:
-    app: {{ .Chart.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: release
-    heritage: Helm
-    {{- with .Files.Glob "resources/policies/*" }}
-binaryData:
-    {{- range $path, $bytes := . }}
-       {{ base $path }}: {{ $.Files.Get $path | b64enc | quote }}
-    {{- end }}
-    {{- end }}
----
 apiVersion: v1
 kind: ConfigMap
 metadata:
