@@ -121,6 +121,25 @@ InstantiateAutomationCompositionMigrationFrom
     set Suite variable  ${instanceMigrationId}    ${respyaml["instanceId"]}
     Should Be Equal As Strings    ${resp.status_code}     201
 
+FailPrepareAutomationCompositionMigrationFrom
+    [Documentation]  Fail Prepare automation composition migration.
+    SetParticipantSimFail
+    ${auth}=    ClampAuth
+    ${postjson}=  Get file  ${CURDIR}/data/PrepareAC.json
+    ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}  ${postjson}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}    202
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
+
+PrepareAutomationCompositionMigrationFrom
+    [Documentation]  Prepare automation composition migration.
+    SetParticipantSimSuccess
+    ${auth}=    ClampAuth
+    ${postjson}=  Get file  ${CURDIR}/data/PrepareAC.json
+    ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}  ${postjson}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}    202
+    Wait Until Keyword Succeeds    10 min    5 sec    VerifySubStatus  ${compositionFromId}  ${instanceMigrationId}
+    VerifyPrepareElementsRuntime   ${compositionFromId}  ${instanceMigrationId}
+
 FailDeployAutomationCompositionMigration
     [Documentation]  Fail Deploy automation composition.
     SetParticipantSimFail
@@ -137,14 +156,6 @@ TimeoutDeployAutomationCompositionMigration
     ${postjson}=  Get file  ${CURDIR}/data/DeployAC.json
     ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}  ${postjson}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     202
-
-PrepareAutomationComposition
-    [Documentation]  Prepare automation composition.
-    ${auth}=    ClampAuth
-    ${postjson}=  Get file  ${CURDIR}/data/PrepareAC.json
-    ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}  ${postjson}  ${auth}
-    Should Be Equal As Strings    ${resp.status_code}    202
-    Wait Until Keyword Succeeds    10 min    5 sec    VerifySubStatus  ${compositionId}  ${instanceId}
 
 DeployAutomationComposition
     [Documentation]  Deploy automation composition.
@@ -211,14 +222,6 @@ QueryPolicyTypes
     Should Be Equal As Strings    ${resp.status_code}     200
     List Should Contain Value  ${resp.json()['policy_types']}  onap.policies.native.Apex
 
-ReviewAutomationComposition
-    [Documentation]  Review automation composition.
-    ${auth}=    ClampAuth
-    ${postjson}=  Get file  ${CURDIR}/data/ReviewAC.json
-    ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}  ${postjson}  ${auth}
-    Should Be Equal As Strings    ${resp.status_code}     202
-    Wait Until Keyword Succeeds    10 min    5 sec    VerifySubStatus  ${compositionId}  ${instanceId}
-
 CheckTimeoutAutomationComposition
     [Documentation]  Timeout Deploy automation composition.
     Wait Until Keyword Succeeds    5 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  TIMEOUT
@@ -241,6 +244,24 @@ SendOutPropertiesToRuntime
     ${resp}=   MakeJsonPutRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/datas  ${updatedpostjson}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyPropertiesUpdated  ${compositionFromId}  ${instanceMigrationId}  MyTextToSend
+
+FailReviewAutomationCompositionMigrationFrom
+    [Documentation]  Fail Review automation composition migration.
+    SetParticipantSimFail
+    ${auth}=    ClampAuth
+    ${postjson}=  Get file  ${CURDIR}/data/ReviewAC.json
+    ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}  ${postjson}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}    202
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
+
+ReviewAutomationCompositionMigrationFrom
+    [Documentation]  Review automation composition migration.
+    SetParticipantSimSuccess
+    ${auth}=    ClampAuth
+    ${postjson}=  Get file  ${CURDIR}/data/ReviewAC.json
+    ${resp}=   MakeJsonPutRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}  ${postjson}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}    202
+    Wait Until Keyword Succeeds    10 min    5 sec    VerifySubStatus  ${compositionFromId}  ${instanceMigrationId}
 
 AutomationCompositionUpdate
     [Documentation]  Update of an automation composition.
@@ -502,6 +523,19 @@ VerifyMigratedElementsRuntime
     ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb79c6c35']['outProperties']['stage']}
     Should Be Equal As Strings  ${respstring}  [0, 1]
     ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb79c6c37']['outProperties']['stage']}
+    Should Be Equal As Strings  ${respstring}  [0, 2]
+
+VerifyPrepareElementsRuntime
+    [Arguments]  ${theCompositionId}  ${theInstanceId}
+    [Documentation]  Verify the Instance elements after Prepare
+    ${auth}=    ClampAuth
+    ${resp}=    MakeGetRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}/instances/${theInstanceId}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
+    ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb79c6c34']['outProperties']['prepareStage']}
+    Should Be Equal As Strings  ${respstring}  [1, 2]
+    ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb79c6c35']['outProperties']['prepareStage']}
+    Should Be Equal As Strings  ${respstring}  [0, 1]
+    ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb79c6c36']['outProperties']['prepareStage']}
     Should Be Equal As Strings  ${respstring}  [0, 2]
 
 VerifyMigratedElementsSim

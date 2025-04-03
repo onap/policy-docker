@@ -1,5 +1,5 @@
 # ============LICENSE_START=======================================================
-# Copyright (C) 2024 Nordix Foundation.
+# Copyright (C) 2024-2025 OpenInfra Foundation Europe. All rights reserved.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -58,8 +58,8 @@ node_types:
           in reverse start phase order. Automation Composition Elements with the same start phase are started and
           stopped simultaneously
       stage:
-        type: list
-        description: A list indicating the stages in which this automation composition element will be started, the
+        type: map
+        description: A map of list indicating for each operation the stages in which this automation composition element will be started, the
           first stage is zero. Automation Composition Elements are started in their stage order.
           Automation Composition Elements with the same stage are started simultaneously.
 
@@ -125,7 +125,9 @@ topology_template:
       properties:
         provider: ONAP
         startPhase: 0
-        stage: [1,2]
+        stage:
+          prepare: [1,2]
+          migrate: [1,2]
 
     onap.policy.clamp.ac.element.Sim_BridgeAutomationCompositionElement:
       version: 1.2.4
@@ -135,7 +137,9 @@ topology_template:
       properties:
         provider: ONAP
         startPhase: 0
-        stage: [0,1]
+        stage:
+          prepare: [0,1]
+          migrate: [0,1]
 
     onap.policy.clamp.ac.element.Sim_NewAutomationCompositionElement:
       version: 1.2.4
@@ -145,7 +149,9 @@ topology_template:
       properties:
         provider: ONAP
         startPhase: 0
-        stage: [0,2]
+        stage:
+          prepare: [0,2]
+          migrate: [0,2]
 
     onap.policy.clamp.ac.element.AutomationCompositionDefinition:
       version: 1.2.4
