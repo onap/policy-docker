@@ -1,6 +1,7 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
 #  Copyright (C) 2025 Nordix Foundation. All rights reserved.
+#  Modifications Copyright 2025 Deutsche Telekom
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,7 +23,7 @@ export POLICY_API_ROBOT="api-test.robot api-slas.robot"
 export POLICY_PAP_ROBOT="pap-test.robot pap-slas.robot"
 export POLICY_APEX_PDP_ROBOT="apex-pdp-test.robot apex-slas.robot"
 export POLICY_XACML_PDP_ROBOT="xacml-pdp-test.robot xacml-pdp-slas.robot"
-export POLICY_OPA_PDP_ROBOT="opa-pdp-test.robot"
+export POLICY_OPA_PDP_ROBOT="opa-pdp-test.robot opa-pdp-slas.robot"
 export POLICY_DROOLS_PDP_ROBOT="drools-pdp-test.robot"
 export POLICY_DISTRIBUTION_ROBOT="distribution-test.robot"
 
