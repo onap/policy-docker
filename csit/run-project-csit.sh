@@ -189,9 +189,9 @@ function setup_xacml_pdp() {
 }
 
 function setup_opa_pdp() {
-    export ROBOT_FILES="opa-pdp-test.robot"
+    export ROBOT_FILES="opa-pdp-test.robot opa-pdp-slas.robot"
     export PROJECT="opa-pdp"
-    source "${DOCKER_COMPOSE_DIR}"/start-compose.sh opa-pdp
+    source "${DOCKER_COMPOSE_DIR}"/start-compose.sh opa-pdp --grafana
     echo "Waiting 3 minutes for OPA-PDP to start..."
     sleep 180
     check_rest_endpoint "${PAP_PORT}"

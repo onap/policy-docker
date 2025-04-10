@@ -1,6 +1,7 @@
 #
 # ===========LICENSE_START====================================================
 #  Copyright (C) 2023 Nordix Foundation.
+#  Modifications Copyright 2025 Deutsche Telekom
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -74,6 +75,14 @@ scrape_configs:
     static_configs:
       - targets:
           - "policy-distribution:6969"
+    basic_auth:
+      username: "policyadmin"
+      password: "zb!XztG34"
+
+  - job_name: "opa-pdp-metrics"
+    static_configs:
+      - targets:
+          - "policy-opa-pdp:8282"
     basic_auth:
       username: "policyadmin"
       password: "zb!XztG34"
