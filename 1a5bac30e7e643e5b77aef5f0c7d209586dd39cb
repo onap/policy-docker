@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "69884bec_9d66a54b",
+        "filename": "compose/metrics/prometheus.yml",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-04-11T08:47:48Z",
+      "side": 1,
+      "message": "remove the extra 2 empty lines",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 0
+      },
+      "revId": "1a5bac30e7e643e5b77aef5f0c7d209586dd39cb",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
