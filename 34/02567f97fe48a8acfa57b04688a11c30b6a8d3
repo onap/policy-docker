@@ -1,0 +1,10 @@
+Code-Review+2: Adheli Tavares <adheli.tavares@est.tech>
+Verified+1: ONAP Required GHA <releng+onap.required.gha@linuxfoundation.org>
+Verified+1: ONAP Bypass GHA <releng+onap.bypass.gha@linuxfoundation.org>
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Murali Parthasarathy K <muraliparthasarathy.k@techmahindra.com>
+Submitted-by: Adheli Tavares <adheli.tavares@est.tech>
+Submitted-at: Fri, 11 Apr 2025 12:33:31 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/policy/docker/+/140587
+Project: policy/docker
+Branch: refs/heads/master
