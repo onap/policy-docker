@@ -240,6 +240,12 @@ SendOutPropertiesToRuntime
     ${auth}=    ParticipantAuth
     ${postjson}=  Get file  ${CURDIR}/data/OutProperties.json
     ${updatedpostjson}=   Replace String     ${postjson}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
+    ${updatedpostjson}=   Replace String     ${updatedpostjson}     TEXTPLACEHOLDER       DumpTest
+    ${resp}=   MakeJsonPutRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/datas  ${updatedpostjson}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
+    ${resp}=   MakeJsonPutRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/datas  ${updatedpostjson}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
+    ${updatedpostjson}=   Replace String     ${postjson}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
     ${updatedpostjson}=   Replace String     ${updatedpostjson}     TEXTPLACEHOLDER       MyTextToSend
     ${resp}=   MakeJsonPutRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/datas  ${updatedpostjson}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
