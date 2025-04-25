@@ -31,7 +31,7 @@ global:
   dockerRepository: docker.io
 
   image:
-    readiness: onap/oom/readiness:3.0.1
+    readiness: onap/oom/readiness:6.1.2
     postgres: library/postgres:16.4
     api: onap/policy-api:$tag
     pap: onap/policy-pap:$tag
