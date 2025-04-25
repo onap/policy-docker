@@ -9,7 +9,7 @@
     "prometheus": true
   },
   "pdpStatusParameters": {
-    "pdpGroup": "defaultGroup",
+    "pdpGroup": "sampleGroup",
     "timeIntervalMs": 20000,
     "pdpType": "apex",
     "description": "Pdp Heartbeat",
