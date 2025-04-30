@@ -98,18 +98,23 @@ PrimeACDefinitionTo
     Should Be Equal As Strings    ${resp.status_code}     202
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionToId}  PRIMED
 
-InstantiateAutomationComposition
-    [Documentation]  Instantiate automation composition.
-    ${auth}=    ClampAuth
+DeleteUndeployedInstantiateAutomationComposition
+    [Documentation]  Delete Instantiate automation composition that has never been deployed.
     Run Keyword If    '${TEST_ENV}'=='k8s'    set Suite variable  ${instantiationfile}  AcK8s.json
 
     ...    ELSE    set Suite variable  ${instantiationfile}  AcDocker.json
     ${postjson}=  Get file  ${CURDIR}/data/${instantiationfile}
-    ${updatedpostjson}=   Replace String     ${postjson}     COMPOSITIONIDPLACEHOLDER       ${compositionId}
-    ${resp}=   MakeJsonPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances  ${updatedpostjson}  ${auth}
-    ${respyaml}=  yaml.Safe Load  ${resp.text}
-    set Suite variable  ${instanceId}    ${respyaml["instanceId"]}
-    Should Be Equal As Strings    ${resp.status_code}     201
+    ${tmpInstanceId}=  MakeJsonInstantiateAutomationComposition  ${compositionId}  ${postjson}
+    DeleteAutomationComposition  ${compositionId}  ${tmpInstanceId}
+    Wait Until Keyword Succeeds    1 min    5 sec    VerifyUninstantiated  ${compositionId}
+
+InstantiateAutomationComposition
+    [Documentation]  Instantiate automation composition.
+    Run Keyword If    '${TEST_ENV}'=='k8s'    set Suite variable  ${instantiationfile}  AcK8s.json
+
+    ...    ELSE    set Suite variable  ${instantiationfile}  AcDocker.json
+    ${postjson}=  Get file  ${CURDIR}/data/${instantiationfile}
+    ${instanceId}=  MakeJsonInstantiateAutomationComposition  ${compositionId}  ${postjson}
 
 InstantiateAutomationCompositionMigrationFrom
     [Documentation]  Instantiate automation composition migration.
@@ -369,37 +374,19 @@ UnDeployAutomationCompositionMigrationTo
 
 UnInstantiateAutomationComposition
     [Documentation]  Delete automation composition instance.
-    ${auth}=    ClampAuth
-    Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
-    ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-    ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-    ${resp}=   DELETE On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}     headers=${headers}
-    Log    Received response from runtime acm ${resp.text}
-    Should Be Equal As Strings    ${resp.status_code}     202
+    DeleteAutomationComposition  ${compositionId}  ${instanceId}
     Wait Until Keyword Succeeds    1 min    5 sec    VerifyUninstantiated  ${compositionId}
 
 FailUnInstantiateAutomationCompositionMigrationTo
     [Documentation]  Fail Delete automation composition instance migrated.
     SetParticipantSimFail
-    ${auth}=    ClampAuth
-    Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
-    ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-    ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-    ${resp}=   DELETE On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionToId}/instances/${instanceMigrationId}     headers=${headers}
-    Log    Received response from runtime acm ${resp.text}
-    Should Be Equal As Strings    ${resp.status_code}     202
+    DeleteAutomationComposition  ${compositionToId}  ${instanceMigrationId}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionToId}  ${instanceMigrationId}  FAILED
 
 UnInstantiateAutomationCompositionMigrationTo
     [Documentation]  Delete automation composition instance migrated.
     SetParticipantSimSuccess
-    ${auth}=    ClampAuth
-    Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
-    ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
-    ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
-    ${resp}=   DELETE On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionToId}/instances/${instanceMigrationId}     headers=${headers}
-    Log    Received response from runtime acm ${resp.text}
-    Should Be Equal As Strings    ${resp.status_code}     202
+    DeleteAutomationComposition  ${compositionToId}  ${instanceMigrationId}
     Wait Until Keyword Succeeds    1 min    5 sec    VerifyUninstantiated  ${compositionToId}
 
 DePrimeACDefinitions
@@ -599,6 +586,27 @@ ClampAuth
 ParticipantAuth
     ${auth}=    Create List    participantUser    zb!XztG34
     RETURN  ${auth}
+
+MakeJsonInstantiateAutomationComposition
+    [Arguments]  ${compositionId}  ${postjson}
+    ${auth}=    ClampAuth
+    ${updatedpostjson}=   Replace String     ${postjson}     COMPOSITIONIDPLACEHOLDER       ${compositionId}
+    ${resp}=   MakeJsonPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances  ${updatedpostjson}  ${auth}
+    ${respyaml}=  yaml.Safe Load  ${resp.text}
+    set Suite variable  ${instanceId}    ${respyaml["instanceId"]}
+    Should Be Equal As Strings    ${resp.status_code}     201
+    RETURN  ${instanceId}
+
+DeleteAutomationComposition
+    [Arguments]  ${compositionId}  ${instanceId}
+    ${auth}=    ClampAuth
+    Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+    ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
+    ${headers}=  Create Dictionary     Accept=application/json    Content-Type=application/json
+    ${resp}=   DELETE On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}     headers=${headers}
+    Log    Received response from runtime acm ${resp.text}
+    Should Be Equal As Strings    ${resp.status_code}     202
+
 
 MakeYamlPostRequest
     [Arguments]  ${name}  ${domain}  ${url}  ${postyaml}  ${auth}
