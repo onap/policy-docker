@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3e2313ec_962e8fa5",
+        "filename": "helm/policy/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-05-06T07:15:39Z",
+      "side": 1,
+      "message": "change license",
+      "range": {
+        "startLine": 3,
+        "startChar": 24,
+        "endLine": 3,
+        "endChar": 41
+      },
+      "revId": "bb4520762dd41853cde7b261834470bec9d6464c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81f9f512_04c242c8",
+        "filename": "helm/robot/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-05-06T07:15:39Z",
+      "side": 1,
+      "message": "update license, change foundation",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 36
+      },
+      "revId": "bb4520762dd41853cde7b261834470bec9d6464c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
