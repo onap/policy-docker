@@ -195,47 +195,6 @@
         }
       }
     },
-    "org.onap.policy.clamp.acm.PolicyAutomationCompositionElement": {
-      "version": "1.0.0",
-      "derived_from": "org.onap.policy.clamp.acm.AutomationCompositionElement",
-      "properties": {
-        "policy_type_id": {
-          "type": "onap.datatypes.ToscaConceptIdentifier",
-          "required": true
-        },
-        "policy_id": {
-          "type": "onap.datatypes.ToscaConceptIdentifier",
-          "required": false
-        }
-      }
-    },
-    "org.onap.policy.clamp.acm.K8SMicroserviceAutomationCompositionElement": {
-      "version": "1.0.0",
-      "derived_from": "org.onap.policy.clamp.acm.AutomationCompositionElement",
-      "properties": {
-        "chart": {
-          "type": "string",
-          "required": true
-        },
-        "configs": {
-          "type": "list",
-          "required": false
-        },
-        "requirements": {
-          "type": "string",
-          "required": false
-        },
-        "templates": {
-          "type": "list",
-          "required": false,
-          "entry_schema": null
-        },
-        "values": {
-          "type": "string",
-          "required": true
-        }
-      }
-    },
     "org.onap.policy.clamp.acm.HttpAutomationCompositionElement": {
       "version": "1.0.0",
       "derived_from": "org.onap.policy.clamp.acm.AutomationCompositionElement",
@@ -267,46 +226,6 @@
   },
   "topology_template": {
     "node_templates": {
-      "org.onap.policy.clamp.acm.PolicyParticipant": {
-        "version": "2.3.1",
-        "type": "org.onap.policy.clamp.acm.Participant",
-        "type_version": "1.0.1",
-        "description": "Participant for Policy microservices",
-        "properties": {
-          "provider": "ONAP"
-        }
-      },
-      "onap.policy.clamp.ac.element.Policy_AutomationCompositionElement": {
-        "version": "1.2.3",
-        "type": "org.onap.policy.clamp.acm.PolicyAutomationCompositionElement",
-        "type_version": "1.0.0",
-        "description": "Automation composition element for the operational policy for Performance Management Subscription Handling",
-        "properties": {
-          "provider": "Ericsson",
-          "startPhase": 0
-        }
-      },
-      "org.onap.k8s.acm.K8SAutomationCompositionParticipant": {
-        "version": "2.3.4",
-        "type": "org.onap.policy.clamp.acm.Participant",
-        "type_version": "1.0.1",
-        "description": "Participant for K8S",
-        "properties": {
-          "provider": "ONAP"
-        }
-      },
-      "onap.policy.clamp.ac.element.K8S_AutomationCompositionElement": {
-        "version": "1.2.3",
-        "type": "org.onap.policy.clamp.acm.K8SMicroserviceAutomationCompositionElement",
-        "type_version": "1.0.0",
-        "description": "Automation composition element for the K8S microservice for AC Element Starter",
-        "properties": {
-          "provider": "ONAP",
-          "startPhase": 0,
-          "uninitializedToPassiveTimeout": 300,
-          "podStatusCheckInterval": 30
-        }
-      },
       "org.onap.policy.clamp.acm.HttpParticipant": {
         "version": "2.3.4",
         "type": "org.onap.policy.clamp.acm.Participant",
@@ -335,14 +254,6 @@
         "properties": {
           "provider": "ONAP",
           "elements": [
-            {
-              "name": "onap.policy.clamp.ac.element.Policy_AutomationCompositionElement",
-              "version": "1.2.3"
-            },
-            {
-              "name": "onap.policy.clamp.ac.element.K8S_AutomationCompositionElement",
-              "version": "1.2.3"
-            },
             {
               "name": "onap.policy.clamp.ac.element.Http_AutomationCompositionElement",
               "version": "1.2.3"
