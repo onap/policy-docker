@@ -25,7 +25,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 6,
+  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -41,15 +41,14 @@
         "x": 0,
         "y": 0
       },
-      "id": 19,
+      "id": 1,
       "panels": [],
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "dkSf71fnz"
-          },
-          "refId": "A"
+          }
         }
       ],
       "title": "Quick Info",
@@ -91,7 +90,7 @@
         "x": 0,
         "y": 1
       },
-      "id": 4,
+      "id": 2,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -123,8 +122,7 @@
           "format": "time_series",
           "instant": false,
           "interval": "",
-          "legendFormat": "process_uptime: {{pod}}",
-          "refId": "A"
+          "legendFormat": "process_uptime: {{pod}}"
         }
       ],
       "title": "Process Uptime",
@@ -196,7 +194,7 @@
         "x": 6,
         "y": 1
       },
-      "id": 26,
+      "id": 3,
       "options": {
         "minVizHeight": 75,
         "minVizWidth": 75,
@@ -223,8 +221,7 @@
           "exemplar": true,
           "expr": "irate(process_cpu_seconds_total{job=\"opa-pdp-metrics\"}[$__range]) * 100",
           "interval": "",
-          "legendFormat": "{{pod}}",
-          "refId": "A"
+          "legendFormat": "{{pod}}"
         }
       ],
       "title": "CPU Usage",
@@ -298,7 +295,7 @@
         "x": 12,
         "y": 1
       },
-      "id": 27,
+      "id": 4,
       "options": {
         "minVizHeight": 75,
         "minVizWidth": 75,
@@ -325,8 +322,7 @@
           "expr": "100 * process_resident_memory_bytes{job=\"opa-pdp-metrics\"} / (1024 * 1024 * 1024)",
           "hide": false,
           "interval": "",
-          "legendFormat": "RSS : {{ pod }}",
-          "refId": "A"
+          "legendFormat": "RSS : {{ pod }}"
         }
       ],
       "title": "Memory Usage",
@@ -342,320 +338,16 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 7
-      },
-      "id": 17,
-      "panels": [],
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "dkSf71fnz"
-          },
-          "refId": "A"
-        }
-      ],
-      "title": "System",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dkSf71fnz"
-      },
-      "description": "Policy OPA-PDP CPU Usage Monitoring",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 1,
-            "pointSize": 1,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "process-1h: dev-policy-api-69f54f45cc-wq6xq"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-purple",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "process_1h: dev-policy-api-69f54f45cc-wq6xq"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-purple",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 8,
-        "x": 0,
-        "y": 8
-      },
-      "id": 2,
-      "options": {
-        "legend": {
-          "calcs": [
-            "max",
-            "mean",
-            "last"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true,
-          "sortBy": "Max",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "dkSf71fnz"
-          },
-          "editorMode": "code",
-          "exemplar": true,
-          "expr": "irate(process_cpu_seconds_total{job=\"opa-pdp-metrics\"}[$__range])*100",
-          "interval": "",
-          "legendFormat": "opa: {{pod}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "CPU Usage",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dkSf71fnz"
-      },
-      "description": "Policy OPA-PDP Memory Usage Monitoring",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "linear",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 1,
-            "pointSize": 1,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "{area=\"heap\", container=\"policy-api\", endpoint=\"policy-api\", id=\"Tenured Gen\", instance=\"10.42.7.19:6969\", job=\"policy-api\", namespace=\"onap\", pod=\"dev-policy-api-69f54f45cc-sb56v\", service=\"policy-api\"}"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "text",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Tenured Gen - dev-policy-api-69f54f45cc-wq6xq"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "dark-purple",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 7,
-        "x": 8,
-        "y": 8
-      },
-      "id": 13,
-      "options": {
-        "legend": {
-          "calcs": [
-            "max",
-            "mean",
-            "last"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true,
-          "sortBy": "Last",
-          "sortDesc": false
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "dkSf71fnz"
-          },
-          "editorMode": "code",
-          "exemplar": true,
-          "expr": "100 * process_resident_memory_bytes{job=\"opa-pdp-metrics\"} / (1024 * 1024 * 1024)",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Alloc : {{ pod }}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Memory Usage",
-      "type": "timeseries"
-    },
-    {
-      "collapsed": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "dkSf71fnz"
-      },
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
         "y": 26
       },
-      "id": 21,
+      "id": 5,
       "panels": [],
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "dkSf71fnz"
-          },
-          "refId": "A"
+          }
         }
       ],
       "title": "Requests",
@@ -692,11 +384,11 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
+        "w": 10,
         "x": 0,
         "y": 27
       },
-      "id": 30,
+      "id": 6,
       "options": {
         "displayMode": "gradient",
         "maxVizHeight": 300,
@@ -726,12 +418,240 @@
           "expr": "opa_decision_response_time_seconds_count{instance=\"policy-opa-pdp:8282\", job=\"opa-pdp-metrics\"}",
           "hide": false,
           "interval": "",
-          "legendFormat": "Decision Count",
-          "refId": "B"
+          "legendFormat": "Decision Count"
         }
       ],
       "title": "Policy Decisions",
       "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "dkSf71fnz"
+      },
+      "description": "Dynamic Data Patch Total for OPA-PDP per instance",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 10,
+        "y": 27
+      },
+      "id": 7,
+      "options": {
+        "displayMode": "gradient",
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "sizing": "auto",
+        "valueMode": "color"
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dkSf71fnz"
+          },
+          "exemplar": true,
+          "expr": "opa_data_response_time_seconds_count{instance=\"policy-opa-pdp:8282\", job=\"opa-pdp-metrics\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Dynamic Data(Patch) Count"
+        }
+      ],
+      "title": "Dynamic Data for policies",
+      "type": "bargauge"
+    },
+    {
+      "type": "timeseries",
+      "title": "Policy Deployment Success",
+      "targets": [
+        {
+          "expr": "rate(pdpo_policy_deployments_total[5m])",
+          "legendFormat": "deployments"
+        },
+        {
+          "expr": "rate(pdpo_policy_undeployments_success_total[5m])",
+          "legendFormat": "undeployments_success"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 28,
+        "w": 10,
+        "h": 8
+      },
+      "id": 8,
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Policy Deployment Failures",
+      "targets": [
+        {
+          "expr": "rate(pdpo_policy_failures_total[5m])",
+          "legendFormat": "deployment_failures"
+        },
+        {
+          "expr": "rate(pdpo_policy_undeployments_failures_total[5m])",
+          "legendFormat": "undeployment_failures"
+        }
+      ],
+      "gridPos": {
+        "x": 10,
+        "y": 28,
+        "w": 10,
+        "h": 8
+      },
+      "id": 9,
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Total Policy Decisions",
+      "targets": [
+        {
+          "expr": "sum(pdpo_policy_decisions_total)",
+          "legendFormat": "decisions"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 30,
+        "w": 20,
+        "h": 8
+      },
+      "id": 10,
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Dynamic Data Successful in Updates",
+      "targets": [
+        {
+          "expr": "sum(pdpo_dynamic_data_success_total)",
+          "legendFormat": "dynamic_updates_success"
+        }
+      ],
+      "gridPos": {
+        "x": 0,
+        "y": 29,
+        "w": 10,
+        "h": 8
+      },
+      "id": 11,
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Dynamic Data Update Failures",
+      "targets": [
+        {
+          "expr": "sum(pdpo_dynamic_data_failures_total)",
+          "legendFormat": "dynamic_updates_failures"
+        }
+      ],
+      "gridPos": {
+        "x": 10,
+        "y": 29,
+        "w": 10,
+        "h": 8
+      },
+      "id": 11,
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center"
+      }
     }
   ],
   "refresh": "",

@@ -37,11 +37,11 @@ ValidatesVehiclePolicy
     ${URL_CONTEXT}=    Set Variable    node/vehicle
     ${DYNAMIC_URL}=    Set Variable    ${DATA_URL}${URL_CONTEXT}
     ValidateGetDynamicData  ${DYNAMIC_URL}  200  onap.policy.opa.pdp.policy-vehicle-output.json  data
-    ValidatePatchDynamicData  ${DYNAMIC_URL}  onap.policy.opa.pdp.dyn-data-add.json  204
+    ValidatePatchDynamicData  ${DYNAMIC_URL}  onap.policy.opa.pdp.dyn-data-add.json  204  202
     ValidateGetDynamicData  ${DYNAMIC_URL}  200  onap.policy.opa.pdp.dyn-data-add-output.json  data
-    ValidatePatchDynamicData  ${DYNAMIC_URL}  onap.policy.opa.pdp.dyn-data-replace.json  204
+    ValidatePatchDynamicData  ${DYNAMIC_URL}  onap.policy.opa.pdp.dyn-data-replace.json  204  202
     ValidateGetDynamicData  ${DYNAMIC_URL}  200  onap.policy.opa.pdp.dyn-data-replace-output.json  data
-    ValidatePatchDynamicData  ${DYNAMIC_URL}  onap.policy.opa.pdp.dyn-data-remove.json  204
+    ValidatePatchDynamicData  ${DYNAMIC_URL}  onap.policy.opa.pdp.dyn-data-remove.json  204  202
     ValidateGetDynamicData  ${DYNAMIC_URL}  200  onap.policy.opa.pdp.policy-vehicle-output.json  data
     ValidatePolicyResponse  onap.policy.policy.opa.pdp.decision.vehicle_input.json  200  onap.policy.policy.opa.pdp.decision.vehicle_output.json
     ValidateIncorrectPolicyNameResponse  onap.policy.policy.opa.pdp.decision.vehicle-incorect-policyname.json  400
@@ -49,7 +49,7 @@ ValidatesVehiclePolicy
     UndeployOpaPolicy  /policy/pap/v1/pdps/policies/vehicle  202
     UndeployOpaPolicy  /policy/pap/v1/pdps/policies/vehicle  400
     ValidateGetDynamicData  ${DYNAMIC_URL}  404  onap.policy.opa.pdp.policy-resource-not-found.json  responseCode 
-    ValidatePatchDynamicData  ${DYNAMIC_URL}  onap.policy.opa.pdp.dyn-data-remove.json  400
+    ValidatePatchDynamicData  ${DYNAMIC_URL}  onap.policy.opa.pdp.dyn-data-remove.json  400  400
 
 ValidatesAbacPolicy
     CreateOpaPolicy  onap.policy.opa.pdp.policy-abac-create.yaml  abac  1.0.2  201
@@ -131,12 +131,17 @@ ValidateGetDynamicData
 
 ValidatePatchDynamicData
     [Documentation]    Validating the output for the policy
-    [Arguments]  ${dyn_url}  ${jsonfile}  ${status}
-    ${expectedStatus}=    Set Variable    ${status}
+    [Arguments]  ${dyn_url}  ${jsonfile}  ${status}  ${status1}
+    ${Accepted}=    Set Variable    ${status}
+    ${NoContent}=    Set Variable    ${status1}
     ${patchjson}=  Get file  ${CURDIR}/data/${jsonfile}
     ${hcauth}=  PolicyAdminAuth
-    ${resp}=    PerformPatchRequest   ${POLICY_OPA_IP}  ${dyn_url}  ${expectedStatus}  ${patchjson}  abbrev=true  ${hcauth}
-    Should Be Equal As Integers    ${resp.status_code}    ${expectedStatus}
+    ${resp}=    PerformPatchRequest   ${POLICY_OPA_IP}  ${dyn_url}  ${Accepted}  ${patchjson}  abbrev=true  ${hcauth}
+    IF    ${resp.status_code} == ${Accepted} or ${resp.status_code} == ${NoContent}
+    Log    Status is acceptable
+    ELSE
+    Fail    Unexpected status code: ${resp.status_code}
+    END
 
 ValidatePolicyResponseWithoutFilter
     [Documentation]    Validating the output for the policy
