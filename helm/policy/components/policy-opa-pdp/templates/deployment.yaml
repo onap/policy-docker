@@ -59,18 +59,10 @@ spec:
             periodSeconds: {{ .Values.liveness.periodSeconds }}
           {{ end -}}
           readinessProbe:
-            httpGet:
-              path: {{ .Values.readiness.api }}
+            tcpSocket:
               port: {{ .Values.service.internalPort }}
-              httpHeaders:
-                - name: Authorization
-                  value: Basic {{ printf "%s:%s" .Values.restServer.user .Values.restServer.password | b64enc }}
-              scheme: HTTP
-            successThreshold: {{ .Values.readiness.successThreshold }}
-            failureThreshold: {{ .Values.readiness.failureThreshold }}
             initialDelaySeconds: {{ .Values.readiness.initialDelaySeconds }}
             periodSeconds: {{ .Values.readiness.periodSeconds }}
-            timeoutSeconds: {{ .Values.readiness.timeout }}
           env:
             - name: UseSASLForKAFKA
               value: "{{ .Values.kafka.useSASL }}"
