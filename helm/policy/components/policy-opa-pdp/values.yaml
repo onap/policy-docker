@@ -72,10 +72,6 @@ liveness:
 readiness:
   initialDelaySeconds: 10
   periodSeconds: 120
-  api: /ready
-  successThreshold: 1
-  failureThreshold: 3
-  timeout: 60
 
 service:
   type: ClusterIP
