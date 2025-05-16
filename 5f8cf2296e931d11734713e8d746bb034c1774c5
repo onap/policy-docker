@@ -33,6 +33,24 @@
       "message": "Thanks for the improvements Francesco. Have we done a thorough testing with these changes for all the upgrade paths by keeping compositions and instances in completed, transitioning states ?",
       "revId": "5f8cf2296e931d11734713e8d746bb034c1774c5",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e9d4f87b_8d19d573",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7565
+      },
+      "writtenOn": "2025-05-16T08:49:27Z",
+      "side": 1,
+      "message": "I did a test from Q2, I have insert a composition and an instance, after I have set manually some fields to null, to check the stability of the upgrade",
+      "parentUuid": "8256cae5_a014c211",
+      "revId": "5f8cf2296e931d11734713e8d746bb034c1774c5",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
