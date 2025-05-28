@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e00d8da_08f23710",
+        "filename": "policy-db-migrator/src/main/docker/Dockerfile",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-05-28T13:43:55Z",
+      "side": 0,
+      "message": "shouldn\u0027t this go up also?",
+      "range": {
+        "startLine": 21,
+        "startChar": 28,
+        "endLine": 21,
+        "endChar": 33
+      },
+      "revId": "eadcdf0e9e43280ea35d8dc28628d6217065911d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
