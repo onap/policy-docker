@@ -1,0 +1,12 @@
+distribution_type: 'container'
+container_release_tag: '4.2.0'
+project: 'policy-docker'
+log_dir: 'policy-docker-maven-docker-stage-master/1052'
+ref: 29695755d88a0b78fa6ba5bc4a62a0253c4dfbb2
+containers:
+    - name: 'policy-jre-alpine'
+      version: '4.2.0-20250529T1128'
+    - name: 'policy-jdk-alpine'
+      version: '4.2.0-20250529T1128'
+    - name: 'policy-db-migrator'
+      version: '4.2.0-20250529T1128'
