@@ -1,5 +1,5 @@
 # ============LICENSE_START=======================================================
-# Copyright (C) 2024-2025 OpenInfra Foundation Europe. All rights reserved.
+# Copyright (C) 2025 OpenInfra Foundation Europe. All rights reserved.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the License);
 # you may not use this file except in compliance with the License.
@@ -15,10 +15,10 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
-name: Instance-Migration-From
+name: Instance-Timeout
 version: 1.0.1
 compositionId: COMPOSITIONIDPLACEHOLDER
-description: Demo automation composition instance 0
+description: Demo automation composition instance timeout
 elements:
 
   709c62b3-8918-41b9-a747-d21eb79c6c34:
@@ -28,11 +28,11 @@ elements:
       version: 1.2.3
     description: Starter Automation Composition Element for the Demo
     properties:
-      deployTimeoutMs: 200000
-      undeployTimeoutMs: 150000
-      updateTimeoutMs: 200000
-      migrateTimeoutMs: 200000
-      deleteTimeoutMs: 100000
+      deployTimeoutMs: 200
+      undeployTimeoutMs: 150
+      updateTimeoutMs: 200
+      migrateTimeoutMs: 200
+      deleteTimeoutMs: 100
       baseUrl: http://address:30800
       httpHeaders:
         Content-Type: application/json
@@ -58,11 +58,11 @@ elements:
       version: 1.2.3
     description: Bridge Automation Composition Element for the Demo
     properties:
-      deployTimeoutMs: 200000
-      undeployTimeoutMs: 150000
-      updateTimeoutMs: 200000
-      migrateTimeoutMs: 200000
-      deleteTimeoutMs: 100000
+      deployTimeoutMs: 200
+      undeployTimeoutMs: 150
+      updateTimeoutMs: 200
+      migrateTimeoutMs: 200
+      deleteTimeoutMs: 100
       baseUrl: http://address:30801
       httpHeaders:
         Content-Type: application/json
@@ -88,11 +88,11 @@ elements:
       version: 1.2.3
     description: Sink Automation Composition Element for the Demo
     properties:
-      deployTimeoutMs: 200000
-      undeployTimeoutMs: 150000
-      updateTimeoutMs: 200000
-      migrateTimeoutMs: 200000
-      deleteTimeoutMs: 100000
+      deployTimeoutMs: 200
+      undeployTimeoutMs: 150
+      updateTimeoutMs: 200
+      migrateTimeoutMs: 200
+      deleteTimeoutMs: 100
       baseUrl: http://address:30802
       httpHeaders:
         Content-Type: application/json

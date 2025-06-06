@@ -1,5 +1,5 @@
 # ============LICENSE_START=======================================================
-# Copyright (C) 2024 Nordix Foundation.
+# Copyright (C) 2024-2025 OpenInfra Foundation Europe. All rights reserved.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the License);
 # you may not use this file except in compliance with the License.
@@ -30,6 +30,11 @@ elements:
       version: 1.2.4
     description: Starter Automation Composition Element for the Demo
     properties:
+      deployTimeoutMs: 200000
+      undeployTimeoutMs: 150000
+      updateTimeoutMs: 200000
+      migrateTimeoutMs: 200000
+      deleteTimeoutMs: 100000
       baseUrl: http://10.101.0.249:30800
       configurationEntities:
         - configurationEntityId:
@@ -42,6 +47,11 @@ elements:
       version: 1.2.4
     description: Bridge Automation Composition Element for the Demo
     properties:
+      deployTimeoutMs: 200000
+      undeployTimeoutMs: 150000
+      updateTimeoutMs: 200000
+      migrateTimeoutMs: 200000
+      deleteTimeoutMs: 100000
       baseUrl: http://10.101.0.249:30801
       configurationEntities:
         - configurationEntityId:
@@ -54,6 +64,11 @@ elements:
       version: 1.2.4
     description: Sink Automation Composition Element for the Demo
     properties:
+      deployTimeoutMs: 200000
+      undeployTimeoutMs: 150000
+      updateTimeoutMs: 200000
+      migrateTimeoutMs: 200000
+      deleteTimeoutMs: 100000
       configurationEntities:
         - configurationEntityId:
           myParameterToUpdate: text updated for migration
