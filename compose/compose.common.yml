@@ -1,6 +1,6 @@
 #
 # ===========LICENSE_START====================================================
-#  Copyright (C) 2024-2025 Nordix Foundation.
+#  Copyright (C) 2024-2025 OpenInfra Foundation Europe. All rights reserved.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -30,7 +30,6 @@ services:
           - grpc-sim
           - sdnc-sim
           - so-sim
-          - vfc-sim
     volumes:
       - ./config/sim-all:/opt/app/policy/simulators/etc/mounted:ro
       - ./config/sim-all/logback.xml:/opt/app/policy/simulators/etc/mounted/logback.xml:ro
@@ -38,7 +37,6 @@ services:
       - 6666
       - 6668
       - 6669
-      - 6670
       - 6680
     ports:
       - ${SIMULATOR_PORT}:6666

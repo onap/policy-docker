@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # ============LICENSE_START====================================================
-#  Copyright (C) 2023-2024 Nordix Foundation.
+#  Copyright (C) 2023-2025 OpenInfra Foundation Europe. All rights reserved.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -60,8 +60,6 @@ source get-versions.sh > /dev/null 2>&1
 echo "Collecting logs from docker compose containers..."
 rm -rf *.log
 
-#COMPOSE_FILES="-f compose.${database}.yml -f compose.pdp.scale.yml -f compose.acm.scale.yml"
-
 # this will collect logs by service instead of mixing all together
 containers=$(docker compose ps --all --format '{{.Service}}')
 
@@ -70,6 +68,7 @@ for item in "${item_list[@]}"
 do
     if [ -n "$item" ]; then
         docker compose logs $item >> $item.log
+        cat $item.log
     fi
 done
 
