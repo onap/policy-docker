@@ -61,10 +61,6 @@ service:
       name: so-sim
       externalPort: 6669
       internalPort: 6669
-    vfc:
-      name: vfc-sim
-      externalPort: 6670
-      internalPort: 6670
     grpc:
       name: grpc-sim
       externalPort: 6680
