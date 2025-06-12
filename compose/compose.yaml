@@ -2,7 +2,7 @@
 # ===========LICENSE_START====================================================
 #  Copyright (C) 2020-2021 AT&T Intellectual Property. All rights reserved.
 #  Modifications Copyright (C) 2021 Bell Canada. All rights reserved.
-#  Modifications Copyright 2021-2025 Nordix Foundation.
+#  Modifications Copyright 2021-2025 OpenInfra Foundation Europe. All rights reserved.
 #  Modifications Copyright 2024-2025 Deutsche Telekom
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -201,8 +201,7 @@ services:
       'kafka', '9092',
       'aai-sim', '6666',
       'sdnc-sim', '6668',
-      'so-sim', '6669',
-      'vfc-sim', '6670'
+      'so-sim', '6669'
     ]
 
   policy-clamp-runtime-acm:
