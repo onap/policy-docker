@@ -58,6 +58,53 @@ DeleteACDefinitionTimeout
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionTimeoutId}  COMMISSIONED
     DeleteACDefinition  ${compositionTimeoutId}
 
+CommissionAutomationCompositionSimple
+    [Documentation]  Commission simple automation composition definition.
+    ${postyaml}=  Get file  ${CURDIR}/data/ac-definition-simple.yaml
+    ${tmpCompositionId}=  MakeCommissionAcDefinition  ${postyaml}
+    set Suite variable  ${simpleCompositionId}  ${tmpCompositionId}
+
+PrimeACDefinitionsSimple
+    [Documentation]  Prime simple automation composition definition
+    ${postjson}=  Get file  ${CURDIR}/data/ACPriming.json
+    PrimeACDefinition  ${postjson}  ${simpleCompositionId}
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${simpleCompositionId}  PRIMED
+
+InstantiateAutomationCompositionSimple
+    [Documentation]  Instantiate simple automation composition.
+    ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-simple.yaml
+    ${tmpInstanceId}=  MakeYamlInstantiateAutomationComposition   ${simpleCompositionId}   ${postyaml}
+    set Suite variable  ${simpleInstanceId}    ${tmpInstanceId}
+
+FailDeployAutomationCompositionSimple
+    [Documentation]  Fail Simple Deploy automation composition.
+    SetParticipantSimFail
+    ${postjson}=  Get file  ${CURDIR}/data/DeployAC.json
+    ChangeStatusAutomationComposition  ${simpleCompositionId}   ${simpleInstanceId}  ${postjson}
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${simpleCompositionId}  ${simpleInstanceId}  FAILED
+
+UnDeployAutomationCompositionSimple
+    [Documentation]  UnDeploy simple automation composition.
+    SetParticipantSimDelay
+    ${postjson}=  Get file  ${CURDIR}/data/UndeployAC.json
+    ChangeStatusAutomationComposition  ${simpleCompositionId}   ${simpleInstanceId}  ${postjson}
+    Wait Until Keyword Succeeds    1 min    5 sec    VerifyDeployStatus  ${simpleCompositionId}  ${simpleInstanceId}  UNDEPLOYING
+    Wait Until Keyword Succeeds    1 min    5 sec    VerifyInternalStateElementsRuntime  ${simpleCompositionId}   ${simpleInstanceId}  UNDEPLOYING
+    Wait Until Keyword Succeeds    3 min    5 sec    VerifyDeployStatus  ${simpleCompositionId}  ${simpleInstanceId}  UNDEPLOYED
+    VerifyInternalStateElementsRuntime  ${simpleCompositionId}   ${simpleInstanceId}  UNDEPLOYED
+
+UnInstantiateAutomationCompositionSimple
+    [Documentation]  Delete simple automation composition instance.
+    SetParticipantSimSuccess
+    DeleteAutomationComposition  ${simpleCompositionId}  ${simpleInstanceId}
+    Wait Until Keyword Succeeds    1 min    5 sec    VerifyUninstantiated  ${simpleCompositionId}
+
+DePrimeACDefinitionSimple
+    [Documentation]  DePrime simple automation composition definition
+    ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
+    PrimeACDefinition  ${postjson}  ${simpleCompositionId}
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${simpleCompositionId}  COMMISSIONED
+
 CommissionAutomationComposition
     [Documentation]  Commission automation composition definition.
     ${postyaml}=  Get file  ${CURDIR}/data/acelement-usecase.yaml
@@ -466,6 +513,16 @@ VerifyPropertiesUpdated
     ${respstring}   Convert To String   ${resp.json()}
     Run Keyword If  ${resp.status_code}==200  Should Match Regexp  ${respstring}  ${textToFind}
 
+VerifyInternalStateElementsRuntime
+    [Arguments]  ${theCompositionId}  ${theInstanceId}  ${deploystate}
+    [Documentation]  Verify the Instance elements during operation
+    ${auth}=    ClampAuth
+    ${resp}=    MakeGetRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}/instances/${theInstanceId}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
+    Should Be Equal As Strings  ${resp.json()['deployState']}   ${deploystate}
+    ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb80c6c34']['outProperties']['InternalState']}
+    Should Be Equal As Strings  ${respstring}  ${deploystate}
+
 VerifyMigratedElementsRuntime
     [Arguments]  ${theCompositionId}  ${theInstanceId}
     [Documentation]  Verify the Instance elements after Migration
@@ -542,6 +599,14 @@ SetParticipantSimTimeout
     ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesTimeout.json
     ${resp}=   MakeJsonPutRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
+
+SetParticipantSimDelay
+    [Documentation]  Set Participant Simulator Delay.
+    ${auth}=    ParticipantAuth
+    ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesDelay.json
+    ${resp}=   MakeJsonPutRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
+
 
 ClampAuth
     ${auth}=    Create List    runtimeUser    zb!XztG34
