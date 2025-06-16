@@ -1,7 +1,7 @@
 #   ============LICENSE_START=======================================================
 #    Copyright (C) 2019 Tieto. All rights reserved.
 #    Modifications Copyright (C) 2020, 2021 AT&T Intellectual Property. All rights reserved.
-#    Modifications Copyright (C) 2020, 2022-2024 Nordix Foundation.
+#    Modifications Copyright (C) 2020, 2022-2025 OpenInfra Foundation Europe. All rights reserved.
 #   ================================================================================
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -46,11 +46,8 @@ ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 RUN apk update && \
     apk add --no-cache \
         libretls \
-        musl-locales \
-        musl-locales-lang \
         openjdk17-jre \
-        openssl \
-        ca-certificates && \
+        openssl && \
     rm -rf /var/cache/apk/* && \
 # ONAP additions
     addgroup -S $group && \

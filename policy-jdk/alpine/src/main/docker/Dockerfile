@@ -1,7 +1,7 @@
 #   ============LICENSE_START=======================================================
 #    Copyright (C) 2019 Tieto. All rights reserved.
 #    Modifications Copyright (C) 2020, 2021 AT&T Intellectual Property. All rights reserved.
-#    Modifications Copyright (C) 2020, 2022-2024 Nordix Foundation.
+#    Modifications Copyright (C) 2020, 2022-2025 OpenInfra Foundation Europe. All rights reserved.
 #   ================================================================================
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -47,11 +47,8 @@ ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 RUN apk update && \
     apk add --no-cache \
         libretls \
-        musl-locales \
-        musl-locales-lang \
         openjdk17-jdk \
-        openssl \
-        ca-certificates && \
+        openssl && \
     rm -rf /var/cache/apk/* && \
 # ONAP additions
     addgroup -S $group && \
@@ -68,22 +65,13 @@ RUN apk update && \
         jq \
         procps \
         unzip \
-        zip \
-        python3 && \
+        zip && \
     rm -rf /var/cache/apk/* && \
     addgroup -S policy && \
     adduser -S  --shell /bin/sh -G policy policy && \
     mkdir -p ${POLICY_HOME}/ && \
     chown policy:policy ${POLICY_HOME} && \
     mkdir -p /usr/lib/jvm/ && ln -s /opt/java/openjdk /usr/lib/jvm/default-jvm
-
-# Install python/pip
-RUN apk add --no-cache python3 && \
-    rm /usr/lib/python3.*/EXTERNALLY-MANAGED && \
-    if [ ! -e /usr/bin/python ]; then ln -sf python3 /usr/bin/python ; fi && \
-    python -m ensurepip && \
-    if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
-    pip install --no-cache --upgrade pip setuptools
 
 # Tell docker that all future commands should be run as the onap user
 USER $user
