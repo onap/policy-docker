@@ -318,6 +318,10 @@ do
       export TEARDOWN=true
       shift
       ;;
+    --no-logs)
+      export DONT_PRINT_LOGS=true
+      shift
+      ;;
     *)
       export PROJECT="${1}"
       shift

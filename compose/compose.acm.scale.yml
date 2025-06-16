@@ -1,6 +1,6 @@
 #
 # ===========LICENSE_START====================================================
-#  Copyright (C) 2024-2025 Nordix Foundation.
+#  Copyright (C) 2024-2025 OpenInfra Foundation Europe. All rights reserved.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -105,6 +105,16 @@ services:
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
+      JAVA_TOOL_OPTIONS: >-
+        -Dlogging.config="/opt/app/policy/clamp/etc/logback.xml"
+        -Dcom.sun.management.jmxremote.rmi.port=9090
+        -Dcom.sun.management.jmxremote=true
+        -Dcom.sun.management.jmxremote.port=9090
+        -Dcom.sun.management.jmxremote.ssl=false
+        -Dcom.sun.management.jmxremote.authenticate=false
+        -Dcom.sun.management.jmxremote.local.only=false
+        -Dotel.java.global-autoconfigure.enabled=true
+      SPRING_CONFIG_LOCATION: /opt/app/policy/clamp/etc/AcRuntimeParameters.yaml
       # Tracing can be configured for grpc or http - default is http
       #OTEL_EXPORTER_OTLP_PROTOCOL: grpc
       #OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: grpc
@@ -112,11 +122,10 @@ services:
     volumes:
       - ./config/clamp/AcRuntimeParameters.yaml:/opt/app/policy/clamp/etc/AcRuntimeParameters.yaml
       - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
-      - ./config/clamp/acm-runtime.sh:/opt/app/policy/clamp/bin/acm-runtime.sh:rw
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     entrypoint: /opt/app/policy/bin/wait_for_port.sh
     command: [
-      '-c', './acm-runtime.sh',
+      '-c', 'java -jar /app/app.jar',
       'apex-pdp', '6969',
       'kafka', '9092',
       'policy-clamp-ac-http-ppnt', '6969',
@@ -140,14 +149,18 @@ services:
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
+      JAVA_TOOL_OPTIONS: >-
+        -Dlogging.config="/opt/app/policy/clamp/etc/logback.xml"
+        -Dotel.java.global-autoconfigure.enabled=true
+      SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
+      SPRING_CONFIG_LOCATION: /opt/app/policy/clamp/etc/HttpParticipantParameters.yaml
     volumes:
       - ./config/clamp/HttpParticipantParameters.yaml:/opt/app/policy/clamp/etc/HttpParticipantParameters.yaml
-      - ./config/clamp/http-participant.sh:/opt/app/policy/clamp/bin/http-participant.sh:rw
       - ./config/clamp/logback-ppnt.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     entrypoint: /opt/app/policy/bin/wait_for_port.sh
     command: [
-      '-c', './http-participant.sh',
+      '-c', 'java -jar /app/app.jar',
       'kafka', '9092'
     ]
   policy-clamp-ac-k8s-ppnt-replica:
@@ -161,6 +174,11 @@ services:
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
+      JAVA_TOOL_OPTIONS: >-
+        -Dlogging.config="/opt/app/policy/clamp/etc/logback.xml"
+        -Dotel.java.global-autoconfigure.enabled=true
+      SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
+      SPRING_CONFIG_LOCATION: /opt/app/policy/clamp/etc/KubernetesParticipantParameters.yaml
     expose:
       - 6969
     deploy:
@@ -168,12 +186,11 @@ services:
       replicas: ${REPLICAS:-2}
     volumes:
       - ./config/clamp/KubernetesParticipantParameters.yaml:/opt/app/policy/clamp/etc/KubernetesParticipantParameters.yaml
-      - ./config/clamp/kubernetes-participant.sh:/opt/app/policy/clamp/bin/kubernetes-participant.sh:rw
       - ./config/clamp/logback-ppnt.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     entrypoint: /opt/app/policy/bin/wait_for_port.sh
     command: [
-      '-c', './kubernetes-participant.sh',
+      '-c', 'java -jar /app/app.jar',
       'kafka', '9092'
     ]
   policy-clamp-ac-pf-ppnt-replica:
@@ -192,14 +209,18 @@ services:
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
+      JAVA_TOOL_OPTIONS: >-
+        -Dlogging.config="/opt/app/policy/clamp/etc/logback.xml"
+        -Dotel.java.global-autoconfigure.enabled=true
+      SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
+      SPRING_CONFIG_LOCATION: /opt/app/policy/clamp/etc/PolicyParticipantParameters.yaml
     volumes:
       - ./config/clamp/PolicyParticipantParameters.yaml:/opt/app/policy/clamp/etc/PolicyParticipantParameters.yaml:ro
-      - ./config/clamp/policy-participant.sh:/opt/app/policy/clamp/bin/policy-participant.sh:rw
       - ./config/clamp/logback-ppnt.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     entrypoint: /opt/app/policy/bin/wait_for_port.sh
     command: [
-      '-c', './policy-participant.sh',
+      '-c', 'java -jar /app/app.jar',
       'kafka', '9092'
     ]
   nginx:

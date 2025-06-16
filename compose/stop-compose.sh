@@ -68,7 +68,9 @@ for item in "${item_list[@]}"
 do
     if [ -n "$item" ]; then
         docker compose logs $item >> $item.log
-        cat $item.log
+        if [ "${DONT_PRINT_LOGS}" == "false" ]; then
+            cat $item.log
+        fi
     fi
 done
 

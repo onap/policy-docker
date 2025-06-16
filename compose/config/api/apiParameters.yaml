@@ -24,7 +24,6 @@ spring:
 
 policy-api:
   name: ApiGroup
-  aaf: false
 
 database:
   name: PolicyProviderParameterGroup

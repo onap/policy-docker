@@ -54,16 +54,19 @@ services:
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
       SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
+      JAVA_TOOL_OPTIONS: >-
+        -Dlogging.config="/opt/app/policy/clamp/etc/logback.xml"
+        -Dotel.java.global-autoconfigure.enabled=true
+      spring.config.location: /opt/app/policy/clamp/etc/SimulatorParticipantParameters.yaml
     ports:
       - ${SIM_PARTICIPANT_PORT}:6969
     volumes:
       - ./config/clamp/SimulatorParticipantParameters.yaml:/opt/app/policy/clamp/etc/SimulatorParticipantParameters.yaml:ro
-      - ./config/clamp/sim-participant.sh:/opt/app/policy/clamp/bin/sim-participant.sh:rw
       - ./config/clamp/logback-ppnt.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     entrypoint: /opt/app/policy/bin/wait_for_port.sh
     command: [
-      '-c', './sim-participant.sh',
+      '-c', 'java -jar /app/app.jar',
       'kafka', '9092'
     ]
 
