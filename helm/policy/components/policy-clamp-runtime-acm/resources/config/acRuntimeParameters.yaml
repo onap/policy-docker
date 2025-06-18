@@ -67,9 +67,9 @@ runtime:
     operationTopic: policy-acruntime-participant
     syncTopic: acm-ppnt-sync
   participantParameters:
-    heartBeatMs: 120000
-    maxStatusWaitMs: 150000
-    maxOperationWaitMs: 200000
+    heartBeatMs: {{ .Values.runtime.participantParameters.heartBeatMs }}
+    maxStatusWaitMs: {{ .Values.runtime.participantParameters.maxStatusWaitMs }}
+    maxOperationWaitMs: {{ .Values.runtime.participantParameters.maxOperationWaitMs }}
   topicParameterGroup:
     topicSources:
       -

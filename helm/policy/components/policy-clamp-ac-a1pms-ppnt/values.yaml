@@ -1,5 +1,5 @@
 #  ============LICENSE_START=======================================================
-#  Copyright (C) 2023-2024 Nordix Foundation.
+#  Copyright (C) 2023-2025 OpenInfra Foundation Europe. All rights reserved.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -29,6 +29,9 @@ debugEnabled: false
 restServer:
   user: participantUser
   password: zb!XztG34
+
+a1pms:
+  baseUrl: http://a1policymanagement.onap:8081
 
 # default number of instances
 replicaCount: 1
