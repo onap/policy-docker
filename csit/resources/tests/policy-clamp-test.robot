@@ -105,6 +105,10 @@ DePrimeACDefinitionSimple
     PrimeACDefinition  ${postjson}  ${simpleCompositionId}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${simpleCompositionId}  COMMISSIONED
 
+DeleteACDefinitionSimple
+    [Documentation]  Delete simple automation composition definition.
+    DeleteACDefinition  ${simpleCompositionId}
+
 CommissionAutomationComposition
     [Documentation]  Commission automation composition definition.
     ${postyaml}=  Get file  ${CURDIR}/data/acelement-usecase.yaml
