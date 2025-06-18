@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e0c8f385_9cccc8fb",
+        "filename": "helm/cp-kafka/kafka.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-06-18T14:51:38Z",
+      "side": 1,
+      "message": "2024-2025 OpenInfra Foundation Europe. All rights reserved.",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 36
+      },
+      "revId": "9f75949931e109c1f8e6d9171342571c37f1f409",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d55aec4_b223d460",
+        "filename": "helm/policy/components/policy-clamp-ac-a1pms-ppnt/resources/config/A1pmsParticipantParameters.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-06-18T14:51:38Z",
+      "side": 1,
+      "message": "OpenInfra Foundation Europe. All rights reserved.",
+      "range": {
+        "startLine": 2,
+        "startChar": 27,
+        "endLine": 2,
+        "endChar": 66
+      },
+      "revId": "9f75949931e109c1f8e6d9171342571c37f1f409",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7784c159_a8795fa8",
+        "filename": "helm/policy/components/policy-clamp-ac-a1pms-ppnt/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-06-18T14:51:38Z",
+      "side": 1,
+      "message": "2023-2025 OpenInfra Foundation Europe. All rights reserved.",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 45
+      },
+      "revId": "9f75949931e109c1f8e6d9171342571c37f1f409",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3f196067_5c46bf7d",
+        "filename": "helm/policy/components/policy-clamp-runtime-acm/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-06-18T14:51:38Z",
+      "side": 1,
+      "message": "2024-2025 OpenInfra Foundation Europe. All rights reserved.",
+      "range": {
+        "startLine": 2,
+        "startChar": 23,
+        "endLine": 2,
+        "endChar": 51
+      },
+      "revId": "9f75949931e109c1f8e6d9171342571c37f1f409",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
