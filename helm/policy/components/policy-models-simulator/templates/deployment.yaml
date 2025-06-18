@@ -37,7 +37,6 @@ spec:
           - containerPort: {{ .Values.service.simulators.grpc.internalPort }}
           - containerPort: {{ .Values.service.simulators.sdnc.internalPort }}
           - containerPort: {{ .Values.service.simulators.so.internalPort }}
-          - containerPort: {{ .Values.service.simulators.vfc.internalPort }}
           livenessProbe:
             tcpSocket:
               port: {{ .Values.service.internalPort }}

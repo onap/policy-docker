@@ -32,7 +32,7 @@ security:
   enable-csrf: false
 
 a1pms:
-  baseUrl: http://a1policymanagement.onap:8081
+  baseUrl: {{ .Values.a1pms.baseUrl }}
   headers:
     content-type: application/json
   endpoints:

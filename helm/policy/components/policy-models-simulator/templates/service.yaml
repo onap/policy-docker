@@ -70,23 +70,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.service.simulators.vfc.name }}
-  labels:
-{{ include "policy-models-simulator.labels" . | indent 4 }}
-spec:
-  ports:
-    - port: {{ .Values.service.simulators.vfc.externalPort }}
-      targetPort: {{ .Values.service.simulators.vfc.internalPort }}
-      name: {{ .Values.service.simulators.vfc.name }}
-  selector:
-    app.kubernetes.io/name: {{ include "policy-models-simulator.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
   name: {{ .Values.service.simulators.grpc.name }}
   labels:
 {{ include "policy-models-simulator.labels" . | indent 4 }}

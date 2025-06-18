@@ -31,6 +31,12 @@ config:
   policyAppUserName: runtimeUser
   policyAppUserPassword: zb!XztG34
 
+runtime:
+  participantParameters:
+    heartBeatMs: 120000
+    maxStatusWaitMs: 150000
+    maxOperationWaitMs: 200000
+
 db:
   user: policy-user
   password: policy-user
