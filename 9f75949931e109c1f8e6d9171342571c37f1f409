@@ -48,6 +48,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bdca2229_ff320b30",
+        "filename": "helm/cp-kafka/kafka.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-06-19T09:24:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "378fa76b_213f40cb",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 36
+      },
+      "revId": "9f75949931e109c1f8e6d9171342571c37f1f409",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d55aec4_b223d460",
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "6d55aec4_b223d460",
+      "range": {
+        "startLine": 2,
+        "startChar": 27,
+        "endLine": 2,
+        "endChar": 66
+      },
+      "revId": "9f75949931e109c1f8e6d9171342571c37f1f409",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c66ab8b_d2f2ac7e",
+        "filename": "helm/policy/components/policy-clamp-ac-a1pms-ppnt/resources/config/A1pmsParticipantParameters.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-06-19T09:24:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c365999_450867aa",
       "range": {
         "startLine": 2,
         "startChar": 27,
@@ -142,6 +190,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ebe72d3_131e9e29",
+        "filename": "helm/policy/components/policy-clamp-ac-a1pms-ppnt/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-06-19T09:24:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "245f8416_108c4247",
+      "range": {
+        "startLine": 2,
+        "startChar": 17,
+        "endLine": 2,
+        "endChar": 45
+      },
+      "revId": "9f75949931e109c1f8e6d9171342571c37f1f409",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3f196067_5c46bf7d",
@@ -179,6 +251,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "3f196067_5c46bf7d",
+      "range": {
+        "startLine": 2,
+        "startChar": 23,
+        "endLine": 2,
+        "endChar": 51
+      },
+      "revId": "9f75949931e109c1f8e6d9171342571c37f1f409",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc09dcc5_41e92ed4",
+        "filename": "helm/policy/components/policy-clamp-runtime-acm/values.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-06-19T09:24:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "212623cd_8fdb3ba7",
       "range": {
         "startLine": 2,
         "startChar": 23,
