@@ -111,7 +111,10 @@ DeleteACDefinitionSimple
 
 CommissionAutomationComposition
     [Documentation]  Commission automation composition definition.
-    ${postyaml}=  Get file  ${CURDIR}/data/acelement-usecase.yaml
+    Run Keyword If    '${TEST_ENV}'=='k8s'    set Suite variable  ${compositionFile}  acelement-usecase.yaml
+
+    ...    ELSE    set Suite variable  ${compositionFile}  acelement-usecaseDocker.yaml
+    ${postyaml}=  Get file  ${CURDIR}/data/${compositionFile}
     ${tmpCompositionId}=  MakeCommissionAcDefinition  ${postyaml}
     set Suite variable  ${compositionId}  ${tmpCompositionId}
 
