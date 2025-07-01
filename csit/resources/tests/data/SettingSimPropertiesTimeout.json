@@ -9,6 +9,7 @@
   "migratePrecheck": true,
   "prepare": true,
   "review": true,
+  "rollback": true,
   "primeSuccess": true,
   "deprimeSuccess": true,
   "deployTimerMs": 260000,
@@ -22,5 +23,6 @@
   "reviewTimerMs": 260000,
   "deleteTimerMs": 260000,
   "primeTimerMs": 260000,
-  "deprimeTimerMs": 260000
+  "deprimeTimerMs": 260000,
+  "rollbackTimerMs": 260000
 }

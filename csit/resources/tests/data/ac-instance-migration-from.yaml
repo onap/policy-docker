@@ -49,7 +49,7 @@ elements:
               path: /onap/policy/clamp/acelement/v2/activate
               body: '{ "receiverId": { "name": "onap.policy.clamp.ac.startertobridge", "version": "1.0.0" }, "timerMs": 20000, "elementType": "STARTER", "topicParameterGroup": { "server": "message-router:3904", "listenerTopic": "POLICY_UPDATE_MSG", "publisherTopic": "AC_ELEMENT_MSG", "fetchTimeout": 15000, "topicCommInfrastructure": "dmaap" } }'
               expectedResponse: 201
-          myParameterToUpdate: text
+          myParameterToUpdate: TEXTPLACEHOLDER
 
   709c62b3-8918-41b9-a747-d21eb79c6c35:
     id: 709c62b3-8918-41b9-a747-d21eb79c6c35
@@ -79,7 +79,7 @@ elements:
               path: /onap/policy/clamp/acelement/v2/activate
               body: '{ "receiverId": { "name": "onap.policy.clamp.ac.bridgetosink", "version": "1.0.0" }, "timerMs": 20000, "elementType": "BRIDGE", "topicParameterGroup": { "server": "message-router:3904", "listenerTopic": "POLICY_UPDATE_MSG", "publisherTopic": "AC_ELEMENT_MSG", "fetchTimeout": 15000, "topicCommInfrastructure": "dmaap" } }'
               expectedResponse: 201
-          myParameterToUpdate: text
+          myParameterToUpdate: TEXTPLACEHOLDER
 
   709c62b3-8918-41b9-a747-d21eb79c6c36:
     id: 709c62b3-8918-41b9-a747-d21eb79c6c36
@@ -109,4 +109,4 @@ elements:
               path: /onap/policy/clamp/acelement/v2/activate
               body: '{ "receiverId": { "name": "onap.policy.clamp.ac.sink", "version": "1.0.0" }, "timerMs": 20000, "elementType": "SINK", "topicParameterGroup": { "server": "message-router", "listenerTopic": "POLICY_UPDATE_MSG", "publisherTopic": "AC_ELEMENT_MSG", "fetchTimeout": 15000, "topicCommInfrastructure": "dmaap" } }'
               expectedResponse: 201
-          myParameterToUpdate: text
+          myParameterToUpdate: TEXTPLACEHOLDER

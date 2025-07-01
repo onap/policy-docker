@@ -200,7 +200,8 @@ DeleteAutomationCompositionTimeout
 InstantiateAutomationCompositionMigrationFrom
     [Documentation]  Instantiate automation composition migration.
     ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-from.yaml
-    ${tmpInstanceId}=  MakeYamlInstantiateAutomationComposition   ${compositionFromId}   ${postyaml}
+    ${updatedpostyaml}=   Replace String     ${postyaml}     TEXTPLACEHOLDER       MyTextInit
+    ${tmpInstanceId}=  MakeYamlInstantiateAutomationComposition   ${compositionFromId}   ${updatedpostyaml}
     set Suite variable  ${instanceMigrationId}    ${tmpInstanceId}
 
 FailPrepareAutomationCompositionMigrationFrom
@@ -379,20 +380,6 @@ FailAutomationCompositionMigration
     Should Be Equal As Strings    ${resp.status_code}     200
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionToId}  ${instanceMigrationId}  FAILED
 
-FailDePrimeACDefinitionsFrom
-    [Documentation]  Fail DePrime automation composition definition migration From.
-    SetParticipantSimFail
-    ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
-    PrimeACDefinition  ${postjson}  ${compositionFromId}
-    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResultPriming  ${compositionFromId}   FAILED
-
-DePrimeACDefinitionsFrom
-    [Documentation]  DePrime automation composition definition migration From.
-    SetParticipantSimSuccess
-    ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
-    PrimeACDefinition  ${postjson}  ${compositionFromId}
-    Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionFromId}  COMMISSIONED
-
 UnDeployAutomationComposition
     [Documentation]  UnDeploy automation composition.
     ${postjson}=  Get file  ${CURDIR}/data/UndeployAC.json
@@ -429,6 +416,92 @@ UnInstantiateAutomationCompositionMigrationTo
     SetParticipantSimSuccess
     DeleteAutomationComposition  ${compositionToId}  ${instanceMigrationId}
     Wait Until Keyword Succeeds    1 min    5 sec    VerifyUninstantiated  ${compositionToId}
+
+InstantiateAutomationCompositionRollback
+    [Documentation]  Instantiate automation composition for testing rollback.
+    ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-from.yaml
+    ${updatedpostyaml}=   Replace String     ${postyaml}     TEXTPLACEHOLDER       MyTextInit
+    ${tmpInstanceId}=  MakeYamlInstantiateAutomationComposition   ${compositionFromId}   ${updatedpostyaml}
+    set Suite variable  ${instanceMigrationId}    ${tmpInstanceId}
+
+DeployAutomationCompositionRollback
+    [Documentation]  Deploy automation for testing rollback.
+    ${auth}=    ClampAuth
+    ${postjson}=  Get file  ${CURDIR}/data/DeployAC.json
+    ChangeStatusAutomationComposition  ${compositionFromId}   ${instanceMigrationId}  ${postjson}
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
+
+FailAutomationCompositionMigrationRollback
+    [Documentation]  Fail Migration of an automation composition for testing rollback.
+    SetParticipantSimFail
+    ${auth}=    ClampAuth
+    ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-to.yaml
+    ${updatedpostyaml}=   Replace String     ${postyaml}     COMPOSITIONIDPLACEHOLDER       ${compositionFromId}
+    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     COMPOSITIONTARGETIDPLACEHOLDER       ${compositionToId}
+    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
+    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     TEXTPLACEHOLDER       TextForMigration
+    ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances  ${updatedpostyaml}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
+
+RollbackAutomationComposition
+    [Documentation]  Rollback of an automation composition.
+    SetParticipantSimSuccess
+    ${auth}=    ClampAuth
+    ${resp}=   MakePostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}/rollback  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     202
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
+    VerifyPropertiesUpdated  ${compositionFromId}  ${instanceMigrationId}  MyTextInit
+    VerifyParticipantSim  ${instanceMigrationId}  MyTextInit
+    VerifyRollbackElementsRuntime  ${compositionFromId}  ${instanceMigrationId}
+    VerifyRollbackElementsSim  ${instanceMigrationId}
+
+FailAutomationCompositionMigrationRollback2
+    [Documentation]  Fail Migration of an automation composition for testing rollback.
+    SetParticipantSimFail
+    ${auth}=    ClampAuth
+    ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-to.yaml
+    ${updatedpostyaml}=   Replace String     ${postyaml}     COMPOSITIONIDPLACEHOLDER       ${compositionFromId}
+    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     COMPOSITIONTARGETIDPLACEHOLDER       ${compositionToId}
+    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
+    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     TEXTPLACEHOLDER       TextForMigration
+    ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances  ${updatedpostyaml}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
+
+FailRollbackAutomationComposition
+    [Documentation]  Fail Rollback of an automation composition.
+    ${auth}=    ClampAuth
+    ${resp}=   MakePostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}/rollback   ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     202
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
+
+UnDeployAutomationCompositionRollback
+    [Documentation]  UnDeploy automation composition in fail rollback.
+    SetParticipantSimSuccess
+    ${auth}=    ClampAuth
+    ${postjson}=  Get file  ${CURDIR}/data/UndeployAC.json
+    ChangeStatusAutomationComposition  ${compositionFromId}   ${instanceMigrationId}  ${postjson}
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  UNDEPLOYED
+
+UnInstantiateAutomationCompositionRollback
+    [Documentation]  Delete automation composition instance in fail rollback.
+    DeleteAutomationComposition  ${compositionFromId}  ${instanceMigrationId}
+    Wait Until Keyword Succeeds    1 min    5 sec    VerifyUninstantiated  ${compositionFromId}
+
+FailDePrimeACDefinitionsFrom
+    [Documentation]  Fail DePrime automation composition definition migration From.
+    SetParticipantSimFail
+    ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
+    PrimeACDefinition  ${postjson}  ${compositionFromId}
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResultPriming  ${compositionFromId}   FAILED
+
+DePrimeACDefinitionsFrom
+    [Documentation]  DePrime automation composition definition migration From.
+    SetParticipantSimSuccess
+    ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
+    PrimeACDefinition  ${postjson}  ${compositionFromId}
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionFromId}  COMMISSIONED
 
 DePrimeACDefinitions
     [Documentation]  DePrime automation composition definition
@@ -559,6 +632,22 @@ VerifyPrepareElementsRuntime
     ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb79c6c36']['outProperties']['prepareStage']}
     Should Be Equal As Strings  ${respstring}  [0, 2]
 
+VerifyRollbackElementsRuntime
+    [Arguments]  ${theCompositionId}  ${theInstanceId}
+    [Documentation]  Verify the Instance elements after Rollback
+    ${auth}=    ClampAuth
+    ${resp}=    MakeGetRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}/instances/${theInstanceId}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
+    ${respstring}   Convert To String   ${resp.json()}
+    Should Not Match Regexp  ${respstring}  Sim_NewAutomationCompositionElement
+    Should Match Regexp  ${respstring}  Sim_SinkAutomationCompositionElement
+    ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb79c6c34']['outProperties']['rollbackStage']}
+    Should Be Equal As Strings  ${respstring}  [1, 2]
+    ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb79c6c35']['outProperties']['rollbackStage']}
+    Should Be Equal As Strings  ${respstring}  [0, 1]
+    ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb79c6c36']['outProperties']['rollbackStage']}
+    Should Be Equal As Strings  ${respstring}  [0, 2]
+
 VerifyMigratedElementsSim
     [Arguments]  ${theInstanceId}
     [Documentation]  Query on Participant Simulator
@@ -568,6 +657,16 @@ VerifyMigratedElementsSim
     ${respstring}   Convert To String   ${resp.json()}
     Should Match Regexp  ${respstring}  Sim_NewAutomationCompositionElement
     Should Not Match Regexp  ${respstring}  Sim_SinkAutomationCompositionElement
+
+VerifyRollbackElementsSim
+    [Arguments]  ${theInstanceId}
+    [Documentation]  Query on Participant Simulator
+    ${auth}=    ParticipantAuth
+    ${resp}=    MakeGetRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/instances/${theInstanceId}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
+    ${respstring}   Convert To String   ${resp.json()}
+    Should Not Match Regexp  ${respstring}  Sim_NewAutomationCompositionElement
+    Should Match Regexp  ${respstring}  Sim_SinkAutomationCompositionElement
 
 VerifyParticipantSim
     [Arguments]  ${theInstanceId}  ${textToFind}
@@ -681,6 +780,13 @@ DeleteAutomationComposition
     Log    Received response from runtime acm ${resp.text}
     Should Be Equal As Strings    ${resp.status_code}     202
 
+MakePostRequest
+    [Arguments]  ${name}  ${domain}  ${url}  ${auth}
+    Log    Creating session http://${domain}
+    ${session}=  Create Session  ${name}  http://${domain}  auth=${auth}
+    ${resp}=   POST On Session     ${name}  ${url}
+    Log    Received response from ${name} ${resp.text}
+    RETURN  ${resp}
 
 MakeYamlPostRequest
     [Arguments]  ${name}  ${domain}  ${url}  ${postyaml}  ${auth}
