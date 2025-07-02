@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: broker
-        image: confluentinc/cp-kafka:latest
+        image: confluentinc/cp-kafka:7.9.1
         ports:
         - containerPort: 9092
         command: ["bash", "-c", "unset KAFKA_PORT; /etc/confluent/docker/run"]
