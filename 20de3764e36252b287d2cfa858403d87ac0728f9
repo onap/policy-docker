@@ -24,6 +24,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e59fe61_3e6d3408",
+        "filename": "policy-db-migrator/src/main/docker/config/clampacm/postgres/1702/upgrade/0100-automationcomposition.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 7565
+      },
+      "writtenOn": "2025-07-18T09:50:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "076e05e8_e4c0c186",
+      "range": {
+        "startLine": 21,
+        "startChar": 31,
+        "endLine": 21,
+        "endChar": 33
+      },
+      "revId": "20de3764e36252b287d2cfa858403d87ac0728f9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4d0cf58b_f3cb47dc",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-07-18T09:19:51Z",
       "side": 1,
       "message": "Regarding this initial value of UUID, could we use all zeroes:\n\n    \u002700000000-0000-0000-0000-000000000000\u0027",
+      "range": {
+        "startLine": 21,
+        "startChar": 53,
+        "endLine": 21,
+        "endChar": 89
+      },
+      "revId": "20de3764e36252b287d2cfa858403d87ac0728f9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5a23792_48705bc2",
+        "filename": "policy-db-migrator/src/main/docker/config/clampacm/postgres/1702/upgrade/0200-automationcompositiondefinition.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 7565
+      },
+      "writtenOn": "2025-07-18T09:50:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d0cf58b_f3cb47dc",
       "range": {
         "startLine": 21,
         "startChar": 53,
