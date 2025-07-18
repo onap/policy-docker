@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "076e05e8_e4c0c186",
+        "filename": "policy-db-migrator/src/main/docker/config/clampacm/postgres/1702/upgrade/0100-automationcomposition.sql",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6742
+      },
+      "writtenOn": "2025-07-18T09:18:15Z",
+      "side": 1,
+      "message": "Note UUID can only be length 36 exactly",
+      "range": {
+        "startLine": 21,
+        "startChar": 31,
+        "endLine": 21,
+        "endChar": 33
+      },
+      "revId": "20de3764e36252b287d2cfa858403d87ac0728f9",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
