@@ -17,4 +17,4 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE automationcomposition DROP lastUpdate;
+ALTER TABLE automationcomposition DROP revisionId;
