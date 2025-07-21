@@ -17,4 +17,6 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE automationcomposition DROP revisionId;
+ALTER TABLE automationcomposition
+ DROP COLUMN revisionId,
+ ALTER COLUMN phase TYPE SMALLINT;
