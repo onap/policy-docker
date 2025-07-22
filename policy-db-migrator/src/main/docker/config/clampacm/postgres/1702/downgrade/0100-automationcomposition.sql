@@ -19,4 +19,5 @@
 
 ALTER TABLE automationcomposition
  DROP COLUMN revisionId,
- ALTER COLUMN phase TYPE SMALLINT;
+ ALTER COLUMN phase TYPE SMALLINT,
+ ADD COLUMN restarting BOOLEAN;

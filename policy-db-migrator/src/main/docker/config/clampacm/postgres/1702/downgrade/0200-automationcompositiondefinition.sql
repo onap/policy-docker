@@ -17,4 +17,6 @@
  *  ============LICENSE_END=========================================================
  */
 
-ALTER TABLE automationcompositiondefinition DROP revisionId;
+ALTER TABLE automationcompositiondefinition
+ DROP COLUMN revisionId,
+ ADD COLUMN restarting BOOLEAN;
