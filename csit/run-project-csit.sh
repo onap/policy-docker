@@ -3,7 +3,7 @@
 # Copyright 2016-2017 Huawei Technologies Co., Ltd.
 # Modification Copyright 2019 © Samsung Electronics Co., Ltd.
 # Modification Copyright 2021 © AT&T Intellectual Property.
-# Modification Copyright 2021-2025 Nordix Foundation.
+# Modification Copyright 2021-2025 OpenInfra Foundation Europe.
 # Modifications Copyright 2024-2025 Deutsche Telekom
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -96,25 +96,25 @@ function check_rest_endpoint() {
 }
 
 function setup_clamp() {
-    export ROBOT_FILES="policy-clamp-test.robot clamp-slas.robot"
-    source "${DOCKER_COMPOSE_DIR}"/start-compose.sh policy-clamp-runtime-acm --grafana
-    echo "Waiting 2 minutes acm-runtime and participants to start..."
-    sleep 120
-    check_rest_endpoint "${ACM_PORT}"
-}
-
-function setup_clamp_replica() {
     export ACM_REPLICA_TEARDOWN=true
-    export ROBOT_FILES="policy-clamp-test.robot"
+    export ROBOT_FILES="policy-clamp-test.robot clamp-slas.robot"
     export TEST_ENV="docker"
     export PROJECT=clamp
-    source "${DOCKER_COMPOSE_DIR}"/start-acm-replica.sh --start --replicas=2
+    source "${DOCKER_COMPOSE_DIR}"/start-acm-replica.sh --start --replicas=2 --grafana
     echo "Waiting 2 minutes for the replicas to be started..."
     sleep 120
     # checking on apex-pdp status because acm-r replicas only start after apex-pdp is running
     check_rest_endpoint "${PAP_PORT}"
     check_rest_endpoint "${APEX_PORT}"
     apex_healthcheck
+    check_rest_endpoint "${ACM_PORT}"
+}
+
+function setup_clamp_simple() {
+    export ROBOT_FILES="policy-clamp-test.robot clamp-slas.robot"
+    source "${DOCKER_COMPOSE_DIR}"/start-compose.sh policy-clamp-runtime-acm --grafana
+    echo "Waiting 2 minutes acm-runtime and participants to start..."
+    sleep 120
     check_rest_endpoint "${ACM_PORT}"
 }
 
@@ -240,9 +240,9 @@ function set_project_config() {
         setup_clamp
         ;;
 
-    clamp-replica | policy-clamp-replica)
-        setup_clamp_replica
-	;;
+    clamp-simple | policy-simple)
+        setup_clamp_simple
+        ;;
 
     api | policy-api)
         setup_api
