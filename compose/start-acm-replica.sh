@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # ============LICENSE_START====================================================
-#  Copyright (C) 2024 Nordix Foundation.
+#  Copyright (C) 2025 OpenInfra Foundation Europe.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -41,6 +41,10 @@ while [[ "$#" -gt 0 ]]; do
             REPLICAS="${1#*=}"
             shift
             ;;
+        --grafana)
+              grafana=true
+              shift
+              ;;
         *)
             echo "Unknown option: $1"
             exit 1
@@ -69,8 +73,16 @@ fi
 
 export database=postgres
 
+
 if [ "$START" = true ]; then
-    docker compose -f compose.acm.scale.yml up -d nginx
+    if [ "$grafana" = true ]; then
+        echo "Starting policy-clamp-runtime-acm using ${database} + Grafana/Prometheus"
+        docker compose -f compose.acm.scale.yml up -d nginx grafana --remove-orphans
+        echo "Prometheus server: http://localhost:${PROMETHEUS_PORT}"
+        echo "Grafana server: http://localhost:${GRAFANA_PORT}"
+    else
+        docker compose -f compose.acm.scale.yml up -d nginx
+    fi
 else
     containers=$(docker compose -f compose.acm.scale.yml ps --all --format '{{.Service}}')
 
