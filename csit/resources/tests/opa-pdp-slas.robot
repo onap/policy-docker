@@ -5,7 +5,7 @@ Resource    common-library.robot
 *** Test Cases ***
 WaitForPrometheusServer
     [Documentation]  Sleep time to wait for Prometheus server to gather all metrics
-    Sleep    1 minute
+    Sleep    5 seconds
 
 ValidateOPAPolicyDecisionsTotalCounter
     [Documentation]    Validate opa policy decision counters using prometheus metrics

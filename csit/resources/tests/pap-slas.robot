@@ -14,7 +14,7 @@ ValidateResponseTimeForPap
 *** Test Cases ***
 WaitForPrometheusServer
     [Documentation]  Wait for Prometheus server to gather all metrics
-    Sleep    1 minute
+    Sleep    5 seconds
 
 ValidateResponseTimeForHealthcheck
     [Documentation]  Validate component healthcheck response time
