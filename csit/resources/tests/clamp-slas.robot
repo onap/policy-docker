@@ -15,7 +15,7 @@ ValidateResponseTimeForClamp
 *** Test Cases ***
 WaitForPrometheusServer
     [Documentation]  Sleep time to wait for Prometheus server to gather all metrics
-    Sleep    1 minute
+    Sleep    5 seconds
 
 ValidateResponseTimeForHealthcheck
     [Documentation]  Validate component healthcheck response time
