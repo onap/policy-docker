@@ -65,7 +65,7 @@ ValidatePolicyExecutionAndEventRateModerateComplexity
 
 WaitForPrometheusServer
     [Documentation]  Sleep time to wait for Prometheus server to gather all metrics
-    Sleep    2 minutes
+    Sleep    5 seconds
 
 ValidatePolicyExecutionTimes
     [Documentation]    Validate policy execution times using prometheus metrics
