@@ -5,6 +5,7 @@ Library     OperatingSystem
 Library     String
 Library     json
 Library     yaml
+Library    Process
 Resource    common-library.robot
 
 *** Test Cases ***
@@ -37,6 +38,48 @@ RegisterParticipants
     Log    Received response from runtime acm ${resp.text}
     Should Be Equal As Strings    ${resp.status_code}     202
 
+InsertDataIntoDatabase
+    [Documentation]  Insert restored data into the Database.
+    ${result}=    Run Process    ${CURDIR}/data/script/execute-query.sh    ${CURDIR}/data/query/compositiondefinition-from.sql
+    Should Be Equal As Strings    ${result.rc}     0
+    ${result}=    Run Process    ${CURDIR}/data/script/execute-query.sh    ${CURDIR}/data/query/compositiondefinition-to.sql
+    Should Be Equal As Strings    ${result.rc}     0
+    ${result}=    Run Process    ${CURDIR}/data/script/execute-query.sh    ${CURDIR}/data/query/instance.sql
+    Should Be Equal As Strings    ${result.rc}     0
+
+AcMigrationRestored
+    [Documentation]  Migration of an automation composition restored.
+    set Suite variable  ${compositionIdRestored}  d30b8017-4d64-4693-84d7-de9c4226b9f8
+    set Suite variable  ${InstanceIdRestored}  dd36aaa4-580f-4193-a52b-37c3a955b11a
+    set Suite variable  ${compositionTargetIdRestored}  6c1cf107-a2ca-4485-8129-02f9fae64d64
+    SetParticipantSimSuccess
+    ${auth}=    ClampAuth
+    ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-restored.yaml
+    ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionIdRestored}/instances  ${postyaml}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionTargetIdRestored}  ${InstanceIdRestored}  DEPLOYED
+
+UpdateDataDatabase
+    [Documentation]  Update restored data into the Database.
+    ${result}=    Run Process    ${CURDIR}/data/script/execute-query.sh    ${CURDIR}/data/query/compositiondefinition-update.sql
+    Should Be Equal As Strings    ${result.rc}     0
+
+ReviewAutomationCompositionRestored
+    [Documentation]  Review automation composition restored.
+    ${postjson}=  Get file  ${CURDIR}/data/ReviewAC.json
+    ChangeStatusAutomationComposition  ${compositionTargetIdRestored}   ${InstanceIdRestored}  ${postjson}
+    Wait Until Keyword Succeeds    10 min    5 sec    VerifySubStatus  ${compositionTargetIdRestored}  ${InstanceIdRestored}
+    VerifyCompositionParticipantSim   'MyTextUpdated'
+
+AcDeleteRestored
+    [Documentation]  Undeploy and delete of an automation composition restored.
+    UndeployAndDeleteAutomationComposition  ${compositionTargetIdRestored}  ${InstanceIdRestored}
+
+DeleteACDefinitionsRestored
+    [Documentation]  Deprime and delete of the compositions definition restored.
+    DePrimeAndDeleteACDefinition   ${compositionIdRestored}
+    DePrimeAndDeleteACDefinition   ${compositionTargetIdRestored}
+
 CommissionAcDefinitionTimeout
     [Documentation]  Commission automation composition definition Timeout.
     ${postyaml}=  Get file  ${CURDIR}/data/ac-definition-timeout.yaml
@@ -53,10 +96,7 @@ TimeoutPrimeACDefinition
 DeleteACDefinitionTimeout
     [Documentation]  DePrime and Delete automation composition definition Timeout.
     SetParticipantSimSuccess
-    ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
-    PrimeACDefinition  ${postjson}  ${compositionTimeoutId}
-    Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionTimeoutId}  COMMISSIONED
-    DeleteACDefinition  ${compositionTimeoutId}
+    DePrimeAndDeleteACDefinition  ${compositionTimeoutId}
 
 CommissionAutomationCompositionSimple
     [Documentation]  Commission simple automation composition definition.
@@ -99,15 +139,9 @@ UnInstantiateAutomationCompositionSimple
     DeleteAutomationComposition  ${simpleCompositionId}  ${simpleInstanceId}
     Wait Until Keyword Succeeds    1 min    5 sec    VerifyUninstantiated  ${simpleCompositionId}
 
-DePrimeACDefinitionSimple
-    [Documentation]  DePrime simple automation composition definition
-    ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
-    PrimeACDefinition  ${postjson}  ${simpleCompositionId}
-    Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${simpleCompositionId}  COMMISSIONED
-
 DeleteACDefinitionSimple
-    [Documentation]  Delete simple automation composition definition.
-    DeleteACDefinition  ${simpleCompositionId}
+    [Documentation]  DePrime and Delete simple automation composition definition.
+    DePrimeAndDeleteACDefinition  ${simpleCompositionId}
 
 CommissionAutomationComposition
     [Documentation]  Commission automation composition definition.
@@ -191,11 +225,7 @@ DeployAutomationCompositionTimeout
 DeleteAutomationCompositionTimeout
     [Documentation]  Delete automation composition timeout.
     SetParticipantSimSuccess
-    ${postjson}=  Get file  ${CURDIR}/data/UndeployAC.json
-    ChangeStatusAutomationComposition  ${compositionFromId}  ${instanceTimeoutId}  ${postjson}
-    Wait Until Keyword Succeeds    10 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceTimeoutId}  UNDEPLOYED
-    DeleteAutomationComposition  ${compositionFromId}  ${instanceTimeoutId}
-    Wait Until Keyword Succeeds    1 min    5 sec    VerifyUninstantiated  ${compositionFromId}
+    UndeployAndDeleteAutomationComposition  ${compositionFromId}  ${instanceTimeoutId}
 
 InstantiateAutomationCompositionMigrationFrom
     [Documentation]  Instantiate automation composition migration.
@@ -380,11 +410,10 @@ FailAutomationCompositionMigration
     Should Be Equal As Strings    ${resp.status_code}     200
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionToId}  ${instanceMigrationId}  FAILED
 
-UnDeployAutomationComposition
-    [Documentation]  UnDeploy automation composition.
-    ${postjson}=  Get file  ${CURDIR}/data/UndeployAC.json
-    ChangeStatusAutomationComposition  ${compositionId}   ${instanceId}  ${postjson}
-    Wait Until Keyword Succeeds    10 min    5 sec    VerifyDeployStatus  ${compositionId}  ${instanceId}  UNDEPLOYED
+UnInstantiateAutomationComposition
+    [Documentation]  UnDeploy and Delete automation composition instance.
+    SetParticipantSimSuccess
+    UndeployAndDeleteAutomationComposition  ${compositionId}  ${instanceId}
 
 FailUnDeployAutomationCompositionMigrationTo
     [Documentation]  Fail UnDeploy automation composition migrated.
@@ -399,11 +428,6 @@ UnDeployAutomationCompositionMigrationTo
     ${postjson}=  Get file  ${CURDIR}/data/UndeployAC.json
     ChangeStatusAutomationComposition  ${compositionToId}   ${instanceMigrationId}  ${postjson}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionToId}  ${instanceMigrationId}  UNDEPLOYED
-
-UnInstantiateAutomationComposition
-    [Documentation]  Delete automation composition instance.
-    DeleteAutomationComposition  ${compositionId}  ${instanceId}
-    Wait Until Keyword Succeeds    1 min    5 sec    VerifyUninstantiated  ${compositionId}
 
 FailUnInstantiateAutomationCompositionMigrationTo
     [Documentation]  Fail Delete automation composition instance migrated.
@@ -476,18 +500,10 @@ FailRollbackAutomationComposition
     Should Be Equal As Strings    ${resp.status_code}     202
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
 
-UnDeployAutomationCompositionRollback
-    [Documentation]  UnDeploy automation composition in fail rollback.
-    SetParticipantSimSuccess
-    ${auth}=    ClampAuth
-    ${postjson}=  Get file  ${CURDIR}/data/UndeployAC.json
-    ChangeStatusAutomationComposition  ${compositionFromId}   ${instanceMigrationId}  ${postjson}
-    Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  UNDEPLOYED
-
 UnInstantiateAutomationCompositionRollback
-    [Documentation]  Delete automation composition instance in fail rollback.
-    DeleteAutomationComposition  ${compositionFromId}  ${instanceMigrationId}
-    Wait Until Keyword Succeeds    1 min    5 sec    VerifyUninstantiated  ${compositionFromId}
+    [Documentation]  Undeploy and Delete automation composition instance in fail rollback.
+    SetParticipantSimSuccess
+    UndeployAndDeleteAutomationComposition  ${compositionFromId}  ${instanceMigrationId}
 
 FailDePrimeACDefinitionsFrom
     [Documentation]  Fail DePrime automation composition definition migration From.
@@ -496,36 +512,18 @@ FailDePrimeACDefinitionsFrom
     PrimeACDefinition  ${postjson}  ${compositionFromId}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResultPriming  ${compositionFromId}   FAILED
 
-DePrimeACDefinitionsFrom
-    [Documentation]  DePrime automation composition definition migration From.
+DeleteACDefinitionFrom
+    [Documentation]  DePrime and Delete automation composition definition migration From.
     SetParticipantSimSuccess
-    ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
-    PrimeACDefinition  ${postjson}  ${compositionFromId}
-    Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionFromId}  COMMISSIONED
-
-DePrimeACDefinitions
-    [Documentation]  DePrime automation composition definition
-    ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
-    PrimeACDefinition  ${postjson}  ${compositionId}
-    Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionId}  COMMISSIONED
-
-DePrimeACDefinitionsTo
-    [Documentation]  DePrime automation composition definition migration To.
-    ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
-    PrimeACDefinition  ${postjson}  ${compositionToId}
-    Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionToId}  COMMISSIONED
+    DePrimeAndDeleteACDefinition  ${compositionFromId}
 
 DeleteACDefinitions
-    [Documentation]  Delete automation composition definition.
-    DeleteACDefinition  ${compositionId}
-
-DeleteACDefinitionFrom
-    [Documentation]  Delete automation composition definition migration From.
-    DeleteACDefinition  ${compositionFromId}
+    [Documentation]  DePrime and Delete automation composition definition.
+    DePrimeAndDeleteACDefinition  ${compositionId}
 
 DeleteACDefinitionTo
-    [Documentation]  Delete automation composition definition migration To.
-    DeleteACDefinition  ${compositionToId}
+    [Documentation]  DePrime and Delete automation composition definition migration To.
+    DePrimeAndDeleteACDefinition  ${compositionToId}
 
 *** Keywords ***
 
@@ -668,6 +666,15 @@ VerifyRollbackElementsSim
     Should Not Match Regexp  ${respstring}  Sim_NewAutomationCompositionElement
     Should Match Regexp  ${respstring}  Sim_SinkAutomationCompositionElement
 
+VerifyCompositionParticipantSim
+    [Arguments]  ${textToFind}
+    [Documentation]  Query composition on Participant Simulator
+    ${auth}=    ParticipantAuth
+    ${resp}=    MakeGetRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/compositiondatas  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
+    ${respstring}   Convert To String   ${resp.json()}
+    Should Match Regexp  ${respstring}  ${textToFind}
+
 VerifyParticipantSim
     [Arguments]  ${theInstanceId}  ${textToFind}
     [Documentation]  Query on Participant Simulator
@@ -730,6 +737,13 @@ MakeCommissionAcDefinition
     Should Be Equal As Strings    ${resp.status_code}     201
     RETURN  ${respyaml["compositionId"]}
 
+DePrimeAndDeleteACDefinition
+    [Arguments]   ${compositionId}
+    ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
+    PrimeACDefinition  ${postjson}  ${compositionId}
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionId}  COMMISSIONED
+    DeleteACDefinition  ${compositionId}
+
 PrimeACDefinition
     [Arguments]   ${postjson}  ${compositionId}
     ${auth}=    ClampAuth
@@ -779,6 +793,14 @@ DeleteAutomationComposition
     ${resp}=   DELETE On Session     policy  /onap/policy/clamp/acm/v2/compositions/${compositionId}/instances/${instanceId}     headers=${headers}
     Log    Received response from runtime acm ${resp.text}
     Should Be Equal As Strings    ${resp.status_code}     202
+
+UndeployAndDeleteAutomationComposition
+    [Arguments]  ${compositionId}  ${instanceId}
+    ${postjson}=  Get file  ${CURDIR}/data/UndeployAC.json
+    ChangeStatusAutomationComposition  ${compositionId}   ${instanceId}  ${postjson}
+    Wait Until Keyword Succeeds    3 min    5 sec    VerifyDeployStatus  ${compositionId}  ${instanceId}  UNDEPLOYED
+    DeleteAutomationComposition  ${compositionId}  ${instanceId}
+    Wait Until Keyword Succeeds    1 min    5 sec    VerifyUninstantiated  ${compositionId}
 
 MakePostRequest
     [Arguments]  ${name}  ${domain}  ${url}  ${auth}
