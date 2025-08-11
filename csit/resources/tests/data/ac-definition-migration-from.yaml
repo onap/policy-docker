@@ -106,7 +106,31 @@ node_types:
         required: true
         entry_schema:
           type: map
-        description: The connfiguration entities the Automation Composition Element is managing and their associated REST requests
+        description: The configuration entities the Automation Composition Element is managing and their associated REST requests
+
+  org.onap.policy.clamp.acm.SimAutomationCompositionElement2:
+    version: 1.0.0
+    derived_from: org.onap.policy.clamp.acm.AutomationCompositionElement
+    properties:
+      baseUrl:
+        type: string
+        required: true
+        description: The base URL to be prepended to each path, identifies the host for the REST endpoints.
+        metadata:
+          sensitive: true
+      httpHeaders:
+        type: map
+        required: false
+        entry_schema:
+          type: string
+        description: HTTP headers to send on REST requests
+      configurationEntities:
+        type: map
+        required: true
+        entry_schema:
+          type: map
+        description: The configuration entities the Automation Composition Element is managing and their associated REST requests
+
 
 topology_template:
 
@@ -156,6 +180,18 @@ topology_template:
           prepare: [0,2]
           migrate: [0,2]
 
+    onap.policy.clamp.ac.element.Sim_Sink2AutomationCompositionElement:
+      version: 1.2.3
+      type: org.onap.policy.clamp.acm.SimAutomationCompositionElement2
+      type_version: 1.0.0
+      description: Automation composition element for the http requests of AC Element Sink microservice
+      properties:
+        provider: ONAP
+        startPhase: 0
+        stage:
+          prepare: [ 0,3 ]
+          migrate: [ 0,3 ]
+
     onap.policy.clamp.ac.element.AutomationCompositionDefinition:
       version: 1.2.3
       type: org.onap.policy.clamp.acm.AutomationComposition
@@ -169,4 +205,6 @@ topology_template:
           - name: onap.policy.clamp.ac.element.Sim_BridgeAutomationCompositionElement
             version: 1.2.3
           - name: onap.policy.clamp.ac.element.Sim_SinkAutomationCompositionElement
+            version: 1.2.3
+          - name: onap.policy.clamp.ac.element.Sim_Sink2AutomationCompositionElement
             version: 1.2.3
