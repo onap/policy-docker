@@ -18,7 +18,7 @@ HealthcheckAcm
 HealthcheckParticipantSim
     [Documentation]    Healthcheck on Participant Simulator
     ${auth}=    ParticipantAuth
-    ${resp}=    MakeGetRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/health  ${auth}
+    ${resp}=    MakeGetRequest  participant  ${HTTP_PARTICIPANT_SIM1_IP}  /onap/policy/simparticipant/health  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
 
 HealthcheckApi
@@ -289,27 +289,27 @@ CheckTraces
     [Documentation]    Verify that traces are being recorded in jaeger
     Log    Verifying Jaeger traces
     ${acmResp}=    VerifyTracingWorks    ${JAEGER_IP}    acm-r
-    ${httpResp}=    VerifyTracingWorks    ${JAEGER_IP}    http-ppnt
+    ${httpSim1Resp}=    VerifyTracingWorks    ${JAEGER_IP}    sim-ppnt-1
     ${policyResp}=    VerifyTracingWorks    ${JAEGER_IP}    policy-ppnt
-    ${k8sResp}=    VerifyTracingWorks    ${JAEGER_IP}    k8s-ppnt
+    ${httpSim2Resp}=    VerifyTracingWorks    ${JAEGER_IP}    sim-ppnt-2
     Should Not Be Empty    ${acmResp.json()["data"][0]["spans"][0]["spanID"]}
     Log  Received spanID is ${acmResp.json()["data"][0]["spans"][0]["spanID"]}
-    Should Not Be Empty    ${httpResp.json()["data"][0]["spans"][0]["spanID"]}
+    Should Not Be Empty    ${httpSim1Resp.json()["data"][0]["spans"][0]["spanID"]}
     Should Not Be Empty    ${policyResp.json()["data"][0]["spans"][0]["spanID"]}
-    Should Not Be Empty    ${k8sResp.json()["data"][0]["spans"][0]["spanID"]}
+    Should Not Be Empty    ${httpSim2Resp.json()["data"][0]["spans"][0]["spanID"]}
 
 CheckKafkaPresentInTraces
     [Documentation]    Verify that kafka traces are being recorded in jaeger
     Log    Verifying Kafka Jaeger traces
     ${acmResp}=    VerifyKafkaInTraces    ${JAEGER_IP}    acm-r
-    ${httpResp}=    VerifyKafkaInTraces    ${JAEGER_IP}    http-ppnt
+    ${httpSim1Resp}=    VerifyKafkaInTraces    ${JAEGER_IP}    sim-ppnt-1
     ${policyResp}=    VerifyKafkaInTraces    ${JAEGER_IP}    policy-ppnt
-    ${k8sResp}=    VerifyKafkaInTraces    ${JAEGER_IP}    k8s-ppnt
+    ${httpSim2Resp}=    VerifyKafkaInTraces    ${JAEGER_IP}    sim-ppnt-2
     Should Not Be Empty    ${acmResp.json()["data"][0]["spans"][0]["spanID"]}
     Log  Received spanID is ${acmResp.json()["data"][0]["spans"][0]["spanID"]}
-    Should Not Be Empty    ${httpResp.json()["data"][0]["spans"][0]["spanID"]}
+    Should Not Be Empty    ${httpSim1Resp.json()["data"][0]["spans"][0]["spanID"]}
     Should Not Be Empty    ${policyResp.json()["data"][0]["spans"][0]["spanID"]}
-    Should Not Be Empty    ${k8sResp.json()["data"][0]["spans"][0]["spanID"]}
+    Should Not Be Empty    ${httpSim2Resp.json()["data"][0]["spans"][0]["spanID"]}
 
 CheckHttpPresentInAcmTraces
     [Documentation]    Verify that http traces are being recorded in jaeger
@@ -355,13 +355,13 @@ SendOutPropertiesToRuntime
     ${postjson}=  Get file  ${CURDIR}/data/OutProperties.json
     ${updatedpostjson}=   Replace String     ${postjson}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
     ${updatedpostjson}=   Replace String     ${updatedpostjson}     TEXTPLACEHOLDER       DumpTest
-    ${resp}=   MakeJsonPutRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/datas  ${updatedpostjson}  ${auth}
+    ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM1_IP}  /onap/policy/simparticipant/v2/datas  ${updatedpostjson}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
-    ${resp}=   MakeJsonPutRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/datas  ${updatedpostjson}  ${auth}
+    ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM1_IP}  /onap/policy/simparticipant/v2/datas  ${updatedpostjson}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
     ${updatedpostjson}=   Replace String     ${postjson}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
     ${updatedpostjson}=   Replace String     ${updatedpostjson}     TEXTPLACEHOLDER       MyTextToSend
-    ${resp}=   MakeJsonPutRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/datas  ${updatedpostjson}  ${auth}
+    ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM1_IP}  /onap/policy/simparticipant/v2/datas  ${updatedpostjson}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyPropertiesUpdated  ${compositionFromId}  ${instanceMigrationId}  MyTextToSend
 
@@ -671,9 +671,9 @@ VerifyRollbackElementsRuntime
 
 VerifyMigratedElementsSim
     [Arguments]  ${theInstanceId}
-    [Documentation]  Query on Participant Simulator
+    [Documentation]  Query on Participant Simulator 1
     ${auth}=    ParticipantAuth
-    ${resp}=    MakeGetRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/instances/${theInstanceId}  ${auth}
+    ${resp}=    MakeGetRequest  participant  ${HTTP_PARTICIPANT_SIM1_IP}  /onap/policy/simparticipant/v2/instances/${theInstanceId}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
     ${respstring}   Convert To String   ${resp.json()}
     Should Match Regexp  ${respstring}  Sim_NewAutomationCompositionElement
@@ -683,7 +683,7 @@ VerifyRollbackElementsSim
     [Arguments]  ${theInstanceId}
     [Documentation]  Query on Participant Simulator
     ${auth}=    ParticipantAuth
-    ${resp}=    MakeGetRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/instances/${theInstanceId}  ${auth}
+    ${resp}=    MakeGetRequest  participant  ${HTTP_PARTICIPANT_SIM1_IP}  /onap/policy/simparticipant/v2/instances/${theInstanceId}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
     ${respstring}   Convert To String   ${resp.json()}
     Should Not Match Regexp  ${respstring}  Sim_NewAutomationCompositionElement
@@ -693,7 +693,7 @@ VerifyCompositionParticipantSim
     [Arguments]  ${textToFind}
     [Documentation]  Query composition on Participant Simulator
     ${auth}=    ParticipantAuth
-    ${resp}=    MakeGetRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/compositiondatas  ${auth}
+    ${resp}=    MakeGetRequest  participant  ${HTTP_PARTICIPANT_SIM1_IP}  /onap/policy/simparticipant/v2/compositiondatas  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
     ${respstring}   Convert To String   ${resp.json()}
     Should Match Regexp  ${respstring}  ${textToFind}
@@ -702,7 +702,7 @@ VerifyParticipantSim
     [Arguments]  ${theInstanceId}  ${textToFind}
     [Documentation]  Query on Participant Simulator
     ${auth}=    ParticipantAuth
-    ${resp}=    MakeGetRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/instances/${theInstanceId}  ${auth}
+    ${resp}=    MakeGetRequest  participant  ${HTTP_PARTICIPANT_SIM1_IP}  /onap/policy/simparticipant/v2/instances/${theInstanceId}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
     ${respstring}   Convert To String   ${resp.json()}
     Should Match Regexp  ${respstring}  ${textToFind}
@@ -719,28 +719,28 @@ SetParticipantSimFail
     [Documentation]  Set Participant Simulator Fail.
     ${auth}=    ParticipantAuth
     ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesFail.json
-    ${resp}=   MakeJsonPutRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
+    ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM1_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
 
 SetParticipantSimSuccess
     [Documentation]  Set Participant Simulator Success.
     ${auth}=    ParticipantAuth
     ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesSuccess.json
-    ${resp}=   MakeJsonPutRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
+    ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM1_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
 
 SetParticipantSimTimeout
     [Documentation]  Set Participant Simulator Timeout.
     ${auth}=    ParticipantAuth
     ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesTimeout.json
-    ${resp}=   MakeJsonPutRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
+    ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM1_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
 
 SetParticipantSimDelay
     [Documentation]  Set Participant Simulator Delay.
     ${auth}=    ParticipantAuth
     ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesDelay.json
-    ${resp}=   MakeJsonPutRequest  participant  ${POLICY_PARTICIPANT_SIM_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
+    ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM1_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
 
 

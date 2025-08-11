@@ -106,7 +106,7 @@ node_types:
         required: true
         entry_schema:
           type: map
-        description: The connfiguration entities the Automation Composition Element is managing and their associated REST requests
+        description: The configuration entities the Automation Composition Element is managing and their associated REST requests
 
 topology_template:
 

@@ -218,10 +218,9 @@ services:
       - apex-pdp
       - kafka
       - jaeger
-      - policy-clamp-ac-http-ppnt
-      - policy-clamp-ac-k8s-ppnt
       - policy-clamp-ac-pf-ppnt
-      - policy-clamp-ac-sim-ppnt
+      - policy-clamp-ac-sim-ppnt-1
+      - policy-clamp-ac-sim-ppnt-2
     ports:
       - ${ACM_PORT}:6969
     environment:
@@ -253,9 +252,9 @@ services:
       '-c', 'java -jar /app/app.jar',
       'apex-pdp', '6969',
       'kafka', '9092',
-      'policy-clamp-ac-http-ppnt', '6969',
-      'policy-clamp-ac-k8s-ppnt', '6969',
-      'policy-clamp-ac-pf-ppnt', '6969'
+      'policy-clamp-ac-pf-ppnt', '6969',
+      'policy-clamp-ac-sim-ppnt-1', '6969',
+      'policy-clamp-ac-sim-ppnt-2', '6969'
     ]
 
   policy-clamp-ac-http-ppnt:
