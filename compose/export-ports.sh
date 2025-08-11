@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-# Copyright 2023-2024 Nordix Foundation.
+# Copyright 2023-2025 OpenInfra Foundation Europe. All rights reserved.
 # Modifications Copyright 2024 Deutsche Telekom
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,7 +30,8 @@ export DROOLS_TELEMETRY_PORT=30216
 export DIST_PORT=30006
 export ACM_PORT=30007
 export POLICY_PARTICIPANT_PORT=30008
-export SIM_PARTICIPANT_PORT=30011
+export SIM_PARTICIPANT1_PORT=30011
+export SIM_PARTICIPANT2_PORT=30013
 export DROOLS_APPS_PORT=30009
 export DROOLS_APPS_TELEMETRY_PORT=30219
 export SIMULATOR_PORT=30904
