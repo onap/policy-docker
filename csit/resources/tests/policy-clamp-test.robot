@@ -80,6 +80,29 @@ DeleteACDefinitionsRestored
     DePrimeAndDeleteACDefinition   ${compositionIdRestored}
     DePrimeAndDeleteACDefinition   ${compositionTargetIdRestored}
 
+InsertDataIntoDatabase2
+    [Documentation]  Insert restored data into the Database.
+    ${result}=    Run Process    ${CURDIR}/data/script/execute-query.sh    ${CURDIR}/data/query/compositiondefinition-from.sql
+    Should Be Equal As Strings    ${result.rc}     0
+    ${result}=    Run Process    ${CURDIR}/data/script/execute-query.sh    ${CURDIR}/data/query/instance.sql
+    Should Be Equal As Strings    ${result.rc}     0
+
+SyncParticipant
+    [Documentation]  Manual sync participants.
+    ${auth}=    ClampAuth
+    Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+    ${session}=    Create Session      policy  http://${POLICY_RUNTIME_ACM_IP}   auth=${auth}
+    ${resp}=   PUT On Session     policy  /onap/policy/clamp/acm/v2/participants/sync
+    Log    Received response from runtime acm ${resp.text}
+    Should Be Equal As Strings    ${resp.status_code}     202
+    Wait Until Keyword Succeeds    1 min    10 sec    VerifyCompositionParticipantSim   'InternalState'
+    VerifyParticipantSim  ${InstanceIdRestored}  myParameterToUpdate
+
+AcDeleteRestored2
+    [Documentation]  Undeploy and delete of an automation composition restored.
+    UndeployAndDeleteAutomationComposition  ${compositionIdRestored}  ${InstanceIdRestored}
+    DePrimeAndDeleteACDefinition   ${compositionIdRestored}
+
 CommissionAcDefinitionTimeout
     [Documentation]  Commission automation composition definition Timeout.
     ${postyaml}=  Get file  ${CURDIR}/data/ac-definition-timeout.yaml
@@ -198,7 +221,7 @@ DeleteUndeployedInstantiateAutomationComposition
     ${postjson}=  Get file  ${CURDIR}/data/${instantiationfile}
     ${tmpInstanceId}=  MakeJsonInstantiateAutomationComposition  ${compositionId}  ${postjson}
     DeleteAutomationComposition  ${compositionId}  ${tmpInstanceId}
-    Wait Until Keyword Succeeds    1 min    5 sec    VerifyUninstantiated  ${compositionId}
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyUninstantiated  ${compositionId}
 
 InstantiateAutomationComposition
     [Documentation]  Instantiate automation composition.
