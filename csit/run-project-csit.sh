@@ -99,7 +99,7 @@ function setup_clamp() {
     export ACM_REPLICA_TEARDOWN=true
     export ROBOT_FILES="policy-clamp-test.robot clamp-slas.robot"
     export TEST_ENV="docker"
-    export PROJECT=clamp
+    export PROJECT="clamp"
     source "${DOCKER_COMPOSE_DIR}"/start-acm-replica.sh --start --replicas=2 --grafana
     echo "Waiting 2 minutes for the replicas to be started..."
     sleep 120
@@ -111,6 +111,8 @@ function setup_clamp() {
 }
 
 function setup_clamp_simple() {
+    export PROJECT="clamp"
+    export TEST_ENV="docker"
     export ROBOT_FILES="policy-clamp-test.robot clamp-slas.robot"
     source "${DOCKER_COMPOSE_DIR}"/start-compose.sh policy-clamp-runtime-acm --grafana
     echo "Waiting 2 minutes acm-runtime and participants to start..."
