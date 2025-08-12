@@ -95,11 +95,15 @@ function check_rest_endpoint() {
     fi
 }
 
-function setup_clamp() {
-    export ACM_REPLICA_TEARDOWN=true
+function export_clamp_variables() {
     export ROBOT_FILES="policy-clamp-test.robot clamp-slas.robot"
     export TEST_ENV="docker"
-    export PROJECT=clamp
+    export PROJECT="clamp"
+    export SCHEMAS_TO_BE_CREATED="policyadmin clampacm"
+}
+function setup_clamp() {
+    export_clamp_variables
+    export ACM_REPLICA_TEARDOWN=true
     source "${DOCKER_COMPOSE_DIR}"/start-acm-replica.sh --start --replicas=2 --grafana
     echo "Waiting 2 minutes for the replicas to be started..."
     sleep 120
@@ -111,7 +115,7 @@ function setup_clamp() {
 }
 
 function setup_clamp_simple() {
-    export ROBOT_FILES="policy-clamp-test.robot clamp-slas.robot"
+    export_clamp_variables
     source "${DOCKER_COMPOSE_DIR}"/start-compose.sh policy-clamp-runtime-acm --grafana
     echo "Waiting 2 minutes acm-runtime and participants to start..."
     sleep 120
@@ -343,6 +347,7 @@ export DOCKER_COMPOSE_DIR="${WORKSPACE}/compose"
 export ROBOT_FILES=""
 export ACM_REPLICA_TEARDOWN=false
 export APEX_REPLICA_TEARDOWN=false
+export SCHEMAS_TO_BE_CREATED="policyadmin operationshistory pooling"
 
 cd "${WORKSPACE}" || exit
 

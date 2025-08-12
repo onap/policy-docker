@@ -98,6 +98,16 @@ SyncParticipant
     Wait Until Keyword Succeeds    1 min    10 sec    VerifyCompositionParticipantSim   'InternalState'
     VerifyParticipantSim  ${InstanceIdRestored}  myParameterToUpdate
 
+GetInstances
+    [Documentation]    Get all the instances from the database
+    ${auth}=    ClampAuth
+    Log    Creating session http://${POLICY_RUNTIME_ACM_IP}
+    ${session}=    Create Session    policy    http://${POLICY_RUNTIME_ACM_IP}    auth=${auth}
+    ${resp}=    GET On Session    policy    /onap/policy/clamp/acm/v2/instances
+    Log    Received response from ACM-R ${resp.text}
+    Should Be Equal As Strings    ${resp.status_code}    200
+    Length Should Be    ${resp.json()["automationCompositionList"]}    1
+
 AcDeleteRestored2
     [Documentation]  Undeploy and delete of an automation composition restored.
     UndeployAndDeleteAutomationComposition  ${compositionIdRestored}  ${InstanceIdRestored}
