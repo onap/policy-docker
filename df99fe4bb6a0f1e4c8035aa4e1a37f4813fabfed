@@ -41,6 +41,30 @@
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6074fd80_1a98c5eb",
+        "filename": "compose/export-ports.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2025-08-15T08:29:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d494662_3b1e920c",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 40
+      },
+      "revId": "df99fe4bb6a0f1e4c8035aa4e1a37f4813fabfed",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b20ec0eb_12036a31",
@@ -54,6 +78,30 @@
       "writtenOn": "2025-08-15T06:55:36Z",
       "side": 1,
       "message": "update license",
+      "range": {
+        "startLine": 4,
+        "startChar": 22,
+        "endLine": 4,
+        "endChar": 45
+      },
+      "revId": "df99fe4bb6a0f1e4c8035aa4e1a37f4813fabfed",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84f74d7e_60890a37",
+        "filename": "csit/resources/scripts/run-test.sh",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2025-08-15T08:29:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b20ec0eb_12036a31",
       "range": {
         "startLine": 4,
         "startChar": 22,
