@@ -429,6 +429,7 @@ AutomationCompositionMigrationTo
     VerifyParticipantSim  ${instanceMigrationId}  TextForMigration
     VerifyMigratedElementsRuntime  ${compositionToId}  ${instanceMigrationId}
     VerifyMigratedElementsSim  ${instanceMigrationId}
+    VerifyRemovedElementsSim  ${instanceMigrationId}
 
 FailAutomationCompositionMigration
     [Documentation]  Fail Migration of an automation composition.
@@ -688,6 +689,15 @@ VerifyMigratedElementsSim
     ${respstring}   Convert To String   ${resp.json()}
     Should Match Regexp  ${respstring}  Sim_NewAutomationCompositionElement
     Should Not Match Regexp  ${respstring}  Sim_SinkAutomationCompositionElement
+
+VerifyRemovedElementsSim
+    [Arguments]  ${theInstanceId}
+    [Documentation]  Query on Participant Simulator 2
+    ${auth}=    ParticipantAuth
+    ${resp}=    MakeGetRequest  participant  ${HTTP_PARTICIPANT_SIM2_IP}  /onap/policy/simparticipant/v2/instances/${theInstanceId}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
+    ${respstring}   Convert To String   ${resp.json()}
+    Should Not Match Regexp  ${respstring}  Sim_Sink2AutomationCompositionElement
 
 VerifyRollbackElementsSim
     [Arguments]  ${theInstanceId}
