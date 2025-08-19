@@ -231,7 +231,7 @@ DeleteUndeployedInstantiateAutomationComposition
     ${postjson}=  Get file  ${CURDIR}/data/${instantiationfile}
     ${tmpInstanceId}=  MakeJsonInstantiateAutomationComposition  ${compositionId}  ${postjson}
     DeleteAutomationComposition  ${compositionId}  ${tmpInstanceId}
-    Wait Until Keyword Succeeds    2 min    5 sec    VerifyUninstantiated  ${compositionId}
+    Wait Until Keyword Succeeds    3 min    5 sec    VerifyUninstantiated  ${compositionId}
 
 InstantiateAutomationComposition
     [Documentation]  Instantiate automation composition.
@@ -251,6 +251,7 @@ InstantiateAutomationCompositionTimeout
 DeployAutomationCompositionTimeout
     [Documentation]  Deploy automation composition timeout.
     SetParticipantSimTimeout
+    SetParticipantSim2Timeout
     ${postjson}=  Get file  ${CURDIR}/data/DeployAC.json
     ChangeStatusAutomationComposition  ${compositionFromId}  ${instanceTimeoutId}   ${postjson}
     Wait Until Keyword Succeeds    5 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceTimeoutId}  TIMEOUT
@@ -258,6 +259,7 @@ DeployAutomationCompositionTimeout
 DeleteAutomationCompositionTimeout
     [Documentation]  Delete automation composition timeout.
     SetParticipantSimSuccess
+    SetParticipantSim2Success
     UndeployAndDeleteAutomationComposition  ${compositionFromId}  ${instanceTimeoutId}
 
 InstantiateAutomationCompositionMigrationFrom
@@ -270,6 +272,7 @@ InstantiateAutomationCompositionMigrationFrom
 FailPrepareAutomationCompositionMigrationFrom
     [Documentation]  Fail Prepare automation composition migration.
     SetParticipantSimFail
+    SetParticipantSim2Fail
     ${postjson}=  Get file  ${CURDIR}/data/PrepareAC.json
     ChangeStatusAutomationComposition   ${compositionFromId}   ${instanceMigrationId}  ${postjson}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
@@ -277,6 +280,7 @@ FailPrepareAutomationCompositionMigrationFrom
 PrepareAutomationCompositionMigrationFrom
     [Documentation]  Prepare automation composition migration.
     SetParticipantSimSuccess
+    SetParticipantSim2Success
     ${postjson}=  Get file  ${CURDIR}/data/PrepareAC.json
     ChangeStatusAutomationComposition   ${compositionFromId}   ${instanceMigrationId}  ${postjson}
     Wait Until Keyword Succeeds    10 min    5 sec    VerifySubStatus  ${compositionFromId}  ${instanceMigrationId}
@@ -429,6 +433,7 @@ AutomationCompositionMigrationTo
     VerifyParticipantSim  ${instanceMigrationId}  TextForMigration
     VerifyMigratedElementsRuntime  ${compositionToId}  ${instanceMigrationId}
     VerifyMigratedElementsSim  ${instanceMigrationId}
+    VerifyRemovedElementsSim  ${instanceMigrationId}
 
 FailAutomationCompositionMigration
     [Documentation]  Fail Migration of an automation composition.
@@ -689,6 +694,15 @@ VerifyMigratedElementsSim
     Should Match Regexp  ${respstring}  Sim_NewAutomationCompositionElement
     Should Not Match Regexp  ${respstring}  Sim_SinkAutomationCompositionElement
 
+VerifyRemovedElementsSim
+    [Arguments]  ${theInstanceId}
+    [Documentation]  Query on Participant Simulator 2
+    ${auth}=    ParticipantAuth
+    ${resp}=    MakeGetRequest  participant  ${HTTP_PARTICIPANT_SIM2_IP}  /onap/policy/simparticipant/v2/instances/${theInstanceId}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
+    ${respstring}   Convert To String   ${resp.json()}
+    Should Not Match Regexp  ${respstring}  Sim_Sink2AutomationCompositionElement
+
 VerifyRollbackElementsSim
     [Arguments]  ${theInstanceId}
     [Documentation]  Query on Participant Simulator
@@ -732,6 +746,13 @@ SetParticipantSimFail
     ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM1_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
 
+SetParticipantSim2Fail
+    [Documentation]  Set Participant Simulator2 Fail.
+    ${auth}=    ParticipantAuth
+    ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesFail.json
+    ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM2_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
+
 SetParticipantSimSuccess
     [Documentation]  Set Participant Simulator Success.
     ${auth}=    ParticipantAuth
@@ -739,11 +760,25 @@ SetParticipantSimSuccess
     ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM1_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
 
+SetParticipantSim2Success
+    [Documentation]  Set Participant Simulator Success.
+    ${auth}=    ParticipantAuth
+    ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesSuccess.json
+    ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM2_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
+
 SetParticipantSimTimeout
     [Documentation]  Set Participant Simulator Timeout.
     ${auth}=    ParticipantAuth
     ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesTimeout.json
     ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM1_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
+
+SetParticipantSim2Timeout
+    [Documentation]  Set Participant Simulator Timeout.
+    ${auth}=    ParticipantAuth
+    ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesTimeout.json
+    ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM2_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
 
 SetParticipantSimDelay
@@ -900,3 +935,4 @@ VerifyHttpInTraces
     ${resp}=  GET On Session  jaeger  /api/traces  params=${params}    expected_status=200
     Log  Received response from jaeger ${resp.text}
     RETURN  ${resp}
+

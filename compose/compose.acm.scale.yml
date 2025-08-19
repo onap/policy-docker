@@ -29,7 +29,7 @@ services:
       - apex-pdp
       - kafka
       - jaeger
-      - policy-clamp-ac-pf-ppnt-replica
+      - policy-clamp-ac-pf-ppnt
       - policy-clamp-ac-sim-ppnt-1
       - policy-clamp-ac-sim-ppnt-2
     expose:
@@ -65,7 +65,7 @@ services:
       '-c', 'java -jar /app/app.jar',
       'apex-pdp', '6969',
       'kafka', '9092',
-      'policy-clamp-ac-pf-ppnt-replica', '6969',
+      'policy-clamp-ac-pf-ppnt', '6969',
       'policy-clamp-ac-sim-ppnt-1', '6969',
       'policy-clamp-ac-sim-ppnt-2', '6969',
     ]
