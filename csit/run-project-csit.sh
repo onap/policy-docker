@@ -20,6 +20,8 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+# DO NOT MERGE
+
 SKIP_BUILDING_ROBOT_IMG=false
 DO_NOT_TEARDOWN=false
 

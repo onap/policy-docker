@@ -2,6 +2,8 @@ Copyright 2018-2019 AT&T Intellectual Property. All rights reserved.
 This file is licensed under the CREATIVE COMMONS ATTRIBUTION 4.0 INTERNATIONAL LICENSE
 Full license text at https://creativecommons.org/licenses/by/4.0/legalcode
 
+DO NOT MERGE - TEST REVIEW TO TRIGGER CLAMP CSITS
+
 This source repository contains legacy docker-compose configurations used for CSIT
 tests, and ONAP Heat instantiations.
 
