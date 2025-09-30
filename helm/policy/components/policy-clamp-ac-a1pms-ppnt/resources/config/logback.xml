@@ -84,7 +84,7 @@
         <appender-ref ref="STDOUT" />
     </appender>
 
-    <logger name="network" level="INFO" additivity="false">
+    <logger name="acm-network" level="INFO" additivity="false">
         <appender-ref ref="AsyncNetworkOut" />
         <appender-ref ref="AsyncStdOut" />
     </logger>
