@@ -78,7 +78,7 @@ echo "Run Robot test"
 echo ROBOT_VARIABLES="${ROBOT_VARIABLES}"
 echo "Starting Robot test suites ..."
 mkdir -p /tmp/results/
-python3 -m robot.run -d /tmp/results/ ${ROBOT_VARIABLES} ${ROBOT_FILE}
+python3 -m robot.run --name "${PROJECT}" -d /tmp/results/ ${ROBOT_VARIABLES} ${ROBOT_FILE}
 RESULT=$?
 echo "RESULT: ${RESULT}"
 

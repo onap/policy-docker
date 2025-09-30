@@ -1,6 +1,6 @@
 #!/bin/bash -x
 #
-# Copyright 2024-2025 Nordix Foundation.
+# Copyright 2024-2025 OpenInfra Foundation Europe. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -52,7 +52,8 @@ fi
 clone_models
 
 echo "Building robot framework docker image"
-docker build . --file Dockerfile  --tag "onap/${ROBOT_DOCKER_IMAGE}" --quiet
+docker buildx install
+docker buildx build . --file Dockerfile  --tag "onap/${ROBOT_DOCKER_IMAGE}" --quiet
 docker save -o policy-csit-robot.tar "onap/${ROBOT_DOCKER_IMAGE}":latest
 
 rm -rf "${WORKSPACE}"/csit/resources/policy-csit-robot.tar

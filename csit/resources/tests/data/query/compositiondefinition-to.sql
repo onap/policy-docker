@@ -28,4 +28,3 @@ VALUES ('3d34ca20-1b16-4f2c-971a-6ed52a0dafff', '6c1cf107-a2ca-4485-8129-02f9fae
 
 INSERT INTO nodetemplatestate (nodetemplatestateid, compositionid, message, nodetemplate_name, nodetemplate_version, outproperties, participantid, state)
 VALUES ('d6a4a446-cfcb-45ad-a63e-3c6393471e42', '6c1cf107-a2ca-4485-8129-02f9fae64d64', 'Primed', 'onap.policy.clamp.ac.element.Sim_BridgeAutomationCompositionElement', '1.2.4', '{"InternalState":"PRIMED"}', '101c62b3-8918-41b9-a747-d21eb79c6c90', 2);
-

@@ -96,11 +96,13 @@ function check_rest_endpoint() {
 }
 
 function export_clamp_variables() {
-    export ROBOT_FILES="policy-clamp-test.robot clamp-slas.robot"
+    export ROBOT_FILES="clamp-health-check.robot clamp-db-restore.robot clamp-single-element-test.robot clamp-timeout-test.robot
+    clamp-migrate-rollback.robot clamp-trace-test.robot clamp-slas.robot"
     export TEST_ENV="docker"
     export PROJECT="clamp"
-    export SCHEMAS_TO_BE_CREATED="policyadmin clampacm"
+    export SCHEMAS_TO_BE_CREATED="policyadmin"
 }
+
 function setup_clamp() {
     export_clamp_variables
     export ACM_REPLICA_TEARDOWN=true

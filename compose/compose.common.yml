@@ -172,3 +172,4 @@ services:
     environment:
       ROBOT_FILE: ${ROBOT_FILES:-none}
       TEST_ENV: ${TEST_ENV:-docker}
+      PROJECT: ${PROJECT:-policy}
