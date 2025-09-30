@@ -23,7 +23,7 @@
 
     <property name="errorLog" value="error" />
     <property name="debugLog" value="debug" />
-    <property name="networkLog" value="network" />
+    <property name="networkLog" value="acm-network" />
 
     <property name="metricLog" value="metric" />
     <property name="transactionLog" value="audit" />
@@ -182,7 +182,7 @@
         <appender-ref ref="STDOUT" />
     </appender>
 
-    <logger name="network" level="INFO" additivity="false">
+    <logger name="acm-network" level="INFO" additivity="false">
         <appender-ref ref="AsyncNetworkOut" />
         <appender-ref ref="AsyncStdOut" />
     </logger>
