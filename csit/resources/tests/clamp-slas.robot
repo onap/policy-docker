@@ -1,8 +1,9 @@
 *** Settings ***
-Library    Collections
-Library    RequestsLibrary
-Library    OperatingSystem
-Library    json
+Name        Service Level Agreement Suite
+Library     Collections
+Library     RequestsLibrary
+Library     OperatingSystem
+Library     json
 Resource    common-library.robot
 
 *** Keywords ***
