@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2025 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2025 OpenInfra Foundation Europe.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -36,7 +36,8 @@ DIST_TEMP_FOLDER=/tmp/distribution
 function clone_models() {
     local retry_count=3
     local success=false
-    cd tests
+    cd tests || exit
+    sudo rm -rf models/
     for ((i = 1; i <= retry_count; i++)); do
         git clone "https://gerrit.onap.org/r/policy/models" && success=true && break
         echo "Retrying git clone ($i/$retry_count)..."
@@ -61,17 +62,17 @@ function clone_models() {
 }
 
 function copy_csar_file() {
-    zip -F ${DISTRIBUTION_CSAR}/sample_csar_with_apex_policy.csar \
-        --out ${DISTRIBUTION_CSAR}/csar_temp.csar -q
+    zip -F "${DISTRIBUTION_CSAR}"/sample_csar_with_apex_policy.csar \
+        --out "${DISTRIBUTION_CSAR}"/csar_temp.csar -q
     sudo rm -rf "${DIST_TEMP_FOLDER}"
     sudo mkdir "${DIST_TEMP_FOLDER}"
-    sudo cp ${DISTRIBUTION_CSAR}/csar_temp.csar ${DISTRIBUTION_CSAR}/temp.csar
-    sudo mv ${DISTRIBUTION_CSAR}/temp.csar ${DIST_TEMP_FOLDER}/sample_csar_with_apex_policy.csar
+    sudo cp "${DISTRIBUTION_CSAR}"/csar_temp.csar "${DISTRIBUTION_CSAR}"/temp.csar
+    sudo mv "${DISTRIBUTION_CSAR}"/temp.csar ${DIST_TEMP_FOLDER}/sample_csar_with_apex_policy.csar
 }
 
 function build_robot_image() {
     echo "Build docker image for robot framework"
-    cd ${WORKSPACE}/csit/resources || exit
+    cd "${WORKSPACE}"/csit/resources || exit
     clone_models
     if [ "${PROJECT}" == "distribution" ] || [ "${PROJECT}" == "policy-distribution" ]; then
         copy_csar_file
@@ -100,9 +101,9 @@ function push_acelement_chart() {
     done
 
     ACELEMENT_CHART=${WORKSPACE}/csit/resources/tests/clamp/examples/src/main/resources/clamp/acm/acelement-helm/acelement
-    helm cm-push $ACELEMENT_CHART policy-chartmuseum
+    helm cm-push "$ACELEMENT_CHART" policy-chartmuseum
     helm repo update
-    rm -rf ${WORKSPACE}/csit/resources/tests/clamp/
+    rm -rf "${WORKSPACE}"/csit/resources/tests/clamp/
     echo "-------------------------------------------"
 }
 
@@ -130,8 +131,8 @@ function start_csit() {
         echo "Importing robot image into microk8s registry"
         docker save -o policy-csit-robot.tar ${ROBOT_DOCKER_IMAGE}:latest
         sudo microk8s ctr image import policy-csit-robot.tar
-        rm -rf ${WORKSPACE}/csit/resources/policy-csit-robot.tar
-        rm -rf ${WORKSPACE}/csit/resources/tests/models/
+        rm -rf "${WORKSPACE}"/csit/resources/policy-csit-robot.tar
+        rm -rf "${WORKSPACE}"/csit/resources/tests/models/
         echo "---------------------------------------------"
         if [ "$PROJECT" == "clamp" ] || [ "$PROJECT" == "policy-clamp" ]; then
           POD_READY_STATUS="0/1"
@@ -143,9 +144,9 @@ function start_csit() {
           push_acelement_chart
         fi
         echo "Installing Robot framework pod for running CSIT"
-        cd ${WORKSPACE}/helm || exit
-        mkdir -p ${ROBOT_LOG_DIR}
-        helm install csit-robot robot --set robot="$ROBOT_FILE" --set "readiness={$(echo ${READINESS_CONTAINERS} | sed 's/[{}]//g' | sed 's/,$//')}" --set robotLogDir=$ROBOT_LOG_DIR
+        cd "${WORKSPACE}"/helm || exit
+        mkdir -p "${ROBOT_LOG_DIR}"
+        helm install csit-robot robot --set robot="$ROBOT_FILE" --set "readiness={$(echo "${READINESS_CONTAINERS}" | sed 's/[{}]//g' | sed 's/,$//')}" --set robotLogDir=$ROBOT_LOG_DIR
         print_robot_log
     fi
 }

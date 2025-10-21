@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # ============LICENSE_START====================================================
-#  Copyright (C) 2022-2025 Nordix Foundation.
+#  Copyright (C) 2022-2025 OpenInfra Foundation Europe.
 #  Modifications Copyright © 2024 Deutsche Telekom
 # =============================================================================
 #
@@ -86,16 +86,16 @@ fi
 # Execute the appropriate script based on the operation
 case $OPERATION in
     install)
-        ${WORKSPACE}/csit/resources/scripts/cluster_setup.sh install $PROJECT $LOCAL_IMAGE_ARG
+        "${WORKSPACE}"/csit/resources/scripts/cluster_setup.sh install "$PROJECT" $LOCAL_IMAGE_ARG
         if [ "$CLUSTER_ONLY" = false ]; then
-            ${WORKSPACE}/csit/resources/scripts/robot_setup.sh $PROJECT
+            "${WORKSPACE}"/csit/resources/scripts/robot_setup.sh "$PROJECT"
         fi
         ;;
     uninstall)
-        ${WORKSPACE}/csit/resources/scripts/cluster_setup.sh uninstall
+        "${WORKSPACE}"/csit/resources/scripts/cluster_setup.sh uninstall
         ;;
     clean)
-        ${WORKSPACE}/csit/resources/scripts/cluster_setup.sh clean
+        "${WORKSPACE}"/csit/resources/scripts/cluster_setup.sh clean
         ;;
     *)
         echo "Error: Invalid operation"

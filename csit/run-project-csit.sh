@@ -357,10 +357,6 @@ cd "${WORKSPACE}" || exit
 sudo rm -rf "${ROBOT_LOG_DIR}"
 mkdir -p "${ROBOT_LOG_DIR}"
 
-if [ "${TEARDOWN}" == "true" ]; then
-    on_exit
-fi
-
 # log into nexus docker
 docker login -u docker -p docker nexus3.onap.org:10001
 
@@ -374,6 +370,10 @@ else
     sudo mkdir -p /usr/local/lib/docker/cli-plugins
     sudo curl -SL https://github.com/docker/compose/releases/download/v2.29.1/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose
     sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
+fi
+
+if [ "${TEARDOWN}" == "true" ]; then
+    on_exit
 fi
 
 set_project_config

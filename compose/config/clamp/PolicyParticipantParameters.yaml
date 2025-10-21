@@ -78,6 +78,14 @@ management:
     web:
       exposure:
         include: health, metrics, prometheus
+  endpoint:
+    health:
+      access: unrestricted
+      show-details: always
+      probes:
+        enabled: true
+      show-components: always
+
 server:
   port: 6969
   ssl:

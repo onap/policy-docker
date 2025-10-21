@@ -102,8 +102,6 @@ runtime:
     toscaCompositionName: {{ .Values.customNaming.toscaCompositionName }}
     enableEncryption: true
 
-
-
 management:
   tracing:
     propagation:
@@ -115,6 +113,13 @@ management:
       base-path: /
       exposure:
         include: health, metrics, prometheus
+  endpoint:
+    health:
+      access: unrestricted
+      show-details: always
+      probes:
+        enabled: true
+      show-components: always
 
 tracing:
   enabled: {{ .Values.jaeger.enabled }}
