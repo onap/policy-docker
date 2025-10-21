@@ -18,7 +18,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END=========================================================
 
-export POLICY_CLAMP_ROBOT="policy-clamp-test.robot clamp-slas.robot"
+export POLICY_CLAMP_ROBOT="clamp-health-check.robot clamp-db-restore.robot clamp-single-element-test.robot clamp-timeout-test.robot clamp-migrate-rollback.robot clamp-trace-test.robot clamp-slas.robot"
 export POLICY_API_ROBOT="api-test.robot api-slas.robot"
 export POLICY_PAP_ROBOT="pap-test.robot pap-slas.robot"
 export POLICY_APEX_PDP_ROBOT="apex-pdp-test.robot apex-slas.robot"
