@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2025 Nordix Foundation. All rights reserved.
+#  Copyright (C) 2025 OpenInfra Foundation Europe.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -115,11 +115,12 @@ function uninstall_policy() {
     helm uninstall csit-robot
     kubectl delete deploy $ZK_CONTAINER $KAFKA_CONTAINER
     rm -rf ${WORKSPACE}/helm/policy/Chart.lock
+
     if [ "$PROJECT" == "clamp" ] || [ "$PROJECT" == "policy-clamp" ]; then
       helm uninstall policy-chartmuseum
       helm repo remove chartmuseum-git policy-chartmuseum
     fi
-    sudo rm -rf /dockerdata-nfs/mariadb-galera/
+
     kubectl delete pvc --all
     echo "Policy deployment deleted"
     echo "Clean up docker"
@@ -190,7 +191,7 @@ function wait_for_pods_running() {
       IFS=' ' read -r -a pod_array <<< "$pod_names"
       if [ "${#pod_array[@]}" -eq 0 ]; then
              echo "*** Error: No pods found for the deployment $pod_name_prefix . Exiting ***"
-             return -1
+             return 1
       fi
       for pod in "${pod_array[@]}"; do
          local pod_status

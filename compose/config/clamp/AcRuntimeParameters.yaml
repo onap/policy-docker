@@ -109,14 +109,19 @@ management:
       base-path: /
       exposure:
         include: health, metrics, prometheus
+  endpoint:
+    health:
+      access: unrestricted
+      show-details: always
+      probes:
+        enabled: true
+      show-components: always
 
 metrics:
   security:
     disabled: false
 
-
 # Tracing can be configured for grpc or http - default is http
-
 tracing:
   enabled: true
   exporter:
