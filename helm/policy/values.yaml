@@ -102,8 +102,6 @@ dbmigrator:
   policy_home: "/opt/app/policy"
   policyadmin:
     schema: policyadmin
-  clampacm:
-    schema: clampacm
 
 subChartsOnly:
   enabled: true
