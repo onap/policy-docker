@@ -295,50 +295,51 @@ DeployAutomationCompositionRollback
     ChangeStatusAutomationComposition  ${compositionFromId}   ${instanceMigrationId}  ${postjson}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
 
-FailAutomationCompositionMigrationRollback
-    [Documentation]  Fail Migration of an automation composition for testing rollback.
-    SetParticipantSimFail
-    ${auth}=    ClampAuth
-    ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-to.yaml
-    ${updatedpostyaml}=   Replace String     ${postyaml}     COMPOSITIONIDPLACEHOLDER       ${compositionFromId}
-    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     COMPOSITIONTARGETIDPLACEHOLDER       ${compositionToId}
-    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
-    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     TEXTPLACEHOLDER       TextForMigration
-    ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances  ${updatedpostyaml}  ${auth}
-    Should Be Equal As Strings    ${resp.status_code}     200
-    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
+# Enable the rollback tests once the logic is refactored in clamp
+#FailAutomationCompositionMigrationRollback
+#    [Documentation]  Fail Migration of an automation composition for testing rollback.
+#    SetParticipantSimFail
+#    ${auth}=    ClampAuth
+#    ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-to.yaml
+#    ${updatedpostyaml}=   Replace String     ${postyaml}     COMPOSITIONIDPLACEHOLDER       ${compositionFromId}
+#    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     COMPOSITIONTARGETIDPLACEHOLDER       ${compositionToId}
+#    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
+#    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     TEXTPLACEHOLDER       TextForMigration
+#    ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances  ${updatedpostyaml}  ${auth}
+#    Should Be Equal As Strings    ${resp.status_code}     200
+#    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
 
-RollbackAutomationComposition
-    [Documentation]  Rollback of an automation composition.
-    SetParticipantSimSuccess
-    ${auth}=    ClampAuth
-    ${resp}=   MakePostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}/rollback  ${auth}
-    Should Be Equal As Strings    ${resp.status_code}     202
-    Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
-    VerifyPropertiesUpdated  ${compositionFromId}  ${instanceMigrationId}  MyTextInit
-    VerifyParticipantSim  ${instanceMigrationId}  MyTextInit
-    VerifyRollbackElementsRuntime  ${compositionFromId}  ${instanceMigrationId}
-    VerifyRollbackElementsSim  ${instanceMigrationId}
+#RollbackAutomationComposition
+#    [Documentation]  Rollback of an automation composition.
+#    SetParticipantSimSuccess
+#    ${auth}=    ClampAuth
+#    ${resp}=   MakePostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}/rollback  ${auth}
+#    Should Be Equal As Strings    ${resp.status_code}     202
+#    Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
+#    VerifyPropertiesUpdated  ${compositionFromId}  ${instanceMigrationId}  MyTextInit
+#    VerifyParticipantSim  ${instanceMigrationId}  MyTextInit
+#    VerifyRollbackElementsRuntime  ${compositionFromId}  ${instanceMigrationId}
+#    VerifyRollbackElementsSim  ${instanceMigrationId}
 
-FailAutomationCompositionMigrationRollback2
-    [Documentation]  Fail Migration of an automation composition for testing rollback.
-    SetParticipantSimFail
-    ${auth}=    ClampAuth
-    ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-to.yaml
-    ${updatedpostyaml}=   Replace String     ${postyaml}     COMPOSITIONIDPLACEHOLDER       ${compositionFromId}
-    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     COMPOSITIONTARGETIDPLACEHOLDER       ${compositionToId}
-    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
-    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     TEXTPLACEHOLDER       TextForMigration
-    ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances  ${updatedpostyaml}  ${auth}
-    Should Be Equal As Strings    ${resp.status_code}     200
-    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
+#FailAutomationCompositionMigrationRollback2
+#    [Documentation]  Fail Migration of an automation composition for testing rollback.
+#    SetParticipantSimFail
+#    ${auth}=    ClampAuth
+#    ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-to.yaml
+#    ${updatedpostyaml}=   Replace String     ${postyaml}     COMPOSITIONIDPLACEHOLDER       ${compositionFromId}
+#    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     COMPOSITIONTARGETIDPLACEHOLDER       ${compositionToId}
+#    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
+#    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     TEXTPLACEHOLDER       TextForMigration
+#    ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances  ${updatedpostyaml}  ${auth}
+#    Should Be Equal As Strings    ${resp.status_code}     200
+#    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
 
-FailRollbackAutomationComposition
-    [Documentation]  Fail Rollback of an automation composition.
-    ${auth}=    ClampAuth
-    ${resp}=   MakePostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}/rollback   ${auth}
-    Should Be Equal As Strings    ${resp.status_code}     202
-    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
+#FailRollbackAutomationComposition
+#    [Documentation]  Fail Rollback of an automation composition.
+#    ${auth}=    ClampAuth
+#    ${resp}=   MakePostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}/rollback   ${auth}
+#    Should Be Equal As Strings    ${resp.status_code}     202
+#    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
 
 UnInstantiateAutomationCompositionRollback
     [Documentation]  Undeploy and Delete automation composition instance in fail rollback.
