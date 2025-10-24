@@ -236,6 +236,7 @@ AutomationCompositionMigrationTo
     VerifyMigratedElementsRuntime  ${compositionToId}  ${instanceMigrationId}
     VerifyMigratedElementsSim  ${instanceMigrationId}
     VerifyRemovedElementsSim  ${instanceMigrationId}
+    VerifyMigratedElementsSim3  ${instanceMigrationId}
 
 FailAutomationCompositionMigration
     [Documentation]  Fail Migration of an automation composition.

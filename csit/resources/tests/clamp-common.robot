@@ -92,6 +92,7 @@ VerifyMigratedElementsRuntime
     Should Be Equal As Strings    ${resp.status_code}     200
     ${respstring}   Convert To String   ${resp.json()}
     Should Match Regexp  ${respstring}  Sim_NewAutomationCompositionElement
+    Should Match Regexp  ${respstring}  Sim_NewAutomationCompositionElement2
     Should Not Match Regexp  ${respstring}  Sim_SinkAutomationCompositionElement
     ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb79c6c34']['outProperties']['stage']}
     Should Be Equal As Strings  ${respstring}  [1, 2]
@@ -99,6 +100,8 @@ VerifyMigratedElementsRuntime
     Should Be Equal As Strings  ${respstring}  [0, 1]
     ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb79c6c37']['outProperties']['stage']}
     Should Be Equal As Strings  ${respstring}  [0, 2]
+    ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb79c6c40']['outProperties']['stage']}
+    Should Be Equal As Strings  ${respstring}  [1, 2]
 
 VerifyPrepareElementsRuntime
     [Arguments]  ${theCompositionId}  ${theInstanceId}
@@ -137,6 +140,16 @@ VerifyMigratedElementsSim
     Should Be Equal As Strings    ${resp.status_code}     200
     ${respstring}   Convert To String   ${resp.json()}
     Should Match Regexp  ${respstring}  Sim_NewAutomationCompositionElement
+    Should Not Match Regexp  ${respstring}  Sim_SinkAutomationCompositionElement
+
+VerifyMigratedElementsSim3
+    [Arguments]  ${theInstanceId}
+    [Documentation]  Query on Participant Simulator 3
+    ${auth}=    ParticipantAuth
+    ${resp}=    MakeGetRequest  participant  ${HTTP_PARTICIPANT_SIM3_IP}  /onap/policy/simparticipant/v2/instances/${theInstanceId}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
+    ${respstring}   Convert To String   ${resp.json()}
+    Should Match Regexp  ${respstring}  Sim_NewAutomationCompositionElement2
     Should Not Match Regexp  ${respstring}  Sim_SinkAutomationCompositionElement
 
 VerifyRemovedElementsSim
