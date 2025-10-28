@@ -26,7 +26,7 @@ AcMigrationRestored
     set Suite variable  ${compositionIdRestored}  d30b8017-4d64-4693-84d7-de9c4226b9f8
     set Suite variable  ${InstanceIdRestored}  dd36aaa4-580f-4193-a52b-37c3a955b11a
     set Suite variable  ${compositionTargetIdRestored}  6c1cf107-a2ca-4485-8129-02f9fae64d64
-    SetParticipantSimSuccess
+    SetParticipantSimSuccess  ${HTTP_PARTICIPANT_SIM1_IP}
     ${auth}=    ClampAuth
     ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-restored.yaml
     ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionIdRestored}/instances  ${postyaml}  ${auth}

@@ -31,7 +31,7 @@ InstantiateAutomationCompositionSimple
 
 FailDeployAutomationCompositionSimple
     [Documentation]  Fail Simple Deploy automation composition.
-    SetParticipantSimFail
+    SetParticipantSimFail  ${HTTP_PARTICIPANT_SIM1_IP}
     ${postjson}=  Get file  ${CURDIR}/data/DeployAC.json
     ChangeStatusAutomationComposition  ${simpleCompositionId}   ${simpleInstanceId}  ${postjson}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${simpleCompositionId}  ${simpleInstanceId}  FAILED
@@ -48,7 +48,7 @@ UnDeployAutomationCompositionSimple
 
 UnInstantiateAutomationCompositionSimple
     [Documentation]  Delete simple automation composition instance.
-    SetParticipantSimSuccess
+    SetParticipantSimSuccess  ${HTTP_PARTICIPANT_SIM1_IP}
     DeleteAutomationComposition  ${simpleCompositionId}  ${simpleInstanceId}
     Wait Until Keyword Succeeds    1 min    5 sec    VerifyUninstantiated  ${simpleCompositionId}
 

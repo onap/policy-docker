@@ -198,45 +198,27 @@ VerifyUninstantiated
     Run Keyword If  ${resp.status_code}==200  Length Should Be  ${resp.json()['automationCompositionList']}  0
 
 SetParticipantSimFail
+    [Arguments]  ${domain}
     [Documentation]  Set Participant Simulator Fail.
     ${auth}=    ParticipantAuth
     ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesFail.json
-    ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM1_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
-    Should Be Equal As Strings    ${resp.status_code}     200
-
-SetParticipantSim2Fail
-    [Documentation]  Set Participant Simulator2 Fail.
-    ${auth}=    ParticipantAuth
-    ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesFail.json
-    ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM2_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
+    ${resp}=   MakeJsonPutRequest  participant  ${domain}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
 
 SetParticipantSimSuccess
+    [Arguments]  ${domain}
     [Documentation]  Set Participant Simulator Success.
     ${auth}=    ParticipantAuth
     ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesSuccess.json
-    ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM1_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
-    Should Be Equal As Strings    ${resp.status_code}     200
-
-SetParticipantSim2Success
-    [Documentation]  Set Participant Simulator Success.
-    ${auth}=    ParticipantAuth
-    ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesSuccess.json
-    ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM2_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
+    ${resp}=   MakeJsonPutRequest  participant  ${domain}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
 
 SetParticipantSimTimeout
+    [Arguments]  ${domain}
     [Documentation]  Set Participant Simulator Timeout.
     ${auth}=    ParticipantAuth
     ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesTimeout.json
-    ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM1_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
-    Should Be Equal As Strings    ${resp.status_code}     200
-
-SetParticipantSim2Timeout
-    [Documentation]  Set Participant Simulator Timeout.
-    ${auth}=    ParticipantAuth
-    ${postjson}=  Get file  ${CURDIR}/data/SettingSimPropertiesTimeout.json
-    ${resp}=   MakeJsonPutRequest  participant  ${HTTP_PARTICIPANT_SIM2_IP}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
+    ${resp}=   MakeJsonPutRequest  participant  ${domain}  /onap/policy/simparticipant/v2/parameters  ${postjson}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
 
 SetParticipantSimDelay
@@ -327,6 +309,16 @@ UndeployAndDeleteAutomationComposition
     Wait Until Keyword Succeeds    3 min    5 sec    VerifyDeployStatus  ${compositionId}  ${instanceId}  UNDEPLOYED
     DeleteAutomationComposition  ${compositionId}  ${instanceId}
     Wait Until Keyword Succeeds    1 min    5 sec    VerifyUninstantiated  ${compositionId}
+
+MigrateAc
+    [Arguments]   ${postyaml}  ${theCompositionId}  ${theCompositionTargetId}  ${theInstanceId}  ${theText}
+    ${auth}=    ClampAuth
+    ${updatedpostyaml}=   Replace String     ${postyaml}            COMPOSITIONIDPLACEHOLDER             ${theCompositionId}
+    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     COMPOSITIONTARGETIDPLACEHOLDER       ${theCompositionTargetId}
+    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     INSTACEIDPLACEHOLDER                 ${theInstanceId}
+    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     TEXTPLACEHOLDER                      ${theText}
+    ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${theCompositionId}/instances  ${updatedpostyaml}  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     200
 
 MakePostRequest
     [Arguments]  ${name}  ${domain}  ${url}  ${auth}

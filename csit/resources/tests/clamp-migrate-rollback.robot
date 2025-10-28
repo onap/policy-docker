@@ -40,14 +40,14 @@ PrimeACDefinitions
 
 FailPrimeACDefinitionFrom
     [Documentation]  Prime automation composition definition Migration From with Fail.
-    SetParticipantSimFail
+    SetParticipantSimFail  ${HTTP_PARTICIPANT_SIM1_IP}
     ${postjson}=  Get file  ${CURDIR}/data/ACPriming.json
     PrimeACDefinition  ${postjson}  ${compositionFromId}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResultPriming  ${compositionFromId}   FAILED
 
 PrimeACDefinitionFrom
     [Documentation]  Prime automation composition definition Migration From.
-    SetParticipantSimSuccess
+    SetParticipantSimSuccess  ${HTTP_PARTICIPANT_SIM1_IP}
     ${postjson}=  Get file  ${CURDIR}/data/ACPriming.json
     PrimeACDefinition  ${postjson}  ${compositionFromId}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyPriming  ${compositionFromId}  PRIMED
@@ -85,16 +85,16 @@ InstantiateAutomationCompositionTimeout
 
 DeployAutomationCompositionTimeout
     [Documentation]  Deploy automation composition timeout.
-    SetParticipantSimTimeout
-    SetParticipantSim2Timeout
+    SetParticipantSimTimeout  ${HTTP_PARTICIPANT_SIM1_IP}
+    SetParticipantSimTimeout  ${HTTP_PARTICIPANT_SIM2_IP}
     ${postjson}=  Get file  ${CURDIR}/data/DeployAC.json
     ChangeStatusAutomationComposition  ${compositionFromId}  ${instanceTimeoutId}   ${postjson}
     Wait Until Keyword Succeeds    5 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceTimeoutId}  TIMEOUT
 
 DeleteAutomationCompositionTimeout
     [Documentation]  Delete automation composition timeout.
-    SetParticipantSimSuccess
-    SetParticipantSim2Success
+    SetParticipantSimSuccess  ${HTTP_PARTICIPANT_SIM1_IP}
+    SetParticipantSimSuccess  ${HTTP_PARTICIPANT_SIM2_IP}
     UndeployAndDeleteAutomationComposition  ${compositionFromId}  ${instanceTimeoutId}
 
 InstantiateAutomationCompositionMigrationFrom
@@ -106,16 +106,16 @@ InstantiateAutomationCompositionMigrationFrom
 
 FailPrepareAutomationCompositionMigrationFrom
     [Documentation]  Fail Prepare automation composition migration.
-    SetParticipantSimFail
-    SetParticipantSim2Fail
+    SetParticipantSimFail  ${HTTP_PARTICIPANT_SIM1_IP}
+    SetParticipantSimFail  ${HTTP_PARTICIPANT_SIM2_IP}
     ${postjson}=  Get file  ${CURDIR}/data/PrepareAC.json
     ChangeStatusAutomationComposition   ${compositionFromId}   ${instanceMigrationId}  ${postjson}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
 
 PrepareAutomationCompositionMigrationFrom
     [Documentation]  Prepare automation composition migration.
-    SetParticipantSimSuccess
-    SetParticipantSim2Success
+    SetParticipantSimSuccess  ${HTTP_PARTICIPANT_SIM1_IP}
+    SetParticipantSimSuccess  ${HTTP_PARTICIPANT_SIM2_IP}
     ${postjson}=  Get file  ${CURDIR}/data/PrepareAC.json
     ChangeStatusAutomationComposition   ${compositionFromId}   ${instanceMigrationId}  ${postjson}
     Wait Until Keyword Succeeds    10 min    5 sec    VerifySubStatus  ${compositionFromId}  ${instanceMigrationId}
@@ -123,7 +123,7 @@ PrepareAutomationCompositionMigrationFrom
 
 FailDeployAutomationCompositionMigration
     [Documentation]  Fail Deploy automation composition.
-    SetParticipantSimFail
+    SetParticipantSimFail  ${HTTP_PARTICIPANT_SIM1_IP}
     ${postjson}=  Get file  ${CURDIR}/data/DeployAC.json
     ChangeStatusAutomationComposition  ${compositionFromId}   ${instanceMigrationId}  ${postjson}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
@@ -160,7 +160,7 @@ QueryPolicyTypes
 
 DeployAutomationCompositionMigration
     [Documentation]  Deploy automation composition.
-    SetParticipantSimSuccess
+    SetParticipantSimSuccess  ${HTTP_PARTICIPANT_SIM1_IP}
     ${postjson}=  Get file  ${CURDIR}/data/DeployAC.json
     ChangeStatusAutomationComposition  ${compositionFromId}   ${instanceMigrationId}  ${postjson}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
@@ -183,14 +183,14 @@ SendOutPropertiesToRuntime
 
 FailReviewAutomationCompositionMigrationFrom
     [Documentation]  Fail Review automation composition migration.
-    SetParticipantSimFail
+    SetParticipantSimFail  ${HTTP_PARTICIPANT_SIM1_IP}
     ${postjson}=  Get file  ${CURDIR}/data/ReviewAC.json
     ChangeStatusAutomationComposition  ${compositionFromId}   ${instanceMigrationId}  ${postjson}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
 
 ReviewAutomationCompositionMigrationFrom
     [Documentation]  Review automation composition migration.
-    SetParticipantSimSuccess
+    SetParticipantSimSuccess  ${HTTP_PARTICIPANT_SIM1_IP}
     ${postjson}=  Get file  ${CURDIR}/data/ReviewAC.json
     ChangeStatusAutomationComposition  ${compositionFromId}   ${instanceMigrationId}  ${postjson}
     Wait Until Keyword Succeeds    10 min    5 sec    VerifySubStatus  ${compositionFromId}  ${instanceMigrationId}
@@ -210,26 +210,14 @@ AutomationCompositionUpdate
 
 PrecheckAutomationCompositionMigration
     [Documentation]  Precheck Migration of an automation composition.
-    ${auth}=    ClampAuth
     ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-precheck-migration.yaml
-    ${updatedpostyaml}=   Replace String     ${postyaml}     COMPOSITIONIDPLACEHOLDER       ${compositionFromId}
-    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     COMPOSITIONTARGETIDPLACEHOLDER       ${compositionToId}
-    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
-    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     TEXTPLACEHOLDER       TextForMigration
-    ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances  ${updatedpostyaml}  ${auth}
-    Should Be Equal As Strings    ${resp.status_code}     200
+    MigrateAc  ${postyaml}  ${compositionFromId}  ${compositionToId}  ${instanceMigrationId}  TextForMigration
     Wait Until Keyword Succeeds    2 min    5 sec    VerifySubStatus  ${compositionFromId}  ${instanceMigrationId}
 
 AutomationCompositionMigrationTo
     [Documentation]  Migration of an automation composition.
-    ${auth}=    ClampAuth
     ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-to.yaml
-    ${updatedpostyaml}=   Replace String     ${postyaml}     COMPOSITIONIDPLACEHOLDER       ${compositionFromId}
-    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     COMPOSITIONTARGETIDPLACEHOLDER       ${compositionToId}
-    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
-    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     TEXTPLACEHOLDER       TextForMigration
-    ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances  ${updatedpostyaml}  ${auth}
-    Should Be Equal As Strings    ${resp.status_code}     200
+    MigrateAc  ${postyaml}  ${compositionFromId}  ${compositionToId}  ${instanceMigrationId}  TextForMigration
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionToId}  ${instanceMigrationId}  DEPLOYED
     VerifyPropertiesUpdated  ${compositionToId}  ${instanceMigrationId}  TextForMigration
     VerifyParticipantSim  ${instanceMigrationId}  TextForMigration
@@ -240,45 +228,39 @@ AutomationCompositionMigrationTo
 
 FailAutomationCompositionMigration
     [Documentation]  Fail Migration of an automation composition.
-    SetParticipantSimFail
-    ${auth}=    ClampAuth
+    SetParticipantSimFail  ${HTTP_PARTICIPANT_SIM1_IP}
     ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-fail.yaml
-    ${updatedpostyaml}=   Replace String     ${postyaml}     COMPOSITIONIDPLACEHOLDER       ${compositionToId}
-    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     COMPOSITIONTARGETIDPLACEHOLDER       ${compositionFromId}
-    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
-    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     TEXTPLACEHOLDER       TextForMigration
-    ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionToId}/instances  ${updatedpostyaml}  ${auth}
-    Should Be Equal As Strings    ${resp.status_code}     200
+    MigrateAc  ${postyaml}  ${compositionToId}  ${compositionFromId}  ${instanceMigrationId}  TextForMigration
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionToId}  ${instanceMigrationId}  FAILED
 
 UnInstantiateAutomationComposition
     [Documentation]  UnDeploy and Delete automation composition instance.
-    SetParticipantSimSuccess
+    SetParticipantSimSuccess  ${HTTP_PARTICIPANT_SIM1_IP}
     UndeployAndDeleteAutomationComposition  ${compositionId}  ${instanceId}
 
 FailUnDeployAutomationCompositionMigrationTo
     [Documentation]  Fail UnDeploy automation composition migrated.
-    SetParticipantSimFail
+    SetParticipantSimFail  ${HTTP_PARTICIPANT_SIM1_IP}
     ${postjson}=  Get file  ${CURDIR}/data/UndeployAC.json
     ChangeStatusAutomationComposition  ${compositionToId}   ${instanceMigrationId}  ${postjson}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionToId}  ${instanceMigrationId}  FAILED
 
 UnDeployAutomationCompositionMigrationTo
     [Documentation]  UnDeploy automation composition migrated.
-    SetParticipantSimSuccess
+    SetParticipantSimSuccess  ${HTTP_PARTICIPANT_SIM1_IP}
     ${postjson}=  Get file  ${CURDIR}/data/UndeployAC.json
     ChangeStatusAutomationComposition  ${compositionToId}   ${instanceMigrationId}  ${postjson}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionToId}  ${instanceMigrationId}  UNDEPLOYED
 
 FailUnInstantiateAutomationCompositionMigrationTo
     [Documentation]  Fail Delete automation composition instance migrated.
-    SetParticipantSimFail
+    SetParticipantSimFail  ${HTTP_PARTICIPANT_SIM1_IP}
     DeleteAutomationComposition  ${compositionToId}  ${instanceMigrationId}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionToId}  ${instanceMigrationId}  FAILED
 
 UnInstantiateAutomationCompositionMigrationTo
     [Documentation]  Delete automation composition instance migrated.
-    SetParticipantSimSuccess
+    SetParticipantSimSuccess  ${HTTP_PARTICIPANT_SIM1_IP}
     DeleteAutomationComposition  ${compositionToId}  ${instanceMigrationId}
     Wait Until Keyword Succeeds    1 min    5 sec    VerifyUninstantiated  ${compositionToId}
 
@@ -296,67 +278,54 @@ DeployAutomationCompositionRollback
     ChangeStatusAutomationComposition  ${compositionFromId}   ${instanceMigrationId}  ${postjson}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
 
-# Enable the rollback tests once the logic is refactored in clamp
-#FailAutomationCompositionMigrationRollback
-#    [Documentation]  Fail Migration of an automation composition for testing rollback.
-#    SetParticipantSimFail
-#    ${auth}=    ClampAuth
-#    ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-to.yaml
-#    ${updatedpostyaml}=   Replace String     ${postyaml}     COMPOSITIONIDPLACEHOLDER       ${compositionFromId}
-#    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     COMPOSITIONTARGETIDPLACEHOLDER       ${compositionToId}
-#    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
-#    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     TEXTPLACEHOLDER       TextForMigration
-#    ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances  ${updatedpostyaml}  ${auth}
-#    Should Be Equal As Strings    ${resp.status_code}     200
-#    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
+FailAutomationCompositionMigrationRollback
+    [Documentation]  Fail Migration of an automation composition for testing rollback.
+    SetParticipantSimFail  ${HTTP_PARTICIPANT_SIM1_IP}
+    ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-to.yaml
+    MigrateAc  ${postyaml}  ${compositionFromId}  ${compositionToId}  ${instanceMigrationId}  TextForMigration
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
 
-#RollbackAutomationComposition
-#    [Documentation]  Rollback of an automation composition.
-#    SetParticipantSimSuccess
-#    ${auth}=    ClampAuth
-#    ${resp}=   MakePostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}/rollback  ${auth}
-#    Should Be Equal As Strings    ${resp.status_code}     202
-#    Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
-#    VerifyPropertiesUpdated  ${compositionFromId}  ${instanceMigrationId}  MyTextInit
-#    VerifyParticipantSim  ${instanceMigrationId}  MyTextInit
-#    VerifyRollbackElementsRuntime  ${compositionFromId}  ${instanceMigrationId}
-#    VerifyRollbackElementsSim  ${instanceMigrationId}
+RollbackAutomationComposition
+    [Documentation]  Rollback of an automation composition.
+    SetParticipantSimSuccess  ${HTTP_PARTICIPANT_SIM1_IP}
+    ${auth}=    ClampAuth
+    ${resp}=   MakePostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}/rollback  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     202
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
+    VerifyPropertiesUpdated  ${compositionFromId}  ${instanceMigrationId}  MyTextInit
+    VerifyParticipantSim  ${instanceMigrationId}  MyTextInit
+    VerifyRollbackElementsRuntime  ${compositionFromId}  ${instanceMigrationId}
+    VerifyRollbackElementsSim  ${instanceMigrationId}
 
-#FailAutomationCompositionMigrationRollback2
-#    [Documentation]  Fail Migration of an automation composition for testing rollback.
-#    SetParticipantSimFail
-#    ${auth}=    ClampAuth
-#    ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-to.yaml
-#    ${updatedpostyaml}=   Replace String     ${postyaml}     COMPOSITIONIDPLACEHOLDER       ${compositionFromId}
-#    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     COMPOSITIONTARGETIDPLACEHOLDER       ${compositionToId}
-#    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     INSTACEIDPLACEHOLDER       ${instanceMigrationId}
-#    ${updatedpostyaml}=   Replace String     ${updatedpostyaml}     TEXTPLACEHOLDER       TextForMigration
-#    ${resp}=   MakeYamlPostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances  ${updatedpostyaml}  ${auth}
-#    Should Be Equal As Strings    ${resp.status_code}     200
-#    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
+FailAutomationCompositionMigrationRollback2
+    [Documentation]  Fail Migration of an automation composition for testing rollback.
+    SetParticipantSimFail  ${HTTP_PARTICIPANT_SIM1_IP}
+    ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-to.yaml
+    MigrateAc  ${postyaml}  ${compositionFromId}  ${compositionToId}  ${instanceMigrationId}  TextForMigration
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
 
-#FailRollbackAutomationComposition
-#    [Documentation]  Fail Rollback of an automation composition.
-#    ${auth}=    ClampAuth
-#    ${resp}=   MakePostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}/rollback   ${auth}
-#    Should Be Equal As Strings    ${resp.status_code}     202
-#    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
+FailRollbackAutomationComposition
+    [Documentation]  Fail Rollback of an automation composition.
+    ${auth}=    ClampAuth
+    ${resp}=   MakePostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}/rollback   ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     202
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
 
 UnInstantiateAutomationCompositionRollback
     [Documentation]  Undeploy and Delete automation composition instance in fail rollback.
-    SetParticipantSimSuccess
+    SetParticipantSimSuccess  ${HTTP_PARTICIPANT_SIM1_IP}
     UndeployAndDeleteAutomationComposition  ${compositionFromId}  ${instanceMigrationId}
 
 FailDePrimeACDefinitionsFrom
     [Documentation]  Fail DePrime automation composition definition migration From.
-    SetParticipantSimFail
+    SetParticipantSimFail  ${HTTP_PARTICIPANT_SIM1_IP}
     ${postjson}=  Get file  ${CURDIR}/data/ACDepriming.json
     PrimeACDefinition  ${postjson}  ${compositionFromId}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResultPriming  ${compositionFromId}   FAILED
 
 DeleteACDefinitionFrom
     [Documentation]  DePrime and Delete automation composition definition migration From.
-    SetParticipantSimSuccess
+    SetParticipantSimSuccess  ${HTTP_PARTICIPANT_SIM1_IP}
     DePrimeAndDeleteACDefinition  ${compositionFromId}
 
 DeleteACDefinitions

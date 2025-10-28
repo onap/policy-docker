@@ -19,12 +19,12 @@ CommissionAcDefinitionTimeout
 
 TimeoutPrimeACDefinition
     [Documentation]  Prime automation composition definition Timeout.
-    SetParticipantSimTimeout
+    SetParticipantSimTimeout  ${HTTP_PARTICIPANT_SIM1_IP}
     ${postjson}=  Get file  ${CURDIR}/data/ACPriming.json
     PrimeACDefinition  ${postjson}  ${compositionTimeoutId}
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResultPriming  ${compositionTimeoutId}   TIMEOUT
 
 DeleteACDefinitionTimeout
     [Documentation]  DePrime and Delete automation composition definition Timeout.
-    SetParticipantSimSuccess
+    SetParticipantSimSuccess  ${HTTP_PARTICIPANT_SIM1_IP}
     DePrimeAndDeleteACDefinition  ${compositionTimeoutId}
