@@ -126,11 +126,11 @@ VerifyRollbackElementsRuntime
     Should Not Match Regexp  ${respstring}  Sim_NewAutomationCompositionElement
     Should Match Regexp  ${respstring}  Sim_SinkAutomationCompositionElement
     ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb79c6c34']['outProperties']['rollbackStage']}
-    Should Be Equal As Strings  ${respstring}  [1, 2]
+    Should Be Equal As Strings  ${respstring}  [2, 1]
     ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb79c6c35']['outProperties']['rollbackStage']}
-    Should Be Equal As Strings  ${respstring}  [0, 1]
+    Should Be Equal As Strings  ${respstring}  [1, 0]
     ${respstring}   Convert To String   ${resp.json()['elements']['709c62b3-8918-41b9-a747-d21eb79c6c36']['outProperties']['rollbackStage']}
-    Should Be Equal As Strings  ${respstring}  [0, 2]
+    Should Be Equal As Strings  ${respstring}  [2, 0]
 
 VerifyMigratedElementsSim
     [Arguments]  ${theInstanceId}
