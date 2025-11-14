@@ -297,7 +297,44 @@ RollbackAutomationComposition
     VerifyRollbackElementsRuntime  ${compositionFromId}  ${instanceMigrationId}
     VerifyRollbackElementsSim  ${instanceMigrationId}
 
+UnInstantiateAutomationCompositionRollback
+    [Documentation]  Undeploy and Delete automation composition instance in fail rollback.
+    UndeployAndDeleteAutomationComposition  ${compositionFromId}  ${instanceMigrationId}
+
+InstantiateAutomationCompositionRollback2
+    [Documentation]  Instantiate automation composition for testing rollback.
+    ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-from.yaml
+    ${updatedpostyaml}=   Replace String     ${postyaml}     TEXTPLACEHOLDER       MyTextInit
+    ${tmpInstanceId}=  MakeYamlInstantiateAutomationComposition   ${compositionFromId}   ${updatedpostyaml}
+    set Suite variable  ${instanceMigrationId}    ${tmpInstanceId}
+
+DeployAutomationCompositionRollback2
+    [Documentation]  Deploy automation for testing rollback.
+    ${auth}=    ClampAuth
+    ${postjson}=  Get file  ${CURDIR}/data/DeployAC.json
+    ChangeStatusAutomationComposition  ${compositionFromId}   ${instanceMigrationId}  ${postjson}
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
+
 FailAutomationCompositionMigrationRollback2
+    [Documentation]  Fail Migration of an automation composition for testing rollback.
+    SetParticipantSimFail  ${HTTP_PARTICIPANT_SIM2_IP}
+    ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-to.yaml
+    MigrateAc  ${postyaml}  ${compositionFromId}  ${compositionToId}  ${instanceMigrationId}  TextForMigration
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
+
+RollbackAutomationComposition2
+    [Documentation]  Rollback of an automation composition.
+    SetParticipantSimSuccess  ${HTTP_PARTICIPANT_SIM2_IP}
+    ${auth}=    ClampAuth
+    ${resp}=   MakePostRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  /onap/policy/clamp/acm/v2/compositions/${compositionFromId}/instances/${instanceMigrationId}/rollback  ${auth}
+    Should Be Equal As Strings    ${resp.status_code}     202
+    Wait Until Keyword Succeeds    2 min    5 sec    VerifyDeployStatus  ${compositionFromId}  ${instanceMigrationId}  DEPLOYED
+    VerifyPropertiesUpdated  ${compositionFromId}  ${instanceMigrationId}  MyTextInit
+    VerifyParticipantSim  ${instanceMigrationId}  MyTextInit
+    VerifyRollbackElementsRuntime  ${compositionFromId}  ${instanceMigrationId}
+    VerifyRollbackElementsSim  ${instanceMigrationId}
+
+FailAutomationCompositionMigrationRollback3
     [Documentation]  Fail Migration of an automation composition for testing rollback.
     SetParticipantSimFail  ${HTTP_PARTICIPANT_SIM1_IP}
     ${postyaml}=  Get file  ${CURDIR}/data/ac-instance-migration-to.yaml
@@ -311,7 +348,7 @@ FailRollbackAutomationComposition
     Should Be Equal As Strings    ${resp.status_code}     202
     Wait Until Keyword Succeeds    2 min    5 sec    VerifyStateChangeResult  ${compositionFromId}  ${instanceMigrationId}  FAILED
 
-UnInstantiateAutomationCompositionRollback
+UnInstantiateAutomationCompositionRollback2
     [Documentation]  Undeploy and Delete automation composition instance in fail rollback.
     SetParticipantSimSuccess  ${HTTP_PARTICIPANT_SIM1_IP}
     UndeployAndDeleteAutomationComposition  ${compositionFromId}  ${instanceMigrationId}
