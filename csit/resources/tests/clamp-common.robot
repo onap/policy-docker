@@ -158,8 +158,7 @@ VerifyRemovedElementsSim
     ${auth}=    ParticipantAuth
     ${resp}=    MakeGetRequest  participant  ${HTTP_PARTICIPANT_SIM2_IP}  /onap/policy/simparticipant/v2/instances/${theInstanceId}  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
-    ${respstring}   Convert To String   ${resp.json()}
-    Should Not Match Regexp  ${respstring}  Sim_Sink2AutomationCompositionElement
+    Should Be Empty    ${resp.text}
 
 VerifyRollbackElementsSim
     [Arguments]  ${theInstanceId}
