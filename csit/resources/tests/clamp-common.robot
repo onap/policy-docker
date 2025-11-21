@@ -10,6 +10,14 @@ Resource    common-library.robot
 
 *** Keywords ***
 
+ExecuteQuery
+    [Arguments]  ${file}
+    [Documentation]    Execute Query
+    Run Keyword If    '${TEST_ENV}'=='k8s'    set Suite variable  ${executeQueryFile}  ${CURDIR}/data/script/execute-queryk8.sh
+    ...    ELSE    set Suite variable  ${executeQueryFile}  ${CURDIR}/data/script/execute-query.sh
+    ${result}=    Run Process    ${executeQueryFile}    ${file}
+    Should Be Equal As Strings    ${result.rc}     0
+
 VerifyHealthcheckApi
     [Documentation]    Verify Healthcheck on policy-api
     ${auth}=    PolicyAdminAuth

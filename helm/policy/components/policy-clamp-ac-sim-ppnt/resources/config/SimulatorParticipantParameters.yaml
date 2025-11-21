@@ -18,7 +18,7 @@
 
 spring:
   application:
-    name: sim-ppnt
+    name: {{ .Values.applicationName }}
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
@@ -40,7 +40,7 @@ participant:
       syncTopic: acm-ppnt-sync
     reportingTimeIntervalMs: 120000
     description: Participant Description
-    participantId: 101c62b3-8918-41b9-a747-d21eb79c6c90
+    participantId: {{ .Values.participantId }}
     clampAutomationCompositionTopics:
       topicSources:
         - topic: ${participant.intermediaryParameters.topics.operationTopic}
@@ -51,7 +51,7 @@ participant:
           useHttps: false
           allowTracing: {{ include "policy-clamp-ac-sim-ppnt.jaeger-enabled" . }}
           additionalProps:
-            group.id: policy-clamp-ac-sim-ppnt
+            group.id: {{ .Values.groupId }}
         - topic: ${participant.intermediaryParameters.topics.syncTopic}
           servers:
             - "{{ .Values.global.kafkaServer }}:9092"
@@ -68,7 +68,7 @@ participant:
           allowTracing: {{ include "policy-clamp-ac-sim-ppnt.jaeger-enabled" . }}
     participantSupportedElementTypes:
       -
-        typeName: org.onap.policy.clamp.acm.SimAutomationCompositionElement
+        typeName: {{ .Values.supportedElementTypeName }}
         typeVersion: 1.0.0
 
 management:

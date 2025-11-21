@@ -76,7 +76,18 @@ dependencies:
   - name: policy-clamp-ac-sim-ppnt
     version: ~11.x-0
     repository: 'file://components/policy-clamp-ac-sim-ppnt'
-    condition: policy-clamp-ac-sim-ppnt.enabled
+    condition: policy-clamp-ac-sim-ppnt-1.enabled
+    alias: policy-clamp-ac-sim-ppnt-1
+  - name: policy-clamp-ac-sim-ppnt
+    version: ~11.x-0
+    repository: 'file://components/policy-clamp-ac-sim-ppnt'
+    condition: policy-clamp-ac-sim-ppnt-2.enabled
+    alias: policy-clamp-ac-sim-ppnt-2
+  - name: policy-clamp-ac-sim-ppnt
+    version: ~11.x-0
+    repository: 'file://components/policy-clamp-ac-sim-ppnt'
+    condition: policy-clamp-ac-sim-ppnt-3.enabled
+    alias: policy-clamp-ac-sim-ppnt-3
   - name: policy-clamp-ac-kserve-ppnt
     version: ~11.x-0
     repository: 'file://components/policy-clamp-ac-kserve-ppnt'

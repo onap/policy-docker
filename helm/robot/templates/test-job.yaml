@@ -48,6 +48,16 @@ spec:
           image: {{ .Values.imageCredentials.csitTestImage.name }}
           imagePullPolicy: Never
           env:
+            - name: PG_USER
+              value: {{ .Values.db.user }}
+            - name: PGPASSWORD
+              value: {{ .Values.db.password }}
+            - name: PG_HOST
+              value: {{ .Values.db.service.name }}
+            - name: PG_PORT
+              value: {{ .Values.db.service.internalPort | quote }}
+            - name: PG_SCHEMA
+              value: {{ .Values.db.name }}
             - name: ROBOT_FILE
               value: {{ .Values.robot }}
             - name: TEST_ENV

@@ -76,8 +76,36 @@ policy-distribution:
   enabled: false
 policy-clamp-ac-http-ppnt:
   enabled: false
-policy-clamp-ac-sim-ppnt:
+policy-clamp-ac-sim-ppnt-1:
   enabled: false
+  applicationName: sim-ppnt-1
+  participantId: 101c62b3-8918-41b9-a747-d21eb79c6c90
+  groupId: policy-clamp-ac-sim-ppnt-1
+  service:
+    name: policy-clamp-ac-sim-ppnt-1
+  serviceAccount:
+    nameOverride: policy-clamp-ac-sim-ppnt-1
+  supportedElementTypeName: org.onap.policy.clamp.acm.SimAutomationCompositionElement
+policy-clamp-ac-sim-ppnt-2:
+  enabled: false
+  applicationName: sim-ppnt-2
+  participantId: 101c62b3-8918-41b9-a747-d21eb79c6c91
+  groupId: policy-clamp-ac-sim-ppnt-2
+  service:
+    name: policy-clamp-ac-sim-ppnt-2
+  serviceAccount:
+    nameOverride: policy-clamp-ac-sim-ppnt-2
+  supportedElementTypeName: org.onap.policy.clamp.acm.SimAutomationCompositionElement2
+policy-clamp-ac-sim-ppnt-3:
+  enabled: false
+  applicationName: sim-ppnt-3
+  participantId: 101c62b3-8918-41b9-a747-d21eb79c6c92
+  groupId: policy-clamp-ac-sim-ppnt-3
+  service:
+    name: policy-clamp-ac-sim-ppnt-3
+  serviceAccount:
+    nameOverride: policy-clamp-ac-sim-ppnt-3
+  supportedElementTypeName: org.onap.policy.clamp.acm.SimAutomationCompositionElement3
 policy-clamp-ac-kserve-ppnt:
   enabled: false
 policy-clamp-ac-a1pms-ppnt:

@@ -103,4 +103,6 @@ jaeger:
     portJaegerGrpc: 14250
 
 applicationName: sim-ppnt
-
+participantId: 101c62b3-8918-41b9-a747-d21eb79c6c90
+groupId: policy-clamp-ac-sim-ppnt
+supportedElementTypeName: org.onap.policy.clamp.acm.SimAutomationCompositionElement

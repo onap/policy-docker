@@ -37,7 +37,9 @@ export POLICY_OPA_CONTAINER="policy-opa-pdp"
 export POLICY_DISTRIBUTION_CONTAINER="policy-distribution"
 export POLICY_K8S_PPNT_CONTAINER="policy-clamp-ac-k8s-ppnt"
 export POLICY_HTTP_PPNT_CONTAINER="policy-clamp-ac-http-ppnt"
-export POLICY_SIM_PPNT_CONTAINER="policy-clamp-ac-sim-ppnt"
+export POLICY_SIM_PPNT_CONTAINER1="policy-clamp-ac-sim-ppnt-1"
+export POLICY_SIM_PPNT_CONTAINER2="policy-clamp-ac-sim-ppnt-2"
+export POLICY_SIM_PPNT_CONTAINER3="policy-clamp-ac-sim-ppnt-3"
 export POLICY_PF_PPNT_CONTAINER="policy-clamp-ac-pf-ppnt"
 export JAEGER_CONTAINER="jaeger"
 
@@ -57,10 +59,11 @@ function set_project_config() {
     clamp | policy-clamp)
         export ROBOT_FILE=$POLICY_CLAMP_ROBOT
         export READINESS_CONTAINERS=($POLICY_CLAMP_CONTAINER,$POLICY_APEX_CONTAINER,$POLICY_PF_PPNT_CONTAINER,$POLICY_K8S_PPNT_CONTAINER,
-            $POLICY_HTTP_PPNT_CONTAINER,$POLICY_SIM_PPNT_CONTAINER,$JAEGER_CONTAINER)
+            $POLICY_HTTP_PPNT_CONTAINER,$POLICY_SIM_PPNT_CONTAINER1,$POLICY_SIM_PPNT_CONTAINER2,$POLICY_SIM_PPNT_CONTAINER3,$JAEGER_CONTAINER)
         export SET_VALUES="--set $POLICY_CLAMP_CONTAINER.enabled=true --set $POLICY_APEX_CONTAINER.enabled=true
             --set $POLICY_PF_PPNT_CONTAINER.enabled=true --set $POLICY_K8S_PPNT_CONTAINER.enabled=true
-            --set $POLICY_HTTP_PPNT_CONTAINER.enabled=true --set $POLICY_SIM_PPNT_CONTAINER.enabled=true
+            --set $POLICY_HTTP_PPNT_CONTAINER.enabled=true --set $POLICY_SIM_PPNT_CONTAINER1.enabled=true
+            --set $POLICY_SIM_PPNT_CONTAINER2.enabled=true --set $POLICY_SIM_PPNT_CONTAINER3.enabled=true
             --set $JAEGER_CONTAINER.enabled=true"
         install_chartmuseum
         ;;
@@ -103,12 +106,13 @@ function set_project_config() {
         export READINESS_CONTAINERS=($POLICY_APEX_CONTAINER,$POLICY_API_CONTAINER,$POLICY_PAP_CONTAINER,
                     $POLICY_DISTRIBUTION_CONTAINER,$POLICY_DROOLS_CONTAINER,$POLICY_XACML_CONTAINER,$POLICY_OPA_CONTAINER,
                     $POLICY_CLAMP_CONTAINER,$POLICY_PF_PPNT_CONTAINER,$POLICY_K8S_PPNT_CONTAINER,
-                    $POLICY_HTTP_PPNT_CONTAINER,$POLICY_SIM_PPNT_CONTAINER)
+                    $POLICY_HTTP_PPNT_CONTAINER,$POLICY_SIM_PPNT_CONTAINER1,$POLICY_SIM_PPNT_CONTAINER2,$POLICY_SIM_PPNT_CONTAINER3)
         export SET_VALUES="--set $POLICY_APEX_CONTAINER.enabled=true --set $POLICY_XACML_CONTAINER.enabled=true
             --set $POLICY_OPA_CONTAINER.enabled=true --set $POLICY_DISTRIBUTION_CONTAINER.enabled=true --set $POLICY_DROOLS_CONTAINER.enabled=true
             --set $POLICY_CLAMP_CONTAINER.enabled=true --set $POLICY_PF_PPNT_CONTAINER.enabled=true
             --set $POLICY_K8S_PPNT_CONTAINER.enabled=true --set $POLICY_HTTP_PPNT_CONTAINER.enabled=true
-            --set $POLICY_SIM_PPNT_CONTAINER.enabled=true"
+            --set $POLICY_K8S_PPNT_CONTAINER.enabled=true --set $POLICY_SIM_PPNT_CONTAINER1.enabled=true
+            --set $POLICY_SIM_PPNT_CONTAINER2.enabled=true --set $POLICY_SIM_PPNT_CONTAINER3.enabled=true"
         ;;
     esac
 }

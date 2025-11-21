@@ -14,12 +14,9 @@ Resource    clamp-common.robot
 
 InsertDataIntoDatabase
     [Documentation]  Insert restored data into the Database.
-    ${result}=    Run Process    ${CURDIR}/data/script/execute-query.sh    ${CURDIR}/data/query/compositiondefinition-from.sql
-    Should Be Equal As Strings    ${result.rc}     0
-    ${result}=    Run Process    ${CURDIR}/data/script/execute-query.sh    ${CURDIR}/data/query/compositiondefinition-to.sql
-    Should Be Equal As Strings    ${result.rc}     0
-    ${result}=    Run Process    ${CURDIR}/data/script/execute-query.sh    ${CURDIR}/data/query/instance.sql
-    Should Be Equal As Strings    ${result.rc}     0
+    ExecuteQuery    ${CURDIR}/data/query/compositiondefinition-from.sql
+    ExecuteQuery    ${CURDIR}/data/query/compositiondefinition-to.sql
+    ExecuteQuery    ${CURDIR}/data/query/instance.sql
 
 AcMigrationRestored
     [Documentation]  Migration of an automation composition restored.
@@ -35,8 +32,7 @@ AcMigrationRestored
 
 UpdateDataDatabase
     [Documentation]  Update restored data into the Database.
-    ${result}=    Run Process    ${CURDIR}/data/script/execute-query.sh    ${CURDIR}/data/query/compositiondefinition-update.sql
-    Should Be Equal As Strings    ${result.rc}     0
+    ExecuteQuery    ${CURDIR}/data/query/compositiondefinition-update.sql
 
 ReviewAutomationCompositionRestored
     [Documentation]  Review automation composition restored.
@@ -56,10 +52,8 @@ DeleteACDefinitionsRestored
 
 InsertDataIntoDatabase2
     [Documentation]  Insert restored data into the Database.
-    ${result}=    Run Process    ${CURDIR}/data/script/execute-query.sh    ${CURDIR}/data/query/compositiondefinition-from.sql
-    Should Be Equal As Strings    ${result.rc}     0
-    ${result}=    Run Process    ${CURDIR}/data/script/execute-query.sh    ${CURDIR}/data/query/instance.sql
-    Should Be Equal As Strings    ${result.rc}     0
+    ExecuteQuery    ${CURDIR}/data/query/compositiondefinition-from.sql
+    ExecuteQuery    ${CURDIR}/data/query/instance.sql
 
 SyncParticipant
     [Documentation]  Manual sync participants.

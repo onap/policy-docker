@@ -68,3 +68,11 @@ affinity: {}
 robot: ""
 readiness: []
 robotLogDir: ""
+
+db:
+  user: policy-user
+  password: policy-user
+  name: clampacm
+  service:
+    name: postgres-service
+    internalPort: 5432
