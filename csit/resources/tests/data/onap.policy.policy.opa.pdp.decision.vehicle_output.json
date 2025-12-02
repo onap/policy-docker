@@ -8,5 +8,6 @@
     ]
   },
   "policyName": "vehicle",
+  "policyVersion": "1.0.6",
   "statusMessage": "OPA Allowed"
 }
