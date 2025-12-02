@@ -50,6 +50,23 @@
       "message": "recheck",
       "revId": "0ca392d2885a5a4c0828685c69dd4ceb435692ef",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dfbd8de3_34c0976b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 7625
+      },
+      "writtenOn": "2025-12-02T11:27:56Z",
+      "side": 1,
+      "message": "just need someone from your team to confirm this is good to go, ignore apex-pdp failure",
+      "revId": "0ca392d2885a5a4c0828685c69dd4ceb435692ef",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
