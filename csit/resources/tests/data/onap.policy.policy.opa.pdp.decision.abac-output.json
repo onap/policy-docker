@@ -28,5 +28,6 @@
     ]
   },
   "policyName": "abac",
+  "policyVersion": "1.0.7",
   "statusMessage": "OPA Allowed"
 }
