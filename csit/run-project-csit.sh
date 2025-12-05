@@ -217,7 +217,7 @@ function setup_distribution() {
 
     # Remake temp directory
     sudo rm -rf /tmp/distribution
-    sudo mkdir /tmp/distribution
+    mkdir /tmp/distribution
 
     export ROBOT_FILES="distribution-test.robot"
     source "${DOCKER_COMPOSE_DIR}"/start-compose.sh distribution --grafana
