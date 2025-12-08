@@ -1,5 +1,5 @@
 #  ============LICENSE_START=======================================================
-#   Copyright (C) 2024 Nordix Foundation.
+#   Copyright (C) 2024-2025 OpenInfra Foundation Europe. All rights reserved.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -54,20 +54,20 @@ liveness:
   # necessary to disable liveness probe when setting breakpoints
   # in debugger so K8s doesn't restart unresponsive container
   enabled: true
-  port: http-api
+  port: sim-api
 
 readiness:
   initialDelaySeconds: 50
   periodSeconds: 10
   failureThreshold: 10
-  port: http-api
+  port: sim-api
 
 service:
   type: ClusterIP
   name: policy-clamp-ac-sim-ppnt
   useNodePortExt: true
   ports:
-    name: http-api
+    name: sim-api
     port: 6969
     nodePort: 42
 
@@ -94,7 +94,7 @@ jaeger:
   sampling:
     probability: "1.0"
   producer:
-    type: B3,W3C,B3_MULTI
+    type: "[B3,W3C,B3_MULTI]"
   collector:
     protocol: grpc
     host: "http://jaeger"

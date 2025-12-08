@@ -1,6 +1,6 @@
 {{/*
 #  ============LICENSE_START=======================================================
-#   Copyright (C) 2023-2024 Nordix Foundation.
+#   Copyright (C) 2023-2025 OpenInfra Foundation Europe. All rights reserved.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -49,18 +49,6 @@ spec:
         args:
         - -c
         - "cd /config-input && for PFILE in `ls -1`; do envsubst <${PFILE} >/config/${PFILE}; done"
-        env:
-        - name: RESTSERVER_USER
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Chart.Name }}-restserver-secret
-              key: login
-        - name: RESTSERVER_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Chart.Name }}-restserver-secret
-              key: password
-
         volumeMounts:
         - mountPath: /config-input
           name: ac-http-ppnt-config
@@ -74,10 +62,37 @@ spec:
           image: {{ .Values.global.repository }}/{{ .Values.global.image.httpparticipant }}
           imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
           command: ["/opt/app/policy/clamp/bin/http-participant.sh"]
-          args: ["/opt/app/policy/clamp/etc/mounted/HttpParticipantParameters.yaml"]
+          env:
+            - name: HTTP_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Chart.Name }}-restserver-secret
+                  key: login
+            - name: HTTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Chart.Name }}-restserver-secret
+                  key: password
+            - name: SERVER_PORT
+              value: "8084"
+            - name: topicCommInfrastructure
+              value: kafka
+            - name: kafkaServer
+              value: "{{ .Values.global.kafkaServer }}:9092"
           {{- $jaegerEnabled := tpl "policy-clamp-ac-http-ppnt.jaeger-enabled" . | trimSuffix "\n" -}}
           {{- if $jaegerEnabled }}
-          env:
+            - name: allowTracing
+              value: "true"
+            - name: jaegerProducerType
+              value: {{ .Values.jaeger.producer.type | quote }}
+            - name: jaegerSamplingProbability
+              value: {{ .Values.jaeger.sampling.probability | quote }}
+            - name: tracingExporterEndpoint
+              value: {{ .Values.jaeger.collector.host }}:{{ include "policy-clamp-ac-http-ppnt.exporter-port" . }}
+            - name: tracingExporterProtocol
+              value: {{ .Values.jaeger.collector.protocol }}
+            - name: tracingSamplerEndpoint
+              value: "{{ .Values.jaeger.collector.host }}:{{ .Values.jaeger.collector.portJaegerGrpc }}"
             - name: OTEL_SERVICE_NAME
               value: {{ .Values.applicationName }}
             - name: OTEL_EXPORTER_OTLP_PROTOCOL
@@ -86,6 +101,8 @@ spec:
               value: {{ include "policy-clamp-ac-http-ppnt.jaeger-protocol" . }}
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: {{ printf "%s:%s" (.Values.jaeger.collector.host) (include "policy-clamp-ac-http-ppnt.exporter-port" .) }}
+            - name: OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED
+              value: "true"
           {{- end }}
           ports:
             - containerPort: 8084
@@ -110,9 +127,6 @@ spec:
             readOnly: true
           - mountPath: /opt/app/policy/clamp/etc/mounted
             name: ac-http-ppnt-config-processed
-          - mountPath: /opt/app/policy/clamp/bin/http-participant.sh
-            name: ac-http-ppnt-config
-            subPath: http-participant.sh
           resources:
 {{ toYaml .Values.resources.small | indent 12 }}
         {{- if .Values.nodeSelector }}

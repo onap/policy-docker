@@ -49,6 +49,10 @@ services:
       - kafka
       - jaeger
     environment:
+      HTTP_USER: participantUser
+      HTTP_PASSWORD: zb!XztG34
+      topicCommInfrastructure: kafka
+      allowTracing: true
       OTEL_SERVICE_NAME: sim-ppnt-1
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
@@ -61,11 +65,9 @@ services:
       JAVA_TOOL_OPTIONS: >-
         -Dlogging.config="/opt/app/policy/clamp/etc/logback.xml"
         -Dotel.java.global-autoconfigure.enabled=true
-      spring.config.location: /opt/app/policy/clamp/etc/SimulatorParticipantParameters.yaml
     ports:
       - ${SIM_PARTICIPANT1_PORT}:6969
     volumes:
-      - ./config/clamp/SimulatorParticipantParameters.yaml:/opt/app/policy/clamp/etc/SimulatorParticipantParameters.yaml:ro
       - ./config/clamp/logback-ppnt.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     entrypoint: /opt/app/policy/bin/wait_for_port.sh
@@ -82,6 +84,10 @@ services:
       - kafka
       - jaeger
     environment:
+      HTTP_USER: participantUser
+      HTTP_PASSWORD: zb!XztG34
+      topicCommInfrastructure: kafka
+      allowTracing: true
       OTEL_SERVICE_NAME: sim-ppnt-2
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
@@ -94,11 +100,9 @@ services:
       JAVA_TOOL_OPTIONS: >-
         -Dlogging.config="/opt/app/policy/clamp/etc/logback.xml"
         -Dotel.java.global-autoconfigure.enabled=true
-      spring.config.location: /opt/app/policy/clamp/etc/SimulatorParticipantParameters.yaml
     ports:
       - ${SIM_PARTICIPANT2_PORT}:6969
     volumes:
-      - ./config/clamp/SimulatorParticipantParameters.yaml:/opt/app/policy/clamp/etc/SimulatorParticipantParameters.yaml:ro
       - ./config/clamp/logback-ppnt.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     entrypoint: /opt/app/policy/bin/wait_for_port.sh
@@ -115,6 +119,10 @@ services:
       - kafka
       - jaeger
     environment:
+      HTTP_USER: participantUser
+      HTTP_PASSWORD: zb!XztG34
+      topicCommInfrastructure: kafka
+      allowTracing: true
       OTEL_SERVICE_NAME: sim-ppnt-3
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
@@ -127,11 +135,9 @@ services:
       JAVA_TOOL_OPTIONS: >-
         -Dlogging.config="/opt/app/policy/clamp/etc/logback.xml"
         -Dotel.java.global-autoconfigure.enabled=true
-      spring.config.location: /opt/app/policy/clamp/etc/SimulatorParticipantParameters.yaml
     ports:
       - ${SIM_PARTICIPANT3_PORT}:6969
     volumes:
-      - ./config/clamp/SimulatorParticipantParameters.yaml:/opt/app/policy/clamp/etc/SimulatorParticipantParameters.yaml:ro
       - ./config/clamp/logback-ppnt.xml:/opt/app/policy/clamp/etc/logback.xml:ro
       - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     entrypoint: /opt/app/policy/bin/wait_for_port.sh

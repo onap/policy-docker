@@ -89,7 +89,7 @@ jaeger:
   sampling:
     probability: "1.0"
   producer:
-    type: B3,W3C,B3_MULTI
+    type: "[B3,W3C,B3_MULTI]"
   collector:
     protocol: grpc
     host: "http://jaeger"

@@ -266,6 +266,10 @@ services:
     ports:
       - "30290:6969"
     environment:
+      HTTP_USER: participantUser
+      HTTP_PASSWORD: zb!XztG34
+      topicCommInfrastructure: kafka
+      allowTracing: true
       OTEL_SERVICE_NAME: http-ppnt
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
@@ -274,9 +278,7 @@ services:
         -Dlogging.config="/opt/app/policy/clamp/etc/logback.xml"
         -Dotel.java.global-autoconfigure.enabled=true
       SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
-      SPRING_CONFIG_LOCATION: /opt/app/policy/clamp/etc/HttpParticipantParameters.yaml
     volumes:
-      - ./config/clamp/HttpParticipantParameters.yaml:/opt/app/policy/clamp/etc/HttpParticipantParameters.yaml
       - ./config/clamp/logback-ppnt.xml:/opt/app/policy/clamp/etc/logback.xml:ro
     healthcheck:
       test: "curl --fail --silent http://localhost:6969/onap/policy/clamp/acm/httpparticipant/health/readiness | grep UP || exit 1"
@@ -294,6 +296,10 @@ services:
       - kafka
       - jaeger
     environment:
+      HTTP_USER: participantUser
+      HTTP_PASSWORD: zb!XztG34
+      topicCommInfrastructure: kafka
+      allowTracing: true
       OTEL_SERVICE_NAME: k8s-ppnt
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
@@ -302,11 +308,9 @@ services:
         -Dlogging.config="/opt/app/policy/clamp/etc/logback.xml"
         -Dotel.java.global-autoconfigure.enabled=true
       SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
-      SPRING_CONFIG_LOCATION: /opt/app/policy/clamp/etc/KubernetesParticipantParameters.yaml
     ports:
       - "30295:6969"
     volumes:
-      - ./config/clamp/KubernetesParticipantParameters.yaml:/opt/app/policy/clamp/etc/KubernetesParticipantParameters.yaml
       - ./config/clamp/logback-ppnt.xml:/opt/app/policy/clamp/etc/logback.xml:ro
     healthcheck:
       test: "curl --fail --silent http://localhost:6969/onap/policy/clamp/acm/k8sparticipant/health/readiness | grep UP || exit 1"
@@ -327,6 +331,14 @@ services:
     ports:
       - ${POLICY_PARTICIPANT_PORT}:6969
     environment:
+      API_USER: policyadmin
+      API_PASSWORD: zb!XztG34
+      PAP_USER: policyadmin
+      PAP_PASSWORD: zb!XztG34
+      HTTP_USER: participantUser
+      HTTP_PASSWORD: zb!XztG34
+      topicCommInfrastructure: kafka
+      allowTracing: true
       OTEL_SERVICE_NAME: policy-ppnt
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
@@ -335,9 +347,7 @@ services:
         -Dlogging.config="/opt/app/policy/clamp/etc/logback.xml"
         -Dotel.java.global-autoconfigure.enabled=true
       SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
-      SPRING_CONFIG_LOCATION: /opt/app/policy/clamp/etc/PolicyParticipantParameters.yaml
     volumes:
-      - ./config/clamp/PolicyParticipantParameters.yaml:/opt/app/policy/clamp/etc/PolicyParticipantParameters.yaml:ro
       - ./config/clamp/logback-ppnt.xml:/opt/app/policy/clamp/etc/logback.xml:ro
     healthcheck:
       test: "curl --fail --silent http://localhost:6969/onap/policy/clamp/acm/policyparticipant/health/readiness | grep UP || exit 1"
@@ -355,6 +365,10 @@ services:
       - kafka
       - jaeger
     environment:
+      HTTP_USER: participantUser
+      HTTP_PASSWORD: zb!XztG34
+      topicCommInfrastructure: kafka
+      allowTracing: true
       OTEL_SERVICE_NAME: a1pms-ppnt
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
@@ -362,11 +376,9 @@ services:
       JAVA_TOOL_OPTIONS: >-
         -Dlogging.config="/opt/app/policy/clamp/etc/logback.xml"
         -Dotel.java.global-autoconfigure.enabled=true
-      SPRING_CONFIG_LOCATION: /opt/app/policy/clamp/etc/A1pmsParticipantParameters.yaml
     ports:
       - "30296:6969"
     volumes:
-      - ./config/clamp/A1pmsParticipantParameters.yaml:/opt/app/policy/clamp/etc/A1pmsParticipantParameters.yaml:ro
       - ./config/clamp/logback-ppnt.xml:/opt/app/policy/clamp/etc/logback.xml:ro
     healthcheck:
       test: "curl --fail --silent http://localhost:6969/onap/policy/clamp/acm/a1pmsparticipant/health/readiness | grep UP || exit 1"
@@ -384,6 +396,10 @@ services:
       - kafka
       - jaeger
     environment:
+      HTTP_USER: participantUser
+      HTTP_PASSWORD: zb!XztG34
+      topicCommInfrastructure: kafka
+      allowTracing: true
       OTEL_SERVICE_NAME: kserve-ppnt
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
@@ -391,11 +407,9 @@ services:
       JAVA_TOOL_OPTIONS: >-
         -Dlogging.config="/opt/app/policy/clamp/etc/logback.xml"
         -Dotel.java.global-autoconfigure.enabled=true
-      SPRING_CONFIG_LOCATION: /opt/app/policy/clamp/etc/KserveParticipantParameters.yaml
     ports:
       - "30297:6969"
     volumes:
-      - ./config/clamp/KserveParticipantParameters.yaml:/opt/app/policy/clamp/etc/KserveParticipantParameters.yaml:ro
       - ./config/clamp/logback-ppnt.xml:/opt/app/policy/clamp/etc/logback.xml:ro
     healthcheck:
       test: "curl --fail --silent http://localhost:6969/onap/policy/clamp/acm/kserveparticipant/health/readiness | grep UP || exit 1"

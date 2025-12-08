@@ -1,6 +1,6 @@
 {{/*
 #  ============LICENSE_START=======================================================
-#   Copyright (C) 2023-2024 Nordix Foundation.
+#   Copyright (C) 2023-2025 OpenInfra Foundation Europe. All rights reserved.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -49,38 +49,6 @@ spec:
         args:
         - -c
         - "cd /config-input && for PFILE in `ls -1`; do envsubst <${PFILE} >/config/${PFILE}; done"
-        env:
-        - name: API_USER
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Chart.Name }}-api-secret
-              key: login
-        - name: API_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Chart.Name }}-api-secret
-              key: password
-        - name: PAP_USER
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Chart.Name }}-pap-secret
-              key: login
-        - name: PAP_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Chart.Name }}-pap-secret
-              key: password
-        - name: RESTSERVER_USER
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Chart.Name }}-restserver-secret
-              key: login
-        - name: RESTSERVER_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Chart.Name }}-restserver-secret
-              key: password
-
         volumeMounts:
         - mountPath: /config-input
           name: ac-pf-ppnt-config
@@ -94,10 +62,57 @@ spec:
           image: {{ .Values.global.repository }}/{{ .Values.global.image.pfparticipant }}
           imagePullPolicy: {{ .Values.global.pullPolicy }}
           command: ["/opt/app/policy/clamp/bin/policy-participant.sh"]
-          args: ["/opt/app/policy/clamp/etc/mounted/PolicyParticipantParameters.yaml"]
+          env:
+            - name: HTTP_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Chart.Name }}-restserver-secret
+                  key: login
+            - name: HTTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Chart.Name }}-restserver-secret
+                  key: password
+            - name: SERVER_PORT
+              value: "6969"
+            - name: API_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Chart.Name }}-api-secret
+                  key: login
+            - name: API_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Chart.Name }}-api-secret
+                  key: password
+            - name: PAP_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Chart.Name }}-pap-secret
+                  key: login
+            - name: PAP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Chart.Name }}-pap-secret
+                  key: password
+            - name: topicCommInfrastructure
+              value: kafka
+            - name: kafkaServer
+              value: "{{ .Values.global.kafkaServer }}:9092"
           {{- $jaegerEnabled := tpl "policy-clamp-ac-pf-ppnt.jaeger-enabled" . | trimSuffix "\n" -}}
           {{- if $jaegerEnabled }}
-          env:
+            - name: allowTracing
+              value: "true"
+            - name: jaegerProducerType
+              value: {{ .Values.jaeger.producer.type | quote }}
+            - name: jaegerSamplingProbability
+              value: {{ .Values.jaeger.sampling.probability | quote }}
+            - name: tracingExporterEndpoint
+              value: {{ .Values.jaeger.collector.host }}:{{ include "policy-clamp-ac-pf-ppnt.exporter-port" . }}
+            - name: tracingExporterProtocol
+              value: {{ .Values.jaeger.collector.protocol }}
+            - name: tracingSamplerEndpoint
+              value: "{{ .Values.jaeger.collector.host }}:{{ .Values.jaeger.collector.portJaegerGrpc }}"
             - name: OTEL_SERVICE_NAME
               value: {{ .Values.applicationName }}
             - name: OTEL_EXPORTER_OTLP_PROTOCOL
@@ -106,10 +121,12 @@ spec:
               value: {{ include "policy-clamp-ac-pf-ppnt.jaeger-protocol" . }}
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: {{ printf "%s:%s" (.Values.jaeger.collector.host) (include "policy-clamp-ac-pf-ppnt.exporter-port" .) }}
+            - name: OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED
+              value: "true"
           {{- end }}
           ports:
             - containerPort: 6969
-              name: http-api
+              name: pf-api
           # disable liveness probe when breakpoints set in debugger
           # so K8s doesn't restart unresponsive container
           {{- if eq .Values.liveness.enabled true }}
@@ -130,9 +147,6 @@ spec:
             readOnly: true
           - mountPath: /opt/app/policy/clamp/etc/mounted
             name: ac-pf-ppnt-config-processed
-          - mountPath: /opt/app/policy/clamp/bin/policy-participant.sh
-            name: ac-pf-ppnt-config
-            subPath: policy-participant.sh
           resources:
 {{ toYaml .Values.resources.small | indent 12 }}
         {{- if .Values.nodeSelector }}
