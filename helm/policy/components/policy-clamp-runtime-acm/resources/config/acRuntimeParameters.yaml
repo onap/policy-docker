@@ -23,7 +23,7 @@ spring:
     user:
       name: ${RUNTIME_USER}
       password: ${RUNTIME_PASSWORD}
-  mvc:
+  http:
     converters:
       preferred-json-mapper: gson
   datasource:
@@ -41,7 +41,6 @@ spring:
       ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-        implicit-strategy: org.onap.policy.common.spring.utils.CustomImplicitNamingStrategy
     properties:
       hibernate:
         format_sql: true
