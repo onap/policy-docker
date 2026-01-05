@@ -1,6 +1,6 @@
 #
 # ===========LICENSE_START====================================================
-#  Copyright (C) 2024-2025 OpenInfra Foundation Europe. All rights reserved.
+#  Copyright (C) 2024-2026 OpenInfra Foundation Europe. All rights reserved.
 # ============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -90,19 +90,14 @@ services:
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
-      JAVA_TOOL_OPTIONS: >-
-        -Dlogging.config="/opt/app/policy/clamp/etc/logback.xml"
-        -Dotel.java.global-autoconfigure.enabled=true
+      OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED: true
       SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
-    volumes:
-      - ./config/clamp/logback-ppnt.xml:/opt/app/policy/clamp/etc/logback.xml:ro
     healthcheck:
       test: "curl --fail --silent http://localhost:6969/onap/policy/clamp/acm/httpparticipant/health/readiness | grep UP || exit 1"
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 60s
-    entrypoint: java -jar /app/app.jar
 
   policy-clamp-ac-k8s-ppnt-replica:
     image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-k8s-ppnt:${POLICY_CLAMP_PPNT_VERSION}
@@ -119,24 +114,19 @@ services:
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
-      JAVA_TOOL_OPTIONS: >-
-        -Dlogging.config="/opt/app/policy/clamp/etc/logback.xml"
-        -Dotel.java.global-autoconfigure.enabled=true
+      OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED: true
       SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
     expose:
       - 6969
     deploy:
       mode: replicated
       replicas: ${REPLICAS:-2}
-    volumes:
-      - ./config/clamp/logback-ppnt.xml:/opt/app/policy/clamp/etc/logback.xml:ro
     healthcheck:
       test: "curl --fail --silent http://localhost:6969/onap/policy/clamp/acm/k8sparticipant/health/readiness | grep UP || exit 1"
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 20s
-    entrypoint: java -jar /app/app.jar
 
   policy-clamp-ac-pf-ppnt-replica:
     image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-pf-ppnt:${POLICY_CLAMP_PPNT_VERSION}
@@ -162,19 +152,14 @@ services:
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
-      JAVA_TOOL_OPTIONS: >-
-        -Dlogging.config="/opt/app/policy/clamp/etc/logback.xml"
-        -Dotel.java.global-autoconfigure.enabled=true
+      OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED: true
       SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
-    volumes:
-      - ./config/clamp/logback-ppnt.xml:/opt/app/policy/clamp/etc/logback.xml:ro
     healthcheck:
       test: "curl --fail --silent http://localhost:6969/onap/policy/clamp/acm/policyparticipant/health/readiness | grep UP || exit 1"
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 30s
-    entrypoint: java -jar /app/app.jar
 
   nginx:
     image: ${CONTAINER_LOCATION}library/nginx:latest

@@ -1,6 +1,6 @@
 {{/*
 #  ============LICENSE_START=======================================================
-#   Copyright (C) 2023-2025 OpenInfra Foundation Europe. All rights reserved.
+#   Copyright (C) 2023-2026 OpenInfra Foundation Europe. All rights reserved.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -43,25 +43,10 @@ spec:
         app.kubernetes.io/managed-by: Helm
         name: {{ .Chart.Name }}
     spec:
-      initContainers:
-      - command:
-        - sh
-        args:
-        - -c
-        - "cd /config-input && for PFILE in `ls -1`; do envsubst <${PFILE} >/config/${PFILE}; done"
-        volumeMounts:
-        - mountPath: /config-input
-          name: ac-http-ppnt-config
-        - mountPath: /config
-          name: ac-http-ppnt-config-processed
-        image: docker.io/dibi/envsubst:1
-        imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
-        name: {{ .Chart.Name }}-update-config
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.global.repository }}/{{ .Values.global.image.httpparticipant }}
           imagePullPolicy: {{ .Values.global.pullPolicy | default .Values.pullPolicy }}
-          command: ["/opt/app/policy/clamp/bin/http-participant.sh"]
           env:
             - name: HTTP_USER
               valueFrom:
@@ -125,8 +110,6 @@ spec:
           - mountPath: /etc/localtime
             name: localtime
             readOnly: true
-          - mountPath: /opt/app/policy/clamp/etc/mounted
-            name: ac-http-ppnt-config-processed
           resources:
 {{ toYaml .Values.resources.small | indent 12 }}
         {{- if .Values.nodeSelector }}
@@ -142,12 +125,5 @@ spec:
         - name: localtime
           hostPath:
              path: /etc/localtime
-        - name: ac-http-ppnt-config
-          configMap:
-            name: {{ .Chart.Name }}-configmap
-            defaultMode: 0755
-        - name: ac-http-ppnt-config-processed
-          emptyDir:
-            medium: Memory
       imagePullSecrets:
       - name: "default-docker-registry-key"

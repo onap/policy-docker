@@ -1,6 +1,6 @@
 {{/*
 #  ============LICENSE_START=======================================================
-#   Copyright (C) 2023-2025 OpenInfra Foundation Europe. All rights reserved.
+#   Copyright (C) 2023-2026 OpenInfra Foundation Europe. All rights reserved.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -44,25 +44,10 @@ spec:
       name: {{ .Chart.Name }}
 
     spec:
-      initContainers:
-      - command:
-        - sh
-        args:
-        - -c
-        - "cd /config-input && for PFILE in `ls -1`; do envsubst <${PFILE} >/config/${PFILE}; done"
-        volumeMounts:
-        - mountPath: /config-input
-          name: ac-a1pms-ppnt-config
-        - mountPath: /config
-          name: ac-a1pms-ppnt-config-processed
-        image: docker.io/dibi/envsubst:1
-        imagePullPolicy: {{ .Values.pullPolicy }}
-        name: {{ .Chart.Name }}-update-config
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.global.repository }}/{{ .Values.global.image.a1pmsparticipant }}
           imagePullPolicy: {{ .Values.global.pullPolicy }}
-          command: ["/opt/app/policy/clamp/bin/a1pms-participant.sh"]
           env:
             - name: HTTP_USER
               valueFrom:
@@ -128,8 +113,6 @@ spec:
           - mountPath: /etc/localtime
             name: localtime
             readOnly: true
-          - mountPath: /opt/app/policy/clamp/etc/mounted
-            name: ac-a1pms-ppnt-config-processed
           resources:
 {{ toYaml .Values.resources.small | indent 12 }}
         {{- if .Values.nodeSelector }}
@@ -145,12 +128,5 @@ spec:
         - name: localtime
           hostPath:
              path: /etc/localtime
-        - name: ac-a1pms-ppnt-config
-          configMap:
-            name: {{ .Chart.Name }}-configmap
-            defaultMode: 0755
-        - name: ac-a1pms-ppnt-config-processed
-          emptyDir:
-            medium: Memory
       imagePullSecrets:
       - name: default-docker-registry-key"
