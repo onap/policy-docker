@@ -19,7 +19,7 @@ WaitForPrometheusServer
 
 ValidateResponseTimeForHealthcheck
     [Documentation]  Validate component healthcheck response time
-    ValidateResponseTimeForClamp  /health  GET
+    ValidateResponseTimeForClamp  /actuator/health  GET
 
 ValidateResponseTimeQueryAcDefinition
     [Documentation]  Validate query AC Definitions response time

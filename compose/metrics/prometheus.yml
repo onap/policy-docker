@@ -97,7 +97,7 @@ scrape_configs:
     password: "zb!XztG34"
 
 - job_name: "acm-metrics"
-  metrics_path: "/onap/policy/clamp/acm/prometheus"
+  metrics_path: "/onap/policy/clamp/acm/actuator/prometheus"
   static_configs:
   - targets:
     - "compose-policy-clamp-runtime-acm-replica-1:6969"

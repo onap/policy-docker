@@ -1,6 +1,6 @@
 {{/*
 #  ============LICENSE_START=======================================================
-#   Copyright (C) 2022-2025 Nordix Foundation.
+#   Copyright (C) 2022-2026 OpenInfra Foundation Europe. All rights reserved.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -70,18 +70,6 @@ spec:
               name: {{ .Chart.Name }}-db-secret
               key: password
 
-        - name: RUNTIME_USER
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Chart.Name }}-runtime-secret
-              key: login
-
-        - name: RUNTIME_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Chart.Name }}-runtime-secret
-              key: password
-
         volumeMounts:
         - mountPath: /config-input
           name: ac-runtime-config
@@ -95,10 +83,57 @@ spec:
           image: {{ .Values.global.repository }}/{{ .Values.global.image.runtimeacm }}
           imagePullPolicy: {{ .Values.global.pullPolicy }}
           command: ["/opt/app/policy/clamp/bin/acm-runtime.sh"]
-          args: ["/opt/app/policy/clamp/etc/mounted/acRuntimeParameters.yaml"]
-          {{- $jaegerEnabled := tpl "policy-clamp-ac-a1pms-ppnt.jaeger-enabled" . | trimSuffix "\n" -}}
-          {{- if $jaegerEnabled }}
           env:
+            - name: RUNTIME_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Chart.Name }}-runtime-secret
+                  key: login
+            - name: RUNTIME_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Chart.Name }}-runtime-secret
+                  key: password
+            - name: SQL_HOST
+              value: {{ .Values.db.service.name }}
+            - name: SQL_PORT
+              value: {{ .Values.db.service.internalPort | quote }}
+            - name: SQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Chart.Name }}-db-secret
+                  key: login
+            - name: SQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Chart.Name }}-db-secret
+                  key: password
+            - name: SERVER_PORT
+              value: {{ .Values.service.ports.port | quote }}
+            - name: TOPIC_COMM_INFRASTRUCTURE
+              value: kafka
+            - name: KAFKA_SERVER
+              value: "{{ .Values.global.kafkaServer }}:9092"
+            - name: TOSCA_ELEMENT_NAME
+              value: {{ .Values.customNaming.toscaElementName }}
+            - name: TOSCA_COMPOSITION_NAME
+              value: {{ .Values.customNaming.toscaCompositionName }}
+            - name: PROMETHEUS_PORT
+              value: {{ .Values.service.ports.port | quote }}
+          {{- $jaegerEnabled := tpl "policy-clamp-runtime-acm.jaeger-enabled" . | trimSuffix "\n" -}}
+          {{- if $jaegerEnabled }}
+            - name: ALLOW_TRACING
+              value: "true"
+            - name: JAEGER_PRODUCER_TYPE
+              value: {{ .Values.jaeger.producer.type | quote }}
+            - name: JAEGER_SAMPLING_PROBABILITY
+              value: {{ .Values.jaeger.sampling.probability | quote }}
+            - name: TRACING_EXPORTER_ENDPOINT
+              value: {{ .Values.jaeger.collector.host }}:{{ include "policy-clamp-runtime-acm.exporter-port" . }}
+            - name: TRACING_EXPORTER_PROTOCOL
+              value: {{ .Values.jaeger.collector.protocol }}
+            - name: TRACING_SAMPLER_ENDPOINT
+              value: "{{ .Values.jaeger.collector.host }}:{{ .Values.jaeger.collector.portJaegerGrpc }}"
             - name: OTEL_SERVICE_NAME
               value: {{ .Values.applicationName }}
             - name: OTEL_EXPORTER_OTLP_PROTOCOL
@@ -107,10 +142,12 @@ spec:
               value: {{ include "policy-clamp-runtime-acm.jaeger-protocol" . }}
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: {{ printf "%s:%s" (.Values.jaeger.collector.host) (include "policy-clamp-runtime-acm.exporter-port" .) }}
+            - name: OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED
+              value: "true"
           {{- end }}
           ports:
             - containerPort: {{ .Values.service.ports.port }}
-              name: http-api
+              name: runtime-api
           # disable liveness probe when breakpoints set in debugger
           # so K8s doesn't restart unresponsive container
           {{- if eq .Values.liveness.enabled true }}
