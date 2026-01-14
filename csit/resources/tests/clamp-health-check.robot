@@ -14,7 +14,7 @@ Resource    clamp-common.robot
 HealthcheckAcm
     [Documentation]    Healthcheck on Clamp Acm
     ${auth}=    ClampAuth
-    ${resp}=    MakeGetRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  onap/policy/clamp/acm/health  ${auth}
+    ${resp}=    MakeGetRequest  ACM  ${POLICY_RUNTIME_ACM_IP}  onap/policy/clamp/acm/actuator/health  ${auth}
     Should Be Equal As Strings    ${resp.status_code}     200
 
 HealthcheckParticipantSim

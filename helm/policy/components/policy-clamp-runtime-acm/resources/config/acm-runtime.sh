@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 #
 # ============LICENSE_START=======================================================
-#  Copyright (C) 2024 Nordix Foundation.
+#  Copyright (C) 2024,2026 OpenInfra Foundation Europe. All rights reserved.
 # ================================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,31 +19,6 @@
 # ============LICENSE_END=========================================================
 #
 
-KEYSTORE="${KEYSTORE:-$POLICY_HOME/etc/ssl/policy-keystore}"
-TRUSTSTORE="${TRUSTSTORE:-$POLICY_HOME/etc/ssl/policy-truststore}"
-KEYSTORE_PASSWD="${KEYSTORE_PASSWD:-Pol1cy_0nap}"
-TRUSTSTORE_PASSWD="${TRUSTSTORE_PASSWD:-Pol1cy_0nap}"
-
-if [ "$#" -eq 1 ]; then
-    CONFIG_FILE=$1
-fi
-
-if [ -z "$CONFIG_FILE" ]; then
-    CONFIG_FILE="${POLICY_HOME}/etc/AcRuntimeParameters.yaml"
-fi
-
-echo "Policy clamp runtime acm config file: $CONFIG_FILE"
-
-if [ -f "${POLICY_HOME}/etc/mounted/policy-truststore" ]; then
-    echo "overriding policy-truststore"
-    cp -f "${POLICY_HOME}"/etc/mounted/policy-truststore "${TRUSTSTORE}"
-fi
-
-if [ -f "${POLICY_HOME}/etc/mounted/policy-keystore" ]; then
-    echo "overriding policy-keystore"
-    cp -f "${POLICY_HOME}"/etc/mounted/policy-keystore "${KEYSTORE}"
-fi
-
 if [ -f "${POLICY_HOME}/etc/mounted/logback.xml" ]; then
     echo "overriding logback xml file"
     cp -f "${POLICY_HOME}"/etc/mounted/logback.xml "${POLICY_HOME}"/etc/
@@ -51,10 +26,6 @@ fi
 
 $JAVA_HOME/bin/java \
     -Dlogging.config="${POLICY_HOME}/etc/logback.xml" \
-    -Dserver.ssl.keyStore="${KEYSTORE}" \
-    -Dserver.ssl.keyStorePassword="${KEYSTORE_PASSWD}" \
-    -Djavax.net.ssl.trustStore="${TRUSTSTORE}" \
-    -Djavax.net.ssl.trustStorePassword="${TRUSTSTORE_PASSWD}" \
     -Dcom.sun.management.jmxremote.rmi.port=9090 \
     -Dcom.sun.management.jmxremote=true \
     -Dcom.sun.management.jmxremote.port=9090 \
@@ -62,5 +33,4 @@ $JAVA_HOME/bin/java \
     -Dcom.sun.management.jmxremote.authenticate=false \
     -Dcom.sun.management.jmxremote.local.only=false \
     -Dotel.java.global-autoconfigure.enabled=true \
-    -jar /app/app.jar \
-    --spring.config.location="${CONFIG_FILE}"
+    -jar /app/app.jar

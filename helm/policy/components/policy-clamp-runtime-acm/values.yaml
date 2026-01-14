@@ -1,5 +1,5 @@
 #  ============LICENSE_START=======================================================
-#   Copyright (C) 2022,2024-2025 OpenInfra Foundation Europe. All rights reserved.
+#   Copyright (C) 2022,2024-2026 OpenInfra Foundation Europe. All rights reserved.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -59,20 +59,20 @@ liveness:
   # necessary to disable liveness probe when setting breakpoints
   # in debugger so K8s doesn't restart unresponsive container
   enabled: true
-  port: http-api
+  port: runtime-api
 
 readiness:
   initialDelaySeconds: 120
   periodSeconds: 10
   failureThreshold: 10
-  port: http-api
+  port: runtime-api
 
 service:
   type: NodePort
   name: policy-clamp-runtime-acm
   useNodePortExt: true
   ports:
-    name: http-api
+    name: runtime-api
     port: 6969
     nodePort: 30442
 
@@ -108,7 +108,7 @@ jaeger:
   sampling:
     probability: "1.0"
   producer:
-    type: B3,W3C,B3_MULTI
+    type: "[B3,W3C,B3_MULTI]"
   collector:
     protocol: grpc
     host: "http://jaeger"

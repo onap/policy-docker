@@ -227,6 +227,15 @@ services:
     restart:
       on-failure:3
     environment:
+      RUNTIME_USER: runtimeUser
+      RUNTIME_PASSWORD: zb!XztG34
+      SQL_HOST: postgres
+      SQL_PORT: 5432
+      SQL_USER: policy_user
+      SQL_PASSWORD: policy_user
+      TOPIC_COMM_INFRASTRUCTURE: kafka
+      ALLOW_TRACING: true
+      PROMETHEUS_PORT: 6969
       OTEL_SERVICE_NAME: acm-r
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
@@ -241,16 +250,10 @@ services:
         -Dcom.sun.management.jmxremote.local.only=false
         -Dotel.java.global-autoconfigure.enabled=true
       SPRING_PROFILES_ACTIVE: ${CLAMP_PROFILE:-default}
-      SPRING_CONFIG_LOCATION: /opt/app/policy/clamp/etc/application.yaml
-      # Tracing can be configured for grpc or http - default is http
-      #OTEL_EXPORTER_OTLP_PROTOCOL: grpc
-      #OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: grpc
-      #OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4317
     volumes:
-      - ./config/clamp/AcRuntimeParameters.yaml:/opt/app/policy/clamp/etc/application.yaml
       - ./config/clamp/logback.xml:/opt/app/policy/clamp/etc/logback.xml:ro
     healthcheck:
-      test: "curl --fail --silent http://localhost:6969/onap/policy/clamp/acm/health/readiness | grep UP || exit 1"
+      test: "curl --fail --silent http://localhost:6969/onap/policy/clamp/acm/actuator/health/readiness | grep UP || exit 1"
       interval: 30s
       timeout: 10s
       retries: 5
