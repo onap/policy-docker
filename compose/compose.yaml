@@ -31,7 +31,8 @@ services:
     container_name: policy-api
     hostname: policy-api
     depends_on:
-      - policy-db-migrator
+      policy-db-migrator:
+        condition: service_completed_successfully
     ports:
       - ${API_PORT}:6969
     environment:
@@ -42,12 +43,12 @@ services:
     volumes:
       - ./config/api/apiParameters.yaml:/opt/app/policy/api/etc/apiParameters.yaml:ro
       - ./config/api/logback.xml:/opt/app/policy/api/etc/logback.xml:ro
-      - ./wait_for_port.sh:/opt/app/policy/api/bin/wait_for_port.sh:ro
-    entrypoint: ./wait_for_port.sh
-    command: [
-      '-c', 'java -jar /app/api.jar',
-      'policy-db-migrator', '6824'
-    ]
+    healthcheck:
+      test: "curl --fail --silent --user 'policyadmin:zb!XztG34' http://localhost:6969/policy/api/v1/health | grep -q UP || exit 1"
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 30s
 
   policy-pap:
     image: ${CONTAINER_LOCATION}onap/policy-pap:${POLICY_PAP_VERSION}
@@ -67,13 +68,12 @@ services:
       - ./config/pap/papParameters.yaml:/opt/app/policy/pap/etc/papParameters.yaml:ro
       - ./config/${PROJECT:-api}/groups.json:/opt/app/policy/pap/etc/mounted/groups.json:ro
       - ./config/pap/logback.xml:/opt/app/policy/pap/etc/logback.xml:ro
-      - ./wait_for_port.sh:/opt/app/policy/pap/bin/wait_for_port.sh:ro
-    entrypoint: ./wait_for_port.sh
-    command: [
-      '-c', 'java -jar /app/pap.jar --group-config-file=/opt/app/policy/pap/etc/mounted/groups.json',
-      'policy-api', '6969',
-      'kafka', '9092'
-    ]
+    healthcheck:
+      test: "curl --fail --silent --user 'policyadmin:zb!XztG34' http://localhost:6969/policy/pap/v1/health | grep -q UP || exit 1"
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 30s
 
   policy-apex-pdp:
     image: ${CONTAINER_LOCATION}onap/policy-apex-pdp:${POLICY_APEX_PDP_VERSION}
@@ -81,7 +81,6 @@ services:
     hostname: policy-apex-pdp
     depends_on:
       - policy-models-simulator
-      - kafka
       - policy-pap
     ports:
       - ${APEX_PORT}:6969
@@ -89,13 +88,13 @@ services:
     volumes:
       - ./config/apex-pdp/OnapPfConfig.json:/opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json:ro
       - ./config/apex-pdp/logback.xml:/opt/app/policy/apex-pdp/etc/logback.xml:ro
-      - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
-    entrypoint: /opt/app/policy/bin/wait_for_port.sh
-    command: [
-      '-c', '/opt/app/policy/apex-pdp/bin/apexOnapPf.sh -c /opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json',
-      'kafka', '9092',
-      'policy-pap', '6969'
-    ]
+    entrypoint: /opt/app/policy/apex-pdp/bin/apexOnapPf.sh -c /opt/app/policy/apex-pdp/etc/onappf/config/OnapPfConfig.json
+    healthcheck:
+      test: "curl --fail --silent --user 'policyadmin:zb!XztG34' http://localhost:6969/policy/apex-pdp/v1/healthcheck | grep -q '\"healthy\":true' || exit 1"
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 30s
 
   policy-distribution:
     image: ${CONTAINER_LOCATION}onap/policy-distribution:${POLICY_DISTRIBUTION_VERSION}
@@ -109,12 +108,12 @@ services:
       - ./config/distribution/defaultConfig.json:/opt/app/policy/distribution/etc/defaultConfig.json:ro
       - /tmp/distribution/:/opt/app/policy/distribution/etc/temp/:ro
       - ./config/distribution/logback.xml:/opt/app/policy/distribution/etc/logback.xml:ro
-      - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
-    entrypoint: /opt/app/policy/bin/wait_for_port.sh
-    command: [
-      '-c', './policy-dist.sh',
-      'policy-apex-pdp', '6969'
-    ]
+    healthcheck:
+      test: "curl --fail --silent --user 'policyadmin:zb!XztG34' http://localhost:6969/healthcheck | grep -q '\"healthy\":true' || exit 1"
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 30s
 
   policy-xacml-pdp:
     image: ${CONTAINER_LOCATION}onap/policy-xacml-pdp:${POLICY_XACML_PDP_VERSION}
@@ -122,43 +121,40 @@ services:
     hostname: policy-xacml-pdp
     depends_on:
       - policy-pap
-      - kafka
     ports:
       - ${XACML_PORT}:6969
       - 30999:3904
     volumes:
       - ./config/xacml-pdp/defaultConfig.json:/opt/app/policy/pdpx/etc/defaultConfig.json:ro
       - ./config/xacml-pdp/logback.xml:/opt/app/policy/pdpx/etc/logback.xml:ro
-      - ./config/xacml-pdp/xacml-postgres.properties:/opt/app/policy/pdpx/apps/guard/xacml.properties:ro
-      - ./wait_for_port.sh:/opt/app/policy/pdpx/bin/wait_for_port.sh:ro
-    entrypoint: ./wait_for_port.sh
-    command: [
-      '-c', './policy-pdpx.sh',
-      'policy-pap', '6969',
-      'kafka', '9092'
-    ]
+      - ./config/xacml-pdp/xacml-${database:-postgres}.properties:/opt/app/policy/pdpx/apps/guard/xacml.properties:ro
+    healthcheck:
+      test: "curl --fail --silent --user 'policyadmin:zb!XztG34' http://localhost:6969/policy/pdpx/v1/healthcheck | grep -q '\"healthy\":true' || exit 1"
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 30s
 
   policy-opa-pdp:
     image: ${CONTAINER_LOCATION}onap/policy-opa-pdp:${POLICY_OPA_PDP_VERSION}
     container_name: policy-opa-pdp
     hostname: policy-opa-pdp
     depends_on:
-      - kafka
       - policy-pap
     ports:
       - ${OPA_PDP_PORT}:8282
     volumes:
       - ./config/opa-pdp/config.json:/app/config/config.json:ro
       - ./config/opa-pdp/policy-opa-pdp.sh:/app/policy-opa-pdp.sh:ro
-      - ./wait_for_port.sh:/app/wait_for_port.sh:ro
     env_file:
       - ./config/opa-pdp/opa-pdp.env
-    entrypoint: ./wait_for_port.sh
-    command: [
-      '-c', './policy-opa-pdp.sh',
-      'kafka', '9092',
-      'policy-pap', '6969'
-    ]
+    entrypoint: /app/opa-pdp
+    healthcheck:
+      test: "curl --fail --silent --user 'policyadmin:zb!XztG34' http://localhost:8282/policy/pdpo/v1/healthcheck | grep -q '\"healthy\":true' || exit 1"
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 30s
 
   policy-drools-pdp:
     image: ${CONTAINER_LOCATION}onap/policy-drools:${POLICY_DROOLS_PDP_VERSION}
@@ -166,21 +162,20 @@ services:
     hostname: policy-drools-pdp
     depends_on:
       - policy-pap
-      - kafka
     ports:
       - ${DROOLS_PORT}:6969
       - ${DROOLS_TELEMETRY_PORT}:9696
     volumes:
       - ./config/drools-pdp/custom:/tmp/policy-install/config:ro
-      - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     env_file:
-      - config/drools-pdp/env/base-postgres.conf
-    entrypoint: /opt/app/policy/bin/wait_for_port.sh
-    command: [
-      '-c', '/opt/app/policy/bin/pdpd-entrypoint.sh boot',
-      'policy-pap', '6969',
-      'kafka', '9092'
-    ]
+      - config/drools-pdp/env/base-${database:-postgres}.conf
+    # Note drools-pdp does not expose 6969, so instead nc to telemetry port
+    healthcheck:
+      test: nc -z localhost 9696 || exit 1
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 30s
 
   policy-drools-apps:
     image: ${CONTAINER_LOCATION}onap/policy-pdpd-cl:${POLICY_DROOLS_APPS_VERSION}
@@ -190,32 +185,27 @@ services:
       - policy-pap
       - policy-xacml-pdp
       - policy-models-simulator
-      - kafka
     ports:
       - ${DROOLS_APPS_PORT}:6969
       - ${DROOLS_APPS_TELEMETRY_PORT}:9696
     volumes:
       - ./config/drools-applications/custom:/tmp/policy-install/config:ro
-      - ./wait_for_port.sh:/opt/app/policy/bin/wait_for_port.sh:ro
     env_file:
       - config/drools-applications/env/base-postgres.conf
       - config/drools-applications/env/feature-healthcheck.conf
       - config/drools-applications/env/feature-pooling-messages.conf
-    entrypoint: /opt/app/policy/bin/wait_for_port.sh
-    command: [
-      '-c', '/opt/app/policy/bin/pdpd-cl-entrypoint.sh boot',
-      'policy-pap', '6969',
-      'kafka', '9092',
-      'aai-sim', '6666',
-      'sdnc-sim', '6668',
-      'so-sim', '6669'
-    ]
+    healthcheck:
+      test: "curl --fail --silent --user 'demo@people.osaaf.org:demo123456!' http://localhost:6969/healthcheck | grep -q '\"healthy\":true' || exit 1"
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 30s
 
   policy-clamp-runtime-acm:
     image: ${CONTAINER_LOCATION}onap/policy-clamp-runtime-acm:${POLICY_CLAMP_VERSION}
     hostname: policy-clamp-runtime-acm
     depends_on:
-      - policy-apex-pdp
+      - postgres
       - kafka
       - jaeger
       - policy-clamp-ac-pf-ppnt
@@ -252,11 +242,11 @@ services:
         -Dotel.java.global-autoconfigure.enabled=true
       SPRING_PROFILES_ACTIVE: ${CLAMP_PROFILE:-default}
     healthcheck:
-      test: "curl --fail --silent http://localhost:6969/onap/policy/clamp/acm/actuator/health/readiness | grep UP || exit 1"
-      interval: 30s
+      test: "curl --fail --silent --user 'runtimeUser:zb!XztG34' http://localhost:6969/onap/policy/clamp/acm/actuator/health/readiness | grep -q UP || exit 1"
+      interval: 10s
       timeout: 10s
-      retries: 5
-      start_period: 60s
+      retries: 12
+      start_period: 30s
 
   policy-clamp-ac-http-ppnt:
     image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-http-ppnt:${POLICY_CLAMP_PPNT_VERSION}
@@ -264,8 +254,6 @@ services:
     depends_on:
       - kafka
       - jaeger
-    expose:
-      - 6969
     deploy:
       replicas: ${ACM_REPLICAS:-1}
     environment:
@@ -280,11 +268,11 @@ services:
       OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED: true
       SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
     healthcheck:
-      test: "curl --fail --silent http://localhost:6969/onap/policy/clamp/acm/httpparticipant/health/readiness | grep UP || exit 1"
-      interval: 30s
+      test: "curl --fail --silent --user 'participantUser:zb!XztG34' http://localhost:6969/onap/policy/clamp/acm/httpparticipant/health/readiness | grep -q UP || exit 1"
+      interval: 10s
       timeout: 10s
-      retries: 5
-      start_period: 60s
+      retries: 12
+      start_period: 30s
 
   policy-clamp-ac-k8s-ppnt:
     image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-k8s-ppnt:${POLICY_CLAMP_PPNT_VERSION}
@@ -292,8 +280,6 @@ services:
     depends_on:
       - kafka
       - jaeger
-    expose:
-      - 6969
     deploy:
       replicas: ${ACM_REPLICAS:-1}
     environment:
@@ -308,11 +294,11 @@ services:
       OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED: true
       SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
     healthcheck:
-      test: "curl --fail --silent http://localhost:6969/onap/policy/clamp/acm/k8sparticipant/health/readiness | grep UP || exit 1"
-      interval: 30s
+      test: "curl --fail --silent --user 'participantUser:zb!XztG34' http://localhost:6969/onap/policy/clamp/acm/k8sparticipant/health/readiness | grep -q UP || exit 1"
+      interval: 10s
       timeout: 10s
-      retries: 5
-      start_period: 20s
+      retries: 12
+      start_period: 30s
 
   policy-clamp-ac-pf-ppnt:
     image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-pf-ppnt:${POLICY_CLAMP_PPNT_VERSION}
@@ -320,9 +306,8 @@ services:
     depends_on:
       - kafka
       - policy-api
+      - policy-apex-pdp
       - jaeger
-    expose:
-      - 6969
     deploy:
       replicas: ${ACM_REPLICAS:-1}
     environment:
@@ -341,10 +326,10 @@ services:
       OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED: true
       SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
     healthcheck:
-      test: "curl --fail --silent http://localhost:6969/onap/policy/clamp/acm/policyparticipant/health/readiness | grep UP || exit 1"
-      interval: 30s
+      test: "curl --fail --silent --user 'participantUser:zb!XztG34' http://localhost:6969/onap/policy/clamp/acm/policyparticipant/health/readiness | grep -q UP || exit 1"
+      interval: 10s
       timeout: 10s
-      retries: 5
+      retries: 12
       start_period: 30s
 
   policy-clamp-ac-a1pms-ppnt:
@@ -353,8 +338,6 @@ services:
     depends_on:
       - kafka
       - jaeger
-    expose:
-      - 6969
     deploy:
       replicas: ${ACM_REPLICAS:-1}
     environment:
@@ -368,11 +351,11 @@ services:
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
       OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED: true
     healthcheck:
-      test: "curl --fail --silent http://localhost:6969/onap/policy/clamp/acm/a1pmsparticipant/health/readiness | grep UP || exit 1"
-      interval: 30s
+      test: "curl --fail --silent --user 'participantUser:zb!XztG34' http://localhost:6969/onap/policy/clamp/acm/a1pmsparticipant/health/readiness | grep -q UP || exit 1"
+      interval: 10s
       timeout: 10s
-      retries: 5
-      start_period: 20s
+      retries: 12
+      start_period: 30s
 
   policy-clamp-ac-kserve-ppnt:
     image: ${CONTAINER_LOCATION}onap/policy-clamp-ac-kserve-ppnt:${POLICY_CLAMP_PPNT_VERSION}
@@ -380,8 +363,6 @@ services:
     depends_on:
       - kafka
       - jaeger
-    expose:
-      - 6969
     deploy:
       replicas: ${ACM_REPLICAS:-1}
     environment:
@@ -395,8 +376,8 @@ services:
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
       OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED: true
     healthcheck:
-      test: "curl --fail --silent http://localhost:6969/onap/policy/clamp/acm/kserveparticipant/health/readiness | grep UP || exit 1"
-      interval: 30s
+      test: "curl --fail --silent --user 'participantUser:zb!XztG34' http://localhost:6969/onap/policy/clamp/acm/kserveparticipant/health/readiness | grep -q UP || exit 1"
+      interval: 10s
       timeout: 10s
-      retries: 5
-      start_period: 20s
+      retries: 12
+      start_period: 30s

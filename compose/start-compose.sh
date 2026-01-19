@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # ============LICENSE_START====================================================
-#  Copyright (C) 2022-2025 Nordix Foundation.
+#  Copyright (C) 2022-2026 OpenInfra Foundation Europe. All rights reserved.
 # =============================================================================
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -74,15 +74,15 @@ fi
 
 if [ -n "$component" ]; then
   if [ "$grafana" = true ]; then
-    docker compose up -d "${component}" postgres grafana
+    docker compose up -d "${component}" postgres grafana --wait
     echo "Prometheus server: http://localhost:${PROMETHEUS_PORT}"
     echo "Grafana server: http://localhost:${GRAFANA_PORT}"
   else
-    docker compose up -d "${component}" postgres
+    docker compose up -d "${component}" postgres --wait
   fi
 else
   export PROJECT=policy-api # policy-api has groups.json complete with all 3 pdps
-  docker compose up -d
+  docker compose up -d --wait
 fi
 
 cd "${WORKSPACE}"
