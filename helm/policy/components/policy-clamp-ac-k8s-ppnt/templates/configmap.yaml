@@ -1,6 +1,6 @@
 {{/*
 #  ============LICENSE_START=======================================================
-#   Copyright (C) 2022 Nordix Foundation. All rights reserved.
+#   Copyright (C) 2022,2026 OpenInfra Foundation Europe. All rights reserved.
 #  ================================================================================
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -27,10 +27,3 @@ metadata:
     app: {{ .Chart.Name }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     heritage: Helm
-data:
-{{ tpl (.Files.Glob "resources/config/*.{xml,yaml}").AsConfig . | indent 2 }}
-{{- if .Values.repoList }}
-{{ tpl (.Files.Glob "resources/config/KubernetesParticipantParameters.yaml").AsConfig . | indent 2 }}
-{{ toYaml .Values.repoList | indent 4 }}
-{{ tpl (.Files.Glob "resources/config/*.{json,xml,sh}").AsConfig . | indent 2 }}
-{{- end }}
