@@ -221,6 +221,7 @@ services:
       - policy-clamp-ac-pf-ppnt
       - policy-clamp-ac-sim-ppnt-1
       - policy-clamp-ac-sim-ppnt-2
+      - policy-clamp-ac-sim-ppnt-3
     ports:
       - ${ACM_PORT}:6969
     restart:
