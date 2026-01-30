@@ -16,6 +16,29 @@
       "message": "recheck",
       "revId": "0e204c66ea38a1ade7199f5b7e62540754c52a8a",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "235ef515_9e5d4450",
+        "filename": "compose/compose.acm.scale.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 6742
+      },
+      "writtenOn": "2026-01-30T15:44:02Z",
+      "side": 1,
+      "message": "This needs to be changed to 6970 now?",
+      "range": {
+        "startLine": 52,
+        "startChar": 23,
+        "endLine": 52,
+        "endChar": 27
+      },
+      "revId": "0e204c66ea38a1ade7199f5b7e62540754c52a8a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
     }
   ]
 }
