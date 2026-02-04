@@ -18,12 +18,17 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END======================================================
 
-#Usage: $0 [policy-component] [OPTIONS]"
-#"  OPTIONS:"
-#"  --grafana              start the docker compose with grafana"
-#"  --mariadb              start the docker compose using mariadb"
-#"  --postgres [default]   start the docker compose using postgres db"
-#"  no policy-component will start all components"
+usage() {
+  cat << EOF
+Usage: $0 [policy-component] [OPTIONS]
+  OPTIONS:
+    --grafana    start docker compose with grafana
+    --local      use local images instead of pulling from registry
+    --help       display this help message
+
+  If no policy-component is specified, all components will be started
+EOF
+}
 
 if [ -z "${WORKSPACE}" ]; then
     WORKSPACE=$(git rev-parse --show-toplevel)
@@ -33,24 +38,16 @@ COMPOSE_FOLDER="${WORKSPACE}"/compose
 
 # Set default values for the options
 grafana=false
-database=postgres
 
 # Parse the command-line arguments
-while [[ $# -gt 0 ]]
-do
-  key="$1"
-
-  case $key in
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --help|-h)
+      usage
+      exit 0
+      ;;
     --grafana)
       grafana=true
-      shift
-      ;;
-    --mariadb)
-      database=mariadb
-      shift
-      ;;
-    --postgres)
-      database=postgres
       shift
       ;;
     --local)
@@ -64,7 +61,7 @@ do
   esac
 done
 
-cd ${COMPOSE_FOLDER}
+cd "${COMPOSE_FOLDER}"
 
 echo "Configuring docker compose..."
 source export-ports.sh > /dev/null 2>&1
@@ -75,24 +72,17 @@ if [ -z "$PROJECT" ]; then
   export PROJECT=$component
 fi
 
-export database
-
 if [ -n "$component" ]; then
   if [ "$grafana" = true ]; then
-    echo "Starting ${component} using ${database} + Grafana/Prometheus"
-    docker compose up -d ${component} ${database} grafana
-
+    docker compose up -d "${component}" postgres grafana
     echo "Prometheus server: http://localhost:${PROMETHEUS_PORT}"
     echo "Grafana server: http://localhost:${GRAFANA_PORT}"
-
   else
-    echo "Starting ${component} using ${database}"
-    docker compose up -d ${component} ${database}
+    docker compose up -d "${component}" postgres
   fi
 else
-  export PROJECT=api # api has groups.json complete with all 3 pdps
-  echo "Starting all components using ${database}"
+  export PROJECT=policy-api # policy-api has groups.json complete with all 3 pdps
   docker compose up -d
 fi
 
-cd ${WORKSPACE}
+cd "${WORKSPACE}"

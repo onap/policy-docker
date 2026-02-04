@@ -18,36 +18,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # ============LICENSE_END======================================================
 
-echo "Shut down started!"
+echo "Stopping docker compose..."
+
 if [ -z "${WORKSPACE}" ]; then
     WORKSPACE=$(git rev-parse --show-toplevel)
     export WORKSPACE
-fi
-
-database=postgres
-
-while [[ $# -gt 0 ]]
-do
-  key="$1"
-
-  case $key in
-    --mariadb)
-      database=mariadb
-      shift
-      ;;
-    --postgres)
-      database=postgres
-      shift
-      ;;
-    *)
-      component="$1"
-      shift
-      ;;
-  esac
-done
-
-if [ -z "$component" ]; then
-  export component=api
 fi
 
 COMPOSE_FOLDER="${WORKSPACE}"/compose
@@ -57,10 +32,9 @@ cd ${COMPOSE_FOLDER}
 source export-ports.sh > /dev/null 2>&1
 source get-versions.sh > /dev/null 2>&1
 
-echo "Collecting logs from docker compose containers..."
+echo "Collecting logs from containers..."
 rm -rf *.log
 
-# this will collect logs by service instead of mixing all together
 containers=$(docker compose ps --all --format '{{.Service}}')
 
 IFS=$'\n' read -d '' -r -a item_list <<< "$containers"
@@ -68,9 +42,6 @@ for item in "${item_list[@]}"
 do
     if [ -n "$item" ]; then
         docker compose logs $item >> $item.log
-        if [ "${DONT_PRINT_LOGS}" == "false" ]; then
-            cat $item.log
-        fi
     fi
 done
 
