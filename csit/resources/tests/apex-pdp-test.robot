@@ -51,6 +51,7 @@ ExecuteApexTestPnfPolicyWithMetadataSet
     CreateNodeTemplate  /policy/api/v1/nodetemplates  201  ${postjson}  1
     DeployPolicy
     Wait Until Keyword Succeeds    2 min    5 sec    QueryPolicyStatus  ${policyName}  defaultGroup  apex  ${pdpName}  onap.policies.native.Apex
+    Sleep    5 seconds
     GetKafkaTopic    apex-cl-mgt2
     TriggerAndVerifyTestPnfPolicy    apex-cl-mgt2
 

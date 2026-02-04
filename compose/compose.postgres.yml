@@ -43,7 +43,7 @@ services:
     env_file: config/db-pg/db-pg.conf
     environment:
       POSTGRES_PASSWORD: policy_user
-      SQL_DB: ${SCHEMAS_TO_BE_CREATED}
+      SQL_DB: policyadmin operationshistory pooling
       SQL_HOST: postgres
     volumes:
       - ./config/db-migrator/init_pg.sh:/opt/app/policy/bin/db_migrator_policy_init_pg.sh:ro

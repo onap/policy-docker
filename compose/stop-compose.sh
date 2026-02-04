@@ -24,32 +24,6 @@ if [ -z "${WORKSPACE}" ]; then
     export WORKSPACE
 fi
 
-database=postgres
-
-while [[ $# -gt 0 ]]
-do
-  key="$1"
-
-  case $key in
-    --mariadb)
-      database=mariadb
-      shift
-      ;;
-    --postgres)
-      database=postgres
-      shift
-      ;;
-    *)
-      component="$1"
-      shift
-      ;;
-  esac
-done
-
-if [ -z "$component" ]; then
-  export component=api
-fi
-
 COMPOSE_FOLDER="${WORKSPACE}"/compose
 
 cd ${COMPOSE_FOLDER}
@@ -68,9 +42,6 @@ for item in "${item_list[@]}"
 do
     if [ -n "$item" ]; then
         docker compose logs $item >> $item.log
-        if [ "${DONT_PRINT_LOGS}" == "false" ]; then
-            cat $item.log
-        fi
     fi
 done
 

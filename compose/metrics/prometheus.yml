@@ -100,8 +100,8 @@ scrape_configs:
   metrics_path: "/onap/policy/clamp/acm/actuator/prometheus"
   static_configs:
   - targets:
-    - "compose-policy-clamp-runtime-acm-replica-1:6969"
-    - "compose-policy-clamp-runtime-acm-replica-2:6969"
+    - "compose-policy-clamp-runtime-acm-1:6969"
+    - "compose-policy-clamp-runtime-acm-2:6969"
   basic_auth:
     username: "runtimeUser"
     password: "zb!XztG34"
