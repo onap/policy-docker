@@ -27,11 +27,3 @@ metadata:
     app: {{ .Chart.Name }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     heritage: Helm
-{{- with .Files.Glob "resources/config/*store" }}
-binaryData:
-{{- range $path, $bytes := . }}
-  {{ base $path }}: {{ $.Files.Get $path | b64enc | quote }}
-{{- end }}
-{{- end }}
-data:
-{{ tpl (.Files.Glob "resources/config/*.{json,xml,yaml,sh}").AsConfig . | indent 2 }}

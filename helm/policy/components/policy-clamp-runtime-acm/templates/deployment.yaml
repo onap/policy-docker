@@ -37,52 +37,10 @@ spec:
         app.kubernetes.io/managed-by: Helm
       name: {{ .Chart.Name }}
     spec:
-      initContainers:
-      - command:
-        - /app/ready.py
-        args:
-        - --job-name
-        - policy-pg-init
-        env:
-        - name: NAMESPACE
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: metadata.namespace
-        image: {{ .Values.global.repository }}/{{ .Values.global.image.readiness }}
-        imagePullPolicy: {{ .Values.pullPolicy }}
-        name: {{ .Chart.Name }}-readiness
-      - command:
-        - sh
-        args:
-        - -c
-        - "cd /config-input && for PFILE in `ls -1`; do envsubst <${PFILE} >/config/${PFILE}; done"
-        env:
-        - name: SQL_USER
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Chart.Name }}-db-secret
-              key: login
-
-        - name: SQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Chart.Name }}-db-secret
-              key: password
-
-        volumeMounts:
-        - mountPath: /config-input
-          name: ac-runtime-config
-        - mountPath: /config
-          name: ac-runtime-config-processed
-        image: docker.io/dibi/envsubst:1
-        imagePullPolicy: {{ .Values.pullPolicy }}
-        name: {{ .Chart.Name }}-update-config
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.global.repository }}/{{ .Values.global.image.runtimeacm }}
           imagePullPolicy: {{ .Values.global.pullPolicy }}
-          command: ["/opt/app/policy/clamp/bin/acm-runtime.sh"]
           env:
             - name: RUNTIME_USER
               valueFrom:
@@ -94,6 +52,8 @@ spec:
                 secretKeyRef:
                   name: {{ .Chart.Name }}-runtime-secret
                   key: password
+            - name: TIMEZONE
+              value: UTC
             - name: SQL_HOST
               value: {{ .Values.db.service.name }}
             - name: SQL_PORT
@@ -166,11 +126,6 @@ spec:
           - mountPath: /etc/localtime
             name: localtime
             readOnly: true
-          - mountPath: /opt/app/policy/clamp/etc/mounted
-            name: ac-runtime-config-processed
-          - mountPath: /opt/app/policy/clamp/bin/acm-runtime.sh
-            name: ac-runtime-config
-            subPath: acm-runtime.sh
           resources:
 {{ toYaml .Values.resources.small | indent 12 }}
         {{- if .Values.nodeSelector }}
@@ -186,12 +141,5 @@ spec:
         - name: localtime
           hostPath:
              path: /etc/localtime
-        - name: ac-runtime-config
-          configMap:
-            name: {{ .Chart.Name }}-configmap
-            defaultMode: 0755
-        - name: ac-runtime-config-processed
-          emptyDir:
-            medium: Memory
       imagePullSecrets:
       - name: "default-docker-registry-key"
