@@ -259,6 +259,11 @@ if [ "${TEARDOWN}" == "true" ]; then
 fi
 
 set_project_config
+if [ $? -ne 0 ]; then
+    echo "ERROR: Project setup failed. Aborting tests."
+    RC=1
+    exit ${RC}
+fi
 
 unset http_proxy https_proxy
 

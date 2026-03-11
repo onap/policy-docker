@@ -22,17 +22,28 @@ export SQL_USER=${PGSQL_USER}
 export SQL_PASSWORD=${PGSQL_PASSWORD}
 export SCRIPT_DIRECTORY=postgres
 
+MAX_RETRY=5
+RETRY_INTERVAL=10
+
 for schema in ${SQL_DB}; do
     echo "Initializing $schema..."
-    /opt/app/policy/bin/prepare_upgrade.sh ${schema}
+    rc=1
+    for i in $(seq 1 ${MAX_RETRY}); do
+        /opt/app/policy/bin/prepare_upgrade.sh ${schema}
 
-    /opt/app/policy/bin/db-migrator-pg -s ${schema} -o report
+        /opt/app/policy/bin/db-migrator-pg -s ${schema} -o report
 
-    /opt/app/policy/bin/db-migrator-pg -s ${schema} -o upgrade
-    rc=$?
+        /opt/app/policy/bin/db-migrator-pg -s ${schema} -o upgrade
+        rc=$?
 
-    /opt/app/policy/bin/db-migrator-pg -s ${schema} -o report
+        /opt/app/policy/bin/db-migrator-pg -s ${schema} -o report
 
+        if [ "$rc" = 0 ]; then
+            break
+        fi
+        echo "Schema $schema initialization failed (attempt ${i}/${MAX_RETRY}), retrying in ${RETRY_INTERVAL}s..."
+        sleep ${RETRY_INTERVAL}
+    done
     if [ "$rc" != 0 ]; then
         break
     fi

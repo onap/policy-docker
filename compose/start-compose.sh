@@ -75,14 +75,22 @@ fi
 if [ -n "$component" ]; then
   if [ "$grafana" = true ]; then
     docker compose up -d "${component}" postgres grafana --wait
+    COMPOSE_RC=$?
     echo "Prometheus server: http://localhost:${PROMETHEUS_PORT}"
     echo "Grafana server: http://localhost:${GRAFANA_PORT}"
   else
     docker compose up -d "${component}" postgres --wait
+    COMPOSE_RC=$?
   fi
 else
   export PROJECT=policy-api # policy-api has groups.json complete with all 3 pdps
   docker compose up -d --wait
+  COMPOSE_RC=$?
+fi
+
+if [ "${COMPOSE_RC}" -ne 0 ]; then
+  echo "ERROR: One or more containers failed to start (exit code: ${COMPOSE_RC}). Aborting."
+  exit ${COMPOSE_RC}
 fi
 
 cd "${WORKSPACE}"
