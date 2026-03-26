@@ -64,6 +64,10 @@ ValidatesAbacPolicy
     UndeployOpaPolicy  /policy/pap/v1/pdps/policies/abac  202
     UndeployOpaPolicy  /policy/pap/v1/pdps/policies/abac  400
 
+ValidateAstGeneration
+    ValidateAstPositiveResponse  onap.policy.opa.pdp.ast-positive-input.json  200  onap.policy.opa.pdp.ast-positive-output.json
+    ValidateAstNegativeResponse  onap.policy.opa.pdp.ast-negative-input.json  400  onap.policy.opa.pdp.ast-negative-output.json
+
 *** Keywords ***
 PdpxGetReq
     [Documentation]     Verify the response of Health Check is Successful
@@ -175,3 +179,30 @@ ValidateIncorrectPolicyFilterResponse
     ${resp}=    PerformPostRequest   ${POLICY_OPA_IP}  ${url}  ${expectedStatus}  ${postjson}  abbrev=true  ${hcauth}
     ${response_data}=    Get From Dictionary    ${resp.json()}    output
     Should Be Equal As Strings   ${response_data}  None
+
+ValidateAstPositiveResponse
+    [Documentation]    Validate AST generation for valid Rego code
+    [Arguments]  ${jsonfile}  ${status}  ${expectedfile}
+    ${expectedStatus}=    Set Variable    ${status}
+    ${postjson}=  Get file  ${CURDIR}/data/${jsonfile}
+    ${expected_data}=  Get file  ${CURDIR}/data/${expectedfile}
+    ${hcauth}=  PolicyAdminAuth
+    ${resp}=    PerformPostRequest   ${POLICY_OPA_IP}  /policy/pdpo/v1/generateast  ${expectedStatus}  ${postjson}  abbrev=true  ${hcauth}
+    ${response_data}=    Get From Dictionary    ${resp.json()}    ast
+    ${expected_value}=    Evaluate    json.loads('''${expected_data}''')    json
+    ${expected_output}=    Get From Dictionary    ${expected_value}    ast
+    Dictionaries Should Be Equal    ${response_data}  ${expected_output}
+
+ValidateAstNegativeResponse
+    [Documentation]    Validate AST generation error for invalid Rego code
+    [Arguments]  ${jsonfile}  ${status}  ${expectedfile}
+    ${expectedStatus}=    Set Variable    ${status}
+    ${postjson}=  Get file  ${CURDIR}/data/${jsonfile}
+    ${expected_data}=  Get file  ${CURDIR}/data/${expectedfile}
+    ${hcauth}=  PolicyAdminAuth
+    ${resp}=    PerformPostRequest   ${POLICY_OPA_IP}  /policy/pdpo/v1/generateast  ${expectedStatus}  ${postjson}  abbrev=true  ${hcauth}
+    Dictionary Should Contain Key    ${resp.json()}    errorMessage
+    ${error_message}=    Get From Dictionary    ${resp.json()}    errorMessage
+    Should Contain    ${error_message}    failed to parse policy
+    ${response_code}=    Get From Dictionary    ${resp.json()}    responseCode
+    Should Be Equal As Strings    ${response_code}    evaluation_error

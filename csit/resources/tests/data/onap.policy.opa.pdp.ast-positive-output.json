@@ -1,0 +1,122 @@
+{
+  "ast": {
+    "package": {
+      "path": [
+        {
+          "type": "var",
+          "value": "data"
+        },
+        {
+          "type": "string",
+          "value": "authz"
+        }
+      ]
+    },
+    "rules": [
+      {
+        "body": [
+          {
+            "index": 0,
+            "terms": {
+              "type": "boolean",
+              "value": true
+            }
+          }
+        ],
+        "default": true,
+        "head": {
+          "name": "allow",
+          "ref": [
+            {
+              "type": "var",
+              "value": "allow"
+            }
+          ],
+          "value": {
+            "type": "boolean",
+            "value": false
+          }
+        }
+      },
+      {
+        "body": [
+          {
+            "index": 0,
+            "terms": [
+              {
+                "type": "ref",
+                "value": [
+                  {
+                    "type": "var",
+                    "value": "equal"
+                  }
+                ]
+              },
+              {
+                "type": "ref",
+                "value": [
+                  {
+                    "type": "var",
+                    "value": "input"
+                  },
+                  {
+                    "type": "string",
+                    "value": "user"
+                  }
+                ]
+              },
+              {
+                "type": "string",
+                "value": "admin"
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "terms": [
+              {
+                "type": "ref",
+                "value": [
+                  {
+                    "type": "var",
+                    "value": "equal"
+                  }
+                ]
+              },
+              {
+                "type": "ref",
+                "value": [
+                  {
+                    "type": "var",
+                    "value": "input"
+                  },
+                  {
+                    "type": "string",
+                    "value": "method"
+                  }
+                ]
+              },
+              {
+                "type": "string",
+                "value": "GET"
+              }
+            ]
+          }
+        ],
+        "head": {
+          "name": "allow",
+          "ref": [
+            {
+              "type": "var",
+              "value": "allow"
+            }
+          ],
+          "value": {
+            "type": "boolean",
+            "value": true
+          }
+        }
+      }
+    ]
+  }
+}
