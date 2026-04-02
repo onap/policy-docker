@@ -208,7 +208,7 @@ services:
       - postgres
       - kafka
       - jaeger
-      - policy-clamp-ac-pf-ppnt
+      - policy-clamp-ac-http-ppnt
       - policy-clamp-ac-sim-ppnt-1
       - policy-clamp-ac-sim-ppnt-2
       - policy-clamp-ac-sim-ppnt-3
@@ -232,6 +232,8 @@ services:
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
       OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED: true
+      MANAGEMENT_OTLP_METRICS_EXPORT_ENABLED: false
+      OTEL_METRICS_EXPORTER: none
       JAVA_TOOL_OPTIONS: >-
         -Dcom.sun.management.jmxremote.rmi.port=9090
         -Dcom.sun.management.jmxremote=true
@@ -266,6 +268,8 @@ services:
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
       OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED: true
+      MANAGEMENT_OTLP_METRICS_EXPORT_ENABLED: false
+      OTEL_METRICS_EXPORTER: none
       SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
     healthcheck:
       test: "curl --fail --silent --user 'participantUser:zb!XztG34' http://localhost:6969/onap/policy/clamp/acm/httpparticipant/health/readiness | grep -q UP || exit 1"
@@ -292,6 +296,8 @@ services:
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
       OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED: true
+      MANAGEMENT_OTLP_METRICS_EXPORT_ENABLED: false
+      OTEL_METRICS_EXPORTER: none
       SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
     healthcheck:
       test: "curl --fail --silent --user 'participantUser:zb!XztG34' http://localhost:6969/onap/policy/clamp/acm/k8sparticipant/health/readiness | grep -q UP || exit 1"
@@ -324,6 +330,8 @@ services:
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
       OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED: true
+      MANAGEMENT_OTLP_METRICS_EXPORT_ENABLED: false
+      OTEL_METRICS_EXPORTER: none
       SPRING_PROFILES_ACTIVE: ${PPNT_PROFILE:-default}
     healthcheck:
       test: "curl --fail --silent --user 'participantUser:zb!XztG34' http://localhost:6969/onap/policy/clamp/acm/policyparticipant/health/readiness | grep -q UP || exit 1"
@@ -350,6 +358,8 @@ services:
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
       OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED: true
+      MANAGEMENT_OTLP_METRICS_EXPORT_ENABLED: false
+      OTEL_METRICS_EXPORTER: none
     healthcheck:
       test: "curl --fail --silent --user 'participantUser:zb!XztG34' http://localhost:6969/onap/policy/clamp/acm/a1pmsparticipant/health/readiness | grep -q UP || exit 1"
       interval: 10s
@@ -375,6 +385,8 @@ services:
       OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
       OTEL_JAVA_GLOBAL_AUTOCONFIGURE_ENABLED: true
+      MANAGEMENT_OTLP_METRICS_EXPORT_ENABLED: false
+      OTEL_METRICS_EXPORTER: none
     healthcheck:
       test: "curl --fail --silent --user 'participantUser:zb!XztG34' http://localhost:6969/onap/policy/clamp/acm/kserveparticipant/health/readiness | grep -q UP || exit 1"
       interval: 10s
