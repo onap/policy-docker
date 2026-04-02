@@ -135,6 +135,7 @@ DeployAutomationComposition
     Wait Until Keyword Succeeds    10 min    5 sec    VerifyDeployStatus  ${compositionId}  ${instanceId}  DEPLOYED
 
 QueryPolicies
+    Skip If    '${TEST_ENV}'=='docker'    Skipping for the docker test
     [Documentation]    Verify the new policies deployed
     ${auth}=    PolicyAdminAuth
     Sleep  10s
@@ -147,6 +148,7 @@ QueryPolicies
     Dictionary Should Contain Value  ${resp.json()[0]}  onap.policies.native.apex.ac.element
 
 QueryPolicyTypes
+    Skip If    '${TEST_ENV}'=='docker'    Skipping for the docker test
     [Documentation]    Verify the new policy types created
     ${auth}=    PolicyAdminAuth
     Sleep  10s
