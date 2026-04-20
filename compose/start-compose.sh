@@ -74,12 +74,12 @@ fi
 
 if [ -n "$component" ]; then
   if [ "$grafana" = true ]; then
-    docker compose up -d "${component}" postgres grafana --wait
+    docker compose up -d "${component}" postgres init-kafka grafana --wait
     COMPOSE_RC=$?
     echo "Prometheus server: http://localhost:${PROMETHEUS_PORT}"
     echo "Grafana server: http://localhost:${GRAFANA_PORT}"
   else
-    docker compose up -d "${component}" postgres --wait
+    docker compose up -d "${component}" postgres init-kafka --wait
     COMPOSE_RC=$?
   fi
 else
