@@ -27,7 +27,7 @@ spring:
   security.user:
     name: "${RESTSERVER_USER}"
     password: "${RESTSERVER_PASSWORD}"
-  mvc.converters.preferred-json-mapper: gson
+  http.converters.preferred-json-mapper: gson
   datasource:
     url: jdbc:postgresql://{{ .Values.db.service.name }}/policyadmin
     driverClassName: org.postgresql.Driver
