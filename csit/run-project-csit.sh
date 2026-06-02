@@ -112,7 +112,7 @@ function setup_distribution() {
     zip -F "${CSAR_DIR}"/sample_csar_with_apex_policy.csar --out "${CSAR_DIR}"/csar_temp.csar -q
 
     # Create clean directory for CSAR files (mounted into policy-distribution container)
-    rm -rf /tmp/distribution
+    sudo rm -rf /tmp/distribution
     mkdir /tmp/distribution
 
     export ROBOT_FILES="distribution-test.robot"
