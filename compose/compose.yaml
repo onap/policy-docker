@@ -220,13 +220,6 @@ services:
         condition: on-failure
         delay: 5s
         max_attempts: 3
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 8G
-        reservations:
-          cpus: '0.1'
-          memory: 2G
     environment:
       RUNTIME_USER: runtimeUser
       RUNTIME_PASSWORD: zb!XztG34
@@ -270,13 +263,6 @@ services:
       - jaeger
     deploy:
       replicas: ${ACM_REPLICAS:-1}
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 8G
-        reservations:
-          cpus: '0.2'
-          memory: 2G
     environment:
       HTTP_USER: participantUser
       HTTP_PASSWORD: zb!XztG34
@@ -306,13 +292,6 @@ services:
       - jaeger
     deploy:
       replicas: ${ACM_REPLICAS:-1}
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 8G
-        reservations:
-          cpus: '0.2'
-          memory: 2G
     environment:
       HTTP_USER: participantUser
       HTTP_PASSWORD: zb!XztG34
@@ -344,13 +323,6 @@ services:
       - jaeger
     deploy:
       replicas: ${ACM_REPLICAS:-1}
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 8G
-        reservations:
-          cpus: '0.2'
-          memory: 2G
     environment:
       API_USER: policyadmin
       API_PASSWORD: zb!XztG34
@@ -384,13 +356,6 @@ services:
       - jaeger
     deploy:
       replicas: ${ACM_REPLICAS:-1}
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 8G
-        reservations:
-          cpus: '0.2'
-          memory: 2G
     environment:
       HTTP_USER: participantUser
       HTTP_PASSWORD: zb!XztG34
@@ -419,13 +384,6 @@ services:
       - jaeger
     deploy:
       replicas: ${ACM_REPLICAS:-1}
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 8G
-        reservations:
-          cpus: '0.2'
-          memory: 2G
     environment:
       HTTP_USER: participantUser
       HTTP_PASSWORD: zb!XztG34
