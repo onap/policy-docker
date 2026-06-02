@@ -57,14 +57,6 @@ function docker_stats(){
     echo
 }
 
-function setup_clamp() {
-    export ROBOT_FILES="clamp-health-check.robot clamp-db-restore.robot clamp-single-element-test.robot clamp-multiple-element-type-test.robot clamp-timeout-test.robot
-    clamp-migrate-rollback.robot clamp-trace-test.robot clamp-slas.robot"
-    export TEST_ENV="docker"
-    export PROJECT="clamp"
-    source "${DOCKER_COMPOSE_DIR}"/start-compose.sh policy-clamp-runtime-acm --grafana
-}
-
 function setup_api() {
     export ROBOT_FILES="api-test.robot api-slas.robot"
     source "${DOCKER_COMPOSE_DIR}"/start-compose.sh policy-api --grafana
@@ -133,16 +125,6 @@ function set_project_config() {
     echo "Setting project configuration for: $PROJECT"
     case $PROJECT in
 
-    clamp | policy-clamp)
-        export ACM_REPLICAS=2
-        setup_clamp
-        ;;
-
-    clamp-simple | policy-simple)
-        export ACM_REPLICAS=1
-        setup_clamp
-        ;;
-
     api | policy-api)
         setup_api
         ;;
@@ -173,6 +155,11 @@ function set_project_config() {
 
     distribution | policy-distribution)
         setup_distribution
+        ;;
+
+    clamp | policy-clamp)
+        echo "clamp CSITs are moved to policy/clamp repo. No test will run."
+        exit 1
         ;;
 
     *)

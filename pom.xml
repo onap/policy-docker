@@ -2,7 +2,7 @@
   ============LICENSE_START=======================================================
    Copyright (C) 2018 Ericsson, Tieto. All rights reserved.
    Modifications Copyright (C) 2020 AT&T Intellectual Property. All rights reserved.
-   Modifications Copyright (C) 2021-2025 OpenInfra Foundation Europe. All rights reserved.
+   Modifications Copyright (C) 2021-2026 OpenInfra Foundation Europe. All rights reserved.
   ================================================================================
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -43,7 +43,6 @@
                 <module>policy-jre</module>
                 <module>policy-jdk</module>
                 <module>policy-db-migrator</module>
-                <module>policy-regression-tests</module>
             </modules>
         </profile>
         <profile>
@@ -52,7 +51,6 @@
                 <module>policy-jre</module>
                 <module>policy-jdk</module>
                 <module>policy-db-migrator</module>
-                <module>policy-regression-tests</module>
             </modules>
             <properties>
                 <docker.dbm.dockerFile>suse.Dockerfile</docker.dbm.dockerFile>
