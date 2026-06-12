@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1458266c_297a1974",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2026-06-12T08:59:16Z",
+      "side": 1,
+      "message": "Do we need to wait for the ci-management changes to be merged before this?",
+      "revId": "b784bde9c383e56743361b8107688a914a031a05",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
