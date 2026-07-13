@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0af4695_38fbe41c",
+        "filename": "policy-db-migrator/pom.xml.versionsBackup",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2026-07-13T11:03:18Z",
+      "side": 1,
+      "message": "this file needs to be deleted?",
+      "range": {
+        "startLine": 21,
+        "startChar": 1,
+        "endLine": 21,
+        "endChar": 9
+      },
+      "revId": "cfb411ce176e75539e543d0c41006674f6be2788",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2d3fc826_4baf56f6",
+        "filename": "policy-jdk/alpine/pom.xml.versionsBackup",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2026-07-13T11:03:18Z",
+      "side": 1,
+      "message": "to be deleted?",
+      "range": {
+        "startLine": 23,
+        "startChar": 1,
+        "endLine": 23,
+        "endChar": 9
+      },
+      "revId": "cfb411ce176e75539e543d0c41006674f6be2788",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51d17458_14b88723",
+        "filename": "policy-jdk/pom.xml.versionsBackup",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2026-07-13T11:03:18Z",
+      "side": 1,
+      "message": "to be deleted?",
+      "range": {
+        "startLine": 23,
+        "startChar": 1,
+        "endLine": 23,
+        "endChar": 9
+      },
+      "revId": "cfb411ce176e75539e543d0c41006674f6be2788",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e10f3e8d_35fedbb9",
+        "filename": "policy-jre/alpine/pom.xml.versionsBackup",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 6070
+      },
+      "writtenOn": "2026-07-13T11:03:18Z",
+      "side": 1,
+      "message": "to be deleted",
+      "range": {
+        "startLine": 23,
+        "startChar": 1,
+        "endLine": 23,
+        "endChar": 9
+      },
+      "revId": "cfb411ce176e75539e543d0c41006674f6be2788",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a"
+    }
+  ]
+}
