@@ -150,7 +150,11 @@ services:
       - ./config/opa-pdp/opa-pdp.env
     entrypoint: /app/opa-pdp
     healthcheck:
-      test: "curl --fail --silent --user 'policyadmin:zb!XztG34' http://localhost:8282/policy/pdpo/v1/healthcheck | grep -q '\"healthy\":true' || exit 1"
+      # The opa-pdp runtime image is distroless (no shell/curl), so the probe is
+      # the binary itself: it does an authenticated GET on the local healthcheck
+      # endpoint using the API_USER/API_PASSWORD from opa-pdp.env and exits
+      # non-zero when unhealthy. Exec form (no shell).
+      test: ["CMD", "/app/opa-pdp", "-healthcheck"]
       interval: 10s
       timeout: 10s
       retries: 12
